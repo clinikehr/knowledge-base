@@ -1,0 +1,157 @@
+---
+title: Manage patient records
+description: "Find a historical record, read a patient's chart tabs and activity timeline, export the registry, and see who has touched what."
+icon: /images/icons/book-user.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Records staff, owners and managers; editing is role-gated" note="Needs the Records care area" />
+
+**Patient Records** is the records office's door onto the hospital's patient list. Reception uses it to register people; the records office uses it to find, correct, export and account for what is held. This page covers the second job.
+
+<Path steps={['Sidebar', 'Records', 'Patient Records']} />
+
+<TaskHeader before="The Records care area switched on, and patients on the register" time="A minute to find a record" after="The record you were asked for, read or corrected, with the access logged" />
+
+## One list, two doors
+
+This screen is reachable from **two** places in the hospital navigation: **Front Desk → Patients** and **Records → Patient Records**. Open either and **both entries highlight at once**.
+
+That is correct, not a fault. Reception registers patients and the records office manages them, but there is one patient list, so both service lines get their own door onto it. For registering someone, the self-registration waitlist and bulk import, see [Register and find patients](/hospital/front-desk/patients). Everything below is the records duty.
+
+## What you're looking at
+
+The heading reads **Patients Management** — "Register, view, and manage patient records across your clinic". **Refresh**, **Import**, **Export** and **New Patient** sit in the header, and two tabs below: **All Patients** and **Analytics**.
+
+Above the table are **Search patients...**, a **Waitlist** filter, and a **Columns** dropdown headed **Visible Columns**. Seventeen columns exist; on by default are **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit**.
+
+Hidden until you switch them on: **Blood Type**, **Occupation**, **Country**, **Email**, **Genotype**, **Triages**, **Lab Tests** and **Prescriptions**. The last four are what a records enquiry usually needs — turn them on and the answer is often in the row without opening anything.
+
+## Find a historical record
+
+<Steps>
+  <Step title="Search by what you actually have">
+    **Search patients...** matches on the name and the hospital number. If you only have a phone number or an email, switch that column on with **Columns** and sort by it.
+  </Step>
+  <Step title="Narrow with the counts">
+    Switch on **Consultations**, **Triages**, **Lab Tests** and **Prescriptions** to tell two similarly named people apart before opening either chart.
+  </Step>
+  <Step title="Open the record">
+    Use the row's **⋯** menu → **View details**. **Edit** appears only for staff whose role may change a record.
+  </Step>
+</Steps>
+
+## Read the chart
+
+An open record shows the patient's identity, contact details, medical background and current medications, with two tabs beneath:
+
+- **Insurance** — the payers and policies held for this person. A coverage answer from the [records desk](/hospital/records/overview) has to be entered here, because it needs a payer chosen from your hospital's own list.
+- **Recent Activity** — **Patient Activities**, "Timeline of patient activities": encounters, orders and events, newest first. A patient with nothing yet reads **No Activities Found**.
+
+Documents sent to this person are listed on the record too, each with a **Document Audit Log** — who was sent it, when they opened it, and when they signed. That log is what you produce when somebody asks whether a consent was actually seen.
+
+## Export the registry
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Export**. The **Export patient registry** sheet opens — "Download every patient record in \{hospital\} as a single CSV file. The same column layout is accepted by the importer for round-trip edits."
+  </Step>
+  <Step title="Check the scope">
+    It states how many records are ready to export, and lists every column that will be included, so there is no guessing what leaves the building.
+  </Step>
+  <Step title="Download">
+    Select the download button, which names the record count. Large registries stream incrementally — "Streamed straight to disk — large clinics are downloaded incrementally." Empty cells stay empty, so re-importing the file will not overwrite data with blanks.
+  </Step>
+</Steps>
+
+<Warning>
+  **An export is the whole patient registry as a plain file, and it leaves the hospital's protections behind the moment it lands on a device.** Export only when you have a reason you could defend, store it encrypted, and delete it when the reason has passed. The export is logged; what happens to the file afterwards is not.
+</Warning>
+
+<AuditNote action="Opening a patient record and exporting the registry" />
+
+## Who can do this
+
+**Role** decides whether the screen opens. **Patient Records** needs the **Records** care area in **Settings → Facility**; **Patients** under Front Desk needs the **Front desk** one. On Enterprise an owner controls which roles see either group under **Settings → Role Navigation**.
+
+**Permission** decides what you may do inside:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Search and **View details** | Records and front-desk staff | **Search for clients** |
+| Create a record | Front desk and records staff | **Create client profiles** |
+| **Edit** a record | Staff whose role may edit | Role-gated; without it the record is read-only and **Edit** is absent |
+| Delete a record | Owners and managers | **Delete client profiles** |
+| Read documents on the chart | Records staff | **View all documents** |
+| **Send Consent** | Records and front-desk staff | **Share documents with clients** |
+| **Export** the registry | Owners and managers | **Settings → Data export** governs the wider exports |
+
+Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, so hiding a patient list from a role tidies a sidebar rather than protecting anything. Every read of a patient record is logged whether or not a permission was involved.
+
+## Check it worked
+
+- The record opens for the right person, with the hospital number you searched on.
+- **Recent Activity** shows the encounter you expected to find.
+- A correction you saved is visible on the row after **Refresh**.
+- An export downloads a CSV whose row count matches the figure the sheet quoted.
+- Your access appears in the [audit log](/platform/security/audit-log) with your name and the time.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Both Patients and Patient Records are highlighted">
+    Expected. They are two doors onto one list — one for reception, one for the records office.
+  </Accordion>
+
+  <Accordion title="Everything is read-only and there is no Edit">
+    Editing is role-gated, and a user without an editing role gets the read-only view with no error explaining it. Ask an owner or manager to check your role — see [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="I cannot find a patient I know exists">
+    The search matches the name and hospital number. Try a partial surname, and check the **Waitlist** filter is off — a self-registered person who has not been approved is not on the main list yet.
+  </Accordion>
+
+  <Accordion title="Two records look like the same person">
+    They probably are. Do not delete either — check which one carries the clinical history, and raise the merge with an owner before anything is removed.
+  </Accordion>
+
+  <Accordion title="The export button is disabled">
+    There is nothing to export. It reads **No patients to export** on an empty registry.
+  </Accordion>
+
+  <Accordion title="Patient Records is missing from the sidebar">
+    It needs the **Records** care area in **Settings → Facility**. The **Front Desk → Patients** door needs the **Front desk** one — see [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this a different list from the front desk's?">
+    No. It is the same list and the same records, reached from the records group instead of the front-desk group.
+  </Accordion>
+
+  <Accordion title="Can I see who else has opened a patient's record?">
+    Yes — every read is written to your hospital's audit log with the reader's name and the time. Owners and managers can review it under [Audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="What does the Document Audit Log show?">
+    The life of one document against one patient: sent, viewed, signed. It is the evidence that a consent was actually seen, rather than merely emailed.
+  </Accordion>
+
+  <Accordion title="Can I re-import an exported file to correct records in bulk?">
+    Yes — the export uses the column layout the importer accepts, and empty cells stay empty rather than blanking existing data. Check a handful by hand before a large batch.
+  </Accordion>
+
+  <Accordion title="Where do a patient's lab results and prescriptions live?">
+    In their own modules — [Laboratory](/hospital/diagnostics/laboratory) and the [pharmacy unit](/hospital/pharmacy/prescription-history). The counts here tell you they exist; the modules hold the detail.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="patient records" />
+
+{/* source of truth: components/clinic/patients-management/ (patient-management-dashboard, enhanced-patients-table, table-columns, patient-management-form, activities-tab, document-audit-log-dialog), components/clinic/clients-management/patient-export-sheet.tsx, lib/clinic-nav-registry.ts */}

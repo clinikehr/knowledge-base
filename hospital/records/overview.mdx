@@ -1,6 +1,6 @@
 ---
-title: The records desk
-description: "Work the three records queues — intake conflicts, signature chasing and unfiled files — and know when to go to Documents instead."
+title: Work the records desk
+description: "Clear the three records queues — intake conflicts, signature chasing and unfiled files — and know when to go to Documents instead."
 icon: /images/icons/folder-open.svg
 ---
 
@@ -9,80 +9,129 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Records staff, Owner, Manager" note="The Records group only appears when the Records care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Records staff, owners and managers" note="Needs the Records care area" />
 
-**Records** is a triage queue, not a filing cabinet. It shows "What needs a person today. The full document ledger lives in Documents." If you are looking for a specific document, go to Documents; if you are working through what is outstanding, stay here.
+**Records** is a triage queue, not a filing cabinet. It shows "What needs a person today. The full document ledger lives in Documents." If you are hunting for a specific document, go to Documents. If you are clearing what is outstanding, stay here.
 
 <Path steps={['Sidebar', 'Records', 'Records']} />
 
 <TaskHeader before="The Records care area switched on" time="A few minutes a day" after="No intake answers waiting on a decision, no expired signature links, and every file in a folder" />
 
-Records needs the Enterprise plan and the **Records** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+## What you're looking at
 
-## What the page shows
+The heading is **Records**. Two buttons sit beside it: **Open Documents**, the way out to the full ledger, and **Refresh**.
 
-Four tiles across the top — **Conflicts to review**, **Needs chasing**, **Expiring or expired** and **Unfiled files** — then two shortcuts, **Send for signature** and **New patient**, then the three queues as tabs, each carrying its own count.
+Four tiles run across the top:
 
-**Open Documents** and **Refresh** sit in the header. **Open Documents** is the way out to the full ledger whenever the queue is not what you needed.
+| Tile | Counts |
+| --- | --- |
+| **Conflicts to review** | Intake answers waiting on a decision |
+| **Needs chasing** | Documents that want a reminder |
+| **Expiring or expired** | Documents whose link needs re-sending |
+| **Unfiled files** | Uploads with no folder |
+
+Below them, two shortcuts — **Send for signature** and **New patient** — then the three queues as tabs, each carrying its own count: **Conflicts (n)**, **Signature chase (n)** and **Unfiled (n)**.
 
 ## Conflicts — decide what the chart says
 
-When a patient answers an intake question differently from what is already on their chart, the answer waits here instead of overwriting anything.
+When a patient answers an intake question differently from what is already on their chart, the answer waits here rather than overwriting anything.
 
-The table is four columns — **Field**, **On the chart**, **Patient answered** and **Decision**. Read the two values side by side, then **Accept** the patient's answer to write it to the chart, or reject it to keep what you have. Accepted answers show as **Applied to the chart**; rejected ones as **Rejected**.
+<Steps>
+  <Step title="Read the two values side by side">
+    The table is four columns — **Field**, **On the chart**, **Patient answered** and **Decision**. A blank chart value shows as a dash.
+  </Step>
+  <Step title="Accept or reject">
+    **Accept** writes the patient's answer to the chart. **Reject** keeps what you already hold. Both are recorded.
+  </Step>
+  <Step title="Handle an insurance answer differently">
+    Coverage needs a payer chosen from your hospital's own list, so an insurance row offers **Add from Insurance tab** instead of Accept — it takes you to the patient's insurance tab to enter it properly.
+  </Step>
+  <Step title="Check the trail">
+    Below the queue, **Recent activity — including answers applied automatically** lists what has already been decided, including the answers that needed no human at all.
+  </Step>
+</Steps>
 
-Below the queue, **Recent activity — including answers applied automatically** lists what has already been decided, including answers that needed no human.
-
-When there is nothing to decide: **All clear — No intake answers are waiting for a decision.**
+Empty state: **All clear** — "No intake answers are waiting for a decision."
 
 ## Signature chase — remind, or re-send
 
-Documents sent out for signature and not yet signed appear here, with **Patient**, **Document**, **Sent**, **Reminders** and **Status**.
+Documents sent for signature and not yet signed appear here, with **Patient**, **Document**, **Sent**, **Reminders** and **Status**.
 
-The footer states your clinic's thresholds — how many days before a document is flagged as not opened, how many before no response, and how close to the link deadline counts as expiring. It also states the rule that matters most:
+**Status** is the column that tells you what to do, and it has five values:
+
+| Status | What it means | What it needs |
+| --- | --- | --- |
+| **Sent** | Recently sent, still fresh | Nothing yet |
+| **Not opened** | Sent, never opened | A reminder |
+| **No response** | Opened, not signed | A reminder |
+| **Expiring soon** | The link is close to its deadline | Re-sending |
+| **Link expired** | The link no longer works | Re-sending |
 
 <Note>
-  **An expired link needs re-sending, not another reminder.** A reminder points at a link that no longer works, so the patient gets a nudge to a dead end and you get another row in the queue. Check the status before you act: chase what is merely unopened, re-send what has expired.
+  **An expired link needs re-sending, not another reminder.** A reminder points at a link that no longer works, so the patient gets a nudge to a dead end and you get another row in the queue. Read the status before you act.
 </Note>
 
-Change the thresholds in **Settings → Facility** under **Records chase**.
+This tab tells you what each document needs; you act on it in [Documents](/hospital/records/documents), where **Resend Document** lives. The footer states your hospital's thresholds — how many days before a document is flagged as not opened, how many before no response, and how close to the deadline counts as expiring. Change them in **Settings → Facility** — see [Facility settings](/hospital/settings/facility).
 
-Empty state: **All clear — No documents are waiting on a signature.**
+Empty state: **All clear** — "No documents are waiting on a signature."
 
 ## Unfiled — give every file a folder
 
-Uploads that arrived without a home. File each one against the right patient and folder. Empty state: **All clear — Every uploaded file has a folder.**
+Uploads that arrived without a home. Each row shows the **Patient**, the **File**, how long ago it was **Uploaded**, and a **File it** button that opens that patient's files tab so you can put it where it belongs.
+
+Empty state: **All clear** — "Every uploaded file has a folder."
 
 ## The queues are capped
 
-Each queue shows only the first 100 rows: "Showing the first 100 conflicts. Resolve some to see the rest." and "Showing the 100 oldest open requests." The cap is not a limit on your data — it is a limit on the triage view. The complete list is always in [Documents](/clinic/clinical/documents).
+Each queue shows only its first hundred rows: "Showing the first 100 conflicts. Resolve some to see the rest." and "Showing the 100 oldest open requests." That is a limit on the triage view, not on your data — the complete list is always in [Documents](/hospital/records/documents).
 
 <AuditNote action="Opening the records dashboard" />
 
+## Who can do this
+
+**Role** decides whether the desk opens. **Records** needs the **Records** care area in **Settings → Facility**, and on Enterprise an owner controls which roles see the **Records** group under **Settings → Role Navigation**.
+
+**Permission** decides what you may do inside:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the desk and read the queues | Records staff, owners, managers | Role → route |
+| **Accept** or **Reject** a conflict | Records staff, owners, managers | Role → route |
+| Add coverage from a conflict | Whoever may edit a patient record | The patient's insurance tab |
+| **File it** on an unfiled upload | Records staff | **View all documents** |
+| Send or re-send for signature | Records and front-desk staff | **Share documents with clients** |
+| Change the chase thresholds | Owners | **Settings → Facility** |
+
+Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, so hiding **Records** from a role tidies a sidebar rather than securing anything.
+
 ## Check it worked
 
-- An accepted conflict disappears from **Conflicts** and the chart shows the patient's answer.
-- **Conflicts to review** drops by one for each decision.
-- A re-sent document shows a new **Sent** time and its reminder count resets.
-- A filed upload leaves **Unfiled** and is findable in Documents.
+- An accepted conflict leaves **Conflicts**, and the chart shows the patient's answer.
+- **Conflicts to review** falls by one for each decision.
+- A re-sent document shows a new **Sent** time and its status is no longer **Link expired**.
+- A filed upload leaves **Unfiled** and is findable on the patient's record.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="A conflict will not accept">
-    The message is **Could not decide**. Refresh — someone else may have already decided it — then try again.
+    Refresh — someone else may already have decided it — then try again. An insurance row never accepts here by design; use **Add from Insurance tab**.
   </Accordion>
 
   <Accordion title="A patient says they never got the reminder">
-    Check the status first. If the link has expired, a reminder cannot help; re-send the document from Documents.
+    Check the status first. **Link expired** cannot be fixed with a reminder; re-send the document from Documents.
   </Accordion>
 
   <Accordion title="Resolving conflicts does not shorten the list">
-    It will, but only 100 are ever shown at once. As you resolve, the next oldest take their place.
+    Only a hundred are shown at a time. As you resolve them, the next oldest take their place.
   </Accordion>
 
   <Accordion title="I cannot find a specific document here">
-    Records only shows what is outstanding. Use **Open Documents** for the full ledger — see [Documents](/clinic/clinical/documents).
+    Records only shows what is outstanding. Use **Open Documents** for the full ledger.
+  </Accordion>
+
+  <Accordion title="The tiles all read a dash">
+    The page is still loading. Give it a moment or select **Refresh**; a dash is "not known yet", not zero.
   </Accordion>
 
   <Accordion title="Records is missing from the sidebar">
@@ -90,6 +139,30 @@ Each queue shows only the first 100 rows: "Showing the first 100 conflicts. Reso
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why does the patient's answer not just overwrite the chart?">
+    Because a patient filling in a form at home and a clinician recording something at a bedside are different kinds of evidence. A person decides which one the chart keeps.
+  </Accordion>
+
+  <Accordion title="What gets applied automatically?">
+    Answers with nothing to disagree with — a field the chart holds no value for. Those appear under **Recent activity** rather than in the queue.
+  </Accordion>
+
+  <Accordion title="Where do the chase thresholds come from?">
+    **Settings → Facility**, under the records chase settings. They are hospital-wide, not per document.
+  </Accordion>
+
+  <Accordion title="Is this the same as the Documents screen?">
+    No. Records is the triage queue for what needs a person today; [Documents](/hospital/records/documents) is the complete ledger, where documents are sent, resent and cancelled.
+  </Accordion>
+
+  <Accordion title="How do files end up unfiled?">
+    An upload that arrived without being attached to a patient's folder — commonly from a bulk upload or an emailed-in file. Filing it is the whole fix.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck />
 
-{/* source of truth: components/clinic/records/records-content.tsx, components/clinic/dashboard/settings/facility-settings.tsx */}
+{/* source of truth: components/clinic/records/records-content.tsx, lib/records/queue-ageing.ts, components/clinic/dashboard/settings/facility-settings.tsx */}

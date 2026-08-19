@@ -1,0 +1,147 @@
+---
+title: Build your services and prices
+description: "Create the priced service catalogue every hospital invoice, booking page and revenue report is built from, and group it into categories."
+icon: /images/icons/tags.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners and managers; changing a price is a separate permission" />
+
+Your service catalogue is the hospital's price list. Invoices are built from it, your booking page offers what is on it, and revenue reporting groups by it. Getting it right once makes everything downstream faster.
+
+<Path steps={['Sidebar', 'Billing', 'Services']} />
+
+<TaskHeader before="Your currency set under Settings → Billing" time="A minute per service" after="A service that can be added to an invoice and offered for booking" />
+
+## What you're looking at
+
+The heading reads **Services Dashboard** — "Manage your clinic's services, prices, and categories". A date-range picker and **Refresh** sit beside it, alongside one context-sensitive button: it reads **New Category** while the **Categories** tab is open and **New Service** everywhere else.
+
+Three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | **Total Services**, **Active Services**, **Service Types** and **Inactive Services**, plus **Service Categories** and **Recent Services** panels |
+| **Services** | The full catalogue |
+| **Categories** | Your own groupings |
+
+The **Services** table shows **Service Name**, **Code**, **Type**, **Category**, **Price** and **Status**. **Filter services...** narrows by name and **Filter by type** by kind. Selecting a code copies it — "Service code copied to clipboard" — and codes are generated for you: "Service codes are auto-generated based on clinic name and category".
+
+**Empty state.** A new hospital sees **No services found** with "Get started by adding your first service." and an **Add Service** button. Filtered to nothing it reads "No services match your current filters." instead, which is a different problem.
+
+## Add a service
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **New Service**. The **New service** sheet opens — "Add a new service to your clinic's catalogue."
+  </Step>
+  <Step title="Name it and price it">
+    **Service Name\*** is what appears on the invoice and on your booking page, so write it the way a patient would recognise it, not as an internal code. **Price\*** is in your hospital's currency.
+  </Step>
+  <Step title="Choose the service type">
+    **Service Type\*** — "The category this service falls under." The picker is grouped, and a hospital uses most of it: General, Medical Services, Diagnostic Services, Therapy Services, Alternative Medicine, Mental Health and Wellness Services. It is what reporting uses to tell a consultation apart from a radiology study.
+  </Step>
+  <Step title="Add a category and a billing code">
+    **Service Category** is your own grouping. **Procedure Code** — "Optional CPT or HCPCS code for billing & reporting." — carries through onto invoice lines and insurance claims, so fill it in for anything you bill to a payer.
+  </Step>
+  <Step title="Describe it and save">
+    **Description** — "Detailed description of what the service includes." — is the text a patient reads when booking. Leave **Active** on ("Toggle whether this service is currently available.") and save.
+  </Step>
+</Steps>
+
+## Add a category
+
+Select **New Category**, enter a **Category Name\***, an optional **Description**, and leave **Active** on.
+
+Categories exist so that a list of two hundred hospital services stays navigable. Group by what the patient came in for — "Antenatal", "Occupational health", "Day surgery" — rather than by which department performs it, because a patient reading a bill recognises the first and not the second.
+
+Each category card's **Actions** menu offers **Copy ID**, **Edit Category** and **Delete Category**, which asks **Confirm Delete?** before it acts.
+
+## Retiring a service
+
+Switch **Active** off rather than deleting. An inactive service stops being offered for booking and disappears from the invoice picker, but every invoice that already used it keeps its line, its price and its history. Deleting a service that has been billed is how a revenue report ends up with a hole in it.
+
+## Who can do this
+
+**Role** decides whether **Services** opens; an owner sets that per role under **Settings → Role Navigation**. Most hospitals restrict it to management and the billing office, because a price list edited by everyone stops being a price list.
+
+**Permission** decides what you may do inside:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Read the catalogue | Anyone the role navigation lets in | Role → route |
+| Add a service or a category | Owners and managers | Role → route |
+| Change a price | Owners and managers | **Edit service fees** |
+| Put a service on an invoice | Billers and front desk | **Create billing documents** |
+| See the earnings figures on **Overview** | Owners, managers, executives | **View financial dashboard** |
+
+Repricing is deliberately separate from creating: the people who maintain the catalogue are not automatically the people who should be able to change what the hospital charges.
+
+Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, and hiding **Services** from a role is a convenience rather than a security boundary.
+
+## Check it worked
+
+- The service appears under the **Services** tab with its price in your hospital's currency and a green **Active** dot.
+- "Search services to add..." on a [new invoice](/hospital/revenue/invoices) finds it.
+- **Total Services** and **Active Services** on **Overview** have both gone up by one.
+- If you publish it, it appears on your booking page — see [Booking settings](/hospital/settings/booking-settings).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The price shows in the wrong currency">
+    Currency is set once for the whole hospital under **Settings → Billing**, not per service, and only an owner can change it. See [Billing settings](/hospital/settings/billing).
+  </Accordion>
+
+  <Accordion title="I cannot change a price">
+    **Edit service fees** is granted separately from creating services. Ask an owner or manager — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The service does not appear on my booking page">
+    Check it is **Active**, then check it is offered on the booking page itself — a service can exist in the catalogue without being published for online booking.
+  </Accordion>
+
+  <Accordion title="Prices need to differ per insurer">
+    Payer-specific pricing is not set here. Set negotiated rates under **Insurance** — see [Insurance](/hospital/insurance/overview).
+  </Accordion>
+
+  <Accordion title="Every price shows as zero and charges are disabled">
+    **Free Clinic Mode** is on under **Settings → Billing** — "Enable this if your clinic provides free services. All charges will be disabled." Your hospital carries a **Free Clinic** badge while it is.
+  </Accordion>
+
+  <Accordion title="The button says New Category when I want a service">
+    The header button follows the tab you are on. Switch to **Services** or **Overview** and it reads **New Service** again.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Where does the Code column come from?">
+    It is generated from your hospital's name and the service's category, so every service has a stable internal reference without anyone inventing one.
+  </Accordion>
+
+  <Accordion title="Is Service Type the same as Service Category?">
+    No. **Service Type** is a fixed list the product reports on; **Service Category** is your own grouping, which you create and name. A service has both.
+  </Accordion>
+
+  <Accordion title="Do consultation rates live here?">
+    Department consultation rates are set under **Settings → Departments** and appear separately on the payment form. See [Departments](/hospital/settings/departments).
+  </Accordion>
+
+  <Accordion title="Can I set a member price?">
+    Not on the service. Member pricing comes from the plan a patient is on and applies automatically when you add a service to their invoice — see [Memberships](/hospital/revenue/memberships).
+  </Accordion>
+
+  <Accordion title="Can I bulk-import a price list?">
+    Not from this screen. Services are added one at a time, which is slow but keeps the type and category decisions deliberate.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="services and prices" />
+
+{/* source of truth: components/clinic/dashboard/services/services-content-dashboard.tsx, .../service-form-sheet.tsx, .../service-category-form-sheet.tsx, .../service-list.tsx, .../category-list.tsx, .../services-stats.tsx */}

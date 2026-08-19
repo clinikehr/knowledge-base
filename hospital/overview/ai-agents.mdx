@@ -1,0 +1,172 @@
+---
+title: Build an AI agent for your hospital
+description: "Design an automation on the agent canvas, preview it safely, and deploy it so its trigger starts firing across the hospital."
+icon: /images/icons/bot.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise — unlimited published agents and public chat links" roles="Anyone the AI Agents row is shown to; webhook secrets are owner and manager only" note="No care area needed — AI Agents is always the second row in the sidebar" />
+
+**AI Agents** is where a hospital automates the work nobody enjoys: chasing an unsigned document, answering an out-of-hours enquiry, following up a denied claim, nudging a patient who missed an appointment. You draw the workflow on a canvas, test it in a sandbox, and deploy it — and only then does anything fire.
+
+<Path steps={['Sidebar', 'AI Agents']} />
+
+<TaskHeader
+  before="Agent credits on your plan — Enterprise grants them monthly"
+  time="15 minutes for a first agent from a template"
+  after="A deployed agent that runs on its own whenever its trigger occurs"
+/>
+
+## Before you start
+
+Nothing to switch on: **AI Agents** sits directly under **Dashboard** and has no care-area gate. On Enterprise you have unlimited published agents, unlimited public chat links, and the webhook trigger — so no plan limit will stop you.
+
+Decide first what should set the agent off, because that shapes everything else: a schedule, an event in the hospital (an appointment booked, a claim denied, a lab result ready), an inbound message, or a request from another system.
+
+## What you're looking at
+
+The landing page is headed **Agent Builder** — "Build AI agents and workflows with custom logic and tools." — with **Public UIs**, **Runs** and **+ Create** in the header, and your **Agent credits** card below: the balance, a **Top up** button, and a **Recent activity** ledger where each run appears as **Agent run**.
+
+Your existing agents follow under **Your agents** as cards, each with a **published** or **draft** pill and a **Delete** link. A hospital with none simply does not get that section; what you see instead is the gallery, headed **Create a workflow** — "Start from a template, or create your own from scratch." There are more than thirty templates, and starting from one is much faster than starting from nothing.
+
+### Inside the builder
+
+Three columns: the node palette, the canvas, and an inspector that says **Select a node to configure it.** until you pick something. An empty canvas reads "Add nodes from the palette to build your workflow."
+
+The top bar carries the agent's name, a green **● Live · v\{n\}** pill when a version is deployed, a grey **Draft · v\{n\}** pill for what you are editing, a save indicator (**Saving…** / **Unsaved** / **Saved** — there is no save button), your credit balance and the PHI policy switch. On the right: **Playbooks**, **Evals**, **Preview** and **Deploy**.
+
+### The palette
+
+| Group | Nodes |
+| --- | --- |
+| **Core** | **Agent** · **Classify** · **End** · **Note** |
+| **Tools** | **File search** · **Guardrails** · **MCP** |
+| **Logic** | **If / else** · **While** · **User approval** |
+| **Data** | **Transform** · **Set state** |
+
+Every graph also has a **Start** node you cannot delete — that is where the trigger lives.
+
+Only **Agent** and **Classify** call a model, and only those two carry the amber **billable** chip in the inspector and spend credits. **File search**, **MCP**, the logic nodes and the data nodes are deterministic and free.
+
+## Build and deploy an agent
+
+<Steps>
+  <Step title="Start from a template">
+    Select a card in the gallery — it installs the whole workflow and opens the canvas. Or select **+ Create**, name it in **Create a workflow**, and start on an empty board.
+  </Step>
+  <Step title="Choose the trigger">
+    Select the **Start** node and pick a **Trigger**. **Manual / Preview** is the default and is what you want while building. The live options are grouped by **Schedule**, **Webhook / API**, **Inbound message / call**, and then by what happened in the hospital — appointments, documents, billing, memberships, insurance, clinical results, operations, and new patients or contacts.
+  </Step>
+  <Step title="Set the PHI policy">
+    In the top bar, choose **🔒 De-identified · any model** or **🏥 PHI allowed · BAA models only**. De-identified is the safer default and runs on any model; PHI-allowed restricts you to models covered by a business associate agreement. If the two disagree the inspector warns you and the run is blocked rather than sent.
+  </Step>
+  <Step title="Add your steps">
+    Drag nodes on and connect them. Branching nodes have two labelled outputs — **true** / **false** on **If / else**, **loop** / **done** on **While**, **pass** / **fail** on **Guardrails** — so the path is visible on the canvas rather than buried in a setting.
+
+    Put a **User approval** node in front of anything you would not want happening unattended: outbound patient messages, payments, converting a contact.
+  </Step>
+  <Step title="Preview it">
+    Select **Preview**. The sandbox sheet says **Sandbox · remembers this chat**; send a test message and watch it run against your real hospital data without the trigger being live. **New chat** clears the memory. The footer is honest about the cost: "Sandbox — runs the saved agent · debits credits".
+  </Step>
+  <Step title="Deploy">
+    Select **Deploy**. You get "Deployed — v\{n\} is now live", the **● Live** pill appears, and a fresh draft opens at the next version so you can keep editing without touching what is running.
+  </Step>
+</Steps>
+
+<Warning>
+  **Nothing fires until you deploy, and there is no pause button.** A draft has no live trigger, so a schedule or an event never reaches it — this is why a half-finished agent is safe. The moment you deploy, it is running on real patients and real money, and every **Agent** or **Classify** step it takes spends credits. There is no undeploy control: to stop a live agent you **Delete** it. Preview thoroughly before you deploy an agent that sends anything outward.
+</Warning>
+
+## Watch what it does
+
+Select **Runs** for **Agent runs** — "Every run is fully traced — status, model, tokens, credits, and per-node steps." Pick a run to see its **Trace**, step by step, and its **Output**. Before there are any it reads "No runs yet. Preview or deploy an agent to see runs here."
+
+If an agent is paused on a **User approval** node, a **Pending approvals** banner appears with **Approve** and **Deny** on each item. Nothing moves until somebody acts.
+
+**Evals** are repeatable checks against the deployed version — "so you catch regressions before patients do" — including a **No raw PHI in output** assertion, returning **✓ PASS** or **✕ FAIL**.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **AI Agents**, build and deploy | Anyone the row is shown to | Role Navigation |
+| Approve or deny a paused run | Anyone who can open **Runs** | Role |
+| Read or rotate the webhook signing secret | Owners and managers only | A fixed rule, not a permission slug |
+| Publish a public chat link | Anyone who can open the module | Role |
+
+Everything an agent touches is still bound by your hospital's own boundaries — an agent cannot read another hospital's records, and its runs are logged like any other access. Two behaviours to know: permission enforcement is **opt-in per person**, and the permissions sheet warns **"Saving starts enforcing"**; and hiding the row in [Role Navigation](/hospital/settings/role-navigation) tidies a sidebar rather than securing anything. A denied action is recorded; an allowed one is not.
+
+## Check it worked
+
+- The agent card shows a green **published** pill and the builder shows **● Live · v\{n\}**.
+- Causing the trigger — booking a test appointment, firing the webhook — puts a new row on **Agent runs** within a minute.
+- The run's **Trace** shows every node it walked and what each cost.
+- Your **Agent credits** balance has gone down by that amount, and **Recent activity** shows an **Agent run** entry.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I deployed it and nothing happens">
+    The **Start** node is probably still on **Manual / Preview**. Change the trigger, then **Redeploy** — the trigger is only picked up at deploy time.
+  </Accordion>
+
+  <Accordion title="Runs are blocked because of the model">
+    The agent is set to **PHI allowed** but the chosen model is not covered by a business associate agreement. The inspector says so in amber: pick a Claude or GPT model, or switch the agent to **De-identified** in the top bar.
+  </Accordion>
+
+  <Accordion title="Credits are draining faster than expected">
+    Count the **Agent** and **Classify** nodes on the path — those are the only billable ones — and check the trigger. A schedule set to **Every 15 minutes** runs 96 times a day whether there is work or not. Consider a less frequent schedule with a worklist step.
+  </Accordion>
+
+  <Accordion title="A run is stuck">
+    Look for the **Pending approvals** banner on **Agent runs**. A **User approval** node holds the run until a person selects **Approve** or **Deny** — that is the node doing its job.
+  </Accordion>
+
+  <Accordion title="My MCP tool is not in the list">
+    No server is connected. The node says so: "No MCP servers connected. Add one under **Settings → AI → MCP servers**, then it appears here."
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How do I stop a live agent?">
+    Delete it. There is no undeploy or pause control, so the safe habit is to preview thoroughly and to put a **User approval** node in front of anything irreversible.
+  </Accordion>
+
+  <Accordion title="Do drafts cost anything?">
+    Drafting and editing are free and unlimited. Credits are spent when an **Agent** or **Classify** step actually runs a model — including in **Preview** and in **Evals**, both of which are real runs.
+  </Accordion>
+
+  <Accordion title="Can an agent see patient data?">
+    Only if you allow it. A **de-identified** agent has identifiers stripped before anything reaches a model, and tool arguments are de-identified before they leave for a third-party server. See [AI safety and patient data](/platform/ai/safety).
+  </Accordion>
+
+  <Accordion title="What happens to the live agent while I edit?">
+    Nothing. Deploying forks a new draft at the next version, so **● Live · v3** keeps running while you work on **Draft · v4**. Your changes go live only on the next **Redeploy**.
+  </Accordion>
+
+  <Accordion title="Can patients chat with an agent directly?">
+    Yes — publish it as a branded public chat link under **Public UIs**. Only published, de-identified agents using safe tools are eligible. See [Publish an agent](/platform/ai/publishing-agents).
+  </Accordion>
+</AccordionGroup>
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card title="Build an AI agent" icon="/images/icons/bot.svg" href="/platform/ai/agents">
+    The canvas, the nodes and every trigger, in full detail — plus [tools and knowledge](/platform/ai/agent-tools) and [publishing](/platform/ai/publishing-agents).
+  </Card>
+
+  <Card title="How agent credits are used" icon="/images/icons/coins.svg" href="/platform/ai/credits">
+    What spends a credit, and what is stripped before anything leaves your hospital — see also [AI safety](/platform/ai/safety).
+  </Card>
+</Columns>
+
+<StillStuck topic="AI agents" />
+
+{/* source of truth: components/clinic/agents/ (agents-content.tsx, agent-builder.tsx, node-catalog.ts, agent-runs.tsx), lib/agents/agent-plan.ts, lib/clinic-nav-registry.ts */}

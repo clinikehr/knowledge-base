@@ -1,0 +1,161 @@
+---
+title: Write a clinical note
+description: "Document a client from a template, a blank page or a recording, then sign and lock it — and countersign a colleague's."
+icon: /images/icons/square-pen.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team — signing and locking need Starter, the AI writing tools need Essential" roles="Any clinical staff member" />
+
+**Notes** is where a solo or team practice does all of its clinical documentation. You write about a client, save it as a draft while you think, then sign it — and signing is what turns it into a record.
+
+<Path steps={['Sidebar', 'Notes', 'New Note']} />
+
+<TaskHeader
+  before="The person must already exist as a client"
+  time="5 minutes"
+  after="A note saved as a draft, or signed and locked on the client's chart"
+/>
+
+## What you're looking at
+
+The left rail is headed **Clinical Notes** and holds **New Note**, **Templates**, **Custom Templates** and **Snippets**, with an **AI** heading below them over a single entry, **AI Notes**. That last one opens a panel over whatever you are doing rather than navigating away.
+
+**New Note** opens a page headed **New Progress Note** — "Create a new clinical note or documentation entry" — offering three ways in:
+
+| Card | Use it when |
+| --- | --- |
+| **Use Template** | "Start from a template" — the structure is already decided |
+| **Blank Note** | "Start from scratch" |
+| **AI Note Taker** | "AI-powered note generation" — from a recording or a document |
+
+Below those: a **Waiting on you (\{n\})** card, shown only when something is pending your countersignature; the **Quick Note** card you write in; and **Recent Notes**, a searchable list badged **Locked**, **Draft** or **Final** with a **View** button on each row. A brand-new practice sees "No recent notes found. Create your first note above." and no **Waiting on you** card at all.
+
+## Write a quick note
+
+<Steps>
+  <Step title="Name it and pick a shape">
+    Enter a **Note Title** ("Enter note title..."), then a **Template Type**: **SOAP Note**, **Progress Note**, **Initial Assessment**, **Therapy Session**, **Discharge Summary**, **Treatment Plan** or **General Note**.
+  </Step>
+  <Step title="Attach it to a client">
+    Open the **Client** picker ("Search for a client...") and search by name, client ID or national ID. If they are not registered, **Register new client** takes you there without losing what you have typed.
+
+    A draft saves without a client. A final note does not — you are stopped with "Please select a client before saving the final note".
+  </Step>
+  <Step title="Tag it and write">
+    **Tags** ("Add a tag...") make the note findable later. Write the body in **Note Content**. The placeholder tells you the shortcut that matters: "Start typing your note content... Type / for snippets".
+  </Step>
+  <Step title="Save as a draft, or sign it">
+    **Save as Draft** keeps it editable. **Sign & Lock** finishes it. **Upload File** attaches supporting material, and **Clear** empties the card.
+  </Step>
+</Steps>
+
+## Sign and lock
+
+Select **Sign & Lock** to open the **Sign & Lock Note** sheet — "Once signed, this note becomes read-only". Check the **Signing Provider**, then add the **Provider Signature**: **Typed**, which previews under the heading **Electronic Signature**, or **Draw**, which needs a real signature drawn in the box before it will accept.
+
+Below that is an attestation you must tick — it confirms you have reviewed the note, that locking it prevents further changes, and that "This electronic signature has the same legal effect as a handwritten signature." Then select **Sign & Lock**. You will see "Note Signed & Locked".
+
+A locked note carries a **Read-Only (Locked)** badge and reads "This note is locked and cannot be edited" where its buttons used to be. Both of those are selectable — they reopen the sheet in unlock mode, where you confirm and select **Unlock Note**. The note becomes editable again and must be re-signed.
+
+## Countersign a colleague's note
+
+**Waiting on you (\{n\})** collects work by somebody you supervise: "Notes signed by a colleague you supervise. They are not final until you countersign." Select **Read the note**, read it properly, then countersign from the panel underneath.
+
+## The AI writing tools
+
+Two live in the editor toolbar and work on text you have already written:
+
+- **AI Rewrite** improves a passage — "Content has been enhanced. Review before saving."
+- **AI Autocomplete** suggests the next few words in grey as you type. Its tooltip reads "AI Autocomplete (on) — Tab to accept". Press Tab to take it, Escape to dismiss it.
+
+Both need the Essential plan. To draft a whole note from a recording instead, use [the AI Note Taker](/practice/clinical/ai-notes) — a separate add-on, not a plan feature.
+
+<Note>
+  AI text is a first draft, never a record. Read every sentence before you sign — your signature makes the words yours.
+</Note>
+
+## Who can do this
+
+Role decides whether **Notes** opens. Permission decides what you may do once it is open.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Write and save a draft | Any clinical staff member | Role |
+| Attach a note to a client you do not own | Owner, manager, and staff set to **Full client list** or **Entire practice** | The access tier chosen when they were invited |
+| Sign and lock a note | The signing clinician | Role — plus the Starter plan or above |
+| Countersign somebody else's note | The colleague named as their supervisor | The supervisor relationship set when they were invited |
+| Build or edit a template | Owner, manager | Permission — **Edit note and form templates** |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Notes** from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Opening a clinical note" />
+
+## Check it worked
+
+The note is in **Recent Notes** with the right client against it and a **Final** or **Locked** badge, and it is on that client's chart. A signed note names the signing provider and cannot be edited until it is unlocked.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Please select a client before saving the final note">
+    A final note must belong to somebody. Choose them in the **Client** picker — or, if they are not registered yet, use **Register new client** in the picker itself. See [Clients](/practice/work/clients).
+  </Accordion>
+
+  <Accordion title="eSignatures & Locking Limit Reached">
+    Signing and locking need the Starter plan or above: "The ability to electronically sign and lock clinical notes is a premium compliance feature." On Free you can write and save drafts. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Limit Reached when saving a note">
+    The Free plan caps how many notes you can write each month. The count resets at the start of the next month; paid plans remove the cap.
+  </Accordion>
+
+  <Accordion title="Sign & Lock is greyed out">
+    No client is selected. The button stays disabled until one is.
+  </Accordion>
+
+  <Accordion title="AI Rewrite or AI Autocomplete shows a flag and will not run">
+    Both need the Essential plan — the tooltip reads "Upgrade to use AI Rewrite". They are separate from the AI Note Taker, which is an add-on bought per person.
+  </Accordion>
+
+  <Accordion title="A locked note needs correcting">
+    Select the **Read-Only (Locked)** badge, confirm, and select **Unlock Note**. Unlocking removes the signature, so re-sign after editing. Both the lock and the unlock are in your [audit log](/platform/security/audit-log) — amend rather than working around it.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I edit a signed note?">
+    Not while it is locked. Unlock it, edit, and sign again. The original signature is removed by unlocking, and both events are recorded, so the history of the correction is preserved.
+  </Accordion>
+
+  <Accordion title="Does a draft show on the client's chart?">
+    A draft is visible to your practice as a draft, and can exist without a client attached at all. Only a saved final note reads as documentation of the encounter.
+  </Accordion>
+
+  <Accordion title="What is the difference between Template Type here and a template?">
+    **Template Type** is a label on a quick note. A **template** is a whole structured form with its own sections — see [Note templates](/practice/clinical/note-templates).
+  </Accordion>
+
+  <Accordion title="How do I get a snippet into a note?">
+    Type **/** in the note body and pick it from the menu. The **Snippets** page's own buttons copy to the clipboard instead — see [Snippets](/practice/clinical/snippets).
+  </Accordion>
+
+  <Accordion title="Can I write a note during a video call?">
+    Yes — telehealth has its own notes panel beside the call. See [Run a video session](/practice/clinical/telehealth).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/notes/general/notes-sidebar.tsx, notes-content-dashboard.tsx, new-notes/sign-and-lock-sheet.tsx, new-notes/rich-textarea.tsx */}

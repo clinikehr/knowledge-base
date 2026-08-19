@@ -1,0 +1,156 @@
+---
+title: "Referring doctors"
+description: "Register the doctors and facilities that send you tests, and give each one a private portal link for following orders and collecting results."
+icon: "/images/icons/address-book.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+
+Outside clinicians send work to your laboratory, and they need to know what happened to it. **Referring Doctors** is where you register them: **Each referrer gets a private portal link where they can follow their orders and pick up released results.**
+
+<Path steps={['Sidebar', 'Laboratory', 'Referring Doctors']} />
+
+<TaskHeader
+  before="The Diagnostics care area switched on"
+  time="A minute per referrer"
+  after="A registered referrer with a private portal link, selectable on new orders"
+/>
+
+## What you're looking at
+
+Above the table: **Search referrers…**, which matches name, facility and email, and **Add referring doctor**. Hospitals on a Business plan also see **Commission statements**.
+
+| Column | Shows |
+| --- | --- |
+| **Referrer** | Their name and facility |
+| **Contact** | Email and phone, or an em dash |
+| **Status** | **Active** or **Paused** |
+| **Last portal visit** | When they last opened their portal, or an em dash |
+| **Link generated** | When their current link was issued |
+
+Before you add anyone, the table explains itself: **No referring doctors yet. Add one to generate their private results-portal link, then pick them on new orders so their results appear in the portal.**
+
+Each row's actions are **Get portal link**, **Edit**, **Pause portal access** (or **Re-enable portal access**) and **Remove**.
+
+## Add a referring doctor
+
+<Steps>
+  <Step title="Select Add referring doctor">
+    The dialog explains what saving does: **A private results-portal link is generated when you save.**
+  </Step>
+  <Step title="Enter their details">
+    **Name** is the only required field — the example given is "Dr. Adaeze Okafor". **Facility (optional)**, **Email (optional)**, **Phone (optional)** and **Notes (optional)** follow. Add the email if you want to send the link from inside ClinikEHR rather than copying it out.
+  </Step>
+  <Step title="Set a commission arrangement, if you have one">
+    On a Business plan a **Commission arrangement** block appears: **Percent of collected (%)** on lab and imaging orders, and **Flat per order**. It is applied when you generate their monthly statement, not per order.
+  </Step>
+  <Step title="Select Add referrer">
+    You get **Referring doctor added**, and the portal link dialog opens straight away.
+  </Step>
+  <Step title="Share the link">
+    **Copy link**, **Email link** (only offered when you entered an email) or **Share on WhatsApp**. Then **Done**.
+  </Step>
+</Steps>
+
+<Warning>
+  The portal link opens their results portal — anyone holding it sees that referrer's orders. It is shown **once**, at the moment it is generated. If it is lost, generate a new one: doing so immediately stops the previous link from working, including for them, so share the replacement afterwards.
+</Warning>
+
+## Use a referrer on an order
+
+Registering someone is only half of it. On the ordering form, under **Additional Notes**, set **Referring Doctor / Facility** to them. Attributed tests and completed results are what appears in their portal — an order raised without that field set never reaches them, however carefully they were registered. See [Lab reports](/hospital/diagnostics/lab-reports).
+
+## Manage an existing referrer
+
+| Action | What happens |
+| --- | --- |
+| **Get portal link** | Asks **Generate a new portal link?** first, and warns that the previous link stops working immediately. Confirm with **Generate new link** |
+| **Edit** | Updates their contact details and commission arrangement. Confirms with **Referring doctor updated** |
+| **Pause portal access** | Their link stops working; the row shows **Paused**. **Re-enable portal access** puts it back |
+| **Remove** | Asks **Remove \{name\}?** — their link stops working immediately, and orders already attributed to them keep their history but are no longer linked to a referrer |
+
+Pause when someone is away or a relationship is on hold; remove only when they are gone for good.
+
+<AuditNote action="Opening a referrer's account, and releasing a result to their portal" />
+
+## Who can do this
+
+**Role** decides whether this page opens — owners, lab scientists, doctors, managers and nurses pass; anyone else is told **You don't have permission to manage Referring Doctors. Please contact your clinic administrator.** An owner can also hide **Laboratory** from a role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Open the referrer list | Lab and clinical staff | Role |
+| Add, edit, pause or remove a referrer | Lab and clinical staff | Role |
+| Generate or share a portal link | Lab and clinical staff | Role |
+| Open **Commission statements** | Owners and managers | Plan — the button appears only on Business, and the page behind it locks with **Referral commissions is a Business feature** |
+| Set a commission arrangement | Owners and managers | Plan — the block is hidden below Business |
+
+Where per-person enforcement applies, it is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The referrer appears in the table with **Active** status and a **Link generated** date.
+- They are offered in **Referring Doctor / Facility** on the ordering form.
+- After they open their link, **Last portal visit** fills in.
+- A test attributed to them and completed appears in their portal.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Referring doctors are hidden">
+    The full message is **Needs authorisation from your clinic owner or manager.** Ask an owner or manager to grant you access to the referrer portal.
+  </Accordion>
+
+  <Accordion title="The referrer says their link no longer works">
+    Either it was regenerated — which breaks the previous link immediately — or their access is **Paused**. Check the row's status, then **Get portal link** and send them the new one.
+  </Accordion>
+
+  <Accordion title="They cannot see a result I completed">
+    The order was not attributed to them. Set **Referring Doctor / Facility** on the order at the time it is raised; attribution cannot be added retrospectively from this page.
+  </Accordion>
+
+  <Accordion title="Could not email the link">
+    The message suggests the fix itself: copy it and share directly instead. Check the email address on the referrer's record while you are there.
+  </Accordion>
+
+  <Accordion title="No referring doctors registered appears on the ordering form">
+    Nobody has been added yet. Add them here first; the ordering form only offers referrers from this list.
+  </Accordion>
+
+  <Accordion title="Commission statements is missing">
+    It is a Business-plan feature. Below that plan the button does not render and the page behind it shows **Referral commissions is a Business feature**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can a referrer see other doctors' patients?">
+    No. The portal shows only orders attributed to that referrer. That is also why the link must be shared with them directly and never posted anywhere shared.
+  </Accordion>
+
+  <Accordion title="Why is the link only shown once?">
+    Because it is a credential, not a bookmark. Storing it for later retrieval would mean anyone who can open this page could collect every referrer's access. Generate a new one instead.
+  </Accordion>
+
+  <Accordion title="Does removing a referrer delete their orders?">
+    No. The orders keep their history; they simply stop being linked to a referrer. Pausing is the reversible option if you are unsure.
+  </Accordion>
+
+  <Accordion title="Do preliminary results appear in the portal?">
+    No — only released results. A test that has not been completed is not published to anyone outside your laboratory.
+  </Accordion>
+
+  <Accordion title="Is there more on commissions and statements?">
+    Yes. The Diagnostics edition runs the same referrer network and documents statements and payouts in full — see [Referring doctors](/lims/business/referrers).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a referring doctor" />
+
+{/* source of truth: components/clinic/lab-referrers/, app/u/clinic/dashboard/lab-station/referrers/[clinicId]/page.tsx */}

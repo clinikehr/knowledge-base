@@ -1,0 +1,149 @@
+---
+title: Note templates
+description: "Start a note from a pre-built template, build your practice's own under Custom Templates, and fill the template form in."
+icon: /images/icons/clipboard-list.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team — building your own templates needs Starter or above" roles="Any clinical staff member" />
+
+A template is the shape of a whole note: sections, prompts and fields already laid out, so you fill in rather than compose. ClinikEHR ships a library of them, and your practice can build its own.
+
+<Path steps={['Sidebar', 'Notes', 'Templates']} />
+
+<TaskHeader
+  before="Nothing — the pre-built library is there from day one"
+  time="2 minutes to use one, 10 minutes to build your own"
+  after="A note written on a proper structure, saved as a draft or signed"
+/>
+
+## What you're looking at
+
+**Templates** is headed **Pre-built templates** — "Simplify documentation with pre-built templates" — and carries a yellow panel you should read once:
+
+> **Legal Disclaimer:** Templates are for reference only. It is your responsibility to customize them and ensure they meet the legal requirements of your state.
+
+Below it, a **Search templates...** box and the library grouped into categories: **General/Standard**, **Scored measures**, **Intake forms**, **Progress notes / Session notes**, **Diagnosis and Treatment Plans**, **Mental Health**, **Dental**, **Ophthalmology**, **Physiotherapy**, **Med Spa** and **Other Documents**. Every card carries a **Use** button and a **⋮** menu.
+
+| Card action | What it does |
+| --- | --- |
+| **Use** / **Use Template** | Opens the template as a note form |
+| **Preview** | Shows the structure without starting a note |
+| **Copy Content** | Copies the template's text — "Copied — Template content copied to clipboard" |
+| **Delete** | Does nothing on a pre-built template. See below |
+
+This page has no empty state: the library is fixed, so a brand-new practice sees every category on day one. The only blank view is a search that matched nothing — "No templates found. Try adjusting your search terms."
+
+<Note>
+  **Delete** on a pre-built template replies "Delete functionality is disabled in static mode" and removes nothing. The shipped library is shared and cannot be edited away. If one does not suit how you work, build your own version under **Custom Templates**.
+</Note>
+
+## Use a template
+
+<Steps>
+  <Step title="Choose one">
+    Select **Use** on the card. It opens as a note form headed **Template Notes** — "Create structured clinical documentation".
+  </Step>
+  <Step title="Pick the client">
+    Set **Client** at the top. Two of the header buttons — **Upload file** and **Load last note** — stay disabled until you have.
+  </Step>
+  <Step title="Pull forward what you wrote last time">
+    **Load last note** opens **Previous Template Notes** for this client. Choose one and its content loads into the form, so a review appointment does not start from a blank page.
+  </Step>
+  <Step title="Work down the form">
+    Each section has its own field. **Upload file** attaches supporting material, and **AI Note Taker** drafts the whole thing from a recording — see [Generate a note with AI](/practice/clinical/ai-notes).
+
+    The form saves itself as you go. The chip beside the title reads **Saving...**, then **Saved at 14:32:07**, and **Unsaved changes** when there is something not yet written down.
+  </Step>
+  <Step title="Finish it">
+    **Save Draft** keeps it editable. **Sign & Lock** finishes it — and saves a draft for you first, so nothing is lost between the two. **Export PDF** needs the note saved: an unsaved one replies "Note not saved — Please save the note as a draft before exporting."
+  </Step>
+</Steps>
+
+If you open the form without choosing a template you see **No Template Selected** — "Choose a template to begin documenting your note" — and a **Choose a template...** picker.
+
+## Build your practice's own
+
+Select **Custom Templates** in the left rail — "Templates created by your clinic staff" — then **Create Template**. Give it a category and lay out its sections; it is then shared with everyone in the practice, so name it the way a colleague would search for it.
+
+Custom template cards offer **Use**, and a **⋮** menu with **Use Template**, **Preview**, **Edit**, **Copy Content** and **Delete** — and here **Delete** really deletes, for everybody. Each card shows **Created by** and its author's name. A category with nothing in it reads "No custom templates in this category yet." with a **Create First Template** button, and empty categories start collapsed.
+
+Building custom templates needs the Starter plan. On Free, **Create Template** is greyed out and hovering it shows an upgrade card ending **Upgrade to Starter**; see [Change your plan](/platform/plans/change-plan).
+
+## Who can do this
+
+Role decides whether **Notes** opens at all. Permission decides whether you may change the shared library.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Use any template | Any clinical staff member | Role |
+| Preview or copy a template's content | Any clinical staff member | Role |
+| Create, edit or delete a custom template | Owner, manager | Permission — **Edit note and form templates** |
+| Delete a pre-built template | Nobody | Fixed — the shipped library is read-only |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding the page from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+A template you used opens as **Template Notes** with its sections in place, and the finished note appears under **Recent Notes** on the [Notes](/practice/clinical/notes) dashboard against the right client. A template you built is on the **Custom Templates** page for every colleague in the practice, under the category you gave it, with your name under **Created by**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Create Template is greyed out">
+    Custom templates need the Starter plan or above. Hover the button and the upgrade card appears. The pre-built library stays available on every plan.
+  </Accordion>
+
+  <Accordion title="Delete functionality is disabled in static mode">
+    You tried to delete a pre-built template. They cannot be removed. Build your own under **Custom Templates** and use that instead.
+  </Accordion>
+
+  <Accordion title="Upload file and Load last note are greyed out">
+    Both need a client selected — one attaches a file to their record, the other reads their history. Set **Client** first.
+  </Accordion>
+
+  <Accordion title="No previous template notes found">
+    Nothing has been written for this client on this template before. It is a genuine "nothing to load", not a fault.
+  </Accordion>
+
+  <Accordion title="A colleague cannot see the template I built">
+    Custom templates are shared across the whole practice, so a colleague who cannot see yours is signed in somewhere else. See [Switching workspaces](/platform/account/switching-workspaces).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I edit a pre-built template?">
+    Not in place. Use **Copy Content** to lift its text, then build a custom template from it and change what you need.
+  </Accordion>
+
+  <Accordion title="What is the difference between a template and a snippet?">
+    A template is a whole note laid out for you. A snippet is a paragraph you drop into any note. See [Snippets](/practice/clinical/snippets).
+  </Accordion>
+
+  <Accordion title="Do templates change notes that were already written?">
+    No. A note keeps the content it was saved with. Editing a template only affects notes started after the change.
+  </Accordion>
+
+  <Accordion title="Where does a template note end up?">
+    On the client's chart, exactly like a quick note, and in **Recent Notes** with a **Template Note** type label.
+  </Accordion>
+
+  <Accordion title="Does Sign & Lock lose my work if I have not saved?">
+    No. It saves a draft first, then opens the signing sheet.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/notes/default-template/templates-content.tsx, custom-template/custom-templates-content.tsx, new-notes/template-notes-form.tsx */}

@@ -1,0 +1,146 @@
+---
+title: Look up past triage records
+description: "Search every triage record your hospital has taken, not just the last 48 hours, and read the vitals back."
+icon: /images/icons/clock-rotate-left.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any clinical role the Outpatient group is shown to" note="No care area needed — Triage is always in the Enterprise sidebar" />
+
+**Triage History** is the full record of every set of vital signs your hospital has taken. The [Triage List](/hospital/outpatient/triage) only ever shows the last 48 hours, so this is where you come the moment a record is older than that — which, on a ward round or a follow-up appointment, is most of the time.
+
+<Path steps={['Sidebar', 'Outpatient', 'Triage', 'Triage History']} />
+
+<TaskHeader
+  before="At least one saved triage record"
+  time="Under a minute"
+  after="A past set of vital signs on screen, read-only"
+/>
+
+## Before you start
+
+Nothing to set up. **Triage** and its history are always in the sidebar on the Enterprise plan — there is no care-area switch to find.
+
+## What you're looking at
+
+The page opens on a greeting and the line "View complete history of all triage records". It is a separate screen from the list, not a filter on it, and its toolbar is deliberately shorter: **Search for patient**, **New Patient** and **View Columns**. There is no **New Triage** button and no **Refresh** — this page is for reading, and new records are taken on the list.
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** | The hospital number |
+| **Patient Name** | Who was triaged |
+| **Status** | The recorded triage status |
+| **Triage by** | The staff member who took the vitals |
+| **Date** | When the record was last updated |
+
+The **⋯** menu on each row offers one action, **View Details**, because a historical record is read-only.
+
+Below the table sits the pager: **Show** … **per page** at 5, 10, 20 or 50 rows, with "Showing 1 to 10 of 47" beside it. An empty history reads **No triage history available.** — a different message from the list's, so the wording tells you which screen you are on.
+
+## Find a past record
+
+<Steps>
+  <Step title="Search">
+    Enter a name, a patient ID or the name of the staff member who took the vitals into **Search for patient**. The search matches all three, so "who triaged this?" is as answerable as "who was triaged?".
+  </Step>
+  <Step title="Narrow the table if you need to">
+    **View Columns** opens **Toggle columns** — switch off anything you are not reading to fit more rows on a small screen.
+  </Step>
+  <Step title="Open the record">
+    Select **View Details** from the row's **⋯** menu. On a phone, select the card.
+  </Step>
+</Steps>
+
+## Read the record
+
+The detail view is titled **Triage Details** and holds two cards:
+
+- **Patient Information** — **Patient ID**, **Patient Name**, **Triage By** and **Date**.
+- **Vital Signs** — every reading taken, each as a labelled badge: **Blood Pressure** in mmHg, **Pulse Rate** in bpm, **Temperature** in °C, **Respiratory Rate** in bpm, **Oxygen Saturation** as a percentage, **Weight** in kg, **Height** in cm, and **Fasting** and **Random Blood Sugar** in mg/dL. Anything that was not recorded reads **N/A**.
+
+Two things the live form has and this view does not: there is no BMI, and abnormal values are not highlighted. This is a faithful copy of what was written down, not a fresh clinical assessment — read the numbers against the ranges yourself.
+
+Select **Back to History** to return to the table.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Triage History** | Any clinical role the Outpatient group is shown to | Role Navigation |
+| Read a past record | Anyone who can open the page | Role |
+| Change a past record | Nobody, from this screen | Records are read-only here |
+| Register a patient from the toolbar | Anyone who can open the page | Role |
+
+Nothing on this page is gated by an individual permission slug, so there are no figures that render as a dash and no rows that quietly disappear — you either have the page or you do not.
+
+Two behaviours that surprise people. Permission enforcement across the product is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And hiding a module from a role in [Role Navigation](/hospital/settings/role-navigation) tidies a sidebar; it is not a security boundary. A denied action is recorded in the audit log; an allowed one is not.
+
+If your hospital requires two-factor authentication, an unverified session cannot read clinical records at all. See [Two-factor authentication](/platform/security/mfa).
+
+## Check it worked
+
+- The record you saved on **Triage List** appears here as soon as it is created — it does not wait 48 hours.
+- Searching the patient's name returns their whole triage history, oldest included.
+- **View Details** shows the same nine readings that were entered on the form.
+
+<AuditNote action="Opening a past triage record" />
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A record I can see on the list is not here">
+    It is, but the search or a column toggle is hiding it. Clear **Search for patient** and check the pager — history is sorted newest first and shows ten rows at a time by default.
+  </Accordion>
+
+  <Accordion title="There is no Update option on the row">
+    Correct. History is read-only; the only row action is **View Details**. Vitals are edited from the record on [Triage List](/hospital/outpatient/triage), and only while it is still inside the 48-hour window.
+  </Accordion>
+
+  <Accordion title="The vital signs all say N/A">
+    Those readings were never taken. Triage saves whatever was entered and leaves the rest blank rather than inventing a value.
+  </Accordion>
+
+  <Accordion title="I cannot find a date filter or an export button">
+    There is neither. Filtering is free-text search plus column toggles. To take triage data out of the hospital, use [Data export](/hospital/settings/data-export).
+  </Accordion>
+
+  <Accordion title="Very old records are missing">
+    The page loads a large but finite number of the most recent records. If you are looking further back than that, search for the specific patient rather than scrolling — the search runs across everything loaded.
+  </Accordion>
+
+  <Accordion title="There is no Triage in my sidebar at all">
+    Triage exists only on the **Enterprise** plan. There is no care area to check. If the hospital is on Enterprise, what is missing is your role's access to the Outpatient group — see [Role navigation](/hospital/settings/role-navigation).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why are there two triage screens?">
+    Speed. The list answers "who is waiting right now" and is deliberately capped at 48 hours so it stays short during a clinic. History answers "what did we record for this patient" across all time, and is built for searching rather than working.
+  </Accordion>
+
+  <Accordion title="Does opening a record here show up in the audit log?">
+    Yes. Reading a triage record is logged with your name, the record and the time — the same as opening it anywhere else. See [Audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="Can I see a patient's vitals over time?">
+    Not on this page — it lists records, not trends. Open the patient's consultation chart and use its **Vitals** tab, which plots the same readings on an **Over time** chart.
+  </Accordion>
+
+  <Accordion title="Why is the Date column sometimes later than the visit?">
+    **Date** is when the record was last updated. A clinician correcting a reading afterwards moves the record up the list, which is what you want when you are checking recent activity.
+  </Accordion>
+
+  <Accordion title="Does this page work offline?">
+    No. Triage has no offline capture or cached history — you will see "You're offline" and an empty table. Reconnect and reload.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="triage history" />
+
+{/* source of truth: app/u/clinic/triage/history/, components/clinic/triage-history/ (triage-history-actions.tsx, table-columns.ts, past-triage-form.tsx), lib/clinic-nav-registry.ts */}

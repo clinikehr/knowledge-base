@@ -1,7 +1,7 @@
 ---
-title: Work a shift from the nursing station
-description: "See every observation due across the ward, read the shift handover, and chart without losing the worklist."
-icon: /images/icons/syringe.svg
+title: "Nursing station"
+description: "Work a shift from one board: see what observations are due across the ward, read the handover, and chart without losing your place."
+icon: "/images/icons/syringe.svg"
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -9,102 +9,175 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Nursing staff with access to the inpatient group" note="The Inpatient group only appears when the In-patient care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Nursing and clinical staff" note="Needs the In-patient care area" />
 
-The **Nursing Station** is the shift's worklist: "Observations due across the ward. Recording happens on the patient." It tells you who needs attention next; the charting itself happens against the individual patient.
-
-It needs the Enterprise plan and the **In-patient care** area in **Settings → Facility**.
+The **Nursing Station** is the board you keep open for a whole shift. It answers one question — who needs something right now — and lets you record it without walking back to the desk.
 
 <Path steps={['Sidebar', 'Inpatient', 'Nursing Station']} />
 
-<TaskHeader before="At least one admitted patient, and the In-patient care area switched on" time="Continuous — this is the screen you keep open" after="Observations, notes and doses recorded for the shift" />
+<TaskHeader
+  before="At least one patient admitted to a bed"
+  time="Continuous — this is the screen you leave open"
+  after="Observations, notes and doses recorded, and a handover the next shift can read"
+/>
 
-## Narrow the worklist
+## Before you start
 
-Four controls sit above the list:
+The board's idea of "due" is not a guess. The observation interval, the grace period and your shift boundaries are set once by an owner under **Settings → Facility** — see [Facility](/hospital/settings/facility). If patients look overdue when they are not, or "nothing charted this shift" reads wrong, that is where it is fixed.
+
+## What you're looking at
+
+The heading reads **Nursing Station**, and under it: **Observations due across the ward. Recording happens on the patient.**
+
+**Filter chips** sit across the top and double as counts. Selecting one narrows the board:
+
+**Overdue · Due · No obs yet · Doses due · No fluids charted · All patients**
+
+Below them are the controls:
 
 | Control | What it does |
 | --- | --- |
-| Ward filter | Defaults to **All wards** |
+| Ward select | Defaults to **All wards** |
 | **Search patient or bed…** | Finds one person without scrolling |
 | **Bed order** | Sorts the way you physically walk the ward |
 | **Priority** | Sorts by what is most overdue |
+| **Refresh** | Re-reads the board |
 
-Use **Bed order** while you are walking and **Priority** when you are catching up.
+Use **Bed order** while you are walking, and **Priority** when you come back from a break and need to catch up.
 
-## Read the handover
-
-A **Shift handover** block sits above the worklist. Add to it with **Add to the handover…** as the shift goes on rather than writing it all at the end — this is what the next shift reads first. Until anything is written it shows **Nothing written this shift yet.**
-
-## The worklist columns
+### The worklist columns
 
 | Column | Shows |
 | --- | --- |
-| **Patient** | Who, and their bed |
-| **Ward** | Which ward and sub-ward |
-| **Last obs** | When observations were last recorded, or **No obs yet** |
-| **Last note** | When anyone last wrote |
-| **Doses** | What is due on the drug chart |
-| **Fluids** | Intake and output balance |
-| **Status** | The observation state |
+| **Bed** | Which bay |
+| **Patient** | Who — **Unnamed patient** if no name was recorded |
+| **Ward** | Ward and sub-ward, or **Unassigned** |
+| **Last obs** | When observations were last taken, or **No obs yet** |
+| **Last note** | When anyone last wrote, or **Nothing this shift** |
+| **Doses** | What the drug chart has due |
+| **Fluids** | Intake and output balance, or **No fluids charted** |
+| **Status** | **Overdue**, **Due**, **No obs yet** or **Recorded** |
 
-When there is nothing outstanding the list reads **Nothing waiting**.
+With nothing outstanding the board reads **Nothing waiting**. On a brand-new hospital with no admitted patients, that is what you see — and it is correct, not broken.
+
+## Read and write the handover
+
+A **Shift handover** block sits above the worklist, on the page rather than behind a button, because a handover that takes a click stops being read.
+
+<Steps>
+  <Step title="Read what the last shift left">
+    Until anyone writes, it says **Nothing written this shift yet.**
+  </Step>
+  <Step title="Add to it as you go">
+    Type into **Add to the handover…** and select **Add to the handover**. Write through the shift rather than saving it all for the end — this is the first thing the next person reads.
+  </Step>
+  <Step title="Open the full history">
+    **Open handover** shows this shift; once the previous shift has entries the button becomes **Handover &amp; history** and shows both.
+  </Step>
+</Steps>
 
 ## Chart from a row
 
-Each row carries two actions:
+Each row carries up to three actions, and which of them you see depends on your profession.
 
 <Steps>
-  <Step title="Select the pen to chart">
-    It offers a **Nursing note** or a **Round note**, and opens the charting sheet without leaving the worklist.
+  <Step title="Select Chart">
+    The primary action. It opens the charting sheet over the board, so you keep your place in the list.
   </Step>
   <Step title="Pick the tab you need">
-    The sheet has **Observations & fluids** and **Drug chart**. It always opens on **Observations & fluids**, because that is the question the board asked.
+    The sheet has **Observations &amp; fluids** and **Drug chart**, and always opens on **Observations &amp; fluids** — that is the question the board asked.
   </Step>
-  <Step title="Record, and return to the list">
-    Saving confirms with **Nursing note recorded** or **Round note recorded**, and the row's **Last note** updates.
+  <Step title="Or write a note from the pen">
+    The pen offers a **Nursing note** if you are a nurse, or a **Round note** if you prescribe. A role with neither sees no pen. Saving confirms with **Nursing note recorded** or **Round note recorded**, and the row's **Last note** updates.
   </Step>
   <Step title="Use Open for anything bigger">
-    **Open** goes to the patient's full inpatient chart — the whole stay, all tabs. See [Admit, chart and discharge on the ward](/hospital/inpatient/wards).
+    **Open** leaves the board for the patient's full inpatient chart — every tab, the whole stay. See [Ward admissions](/hospital/inpatient/admissions).
   </Step>
 </Steps>
 
 <AuditNote action="Opening the nursing station worklist" />
 
-## What needs a connection
+## Working offline
 
-Writing a note and loading the drug chart both need a live connection, and the product says so rather than failing quietly: **Writing a note needs a connection** and **The drug chart needs a connection**. A stale drug chart is a claim about a patient's medicines, so it is never shown from cache. See [Working offline](/platform/apps/offline).
+The board and the observation form keep working. Two things do not, and each says so rather than failing quietly:
+
+- **Writing a note needs a connection** — on the pen.
+- **The drug chart needs a connection** — on the **Drug chart** tab.
+
+A stale drug chart is a claim about a patient's medicines, so it is never served from cache. See [Working offline](/platform/apps/offline).
+
+## Who can do this
+
+Your **role** decides whether the **Inpatient** group appears at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). **Permissions** decide what you may record once you are in:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the board and read it | Anyone with the Inpatient group | Governed by role, not a separate permission |
+| Record observations and fluids | Doctors and nurses | **Record observations** |
+| Give, hold or refuse a dose | Doctors and nurses | **Give a medication** |
+| Write a nursing or round note | Follows your profession | The pen is absent for a role that writes neither |
+
+Two things surprise people. Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And a **denied action is recorded** in the audit log while an allowed one is not; hiding a module from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
 - The row you charted shows a fresh **Last obs** or **Last note**.
-- A patient with nothing outstanding drops off the default view.
-- Your handover text is visible in the **Shift handover** block to the next person who opens the station.
+- Its **Status** badge moves from **Overdue** or **Due** to **Recorded**.
+- A patient with nothing outstanding drops out of the **Overdue** and **Due** chips.
+- Your handover text is visible in the **Shift handover** block to the next person who opens the board.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Nothing waiting, but I know observations are due">
-    Check the ward filter is on **All wards** and that no search text is left in the box. Then switch to **Priority** to bring the most overdue to the top.
+    Check the ward select is on **All wards**, that no text is left in **Search patient or bed…**, and that you are on the **All patients** chip rather than a narrower one. Then switch to **Priority** to bring the most overdue to the top.
   </Accordion>
 
-  <Accordion title="The pen does nothing">
-    Writing a note needs a connection. Reconnect and try again — nothing is lost by waiting, and nothing half-written was saved.
+  <Accordion title="The pen is disabled">
+    **Writing a note needs a connection.** Reconnect and try again — nothing half-written was saved, and nothing is lost by waiting.
   </Accordion>
 
   <Accordion title="The Drug chart tab will not load">
-    Same reason. The drug chart is never served from cache, because a stale one would be a false statement about a patient's medicines.
+    **The drug chart needs a connection.** It is never served from cache, because a stale drug chart is a false statement about a patient's medicines.
+  </Accordion>
+
+  <Accordion title="Everyone looks overdue at the start of a shift">
+    The observation interval or the grace period is set too tight for your ward, or the shift pattern moved. Both live in **Settings → Facility** — see [Facility](/hospital/settings/facility).
+  </Accordion>
+
+  <Accordion title="There is no pen on any row">
+    The pen follows your profession: nurses get **Nursing note**, prescribers get **Round note**, and a role that writes neither sees no button. Use **Open** and write from the patient's chart instead.
   </Accordion>
 
   <Accordion title="Nursing Station is missing from the sidebar">
     It needs the Enterprise plan and the **In-patient care** area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
   </Accordion>
+</AccordionGroup>
 
-  <Accordion title="A dose will not record from here">
-    Doses are recorded on the patient's drug chart, and the round may be claimed by another device. See the drug round section of [Admit, chart and discharge on the ward](/hospital/inpatient/wards).
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I record a dose from this board?">
+    Yes — the charting sheet's **Drug chart** tab records doses without leaving the board. If a colleague has claimed the round on another device, give from that device or open the patient's full chart.
+  </Accordion>
+
+  <Accordion title="Who sees my handover note?">
+    Everyone who opens the Nursing Station for that ward during the same shift, and the next shift once theirs begins. It is a ward record, not a private note.
+  </Accordion>
+
+  <Accordion title="Why does a patient still show No obs yet after I charted?">
+    The row updates on the next read of the board. Select **Refresh** — and check you charted against the right bed, since the sheet names the patient at the top for exactly that reason.
+  </Accordion>
+
+  <Accordion title="Does changing the shift pattern re-file notes I already wrote?">
+    No. Notes already written stay where they were filed; only future ones follow the new boundary. That is why an owner should change the pattern at a quiet changeover and tell the ward first.
+  </Accordion>
+
+  <Accordion title="Is this the same as the ward chart?">
+    No. The board is a worklist across the whole ward; the chart is one patient's whole stay. **Open** takes you from one to the other.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/nursing-station/nursing-station-content.tsx, components/clinic/dashboard/nursing-station/nursing-charting-sheet.tsx, components/clinic/dashboard/nursing-station/nursing-shift-notes.tsx, components/clinic/dashboard/nursing-station/nursing-worklist-table.tsx */}
+{/* source of truth: components/clinic/dashboard/nursing-station/, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts */}

@@ -1,0 +1,155 @@
+---
+title: Your dashboard
+description: "Read the first screen after sign-in — client and activity figures, the weekly chart, and the most recent work in your practice."
+icon: /images/icons/app-window.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant, and colleagues invited into the practice" />
+
+**Dashboard** is the screen you land on after signing in. It answers one question — what has been happening in the practice this week — and hands you off to the module where you can act on it.
+
+<Path steps={['Sidebar', 'Dashboard']} />
+
+<TaskHeader
+  before="Nothing — the page fills itself from work you have already recorded"
+  time="A minute to read"
+  after="A clear picture of the week, and the right module open"
+/>
+
+## What you're looking at
+
+Across the top sits your practice name — shortened with an ellipsis past 17 characters — then a plan badge reading **Free Plan**, **Starter Plan**, **Essential Plan** or **Team Plan**. A subscription that is ending carries **Ending Soon**, one already stopped carries **Cancelled**. Next to those, **Upgrade to Starter** (or whichever plan is next up) and **Manage** both open your subscription. On the right: a date range button reading **Pick a date range**, and **New Client**.
+
+Below that are four tabs.
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The figures, charts and recent-work lists described below |
+| **Analytics** | **Clinic Analytics** — ten charts covering demographics, workload, treatments, prescriptions, staff and outcomes |
+| **Reports** | **AI Reports** — pick a **Report Type**, select **Generate Report**, and read the written summary it produces |
+| **Subscription** | Your plan, what you are using of it, and the controls to change or cancel it. Narrow screens label this tab **Plan** |
+
+While the page is still reading its figures you see grey placeholder blocks in the shape of the real cards, not zeroes.
+
+### The four figures
+
+| Figure | What it counts | Over what period |
+| --- | --- | --- |
+| **Total Clients** | Everyone on your client list | All time |
+| **Consultations** | Consultations recorded | The last seven days |
+| **Lab Tests** | Lab tests recorded | The last seven days |
+| **Prescriptions** | Prescriptions recorded | The last seven days |
+
+Under each figure is a trend line reading "**5%** from last week", green with an up arrow when the number has grown and red with a down arrow when it has fallen. A green **0%** means no change was measured — it is not a claim of growth.
+
+### The charts and the recent lists
+
+**Weekly Activity** — "Overview of clinic activities for the past week" — plots consultations, prescriptions and tests as three bars per day, one group per day for the last seven days. **Staff Distribution** — "Current staff distribution by role" — is a ring with your total staff count in the middle and a slice per role.
+
+Three lists sit along the bottom, each showing the five most recent entries with the time and a coloured status pill:
+
+- **Recent Consultations** — "Latest patient consultations": the client's name, who consulted, and **completed** in green or anything else in amber.
+- **Recent Prescriptions** — "Latest medications prescribed": the medication, who prescribed it, and **dispensed** in green.
+- **Recent Lab Tests** — "Latest laboratory results": the test, who ordered it, and **completed**, **pending** or another status.
+
+Above everything on **Overview** is a **Clinic tier** card showing your medal, your tier name and how many points you need for the next one. Selecting it opens [Achievements](/practice/insights/achievements).
+
+### What a brand-new practice sees
+
+Every figure is **0**, both charts are empty, all three recent lists are blank, and **Staff Distribution** shows **1 Staff** — you. The plan badge says **Free Plan**. Nothing is broken; there is simply nothing recorded yet. Add somebody in [Clients](/practice/work/clients) and the total moves on your next reload.
+
+## Act on what you see
+
+<Steps>
+  <Step title="Read the four figures first">
+    They tell you the shape of the week in one glance. Anything unexpected is worth chasing into a module rather than staring at here.
+  </Step>
+  <Step title="Open the module, not the tile">
+    Nothing on the **Overview** tab is a link to a record. Go to [Appointments](/practice/work/appointments) for the diary, [Notes](/practice/clinical/notes) for documentation, [Billing](/practice/money/billing) for money owed.
+  </Step>
+  <Step title="Add a client without leaving">
+    Select **New Client**. It opens your client list ready for a new record — the one action this screen performs itself.
+  </Step>
+  <Step title="Go deeper on a number">
+    **Analytics** breaks the same activity down by demographic and workload. For money and appointments specifically, use [the executive dashboard](/practice/insights/dashboard), where every figure links to the report behind it.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role decides whether **Dashboard** opens at all. Permission decides what you may then do from it.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open **Dashboard** | Owner, manager, accountant, and any colleague invited into the practice | Role |
+| Add somebody from **New Client** | Owner, manager, scheduler | Permission — **Create client profiles** |
+| Open the **Subscription** tab and change or cancel the plan | Owner | Role — billing is owner-only |
+| See work belonging to colleagues' clients as well as your own | Owner, manager, and staff set to **Full client list** or **Entire practice** | The access tier chosen when they were invited |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"** — saving their permissions for the first time is what begins limiting them.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from somebody's sidebar is a convenience, not a security boundary.
+
+Unlike the reports, no individual figure here is permission-gated: you either get the whole page or you get the refusal, so a **0** on this screen is always a real zero. See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Opening the dashboard" />
+
+## Check it worked
+
+- Your practice name and plan badge are in the header, and all four figures show a number rather than a placeholder block.
+- **Staff Distribution** totals the people actually in your practice, including you.
+- Record something — a note, a prescription — then reload. The matching figure and its recent list have moved.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="You don't have permission to access the dashboard.">
+    The full message adds "Please contact your clinic administrator." Your role does not open this screen. Ask the practice owner to check your role under [Staff and teams](/practice/settings/staff).
+  </Accordion>
+
+  <Accordion title="Consultations and Lab Tests are always 0">
+    A solo or team practice has no Consultation or Laboratory module — those two cards belong to the hospital edition and share this screen. Your clinical work is counted through [Notes](/practice/clinical/notes) instead. The zeroes are accurate, not a fault.
+  </Accordion>
+
+  <Accordion title="Changing the date range does not change the figures">
+    The picker does not re-scope this tab. **Overview** always reads the last seven days, and **Total Clients** is always all time. For a period you choose, use **Analytics** or [Reports and analytics](/practice/insights/analytics).
+  </Accordion>
+
+  <Accordion title="New Client is greyed out">
+    You have reached your plan's client limit. Hover the button and an upgrade card appears with your current limit on it. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="I added a client but the figure has not moved">
+    The page reads its figures once, when it loads. Reload the browser tab.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How is this different from Executive?">
+    This screen is activity — what was recorded in the last week, and by whom. [The executive dashboard](/practice/insights/dashboard) is money and appointments, and every figure there links to the report behind it.
+  </Accordion>
+
+  <Accordion title="Can I choose which figures appear?">
+    No. The four figures, two charts and three lists are fixed. Anything more specific lives in a report you can filter and export.
+  </Accordion>
+
+  <Accordion title="Do the recent lists show every client or only mine?">
+    That depends on the access tier set when you were invited. **Basic** and **Billing** cover your own clients; **Full client list** and **Entire practice** cover everyone.
+  </Accordion>
+
+  <Accordion title="Is a client's name on this screen a privacy problem?">
+    **Recent Consultations** does show client names, which is why opening the dashboard is written to your audit log. Treat the screen as you would a chart — do not leave it up in a waiting area.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/clinic-dashboard-content.tsx, components/clinic/achievements/tier-widget.tsx, app/u/clinic/dashboard/[clinicId]/page.tsx, lib/clinic-nav-registry.ts */}

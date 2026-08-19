@@ -1,0 +1,168 @@
+---
+title: Track stock and supplies
+description: "Keep a catalogue of what you hold, receive stock into lots with expiry dates, and let alerts tell you what is running low or running out of time."
+icon: /images/icons/boxes-stacked.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans — Free is capped at 20 items" roles="Owners and managers; staff a clinic has not restricted" note="The Inventory care area controls whether it appears in the sidebar" />
+
+Inventory is the ledger for everything physical your practice holds: "Stock, lots, and expiry across your rooms and devices."
+
+<Path steps={['Sidebar', 'Inventory']} />
+
+<TaskHeader
+  before="Nothing. Add a location first if you want somewhere specific to receive stock into"
+  time="Two minutes to add an item; a minute to receive a lot"
+  after="An item with stock on hand, tracked by lot and expiry, that warns you before it runs out"
+/>
+
+## What you're looking at
+
+The toolbar carries **Receive**, **Dispense**, **Transfer**, **Reports**, **Import**, **Opening stock**, **Export** and **Add item**. Below it, the tabs split the module by question:
+
+| Tab | Answers |
+| --- | --- |
+| **Catalog** | What do we stock at all? |
+| **Stock** | How much is on hand, and where? |
+| **Ledger** | Every movement in and out |
+| **Counts** | Physical counts and what they corrected |
+| **Fill Rx** | Prescriptions waiting to be filled |
+| **Purchasing** | What is on order from a supplier |
+| **Vouchers** | Stock issued against a funding source |
+| **Recalls** | Batches pulled from use |
+| **Locations** | The rooms, cabinets and fridges stock lives in |
+| **Alerts (\{n\})** | Low stock and approaching expiry, counted in the tab |
+| **Reconciliation** | Where the ledger and the shelf disagree |
+
+Three more appear only when your own stock calls for them, not because of your plan: **Validation** for reagent lots, **Vaccines** once you hold a vaccine-type item, and **Ward MAR** if you run wards. When something needs attention a banner sits above the tabs: "\{n\} open inventory alerts — see the Alerts tab."
+
+A brand-new module shows its empty states rather than an error: "No items yet. Add your first product (e.g. Botox 100U vial).", "No stock on hand. Receive a lot to get started." and "No open alerts. You're all stocked up."
+
+On the **Free plan** a strip across the top counts you against each limit — **20 items**, **5 locations**, **2 vendors**, **5 purchase orders** — as badges like "12/20 items", with **Upgrade for unlimited** beside them.
+
+## Add a catalogue item
+
+An item is the *thing*; stock is the quantity of it: "A catalog entry — e.g. 'Botox 100U vial'. Stock is tracked per lot."
+
+<Steps>
+  <Step title="Open Add item and name it">
+    **Name** is required — write it the way your team says it out loud, not as a supplier's product code. **Barcode / UPC (optional)** lets a scanner find it later, and **Look up drug (NDC or name)** pre-fills a medication: "Pick a match to pre-fill — you can still edit everything."
+  </Step>
+  <Step title="Classify it">
+    Set the **Type** — Injectable, Skincare / Cosmetic, Medication, Vaccine, Consumable, Supply, Device, Reagent or Kit — the **Unit** you count it in (required), and a **Category (optional)**. The unit is the one decision that hurts to change later: vials and millilitres are not the same thing.
+  </Step>
+  <Step title="Seed the shelf if you already hold some">
+    **Opening stock (optional)** with **Into location** puts what is already there into the ledger — "Received at the cost price above." **SKU (optional)** is your own reference.
+  </Step>
+  <Step title="Set the reorder rules">
+    **Low-stock threshold** — "Alerts at/below this on-hand." — is what makes the **Alerts** tab useful. **Reorder qty**, **Unit cost** and **Sale price** feed purchasing, valuation and the store.
+  </Step>
+  <Step title="Set the handling switches">
+    **Refrigerated**, **Track by lot / expiry** for anything with a shelf life, and **Witness required (controlled)** for anything a second person must countersign.
+  </Step>
+</Steps>
+
+## Receive stock
+
+<Steps>
+  <Step title="Open Receive">
+    The **Receive stock** sheet — "Add a delivered lot to a location." Choose the **Item** and the **Location**, and enter the **Quantity**, labelled with the item's own unit.
+  </Step>
+  <Step title="Name the funding source">
+    **Funding source** records who paid — **Private stock**, **VFC (Vaccines for Children)**, **Section 317** or **State-supplied**. It is what makes the **Vouchers** tab meaningful.
+  </Step>
+  <Step title="Enter the lot and expiry">
+    **Lot number** and **Expiry** identify the batch. **Scan package (GS1)** reads both off the supplier's barcode instead — "Auto-fills item, lot & expiry from the package barcode."
+  </Step>
+  <Step title="Save">
+    On-hand rises on the **Stock** tab and a receipt line appears in the **Ledger**.
+  </Step>
+</Steps>
+
+Stock leaves the same way it arrives: **Dispense** draws it for a client, **Transfer** moves it between locations, and both say how they pick — "(earliest-expiring lot first)".
+
+<Warning>
+  Picking is always **earliest-expiry-first**, and a lot with no expiry date has nothing to sort on — so it is invisible to the picking order *and* to every expiry alert, and sits on the shelf until somebody finds it by hand. Turn on **Require expiry date on new lots** in [Inventory settings](/practice/settings/inventory).
+</Warning>
+
+For lots and expiry in depth see [Batches and expiry](/pharmacy/inventory/batches-and-expiry); for supplier ordering see [Purchase orders](/pharmacy/inventory/purchase-orders).
+
+## Who can do this
+
+A solo or team practice has 21 staff permissions, and none of them is about stock. Inventory is governed by **role** and by what your practice has switched on — not by a per-person toggle.
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Inventory** | Owner, manager, staff | Role — no permission of its own |
+| Add an item, receive, dispense or transfer | Owner, manager, staff | Role |
+| Run a count and post its adjustment | Owner, manager | Role |
+| Change how expiry and receiving behave | Owner | Role — it is a settings tab |
+| See cost, valuation and margin | Owner, manager | **View financial dashboard** |
+
+- **Enforcement is opt-in, per person.** A staff member never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Turning the Inventory care area off only hides the link: "It does not delete anything, and existing records stay reachable by direct link." Hiding a module is a convenience, not a security boundary.
+
+Cost figures you may not see render as a dash, never a zero — a zero would read as worthless stock. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The item is on the **Catalog** tab and can be found by name or barcode.
+- After receiving, the **Stock** tab shows the quantity in the right location, with its lot and expiry.
+- The **Ledger** has one line per movement, and the **Alerts (\{n\})** count reacts when you set a threshold above current stock.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I cannot add another item">
+    "Your Free plan includes up to 20 items. Upgrade to a paid plan for unlimited inventory." The same caps apply to locations, vendors and purchase orders — see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="An expiring lot never appeared in Alerts">
+    Its lot has no expiry date, so nothing can compare it to a horizon. Correct the lot, then turn on **Require expiry date on new lots** in [Inventory settings](/practice/settings/inventory) so it cannot recur.
+  </Accordion>
+
+  <Accordion title="The shelf and the Stock tab disagree">
+    Run a count on the **Counts** tab; the adjustment it posts is recorded in the **Ledger** with a reason. See [Stock counts](/pharmacy/inventory/stock-counts).
+  </Accordion>
+
+  <Accordion title="Dispense will not let me save">
+    Either there is no stock in the location you chose, or the item is **Witness required (controlled)** and needs a second person to countersign.
+  </Accordion>
+
+  <Accordion title="Inventory disappeared from my sidebar">
+    The Inventory care area has been switched off — "Turning an area off hides it from menus for everyone in this clinic." Nothing was deleted. See [Care areas](/platform/team/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I load my existing stock list rather than typing it?">
+    Yes — **Import** takes a file of catalogue items, and **Opening stock** seeds what is already on the shelf. See [Import and export](/pharmacy/inventory/import-export).
+  </Accordion>
+
+  <Accordion title="Does the online store draw from these numbers?">
+    Yes. Stock and cost are read from here and are not editable in the store — see [Run an online store](/practice/money/store).
+  </Accordion>
+
+  <Accordion title="What is a location, exactly?">
+    Any place stock physically sits — a consulting room, a cabinet, a fridge. Locations are what make **Transfer** and a per-room count meaningful.
+  </Accordion>
+
+  <Accordion title="Do I have to track lots?">
+    No. Turn **Track by lot / expiry** off for things with no shelf life, such as instruments.
+  </Accordion>
+
+  <Accordion title="Where do I see what my stock is worth?">
+    The **Inventory** report — valuation, turnover and expiry risk. See [Reports and analytics](/practice/insights/analytics).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="inventory" />
+
+{/* source of truth: components/inventory/inventory-content.tsx, components/inventory/item-form-sheet.tsx, components/inventory/stock-movement-sheet.tsx, lib/inventory/plan-limits.ts, lib/edition-staff-roles.ts */}

@@ -1,0 +1,149 @@
+---
+title: Your services and prices
+description: "Build the price list every invoice, booking page and receipt draws from, and group it into categories that make sense to your practice."
+icon: /images/icons/tags.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers; editing fees is a separate permission" />
+
+Your service list is the price list for the whole practice. Invoices are built from it, your [booking page](/practice/work/booking-page) offers what is on it, and reporting groups revenue by it. Get it right once and everything downstream gets easier.
+
+<Path steps={['Sidebar', 'Billing', 'Services']} />
+
+<TaskHeader
+  before="Your currency set under Settings → Billing"
+  time="A minute per service"
+  after="A service that can be added to an invoice and offered for online booking"
+/>
+
+## What you're looking at
+
+**Services** sits under **Billing** in the sidebar. The page is headed **Services Dashboard** — "Manage your clinic's services, prices, and categories" — with three tabs.
+
+| Tab | Shows |
+| --- | --- |
+| **Overview** | **Service Categories** and **Recent Services**, each with **View All** |
+| **Services** | Every service, its price and whether it is active |
+| **Categories** | The groups you sort services into |
+
+The header carries **Refresh** and one create button, which swaps with the tab: **New Category** while **Categories** is open, **New Service** everywhere else. If you are hunting for **New Category**, open the **Categories** tab first.
+
+A new practice arrives here with an empty **Services** tab — which is why the invoice form's service picker finds nothing until you add something. Prices are shown in your practice's own currency, never with a hard-coded symbol; see [Currency](/platform/settings/currency).
+
+There are two doors into the same catalogue. This screen is the billing view. **Settings** → **Appointment Services** is the same list seen from the booking side — see [Appointment services](/practice/settings/appointment-services). If you are setting up for the first time, walk [Set up your services](/practice/get-started/services) instead; it starts from nothing.
+
+## Add a service
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **New Service**. The **New service** sheet opens — "Add a new service to your clinic's catalogue."
+  </Step>
+  <Step title="Name it and price it">
+    **Service Name\*** — "The name of the service provided." — is what appears on the invoice and on your booking page, so write it the way a client would recognise it, not as an internal code. **Price\*** is in your practice's currency.
+  </Step>
+  <Step title="Choose the service type">
+    **Service Type\*** — "The category this service falls under." Pick the closest; it is what reporting uses to tell a consultation apart from a test.
+  </Step>
+  <Step title="Add your own category and a code">
+    **Service Category** is "Optional category grouping for this service." **Procedure Code** is an "Optional CPT or HCPCS code for billing & reporting" — it carries through onto invoice lines and claims.
+  </Step>
+  <Step title="Describe it and save">
+    **Description** is "Detailed description of what the service includes" — the text a client reads when booking. Leave **Active** on — "Toggle whether this service is currently available." — and save.
+  </Step>
+</Steps>
+
+## Add a category
+
+Open the **Categories** tab so the header shows **New Category**, then enter a **Category Name**, an optional **Description**, and leave **Active** on.
+
+Categories exist so a list of sixty services stays navigable. Group by what a client came in for — "Antenatal", "Occupational health" — not by which member of staff performs it, because the person changes and the reason does not.
+
+## Retire a service
+
+Switch **Active** off rather than deleting.
+
+An inactive service stops being offered for booking and stops appearing in the invoice picker, but every invoice that already used it keeps its line, its price and its history intact. Deleting a service that has been billed is how a revenue report ends up with a hole in it a year later, when nobody remembers why.
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Services** | Owner, manager | Role — no permission of its own |
+| Add a service or category | Owner, manager | **Create billing documents** |
+| Change a price | Owner, manager | **Edit service fees** |
+| Deactivate a service | Owner, manager | **Edit service fees** |
+| See the earnings figures on **Overview** | Owner, manager | **View financial dashboard** |
+
+Editing fees is granted separately from creating services on purpose: the person who maintains the catalogue is not automatically the person who may reprice it.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding the screen from a sidebar is a convenience, not a security boundary.
+
+A figure you may not see renders as a dash, not a zero. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The service appears under the **Services** tab, marked active, with its price in your practice's currency.
+- "Search services to add..." on a [new invoice](/practice/money/invoices) finds it.
+- If you offer it publicly, it appears on your [booking page](/practice/work/booking-page).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no New Category button">
+    The header shows one create button at a time. Open the **Categories** tab and it changes to **New Category**.
+  </Accordion>
+
+  <Accordion title="The price shows in the wrong currency">
+    Currency is a practice-wide setting under **Settings** → **Billing**, not a per-service one, and only an owner can change it. See [Currency](/platform/settings/currency).
+  </Accordion>
+
+  <Accordion title="I cannot change a price">
+    Editing service fees is a separate permission from creating services. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The service does not appear on my booking page">
+    Check it is **Active**, then check it is actually offered for booking — a service can exist in your catalogue without being published. See [Your booking page](/practice/work/booking-page).
+  </Accordion>
+
+  <Accordion title="Every price shows as zero and charges are disabled">
+    **Free Clinic Mode** is on under **Settings** → **Billing** — "Enable this if your clinic provides free services. All charges will be disabled." Your practice carries a **Free Clinic** badge while it is.
+  </Accordion>
+
+  <Accordion title="I have two services with almost the same name">
+    Deactivate the one you do not use rather than deleting it, then rename the survivor so the picker is unambiguous. Past invoices keep whichever line they were raised with.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does changing a price change invoices already raised?">
+    No. An invoice keeps the price it was raised at. A new price applies to new invoices only.
+  </Accordion>
+
+  <Accordion title="Can I discount without changing the price?">
+    Yes. Each invoice line carries its own **Disc %**, so a one-off discount never touches the catalogue.
+  </Accordion>
+
+  <Accordion title="Can I charge different prices for different insurers?">
+    Not from this screen. Payer-specific rates are an Enterprise feature; on a solo or team plan, price the service once and adjust on the invoice line.
+  </Accordion>
+
+  <Accordion title="Is Services the same list as Settings → Appointment Services?">
+    Yes — one catalogue, two views. This screen is the billing view; the settings tab is the booking view. Editing either edits the same service.
+  </Accordion>
+
+  <Accordion title="Do I need a procedure code?">
+    Only if you bill insurance. **Procedure Code** carries the CPT/HCPCS code onto invoice lines and claims; leave it blank for self-pay work.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="services and prices" />
+
+{/* source of truth: components/clinic/dashboard/services/service-form-sheet.tsx, components/clinic/dashboard/services/service-category-form-sheet.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, lib/clinic-nav-registry.ts */}

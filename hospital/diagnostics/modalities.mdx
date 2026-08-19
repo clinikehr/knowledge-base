@@ -1,0 +1,187 @@
+---
+title: "Modalities"
+description: "Register each imaging machine with a private bridge key so finished studies attach themselves to the right order, and review the ones that don't."
+icon: "/images/icons/plug.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors and managers" note="Needs the Diagnostics care area and the imaging bridge" />
+
+**Modalities** connects your CT, MRI, ultrasound and X-ray machines to ClinikEHR: **Register each imaging machine (or its bridge PC) with a private key. Finished studies with a matching accession attach automatically; anything ambiguous waits below for review.**
+
+<Path steps={['Sidebar', 'Radiology', 'Modalities']} />
+
+<TaskHeader
+  before="The imaging bridge switched on for your hospital, and someone who can configure the machine's bridge PC"
+  time="Five minutes per machine"
+  after="Studies arriving on their orders by themselves, ready to report"
+/>
+
+## Before you start
+
+This page needs two things on top of the **Diagnostics** care area. Without the imaging bridge, the page shows a locked card instead: **Modality integration is a Professional feature**, with "Connect your CT/MRI/US/X-ray machines: orders reach the modality worklist and finished studies attach themselves to the order for reporting." A **View plans** button sits underneath — see [Change your plan](/platform/plans/change-plan).
+
+You also need whoever looks after the machine's bridge PC, because half of this task happens there rather than in ClinikEHR.
+
+<Note>
+  Image pixels never leave your building. ClinikEHR stores addresses only, and the viewer reads full-resolution studies from your own on-site archive: "Images never leave the clinic — only these URLs are stored."
+</Note>
+
+## What you're looking at
+
+**Register modality** adds a machine; **Refresh** re-reads the page. Four sections follow.
+
+### The modality registry
+
+| Column | Shows |
+| --- | --- |
+| **Modality** | The name you gave it |
+| **AE title** | Its DICOM application entity title, the name it announces itself by |
+| **Type** | CT, MR, US and so on |
+| **Status** | **Active** or **Paused** |
+| **Last seen** | When it last sent anything — **never** if it has not |
+
+Before you register anything it reads **No modalities registered yet.** Each row offers **New key** and **Pause** (or **Resume**).
+
+### Studies awaiting review
+
+**These arrived without a matching accession. Attach each to the right order so its images show up for reporting.** Columns are **Received**, **Modality**, **Patient / accession**, **Study** and **Review**, and the healthy state is **Nothing waiting — unmatched studies appear here.**
+
+### The three settings blocks
+
+**Prior-image sources (PACS)** — "When a study arrives, the bridge pulls the patient's priors from these archives for comparison." **Auto-archive to cloud** archives matching studies as they attach, with no per-study click. **Full-resolution viewer (OHIF)** holds the two addresses the report's **Open full viewer** button uses.
+
+## Register a machine
+
+<Steps>
+  <Step title="Select Register modality">
+    The dialog explains what it is about to do: **A private key is generated for this machine's bridge PC — it authenticates every study it forwards.**
+  </Step>
+  <Step title="Name it">
+    **Name** is the only required field — the example is "CT Room 1". Add the **AE title (optional)** and **Type (optional)** if you know them; both help you tell machines apart later.
+  </Step>
+  <Step title="Select Register">
+    The bridge key dialog opens immediately, headed **Bridge key for \{name\}**.
+  </Step>
+  <Step title="Copy the key and configure the bridge PC">
+    Set the key on the machine's bridge PC as the `X-Modality-Key` header. Copy it before you close the dialog.
+  </Step>
+  <Step title="Confirm it is talking">
+    Once the machine forwards its first study, **Last seen** changes from **never** to a timestamp.
+  </Step>
+</Steps>
+
+<Warning>
+  The bridge key is shown **once**, at the moment it is generated. If it is lost, use **New key** on the row to generate a replacement — which immediately stops the old key working, so the machine will forward nothing until the bridge PC is updated. Never write the key down anywhere shared: it authenticates every study that machine sends.
+</Warning>
+
+## Attach a study that arrived unmatched
+
+A study with an exact accession match attaches itself. Everything else waits under **Studies awaiting review**, because guessing which patient an image belongs to is not a thing software should do.
+
+<Steps>
+  <Step title="Read the row">
+    It shows the modality, the patient name and accession the machine sent, and the study — modality code, image count, series count. A missing name shows as **(no name in study)**, a missing accession as **no accession**.
+  </Step>
+  <Step title="Select Attach to order">
+    The dialog, **Attach study to an order**, names the study's patient and accession. **Search by accession, patient or test…** is pre-filled with whatever the study carried; nothing matching reads **No matching orders awaiting a study.**
+  </Step>
+  <Step title="Select the order">
+    Selecting a row attaches immediately — there is no second confirmation. You get **Study attached — images are now on the order**. Attaching only makes the images viewable; the radiologist still writes the report — see [Radiology reports](/hospital/diagnostics/radiology-reports).
+  </Step>
+</Steps>
+
+**Discard** removes an unmatched study from the queue **with no confirmation dialog**. Use it only for genuine junk — a test acquisition, a duplicate — and check the row twice first.
+
+## Connect priors, archiving and the viewer
+
+<Steps>
+  <Step title="Add a PACS source">
+    **Add source** takes a **Name**, an **AE Title**, a **Host** and a **Port** (104 by default) — the archive priors are pulled from. It must be reachable from your own on-site archive. Its status badge toggles **Active** / **Paused** when you select it.
+  </Step>
+  <Step title="Set an auto-archive policy">
+    Switch **Auto-archive to cloud** on, choose which **Modalities to auto-archive** (none selected means all of them) and a **Minimum images** threshold to **Skip trivial studies below this image count**. Select **Save auto-archive policy**.
+  </Step>
+  <Step title="Point the viewer at your archive">
+    Enter the **OHIF viewer URL** and the **Orthanc DICOMweb URL (tunnelled)**, then **Save viewer settings**. That second address is what **Open full viewer** passes the study to.
+  </Step>
+</Steps>
+
+<AuditNote action="Attaching a study to a patient's order" />
+
+## Who can do this
+
+**Role** decides whether the page opens — owners, managers, radiologists, radiology technicians and doctors pass. Anyone else is told **You don't have permission to manage imaging modalities. Please contact your clinic administrator.** An owner can also hide **Radiology** from a role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| See **Modalities** in the sidebar at all | Everyone with Radiology | Plan — the imaging bridge is a Professional feature |
+| Register a machine or generate a new key | Imaging staff, managers, owners | Role |
+| Attach or discard an unmatched study | Imaging staff, managers, owners | Role |
+| Add or remove a PACS source | Imaging staff, managers, owners | Role |
+| Change auto-archive and viewer settings | Imaging staff, managers, owners | Role |
+
+Where per-person permissions apply, enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The machine appears in the registry as **Active**, and **Last seen** fills in after its first study.
+- New studies stop appearing under **Studies awaiting review** — they attach themselves.
+- A report for that study shows **\{n\} images attached** and offers **Open full viewer**.
+- **Prior studies** appears on the report where the patient has earlier imaging.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Modality integration is a Professional feature">
+    The imaging bridge is off for your plan, so the page is locked. Everything else in Radiology works without it — you attach images by hand instead. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Last seen still says never">
+    The bridge PC is not sending, or the key on it is wrong. Confirm the key is set as the `X-Modality-Key` header, and remember that generating a **New key** invalidates the previous one instantly.
+  </Accordion>
+
+  <Accordion title="Everything lands in Studies awaiting review">
+    The accession the machine sends does not match the one on the order. Fix that at the machine or in your worklist configuration — attaching by hand every time is a symptom, not a workflow.
+  </Accordion>
+
+  <Accordion title="No matching orders awaiting a study.">
+    The order is not in a state that accepts a study. Check on [Radiology list](/hospital/diagnostics/radiology) that the request exists and has not already had a study attached.
+  </Accordion>
+
+  <Accordion title="I discarded the wrong study">
+    Discard has no confirmation and no undo. The machine can re-send it; if it cannot, the images are still in your own archive, so attach the next copy rather than reporting from memory.
+  </Accordion>
+
+  <Accordion title="Open full viewer is missing on reports">
+    No viewer address is saved. Fill in **OHIF viewer URL** and **Orthanc DICOMweb URL (tunnelled)** and select **Save viewer settings**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does ClinikEHR store our images?">
+    No. It stores addresses, plus small preview images for the report. Full diagnostic pixels stay in your own archive and are served from there over your secure tunnel.
+  </Accordion>
+
+  <Accordion title="What does pausing a modality do?">
+    It stops that machine's studies being accepted while leaving its registration intact. Use it while a machine is being serviced or moved, rather than deleting it.
+  </Accordion>
+
+  <Accordion title="Is the bridge key per machine or per hospital?">
+    Per machine, so one compromised or replaced bridge PC never affects the others. Each row generates and rotates its own.
+  </Accordion>
+
+  <Accordion title="Is there deeper documentation on the bridge?">
+    Yes — the Diagnostics edition runs the same integration, including auto-archive policy in detail. See [Modalities](/lims/imaging/modalities).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a modality connection" />
+
+{/* source of truth: components/clinic/dashboard/radiology-station/modalities/, hooks/use-lims-features.ts, lib/clinic-nav-registry.ts */}

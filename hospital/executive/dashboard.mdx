@@ -6,54 +6,86 @@ icon: /images/icons/gauge.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager, and staff granted access to figures" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and accountants" />
 
-**Executive** is the hospital at a glance, across every department at once: headline tiles at the top, then a card for each report your hospital can open. It is a page you read, not a page you act on — its job is to tell you where to look, and then hand you off.
+**Executive** is the hospital at a glance, across every department at once. It is a page you read, not a page you act on: its job is to tell you where to look, and then hand you off to the report that explains a figure or the unit that can change it.
 
 <Path steps={['Sidebar', 'Executive', 'Executive']} />
 
-## The tiles, and where each one leads
+<TaskHeader before="Nothing — the dashboard works from your first appointment and first invoice onward" time="A minute to read" after="A view of the hospital's headline numbers, and the report behind any of them" />
 
-| Tile | What it means | Where to act |
+## What you're looking at
+
+The heading reads **Executive** — "The hospital at a glance. Each figure opens the report behind it." Beneath it sit six tiles, and beneath those a **Reports** list.
+
+There is no date picker, no filter and no toolbar. Every tile is a link, so a figure you do not believe is one selection away from its workings.
+
+| Tile | What it counts | Where to read it in full |
 | --- | --- | --- |
-| **Appointments today** | Booked activity for today across the hospital | [Front desk](/hospital/front-desk/overview) |
-| **Appointments this week** | The week's booked load, for staffing | [Front desk](/hospital/front-desk/overview) |
-| **Collected this month** | Money that has actually arrived | [Billing](/clinic/revenue/billing) |
-| **Outstanding** | Invoiced and not yet paid | [Billing](/clinic/revenue/billing) |
-| **Patients** | The size of your patient list | [Patients](/hospital/front-desk/patients) |
-| **New this month** | Patients registered this month | [Patients](/hospital/front-desk/patients) |
+| **Appointments today** | Booked activity for today, hospital-wide | **Appointments** report |
+| **Appointments this week** | The week's booked load, for staffing | **Appointments** report |
+| **Collected this month** | Money that has actually arrived | **Revenue** report |
+| **Outstanding** | Invoiced and not yet paid | **Revenue** report |
+| **Patients** | The size of your patient list | **Patients** report |
+| **New this month** | Patients registered this month | **Patients** report |
 
-Every tile is also a link to the report that explains it, so a figure you do not believe is one selection away from its workings. The two money tiles answer different questions and are routinely confused: **Collected this month** is receipts, **Outstanding** is debt.
+The two money tiles answer different questions and are routinely confused: **Collected this month** is receipts, **Outstanding** is debt. Both are shown in your hospital's own currency — see [Currency](/platform/settings/currency).
 
-Money is shown in your hospital's own currency, taken from your billing settings — see [Currency](/platform/settings/currency).
+**Empty state.** A new hospital sees the same six tiles reading zero and a **Reports** list that already lists everything its care areas allow. Nothing here has to be switched on.
 
-## An em dash is not a zero
+### An em dash is not a zero
 
-Tiles show **—** while a figure is still loading, and only ever show a number once the real value has arrived. A zero on this screen is a true zero.
+Tiles read **—** while a figure is still loading, and show a number only once the real value has arrived. So a **0** on this screen is a true zero, not a placeholder. The same honesty runs through the rest of the product: where a figure is not yours to see, it is withheld or rendered as a dash — you are never handed a fabricated zero standing in for something you have no access to. If a colleague quotes a number you cannot find, that is a difference in what each of you may see, not a discrepancy in the data.
 
-The same honesty applies to permissions. If your role is not allowed to see a figure, you get a dash or the row is simply not shown — you are never given a fabricated zero standing in for something you cannot see. If a colleague quotes a number you cannot find, that is a permissions difference, not a discrepancy in the data. See [Staff permissions](/platform/team/permissions).
+## Then go and act
 
-## The Reports list
+The dashboard is aggregates only — no patient names, no clinical detail, nothing to change. The work itself lives in the units:
 
-Below the tiles, **Reports** lists every report available to your hospital with a one-line description of what each covers. It is the same set as the Analytics page, filtered the same way — by your plan, your care areas and your own permissions — so turning a care area off removes its report from here too.
+| To act on | Go to |
+| --- | --- |
+| Today's queue, arrivals and the appointment book | [Front desk](/hospital/front-desk/overview) |
+| Beds, admissions and occupancy | [Admissions](/hospital/inpatient/admissions) |
+| Today's operating list and case flow | [Theatre list](/hospital/theatre/list) |
+| Samples, results and turnaround | [Laboratory](/hospital/diagnostics/laboratory) |
+| Invoices, payments and debt | [Billing](/hospital/revenue/billing) |
+| Your patient list | [Patients](/hospital/front-desk/patients) |
 
-For what each report contains and why the list differs between hospitals, see [Hospital reports and analytics](/hospital/executive/analytics).
+## Open a report
 
-## Where to go next
+<Steps>
+  <Step title="Pick a figure or a report">
+    Select a tile to open the report behind it, or choose any card from the **Reports** list below. Each card names the report and says in one line what it covers.
+  </Step>
+  <Step title="Set the period">
+    A report opens on **Last 30 days**. Change it to **Last 90 days** or **Last 12 months** if you are looking at a trend rather than a month.
+  </Step>
+  <Step title="Read it, then export if you need to">
+    Summary tiles, a chart over time, a breakdown and the rows behind them. See [Reports and analytics](/hospital/executive/analytics) for how the workbench behaves.
+  </Step>
+</Steps>
 
-The dashboard is aggregates only: no patient names, no clinical detail, nothing to act on. For the work itself, go to the unit:
+The **Reports** list here is the same set as the Analytics page, narrowed the same way — by your plan and by the care areas your hospital runs. Turning a care area off under **Settings → Facility** removes its report from both.
 
-- The day's queue and arrivals — [Front desk](/hospital/front-desk/overview)
-- Beds, admissions and occupancy — [Wards](/hospital/inpatient/wards)
-- Today's list and case flow — [Theatre](/hospital/theatre)
-- Samples and turnaround — [Laboratory](/hospital/diagnostics/laboratory)
-- Invoices, payments and debt — [Billing](/clinic/revenue/billing)
+## Who can do this
+
+**Role** decides whether **Executive** opens at all. On Enterprise, an owner controls which roles reach it under **Settings → Role Navigation**: owners and managers can never be locked out, accountants reach it by default, and a role with no rule of its own is unrestricted. Ward and bench roles are scoped to their own units and do not see the group.
+
+**Permission** decides what a person may do inside a module. There is nothing to do on this page — it has no buttons — so no per-person permission gates a tile here. Permissions do govern the money screens a tile hands you off to, notably **View financial dashboard** and **View Payment Reports** in the **Billing** section of your staff sheet.
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding a module from a role's sidebar is a convenience, not a security boundary.
 
 <AuditNote action="Opening the executive dashboard" />
 
-## If something goes wrong
+## Check it worked
+
+- All six tiles show a figure rather than **—**.
+- Selecting a tile opens the matching report on **Last 30 days**.
+- The **Reports** list contains a card for every care area your hospital runs.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The executive overview could not be loaded.">
@@ -61,26 +93,50 @@ The dashboard is aggregates only: no patient names, no clinical detail, nothing 
   </Accordion>
 
   <Accordion title="A tile has shown an em dash for a while">
-    The figure has not arrived, or you are not permitted to see it. Reload first; if the dash persists while a colleague sees a number, compare roles under [Permissions](/platform/team/permissions).
-  </Accordion>
-
-  <Accordion title="A whole row is missing compared with what a colleague sees">
-    Figures degrade by permission rather than erroring, so a row you may not see is hidden rather than blanked. This is deliberate.
-  </Accordion>
-
-  <Accordion title="A report I expected is not in the list">
-    Reports follow your plan, your care areas and your permissions. See [Hospital reports and analytics](/hospital/executive/analytics), which lists which report needs which care area.
+    The figure has not arrived yet. Reload the page; the dashboard reads its figures once, on open, and does not refresh itself.
   </Accordion>
 
   <Accordion title="Collected this month does not match the bank">
-    It counts payments recorded in ClinikEHR, not settlements into your account. Open the Revenue report and compare its **Payments** scope against your provider's payouts.
+    It counts payments recorded in ClinikEHR, not settlements into your account. Open the **Revenue** report and compare its **Payments** scope against your provider's payouts.
+  </Accordion>
+
+  <Accordion title="A report I expected is not in the list">
+    Reports follow your plan and your care areas. See [Reports and analytics](/hospital/executive/analytics), which lists which report needs which care area.
   </Accordion>
 
   <Accordion title="Ward or theatre activity is not on the dashboard">
-    The tiles are hospital-wide headlines. Occupancy, length of stay and case volume live in their own reports and on the unit screens — [Wards](/hospital/inpatient/wards) and [Theatre](/hospital/theatre).
+    The tiles are hospital-wide headlines only. Occupancy, length of stay and case volume live in the **Wards** and **Theatre** reports and on the unit screens.
+  </Accordion>
+
+  <Accordion title="Executive is missing from my sidebar">
+    Your role is not one that reaches it, or the hospital is not on Enterprise. An owner can change the first under **Settings → Role Navigation**; see [Change your plan](/platform/plans/change-plan) for the second.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How current are these figures?">
+    They are read when you open the page. There is no live feed and no auto-refresh, so reload if you have been sitting on the screen.
+  </Accordion>
+
+  <Accordion title="Can I change the period on the dashboard?">
+    No. The tiles are fixed windows — today, this week, this month. Open the report behind a tile to choose a period.
+  </Accordion>
+
+  <Accordion title="Does this show patient names or clinical detail?">
+    No. The dashboard is aggregates only. Named records live in the modules, where access is checked per person and per patient.
+  </Accordion>
+
+  <Accordion title="Is this the same as the Overview dashboard?">
+    No. [Dashboard](/hospital/overview/dashboard) is your own working day; **Executive** is the whole hospital's numbers.
+  </Accordion>
+
+  <Accordion title="Can I export what is on this page?">
+    Not from here. Open the report behind a tile and export from its data table.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts */}
+{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts, lib/edition.ts (ENTERPRISE_ROLE_MODULES), lib/edition-staff-roles.ts */}

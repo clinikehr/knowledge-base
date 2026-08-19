@@ -1,0 +1,162 @@
+---
+title: Run a video session
+description: "Schedule a telehealth room, invite the client by email, host the call in your browser, and record or write it up afterwards."
+icon: /images/icons/video.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above — in-call AI notes need Team" roles="Any clinician" note="The scheduling screen says Patient where the rest of your practice says Client. It is the same list." />
+
+A telehealth session runs in the browser at both ends. You schedule a room, the client gets a join link by email, and you host the call with your notes open beside it.
+
+<Path steps={['Sidebar', 'Telehealth']} />
+
+<TaskHeader
+  before="A client with an email address on file, if you want ClinikEHR to send the invite"
+  time="2 minutes to schedule; the call takes as long as it takes"
+  after="A completed session, plus a recording and a note if you asked for them"
+/>
+
+## What you're looking at
+
+**Telehealth** — "Manage video consultations with your patients" — opens on four counters: **Total Calls**, **Total Minutes**, **Avg Duration** and **Completion Rate**. **New Call** sits at the top right, and below that are four tabs.
+
+| Tab | Holds | When it is empty |
+| --- | --- | --- |
+| **Upcoming** | Scheduled calls, badged **Scheduled**, **Waiting** or **In Progress** | "No upcoming calls — Schedule a telehealth call to get started" |
+| **Recent** | Finished calls, badged **Completed**, **No Show** or **Cancelled** | "No recent calls — Completed calls will appear here" |
+| **Recordings** | Finished recordings | "No recordings yet" |
+| **AI Notes** | Notes drafted from recordings | "No AI notes generated yet" |
+
+## Schedule a call
+
+Select **New Call**. This opens a full page, **Schedule Telehealth Call** — "Create a new video consultation with a patient" — not a pop-up, so **Back** is how you leave without saving.
+
+<Steps>
+  <Step title="Choose the client">
+    Under **Patient Information**, open **Select Patient** and search ("Search patients..."). **New Patient** registers somebody who is not on your list yet.
+
+    A client with no email address triggers a warning in place: "This patient doesn't have an email address. Please add one to send the invite, or disable 'Send Invite Email' below."
+  </Step>
+  <Step title="Set the time">
+    Under **Schedule Details**: **Date**, **Time** in 15-minute slots, **Duration** (15 minutes up to 2 hours) and **Room Type** — **Consultation**, **Group Therapy**, **Team Meeting** or **Webinar**.
+  </Step>
+  <Step title="Decide what the room can do">
+    **Room Settings** has five switches: **Waiting Room** ("Patients wait until you admit them", on by default), **Recording** (off), **Screen Sharing**, **Chat** and **Send Invite Email**.
+  </Step>
+  <Step title="Add context, then create it">
+    **Room Notes** under **Additional Notes** holds anything the session needs. Select **Create Room**: "Telehealth Room Created — Invite email sent to patient". The call appears under **Upcoming**.
+  </Step>
+</Steps>
+
+Each **Upcoming** row has a **Join** button and a **⋯** menu offering **Send Invite**, **Copy Link**, **Mark as No Show** and **Cancel**.
+
+## Host the call
+
+Select **Join** and you go straight into the room — there is no lobby for the host. The client gets one: **Ready to join?**, where they check camera and microphone before selecting **Join Call**.
+
+The top bar carries the room code, a red **REC** badge whenever recording is running, **Notes** (host only), **Copy Link** and **Settings**. Along the bottom: mute, camera, **Background** effects, **Screen Share**, **Raise Hand**, **Chat & Participants**, and **End Call** for you — **Leave Call** for everyone else.
+
+With a waiting room on, an amber card tells you "\{n\} people are waiting to join", with **Admit** and **Deny** per person and **Admit everyone** when there is more than one.
+
+## Record the session
+
+Select the record button to open the **Start Recording?** sheet:
+
+> Records BOTH sides of the call — every participant's video and audio, plus any shared screen, composited into one file. All participants will be notified that recording has started.
+
+Below it sits an **AI Note Taker** switch with a **Note template** picker when your plan includes it, then the consent line: "**Important:** Ensure you have consent from all participants before recording."
+
+Confirm with **Start Recording**. Everyone sees the **REC** badge while it runs. **Stop Recording?** ends it and begins processing; the file lands on **Recordings** once that finishes.
+
+<Warning>
+  **Get consent before you start recording, and get it on the record.** The recording captures every participant's video and audio and becomes part of the client's clinical record. Say what you are recording and why, ask, and wait for the answer. If anyone objects, do not record.
+</Warning>
+
+## Write the note
+
+**Notes** opens a host-only panel headed **Clinical Notes** beside the call, with a template picker defaulting to **Medical clerkship**. It saves as you type — the chip reads **Unsaved**, then **Saved just now** — and the footer states the rule: "Autosaves as you type · saved to the client's chart as a draft".
+
+A call with more than one client gains a **Documenting** switcher, and each chart gets its own note. Before anyone is attached you see "No client linked yet". Finish with **Save Notes**.
+
+Drafts produced by the in-call AI Note Taker arrive on the **AI Notes** tab instead; read them before filing — see [Generate a note with AI](/practice/clinical/ai-notes).
+
+## Who can do this
+
+Role decides whether **Telehealth** opens. The plan decides what the room can do, and permission decides who you may document against.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Schedule and host a call | Any clinician | Role — plus the Starter plan |
+| Record a session | The host | Plan — **Session Recordings**, Starter and above |
+| Turn on the in-call AI Note Taker | The host | Plan — "AI Note Taker is available on the Team and Enterprise plans" |
+| Document against a client who is not yours | Owner, manager, and staff set to **Full client list** or **Entire practice** | The access tier chosen when they were invited |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Telehealth** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Opening a telehealth session" />
+
+## Check it worked
+
+The call moves from **Upcoming** to **Recent**, badged **Completed**. A recording appears on **Recordings** a few minutes later, an AI draft on **AI Notes**, and anything you typed in **Clinical Notes** is on the client's chart in [Notes](/practice/clinical/notes). The client's side is described in [Join a video visit](/portal/patients/telehealth).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Telehealth Consultations Limit Reached">
+    Telehealth needs the Starter plan or above; **Recordings** needs Starter too, and the **AI Notes** tab needs Team. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Patient email required">
+    "Please add an email address for this patient to send the invite." Add one to their chart, or switch **Send Invite Email** off and share the link yourself with **⋯** → **Copy Link**.
+  </Accordion>
+
+  <Accordion title="The client cannot get in">
+    Resend with **⋯** → **Send Invite** — an old email may carry a stale link. If the room has a waiting room they are already there, waiting for you to **Admit** them.
+  </Accordion>
+
+  <Accordion title="The client never showed up">
+    Use **⋯** → **Mark as No Show** so the session closes honestly rather than sitting in **Upcoming**.
+  </Accordion>
+
+  <Accordion title="Nobody can see or hear me">
+    Check the mute and camera buttons and your devices under **Settings**, close any other application using the camera, then rejoin — an in-progress call offers **Rejoin** on **Recent**.
+  </Accordion>
+
+  <Accordion title="The recording is not on the Recordings tab">
+    A recording is composited after the call ends, so give it a few minutes. If the **REC** badge never appeared during the call, recording never started.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the client need an account or an app?">
+    No. They open the emailed link in a browser and select **Join Call**.
+  </Accordion>
+
+  <Accordion title="Can I cancel a call after it has finished?">
+    No. **Cancel** and **Mark as No Show** are offered on scheduled and in-progress calls only. A completed call has no row actions; a cancelled one can be deleted from **Recent**.
+  </Accordion>
+
+  <Accordion title="What happens to the note if I switch templates mid-call?">
+    Sections that exist in both are kept. Anything you had completed that the new template does not have is cleared, and you are told how many — so switch early rather than late.
+  </Accordion>
+
+  <Accordion title="Is the room reusable?">
+    Each scheduled call gets its own room and its own link. Schedule a new call rather than reusing an old one. The **Notes** panel is host-only throughout — clients never see what you are writing.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a video session" />
+
+{/* source of truth: components/telehealth/dashboard/, components/telehealth/room/, components/telehealth/notes/telehealth-notes-panel.tsx, components/telehealth/recording/recording-controls.tsx */}

@@ -1,0 +1,163 @@
+---
+title: Create and send an invoice
+description: "Build an invoice from your services, choose exactly who receives the emailed PDF, and know what you can and cannot change afterwards."
+icon: /images/icons/file-text.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Anyone permitted to create billing documents" />
+
+An invoice lists what a client owes you, in your practice's currency, and can be emailed as a branded PDF to the client, to whoever is actually paying, or to both. This page covers creating one, sending it, and what you can change afterwards.
+
+<Path steps={['Sidebar', 'Billing', 'New Invoice']} />
+
+<TaskHeader
+  before="At least one service in your price list, and a client record to bill"
+  time="Two minutes"
+  after="A Pending invoice, emailed as a PDF to the recipients you chose"
+/>
+
+## What you're looking at
+
+The **Invoices** tab on the **Billing Dashboard** is the working list. **New Invoice** in the header opens the form; the row menu on each invoice carries **Edit Invoice**, **Send Invoice**, **Record Payment**, **View Payments**, **Download PDF** and **Delete Invoice**.
+
+Each row carries a status badge: **Draft** (not issued), **Pending** (issued and awaiting payment — the default), **Paid**, **Partially Paid**, **Overdue** (past its **Due Date**) or **Cancelled** (withdrawn, but still on the record).
+
+A practice with no invoices yet sees an empty list rather than an error — and an invoice form whose service picker finds nothing, because it searches [your service list](/practice/money/services).
+
+## Create the invoice
+
+<Steps>
+  <Step title="Open the form">
+    Select **New Invoice** on the **Billing Dashboard**. You can also start one from the client's record, which fills the client in for you.
+  </Step>
+  <Step title="Choose who it is for">
+    **Select Client \*** is required, and its picker searches with "Search for a client...".
+  </Step>
+  <Step title="Set the dates">
+    **Invoice Date \*** is required. **Due Date** is optional — "Payment expected by this date" — and it is the only thing that makes an unpaid invoice tip into **Overdue** later. Without one, nothing ever chases itself.
+  </Step>
+  <Step title="Add the lines">
+    Use the service picker — "Search services to add..." — to pull items in. Each line carries a **Description**, **Type**, **CPT/HCPCS**, **Qty**, **Unit Price**, **Disc %** and **Total**, all editable, so a one-off discount never changes the underlying service. On a phone the same fields become cards, labelled **CPT/HCPCS Code** and **Price**.
+  </Step>
+  <Step title="Set the discounts, tax and notes">
+    The **Notes & Discounts** card carries **Global Discount (%)** — "Applied to subtotal before tax" — **Tax Rate (%)**, and **Notes (Optional)** for anything the client needs to read.
+  </Step>
+  <Step title="Save it">
+    The invoice appears under the **Invoices** tab with its number, already **Pending**.
+  </Step>
+</Steps>
+
+<Note>
+  **There is no Status field on a new invoice.** Every new invoice is created as **Pending** — issued and awaiting payment — and **Status** only appears once you reopen the invoice with **Edit Invoice**. So if you are assembling a bill over several days, create it, then edit it to **Draft** straight away.
+</Note>
+
+Money on the invoice is in your practice's own currency, taken from **Settings** → **Billing**. If **Free Clinic Mode** is on, charges are disabled entirely.
+
+## Send it
+
+Select **Send Invoice** from the invoice's actions. The **Send Invoice** dialog explains itself: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
+
+**Send to** offers three choices, each naming the client: "\{Client\}'s email on file", **A different email**, or "Both — \{Client\} and a different email".
+
+The last two reveal **Other emails**, with the placeholder "billing@employer.com, family@example.com" and the helper "Up to 3 addresses, separated by commas." Exceed it and the dialog refuses: "You can add up to 3 other email addresses."
+
+### A worked example — employer-billed care
+
+An employer sends staff to you for pre-employment medicals and pays centrally. Choose the **Both** option, then enter `accounts@northgate-logistics.example, hr@northgate-logistics.example` in **Other emails** and select **Send Invoice**. One email goes out per recipient with the same PDF attached: the employee keeps a record of what was done and who paid, and the accounts team gets the bill.
+
+The same pattern covers family-billed care — an adult child paying for a parent receives it while the client still gets their copy.
+
+## Download a copy
+
+Select **Download PDF** from the invoice's actions for a paper bill at the desk. You get the same branded PDF the email attaches, confirmed with **Invoice PDF downloaded**. Your bank details and other offline channels appear on it only if you added them under **Settings** → **Payment Details** and switched them on — see [Payment details](/practice/settings/payment-details).
+
+## Cancel, do not delete
+
+<Warning>
+  An invoice with a payment recorded against it **cannot be deleted**. The menu item is disabled and reads "Invoices with recorded payments can't be deleted" / "Has payments — cancel instead". **Cancel** it instead: the invoice stays on the record and the payment stays reconciled. Deleting is permanent, and only for an invoice raised entirely by mistake before anybody paid against it.
+</Warning>
+
+<AuditNote action="Opening, downloading or sending an invoice" />
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open the **Invoices** tab | Owner, manager, front desk | Role — no permission of its own |
+| Create an invoice | Front desk, billers | **Create billing documents** |
+| Send or download the PDF | Front desk, billers | **Create billing documents** |
+| Record a payment against it | Front desk, billers | **Add client payments** |
+| Cancel an invoice | Owner, manager | **Create billing documents** |
+| See the totals on **Overview** | Owner, manager | **View financial dashboard** |
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Billing** from a sidebar is a convenience, not a security boundary. A permission-gated figure shows as a dash, never as a zero.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The invoice is under **Billing** → **Invoices** with a **Pending** badge and the number you will quote.
+- After sending, a toast names who it went to, and each recipient has an email with the PDF attached.
+- The download produces a PDF that opens. A tiny file that will not open means the download failed.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The invoice says Pending and I expected a draft">
+    That is the default, and the form has no **Status** field to change it on. **Pending** means issued and awaiting payment. Reopen it with **Edit Invoice** and set **Status** to **Draft**.
+  </Accordion>
+
+  <Accordion title="The service I want is not in the picker">
+    "Search services to add..." only finds active services in your price list. Add it under [Services](/practice/money/services), or type the line in with its own description and price.
+  </Accordion>
+
+  <Accordion title="The send dialog will not take another address">
+    **Other emails** takes three: "You can add up to 3 other email addresses." For a wider distribution, download the PDF and forward it yourself.
+  </Accordion>
+
+  <Accordion title="The client says they never received it">
+    Check the email on their record, then re-send using **A different email** with an address they confirm. Ask them to check spam — the email carries a PDF attachment, which some filters treat harshly.
+  </Accordion>
+
+  <Accordion title="Delete is greyed out">
+    Money has been recorded against this invoice. Cancel it instead. If the payment itself was the mistake, deal with the payment first — see [Record and collect payments](/practice/money/payments).
+  </Accordion>
+
+  <Accordion title="I have no New Invoice button">
+    Creating billing documents is granted per person. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I edit an invoice after sending it?">
+    Yes, with **Edit Invoice** — but the PDF already in someone's inbox does not change. Re-send after any edit that matters.
+  </Accordion>
+
+  <Accordion title="Does sending an invoice take payment?">
+    No. It delivers a PDF. To let them pay by card, send a payment link instead — see [Record and collect payments](/practice/money/payments).
+  </Accordion>
+
+  <Accordion title="When does an invoice become Overdue?">
+    When its **Due Date** passes with a balance still outstanding. An invoice with no due date never turns overdue.
+  </Accordion>
+
+  <Accordion title="Can I invoice somebody who is not a client?">
+    No. **Select Client** is required, so create the record first — see [Manage your client list](/practice/work/clients).
+  </Accordion>
+
+  <Accordion title="Does cancelling notify the client?">
+    No. It withdraws the invoice on your side. Tell them yourself if they hold a copy.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an invoice" />
+
+{/* source of truth: components/clinic/dashboard/billing/invoice-form.tsx, components/clinic/dashboard/billing/invoice-send-dialog.tsx, components/clinic/dashboard/billing/invoice-actions.tsx, lib/billing/invoice-send.ts */}

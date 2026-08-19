@@ -1,13 +1,13 @@
 ---
-title: The appointment book
-description: "Work the hospital calendar, book patients onto a provider, set availability and reminders, and charge saved cards automatically."
+title: Work the appointment book
+description: "Book a patient onto a provider and service, read the hospital calendar, set availability and reminders, and charge saved cards automatically."
 icon: /images/icons/calendar-days.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Front desk staff, schedulers, managers and the owner" note="Needs the Front desk care area" />
 
@@ -15,26 +15,39 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Path steps={['Sidebar', 'Front Desk', 'Appointments']} />
 
-<TaskHeader before="At least one appointment service and one provider with a schedule" time="Under a minute per booking" after="A booked appointment on the calendar, with the patient reminded" />
+<TaskHeader
+  before="At least one appointment service, and one provider with a schedule"
+  time="Under a minute per booking"
+  after="A booked appointment on the calendar, with the patient reminded"
+/>
 
-## What is in the workspace
+## Before you start
 
-The appointments sidebar has four entries. **Overview** is the calendar itself; the other three open the matching page in clinic **Settings**, so do not be surprised when the screen changes around you.
+The **Front desk** care area must be on — see [Care areas](/hospital/get-started/care-areas). You also need something bookable: a service under **Appointment Services**, and a provider with hours under **Availability**. A provider with no schedule offers no times at all, rather than every time.
+
+## What you're looking at
+
+The module has its own left rail headed **Appointments**, with four entries. **Overview** is the calendar; the other three open the matching page in hospital **Settings**, so do not be surprised when the screen changes around you.
 
 | Entry | Opens |
 | --- | --- |
 | **Overview** | The calendar — the book itself |
-| **Services** | **Appointment Services**, the bookable things a patient can be given a slot for |
-| **Booking Page** | **Booking Page Designer**, the public page patients book on |
-| **Settings** | **Appointment Settings** — availability, rules, resources, dates and communication |
+| **Services** | [Appointment services](/hospital/settings/appointment-services), the bookable things a patient can be given a slot for |
+| **Booking Page** | [Booking page designer](/hospital/settings/booking-page-designer), the public page patients book on |
+| **Settings** | [Booking settings](/hospital/settings/booking-settings) — availability, rules, resources, dates and communication |
 
-## Read the calendar
+**Overview** is a full-screen calendar and nothing else. There are no stat tiles, because at a front desk the day itself is the summary.
 
-**Overview** is a full-screen calendar, not a dashboard — there are no stat tiles, because at a front desk the day itself is the summary.
-
-- Move with **Today** and the arrows either side of the month.
-- Switch how the day is arranged: **Day**, **Week**, **Month**, **Providers** or **Resources**. **Providers** is the hospital view — one lane per clinician, which is how you spot the consultant with a hole in their morning.
-- Colour the book **By Status** or **By Service**, and narrow it with **Search patients, services...** or **More filters**.
+| Control | What it does |
+| --- | --- |
+| **Day** · **Week** · **Month** | How much of the book you see at once |
+| **Providers** | One lane per clinician — the hospital view, and how you spot the consultant with a hole in their morning |
+| **Resources** | One lane per room or piece of equipment |
+| **Color by Status** / **Color by Service** | What the colours mean |
+| **Search patients, services...** | Narrow to one person or one service |
+| **More filters** | Opens **Calendar Filters** — **Appointment Status**, **Urgency Level**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members** |
+| **Refresh** · **Create** | Reload the book; open a new entry |
+| **Current Schedule** | The day laid out as a list |
 
 ## Book an appointment
 
@@ -43,71 +56,73 @@ The appointments sidebar has four entries. **Overview** is the calendar itself; 
     Or select the empty slot you want on the calendar — both open the same **Initial Entry** sheet, on the **Appointment** tab. The other two tabs, **Event** and **Task**, put something in the day that is not a patient booking.
   </Step>
   <Step title="Find the patient">
-    Search under **Patient**. If they are not registered, select **Create patient** without leaving the sheet — or register them properly first in [Register and find patients](/hospital/front-desk/patients).
+    Search under **Patient**. If they are not registered, create them without leaving the sheet — or register them properly first in [Patients](/hospital/front-desk/patients).
   </Step>
   <Step title="Choose the service">
-    **Services** offers the bookable list — "Select clinic service". This is what the visit is for, and what it is charged at.
+    **Services** offers the bookable list. This is what the visit is for, and what it is charged at.
   </Step>
   <Step title="Set the schedule, provider and place">
-    **Schedule** is the date and time, **Select Provider** the staff member, and **Location** the room or address. A resource attached to the service shows as **Auto-reserved for this service**.
+    **Schedule** is the date and time, **Select Provider** the clinician, and **Location** the room or address — "Enter office address/room number" if it is not one of the saved locations. A resource attached to the service shows as **Auto-reserved for this service**, so nobody else can claim it.
   </Step>
   <Step title="Add what the clinician needs">
-    **Symptoms Description**, **Patient Notes** and **Clinic Notes**. Set **Notification** so the patient is told, then read the **Appointment Summary** back before you save.
+    "Describe the symptoms or reason for visit..." under **Symptoms Description**, plus **Patient Notes** ("Any notes from the patient...") and **Clinic Notes** ("Internal notes for clinic staff..."). Set **Notification** so the patient is told.
+  </Step>
+  <Step title="Read the summary back, then save">
+    **Appointment Summary** repeats the provider, location and schedule. Check it against what the patient just told you, then save.
   </Step>
 </Steps>
 
 <Note>
-  **A booking is made against a provider, not a department.** There is no department field on this sheet — the department comes later, at [triage](/hospital/outpatient/triage), where the patient is routed into a consultation queue. Booking the right clinician is what matters here.
+  **A booking is made against a provider, not a department.** There is no department field on this sheet, and people look for one. The department is chosen later at [triage](/hospital/outpatient/triage), which is what puts the patient into a consultation queue. Booking the right clinician is what matters here.
 </Note>
 
-## Set your availability
+## Set availability and reminders
 
 <Path steps={['Appointments', 'Settings']} />
 
-**Appointment Settings** — "Configure availability, special dates, and communication preferences" — has five tabs:
-
-| Tab | What it controls |
-| --- | --- |
-| **Availability** | **Clinic Availability**, your operating hours and slots. **Add Schedule** for each pattern you keep |
-| **Booking Rules** | How far ahead people may book, and how late a change is accepted |
-| **Resources** | Rooms and equipment a booking claims, so two clinics cannot take the same one |
-| **Special Dates** | Holidays, off-days and special hours. **Add Special Date** |
-| **Communication** | **Confirmation Settings**, **Reminder Settings** and **Message Templates** |
+**Appointment Settings** has five tabs: **Availability** (your operating hours and slots — **Add Schedule** for each pattern you keep), **Booking Rules** (how far ahead people may book and how late a change is accepted), **Resources** (rooms and equipment a booking claims), **Special Dates** (holidays and off-days — **Add Special Date**) and **Communication** (confirmations, reminders and message templates).
 
 Enter special dates in advance and in bulk. Every holiday you forget is a patient who arrives to a locked door.
 
-Reminders need a channel as well as a schedule. The channels — SMS, voice, fax and email — live under **Settings → Communications**, and a reminder with no enabled channel reaches nobody.
+Reminders need a channel as well as a schedule. Channels live under [Communications](/hospital/settings/communications), and a reminder with no enabled channel reaches nobody.
 
 ## Charge the card automatically
 
-<Path steps={['Settings', 'Auto Pay']} />
-
-**Auto Pay** — "Automatically charge a patient's saved card on file when their appointment is confirmed or completed — no manual invoicing." Switch on **Enable Auto Pay**, then pick the trigger under **Charge when the appointment is…**: **Confirmed**, **Completed**, or both. Each invoice is only ever charged once, and **Email a receipt to the patient** sends a confirmation each time.
-
-It needs the **Essential** plan or above and a connected Stripe account — without one you get "Connect Stripe to use Auto Pay". Only the owner can change it.
+**Auto Pay** charges a patient's saved card when their appointment is confirmed or completed, with nobody at the desk pressing a button. Switch it on under **Settings → Auto Pay**, choose the trigger, and each invoice is charged once only. Patients with no saved card are skipped for manual collection, and a declined card is never force-charged.
 
 <Warning>
-  Auto Pay carries a **1.9% platform fee per charge**, on top of your normal card processing, and it charges a real card with nobody at the desk pressing a button. Confirm your patients have consented to a card on file before switching it on, and check the first day's charges by hand.
+  Auto Pay carries a **1.9% platform fee per charge**, on top of your normal card processing. Confirm your patients have consented to a card on file before switching it on, and check the first day's charges by hand. Full detail and the setup steps are on [Auto Pay](/hospital/settings/auto-pay).
 </Warning>
 
-Patients without a saved card are skipped and left for manual collection, and a card that is declined or needs 3-D Secure is never force-charged — you are notified to collect it instead.
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the calendar | Any role shown the Front Desk group | Role Navigation + the **Front desk** care area |
+| Create, move or cancel a booking | Front desk staff, schedulers, managers, the owner | Role, plus a permission for managing appointments where your hospital has set one |
+| Change availability, rules and resources | Owner and managers | Owner or manager |
+| Switch Auto Pay on or off | Owner only | Owner |
+
+Enforcement is **opt-in per person**. Someone who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — so nothing changes for your existing staff until you save them once. A denied action is recorded in the audit log; an allowed one is not. Hiding **Appointments** from a role in [Role Navigation](/hospital/settings/role-navigation) tidies their sidebar; it is not a security boundary. See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
 - The appointment is on the calendar for the right day, and the **Providers** view shows it in that clinician's lane.
 - The patient's confirmation reached them on the channel you expect.
-- A slot outside a provider's schedule is not offered, and a special date is closed off entirely.
+- A time outside the provider's schedule is not offered, and a special date is closed off entirely.
 - With Auto Pay on, confirming an appointment records a payment against it without anyone taking one.
 
-## If something goes wrong
+<AuditNote action="Opening a patient's appointment" />
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="There is no Appointments entry in my sidebar">
-    The **Front desk** care area is off — see [Turn on your care areas](/hospital/get-started/care-areas).
+    The **Front desk** care area is off — see [Care areas](/hospital/get-started/care-areas) — or your role has the group hidden.
   </Accordion>
 
   <Accordion title="I cannot find a department field on the booking">
-    There is not one. Appointments are booked onto a provider; the department is chosen at triage.
+    There is not one. Appointments are booked onto a provider; the department is assigned at triage.
   </Accordion>
 
   <Accordion title="A provider has no bookable times">
@@ -115,11 +130,11 @@ Patients without a saved card are skipped and left for manual collection, and a 
   </Accordion>
 
   <Accordion title="Auto Pay is not charging">
-    Three things must all hold: the **Essential** plan or above, a connected Stripe account, and a card saved for that patient. Any one missing and the appointment stays unpaid.
+    Three things must all hold: the plan, a connected payment account, and a card saved for that patient. Any one missing and the appointment stays unpaid.
   </Accordion>
 
   <Accordion title="Reminders are not going out">
-    Check the channel under **Settings → Communications** before you touch the reminder schedule. See [Notifications](/platform/settings/notifications).
+    Check the channel under [Communications](/hospital/settings/communications) before you touch the reminder schedule.
   </Accordion>
 
   <Accordion title="Two clinics were booked into the same room">
@@ -127,22 +142,30 @@ Patients without a saved card are skipped and left for manual collection, and a 
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does booking an appointment put the patient in a consultation queue?">
+    No. Only [triage](/hospital/outpatient/triage) does that. A booking reserves a provider's time; triage takes vitals and routes the patient to a department.
+  </Accordion>
+
+  <Accordion title="What is the difference between an Appointment, an Event and a Task?">
+    An **Appointment** is a patient booking. An **Event** is something in the day that is not a patient — a meeting or a seminar. A **Task** is a job somebody has to do, with a priority and a status, and no slot on anyone's clinic list.
+  </Accordion>
+
+  <Accordion title="Can patients book themselves?">
+    Yes, through your public booking page. Reception still books most hospital appointments, but the two share one calendar and one set of availability rules. See [Booking page designer](/hospital/settings/booking-page-designer).
+  </Accordion>
+
+  <Accordion title="Where did Bookings, Products, AI Agents and Analytics go?">
+    Those entries are not released. The appointment rail deliberately shows four: **Overview**, **Services**, **Booking Page** and **Settings**.
+  </Accordion>
+
+  <Accordion title="If I cancel an appointment, is the patient refunded?">
+    No — cancelling frees the slot and notifies the patient, but money is handled separately in [Billing](/hospital/revenue/billing). Refund or void the payment there.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="the appointment book" />
 
-## Where to go next
-
-<Columns cols={2}>
-  <Card title="Register and find patients" icon="/images/icons/hospital-user.svg" href="/hospital/front-desk/patients">
-    Create a record before you book against it.
-  </Card>
-
-  <Card title="The front desk" icon="/images/icons/concierge-bell.svg" href="/hospital/front-desk/overview">
-    The live check-in board the booked patient arrives onto.
-  </Card>
-
-  <Card title="Record triage and route a patient" icon="/images/icons/heart-pulse.svg" href="/hospital/outpatient/triage">
-    Where the department is finally chosen.
-  </Card>
-</Columns>
-
-{/* source of truth: components/clinic/appointment/general/appointment-sidebar.tsx, components/clinic/appointment/calendar/calendar-view.tsx, components/clinic/appointment/calendar/appointment-create-sheet.tsx, components/clinic/appointment/settings/appointment-settings.tsx, components/clinic/dashboard/settings/auto-pay-settings.tsx */}
+{/* source of truth: components/clinic/appointment/general/appointment-sidebar.tsx, components/clinic/appointment/calendar/calendar-view.tsx, components/clinic/appointment/calendar/appointment-create-sheet.tsx */}

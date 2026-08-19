@@ -1,79 +1,169 @@
 ---
-title: The front desk
-description: "See who is in the building, who is still waiting, and reach every reception task from one board."
+title: Work the front desk board
+description: "See who is in the building, who is still waiting, check people in and out, and reach every reception task from one screen."
 icon: /images/icons/concierge-bell.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
-import { AuditNote } from '/snippets/support.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member who can open the Front Desk group" note="The Front Desk group only appears when the Front desk care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member whose role may open the Front Desk group" note="Needs the Front desk care area" />
 
 **Front Desk** is reception's home screen. It answers one question — who is in the building and who is still waiting — and puts the four things a receptionist does all day within one screen of that answer.
 
-The whole group needs the **Front desk** care area switched on in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
-
 <Path steps={['Sidebar', 'Front Desk', 'Front Desk']} />
 
-## What is in the Front Desk group
+<TaskHeader
+  before="The Front desk care area switched on in Settings → Facility"
+  time="Seconds per check-in"
+  after="A live queue that reflects who is actually in the building"
+/>
 
-The group holds four entries, and they stand or fall together: switching the care area off removes all four from the sidebar at once.
+## Before you start
 
-| Entry | What it is for |
+The whole **Front Desk** group — the board, **Appointments**, **Patients** and **Contacts** — depends on the **Front desk** care area. Switch it on in **Settings → Facility**; see [Care areas](/hospital/get-started/care-areas). Turn it off and all four entries leave the sidebar together.
+
+**Patients** also appears under **Records** as **Patient Records**. Both open the same list and both highlight at once — expected, not a fault.
+
+## What you're looking at
+
+The page is headed **Front Desk**, with the subtitle "Who is in the building, and who is still waiting." **Refresh** sits top right, though the board reloads itself as people are checked in and out, and wait times tick up on their own.
+
+Three tiles run across the top. Each shows an em dash while it loads rather than a zero, so a figure on screen is always a real count.
+
+| Tile | Counts |
 | --- | --- |
-| **Front Desk** | The live check-in board on this page |
-| **Appointments** | The appointment book, services and the booking page |
-| **Patients** | The patient list, registration and the self-registration waitlist |
-| **Contacts** | Enquiries, follow-ups and campaigns |
+| **Waiting now** | Everyone still in the building, whatever their wait band |
+| **Long waits** | Those past your long-wait threshold. It turns red only when there is at least one |
+| **Seen today** | Visits already checked out today |
 
-**Patients** also appears under **Records** as **Patient Records**. Both entries open the same list and both highlight at once — that is expected, not a fault.
+Below the tiles, four buttons cover the whole of reception — **Check in**, **Book appointment**, **New patient** and **New contact**. Each opens a sheet over the board, so you never lose the queue you were looking at.
 
-## Reading the board
-
-Three tiles run across the top: **Waiting now**, **Long waits** and **Seen today**. Each shows an em dash while it loads rather than a zero, so a figure on screen is always a real count.
-
-Below the tiles, four buttons cover the whole of reception — **Check in**, **Book appointment**, **New patient** and **New contact**. Each opens a sheet over the board, so you never lose the queue you were looking at. Registering someone with **New patient** flows straight into checking them in, which is the actual walk-in motion.
-
-The queue itself is filtered by three tabs — **Waiting**, **Checked out** and **All**, each carrying its own count — and searched by reason, room or staff member with **Search reason, room or staff…**. The columns are:
+The queue is filtered by three tabs, each carrying its own live count: **Waiting \{n\}**, **Checked out \{n\}** and **All \{n\}**. The columns are:
 
 | Column | Shows |
 | --- | --- |
 | **Checked in** | The time they arrived |
-| **Waiting** | How long they have been waiting |
-| **For** | The visit items — a service, a lab test or a custom label |
+| **Waiting** | How long they have been waiting, as `45m` or `1h 20m`. A checked-out visit's wait is frozen |
+| **For** | The visit items — a service, a lab test or a custom label. More than one reads like **Endoscopy +2** |
 | **With** | The staff member they are assigned to, or an em dash |
 | **Location** | The room, if one was recorded |
-| **Status** | A coloured badge for the wait band |
+| **Status** | The wait band |
 
-Select any row to reopen that visit. Each row also carries **View** and, until the person leaves, **Check out**. Checking someone out takes effect immediately with no confirmation — it is reversible by checking them back in, and a confirmation on every one would slow a busy desk to a crawl.
+Four wait bands, and the colours are not what people assume — amber is ordinary waiting, red is the problem:
 
-When nothing is queued the board reads **Nobody waiting**.
+| Badge | Meaning |
+| --- | --- |
+| **Just arrived** | Under five minutes, green |
+| **Waiting** | Five minutes up to your threshold, amber |
+| **Long wait** | Past your threshold, red. Sorted to the top |
+| **Checked out** | They have left, grey |
 
-## The long-wait threshold
+When nothing is queued the board reads **Nobody waiting** — "Check someone in to see them here."
 
-A visit is flagged as a long wait after a number of minutes your clinic sets, and the board prints the current figure under the table. Change it in **Settings → Facility** under **Front desk waiting**. The tile, the badge and the row colour all follow the same number, so there is only ever one definition of "too long" in the building.
+## Check a patient in
+
+<Steps>
+  <Step title="Select Check in">
+    A picker opens on the board asking **Who are you checking in?**
+  </Step>
+  <Step title="Find the patient">
+    Search the picker. Nobody registered yet? Select **New patient** instead — registering someone flows straight into checking them in, which is the actual walk-in motion.
+  </Step>
+  <Step title="Record what the visit is for">
+    Add a reason, an appointment, or at least one item. The sheet refuses an empty visit with "Add a reason, appointment, or at least one item".
+  </Step>
+  <Step title="Select Check in">
+    A toast confirms it and the patient appears on the board as **Just arrived**.
+  </Step>
+</Steps>
+
+## Check a patient out
+
+Select **Check out** on the row — it is only there while the person is still in. It takes effect immediately with no confirmation, because a confirmation on every one would slow a busy desk to a crawl, and because it is reversible: check them back in.
+
+Select **View**, or anywhere on the row, to reopen the visit sheet, where **Edit**, **Download PDF**, **Email patient** and **Cancel check-in** also live.
+
+## Set the long-wait threshold
+
+The board prints the current figure under the table: "A visit is flagged as a long wait after \{n\} minutes. Change this in **Settings → Facility**." Set it under **Front desk waiting** → **Long wait after (minutes)**, between 5 minutes and 8 hours; it starts at 30. See [Facility settings](/hospital/settings/facility).
+
+One number drives the tile, the badge and the sort order, so there is only ever one definition of "too long" in the building. It colours a badge and lifts the row to the top — it notifies nobody and escalates nothing.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the board | Any role the Front Desk group is shown to | Role Navigation, plus the **Front desk** care area |
+| Check in, check out, edit a visit | Anyone who can open the board | Role only |
+| Change the long-wait threshold | Owner and managers | Owner or manager, on **Settings → Facility** |
+
+Two behaviours surprise people. Enforcement is **opt-in per person**: someone who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And hiding a module from a role in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary — a denied action is recorded, an allowed one is not.
+
+The board also sits behind your two-factor rule. If your hospital requires it and your session is not verified, the whole board is replaced by "Two-factor verification is required to view the check-in board." — see [Two-factor authentication](/platform/security/mfa).
+
+## Check it worked
+
+- The patient you checked in is on the **Waiting** tab with a **Just arrived** badge and today's time under **Checked in**.
+- **Waiting now** has gone up by one.
+- Checking them out moves them to **Checked out** and increments **Seen today**.
 
 <AuditNote action="Opening the front desk board" />
 
-## Where to go next
+## Common issues
 
-<Columns cols={2}>
-  <Card title="Manage the appointment book" icon="/images/icons/calendar-days.svg" href="/hospital/front-desk/appointments">
-    The calendar, booking a provider and service, reminders and the public booking page.
-  </Card>
+<AccordionGroup>
+  <Accordion title="There is no Front Desk in my sidebar">
+    Either the **Front desk** care area is off — see [Care areas](/hospital/get-started/care-areas) — or your role has the group hidden in [Role Navigation](/hospital/settings/role-navigation).
+  </Accordion>
 
-  <Card title="Register and check in a patient" icon="/images/icons/user-plus.svg" href="/hospital/front-desk/patients">
-    Create a record, import a list, work the self-registration waitlist, and record an arrival.
-  </Card>
+  <Accordion title="The whole board says two-factor verification is required">
+    Your hospital requires two-factor authentication and this sign-in has not been verified. Sign out, sign back in and complete the second step. See [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
 
-  <Card title="Contacts and enquiries" icon="/images/icons/address-book.svg" href="/hospital/front-desk/contacts">
-    The enquiry board, the public contact form, and what each plan includes.
-  </Card>
+  <Accordion title="Searching a patient's name finds nothing">
+    The board search matches the reason, the room and the assigned staff member only — never a patient name. Use the tabs to narrow the queue, or open [Patients](/hospital/front-desk/patients) to search by name.
+  </Accordion>
 
-  <Card title="Set up your hospital" icon="/images/icons/hospital.svg" href="/hospital/get-started">
-    Care areas, departments and wards, in the order that works.
-  </Card>
-</Columns>
+  <Accordion title="It says 'Could not load the check-in board'">
+    The board could not reach your data. Select **Refresh**; rows already on screen stay put while you retry.
+  </Accordion>
 
-{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts */}
+  <Accordion title="Someone from yesterday is still on the board">
+    They were never checked out. Anyone still checked in carries over from any day — that is the point. Select **Check out** on their row.
+  </Accordion>
+
+  <Accordion title="Everything shows an em dash and no numbers">
+    The board is still loading. Tiles deliberately show a dash rather than a zero so a slow query is never mistaken for an empty waiting room.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a long wait alert anyone?">
+    No. It colours the badge red and sorts the row to the top of the queue. Nobody is paged, emailed or notified — the board assumes a human is looking at it.
+  </Accordion>
+
+  <Accordion title="Do I have to refresh to see new arrivals?">
+    No. The board updates itself when anyone checks in or out, and wait times advance about every half a minute on their own. **Refresh** is there for when you want to be certain.
+  </Accordion>
+
+  <Accordion title="Can I undo a check-out?">
+    Yes — check them back in. Nothing is deleted, which is why there is no confirmation dialog on the button.
+  </Accordion>
+
+  <Accordion title="Does checking someone in book an appointment?">
+    No. A check-in records an arrival; it can be linked to an existing appointment, but it does not create one. Use **Book appointment** for that — see [The appointment book](/hospital/front-desk/appointments).
+  </Accordion>
+
+  <Accordion title="Does a check-in send the patient to a department?">
+    No. Routing happens at [triage](/hospital/outpatient/triage), where vital signs are taken and the patient is put into a department's consultation queue.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the front desk board" />
+
+{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, lib/front-desk/waiting-time.ts, components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts */}

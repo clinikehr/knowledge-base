@@ -1,0 +1,155 @@
+---
+title: Read your hospital dashboard
+description: "The first screen after sign-in: patient totals, a week of clinical activity, your staff mix and the last few consultations, prescriptions and lab tests."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and accountants" note="No care area needed — Dashboard is always the first entry in the sidebar" />
+
+**Dashboard** is the first screen after sign-in and the top entry in the sidebar. It answers one question in a glance — is the hospital busier or quieter than last week — and then hands you off to the module that can do something about it.
+
+<Path steps={['Sidebar', 'Dashboard']} />
+
+<TaskHeader
+  before="Nothing — this is the landing screen"
+  time="A minute to read"
+  after="A clear picture of the week's clinical activity, and the screen to act on it"
+/>
+
+## Before you start
+
+The dashboard has no care-area switch and no setup. It does have a role gate: **owners, managers and accountants** get it. Anyone else is met with a single message instead of the page — see [Who can do this](#who-can-do-this).
+
+## What you're looking at
+
+The header carries your hospital's name, a plan badge reading **Enterprise Plan**, and a **New Patient** button that opens [Patients](/hospital/front-desk/patients). There is a date range control beside them, and it is worth knowing up front that it **does not filter these figures** — every window on this tab is fixed, and is named in the table below.
+
+The page has four tabs: **Overview**, **Analytics**, **Reports** and **Subscription** (labelled **Plan** on a narrow screen). Overview is what opens.
+
+Above the figures sits your **Clinic tier** card, showing how many points until the next tier. Select it to open your achievements.
+
+### The four tiles
+
+| Tile | Counts | Over |
+| --- | --- | --- |
+| **Total Patients** | Every patient registered at the hospital | All time |
+| **Consultations** | Consultations recorded | The last 7 days, today included |
+| **Lab Tests** | Lab tests raised | The last 7 days |
+| **Prescriptions** | Prescriptions written | The last 7 days |
+
+Each tile carries a trend line — "\{n\}% from last week" — green with an up arrow when activity has risen, red with a down arrow when it has fallen. The trend updates on its own as activity is recorded; the tile values are read once when the page loads, so reload if you want them recalculated.
+
+### The two charts
+
+- **Weekly Activity** — "Overview of clinic activities for the past week". One bar group per day for the last seven days, with consultations, prescriptions and tests side by side. It is a shape-of-the-week chart rather than a precise one: a very busy day can reach the top of the plot and stop there, so read exact numbers from the tiles or [Analytics](/hospital/executive/analytics).
+- **Staff Distribution** — "Current staff distribution by role". A ring showing how many doctors, nurses, lab scientists, pharmacists, physiotherapists, managers and owners you have, with the total in the centre. This is current headcount, not a period.
+
+### The three recent lists
+
+**Recent Consultations** ("Latest patient consultations"), **Recent Prescriptions** ("Latest medications prescribed") and **Recent Lab Tests** ("Latest laboratory results"). Each shows the **five** most recent entries with who ordered it, the time, and a status badge — green when finished, amber while pending.
+
+### What a brand-new hospital sees
+
+Honest but sparse: the three recent lists render their titles with nothing under them, the weekly chart is an empty grid, and the staff ring shows your own account. Nothing is broken — there is simply no activity yet. The lists fill from the first consultation, prescription or lab test recorded anywhere in the hospital.
+
+## Act on what you see
+
+<Steps>
+  <Step title="Read the trend, not the tile">
+    A number on its own means little. "18% from last week" on **Consultations** is the figure worth reacting to.
+  </Step>
+  <Step title="Open the module behind the figure">
+    Consultations lead to [Consultation](/hospital/outpatient/consultation), lab tests to [Laboratory](/hospital/diagnostics/laboratory), prescriptions to [Pharmacy](/hospital/pharmacy/prescriptions). The dashboard reports; the modules act.
+  </Step>
+  <Step title="Check the day itself if a figure looks wrong">
+    A quiet day on the chart is usually a real quiet day. If it is not, the front desk board tells you who actually walked in — see [The front desk board](/hospital/front-desk/overview).
+  </Step>
+  <Step title="Go deeper on the neighbouring tabs">
+    **Analytics** breaks the same activity down by demographics, workload, treatment, prescribing, lab tests, staff, patient journey, outcomes, wards and forecasts. **Reports** writes those up as a document you can export. **Subscription** is your plan and billing history.
+  </Step>
+</Steps>
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Dashboard** | Owners, managers and accountants | Role — a fixed rule on this page, not a permission slug |
+| Read any tile, chart or list | Anyone who can open the page | Role |
+| Select **New Patient** | Anyone who can open the page | Role Navigation on **Patients** |
+| Open the **Analytics** and **Reports** tabs | Anyone who can open the page; individual reports can be withheld | Report permissions |
+| Open **Subscription** | Owners, in practice | Owner |
+
+Everyone else sees the page replaced by "You don't have permission to access the dashboard. Please contact your clinic administrator." It is all or nothing here — no figure is blanked out and no partial page is drawn, so a number on this screen is always a real number.
+
+That differs from the [Executive](/hospital/executive/dashboard) board, where a tile shows an em dash while it is still loading, and from [Analytics](/hospital/executive/analytics), where a report your role may not see is **absent from the list** rather than greyed out.
+
+Two behaviours worth knowing. Permission enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And hiding a module from a role in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary: a denied action is recorded in the audit log, an allowed one is not.
+
+## Check it worked
+
+- **Total Patients** matches the count on [Patients](/hospital/front-desk/patients).
+- Record a consultation, reload the dashboard, and it appears at the top of **Recent Consultations**.
+- **Staff Distribution** adds up to the people listed under [Staff](/hospital/settings/staff).
+
+<AuditNote action="Opening the dashboard" />
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="It says I don't have permission to access the dashboard">
+    The dashboard is for owners, managers and accountants. Your role opens the clinical modules instead — the sidebar shows you which. Ask an owner to review your role; see [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="Every figure is zero on a hospital that is clearly busy">
+    Three of the four tiles only count the last seven days, so a hospital that has just started using ClinikEHR shows zeros until work is recorded in it. **Total Patients** is the one all-time figure, and it should not be zero once you have registered anyone.
+  </Accordion>
+
+  <Accordion title="Picking a date range changes nothing">
+    Correct — the control does not filter this tab. For a chosen period use [Analytics](/hospital/executive/analytics).
+  </Accordion>
+
+  <Accordion title="The tiles and the chart disagree">
+    They are drawn from the same seven days, but the chart's vertical scale stops at a fixed height, so a very busy day looks capped. Trust the tiles for counts and the chart for shape.
+  </Accordion>
+
+  <Accordion title="A recent list is empty but I know work was done">
+    Each list shows only the five newest entries and is loaded when the page opens. Reload the page. If it is still empty, the work was recorded against a different hospital — check the workspace switcher.
+  </Accordion>
+
+  <Accordion title="New Patient is greyed out">
+    You have reached your plan's patient limit. Hovering shows the upgrade card. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this the same as the Executive board?">
+    No. This is the clinical week — consultations, tests, prescriptions. [Executive](/hospital/executive/dashboard) is the money and capacity view: appointments today and this week, collected this month, outstanding, and patient growth.
+  </Accordion>
+
+  <Accordion title="Does the dashboard refresh itself?">
+    Only the trend percentages update live. The tile values, the charts and the three lists are read when you open the page, so reload to bring them forward.
+  </Accordion>
+
+  <Accordion title="Why does every recent list say 'Dr.' in front of the name?">
+    The lists prefix the staff member's name that way regardless of their actual role, so a nurse or a lab scientist will also appear with it. The name itself is correct.
+  </Accordion>
+
+  <Accordion title="Can I add or remove tiles?">
+    No — the Overview tab is fixed. If you want a specific figure in front of you every morning, the report catalogue on **Analytics** is the place to find it.
+  </Accordion>
+
+  <Accordion title="Does this page contain patient identities?">
+    Yes — the three recent lists name patients and medications, so opening it is a clinical data view and is logged as one.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the dashboard" />
+
+{/* source of truth: components/clinic/dashboard/clinic-dashboard-content.tsx, app/u/clinic/dashboard/[clinicId]/page.tsx, db/queries/clinic-stats.ts, lib/clinic-nav-registry.ts */}

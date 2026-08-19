@@ -1,0 +1,153 @@
+---
+title: Review pharmacy sales
+description: "Read the pharmacy unit's takings, find a past counter sale, reprint its receipt, and amend or reverse it."
+icon: /images/icons/cash-register.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy staff; amending and voiding are for leads" note="Needs the In-house pharmacy care area" />
+
+**Sales** is the record of everything the pharmacy counter has rung up: what came in, what sold, who still owes, and every individual transaction with its receipt. It is where a shift is checked and a customer query is answered.
+
+<Path steps={['Sidebar', 'Pharmacy', 'Sales']} />
+
+<TaskHeader before="At least one completed counter sale" time="A minute to find a sale" after="The transaction on screen, with its receipt reprinted or amended" />
+
+## What you're looking at
+
+The heading reads **Sales Dashboard** — "Track and analyze your pharmacy sales performance". Three controls sit beside it: a period picker offering **Today**, **Last 7 Days**, **This Month** and **All Time**; **Debtors**, which opens what is still owed; and **New Sale**, which takes you to the [till](/hospital/pharmacy/pos).
+
+Four tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The money picture for the chosen period |
+| **Recent Sales** | **Sales History** — every transaction, searchable |
+| **Products** | What actually sold, by line |
+| **Analytics** | Daily comparison, revenue trend and a performance summary |
+
+**Overview** leads with four tiles — **Total Revenue**, **Total Sales**, **Avg Sale Value** and **Items Sold** — then a **Net position** card: "Revenue less cost of goods and expenses, for the selected period", broken into **Revenue**, **Cost of goods**, **Expenses**, **Loss (expired/damaged)** and **Net**. Below sit **Sales Trend**, **Payment Methods** and **Recent Sales**. A quiet period reads **No sales found for this period**.
+
+**Sales History** on the **Recent Sales** tab is the table you will use most. It searches with "Search or scan receipt..." — a camera button beside it scans a printed receipt barcode when the till has no hardware scanner — and filters by **All Status**, **Completed**, **Pending**, **Cancelled** or **Refunded**. The columns are **Sale #**, **Date & Time**, **Customer**, **Items**, **Payment**, **Amount** and **Status**. A sale with no named buyer shows **Walk-in**.
+
+**Empty state.** With nothing matching you get **No sales found** and **Try adjusting your search or filter criteria** — check the period picker and the status filter before concluding the till took nothing.
+
+## Find a sale and reprint its receipt
+
+<Steps>
+  <Step title="Set the period">
+    The period picker filters everything on the page. A sale from last week will not appear while the picker says **Today**.
+  </Step>
+  <Step title="Search for it">
+    Enter the **Sale #**, or the customer's name, in "Search or scan receipt...". If the customer brought the printed slip, scan its barcode with the camera button instead of typing.
+  </Step>
+  <Step title="Open the row menu">
+    Select **⋯** at the end of the row.
+  </Step>
+  <Step title="Print or download">
+    **Print Receipt** sends it to the counter's receipt printer. **Download PDF** gives you a file to email or keep.
+  </Step>
+</Steps>
+
+## Amend or reverse a sale
+
+Both actions appear only on a sale at **Completed**, and they answer different questions.
+
+<Steps>
+  <Step title="Decide which you need">
+    **Edit sale** amends part of a transaction — void some units, or discount what the customer is keeping. **Return / void all** reverses the whole sale and returns the money.
+  </Step>
+  <Step title="Open the action">
+    From the row's **⋯** menu. **Return / void all** is shown in red because it is the destructive one.
+  </Step>
+  <Step title="Confirm">
+    The sale's status changes to **Refunded** or **Cancelled** and the stock is put back. The original transaction stays on the record — a reversal is a new entry, not an erasure.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening the sales record and reversing a sale" />
+
+## Chase what is owed
+
+**Debtors** lists customers who left with goods and an outstanding balance. Work it at the end of a shift rather than at the end of a month: a counter debt is easiest to collect while the person still remembers the transaction. Settling a debt is done at the [till](/hospital/pharmacy/pos), not on this screen.
+
+## Who can do this
+
+**Role** decides whether the screen opens. **Sales** needs the **In-house pharmacy** care area, and on Enterprise an owner can hide the Pharmacy group from a role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do here.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open Sales and search it | Anyone the role navigation lets in | Role → route |
+| Reprint or download a receipt | The same people | Role → route |
+| **Edit sale** | Owners, managers and pharmacy leads | Role → route |
+| **Return / void all** | Owners, managers and pharmacy leads | Role → route |
+| See cost, margin and **Net position** | Owners and managers | The financial figures on this page |
+
+Two behaviours to know. Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And a **denied action is recorded**, while an allowed one is not; hiding this page from a role is convenience, not a security boundary.
+
+Where a money figure is not yours to see, the row or the column is withheld rather than shown as **0** — a zero would be a false statement about the day's takings.
+
+## Check it worked
+
+- The sale you reprinted has the same **Sale #** on the slip as on the row.
+- A reversed sale reads **Refunded** or **Cancelled**, and the items are back on hand in [Inventory](/hospital/supply/inventory).
+- **Total Revenue** for the period changes by the amount you reversed.
+- A settled debt has left the **Debtors** list.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No sales found, but the till took money today">
+    Check the period picker and the status filter first — a filter set to **Refunded**, or a period of **Today** when you want last week, produces exactly this.
+  </Accordion>
+
+  <Accordion title="A sale rung up offline is not here">
+    An offline sale reaches this record when the till reconnects and syncs. Until then it is held on the till itself — see [Selling offline](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Edit sale and Return / void all are not offered">
+    They appear only on a sale at **Completed**. A sale already cancelled or refunded has nothing left to reverse.
+  </Accordion>
+
+  <Accordion title="Cost, margin or Net position are missing">
+    Those figures are for owners and managers. The screen still opens; the money detail does not.
+  </Accordion>
+
+  <Accordion title="The receipt will not print">
+    Check the counter's printer is the one selected in the desktop app. Failing that, use **Download PDF** and print from the file — see [Receipts](/pharmacy/pos/receipts).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this the hospital's revenue?">
+    No — it is the pharmacy counter's takings only. Billed care, invoices and payments live in [Billing](/hospital/revenue/billing), and the hospital-wide picture is in [Analytics](/hospital/executive/analytics).
+  </Accordion>
+
+  <Accordion title="What is the difference between Edit sale and Return / void all?">
+    **Edit sale** changes part of a transaction — some units voided, or a discount applied to what the customer keeps. **Return / void all** reverses the entire sale in one step.
+  </Accordion>
+
+  <Accordion title="Does reversing a sale put stock back?">
+    Yes. The items return to the on-hand figure they came out of, which is why a reversal must be recorded rather than the sale being deleted.
+  </Accordion>
+
+  <Accordion title="Can I export the sales list?">
+    Not from this page. Period exports are on the Executive dashboard's Reports tabs — see [Analytics](/hospital/executive/analytics).
+  </Accordion>
+
+  <Accordion title="Why does a sale show Walk-in?">
+    Nobody was named at the till. It is a valid counter sale; nothing is written to a patient's chart.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="pharmacy sales" />
+
+{/* source of truth: components/clinic/dashboard/pharmacy-station/sales/pharmacy-sales-content.tsx, .../sales/debtors-sheet.tsx, .../sales/pos-edit-sale-sheet.tsx, .../sales/pos-return-dialog.tsx, .../sales/pos-receipt-dialog.tsx */}

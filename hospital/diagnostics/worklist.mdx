@@ -1,0 +1,171 @@
+---
+title: "Worklist"
+description: "Work the bench queue oldest first: filter specimens by status and type, open one, or screen a batch of negatives in a single pass."
+icon: "/images/icons/clipboard-list.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors, nurses, managers and owners" note="Needs the Diagnostics care area" />
+
+The **Worklist** is the specimen queue as the bench sees it: **The bench queue, oldest first.** It is where you find a specimen by its number, see what stage it has reached, and clear a run of negatives without opening them one at a time.
+
+<Path steps={['Sidebar', 'Laboratory', 'Worklist']} />
+
+<TaskHeader
+  before="At least one specimen registered against a test request"
+  time="Seconds to find one; a minute to clear a batch"
+  after="Specimens moved on through the queue, with the technician's name on the record"
+/>
+
+## What you're looking at
+
+Seven chips run across the top. Each carries a live count and doubles as a filter:
+
+**All · Lab intake · Collected · In transit · Received · Screening · Confirmed**
+
+Below them are the controls:
+
+| Control | What it does |
+| --- | --- |
+| **Specimen ID, LAN or donor…** | Searches the specimen number, the lab accession number and the patient's name |
+| **All specimen types** | Narrows to **Oral fluid** or **Urine** |
+| **List** / **Rack** | Two views of the same queue |
+| Rack density | **5 / row** to **12 / row**, default **10 / row** |
+| **Refresh** | Re-reads the queue |
+
+### The list
+
+| Column | Shows |
+| --- | --- |
+| **Specimen** | The specimen ID |
+| **LAN** | The lab accession number |
+| **Donor** | The patient the specimen came from |
+| **Type** | Oral fluid or urine |
+| **Panel** | **\{n\} analytes** |
+| **Status** | **Intake Pending**, **Collected**, **In Transit**, **Lab Received**, **Screening** or **Confirmed** |
+| **Received** | When it arrived |
+
+Anything not recorded shows as an em dash. With nothing matching, the table reads **Nothing in the queue for these filters.** — check the chips and the search box before assuming the queue is empty.
+
+### The rack
+
+**Rack** lays the same specimens out as a plate: rows **A**, **B**, **C**, wells **A1**, **A2** and so on, in first-in-first-out order. Select a well to include it in a batch; double-select it to open the specimen. Its own footer is honest about what it is: "positions are a bench aid, not stored assignments."
+
+## Open one specimen
+
+Selecting a row opens its workflow sheet, titled with the specimen ID and its status badge. Two tabs: **Workflow**, which offers the action appropriate to the current status, and **Chain of Custody**, which is the unbroken record of who held the specimen and when. If a status has no action available, the sheet says so rather than offering a dead button.
+
+## Screen a batch of negatives
+
+This is the reason the worklist exists. When a bench run comes back all-negative, you clear the whole tray in one action instead of opening each specimen.
+
+<Steps>
+  <Step title="Filter to what you ran">
+    Select the **Received** chip and set the type to **Oral fluid**. Only received oral-fluid specimens are eligible for a batch screen — everything else goes through its own form.
+  </Step>
+  <Step title="Select the specimens">
+    Tick the rows, or select the wells in **Rack** view. The action bar tells you **\{n\} selected**, and adds "· \{n\} eligible for batch screen (received oral-fluid only)" when your selection includes rows that do not qualify. **Clear** starts again.
+  </Step>
+  <Step title="Select Mark batch negative">
+    The button carries the eligible count. The dialog asks **Mark \{n\} screens negative?** and states exactly what it will do: record an all-negative initial screen for every selected specimen and finalise each as a negative result.
+  </Step>
+  <Step title="Name the screening technician">
+    Enter the name as it should appear on the chain of custody. The button stays disabled until you do — an unattributed screen is not a chain of custody.
+  </Step>
+  <Step title="Record">
+    Select **Record \{n\} negative screens**. You get **\{n\} specimens screened negative**, and any that failed are listed individually so nothing fails silently.
+  </Step>
+</Steps>
+
+<Warning>
+  Only run a batch screen after the bench run has confirmed every one of those specimens screened negative. Any specimen with a non-negative must go through its own screen form — a batch marks results, and a wrongly-batched positive is a reported result that was never read.
+</Warning>
+
+<AuditNote action="Opening the worklist and screening specimens" />
+
+## If your site is a collection centre
+
+A site that collects but does not test shows a banner and disables the bench actions: "This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here." That is a property of the site, not of your account.
+
+## Who can do this
+
+| Layer | What it decides |
+| --- | --- |
+| Care area | Whether **Laboratory** exists here at all — **Diagnostics**, in **Settings → Facility** |
+| Role | Whether this page opens. Owners, lab scientists, doctors, managers, nurses and staff pass; anyone else is told **You don't have permission to access the Worklist. Please contact your clinic administrator.** |
+| Permission | What you may do to a specimen once you can see it |
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Open the worklist and read it | Lab and clinical staff | Role |
+| Open a specimen's workflow sheet | Lab and clinical staff | Role |
+| Screen a batch negative | Bench staff | Role, plus the site being a testing site |
+| Read the chain of custody | Lab and clinical staff | Role |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The specimens you batched leave the **Received** chip and its count drops.
+- Each one shows the screening technician's name on its **Chain of Custody** tab.
+- The confirmation names the count you expected — if it names fewer, read the per-specimen warnings underneath.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Nothing in the queue for these filters.">
+    A chip or the type filter is still narrowing the list. Select **All**, set the type back to **All specimen types**, and clear the search box.
+  </Accordion>
+
+  <Accordion title="Mark batch negative is disabled">
+    None of your selected rows are eligible. Batch screening covers **received oral-fluid** specimens only; urine and anything not yet received go through the per-specimen form.
+  </Accordion>
+
+  <Accordion title="The Record button will not enable">
+    The **Screening technician** field is blank. A screen with no named technician cannot go on a chain of custody, so the dialog refuses it.
+  </Accordion>
+
+  <Accordion title="Some specimens in my batch failed">
+    Each failure is listed with its specimen ID and reason, and more than three are summarised as "…and \{n\} more specimens failed". Open those specimens individually — the rest were recorded.
+  </Accordion>
+
+  <Accordion title="You don't have permission to access the Worklist.">
+    Your role does not include the bench. Ask an owner to correct it under [Staff](/hospital/settings/staff).
+  </Accordion>
+
+  <Accordion title="Failed to load the worklist">
+    A transient read failure. Select **Refresh**. If it persists, narrow the filters — a very large unfiltered queue is the usual cause.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the rack view remember where I put a specimen?">
+    No. It is a first-in-first-out layout of whatever the current filter returns — a bench aid, not stored positions. Refiltering redraws it.
+  </Accordion>
+
+  <Accordion title="Why does it say Donor rather than Patient?">
+    The worklist is built around chain-of-custody testing, where the person the specimen came from is the donor. It is the same person as the patient on the request.
+  </Accordion>
+
+  <Accordion title="Can I undo a batch screen?">
+    Not as a batch. Open the affected specimen and correct it through its own workflow, so the correction is recorded as a deliberate act on that specimen.
+  </Accordion>
+
+  <Accordion title="How far back does the queue go?">
+    It shows the working queue, oldest first, and is capped so a busy lab still loads quickly. For anything older, search by specimen ID or LAN.
+  </Accordion>
+
+  <Accordion title="Is there more detail on this screen anywhere?">
+    Yes — the Diagnostics edition runs the same worklist and documents accessioning and screening in more depth. See [Worklist](/lims/lab/worklist).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the worklist" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/worklist/, components/clinic/dot-lims/general/order-status-badge.tsx */}

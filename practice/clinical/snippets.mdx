@@ -1,0 +1,141 @@
+---
+title: Snippets
+description: "Keep the paragraphs you type over and over, then drop one into a note by typing a forward slash — or copy it to the clipboard."
+icon: /images/icons/copy.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team — creating snippets needs Starter or above" roles="Any clinical staff member" />
+
+A snippet is a short block of text you write again and again — standard advice, a follow-up instruction, a normal-examination paragraph. **Read this first: the buttons on the Snippets page copy a snippet to your clipboard, they do not put it in a note.** To insert one directly, type **/** in the note body.
+
+<Path steps={['Sidebar', 'Notes', 'Snippets']} />
+
+<TaskHeader
+  before="Nothing, though a snippet is only worth writing once you know what you retype"
+  time="2 minutes to write one"
+  after="A reusable paragraph your whole practice can drop into any note"
+/>
+
+## The two ways to use one, and why people get caught
+
+| Where you are | What happens |
+| --- | --- |
+| In a note, you type **/** | A menu headed **Insert Snippet** appears. Pick one and the text goes straight into the note |
+| On the **Snippets** page, you select **Copy** or **Copy & Use** | The text goes to your clipboard. Nothing is inserted anywhere until you paste it |
+
+The second one is what surprises everybody. You select **Copy & Use**, see a toast reading "Snippet Copied — \"Follow-up advice\" has been copied to your clipboard", look at the note, and it is unchanged — so you select it again. It worked the first time. Put your cursor in the note and paste with Ctrl\+V, or ⌘\+V on a Mac.
+
+If you are already writing, the **/** menu is the faster route by a distance: arrow keys move through it, **Enter** or **Tab** inserts, **Escape** closes it. The note body says so itself — its placeholder reads "Start typing your note content... Type / for snippets".
+
+## What you're looking at
+
+**Snippets** — "Reusable text snippets for quick insertion" — opens on three counters: **Total Snippets**, **Active Snippets** and **Avg. Length**. Under them sits a **Search snippets...** box and a card for each snippet, showing **Created by** and its author, a badge counting its characters, a **Copy** button and a **⋮** menu.
+
+| Menu item | What it does |
+| --- | --- |
+| **Copy & Use** | Copies the content to your clipboard |
+| **Preview** | Shows the full text without copying |
+| **Edit** | Opens **Edit Snippet** — "Update your snippet" |
+| **Delete** | Removes it for the whole practice |
+
+A brand-new practice sees "No snippets yet — Get started by creating your first snippet." with a **Create First Snippet** button. A search that matches nothing reads "No snippets found. Try adjusting your search terms."
+
+## Create a snippet
+
+<Steps>
+  <Step title="Open the create dialog">
+    Select **Create Snippet** in the header. The dialog is headed **Create Snippet** — "Create a new reusable text snippet".
+  </Step>
+  <Step title="Name it the way you would search for it">
+    **Snippet Name** ("Enter snippet name...") is required and capped at 100 characters. This is the name you will scan in the **/** menu, so make it specific: "Post-op wound advice", not "Advice".
+  </Step>
+  <Step title="Say when to reach for it">
+    **Description (Optional)** tells a colleague what the snippet is for. Snippets are shared across the practice, so someone who did not write it will be relying on this line.
+  </Step>
+  <Step title="Write the content">
+    **Snippet Content** ("Enter snippet content...") is required and capped at **1000 characters** — "Content must be less than 1000 characters". A snippet is a paragraph. Anything longer is really a template, so build it under [Custom Templates](/practice/clinical/note-templates).
+  </Step>
+  <Step title="Save it">
+    Select **Create Snippet**. The card appears immediately with your name under **Created by** and its character count on the badge, and it is available in every colleague's **/** menu straight away.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role decides whether **Notes** opens. Permission decides whether you may change the shared library.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Insert a snippet into your own note | Any clinical staff member | Role |
+| Copy or preview a snippet | Any clinical staff member | Role |
+| Create, edit or delete a snippet | Owner, manager | Permission — **Edit note and form templates** |
+
+Snippets are practice-wide, not personal. Editing one changes it for everybody's next note, and deleting one removes it from everybody's **/** menu — though notes already written keep the text they were saved with.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding the page from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+The snippet is on the **Snippets** page with the right character count, and **Total Snippets** has gone up by one. Open any note, type **/**, and the snippet's name is in the **Insert Snippet** menu — choose it and its text appears in the note body. That is the real test: a snippet that is not in the **/** menu is not usable in a hurry.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Copy & Use did nothing">
+    It copied. Put your cursor in the note and paste. If your browser blocked clipboard access, open **Preview**, select the text and copy it by hand — or use the **/** menu instead, which does not touch the clipboard at all.
+  </Accordion>
+
+  <Accordion title="Create Snippet is greyed out">
+    Creating snippets needs the Starter plan or above; hovering the button shows an upgrade card ending **Upgrade to Starter**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Content must be less than 1000 characters">
+    The content field stops at 1000 characters. Split it into two snippets, or build it as a custom template — see [Note templates](/practice/clinical/note-templates).
+  </Accordion>
+
+  <Accordion title="No snippets available in the / menu">
+    The menu adds "Create snippets in Notes → Snippets". Nothing has been written for your practice yet, or you are signed in to a different workspace than the colleague who wrote them.
+  </Accordion>
+
+  <Accordion title="Create First Snippet opened the dialog but the header button is locked">
+    The empty-state button is not plan-gated in the same way as the header one. If you are on Free, treat the header button as the truthful answer and upgrade before relying on snippets.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Are snippets mine or the practice's?">
+    The practice's. Everyone sees every snippet, and **Created by** records who wrote it. There is no private list.
+  </Accordion>
+
+  <Accordion title="If I edit a snippet, do old notes change?">
+    No. A note keeps the text it was saved with. The edit only affects insertions made after it.
+  </Accordion>
+
+  <Accordion title="Can a snippet contain formatting?">
+    It is stored as plain text, so what you type is what arrives. Format it in the note after inserting.
+  </Accordion>
+
+  <Accordion title="Can I use a snippet in a template note?">
+    Yes. The **/** menu works in any note field, whether you started from a template or a blank page.
+  </Accordion>
+
+  <Accordion title="Should a whole consent paragraph be a snippet?">
+    If it is under 1000 characters and you paste it into notes, yes. If clients have to sign it, it belongs in [Documents](/practice/clinical/documents) instead.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/notes/notes-snippets/snippets-content.tsx, components/clinic/notes/new-notes/rich-textarea.tsx */}

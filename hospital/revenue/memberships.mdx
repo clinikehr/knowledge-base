@@ -1,0 +1,183 @@
+---
+title: Sell memberships
+description: "Connect a payout account, publish recurring plans, and enrol patients into subscriptions that bill and renew themselves."
+icon: /images/icons/id-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners and managers only" />
+
+A membership is a recurring plan a patient subscribes to — a chronic-care package, an antenatal programme, a corporate health retainer. ClinikEHR collects each period's payment and settles it to your hospital's own payout account, so nobody is chasing the same people every month.
+
+<Path steps={['Sidebar', 'Memberships']} />
+
+<TaskHeader before="A connected payout account. Nothing on this page works without one" time="10 minutes to set up your first plan" after="A published plan, a public signup page, and members billing automatically" />
+
+## Before you start
+
+Memberships need a payout account that is fully connected **and able to accept charges**. Until then the screen shows **Connect payouts to sell memberships** with the exact reason, and every create button is disabled.
+
+Which provider you use is decided by your hospital's currency, not by preference:
+
+| Your currency | Provider | Where to connect it |
+| --- | --- | --- |
+| NGN | Paystack | **Settings → Online Payments → Paystack Connect** |
+| Anything else | Stripe | **Settings → Online Payments → Stripe Connect** |
+
+A half-finished connection counts as no connection: "Finish Stripe onboarding (charges not yet enabled) to sell memberships." Go back and complete it. See [Online payments](/hospital/settings/online-payments).
+
+## What you're looking at
+
+The heading reads **Memberships** — "Create recurring plans your patients subscribe to. Billing settles to your connected payout account; ClinikEHR keeps a 1.9% fee."
+
+Along the top: **Collections**, **Share signup page** (or **Set up link** before you claim an address), **Enroll member** — which appears only once payouts are connected and a plan is active — and **New plan**.
+
+Five tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Plans (n)** | Your recurring plans, with a live count |
+| **Add-ons** | One-off extras a member can buy on top of a plan |
+| **Members** | Who is subscribed, and to what |
+| **Transactions** | Every collection, successful or not |
+| **Overview** | **MRR**, **Active members**, **New this month**, **Churn this month** and revenue by plan |
+
+Each plan card shows its name, category, status, price and interval, any free trial, the benefits, and how many members it holds.
+
+**Empty state.** A hospital with no plans reads **No membership plans yet**, with **Create your first plan** — disabled while payouts are unconnected.
+
+## Create a plan
+
+<Steps>
+  <Step title="Open the form">
+    Select **New plan**. It says what it is for: "Define a recurring plan your patients can subscribe to. Billing settles to your connected payout account."
+  </Step>
+  <Step title="Name and price it">
+    **Plan name** ("e.g. Primary Care Membership"), an optional **Emoji** and **Description**, then **Price** and **Per** — **Month**, **Quarter** or **Year**. This is what the patient's card is charged, unchanged, each period.
+  </Step>
+  <Step title="Set the terms">
+    **Trial days**, **Signup fee** and **Capacity** (blank means unlimited). **Membership terms URL (optional)** links your membership agreement — worth having for anything resembling a care retainer.
+  </Step>
+  <Step title="List the benefits">
+    Under **Benefits**, add what the member gets — included visits, a service credit, a member discount, an included service or a perk — each with its quantity or percentage. This is the list a patient reads before subscribing.
+  </Step>
+  <Step title="Decide whether it is public">
+    **List on public page** — "Let patients self-enroll from your booking/membership page." Leave it off for a plan you enrol only at a desk.
+  </Step>
+  <Step title="Publish it">
+    Set **Status** to **Active (accepting members)** rather than **Draft (hidden)** and save. You get **Plan created**.
+  </Step>
+</Steps>
+
+## Enrol a member
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Enroll member** — "Subscribe a patient to a membership plan. They'll be billed automatically to your connected payout account."
+  </Step>
+  <Step title="Choose the patient">
+    Step **1. Patient** searches with "Search patients by name or email…".
+  </Step>
+  <Step title="Choose the plan">
+    Step **2. Plan** lists your active plans with price, interval, trial and enrolment fee. Only active plans appear.
+  </Step>
+  <Step title="Confirm the card">
+    Step **3. Card on file** is the one people skip. With no card the sheet warns: "No card on file. Add one below (or send a setup link) — the first charge will fail otherwise."
+  </Step>
+  <Step title="Enrol">
+    The footer states what will be charged per cycle. Select **Enroll member**. A plan with a trial confirms "Trial started — first charge at trial end."; one without says "Membership active."
+  </Step>
+</Steps>
+
+<Warning>
+  **Enrolling a member starts a real recurring charge against their card.** The first collection is not a preview. Confirm the plan, the price and the renewal period with the patient before you enrol, and check the card on file is theirs.
+</Warning>
+
+## Manage members
+
+The **Members** tab filters by status — **Active**, **Trial**, **Past due**, **Paused**, **Canceled** — and by plan.
+
+Cancelling asks how: **Cancel at period end** "keeps their care active until the current cycle is paid through (recommended)", while cancelling immediately "ends it now and stops future billing". For a clinical membership, period-end is almost always right. Failed collections appear under **Transactions**; an expired card needs the member to update it, not a retry.
+
+## Who can do this
+
+**Role** decides everything here, and it is unusually blunt: **only clinic owners and managers can manage memberships.** That is not adjustable through per-person permissions, because enrolment starts a recurring charge and belongs with the people accountable for the hospital's money.
+
+**Permission** adds nothing on top of that role rule for this screen. What does gate it, besides role:
+
+| Action | Who | Also needs |
+| --- | --- | --- |
+| Open Memberships | Owners and managers | The Enterprise plan |
+| Create or edit a plan | Owners and managers | A connected payout account |
+| **Enroll member** | Owners and managers | An active plan, and a card on file for the patient |
+| Cancel or pause a membership | Owners and managers | — |
+| Sell an add-on | Owners and managers | The Team plan or above |
+
+Enforcement elsewhere is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — but the owner-and-manager rule here applies regardless. A **denied action is recorded**; an allowed one is not.
+
+## Check it worked
+
+- **Plans (n)** shows your plan, and the create buttons are enabled rather than greyed out.
+- Your public signup page loads at the address you claimed, showing the plan and its price.
+- After the first enrolment the member is under **Members**, and the collection is under **Transactions**.
+- **MRR** on the **Overview** tab reflects the new subscription.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Everything is greyed out and I cannot create a plan">
+    Your payout account is not connected, or not yet able to accept charges. The banner names the reason — fix it under **Settings → Online Payments**.
+  </Accordion>
+
+  <Accordion title="Enroll member is not offered">
+    It appears only when payouts are connected **and** a plan is **Active**. A plan left at **Draft (hidden)** does not count.
+  </Accordion>
+
+  <Accordion title="A staff member cannot open Memberships">
+    "Only clinic owners and managers can manage memberships." This one is not adjustable through per-person permissions.
+  </Accordion>
+
+  <Accordion title="I cannot add an add-on">
+    "Add-ons are a Team feature." Plans themselves work from **Essential** upward, and every Enterprise hospital has both.
+  </Accordion>
+
+  <Accordion title="A plan will not delete">
+    Plans with members cannot be deleted — "archive them instead to keep billing history." Archiving stops new signups without erasing what was collected.
+  </Accordion>
+
+  <Accordion title="A member's payment failed">
+    Look under **Transactions**. An expired card needs the member to update it, not a retry.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What does ClinikEHR take?">
+    A 1.9% platform fee, stated in the page's own subheading. Your payment provider's fees are separate.
+  </Accordion>
+
+  <Accordion title="Does a member get discounted prices on invoices?">
+    Yes, where the plan includes a discount or credit. A member is badged in the invoice patient picker and member pricing applies automatically.
+  </Accordion>
+
+  <Accordion title="Can patients sign themselves up?">
+    Yes, for any plan with **List on public page** switched on. See [Membership settings](/hospital/settings/memberships).
+  </Accordion>
+
+  <Accordion title="What happens at the end of a trial?">
+    The first real charge is taken. The member's status moves from **Trial** to **Active**, and the collection appears under **Transactions**.
+  </Accordion>
+
+  <Accordion title="Can I move someone to a different plan?">
+    Yes — the **Members** tab offers a plan change on the row, without cancelling and re-enrolling.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="memberships" />
+
+{/* source of truth: components/clinic/memberships/memberships-content.tsx, .../membership-plan-form.tsx, .../enroll-member-sheet.tsx, .../members-roster.tsx, .../membership-transactions.tsx, lib/memberships/payout-gating.ts, lib/memberships/authz.ts */}

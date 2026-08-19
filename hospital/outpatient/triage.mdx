@@ -1,6 +1,6 @@
 ---
 title: Record triage and route a patient
-description: Take a patient's vital signs at triage and send them to the right department's consultation queue.
+description: "Take a patient's vital signs at triage and send them to the right department's consultation queue."
 icon: /images/icons/heart-pulse.svg
 ---
 
@@ -9,93 +9,161 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Doctors and nurses (and the clinic owner)" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctors, nurses and the owner can record; everyone else can view" note="No care area needed — Triage is always in the Enterprise sidebar" />
 
-Triage is where a patient's vital signs are recorded and where they are routed to the department that will see them. Saving a triage record is what puts the patient into a consultation queue, so nothing downstream happens until this is done.
-
-**Triage** has no care-area switch. It is always in the sidebar on the Enterprise plan, because every hospital sees patients.
+Triage is where a patient's vital signs are recorded and where they are routed to the department that will see them. Saving a triage record is what puts a patient into a consultation queue, so nothing downstream happens until this is done.
 
 <Path steps={['Sidebar', 'Outpatient', 'Triage', 'Triage List']} />
 
-<TaskHeader before="A registered patient who has paid for a consultation, unless your clinic runs in free-clinic mode" time="2 minutes" after="A triage record with vitals, and the patient waiting in the chosen department's consultation queue" />
+<TaskHeader
+  before="A registered patient who has paid for a consultation, unless your hospital runs in Free Clinic Mode"
+  time="2 minutes"
+  after="A triage record with vitals, and the patient waiting in the chosen department's consultation queue"
+/>
+
+## Before you start
+
+**Triage** has no care-area switch. It is always in the sidebar on the Enterprise plan, because every hospital sees patients.
+
+The patient must exist, and — unless Free Clinic Mode is on — must have paid for a consultation. Your departments and sub-units must also be set up, or there is nowhere to route anyone; see [Departments](/hospital/get-started/departments).
+
+## What you're looking at
+
+**Triage List** opens on a greeting and the line "Here's a list of all the patients for today!". The toolbar carries a search box — **Search for patient** — plus **New Patient**, **New Triage**, **Refresh** and **View Columns**.
+
+The list is a rolling **48-hour window**, newest first. Anything older lives on [Triage history](/hospital/outpatient/triage-history), which is the whole reason that page exists. When the window is empty you get "No recent triage data available for this clinic."
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** | The hospital number, with a badge reading **New Patient** or **Follow up** |
+| **Patient Name** | Who was triaged |
+| **Status** | **In Progress** in red, otherwise the recorded status |
+| **Blood Pressure** | The reading in mmHg, red above 140 systolic |
+| **Pulse Rate** | Beats per minute, red above 100 |
+
+Select a row, or its **⋯** menu, for **View Triage** and — for those who may record — **Update Triage**.
+
+The form itself is headed **New Triage**, **Update Triage** or **View Triage**, subtitled "Patient vital signs assessment", and holds three cards: **Patient Information**, **Department Assignment** and **Vital Signs**.
 
 <Note>
-  **The patient picker only lists patients with a valid consultation payment.** This is the single most common reason a patient you can see at the front desk does not appear at triage. If the list is empty you will read: "No patients with valid payments … This clinic requires consultation payment. Only patients who have paid for a consultation will appear here. Please process payment at the payments desk first." Take the payment first — see [Payments](/clinic/revenue/payments) — and the patient appears. Clinics running in free-clinic mode do not have this restriction.
+  **The patient picker only lists patients with a valid consultation payment.** This is the single most common reason a patient you can see at the front desk does not appear at triage. An empty picker reads **No patients with valid payments** — "This clinic requires consultation payment. Only patients who have paid for a consultation will appear here." and, in amber, "Please process payment at the payments desk first."
+
+  Take the payment first — see [Payments](/hospital/revenue/payments) — and the patient appears. Hospitals with **Free Clinic Mode** switched on under [Billing settings](/hospital/settings/billing) have no such restriction; their picker simply says "Start typing to search patients...".
 </Note>
 
 ## Record the triage
 
 <Steps>
   <Step title="Open a new triage record">
-    On the **Triage** list, select **New Triage**. The list itself only shows the last 48 hours; when there is nothing in that window it reads "No recent triage data available for this clinic." Anything older is under **Triage History**.
-
-    If the patient is not registered yet, select **New Patient** from the same toolbar, or use **Search for patient** to find someone already on the list.
+    On **Triage List**, select **New Triage**. If the patient is not registered yet, select **New Patient** from the same toolbar first.
   </Step>
   <Step title="Choose the patient">
-    The form is headed **New Triage**, with the subtitle "Patient vital signs assessment". Choose the patient in the **Patient Information** card.
-
-    If the patient has paid for exactly one department, that department is selected for you.
+    Search the picker in **Patient Information**. The panel then lists the patient's **Paid Departments:** with how long each payment has left — `2 days remaining`, `18h left`.
   </Step>
   <Step title="Assign the department and sub-unit">
-    Tick the departments — and sub-units where they exist — that should see this patient. Each one tells you what it does: "Patient will appear in this department's consultation queue".
+    In **Department Assignment**, tick the departments and, under **Sub-Units / Specialties**, the sub-units that should see this patient. The panel confirms what will happen: "Patient will appear in this department's consultation queue", or "multiple consultation queues" if you tick more than one. **Clear** resets both lists.
 
-    Select **Clear** to start the assignment again.
+    A department the patient has not paid for is disabled and carries a **Not Paid** badge. If they have paid for exactly one, it is ticked for you.
   </Step>
   <Step title="Enter the vital signs">
-    Fill in the **Vital Signs** card. Nothing is mandatory; record what you took.
+    Fill in **Vital Signs**. Nothing is mandatory — record what you took. Each field shows its normal range underneath.
 
-    | Field | Notes |
-    | --- | --- |
-    | **Blood Pressure (mmHg)** | Entered as one value, `e.g. 120/80` |
-    | **Pulse Rate** | Beats per minute |
-    | **Temperature** | In your clinic's usual unit |
-    | **Respiratory Rate** | Breaths per minute |
-    | **Oxygen Saturation** | Percentage |
-    | **Weight** and **Height** | BMI is calculated from these two |
-    | **Fasting Blood Sugar** |  |
-    | **Random Blood Sugar** |  |
+    | Field | Example | Normal |
+    | --- | --- | --- |
+    | **Blood Pressure (mmHg)** | `e.g. 120/80` | 90-140/60-90 |
+    | **Pulse Rate (bpm)** | `e.g. 75` | 60-100 |
+    | **Temperature (°C)** | `e.g. 37.0` | 35-37.5 |
+    | **Respiratory Rate (bpm)** | `e.g. 16` | 12-20 |
+    | **Oxygen Saturation (%)** | `e.g. 98` | 95-100 |
+    | **Weight (kg)** · **Height (cm)** | `e.g. 70` · `e.g. 170` | — |
+    | **Fasting Blood Sugar (mg/dL)** | `e.g. 90` | 70-100 |
+    | **Random Blood Sugar (mg/dL)** | `e.g. 140` | 70-140 |
 
-    BMI appears on its own as soon as both weight and height are in, with an **Underweight**, **Normal**, **Overweight** or **Obese** badge beside it.
+    **Body Mass Index (BMI)** appears on its own as soon as both weight and height are in, with an **Underweight**, **Normal**, **Overweight** or **Obese** badge beside it.
   </Step>
   <Step title="Save">
-    Select **Save Triage**, or press Ctrl\+S (⌘\+S on a Mac). You will see the toast "Triage record created successfully".
+    Select **Save Triage**, or press Ctrl\+S (⌘\+S on a Mac). You will see "Triage record created successfully". Escape closes the form without saving.
   </Step>
 </Steps>
 
 ## Abnormal readings
 
-A value outside the normal range turns its field red and shows an **Abnormal** chip. This is a flag for the clinician, not a block — an abnormal reading never stops you saving, because the reading you took is the reading you record.
+A value outside the normal range turns its field red and pins an **Abnormal** chip to the corner. This is a flag for the clinician, not a block — an abnormal reading never stops you saving, because the reading you took is the reading you record.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Triage List** and view a record | Any clinical role the Outpatient group is shown to | Role Navigation |
+| Create a triage record | Doctors, nurses and the owner | Role — this is a fixed rule, not a permission slug |
+| Update the vitals on a record | Doctors, nurses and the owner | Role |
+| Change the department after saving | Nobody | Not possible — see the FAQ |
+| Register a patient from the toolbar | Roles with access to patient records | Role Navigation on **Patients** |
+
+Everyone else opens the form read-only, with no save button and no error to explain it — a blocked save answers "Only doctors and nurses can modify triage records". If **New Patient** is greyed out, the tooltip says "Your role does not have access to patient records. Ask your clinic administrator."
+
+Two behaviours worth knowing. Permission enforcement across the product is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And hiding a module from a role in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary: a denied action is recorded in the audit log, an allowed one is not.
 
 ## Check it worked
 
-The new record is at the top of the **Triage** list, and the patient now appears in the consultation queue for every department you ticked. Open [Consultation](/hospital/outpatient/consultation), choose that department, and the patient is there with a **Pending** status.
+- The new record is at the top of **Triage List** with today's time against it.
+- Open [Consultation](/hospital/outpatient/consultation), choose that department, and the patient is in the queue.
+- The **Patient ID** badge reads **Follow up** rather than **New Patient** the next time they are triaged.
 
 <AuditNote action="Opening or saving a triage record" />
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="The patient is not in the list">
-    Almost always the consultation payment. Check the empty-state message: if it mentions valid payments, the patient needs to pay at the payments desk first. If the patient is genuinely new, register them with **New Patient** from the triage toolbar or in [Patients](/hospital/front-desk/patients).
+  <Accordion title="The patient is not in the picker">
+    Almost always the consultation payment. If the empty state mentions valid payments, the patient must pay at the payments desk first. If they are genuinely new, register them with **New Patient**.
   </Accordion>
 
-  <Accordion title="The fields are read-only and I cannot save">
-    Only doctors and nurses — and the clinic owner — can create or edit a triage record. Everyone else gets the form in read-only mode, and a blocked save shows "Only doctors and nurses can modify triage records". Ask an owner or manager to check your role in [Roles](/platform/team/roles).
+  <Accordion title="The fields are read-only and there is no save button">
+    Only doctors, nurses and the owner may record triage. Everyone else gets the read-only view. Ask an owner or manager to check your role — see [Roles](/platform/team/roles).
   </Accordion>
 
-  <Accordion title="There is no Triage in my sidebar">
-    Triage exists only on the **Enterprise** plan, where the hospital's service-line navigation lives. There is no care area to check — if the workspace is on Enterprise, **Outpatient → Triage** is there. See [Change your plan](/platform/plans/change-plan).
+  <Accordion title="A department is greyed out with a 'Not Paid' badge">
+    The patient has paid for a consultation in a different department. Either route them where they paid, or take the extra payment at the desk and reopen the form.
   </Accordion>
 
   <Accordion title="An older record has disappeared from the list">
-    The list is a rolling 48-hour window. Older records are under **Triage History**.
+    The list is a rolling 48-hour window. Everything older is on [Triage history](/hospital/outpatient/triage-history).
   </Accordion>
 
-  <Accordion title="The patient went to the wrong department">
-    Open the record from the list, change the assignment on the **Update Triage** form and save again. The patient moves to the new department's queue.
+  <Accordion title="I sent the patient to the wrong department">
+    Departments cannot be changed after saving — the form says "Departments cannot be changed after creation", because a queue entry has already been created elsewhere. Record a new triage for the correct department, and ask that department to close the wrong entry.
+  </Accordion>
+
+  <Accordion title="My save failed and the form emptied">
+    Triage has no offline capture. If the connection dropped you will have seen "You're offline" and the save fails with "Failed to save triage record". Reconnect and re-enter the vitals — nothing was kept.
   </Accordion>
 </AccordionGroup>
 
-<StillStuck />
+## FAQ
 
-{/* source of truth: components/clinic/triage/new-triage-form.tsx, triage-actions.tsx, lib/clinic-nav-registry.ts */}
+<AccordionGroup>
+  <Accordion title="Can one patient go to more than one department?">
+    Yes. Tick several departments or sub-units and the patient joins each of their consultation queues. The panel changes to read "multiple consultation queues" so you know what you are about to do.
+  </Accordion>
+
+  <Accordion title="Is the BMI stored on the record?">
+    No. It is worked out on screen from the weight and height you enter, so it is always consistent with them. The two measurements are what is kept.
+  </Accordion>
+
+  <Accordion title="Does an abnormal reading alert anybody?">
+    No. It colours the field and shows an **Abnormal** chip for the person in front of the screen. Escalation is a clinical decision, not an automatic one.
+  </Accordion>
+
+  <Accordion title="What does 'Free Clinic Mode' change?">
+    It removes the payment requirement from the picker, so every registered patient can be triaged. It is under [Billing settings](/hospital/settings/billing) — "Enable this if your clinic provides free services. All charges will be disabled."
+  </Accordion>
+
+  <Accordion title="Can I update the vitals later?">
+    Yes — open the record and select **Update Triage**. Only the nine vital signs are editable; the routing is fixed at creation.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="triage" />
+
+{/* source of truth: components/clinic/triage/ (new-triage-form.tsx, triage-actions.tsx, table-columns.ts), db/queries/triage-patients.ts, lib/clinic-nav-registry.ts */}

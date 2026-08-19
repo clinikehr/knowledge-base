@@ -1,0 +1,167 @@
+---
+title: "Lab station"
+description: "Read your laboratory's own numbers, maintain the test catalogue behind every request, and generate an AI lab report."
+icon: "/images/icons/microscope.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+
+**Lab Station** is the laboratory's own dashboard: how much work came through, how fast it went, and the catalogue of tests that every request is built from. It is where a lab manager looks, not where a bench scientist records a result.
+
+<Path steps={['Sidebar', 'Laboratory', 'Lab Station']} />
+
+<TaskHeader
+  before="The Diagnostics care area switched on"
+  time="Two minutes to add a test to the catalogue"
+  after="A catalogue the ordering form can offer, and a read on how the lab is running"
+/>
+
+## What you're looking at
+
+A date range picker sets the period every figure on the page is measured over, and **New Lab Test** jumps straight to the ordering form. Three tabs divide the screen.
+
+| Tab | What it is for |
+| --- | --- |
+| **Analytics** | The lab's numbers for the chosen period |
+| **Test List** | The catalogue of tests your hospital offers |
+| **Reports** | AI-written lab reports |
+
+### Analytics
+
+Four tiles run across the top — **Total Lab Tests**, **Pending Tests**, **Completed Tests** and **Critical Results** — each with a week-on-week comparison and a second line (**Awaiting processing**, a completion rate, **Requires immediate attention**).
+
+Under them sit seven charts: **Test Volume Trends**, **Most Requested Tests**, **Turnaround Time**, **Staff Performance**, **Test Type Distribution**, **Patient Demographics** and **Test Correlations**. Turnaround is shown in hours against a target line, which is the fastest way to see whether a backlog is real or seasonal.
+
+### Test List
+
+This is the catalogue, and it is what the ordering form searches. Columns are **Test Name**, **Category**, **Department**, **Price**, **Parameters**, **Usage Count** and **Created**. A test with no category shows **Uncategorized**, and a test with no price shows **N/A**.
+
+An empty catalogue reads **No lab tests found for this clinic**; a search with no match reads **No lab tests match your search**.
+
+### Reports
+
+**Lab AI Reports** generates a written commentary on the period. Eight report types are offered on the left, under **Select a lab report type**: **Comprehensive**, **Test Trends**, **Staff Performance**, **Department Distribution**, **Parameter Abnormality**, **Critical Results**, **Patient Demographics** and **Test Correlations**. Before anything is generated the right pane says **No Report Selected**.
+
+## Maintain the test catalogue
+
+Every parameter you define here becomes a field on the results form, and every reference range you set is what prints on the report. This is the highest-leverage screen in the laboratory.
+
+<Steps>
+  <Step title="Open the Test List tab">
+    Find an existing test with **Search lab tests**, or use **View Columns** → **Toggle columns** to show what you need.
+  </Step>
+  <Step title="Add a test">
+    Select **New Test Record** and give it a name, a category, a department, a price and its parameters with their reference ranges. It becomes available to the ordering form immediately.
+  </Step>
+  <Step title="Edit or inspect an existing one">
+    The row menu offers **View Details**, **Edit Details** and **Delete Test**. **Usage Count** tells you how often a test is actually ordered, which is the honest way to decide whether it belongs in the catalogue.
+  </Step>
+  <Step title="Delete only what nobody uses">
+    **Delete Test** asks first: "Are you sure you want to delete …? This action cannot be undone." Results already recorded against past requests are unaffected — you are removing the test from the menu, not from history.
+  </Step>
+  <Step title="Refresh">
+    **Refresh** re-reads the catalogue and confirms with **Lab tests refreshed**.
+  </Step>
+</Steps>
+
+## Generate a lab report
+
+<Steps>
+  <Step title="Pick the report type">
+    Choose one of the eight on the left. **Comprehensive** covers the lot; the others answer one question each.
+  </Step>
+  <Step title="Select Generate Report">
+    The button reads **Generating...** while it runs. The finished report is dated — **Generated \{date\}**, or **Regenerated \{date\}** if you have run it again.
+  </Step>
+  <Step title="Read it before you circulate it">
+    This text is written by AI from your lab's own figures. Treat it as a first draft: check the numbers against the Analytics tab, and never send it out unread.
+  </Step>
+  <Step title="Export it">
+    **Export** offers **Export as PDF** and **Export as Word**. **Regenerate** produces a fresh version over the same period.
+  </Step>
+</Steps>
+
+Before anything has been generated the pane reads **No lab report available**, with **Generate your first lab AI report to see insights about test trends, staff performance, and lab metrics.**
+
+<AuditNote action="Opening the lab station and generating a lab report" />
+
+## Who can do this
+
+Your **role** decides whether the **Laboratory** group opens, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). Inside it:
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Read the Analytics tab | Lab and clinical staff, managers, owners | Role |
+| Add, edit or delete a catalogue test | Lab scientists, managers, owners | Role |
+| Generate and export an AI report | Lab and clinical staff | Role |
+| See prices and revenue figures | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never as a zero |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is written to the audit log**; an allowed one is not. Hiding the group from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A test you added appears when you search for it on the ordering form.
+- Its parameters appear as fields on the results form for the next request.
+- The **Total Lab Tests** tile moves when you change the date range.
+- A generated report shows **Generated \{date\}** and exports without error.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A test I added is not offered when ordering">
+    The ordering form searches this catalogue by name. Check for a typo, and check you saved the test rather than closing the form — the **Test List** tab is the source of truth.
+  </Accordion>
+
+  <Accordion title="Reports print without reference ranges">
+    Ranges come from the test definition here, not from the results form. A test defined without ranges prints without them for every patient. Edit the test and add them.
+  </Accordion>
+
+  <Accordion title="Unable to open print window. Please check your popup blocker settings.">
+    Your browser blocked the export window. Allow pop-ups for ClinikEHR and select **Export** again.
+  </Accordion>
+
+  <Accordion title="Export failed">
+    The message adds **Could not export the report. Please try again.** Regenerate the report first, then export — an export of a stale report is the usual cause.
+  </Accordion>
+
+  <Accordion title="The tiles all read zero">
+    The date range is the first thing to check; the tiles measure the period you selected, not all time. Widen the range and they repopulate.
+  </Accordion>
+
+  <Accordion title="Lab Station is missing from the sidebar">
+    It needs the Enterprise plan and the **Diagnostics** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is the AI report safe to send to a board meeting?">
+    Only after a person has read it. It is generated from your own figures but it is still generated text — check it against the Analytics tab, and edit the exported document if you need to.
+  </Accordion>
+
+  <Accordion title="Does deleting a test delete past results?">
+    No. Results already recorded stay on the patients' records. Deleting removes the test from the ordering menu only.
+  </Accordion>
+
+  <Accordion title="Where do I record an actual result?">
+    On [Lab test list](/hospital/diagnostics/laboratory) for today's requests, or on [Lab reports](/hospital/diagnostics/lab-reports) for the full order-to-report flow.
+  </Accordion>
+
+  <Accordion title="Is turnaround time measured from order or from collection?">
+    It is measured across the lab's own processing window. For the full turnaround breakdown, the Diagnostics edition documents the same figures in more depth — see [Turnaround time](/lims/lab/turnaround-time).
+  </Accordion>
+
+  <Accordion title="Can two departments have separate catalogues?">
+    Not as separate lists. Use the **Department** column on each test and filter the catalogue by it — every hospital shares one catalogue so an order never falls between two of them.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the lab station" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/lab-dashboard-content.tsx, .../test-list/, .../reports/lab-reports-dashboard.tsx */}

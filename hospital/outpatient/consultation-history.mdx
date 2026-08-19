@@ -1,0 +1,147 @@
+---
+title: Look up past consultations
+description: "Search every consultation the hospital has recorded, across all departments and all time, and read the encounter back in full."
+icon: /images/icons/clock-rotate-left.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any clinical role the Outpatient group is shown to" note="No care area needed — Consultation is always in the Enterprise sidebar" />
+
+**Consultation History** is the full record of every encounter your hospital has documented. The [consultation queue](/hospital/outpatient/consultation) only shows the last 48 hours of one department, so this is where you come for anything older — or for anything another department wrote.
+
+<Path steps={['Sidebar', 'Outpatient', 'Consultation', 'Consultation History']} />
+
+<TaskHeader
+  before="At least one saved consultation"
+  time="Under a minute"
+  after="A past encounter on screen in full, read-only"
+/>
+
+## Before you start
+
+Nothing to set up, and — unlike the queue — **no department to choose**. History is deliberately cross-department: you land straight on the table.
+
+## What you're looking at
+
+The page opens on a greeting and the line "View complete history of all consultation records". The toolbar is short by design: a search box, **Search consultations...**, and a **View** button opening **Toggle columns**. There is no department filter, no status filter, no date range and no export button — this page is for finding a record and reading it.
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** | The hospital number, with a badge for the patient type |
+| **Patient Name** | Who was seen |
+| **Status** | **Completed** in the usual case, anything else in red |
+| **Consulted by** | The clinician, as `Dr. Jane M. Doe`, or **N/A** |
+| **Date** | When the record was last updated |
+
+The row's **⋯** menu offers one action, **View details**, because history is read-only. On a phone the whole card opens it.
+
+Below the table sits the pager: **Show** … **per page** at 5, 10, 20 or 50 rows, defaulting to 10. Treat the "of \{n\}" figure as approximate — it rounds up to a whole page. An empty history reads **No consultation history available.**, and the same message appears when a search matches nothing, so clear the box before concluding a record is missing.
+
+## Find a past encounter
+
+<Steps>
+  <Step title="Search">
+    Enter a patient name, a patient ID, or the name of the clinician who wrote the note. All three are matched, so "what did Dr Okafor see last month?" is as answerable as "what happened to this patient?".
+  </Step>
+  <Step title="Narrow the table if you need to">
+    **View** opens **Toggle columns** — switch off anything you are not reading so more rows fit on a small screen.
+  </Step>
+  <Step title="Open the record">
+    Select **View details**. The header confirms what you have: **Consultation History**, "Complete consultation record for …", and the encounter's status badge.
+  </Step>
+</Steps>
+
+## Read the record
+
+The detail view holds everything that was documented, in four parts:
+
+- **Patient Information** — **Patient ID**, **Patient Type** and **Patient Name**.
+- **Consultation Information** — **Created By**, **Template Used** with its category, **Created At** and **Last Updated**.
+- **Medical Details** — the template's own sections, each as a collapsible with a **Completed** badge when it was filled in. Sections with nothing in them start closed. **Expand All** and **Collapse All** move through them at once. Older records written before templates show **Presenting Complaints**, **Examination**, **Clinical Notes** and **Plan** instead.
+- **Diagnosis & Assessment** — **ICD-10 Diagnoses** and the **Clinical Impression**.
+
+Where nothing was recorded you see **No data recorded**, **None selected** or, for a completely empty encounter, **No medical details recorded**. That is faithful reporting: history shows what was written, and never fills a gap.
+
+Select **Back** to return to the table.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Consultation History** | Any clinical role the Outpatient group is shown to | Role Navigation |
+| Read any record, from any department | Anyone who can open the page | Role |
+| Amend a record | Nobody, from this screen | History is read-only |
+
+Nothing here is gated by an individual permission slug, so no figure renders as a dash and no row quietly disappears — you either have the page or you do not. Someone who is not a member of the hospital gets an error message rather than a table.
+
+Two behaviours that surprise people. Permission enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And a denied action is recorded in the audit log while an allowed one is not — hiding a module in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary.
+
+If your hospital requires two-factor authentication, an unverified session cannot read clinical records at all. See [Two-factor authentication](/platform/security/mfa).
+
+## Check it worked
+
+- A consultation you signed appears here immediately — it does not wait 48 hours.
+- Searching a patient's name returns every encounter they have had, in every department.
+- **View details** shows the same template sections that were filled in on the chart.
+
+<AuditNote action="Opening a past consultation record" />
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A record I can see in the queue is not here">
+    It is, but a search term or a column toggle is hiding it. Clear **Search consultations...** and check the pager — records are newest first, ten at a time by default.
+  </Accordion>
+
+  <Accordion title="There is no Update option on the row">
+    Correct. The only row action is **View details**. Amendments are made from the chart on the [consultation queue](/hospital/outpatient/consultation), and only while the encounter is inside its 48-hour window — after that it stands as written.
+  </Accordion>
+
+  <Accordion title="The record says 'No medical details recorded'">
+    The encounter was created but never documented. That happens when a chart is opened and abandoned. The record is kept honestly rather than deleted.
+  </Accordion>
+
+  <Accordion title="I cannot filter by department or by date">
+    Neither filter exists here, deliberately — history is a cross-department search surface. Use the search box for a person or a clinician, and [Analytics](/hospital/executive/analytics) for anything you want grouped by period.
+  </Accordion>
+
+  <Accordion title="An error message appears instead of the table">
+    Your account is not a member of this hospital, or the connection dropped mid-load. Check the workspace switcher first, then reload.
+  </Accordion>
+
+  <Accordion title="Very old encounters seem to be missing">
+    The page loads a large but finite number of the most recent records. Search for the specific patient rather than scrolling — the search runs across everything loaded.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why are there two consultation screens?">
+    Speed. The queue answers "who is waiting in my department right now" and is capped at 48 hours so it stays short during a clinic. History answers "what was recorded for this patient", across every department and all time, and is built for searching.
+  </Accordion>
+
+  <Accordion title="Can I see another department's consultations?">
+    Yes — that is the point of this page. There is no department filter because history is not scoped to one. Every read is logged with your name against it.
+  </Accordion>
+
+  <Accordion title="Is opening a record here logged?">
+    Yes. Both the page view and the individual record are written to the audit log with your name, the record and the time. See [Audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="Can I print or export a past consultation?">
+    Not from this table. Download the signed note from the encounter itself, or use [Data export](/hospital/settings/data-export) for a bulk extract.
+  </Accordion>
+
+  <Accordion title="Why is the Date sometimes later than the visit?">
+    **Date** is when the record was last updated. A clinician unlocking a note to correct it moves the record up the list, which is what you want when reviewing recent activity.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="consultation history" />
+
+{/* source of truth: app/u/clinic/consultation/history/, components/clinic/consultation-history/ (consultation-history-actions.tsx, table-columns.ts, past-consultation-form.tsx), lib/clinic-nav-registry.ts */}

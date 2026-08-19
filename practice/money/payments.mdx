@@ -1,0 +1,166 @@
+---
+title: Record and collect payments
+description: "Record a cash or transfer payment against an invoice, or send a secure payment link so the client can pay online."
+icon: /images/icons/hand-coins.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Anyone permitted to add payments" note="Payment links need a connected payment account" />
+
+Money arrives two ways: somebody hands it over at the desk and you record it, or you send them a link and they pay by card. This page covers both, and how to see what is still outstanding.
+
+<Path steps={['Sidebar', 'Billing', 'Payments']} />
+
+<TaskHeader
+  before="An invoice with a balance due"
+  time="Under a minute"
+  after="A recorded payment and an invoice that reflects it"
+/>
+
+## What you're looking at
+
+**Payments** sits under **Billing** in the sidebar. The page is headed **Payments Management** — "Process and track payments from patients for services, medications, and more" — with **Refresh** and **New Payment** in the header, the latter for a payment that is not tied to an invoice you already have open.
+
+| Tab | Shows |
+| --- | --- |
+| **Overview** | The money picture — what came in, how, and when |
+| **Payments** | Every payment recorded, newest first |
+| **Pending** | What is still owed |
+
+A new practice sees all three empty. The **Pending** tab is the one to watch daily: it is your outstanding balance, in your practice's currency, and it should shrink as you work it.
+
+## Record a payment against an invoice
+
+This is the usual route, because it settles a specific balance.
+
+<Steps>
+  <Step title="Open the invoice's actions">
+    Find the invoice under **Billing** → **Invoices** and select **Record Payment**. The dialog names what you are settling: "Record a payment for invoice \{number\} — balance due \{amount\}".
+  </Step>
+  <Step title="Check the amount">
+    **Amount** is prefilled with the balance due. Overtype it for a part payment — the invoice then reads **Partially Paid** and keeps the remainder outstanding.
+  </Step>
+  <Step title="Choose the method">
+    **Payment Method** defaults to **Cash**; the others are **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other**. Set it to what actually happened: the **Overview** tab breaks takings down by method, and a bank transfer logged as cash quietly ruins that.
+  </Step>
+  <Step title="Add a reference">
+    **Reference (optional)** takes the transfer reference, cheque number or terminal receipt number — "Transaction / receipt reference". It is what makes a payment findable when a client queries it three months later. **Notes (optional)** carries anything else.
+  </Step>
+  <Step title="Select Record Payment">
+    You get a **Payment recorded** confirmation, and the invoice's balance drops immediately.
+  </Step>
+</Steps>
+
+<Warning>
+  Once a payment is recorded against an invoice, that invoice can no longer be deleted — only cancelled. Record against the right invoice: correcting one afterwards is a deliberate, recorded reversal, not a quiet edit.
+</Warning>
+
+## Send a payment link instead
+
+If the client is not standing in front of you, send them a link and let them pay by card.
+
+<Steps>
+  <Step title="Open the client's record and start a payment">
+    Choose **Send payment link** — "Collect payment via a secure link sent to contact". The **Send secure payment link** panel opens: "We'll send a Stripe Checkout link to the patient. They can pay using their card without you seeing their details."
+  </Step>
+  <Step title="Enter where it goes">
+    **Recipient Email Address** is the address that receives the link. It does not have to be the address on the record.
+  </Step>
+  <Step title="Select Send Link">
+    A toast confirms it went. The email tells the client the link **expires in 24 hours**, and invites them to reply for a fresh one if it lapses.
+  </Step>
+</Steps>
+
+The panel states the cost in the same breath: "A 1.9% platform fee will be auto-deducted from this transaction by Stripe."
+
+<Note>
+  Payment links need a connected payment account under **Settings** → **Online Payments**. A practice collecting through Paystack cannot use Stripe links — the product says so: "This clinic collects payments via Paystack — Stripe payment links are not available." Send your bank details on the invoice instead, via [Payment details](/practice/settings/payment-details).
+</Note>
+
+To charge a card on file automatically after an appointment rather than asking each time, see [Auto Pay](/practice/settings/auto-pay).
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Payments** | Owner, manager, front desk | Role — no permission of its own |
+| Record a payment | Front desk, billers | **Add client payments** |
+| Send a payment link | Front desk, billers | **Add client payments** |
+| Record an insurer's payment | Billers | **Add insurance payments** |
+| Reverse or refund a payment | Owner, manager | **Refund payments** |
+| See the figures on **Overview** | Owner, manager | **View financial dashboard** |
+| Open the payment reports | Owner, manager, billers | **View Payment Reports** |
+
+Adding and reversing are deliberately separate: taking money is a daily job, and putting it back is not.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Payments** from a sidebar tidies the rail; the permission is the boundary.
+
+A figure you may not see renders as a dash, not a zero. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The payment is listed under **Payments** with the method and the reference you entered.
+- The invoice shows **Paid**, or **Partially Paid** with the correct remaining balance.
+- The **Pending** tab no longer lists that balance.
+- For a payment link: the client received the email, and the payment appears once they have paid.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The prefilled amount is not what they paid">
+    Overtype it. The prefill is the balance due, not a fixed value, and a part payment is a normal thing to record.
+  </Accordion>
+
+  <Accordion title="I recorded a payment against the wrong invoice">
+    Do not try to delete the invoice — you cannot once it has a payment on it. Reverse the payment and record it correctly. Reversing is a separate permission from adding, so you may need an owner or manager.
+  </Accordion>
+
+  <Accordion title="Send payment link is not offered">
+    Either no payment account is connected under **Settings** → **Online Payments**, or your practice collects through Paystack and the link in question is Stripe-only. Connect an account, or send the invoice with your bank details on it.
+  </Accordion>
+
+  <Accordion title="The client says the link no longer works">
+    Links expire 24 hours after they are sent. Send a fresh one.
+  </Accordion>
+
+  <Accordion title="They paid online but the invoice still says Pending">
+    Online payments record themselves, but not always instantly. **Refresh** the **Billing** page before recording it by hand — recording it manually as well double-counts the money.
+  </Accordion>
+
+  <Accordion title="Figures on the Overview tab show as dashes">
+    You may open the screen but not see the financial figures. Viewing the financial dashboard and viewing payment reports are separate permissions — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I record a payment with no invoice?">
+    Yes — **New Payment** on the **Payments** page. Attach it to an invoice when you can, though; an unattached payment settles no balance and shows up as a reconciliation puzzle later.
+  </Accordion>
+
+  <Accordion title="Does recording a payment send a receipt?">
+    Not automatically. Download the invoice PDF, which then shows what has been paid — see [Create and send an invoice](/practice/money/invoices).
+  </Accordion>
+
+  <Accordion title="Why does Collected this month not match my bank?">
+    It counts payments recorded in ClinikEHR, not settlements landing in your account. Your provider pays out on its own schedule. See [The executive dashboard](/practice/insights/dashboard).
+  </Accordion>
+
+  <Accordion title="Can a client pay part of a payment link?">
+    No. A link settles the invoices it covers in full. For a part payment, take it at the desk and record it against the invoice.
+  </Accordion>
+
+  <Accordion title="What currency does the link charge in?">
+    Your practice's currency, set under **Settings** → **Billing** — see [Currency](/platform/settings/currency).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a payment" />
+
+{/* source of truth: components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/billing/invoice-actions.tsx, components/clinic/clients-management/record-payment-sheet.tsx, lib/clinic-nav-registry.ts */}

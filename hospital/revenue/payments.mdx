@@ -1,0 +1,179 @@
+---
+title: Record and collect payments
+description: "Record what a patient pays at the desk, send a secure payment link, chase what is outstanding, and void a payment taken in error."
+icon: /images/icons/hand-coins.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise; payment links need a connected payment account" roles="Anyone permitted to add payments" />
+
+Money reaches a hospital two ways: somebody hands it over at a desk and you record it, or you send a link and they pay by card. **Payments Management** covers both, and shows what is still outstanding.
+
+<Path steps={['Sidebar', 'Billing', 'Payments']} />
+
+<TaskHeader before="An invoice with a balance due, or a service to charge for" time="Under a minute" after="A recorded payment and an invoice that reflects it" />
+
+## What you're looking at
+
+The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". A date-range picker, **Refresh** and **New Payment** sit beside it.
+
+Three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | **Total Collected**, **Pending Balance**, **Recent Payments** and **Top Method**, with a method breakdown and recent activity |
+| **Payments** | Every payment recorded, searchable and filterable |
+| **Pending** | Patients with an outstanding balance |
+
+The **Payments** table shows **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**. **Filter by Method** narrows it to **Cash**, **Card**, **Bank Transfer**, **Mobile Money** or **Insurance**. Each row's **Actions** menu offers **View Details**, **Download Receipt**, **Void Payment**, **Copy Payment ID** and **Copy Payment Info**.
+
+The **Pending** table lists **Patient Name**, **Patient ID**, **Items**, **Oldest Item** and **Total Pending**, with **Process Payment** on the row. **Oldest Item** is what to sort a chase list by.
+
+**Empty states.** With nothing outstanding, **Pending** reads **No Pending Payments** and "All patients have cleared their pending payments. Great job!" A search that matches nobody says "No patients found matching your search with pending payments." instead.
+
+## Record a payment against an invoice
+
+This is the usual route, because it settles a specific balance.
+
+<Steps>
+  <Step title="Find the invoice">
+    Under **Billing → Invoices**, open **Invoice Actions** and select **Record Payment**. The dialog names the invoice and its balance due.
+  </Step>
+  <Step title="Check the amount">
+    **Amount** is prefilled with the balance due. Overtype it for a part payment — the invoice then reads **Partially paid** and keeps the remainder outstanding. Zero is refused: "Enter an amount greater than zero".
+  </Step>
+  <Step title="Choose the method">
+    **Payment Method** defaults to **Cash**, with **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other** alongside. Record what actually happened — the **Overview** tab breaks takings down by method, and a transfer logged as cash quietly ruins that.
+  </Step>
+  <Step title="Add a reference and save">
+    **Reference (optional)** takes the transfer reference, cheque number or terminal receipt number. It is what makes a payment findable when a patient queries it months later. Select **Record Payment**: you get **Payment recorded** and the balance drops immediately.
+  </Step>
+</Steps>
+
+## Take a payment with no invoice behind it
+
+**New Payment** opens a fuller form for money taken at a desk against services rather than a bill.
+
+<Steps>
+  <Step title="Choose the patient">
+    **Patient Details** searches with "Search for a patient...". Any consultation or flat-rate credits they hold are shown here.
+  </Step>
+  <Step title="Pick what is being paid for">
+    **Payment Items** — "Select what is being paid for" — has two inner tabs: **Direct Payment** for services and consultation rates, and **Pay Invoice** to settle an existing bill. Each item takes a **Pay:** amount, so a part payment is badged **Partial Payment**.
+  </Step>
+  <Step title="Set the method and amount">
+    **Payment Method** offers six tiles — **Cash**, **Card**, **Insurance**, **Mobile Money**, **Bank Transfer** and **Other** — then **Amount to Pay**, **Reference (Optional)** and **Notes (Optional)**.
+  </Step>
+  <Step title="Process it">
+    A **Payment Successful** dialog shows the reference, date and method, and offers **Print Receipt**. Part-paid items are called out: "⚠️ This includes partial payments. Some items have remaining balances."
+  </Step>
+</Steps>
+
+<AuditNote action="Recording, viewing or voiding a payment" />
+
+## Send a payment link instead
+
+If the patient is not in front of you, send a link and let them pay by card.
+
+<Steps>
+  <Step title="Open the patient's record">
+    Select **Send payment link** — "Collect payment via a secure link sent to contact".
+  </Step>
+  <Step title="Choose what it covers">
+    Pick the invoices the link should settle, then enter the **Recipient Email Address**.
+  </Step>
+  <Step title="Send it">
+    Select **Send Link**. You get "Payment link sent to \{email\}", and the invoices it covers are marked as sent.
+  </Step>
+</Steps>
+
+<Note>
+  **A payment link expires 24 hours after it is sent** — the email says so, and offers a fresh one on request. Links also need a connected payment account under **Settings → Online Payments**. A hospital collecting through Paystack cannot use Stripe links: "This clinic collects payments via Paystack — Stripe payment links are not available." Send your bank details on the invoice instead.
+</Note>
+
+## Void a payment taken in error
+
+<Warning>
+  Voiding is the only way back, and only these roles can do it: "Only a clinic owner, manager or accountant can void a payment." The dialog explains what happens — the payment "will be marked voided and the invoice balance restored. The record is kept for your books and audit trail." Give a **Reason (optional)** anyway; a voided payment with no reason is a question somebody will ask later.
+</Warning>
+
+Nothing is deleted. The voided row stays visible, struck through and badged **Voided**, and the invoice returns to its outstanding balance.
+
+## Who can do this
+
+**Role** decides whether **Payments** opens; an owner sets that per role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do inside:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Record a payment | Front desk, billers | **Add client payments** |
+| Record an insurer's settlement | Billers | **Add insurance payments** |
+| See the money figures on **Overview** | Owners, managers, executives | **View financial dashboard** |
+| Open the payment reports | Owners, managers, billers | **View Payment Reports** |
+| Reverse money already taken | Owners, managers, accountants | **Refund payments**, plus a server check nobody bypasses |
+
+Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. A figure not yours to see shows as a dash, never as **0**.
+
+## Check it worked
+
+- The payment is under **Payments** with your name in **Received By**, the method and your reference.
+- The invoice reads **Paid**, or **Partially paid** with the correct remaining balance.
+- The **Pending** tab no longer lists that balance.
+- A voided payment is struck through and badged **Voided**, and the invoice balance is back.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The prefilled amount is not what they paid">
+    Overtype it. The prefill is the balance due, not a fixed value.
+  </Accordion>
+
+  <Accordion title="I recorded a payment against the wrong invoice">
+    Void it with a reason, then record it correctly. You cannot delete an invoice once it has a payment, and voiding is limited to owners, managers and accountants.
+  </Accordion>
+
+  <Accordion title="Send payment link is not offered, or is refused">
+    Either no account is connected under **Settings → Online Payments**, or your hospital collects through Paystack and Stripe links are unavailable. There is also a small minimum amount.
+  </Accordion>
+
+  <Accordion title="The patient says the link no longer works">
+    Links last 24 hours. Send a fresh one.
+  </Accordion>
+
+  <Accordion title="They paid online but the invoice still says Pending">
+    Online payments record themselves, but not always instantly. Select **Refresh** before recording it by hand — recording it manually as well would double-count the money.
+  </Accordion>
+
+  <Accordion title="Figures on Overview show as dashes">
+    You may open the screen but not see the financial figures. Viewing the dashboard and viewing payment reports are separate permissions.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What is the difference between a direct payment and an invoice payment?">
+    A direct payment is money taken against a service with no bill raised — common at a hospital front desk. An invoice payment settles a specific document. Both appear under **Payments**.
+  </Accordion>
+
+  <Accordion title="Does voiding refund the patient's card?">
+    No. It corrects your record and restores the invoice balance. Returning money charged to a card is done with your payment provider.
+  </Accordion>
+
+  <Accordion title="Where do pharmacy counter takings appear?">
+    In [Pharmacy sales](/hospital/pharmacy/sales), not here. A counter sale is settled on the spot and is not an invoice.
+  </Accordion>
+
+  <Accordion title="Can I print a receipt later?">
+    Yes — **Download Receipt** on the payment's row, or **Print Receipt** from the payment view.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a payment" />
+
+{/* source of truth: components/clinic/dashboard/payments/payments-content-dashboard.tsx, .../payments-table.tsx, .../pending-payments-table.tsx, .../payments-form.tsx, components/clinic/dashboard/billing/invoice-actions.tsx, .../invoice-payments-dialog.tsx, app/api/stripe/create-payment-link/route.ts */}

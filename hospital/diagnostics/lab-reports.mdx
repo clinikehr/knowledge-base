@@ -1,0 +1,173 @@
+---
+title: "Lab reports"
+description: "Order a lab test, take payment, enter results against every parameter, and print or download the finished report."
+icon: "/images/icons/file-lines.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+
+**Lab Reports** is the laboratory's full surface: **Manage and track laboratory test results.** Ordering, payment, result entry, printing and the day's numbers all live here, on one screen.
+
+<Path steps={['Sidebar', 'Laboratory', 'Lab Reports']} />
+
+<TaskHeader
+  before="At least one test in your catalogue, and a registered patient"
+  time="Two minutes to raise an order"
+  after="A completed test and a printable report"
+/>
+
+## What you're looking at
+
+A period select — **Today**, **Last 7 Days**, **This Month** or **All Time** — sets what every figure is measured over, and **New Report** opens the ordering form. Four tabs divide the screen: **Overview**, **Lab Reports**, **Analytics** and **Reports**.
+
+**Overview** carries four tiles: **Total Tests**, **Pending Tests**, **Completed** and **Critical Results**, with **Test Volume Trends** and **Status Distribution** beneath them and a **Recent Lab Reports** list at the bottom. A quiet period reads **No lab reports found for this period**.
+
+The **Lab Reports** tab is the working list — **Complete list of all laboratory tests** — with **Search reports...** and a status filter offering **All Status**, **Pending**, **In Progress**, **Completed** and **Cancelled**.
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** · **Patient Name** | Who |
+| **Test Name** | What was ordered |
+| **Status** | **Pending**, **In Progress**, **Completed** or **Cancelled** |
+| **Date Ordered** · **Ordered By** | When, and which clinician |
+| **Payment** | **Paid**, **Partial** or **Pending** |
+
+A **Critical** badge replaces the status badge when the test carries critical values, so an urgent result is never buried behind a routine one. With nothing matching, the table reads **No lab reports found** / **Try adjusting your search or filter criteria**.
+
+Each row's **Actions** menu offers, in order: **View Details**, **Start Test**, **Enter Results**, **Edit Results**, **Cancel Test**, **Print Report** and **Print Receipt**.
+
+## Order a test
+
+<Steps>
+  <Step title="Select New Report">
+    The form opens as **New Lab Test Order** — **Create a new lab test order for a patient.**
+  </Step>
+  <Step title="Find the patient">
+    Under **Patient Details**, use **Select Patient** and search by name, ID, phone or email. Their ID, age and gender appear as chips so you can check you have the right person.
+  </Step>
+  <Step title="Choose the tests">
+    **Select Lab Test** — **Choose a test to order** — searches your catalogue. Optionally narrow it with **Select Parameters**; leave that empty to include every parameter the test defines. Select **Add to Order**.
+  </Step>
+  <Step title="Attribute it and add notes">
+    Under **Additional Notes**, set the **Referring Doctor / Facility** if the request came from outside. Attributed tests and completed results appear in that referrer's portal — see [Referring doctors](/hospital/diagnostics/referrers).
+  </Step>
+  <Step title="Check the money">
+    **Order Summary** → **Order Items** shows subtotal, tax, any flat-rate credit and the **Total Amount**. Tick **Collect Payment Now** and pick a **Payment Method** to take it at the desk; leave it, and the order carries **Payment Pending** with the balance shown.
+  </Step>
+  <Step title="Create the order">
+    **Create Lab Orders (\{n\})**, or **Create &amp; Pay (\{n\})** when collecting. The confirmation offers **Print Receipt**.
+  </Step>
+</Steps>
+
+## Enter and release results
+
+<Steps>
+  <Step title="Start the test">
+    **Start Test** moves the row to **In Progress** and confirms with **Test marked as in progress**. That is what tells the rest of the hospital the sample is on the bench rather than lost.
+  </Step>
+  <Step title="Enter the values">
+    **Enter Results** opens the form on **Test Parameters**, which counts your progress as **\{n\} / \{n\} parameters filled**. Each field shows **Reference: \{range\}** beneath it, and a value outside its range raises an **Abnormal** or **Critical** badge as you type.
+  </Step>
+  <Step title="Save">
+    **Save Results**, or **Save Results &amp; Pay** if a balance is outstanding. The confirmation warns **Critical values detected!** where any parameter is critical — **Please notify the appropriate personnel.**
+  </Step>
+  <Step title="Correct one if you must">
+    **Edit Results** reopens a completed test. The change is recorded with your name and the time; a corrected result is a new clinical statement, not a quiet edit.
+  </Step>
+</Steps>
+
+<Warning>
+  Moving a test to **Completed** is the release, not a housekeeping step — it is what turns a set of numbers into a result other clinicians will act on. A test that is not completed is preliminary and must never leave the building looking final. Print nothing, and send nothing, until it is.
+</Warning>
+
+## Print or download
+
+**Print Report** produces the clinical document. **Print Receipt** prints the money slip — they are different documents and are never interchangeable. Opening a report in view mode also offers **Download report**, which shows **Preparing…** while the file is built and confirms with **Laboratory report downloaded**.
+
+<AuditNote action="Opening, printing and downloading a lab result" />
+
+## Working offline
+
+Ordering keeps working. An order raised offline is held on the device and confirmed as **Lab order saved offline**, with a provisional reference and the note that it "syncs when the connection returns; payment stays pending." A connection that drops mid-save gives **Connection dropped — lab order queued** instead. Payment is never taken offline; settle it at the desk once you are back online. See [Working offline](/platform/apps/offline).
+
+## Who can do this
+
+**Role** decides whether this page opens — owners, lab scientists, doctors, managers and nurses pass; anyone else is told **You don't have permission to access Lab Reports. Please contact your clinic administrator.** An owner can also hide **Laboratory** from a role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Read the list and open a report | Lab and clinical staff | Role |
+| Order a test | Lab and clinical staff | Role |
+| Enter or edit results | Lab scientists | Role — anyone else gets **You are not authorized to submit lab results.** |
+| Take payment on the order | Staff with billing rights | Permission |
+| See revenue on the Analytics tab | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The row shows **Completed**, with **\{n\} / \{n\} parameters filled** on the form.
+- The **Payment** badge reads **Paid**, or **Pending** with a balance you meant to leave.
+- **Print Report** produces a document with no preliminary stamp.
+- The result appears on the ordering [consultation](/hospital/outpatient/consultation) under **Results**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="You are not authorized to submit lab results.">
+    Result entry is restricted by role. Ask an owner to correct your role under [Staff](/hospital/settings/staff), or have a lab scientist enter the values.
+  </Accordion>
+
+  <Accordion title="Please add at least one lab test to the order.">
+    You have a patient but an empty basket. Search the catalogue, select a test and use **Add to Order** before saving.
+  </Accordion>
+
+  <Accordion title="No lab tests found">
+    The catalogue has nothing matching. **Add New Test** on the picker takes you straight there — see [Lab station](/hospital/diagnostics/lab-station).
+  </Accordion>
+
+  <Accordion title="Save the lab test before downloading its report.">
+    You are trying to download a report for an order that has not been saved yet. Save it, reopen it, then use **Download report**.
+  </Accordion>
+
+  <Accordion title="Lab tests ordered. Payment failed">
+    The order exists; only the payment did not go through. It carries **Payment Pending** with the outstanding balance — take it again from [Billing](/hospital/revenue/billing) rather than re-ordering the test.
+  </Accordion>
+
+  <Accordion title="No lab reports found for this period">
+    The period select is the first thing to check. It defaults to **All Time**, so a narrower choice is usually what emptied the screen.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I cancel a test after ordering it?">
+    Yes — **Cancel Test** on the row, confirmed with **Test cancelled**. Cancelling does not refund a payment already taken; handle that in [Billing](/hospital/revenue/billing).
+  </Accordion>
+
+  <Accordion title="What does the Critical badge actually mean?">
+    At least one parameter fell outside its critical range. It replaces the status badge deliberately, so a critical result cannot be missed while scanning a busy list.
+  </Accordion>
+
+  <Accordion title="Does a referring doctor see the result automatically?">
+    Only once it is completed, and only if you attributed the order to them. See [Referring doctors](/hospital/diagnostics/referrers).
+  </Accordion>
+
+  <Accordion title="Is the receipt the same as the report?">
+    No. **Print Receipt** is the money slip; **Print Report** is the clinical document. Neither substitutes for the other.
+  </Accordion>
+
+  <Accordion title="Is there deeper documentation on the report itself?">
+    Yes — the Diagnostics edition issues the same reports and covers their contents in detail. See [Lab reports](/lims/lab/reports).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a lab order or report" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/lab-report/, components/offline/offline-queue-bar.tsx */}

@@ -1,0 +1,180 @@
+---
+title: "Today's theatre list"
+description: "Book a case onto the day's operating list, work the safety checklist, move it through theatre and recovery, and sign the operation note."
+icon: "/images/icons/scissors.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Theatre staff" note="Needs the Surgical theatre care area — off by default" />
+
+**Theatre List** is the day's operating list: **Scheduled cases, their status, and what is running late.** Every case carries its safety checklist, its status and its operation note in a single sheet.
+
+<Path steps={['Sidebar', 'Theatre', "Today's List"]} />
+
+<TaskHeader
+  before="The Surgical theatre care area switched on"
+  time="About two minutes to book a case"
+  after="A case on the list, a worked checklist and a signed operation note"
+/>
+
+## Before you start
+
+**Surgical theatre** is the only care area that starts **off**, because most sites that sign up do not operate. An owner turns it on in **Settings → Facility** — see [Care areas](/hospital/get-started/care-areas). Theatres are added under **Settings → Theatre**; see [Set up theatres](/hospital/get-started/theatre-setup).
+
+## What you're looking at
+
+A day picker chooses the day, **Refresh** re-reads it, and **Book case** adds to it. Four tiles run across the top:
+
+| Tile | Counts |
+| --- | --- |
+| **Cases** | Everything booked for that day |
+| **In theatre** | Cases currently in the room |
+| **In recovery** | Out of the room, not yet completed |
+| **Delayed** | Start time passed, case not started |
+
+Each tile shows an em dash while it loads, never a zero — so a number on screen is always a real count.
+
+Each row shows the times, the case number, the procedure, then patient · theatre · side, with the status badge on the right. **Delayed** shows in red; **Cancelled** is deliberately muted, because a cancelled case is not an error. Urgency appears only when it is not **Elective**.
+
+An empty day reads **No cases scheduled** / **Nothing is booked for this day.** With no theatres created, a line under the board says: "No theatres are set up yet. Add them in Settings → Theatre; a case can still be booked without one, and assigned later."
+
+## Book a case
+
+<Steps>
+  <Step title="Select Book case">
+    The **Book a theatre case** sheet opens. Its own description tells you the important part: **The case number is generated automatically.**
+  </Step>
+  <Step title="Choose the patient and the procedure">
+    Find them with **Search patients…**, then enter the **Procedure** — the field's example is "e.g. Laparoscopic appendicectomy". Set **Side** to **Left**, **Right**, **Bilateral** or leave it **Not applicable**.
+  </Step>
+  <Step title="Set urgency, coding, theatre and time">
+    **Urgency** is **Elective**, **Urgent** or **Emergency**; **Procedure code** and **ASA grade** are optional. Pick a **Theatre** — only active rooms are offered — or leave it unassigned and allocate later. Set **Start** and **End**; the end must be after the start.
+  </Step>
+  <Step title="Name the care team">
+    Under **Care team**, choose the **Primary surgeon**, **Anaesthetist** and **Scrub nurse**, each of which can stay **Unassigned**. Add anything the team needs beforehand under **Pre-operative notes**.
+  </Step>
+  <Step title="Select Book case">
+    You get **Case booked** — **It now appears on the theatre list.** If the room is taken you are told plainly: "That theatre is already booked for part of this time. Choose another room or another slot."
+  </Step>
+</Steps>
+
+## Work the case
+
+Selecting a case opens its sheet, in three sections.
+
+### Surgical safety checklist
+
+Three phases, each with its own items and a checked-of-total badge:
+
+| Phase | When |
+| --- | --- |
+| **Sign in** | Before induction of anaesthesia |
+| **Time out** | Before skin incision |
+| **Sign out** | Before the patient leaves theatre |
+
+New hospitals start on the standard WHO Surgical Safety Checklist (2009); an owner can customise it under **Settings → Theatre**. Ticking is deliberately open to everyone in the room — a team instrument, not a surgeon's form — and each tick saves as you make it.
+
+What an incomplete phase *does* depends on one switch, **Require the checklist before a case advances**, **off by default**. Off, the sheet says **Gaps are recorded but do not stop the case.** and you get a note like "Time out is incomplete — 3 of 7 items not confirmed." On, it says **This clinic requires each phase to be complete before the case advances.** and the button is disabled until it is.
+
+### Status
+
+The **Status** section offers a **Move to** button for each legal next state:
+
+| From | Offered |
+| --- | --- |
+| **Scheduled** | **Move to in theatre** · **Cancel case** |
+| **In theatre** | **Move to in recovery** · **Cancel case** |
+| **In recovery** | **Move to completed** — cancelling is no longer offered |
+
+**Cancel case** opens a dialog headed **Cancel this case**, warning that "A cancelled case cannot be reopened — going ahead later means booking a new case." A **Reason** is required before the button will fire.
+
+Terminal states are honest dead ends rather than hidden buttons: **This case is completed. A correction is recorded as an amendment, not a status change.** and **This case was cancelled. Schedule a new case rather than reopening it.**
+
+### Operation note
+
+Enter **Findings**, **Procedure** and **Post-operative instructions**. **Save draft** keeps it editable. **Download PDF** works at any point — a draft is stamped as unsigned, so an unfinished note can be read on paper without ever looking final.
+
+<Warning>
+  **Sign note** is final. Once signed, the note cannot be edited, the safety checklist becomes read-only, and the recorded care team freezes: "This note is signed and can no longer be edited here. Record a correction as an amendment so the original stays intact." Writing the note and signing it are separate permissions, so a scrub nurse can write the account without being able to sign it off.
+</Warning>
+
+<AuditNote action="Opening a theatre case" />
+
+## Who can do this
+
+Your **role** decides whether the **Theatre** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). **Permissions** decide each act inside it:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Book or reschedule a case | Theatre staff | **Book and reschedule cases** |
+| Move a case through theatre and recovery | Theatre staff | **Advance a case through theatre** |
+| Cancel a case | Theatre staff | **Cancel a case** |
+| Write the operation note | Theatre staff | **Record the operation note** |
+| Sign the operation note | Surgeons | **Sign the operation note** |
+| Add theatres, edit the checklist | Owners and managers | **Manage theatres and the safety checklist** |
+| Tick a checklist item | Anyone in the room | Deliberately ungated |
+
+Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is written to the audit log**; an allowed one is not. Hiding the group from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The case sits on the list for the right day, with a generated case number.
+- Each checklist phase shows its checked-of-total badge.
+- The **In theatre** and **In recovery** tiles move as you advance the case.
+- A signed note shows a **Signed** badge and its three fields are read-only.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Theatre is missing from the sidebar">
+    The **Surgical theatre** care area is off by default. An owner turns it on in **Settings → Facility** — see [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+
+  <Accordion title="Two-factor verification is required to view the theatre list.">
+    A signed-in session is not enough for theatre records. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+
+  <Accordion title="A Move to button is disabled">
+    Either an incomplete phase is blocking it under your hospital's enforcement setting — the alert above the button names the phase and the count — or you do not have **Advance a case through theatre**.
+  </Accordion>
+
+  <Accordion title="A case cannot be completed">
+    "A case can only be completed from recovery." Move it to recovery first. Cancelling is not offered from recovery either — a case that got that far is recorded, not erased.
+  </Accordion>
+
+  <Accordion title="That theatre is already booked for part of this time">
+    Two cases cannot occupy one room at overlapping times. Choose another room or another slot; the error also highlights the **Theatre** field.
+  </Accordion>
+
+  <Accordion title="I signed the note too early">
+    A signed note is not editable. Record a correction as an amendment — the original stays intact, which is what makes the record trustworthy. A second attempt to sign is refused outright.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I book a case before the theatre exists?">
+    Yes. Leave **Theatre** unassigned and allocate the room later. Booking is never blocked on the estate being configured.
+  </Accordion>
+
+  <Accordion title="Where does the case number come from?">
+    ClinikEHR mints it per hospital when the case is created. You never type one, and it cannot be edited afterwards.
+  </Accordion>
+
+  <Accordion title="Should we turn on checklist enforcement?">
+    Most theatres deliberately leave it off. A system that refuses to let an operation proceed because a box is unticked tends to get worked around, after which the record is wrong *and* the checklist is theatre. Turn it on only if your governance requires it.
+  </Accordion>
+
+  <Accordion title="Where do I find last month's cases?">
+    On [Case history](/hospital/theatre/history), which searches across days by case number or procedure. A live case can also be rescheduled from there; a completed or cancelled one cannot.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/theatre/, lib/theatre/case-status.ts, lib/theatre/who-checklist.ts, lib/edition-staff-roles.ts */}

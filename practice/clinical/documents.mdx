@@ -1,0 +1,160 @@
+---
+title: Send a document for signature
+description: "Email a consent form or intake pack to a client, watch its status as they open and sign it, and keep the signed copy on their record."
+icon: /images/icons/file-pen.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above — sharing outcome measures needs Essential" roles="Any staff member with access to Documents" note="These screens say Patient where the rest of your practice says Client. It is the same person." />
+
+Send a consent form, an intake pack or an agreement to a client by email, watch its status change as they open and sign it, and keep the signed copy on their record. Nothing is printed and nothing comes back by post.
+
+<Path steps={['Sidebar', 'Documents']} />
+
+<TaskHeader
+  before="An active document template, and a client with an email address on file"
+  time="Under a minute per document"
+  after="A document sent, tracked by status, and filed to the client's record once signed"
+/>
+
+## What you're looking at
+
+**Clinic Documents** — "Manage and send documents for clinic signatures" — has four tabs: **Overview**, **Documents**, **Analytics** and **Templates**. Across the top sit four counters — **Total Documents**, **Pending**, **Signed** and **Viewed** — a period filter offering **Today**, **Last 7 Days**, **This Month** and **All Time**, and a split **Send Document** button whose caret also offers **Create Document** and **Upload Document**.
+
+The **Documents** tab adds a **Status** filter and a **Search documents...** box. A practice that has sent nothing sees "No documents found — Send your first document to get started", and **Templates** reads "No Templates Yet".
+
+| Status | What it means |
+| --- | --- |
+| **Pending** | Sent, not yet opened |
+| **Viewed** | The client has opened it but not signed |
+| **Signed** | Done — the signed copy is on their record |
+| **Expired** | The link ran out before they signed |
+| **Declined** | The client refused to sign |
+| **Cancelled** | You withdrew it |
+
+## Send one document
+
+<Steps>
+  <Step title="Make sure a template exists">
+    Everything you send is built from a template. Build one on the **Templates** tab first — the **Create Document Template** form asks for a **Template Name**, a **Document Type**, the **Document Content** and whether it **Requires Witness**.
+  </Step>
+  <Step title="Open the send form">
+    Select **Send Document**. The page is headed **Send Document to Patient**.
+  </Step>
+  <Step title="Choose the client">
+    Under **Patient Details**, use **Select Patient** ("Search for a patient..."). Somebody with no email address triggers a warning: "This patient does not have an email address. Please update their profile before sending documents."
+  </Step>
+  <Step title="Choose what to send">
+    **Select Template** — "Choose a template or create a custom document" — has four sub-tabs: **Saved**, **Intake**, **Measures** and **Custom**. Then fill in **Document Details**: **Document Title**, **Document Type**, the content, and **Internal Notes (Optional)**, which the client never sees.
+  </Step>
+  <Step title="Send it">
+    Select **Send Document**. You get a **Document Sent!** confirmation, the client gets an email with their own link, and the document appears in your **Documents** list at **Pending**.
+  </Step>
+</Steps>
+
+## Send an intake pack from the client's chart
+
+For a new client it is usually faster to send everything at once. Open their chart and select **Intakes** in the header. The **Send intakes** sheet walks through three steps — the client, **Compose email**, then **Review & send**.
+
+Step one groups the library into **Consent documents** and **Clinical outcomes & measures**; tick what you want. An empty consent list reads "No consent templates found", and the measures section needs the Essential plan. Move on with **Continue to email**, write the **Email subject** and **Email message**, then **Review & confirm** and **Send documents**.
+
+The review step states the deadline plainly: documents stay signable **for 30 days**, and every interaction is logged.
+
+## Track what happens next
+
+Each row's **Actions** menu offers **View Details** always, plus two that only appear when they make sense: **Resend Document** on an expired document, and **Cancel Document** on one still **Pending** or **Viewed**.
+
+<Warning>
+  **Cancelling kills the client's signing link for good.** The dialog says so — "This will cancel the document and the patient will no longer be able to sign it. This action cannot be undone." Back out with **Keep Document** if you are only chasing a slow signer; ring them instead.
+</Warning>
+
+## Documents on the client's chart
+
+The **Files** tab of a chart holds two things. **Health Records** is a vault for files you hold about the person — an empty one reads "Vault is empty", **Select files to upload** adds to it, and each file's menu can download it, move it or **Move to Trash**.
+
+Below that sits the shared-forms list. Until something has been sent it reads "No shared forms", with **Send documents to sign** as a second route into the same intake sheet. Clients with portal access can also open and sign from there — see [Documents to sign](/portal/patients/documents).
+
+## Who can do this
+
+Role decides whether **Documents** opens. Permission decides whose documents you may see and whether you may send at all.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open **Documents** and read the counters | Any staff member with access | Role |
+| See documents belonging to colleagues' clients | Owner, manager | Permission — **View all documents** |
+| Send a document or intake pack | Owner, manager, scheduler | Permission — **Share documents with clients** |
+| Create or edit a template | Owner, manager | Permission — **Edit note and form templates** |
+| Cancel or resend a sent document | Owner, manager | Permission — **Share documents with clients** |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Documents** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Sending or opening a signed document" />
+
+## Check it worked
+
+The document is in the **Documents** list against the right client at **Pending**. When they open it the status becomes **Viewed**, and once they sign it becomes **Signed** and the signed copy is on their chart's **Files** tab. The **Overview** and **Analytics** tabs count the same documents over whichever period you have chosen.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No active document templates found. Please create a template first.">
+    Nothing can be sent without a template. Create one on the **Templates** tab, make sure it is active, then send again.
+  </Accordion>
+
+  <Accordion title="This patient does not have an email address">
+    Documents are delivered by email. Add an address to their chart in [Clients](/practice/work/clients) and send again.
+  </Accordion>
+
+  <Accordion title="Send Documents Limit Reached">
+    Sending documents for signature needs the Starter plan or above, and **Client Intake Sharing** on the intake sheet needs it too. Sharing scored outcome measures needs Essential. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="The document expired before they signed">
+    Use **Actions** → **Resend Document**. It is offered only on expired documents and gives the client a fresh 30-day link.
+  </Accordion>
+
+  <Accordion title="The client says they never got the email">
+    Ask them to check spam first. If it is genuinely missing, confirm the address on their chart, cancel the outstanding document and send a new one. A client with portal access can open it there without the email — see [Turn on the client portal](/portal/setup/features).
+  </Accordion>
+
+  <Accordion title="Cancel Document is not in the menu">
+    It only appears while a document is **Pending** or **Viewed**. Once it is signed, declined, expired or already cancelled there is nothing to withdraw.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How long does a client have to sign?">
+    30 days from sending. After that the document goes **Expired** and needs resending, which issues a fresh link.
+  </Accordion>
+
+  <Accordion title="Can I send several documents at once?">
+    Yes — use **Intakes** from the client's chart and tick everything in one pass. The **Send Document** button sends one at a time.
+  </Accordion>
+
+  <Accordion title="Does the client need a portal account?">
+    No. The emailed link is enough. A portal account simply gives them a second way in, and somewhere to find it again later.
+  </Accordion>
+
+  <Accordion title="Can I edit a document after sending it?">
+    No. Cancel it and send a corrected one — the client's link dies with the cancellation, so tell them another is coming.
+  </Accordion>
+
+  <Accordion title="Where does the signed copy live?">
+    On the client's chart, under the **Files** tab, alongside anything you have uploaded about them yourself.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/documents/ (document-dashboard-content.tsx, document-table.tsx, document-form.tsx), components/clinic/clients-management/share-client-docs.tsx, client-files-tab.tsx */}

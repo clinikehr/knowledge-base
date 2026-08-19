@@ -1,0 +1,170 @@
+---
+title: AI agents
+description: "Build an agent on the canvas, choose what starts it, and deploy it — plus what your plan lets you publish and what each step costs."
+icon: /images/icons/robot.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter, Essential and Team — the builder is closed on Free" roles="Owners and managers" note="Agent and Classify steps consume credits" />
+
+An agent is a small automation you draw rather than code: something starts it, it does a few steps, it stops. Use it for the jobs nobody wants to do by hand — triaging an inbox, drafting a follow-up, tagging a form as it arrives.
+
+<Path steps={['Sidebar', 'AI Agents']} />
+
+<TaskHeader
+  before="A paid plan, and credits on your account before anything runs"
+  time="Fifteen minutes for a first working agent"
+  after="A deployed agent that runs when its trigger fires"
+/>
+
+## What you're looking at
+
+The page is headed **Agent Builder** — "Build AI agents and workflows with custom logic and tools." The header carries **Runs** (every execution, with what it did and what it cost), **+ Create** — "Name your agent. You can design it on the canvas next." — and **Public UIs** once your plan includes any. Below sits **Your agents** and a template gallery: "Start from a template, or create your own from scratch."
+
+The node palette is grouped:
+
+| Group | Nodes |
+| --- | --- |
+| **Core** | **Agent**, **Classify**, **End**, **Note** |
+| **Tools** | **File search**, **Guardrails**, **MCP** |
+| **Logic** | **If / else**, **While**, **User approval** |
+| **Data** | **Transform**, **Set state** |
+
+Every graph also has a **Start** node, added for you. Only **Agent** and **Classify** consume credits — they carry a **billable** pill in the inspector. Everything else, including **File search** ("Deterministic — no model, no credit.") and **MCP**, is free to run.
+
+Across the top of the canvas sit the status chips — "● Live · v3" for what is deployed, "Draft · v4" for what you are editing — a **Saved** / **Unsaved** indicator, and your credit balance.
+
+On the **Free plan** there is no canvas at all: the page shows an upgrade panel for **Agent Studio** — "Build AI agent virtual assistants on any paid plan."
+
+## Build and deploy an agent
+
+<Steps>
+  <Step title="Create the workflow">
+    Select **+ Create**, name it — "Agent name (e.g. Appointment reminder)" — and select **Create**. The canvas opens.
+  </Step>
+  <Step title="Choose what starts it">
+    Select the **Start** node and set its **Trigger**: **Manual / Preview** for testing; a **Schedule** of **Every 15 minutes**, **Every 30 minutes**, **Every hour**, **Every day** or **Every week**; **Webhook / API call**; an inbound message (**Inbound SMS**, **WhatsApp**, **email**, **fax** or **phone call (voice)**); or one of around fifty events such as **Appointment booked**.
+  </Step>
+  <Step title="Lay out the steps">
+    Drag nodes from the palette and connect them. Start with one **Agent** node and an **End**; add **Classify** and **If / else** once that works. Put a **User approval** node in front of anything that sends, charges or writes to a record.
+  </Step>
+  <Step title="Test it by hand">
+    Run it manually and read the result under **Runs** — this is where you find out what your instructions actually said, as opposed to what you meant.
+  </Step>
+  <Step title="Deploy it">
+    Select **Deploy**. A toast confirms it — "Deployed — v1 is now live" — and the chip changes to **Live**. Later edits sit in the draft until you **Redeploy**.
+  </Step>
+</Steps>
+
+<Note>
+  **A saved draft does nothing.** The builder says so under the trigger: "Event & schedule triggers take effect after you Deploy." A **Webhook / API call** trigger needs one more step — the endpoint has to be switched on under **Settings** → **AI settings**, and that card is a **Team** feature. See [AI settings](/practice/settings/ai-settings).
+</Note>
+
+<Warning>
+  **Agent** and **Classify** steps consume credits every time they run, and a schedule multiplies that: **Every 15 minutes** is 96 runs a day, roughly 2,900 a month, times the billable nodes in the flow. Start on **Every day**, watch the cost under **Runs**, and shorten the interval only once you know what one run costs. See [Agent credits](/platform/ai/credits).
+</Warning>
+
+## What your plan allows
+
+Drafts are unlimited on every paid plan. Publishing is what is capped.
+
+| Plan | The builder | Deployed agents | Public agent UIs |
+| --- | --- | --- | --- |
+| Free | Not available — upgrade panel only | 1 | 0 |
+| Starter | Yes | 5 | 2 |
+| Essential | Yes | Unlimited | 5 |
+| Team | Yes | Unlimited | Unlimited, plus a custom link and the webhook trigger |
+
+The limit is reported when you try to deploy past it: "Your Starter plan can publish up to 5 agents or automations at a time. Drafts are always unlimited. Upgrade to Essential to publish more." Undeploying one frees the slot, so you can rotate rather than upgrade.
+
+## Where the depth lives
+
+This page is the map; the detail sits in the platform section:
+
+- [Agents](/platform/ai/agents) — writing an instruction that behaves.
+- [Agent tools](/platform/ai/agent-tools) — what **File search** and **MCP** reach.
+- [Publishing agents](/platform/ai/publishing-agents) — public UIs and webhooks.
+- [Agent credits](/platform/ai/credits) — what a step costs.
+- [AI safety](/platform/ai/safety) — guardrails and approvals.
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **AI Agents** and draft | Owner, manager | Role — no permission of its own |
+| Deploy or undeploy an agent | Owner, manager | Role |
+| Publish a public agent UI | Owner, manager | Role |
+| Configure the webhook trigger | Owner, manager | Role — "Only clinic owners and managers can configure webhook triggers." |
+| See the credit balance and run costs | Owner, manager | **View financial dashboard** |
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **AI Agents** from a sidebar is a convenience, not a security boundary. A credit figure you may not see renders as a dash, not a zero.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The chip at the top of the canvas reads **Live** with a version number, not just **Draft**.
+- A manual run appears under **Runs** with its steps and its cost.
+- A scheduled agent produces a run at the next interval without you touching anything.
+- A webhook agent produces a run when the other system calls it — nothing at all means the endpoint is still disabled in **AI settings**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="My scheduled agent never runs">
+    It is still a draft. "Event & schedule triggers take effect after you Deploy" — select **Deploy**.
+  </Accordion>
+
+  <Accordion title="My webhook agent does not fire">
+    Deploying is only half of it. The endpoint has to be enabled under **Settings** → **AI settings**, and that card is a Team feature. See [AI settings](/practice/settings/ai-settings).
+  </Accordion>
+
+  <Accordion title="Deploy failed and mentions my plan">
+    You are at your plan's deployed limit: "Your Starter plan can publish up to 5 agents or automations at a time. Drafts are always unlimited. Upgrade to Essential to publish more." Undeploy one, or move up a plan.
+  </Accordion>
+
+  <Accordion title="Credits are draining faster than expected">
+    Check the schedule interval and the number of **Agent** and **Classify** nodes — every one bills on every run. **Runs** shows the cost per execution.
+  </Accordion>
+
+  <Accordion title="The agent did something I did not want sent">
+    Put a **User approval** node in front of the sending step and redeploy. See [AI safety](/platform/ai/safety).
+  </Accordion>
+
+  <Accordion title="There is no Public UIs button">
+    Your plan includes none — "Public Agent UIs are available on the Starter plan and above." See [Publishing agents](/platform/ai/publishing-agents).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does drafting cost anything?">
+    No. Drafts are unlimited on every paid plan, and credits are consumed only when an **Agent** or **Classify** step actually executes.
+  </Accordion>
+
+  <Accordion title="Can an agent see my clients' clinical records?">
+    Only through the tools you give it, and within the safeguards in [AI safety](/platform/ai/safety). It has no standing access to anything you have not wired to it.
+  </Accordion>
+
+  <Accordion title="What happens to a live agent if I edit it?">
+    Your edits sit in the draft — the chips show **Live · v3** and **Draft · v4** side by side. The version running is the one you last deployed.
+  </Accordion>
+
+  <Accordion title="Can I stop an agent without deleting it?">
+    Yes. Undeploy it — the design is kept and the slot is freed.
+  </Accordion>
+
+  <Accordion title="What is the difference between Agent and Classify?">
+    **Classify** sorts an input into one of your categories and pairs with **If / else** to branch. **Agent** reasons and writes. Both bill, but **Classify** is the cheaper way to route.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="AI agents" />
+
+{/* source of truth: components/clinic/agents/agents-content.tsx, components/clinic/agents/agent-builder.tsx, components/clinic/agents/node-catalog.ts, lib/agents/agent-plan.ts, lib/agents/agent-ui-plan.ts */}

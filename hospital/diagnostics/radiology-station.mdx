@@ -1,0 +1,150 @@
+---
+title: "Radiology station"
+description: "Read your imaging unit's numbers and maintain the catalogue of studies — modality, price, preparation, dose and contraindications."
+icon: "/images/icons/display.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors and managers" note="Needs the Diagnostics care area" />
+
+**Radiology Station** is the imaging unit's own dashboard: how much work came through, on which machines, and the catalogue of studies every request is built from. It is where a unit manager looks, not where a study is reported.
+
+<Path steps={['Sidebar', 'Radiology', 'Radiology Station']} />
+
+<TaskHeader
+  before="The Diagnostics care area switched on"
+  time="A few minutes to define a study"
+  after="A catalogue the ordering form can offer, and a read on how the unit is running"
+/>
+
+## What you're looking at
+
+A date range picker sets the period every figure is measured over, and **New Radiology Order** jumps to the ordering form. Tabs divide the screen:
+
+| Tab | What it is for |
+| --- | --- |
+| **Analytics** | The unit's numbers for the chosen period |
+| **Test Catalog** | The studies your hospital offers |
+| **Reports** | A placeholder, for now — see the note below |
+| **Modalities** | Only when the imaging bridge is switched on — see [Modalities](/hospital/diagnostics/modalities) |
+
+### Analytics
+
+Four tiles: **Total Radiology Tests**, **Pending Tests**, **Completed Tests** and **Critical Findings**, each with a week-on-week comparison and a second line (**Awaiting processing**, a completion rate, **Requires immediate attention**).
+
+Seven charts sit beneath: **Test Volume Trends**, **Most Requested Tests**, **Turnaround Time** (hours against a target), **Staff Performance**, **Modality Distribution**, **Patient Demographics** and **Urgency Distribution**. Where a period has nothing to plot, the chart says so — **No test trend data available**, **No modality data available** — rather than drawing an empty axis.
+
+### Test Catalog
+
+The list of studies the ordering form searches. Columns are **Test Name**, **Modality**, **Category**, **Price**, **Duration (min)**, **Usage Count** and **Created**, with **Search radiology tests...** and **Toggle columns** above them. An empty catalogue reads **No radiology tests found for this clinic**; a search with no match reads **No radiology tests match your search**.
+
+<Note>
+  The **Reports** tab is a placeholder: **Radiology reports dashboard is under development. This will provide comprehensive reporting and analytics for radiology operations.** Written reports live on [Radiology reports](/hospital/diagnostics/radiology-reports); the day-to-day queue lives on [Radiology list](/hospital/diagnostics/radiology).
+</Note>
+
+## Maintain the study catalogue
+
+What you define here is what a requesting clinician sees, what the patient is told to do beforehand, and what is charged. It is worth doing properly once.
+
+<Steps>
+  <Step title="Open the Test Catalog tab">
+    Find an existing study with **Search radiology tests...**, or select **Add Test** to define a new one.
+  </Step>
+  <Step title="Name it and classify it">
+    Give it a name — the example is "e.g., Chest X-Ray PA View" — a code such as "e.g., CXR-PA", then choose a **modality** and a **category**. The modality is what groups it in every chart and filter on this page.
+  </Step>
+  <Step title="Set price and duration">
+    The price feeds the order's total; the duration feeds scheduling. A study with neither still works, but the unit loses both its revenue figure and its slot length.
+  </Step>
+  <Step title="Record what keeps the patient safe">
+    **Radiation dose** ("e.g., 0.1 mSv"), **contraindications** ("e.g., Pregnancy, Severe kidney disease"), **preparation** ("e.g., Fast for 8 hours before the test...") and the **body parts** covered. These travel with the request, so the person booking it sees them before the patient does.
+  </Step>
+  <Step title="Add a report template">
+    A reporting template pre-fills the structure of the written report for that study, so every chest film in your unit reads in the same order.
+  </Step>
+  <Step title="Retire what nobody orders">
+    **Usage Count** is the honest measure. Deleting a study asks first — **Delete Radiology Test** — and removes it from the ordering menu only; studies already performed keep their records.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening the radiology station" />
+
+## Who can do this
+
+**Role** decides whether the **Radiology** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Read the Analytics tab | Imaging and clinical staff, managers, owners | Role |
+| Add, edit or delete a catalogue study | Radiologists, technicians, managers, owners | Role |
+| Open the **Modalities** tab | Imaging staff, managers, owners | Plan — the imaging bridge is a Professional feature |
+| See prices and revenue figures | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. Hiding the group from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A study you added is offered when you search for it on the ordering form.
+- Its preparation and contraindications appear against the request.
+- The **Modality Distribution** chart shows it under the right modality after the first order.
+- The **Total Radiology Tests** tile moves when you change the date range.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A study I added is not offered when ordering">
+    The ordering form searches this catalogue by name. Check for a typo, and check the study saved rather than the dialog being closed — the **Test Catalog** tab is the source of truth.
+  </Accordion>
+
+  <Accordion title="The Modalities tab is missing">
+    The imaging bridge is a Professional feature and is off below that plan. Everything else on this page works without it. See [Modalities](/hospital/diagnostics/modalities).
+  </Accordion>
+
+  <Accordion title="The Reports tab has nothing in it">
+    It is a placeholder while that dashboard is built. Use [Radiology reports](/hospital/diagnostics/radiology-reports) for written reports and the **Analytics** tab here for numbers.
+  </Accordion>
+
+  <Accordion title="Every tile reads zero">
+    The date range is the first thing to check — the tiles measure the period you selected, not all time. Widen it and they repopulate.
+  </Accordion>
+
+  <Accordion title="Turnaround time looks impossible">
+    It measures from order to report. A study left as **Completed** but never reported keeps counting, so a long tail usually means unreported studies rather than a slow unit — check **Reports Due** on [Radiology list](/hospital/diagnostics/radiology).
+  </Accordion>
+
+  <Accordion title="Radiology Station is missing from the sidebar">
+    It needs the Enterprise plan and the **Diagnostics** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does deleting a study delete past reports?">
+    No. Reports already written stay on the patients' records. Deleting removes the study from the ordering menu.
+  </Accordion>
+
+  <Accordion title="Where is the radiation dose actually used?">
+    It travels with the request so the person booking and performing it can see it, and it belongs on the record because dose is cumulative for a patient across their life. The dose actually delivered is entered on the report.
+  </Accordion>
+
+  <Accordion title="Can each machine have its own catalogue?">
+    No — one catalogue, with **Modality** on each study. That is also what makes **Modality Distribution** meaningful.
+  </Accordion>
+
+  <Accordion title="Does a report template lock the radiologist in?">
+    No. It pre-fills a structure; the radiologist writes freely over it. Consistency is the goal, not a form.
+  </Accordion>
+
+  <Accordion title="Is there deeper documentation on the imaging station?">
+    Yes — the Diagnostics edition runs the same screens. See [Imaging station](/lims/imaging/station).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the radiology station" />
+
+{/* source of truth: components/clinic/dashboard/radiology-station/radiology-dashboard-content.tsx, .../test-list/, .../reports/radiology-reports-dashboard.tsx */}

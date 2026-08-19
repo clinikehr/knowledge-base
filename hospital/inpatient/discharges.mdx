@@ -1,0 +1,167 @@
+---
+title: "Ward discharges"
+description: "End a patient's stay with a discharge summary, free the bed, and review any completed stay in full afterwards."
+icon: "/images/icons/clipboard-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Clinicians with the discharge permission" note="Needs the In-patient care area" />
+
+Discharging is the act that ends a stay and frees the bed for the next patient. **Ward Discharges** is where every completed stay is then kept, in one place, for as long as you need to look back at it.
+
+<Path steps={['Sidebar', 'Inpatient', 'Ward Discharges']} />
+
+<TaskHeader
+  before="A patient currently admitted to a bed"
+  time="A couple of minutes to write the summary"
+  after="A freed bed and a complete, readable record of the stay"
+/>
+
+## Before you start
+
+Write the discharge summary before you start the discharge, not during it. It is the one part of the stay that a GP, a community nurse or the patient themselves will actually read, and it is the last thing anyone can add to the record while the patient is still yours.
+
+## Discharge a patient
+
+<Steps>
+  <Step title="Open the patient's ward chart">
+    From [Ward admissions](/hospital/inpatient/admissions), select the occupied bed.
+  </Step>
+  <Step title="Select Discharge">
+    It sits leftmost in the chart header, deliberately away from the primary slot. The **Discharge Patient** sheet opens.
+  </Step>
+  <Step title="Write the Discharge Summary">
+    One field, **Discharge Summary**, with the prompt **Enter discharge summary...**. Cover the condition on discharge, the treatment given, the medicines going home, and the follow-up arranged.
+  </Step>
+  <Step title="Select Discharge Patient">
+    ClinikEHR confirms with **Patient discharged**. The bed empties on the grid and the stay moves to **Ward Discharges**.
+  </Step>
+</Steps>
+
+<Warning>
+  Discharging cannot be undone from the app. It ends the stay, releases the bed to whoever needs it next, and closes the chart to further ordering. If the patient turns out not to be going home, they are admitted again as a new stay — which is a different record from the one you just closed.
+</Warning>
+
+### When Discharge is disabled
+
+The button stays visible and states its reason rather than disappearing:
+
+| Reason shown | What it means |
+| --- | --- |
+| **This stay has already ended** | Someone else discharged this patient. Refresh, and look for them under **Ward Discharges**. |
+| **Discharge needs a connection — it frees a bed, which is a shared resource** | You are offline. A bed released on one device that no other device can see is how two patients end up in one bay. |
+
+Offline, an amber banner sits across the top of the chart: "You are offline. Discharge and ordering need a connection — a bed is a shared resource, and an order composed offline would be a draft nobody has confirmed." Observations and notes keep working. See [Working offline](/platform/apps/offline).
+
+## What you're looking at
+
+**Ward Discharges** opens on the list of completed stays, under the line **View complete history of all discharged patients**. Find someone with **Search for patient**, and use **View Columns** → **Toggle columns** to change what the table shows.
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** | Their hospital number |
+| **Patient Name** | Who |
+| **Status** | Their condition as last recorded — **STABLE**, **CRITICAL**, **RECOVERING** |
+| **Admission Date** | When they came in |
+| **Discharge Date** | When they left |
+| **Ward** | Where they were |
+| **Doctor** | The clinician responsible |
+| **Actions** | Opens the stay |
+
+A hospital with no completed stays yet sees **No discharged patients available.**, and a filtered page with nothing on it reads **No records found**.
+
+## Review a completed stay
+
+<Steps>
+  <Step title="Open the row">
+    Select **View Full Details** from the row's action menu. The page becomes **Patient Discharge Details**; **Back to Discharges** returns you to the list.
+  </Step>
+  <Step title="Read the three summary cards">
+    **Patient Information** (identity, admission and discharge dates), **Ward Information** (ward, sub-ward, bed number, attending doctor, diagnosis) and **Discharge Summary**. A stay discharged without a summary says **No discharge summary available.** — worth noticing, because that is a gap in the record rather than a display problem.
+  </Step>
+  <Step title="Work through the stay under Patient History">
+    Eight tabs cover everything that happened: **Timeline**, **Consultations**, **Nursing Notes**, **Prescriptions**, **Lab Tests**, **Services**, **Radiology** and **Vitals**. Start on **Timeline** for the shape of the admission, then open the tab that answers your actual question.
+  </Step>
+</Steps>
+
+Each tab says plainly when there is nothing in it — **No consultation records available**, **No nursing notes available**, **No lab test records available**, and so on. That is a statement about the stay, not an error.
+
+<AuditNote action="Opening a discharged patient's stay" />
+
+## Who can do this
+
+Your **role** decides whether the **Inpatient** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). **Permissions** decide what you may do inside it, and they are granted per person:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Discharge a patient | Clinicians | **Discharge a patient** — "End the stay and free the bed — this cannot be undone" |
+| Open **Ward Discharges** and read a stay | Anyone with the Inpatient group | Governed by role, not by a separate permission |
+| Record observations or doses on a live stay | Doctors and nurses | **Record observations** · **Give a medication** |
+
+Enforcement is **opt-in per person**: anyone who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before you save the first one. A **denied action is written to the audit log**; an allowed one is not. Hiding the group from a role is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The bed shows as free on the ward's bed grid.
+- The patient appears in **Ward Discharges** with a discharge date of today.
+- Opening the row shows your text under **Discharge Summary**, not **No discharge summary available.**
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Discharge button is greyed out">
+    Hover it. It is either **This stay has already ended** — someone else discharged them — or **Discharge needs a connection — it frees a bed, which is a shared resource**, meaning you are offline.
+  </Accordion>
+
+  <Accordion title="I discharged the wrong patient">
+    There is no undo. Admit them again from a consultation; they get a new stay, and the closed one stays in **Ward Discharges** exactly as it was. Tell your ward manager — the discharge is on the audit log with your name and the time.
+  </Accordion>
+
+  <Accordion title="The stay says No discharge summary available.">
+    It was discharged with the summary field left blank. The summary cannot be added to a closed stay, so record what happened as a clinical note against the patient instead.
+  </Accordion>
+
+  <Accordion title="The bed is still showing as occupied">
+    Refresh the bed grid. If it stays occupied, the discharge did not complete — check whether the patient is in **Ward Discharges** at all before discharging a second time.
+  </Accordion>
+
+  <Accordion title="A tab in Patient History is empty but I know there were results">
+    The tabs show what was recorded against *this stay*. Anything ordered before admission or after discharge belongs to the outpatient record — look under the [patient's record](/hospital/front-desk/patients) instead.
+  </Accordion>
+
+  <Accordion title="Ward Discharges is missing from the sidebar">
+    It needs the Enterprise plan and the **In-patient care** area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does discharging bill the patient?">
+    No. Discharge ends the clinical stay only. Charges raised during the admission sit on the patient's account and are settled through [Billing](/hospital/revenue/billing) in the normal way.
+  </Accordion>
+
+  <Accordion title="Can a patient be readmitted to the same bed?">
+    Yes, once the bed is free. It is a new admission with its own chart; the previous stay is untouched and stays under **Ward Discharges**.
+  </Accordion>
+
+  <Accordion title="How long are discharged stays kept?">
+    Indefinitely, and the audit trail of who read them is kept for seven years. Nothing is pruned from **Ward Discharges** on a schedule.
+  </Accordion>
+
+  <Accordion title="Can I print a stay from this page?">
+    No — **Ward Discharges** is a reading surface with no print or export control. The **Radiology** tab links out to the full imaging report, which does have its own download; everything else is read on screen.
+  </Accordion>
+
+  <Accordion title="Who can see that I opened a discharged stay?">
+    Owners and managers, under [Audit log](/platform/security/audit-log). Every read of a patient record is logged with the reader's name and the time — that is a HIPAA requirement, not a ClinikEHR choice.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/ward-discharges/, components/clinic/ward-admissions/discharge-dialog.tsx, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}

@@ -1,6 +1,6 @@
 ---
-title: Contacts and enquiries
-description: "Track the people who have contacted your hospital but are not patients yet, on a board you can drag them across."
+title: Track contacts and enquiries
+description: "Work the pre-clinical funnel — leads, enquiries and prospects — on a board you drag them across, and take new ones from your website."
 icon: /images/icons/address-book.svg
 ---
 
@@ -9,25 +9,49 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Front desk staff and anyone who may manage contacts" note="Needs the Front desk care area" />
+<Availability editions={['clinic']} plans="Enterprise — unlimited contacts, pipelines and advanced embedding" roles="Front desk staff can work it; owners and managers can manage it" note="Needs the Front desk care area" />
 
 **Contacts** is "Your pre-clinical funnel — leads, inquiries, prospects, and the waitlist. No clinical data lives here." It holds the people who have reached your hospital but are not patients yet: the enquiry about an antenatal package, the employer asking about occupational health, the family ringing round about a scan.
 
 <Path steps={['Sidebar', 'Front Desk', 'Contacts']} />
 
-<TaskHeader before="Nothing to configure to start using it" time="A few minutes to set up your stages" after="An enquiry board reception works, and a public form that fills it" />
+<TaskHeader
+  before="Nothing to configure to start using it"
+  time="A few minutes to set up your stages"
+  after="An enquiry board reception works, and a public form that fills it"
+/>
 
-## The five tabs
+## Before you start
+
+The **Front desk** care area must be on — it carries the board, appointments, patients and contacts together. See [Care areas](/hospital/get-started/care-areas).
+
+Being on Enterprise means every limit is lifted: unlimited contacts, unlimited pipelines and segments, unlimited campaigns, custom fields, and advanced embedding. You will not meet an upgrade prompt on this page.
+
+## What you're looking at
+
+Five tabs:
 
 | Tab | What it is for |
 | --- | --- |
 | **Board** | Every contact as a card, arranged by stage |
-| **Contacts** | The full list, with the count beside the name once there is one |
+| **Contacts \{n\}** | The full list. The count appears once there is one |
 | **Follow-ups** | What somebody promised to do, and when |
-| **Campaigns** | Outbound messaging to your contacts |
+| **Campaigns** | Outbound email to your opted-in contacts |
 | **Insights** | How enquiries are converting |
 
-**Campaigns** and **Insights** appear only for staff who may manage contacts — as do **Custom fields**, **Import**, **Export** and **Manage stages**. They are **absent** rather than greyed out, so if you cannot see them there is nothing to click and nothing to unlock on this screen.
+The header carries **New contact**, a search box — "Search by name, email, phone, or company…" — a pipeline picker, **Segments**, a sort control, **Clear**, and **Share contact page**. Managers additionally get **Custom fields**, **Import** and **Export**.
+
+**Board** shows one column per stage, each with a count, and an **Add contact** button at the foot. A column with nothing in it says **Drop contacts here**; a hospital with no stages at all sees **No pipeline stages yet.**
+
+**Contacts** lists **Name**, **Contact**, **Stage**, **Score**, **Source**, **Owner** and **Last activity**, and reads "No contacts match your filters." when a search finds nothing.
+
+**Follow-ups** opens on a count — "12 open follow-ups" — with a **My follow-ups** / **All** toggle and columns for **Follow-up**, **Due**, **Owner** and **Priority**. A due badge reads **Overdue**, **Today**, **Upcoming** or **No due date**. Cleared, it says "You're all caught up — no open follow-ups."
+
+**Insights** is the funnel: **Total contacts**, **Open**, **Converted** and **Conversion rate**, then **Funnel by stage**, **Source ROI**, **Owner leaderboard**, **Waitlist aging** and **New leads (last 30 days)**.
+
+<Note>
+  **Campaigns and Insights are hidden by role, not by plan.** So are **Import**, **Export**, **Custom fields** and **Manage stages**. They are **absent** rather than greyed out for anyone who may not manage contacts — so if you cannot see them there is nothing to click and nothing to unlock on this screen. Managing the CRM is limited to the hospital owner and staff with the **owner** or **manager** role.
+</Note>
 
 ## Work the board
 
@@ -36,90 +60,98 @@ import { StillStuck } from '/snippets/support.mdx';
     Each contact is a card sitting in a stage. **List** shows the same thing as rows if you prefer, and behaves the same way.
   </Step>
   <Step title="Drag a contact between stages">
-    Move the card as the enquiry moves. The position of a card is the status of the enquiry, so nobody has to open anything to see where things stand. If a move fails you get **Could not move contact** and the card springs back — nothing is left half-moved.
+    Move the card as the enquiry moves — the position of a card *is* the status of the enquiry, so nobody has to open anything to see where things stand. The card jumps immediately; if the move fails it springs back with **Could not move contact**, and nothing is left half-moved.
 
-    Contacts with no stage collect in an **Unassigned** column. You can drag out of it but not into it.
+    Contacts with no stage collect in an **Unassigned** column, which only appears when there is something in it. You can drag out of it but not into it.
   </Step>
   <Step title="Customise your stages">
-    Select **Manage stages** to open **Manage pipeline** — "Rename, recolor, reorder, add, or remove stages. Drag a stage to change its order." Mark the stages that end an enquiry with **Mark as a won stage** or **Mark as a lost stage**.
+    Select **Manage stages** to open **Manage pipeline** — "Rename, recolor, reorder, add, or remove stages. Drag a stage to change its order." Mark the stages that end an enquiry as won or lost; those drive your conversion figures and the convert flow.
 
-    Name stages after what happens next, not after how the enquirer feels. A pipeline needs at least one stage.
+    Name stages after what happens next, not after how the enquirer feels. Deleting a stage moves its contacts to the first remaining one.
   </Step>
   <Step title="Bring in a list you already have">
-    Select **Import** in the page header — "Upload a CSV, map its columns, and import. Rows are deduped on email then phone — existing contacts are updated, not duplicated." The spreadsheet reception has been keeping is usually the right starting point.
+    Select **Import** — "Upload a CSV, map its columns, and import. Rows are deduped on email then phone — existing contacts are updated, not duplicated." The spreadsheet reception has been keeping is usually the right starting point.
   </Step>
 </Steps>
 
 ## Take enquiries from your website
 
-<Path steps={['Settings', 'Contact Form']} />
+The **Contact form** is a public enquiry page whose submissions land here as leads. Switch it live, set the page address, and use **Share contact page** in the header to copy the link — that hosted page is the fastest route live, with nothing to install. For your own site, copy the embed snippet into the page's HTML just before the closing body tag. Full setup is on [Contact form](/hospital/settings/contact-form).
 
-The **Contact form** page is "A public inquiry form for your website — share the link or embed it. New submissions land in your CRM as leads." Switch it **Live**, then:
+Ask for the minimum on the form. Every extra field costs you enquiries.
 
-- **Your link** — "Where people fill out the form." Set the **Page address**, then **Copy link**. That hosted page is the fastest route live: paste it into a social profile, an email signature or a printed leaflet with nothing to install. The **Share contact page** button in the **Contacts** header copies the same link.
-- **Content** — the **Headline**, **Description** and **Button label**, plus the **Confirmation screen** people see after they submit. Set a **Redirect after submit** instead if you would rather send them to your own thank-you page.
-- **Form fields** — "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." Ask for the minimum. Every extra field costs you enquiries.
-- **Add to your website** — "Copy this snippet into your site's HTML, just before `</body>`." Whoever maintains your site will know where that is. Save your changes first; the embedded form reflects what is saved, not what is on screen.
+## Who can do this
 
-## What each plan includes
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Contacts**, add and edit a contact | Front desk and admin staff whose role reaches the module | Role Navigation + the **Front desk** care area |
+| Drag a contact between stages | Anyone who can open the board | Role |
+| Complete a follow-up | Anyone who can open the board | Role |
+| **Campaigns**, **Insights**, **Import**, **Export**, **Custom fields**, **Manage stages** | The owner, and staff with the **owner** or **manager** role | A fixed rule, not a permission slug |
 
-| Plan | Contacts | Pipelines | Embedding |
-| --- | --- | --- | --- |
-| **Free** | 100 | 1 | Hosted link only |
-| **Starter** | 2,000 | 1 | Hosted link only |
-| **Essential** | 5,000 | 3 | Basic — the standard widget snippet |
-| **Team** | Unlimited | Unlimited | Advanced |
-| **Enterprise** | Unlimited | Unlimited | Advanced |
+The controls in that last row are removed from the page rather than disabled, which is why "it's greyed out" is never the symptom — the button is simply not there. Nothing on this page is gated by an individual permission slug, and no figure renders as a dash.
 
-Customising the board — adding, renaming, reordering or deleting stages, or running more than one pipeline — needs **Essential** or above. Advanced embedding adds the widget's style, position, theme and button text plus a raw frame for full styling control. Custom form fields are a **Team** feature. A hospital on Enterprise has all of it. See [Change your plan](/platform/plans/change-plan).
+Two behaviours worth knowing. Permission enforcement elsewhere in the product is **opt-in per person**, and the permissions sheet warns **"Saving starts enforcing"**. And a denied action is recorded in the audit log while an allowed one is not — hiding a module in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary.
 
 ## Check it worked
 
 - A contact dragged to a new stage stays there when you reload the board.
 - The count beside the **Contacts** tab matches what you expect after an import.
 - Submitting your own public form puts a new card on the board.
-- The embedded form appears on your website and its submission arrives here, not in an inbox.
+- A follow-up you marked done has left the **Follow-ups** count.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="There is no Contacts entry in my sidebar">
-    The **Front desk** care area is off. It carries the board, appointments, patients and the check-in board together — see [Turn on your care areas](/hospital/get-started/care-areas).
+    Either the **Front desk** care area is off — see [Care areas](/hospital/get-started/care-areas) — or your role does not reach the module. Under role-scoped navigation the CRM is opened to a narrow set of roles, so a clinician may well not have it.
   </Accordion>
 
   <Accordion title="Campaigns and Insights are not there at all">
-    They are hidden rather than disabled, for anyone whose role may not manage contacts. **Import**, **Export**, **Custom fields** and **Manage stages** disappear with them. Ask an owner or manager.
+    They are hidden, not disabled, for anyone who may not manage contacts. **Import**, **Export**, **Custom fields** and **Manage stages** disappear with them. Ask an owner or manager, who have them by default.
   </Accordion>
 
-  <Accordion title="I cannot add or rename a stage">
-    Customising the board needs **Essential** or above — below that you get "Your plan uses the default pipeline."
+  <Accordion title="A card springs back when I drag it">
+    The move failed and was undone — you will have seen **Could not move contact**. Check your connection and try again; the board never leaves a contact half-moved.
   </Accordion>
 
-  <Accordion title="I have hit my contact limit">
-    Archive contacts that went nowhere, or raise the plan. A hospital that runs campaigns will reach 5,000 sooner than it expects.
+  <Accordion title="I cannot drag anything into Unassigned">
+    Deliberate. **Unassigned** is where contacts with no stage collect; it is a starting point, not a destination. Drag them out into a real stage instead.
   </Accordion>
 
   <Accordion title="The embedded form does not show on our website">
-    The snippet has to go into the page's HTML immediately before the closing `</body>` tag. If your site is edited through a page builder, look for its "custom code" or "footer scripts" box.
+    The snippet has to go into the page's HTML immediately before the closing body tag. If your site is edited through a page builder, look for its "custom code" or "footer scripts" box. Save your form changes first — the embed reflects what is saved, not what is on screen.
   </Accordion>
 
+  <Accordion title="I am suddenly at a contact limit on Enterprise">
+    Limits snap back to the Free tier if the subscription is neither active nor trialing. Check your plan status under [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
   <Accordion title="An enquirer became a patient — do I retype them?">
     No. Register them properly in [Patients](/hospital/front-desk/patients); the contact card stays as the record of how they first reached you.
+  </Accordion>
+
+  <Accordion title="Can clinical information go on a contact?">
+    No, and that is the point — "No clinical data lives here." A contact is a pre-clinical record. Anything clinical belongs on a patient record, where it is protected and audited properly.
+  </Accordion>
+
+  <Accordion title="Does a campaign email everyone on the board?">
+    Only contacts who have opted in. Consent and an unsubscribe link are always enforced, so a contact who opted out is never mailed even if you select them.
+  </Accordion>
+
+  <Accordion title="What does the Score column mean?">
+    A lead score, recalculated from the contact's activity. Managers can force a recalculation from **Insights** with **Recompute scores**.
+  </Accordion>
+
+  <Accordion title="Can we run more than one pipeline?">
+    Yes — Enterprise has no cap. Use separate pipelines when two funnels have genuinely different stages, such as corporate occupational-health contracts and individual patient enquiries.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="contacts and enquiries" />
 
-## Where to go next
-
-<Columns cols={2}>
-  <Card title="Register and find patients" icon="/images/icons/hospital-user.svg" href="/hospital/front-desk/patients">
-    Turn an enquiry into a patient record.
-  </Card>
-
-  <Card title="Embeds and public forms" icon="/images/icons/code.svg" href="/platform/integrations/embeds">
-    Every public surface you can put on your own website.
-  </Card>
-</Columns>
-
-{/* source of truth: app/u/clinic/crm/, components/clinic/crm/ (board, stage manager, contact-form settings), lib/crm/plan-limits.ts */}
+{/* source of truth: app/u/clinic/crm/, components/clinic/crm/ (crm-content.tsx, crm-board.tsx, crm-inbox.tsx, crm-insights.tsx, crm-stage-manager.tsx), lib/crm/plan-limits.ts, lib/crm/authz.ts */}

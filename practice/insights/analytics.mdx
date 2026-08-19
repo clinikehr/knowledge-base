@@ -1,24 +1,29 @@
 ---
 title: Reports and analytics
-description: "Open a report, choose its period and scope, export the data, and understand why your workspace sees the reports it does."
+description: "Open a report, choose its period and scope, export the data, and understand why your practice sees the reports it does."
 icon: /images/icons/chart-line.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, Manager, and staff granted access to figures" />
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers; staff granted access to figures" />
 
-**Analytics** is the menu of every report your practice can open. It is not a menu in the sidebar — the sidebar entry is a single link, and the page it opens _is_ the menu.
+**Analytics** is the menu of every report your practice can open. The sidebar entry is a single link, not a collapsible list — the page it opens *is* the menu.
 
 <Path steps={['Sidebar', 'Analytics']} />
 
-The page tells you how many you have: "_n_ reports available for this clinic. Each one covers a period you choose and can be exported." They are grouped under **Clinical**, **Operations** and **Money**, each card naming the report and what it covers.
+<TaskHeader
+  before="Some recorded work — a report only exists once there is data behind it"
+  time="Two minutes to read a report; seconds to export it"
+  after="A figure for the period you chose, and a file of the rows behind it"
+/>
 
-## Which reports you get
+## What you're looking at
 
-Three things filter the list: your plan, the modules you use, and your own permissions.
+The page counts itself at the top: "\{n\} reports available for this clinic. Each one covers a period you choose and can be exported." The cards are grouped under **Clinical**, **Operations** and **Money**, each naming a report and what it covers.
 
 | Report | Covers | Scopes |
 | --- | --- | --- |
@@ -35,39 +40,74 @@ Three things filter the list: your plan, the modules you use, and your own permi
 | **Insurance Claims** | Electronic claims: volume, status and what has been paid | — |
 | **e-Prescribing** | Prescriptions transmitted, and how many landed | — |
 
-The last two are specific to solo and team plans, because the [electronic claims](/practice/money/insurance-claims) and [e-prescribing](/platform/integrations/eprescribe) workflows they report on are too.
+Three things filter that list: your plan, the modules you use, and your own permissions. A report only appears once the module behind it is in use, so a new practice sees a short list. If the page says **No reports available**, nothing is broken — there is nothing yet for a report to describe.
 
-A report only appears once the module behind it is in use, and a report you are not permitted to see is simply not listed. If the page says **No reports available**, nothing is broken — there is nothing yet for a report to describe.
+The last two rows are specific to solo and team plans, because the [electronic claims](/practice/money/insurance-claims) and [e-prescribing](/platform/integrations/eprescribe) workflows they report on are too.
 
 <Note>
-  A shorter list than you expected is deliberate, not a missing feature. A report is a promise that the data behind it exists, so a report you have never generated any data for is not published at all. Start using the module and its report appears.
+  A shorter list than you expected is deliberate, not a missing feature. A report is a promise that the data behind it exists, so one you have never generated any data for is not published at all. Start using the module and its report appears.
 </Note>
 
-## Inside a report
+## Read a report
 
-Every report opens in the same workbench, so learning one teaches you all of them:
+Every report opens in the same workbench, so learning one teaches you all of them.
 
 | Part | What it does |
 | --- | --- |
 | Title | The report's name |
 | Period select | **Last 30 days**, **Last 90 days** or **Last 12 months** |
-| Scope tabs | Present only on reports that have them, e.g. **Invoices** / **Payments** |
+| Scope tabs | Only on reports that have them, e.g. **Invoices** / **Payments** |
 | Summary tiles | The headline figures for the chosen period |
 | Chart over time | The same figures plotted across the period |
 | Breakdown chart | The composition — by category, status or staff member |
 | Data table | The rows behind the charts, with **Export** |
 
+<Steps>
+  <Step title="Open the report">
+    Select its card. Reports also open from the tiles on [the executive dashboard](/practice/insights/dashboard).
+  </Step>
+  <Step title="Choose the period">
+    Set the period select first. Every figure and chart on the page redraws for that range.
+  </Step>
+  <Step title="Switch scope if the report has tabs">
+    On **Revenue**, **Invoices** answers "what did we bill" and **Payments** answers "what did we collect". They are not the same number and are not meant to be.
+  </Step>
+  <Step title="Read the table, not only the chart">
+    The chart shows the shape; the table shows the rows you can reconcile against.
+  </Step>
+</Steps>
+
 Money is shown in your practice's own currency — see [Currency](/platform/settings/currency).
 
-Some reports are snapshots rather than periods. Those have no period select and say **As it stands now** in its place, and their footer reads "as it stands now" rather than naming a range. A stock-at-risk figure has no meaningful "last 90 days"; it is either at risk today or it is not.
+Some reports are snapshots rather than periods. Those have no period select, say **As it stands now** in its place, and their footer says the same. Stock at risk of expiry has no meaningful "last 90 days"; it is either at risk today or it is not.
 
-## Export
+## Export the rows
 
-**Export** on the data table takes the rows currently shown — the period and scope you selected, not the whole dataset. Set both before exporting, or you will reconcile the wrong numbers.
+**Export** on the data table takes the rows **currently shown** — the period and the scope you selected, not the whole dataset. Set both before exporting, or you will reconcile the wrong numbers. For a full copy of your practice's records rather than one report, use [Data export](/practice/settings/data-export).
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open Analytics | Owner, manager | **View financial dashboard** |
+| Open the Revenue report | Owner, manager, whoever handles billing | **View Payment Reports** |
+| Open a non-money report | Owner, manager, granted staff | **View financial dashboard** |
+| Export a report's rows | Same as opening it | Whatever governs that report |
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Analytics** from a sidebar is a convenience, not a security boundary.
+
+A report you are not permitted to see is simply not listed, and a permission-gated figure inside one renders as a dash — never as a zero. See [Staff permissions](/platform/team/permissions).
 
 <AuditNote action="Opening a report" />
 
-## If something goes wrong
+## Check it worked
+
+- The report card count at the top of the page matches the number of cards below it.
+- Changing the period changes the summary tiles, not just the chart.
+- The exported file opens and its row count matches what the table showed.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="This report could not be loaded.">
@@ -78,7 +118,7 @@ Some reports are snapshots rather than periods. Those have no period select and 
     Two usual causes: the subscription lapsed and every gate fell back to Free, or a permission was changed. See [Change your plan](/platform/plans/change-plan) and [Staff permissions](/platform/team/permissions).
   </Accordion>
 
-  <Accordion title="There is no period select">
+  <Accordion title="There is no period select on this report">
     That report is a snapshot and shows **As it stands now**. There is no range to choose.
   </Accordion>
 
@@ -86,8 +126,36 @@ Some reports are snapshots rather than periods. Those have no period select and 
     It exports what is on screen for the selected period and scope. Widen the period, or switch the scope tab, then export again.
   </Accordion>
 
+  <Accordion title="Revenue does not match my bank statement">
+    The **Invoices** scope is what you billed; the **Payments** scope is what you recorded as received. Neither is a settlement report — your provider pays out on its own schedule.
+  </Accordion>
+
   <Accordion title="Selecting Analytics opens a page of cards, not a menu">
     That page is the menu. Each card opens a report.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I build my own report?">
+    No. The catalogue is fixed and grows with the product. Export the closest report and pivot the rows yourself.
+  </Accordion>
+
+  <Accordion title="Can I schedule a report by email?">
+    Not from this page. What arrives by email is governed by your [notification settings](/practice/settings/notifications).
+  </Accordion>
+
+  <Accordion title="Do reports contain client names?">
+    Some tables list the record a row came from. Treat an export as clinical data: store it somewhere access-controlled, and delete it when you are done.
+  </Accordion>
+
+  <Accordion title="Why does a report show a period I did not choose?">
+    Each report opens on its default period. The select always shows which range is in force.
+  </Accordion>
+
+  <Accordion title="Does the Inventory report include what the store sold?">
+    Yes — the store sells against the same stock. Takings appear in the **Store** report; the stock movement appears in **Inventory**.
   </Accordion>
 </AccordionGroup>
 

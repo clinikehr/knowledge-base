@@ -9,79 +9,140 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billers" note="The Insurance group only appears when the Insurance care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on." />
 
-A pre-authorization asks an insurer to agree, in advance, that they will pay for something. Get it before you treat and a claim is a formality; skip it and a claim for a procedure that needed approval is a denial waiting to happen.
-
-**Pre-Authorization** needs the **Insurance** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+A pre-authorization asks an insurer to agree, in advance, that they will pay for something. The codes you attach here are what the insurer approves against — get them right and the claim that follows is a formality, get them wrong and you are appealing a denial you could have prevented.
 
 <Path steps={['Sidebar', 'Insurance', 'Pre-Authorization']} />
 
-<TaskHeader before="The Insurance care area switched on, the insurer added under Companies, and the patient's coverage recorded" time="5 minutes" after="A submitted request you can track to approval or denial" />
+<TaskHeader before="The insurer added under Companies, its prices set, and the patient's policy on file" time="5 minutes" after="A submitted request you can track to approval or denial" />
+
+## What you're looking at
+
+The heading reads **Pre-Authorization Management** — "Manage insurance pre-authorization requests with AI-powered analysis". A date-range picker, **Refresh**, **Export** and **New Request** sit beside it.
+
+Four tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | Summary tiles for volume, pending work and approval rate |
+| **Requests** | The searchable list of every request |
+| **Analytics** | Status mix and how it is moving |
+| **Activity** | Who did what to a request, and when |
+
+The **Requests** list carries **Request #**, **Patient**, **Type**, **Status**, **AI Analysis**, **Cost**, **Created At** and **Actions**. **Request #**, **Patient**, **Type**, **Cost** and **Created At** all sort. Above it sit a search box — "Search requests, patients, insurance..." — and **All Statuses** and **All Types** filters, which list only the values your own requests actually use.
+
+**Empty state.** A hospital with nothing raised, or a filter that matches nothing, shows **No requests found**. Clear the search and set both filters back to **All** before concluding a request is missing.
 
 ## Raise the request
 
+The form is a set of tabs you work through in order. Each one answers a question the payer will ask.
+
 <Steps>
   <Step title="Open a new request">
-    From **Pre-Authorization**, start a new request. The form opens on **Patient & Request Information**.
+    Select **New Request**. The form opens on **Basic Info**, headed **Patient & Request Information**.
   </Step>
   <Step title="Identify the patient and the request">
-    Choose the **Patient** — the picker says "Select patient..." — then the **Request Type** and a **Priority Level**. The first two are required. Priority is what tells your own team which requests cannot wait, so set it honestly.
+    Choose the **Patient** and a **Request Type** — both required — then a **Priority Level**. Priority is what tells your own team which requests cannot wait, so set it honestly.
   </Step>
   <Step title="Set the deadlines">
-    **Submission Deadline** is when you must have sent it; **Authorization Deadline** is when you need an answer by. Both drive your follow-up, so fill them in even when the payer has not stated one.
+    **Submission Deadline** is when you must have sent it; **Authorization Deadline** is when you need an answer by. Both drive your follow-up, so fill them in even when the payer has not stated one. **Additional Notes** carries anything else the reviewer should read.
   </Step>
   <Step title="Add the items">
-    Add a line for each thing you want approved. Each line takes an **Item Type**, the item itself, a **Description**, a **Quantity** and a **Unit Cost** — all required. **Tariff Code**, **Tariff ID** and **Diagnosis** carry the payer's own reference where you have one.
+    On **Items & Services**, add a line for each thing you want approved. **Item Type**, the item itself, **Quantity** and **Description** are required; **Unit Cost**, **Tariff Code**, **Tariff ID**, **Diagnosis** and **Medical Necessity** carry the payer's own references and your justification.
   </Step>
   <Step title="Attach the codes">
-    Under **ICD 10/CPT CODE**, search with "Search ICD-10, CPT, or HCPCS codes..." and attach the codes that justify the request. This is the field payers read first: a request with a procedure code and no diagnosis code supporting it is the most common avoidable denial.
+    Still on each item, use **ICD 10/CPT CODE** and search with "Search ICD-10, CPT, or HCPCS codes...". This is the field payers read first: a procedure code with no diagnosis code supporting it is the commonest avoidable denial. The search matches name, code and description, so try the clinical term rather than the number.
+  </Step>
+  <Step title="Confirm the cover">
+    On **Insurance Details**, choose the **Insurance Company** and **Insurance Plan**. If the patient has nothing on file, select **Add Insurance** and complete the **Add Insurance Details** dialog — it is saved against the patient for next time.
   </Step>
   <Step title="Review and submit">
-    Add anything else under **Additional Notes**, then use **Review & Submit**. Read the summary before you send — you are asking a payer to commit money against what is on that screen.
+    On **Review & Submit**, read the summary back. You are asking a payer to commit money against exactly what is on that screen, so an item missing here is an item that is not approved.
   </Step>
 </Steps>
 
-<Note>
-  Prices on the request come from the payer-specific rates you set under **Insurance** → **Pricing**, not from your standard [service list](/clinic/revenue/services). If a figure looks wrong, the negotiated price is where to fix it.
-</Note>
+Costs on the request come from the payer-specific rates under **Insurance** → **Pricing**, not from your standard fees. If a figure looks wrong, the negotiated price is where to fix it.
 
 ## Track the answer
 
-The **Pre-Authorization Requests** list is where you chase. Search across "Search requests, patients, insurance...", or filter by status and by type. The stats above it show **Total Requests**, **Pending**, **Approved** and your **Approval Rate** — a falling approval rate is usually a coding problem, not bad luck.
+Work the **Requests** tab by status. The **AI Analysis** column shows whether an automated review has run — a prompt to look again before you send, never a decision.
 
-When an insurer responds, record their decision on the request. An approval is what you quote on the [claim](/hospital/insurance/claims) later.
+The **Overview** tiles are your chase list: a rising pending count means requests are sitting, and a falling approval rate is almost always a coding problem rather than bad luck. When the insurer answers, record their decision on the request — an approval is what you quote on the [claim](/hospital/insurance/claims) afterwards.
+
+## Who can do this
+
+**Role** decides whether the screen opens. On Enterprise, an owner controls which roles reach **Insurance** under **Settings → Role Navigation**; accountants and billers reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
+
+**Permission** decides what a person may do inside. The **Billing** section of your staff sheet carries the ones that matter here:
+
+| Action | Who can do it by default | Permission |
+| --- | --- | --- |
+| Raise and submit a request | Owner, manager, biller | **File insurance claims** |
+| Pull what a payer covers | Owner, manager, accountant, biller | **Request coverage reports** |
+| Record a payer's settlement | Owner, manager, biller | **Add insurance payments** |
+| Change a negotiated price | Owner, manager, biller | **Edit service fees** |
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary.
 
 ## Check it worked
 
-- The request appears in **Pre-Authorization Requests** with a status, the patient and the insurer.
-- The **Pending** count on the stats row has gone up by one.
-- Every item you expect to deliver is on the request — an item that is not on it is not approved, even if the rest of the request is.
+- The request appears on **Requests** with a **Request #**, the patient and a status.
+- The **Cost** column matches what you expect the payer to approve.
+- Every item you intend to deliver is on the request — one that is not on it is not approved, however the rest is answered.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The patient's insurer is not in the picker">
-    Add the insurer on the **Companies** tab of the Insurance Dashboard first, then record the patient's cover on **Coverage**.
+    Add the insurer on the **Companies** tab of the [Insurance dashboard](/hospital/insurance/overview) first, then reopen the request.
+  </Accordion>
+
+  <Accordion title="No requests found, but we raised several">
+    Clear the search box and set **All Statuses** and **All Types**, then check the date-range picker at the top of the page and select **Refresh**.
   </Accordion>
 
   <Accordion title="I cannot find the right code">
-    "Search ICD-10, CPT, or HCPCS codes..." matches on name, code and description, so try the clinical term rather than the number. If nothing fits, describe it precisely under **Description** — a payer will query a vague description, and a query costs more time than the search did.
+    Search on the clinical term rather than the number. If nothing fits, describe it precisely under **Description** and **Medical Necessity** — a payer will query a vague description, and a query costs more time than the search did.
   </Accordion>
 
   <Accordion title="The unit cost is not what we agreed with this payer">
-    Payer-specific prices live under **Insurance** → **Pricing**. Fix the negotiated price there so every future request is right, rather than overtyping it on each one.
+    Payer-specific prices live under **Insurance** → **Pricing**. Fix the negotiated price there so every future request is right.
   </Accordion>
 
   <Accordion title="The request was denied">
-    Read the payer's reason against the codes you submitted. Most denials at this stage are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the patient's cover excludes. Correct it and raise a new request rather than arguing the old one.
+    Read the payer's reason against the codes you submitted. Most denials at this stage are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the cover excludes. Correct it and raise a new request rather than arguing the old one.
   </Accordion>
 
   <Accordion title="Pre-Authorization is not in my sidebar">
-    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan. An owner can turn the care area on in **Settings → Facility**; see [Change your plan](/platform/plans/change-plan) for the plan.
+    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the hospital is not on Enterprise. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need a pre-authorization for every patient?">
+    No — only where the plan says so. Switch on **Pre-authorization Required** on that plan under **Insurance** → **Plans** so your team can see which ones demand it.
+  </Accordion>
+
+  <Accordion title="Is anything sent to the insurer automatically?">
+    No. The request is prepared and tracked here, and you send it to the payer the way you already do.
+  </Accordion>
+
+  <Accordion title="Can I add an item after submitting?">
+    Raise a fresh request for it. An approval covers the items that were on the request when the payer read it, so amending after the fact is not a change the payer has seen.
+  </Accordion>
+
+  <Accordion title="Does an approval guarantee payment?">
+    It removes the commonest reason for refusal, not every one. The claim still has to match the approval on items, quantities and dates.
+  </Accordion>
+
+  <Accordion title="What does the AI Analysis column do?">
+    It flags gaps in a request before a human sends it — a prompt to look again, never a decision. Submitting is always a person's act.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a pre-authorization" />
 
-{/* source of truth: components/clinic/insurance/pre-authorization/pre-auth-form.tsx, components/clinic/insurance/pre-authorization/pre-auth-table.tsx, components/clinic/insurance/pre-authorization/pre-auth-stats.tsx */}
+{/* source of truth: components/clinic/insurance/pre-authorization/pre-auth-content-dashboard.tsx, pre-auth-form.tsx, pre-auth-table.tsx, patient-insurance-dialog.tsx, lib/edition-staff-roles.ts, lib/edition.ts */}

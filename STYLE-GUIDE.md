@@ -25,18 +25,50 @@ That has consequences:
 
 ## 2. Page types
 
-Only three. Pick one per page and do not blend them.
+Five. Pick one per page and do not blend them. The last two have their own
+contracts, spelled out below — they cover most of this site.
 
 | Type | Answers | Shape |
 |---|---|---|
 | **Task** | "How do I …?" | `<TaskHeader>` → `<Steps>` → verification → troubleshooting |
 | **Concept** | "What is … / how does it work?" | prose + tables + diagrams, no `<Steps>` |
 | **Reference** | "What are all the …?" | tables, exhaustive, minimal prose |
+| **Module** | "How do I use this screen?" | one per navigation destination — see below |
+| **Settings** | "What does this tab do?" | one per settings tab — see below |
 
 Most pages are **Task** pages. A section index (`.../index.mdx`) is a Concept
 page whose job is to route: a short orientation, then `<Cards>`.
 
-### Settings pages are a fourth shape, and they have a stricter contract
+### Module pages — one page per navigation destination
+
+If the sidebar has a row for it, or a subsection under a row, it gets its own
+page. Do not fold "Lab Station" and "Worklist" together because they sit near
+each other; someone searching for the worklist should land on the worklist.
+
+Required sections, in order:
+
+1. **What you're looking at** — the screen, named. Tabs, toolbar buttons,
+   columns, status badges, and the **empty state** a brand-new workspace sees.
+   A reader who cannot map your words onto their screen never reaches step 1.
+2. **The task(s)** — one `<Steps>` block per distinct job. A consultation page
+   has "Start a consultation", "Write the note", "Place orders", "Sign it off"
+   as four H2s, not one twenty-step ladder.
+3. **Who can do this** — roles and permissions are *different things*. Role
+   decides whether the module opens; permission decides whether an action inside
+   it is allowed. Give a table of Action → who by default → the governing
+   permission, then the two behaviours that surprise people: enforcement is
+   opt-in per person ("Saving starts enforcing"), and a denied action is
+   recorded while an allowed one is not.
+4. **Check it worked**
+5. **Common issues** — something is *wrong*. Symptom as the reader would phrase
+   it, one-line cause, the fix. Real error strings. 4–7 entries.
+6. **FAQ** — nothing is wrong, they just want to know. "Can I edit a signed
+   note?", "Does cancelling refund the patient?" 4–6 entries.
+
+Keep both 5 and 6 — they answer different questions and collapsing them loses
+one of them. 600–1100 words.
+
+### Settings pages are a fifth shape, and they have a stricter contract
 
 **One page per settings tab. Never two.** An earlier version compressed eight
 tabs into "Billing, payments and insurance", and a reader who came to switch on

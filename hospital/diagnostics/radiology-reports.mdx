@@ -1,0 +1,161 @@
+---
+title: "Radiology reports"
+description: "Open a study with its images and priors, write the findings and impression, and submit or download the radiology report."
+icon: "/images/icons/file-text.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+
+**Radiology Reports** is the reporting surface: **Manage radiology studies, reports, and imaging analytics.** It is where a radiologist opens a study with its images beside it, writes the report, and releases it.
+
+<Path steps={['Sidebar', 'Radiology', 'Radiology Reports']} />
+
+<TaskHeader
+  before="A completed study, and a two-factor-verified session to submit a report"
+  time="As long as the read takes"
+  after="A submitted report on the patient's record, downloadable as a PDF"
+/>
+
+## What you're looking at
+
+A period select — **Today**, **This Week**, **This Month** or **All Time** — and **New Study** for raising a request. Five tiles run across the top:
+
+**Total Studies · Pending** (Awaiting scheduling) **· In Progress** (Being performed) **· Reported** (Reports finalized) **· Critical Findings** (Require attention)
+
+Four tabs follow: **Overview**, **Reports**, **Analytics** and **Documents**. The **Reports** tab is the working list, with **Search studies...**, a **Date filter** and a **Status filter** offering **All Statuses**, **Pending**, **Scheduled**, **In Progress**, **Completed**, **Reported** and **Cancelled**.
+
+| Column | Shows |
+| --- | --- |
+| **Patient** | Who |
+| **Study** | The study, its modality, and whether images are attached |
+| **Status** | Where it has reached |
+| **Ordered** | When it was requested |
+| **Payment** | **Paid**, **Pending**, **Partial** or **Waived** |
+| **Actions** | The row menu |
+
+Badges rank by importance: **Critical**, then **STAT**, then **Urgent**, then the plain status. The imaging badge shows **\{n\} imgs** where images have arrived, **Acquiring…** while the machine is still sending, and **Discontinued** where acquisition was abandoned. Nothing matching reads **No Studies Found** / **There are no radiology studies matching your current filters.**
+
+## Report a study
+
+<Steps>
+  <Step title="Open the study">
+    From the row menu, **Create Report** on a completed study or **Edit Report** on one already written. The heading reads **Create Study Report**, **Edit Study Report** or **View Study Report**.
+  </Step>
+  <Step title="Check the study information">
+    The **Study Information** card names the modality and the order date, then **Patient**, **Patient ID**, **Study Type**, **Ordered By** and **Indication**. An indication of **Not specified** is worth chasing before you read — a request with no clinical question comes back as a description rather than an answer.
+  </Step>
+  <Step title="Look at the images">
+    Where the imaging bridge is connected, the card shows the **Accession** and **\{n\} images attached**. **View images** opens the key preview images; **Open full viewer** launches the full diagnostic viewer against your own archive. **Prior studies** lists comparisons found for that patient.
+  </Step>
+  <Step title="Write findings and impression">
+    **Findings** is what you can see — "Detailed description of what is observed in the study". **Impression** is the answer to the clinical question — "Clinical interpretation and diagnostic conclusion". Referring clinicians read the impression first and often only that. **Recommendations** carries the follow-up.
+  </Step>
+  <Step title="Confirm the technical details">
+    Where a study came from a connected machine, ClinikEHR pre-fills some of them and says so: **Some values may be pre-filled from the modality (MPPS) — verify before saving.** Verify rather than assume; the dose on the record is the dose the patient carries.
+  </Step>
+  <Step title="Save or submit">
+    **Save Draft** keeps it editable and confirms with **Draft saved successfully**. **Submit Report** releases it — **Report submitted successfully**. The **Report Status** panel tracks you as you go: **Findings** and **Impression** each read **Pending** until they are **Entered**.
+  </Step>
+</Steps>
+
+<Warning>
+  Ticking **This study contains critical findings** marks the record — it does not tell anyone. Critical findings require immediate communication to the ordering physician, and that is still a phone call you make yourself. ClinikEHR reminds you after saving; it cannot make the call.
+</Warning>
+
+## Images, priors and the archive
+
+Image pixels never leave your building. ClinikEHR stores the addresses of your own on-site archive and the viewer reads from it — as the preview dialog puts it, "Full diagnostic images stay in the clinic PACS." Where previews have not arrived yet, it says so: **Preview images haven't synced from the modality yet — they appear here once the bridge uploads them.**
+
+**Archive to cloud** requests long-term storage for a study — **Archive requested — the study will upload to the cloud shortly.** Once archived, **Download study** takes a copy. A failed archive offers **Retry archive**. Do this after reporting, not before.
+
+## Download the report
+
+**Download Report (PDF)** shows **Preparing…** while the file is built and confirms with **Radiology report downloaded**. An order that has not been saved yet refuses politely: **Save the order before downloading its report.**
+
+<AuditNote action="Opening a study, and downloading a report" />
+
+## Working offline
+
+Raising an imaging order keeps working. One captured offline is confirmed as **Imaging order saved offline** with a provisional reference, and syncs when the connection returns; payment stays pending until then. A connection that drops mid-save gives **Connection dropped — imaging order queued**. Reporting itself needs a connection, because it reads images from your archive. See [Working offline](/platform/apps/offline).
+
+## Who can do this
+
+**Role** decides whether this page opens — owners, radiologists, radiology technicians, doctors, managers and nurses pass. Anyone else is told **You don't have permission to access the Radiology Station. Please contact your clinic administrator.** An owner can also hide **Radiology** from a role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Open the list and view a study | Imaging and clinical staff | Role |
+| Move a study through scheduling and performance | Technicians and radiologists | Role |
+| Write, save or submit a report | Radiologists and doctors | Role — others get **You don't have permission to submit reports** |
+| Submit a report at all | Anyone with the above | Two-factor — an unverified session is refused with **Two-factor verification is required.** |
+| See payment and revenue | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The row shows **Reported**, and the **Reported** tile moves.
+- **Report Status** shows **Findings** and **Impression** as **Entered**.
+- **Download Report (PDF)** produces the document without a draft stamp.
+- The requesting clinician sees it on the [patient's record](/hospital/front-desk/patients).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Two-factor verification is required.">
+    Submitting a report needs a second-factor-verified session. You are taken to the verification step automatically — complete it and submit again. See [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+
+  <Accordion title="Open full viewer does nothing">
+    The viewer opens in a new tab. If nothing appears, your browser blocked the pop-up — allow pop-ups for ClinikEHR. If the button is absent altogether, no viewer address has been configured; see [Modalities](/hospital/diagnostics/modalities).
+  </Accordion>
+
+  <Accordion title="The study says no images are attached">
+    The machine has not delivered them yet, or the study was performed on equipment that is not connected. Check the **Studies awaiting review** queue on [Modalities](/hospital/diagnostics/modalities) before reporting from memory.
+  </Accordion>
+
+  <Accordion title="Save the order before downloading its report.">
+    You are downloading a report for an order that has not been saved. Save it, reopen it, then use **Download Report (PDF)**.
+  </Accordion>
+
+  <Accordion title="You don't have permission to submit reports">
+    Reporting is limited to radiologists and doctors. Ask an owner to correct your role under [Staff](/hospital/settings/staff).
+  </Accordion>
+
+  <Accordion title="Archiving to cloud… never finishes">
+    A failed archive turns into **Retry archive**. If it fails repeatedly, the study is likely still acquiring — check its badge before retrying.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do the images upload to ClinikEHR?">
+    No. Only preview images and the addresses of your own archive are held; full diagnostic pixels stay in your PACS and the viewer reads them from there.
+  </Accordion>
+
+  <Accordion title="What are prior studies?">
+    Earlier imaging for the same patient, found on your connected archive, offered for comparison. They appear only where the imaging bridge is set up.
+  </Accordion>
+
+  <Accordion title="What is a structured report (SR)?">
+    Measurements the machine itself recorded, imported alongside the images so you do not retype them. They appear under **Measurements** when the modality sent them.
+  </Accordion>
+
+  <Accordion title="Can I take payment from this screen?">
+    Yes, where a balance is outstanding — **Submit Report &amp; Pay** settles it as you release the report. Otherwise it stays **Pending** and is handled in [Billing](/hospital/revenue/billing).
+  </Accordion>
+
+  <Accordion title="Is there deeper documentation on imaging reports?">
+    Yes — the Diagnostics edition issues the same reports. See [Imaging reports](/lims/imaging/reports).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a radiology report" />
+
+{/* source of truth: components/clinic/dashboard/radiology-station/radiology-report/, components/offline/offline-queue-bar.tsx */}

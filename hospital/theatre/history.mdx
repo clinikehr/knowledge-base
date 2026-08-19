@@ -1,0 +1,157 @@
+---
+title: "Case history"
+description: "Search past and upcoming theatre cases across days by case number or procedure, and open any one of them in full."
+icon: "/images/icons/clock-rotate-left.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Theatre staff with a two-factor-verified session" note="Needs the Surgical theatre care area — off by default" />
+
+**Case History** answers the question the day list cannot: what happened to a case that was not today. It searches **Past and upcoming cases across days** and opens each one in the same sheet the theatre list uses.
+
+<Path steps={['Sidebar', 'Theatre', 'Case History']} />
+
+<TaskHeader
+  before="A two-factor-verified sign-in, and the Surgical theatre care area switched on"
+  time="Under a minute to find a case"
+  after="The case open, with its checklist, status history and operation note"
+/>
+
+## Before you start
+
+Theatre history is gated on two-factor verification. A signed-in session is not enough — if yours has not been verified with a second factor you are told **Two-factor verification is required to view theatre history.** and nothing loads. Set it up under [Two-factor authentication](/platform/security/mfa).
+
+## What you're looking at
+
+The heading reads **Case History**, and under it: **Past and upcoming cases across days. Search by case number or procedure.**
+
+| Control | What it does |
+| --- | --- |
+| **Case number or procedure…** | The search box. It matches those two fields only |
+| Range select | **Last 30 days**, **Last 90 days** (the default) or **Last 12 months** |
+| **All** | Every case in the period — the tab you land on |
+| **In flight** | Scheduled, in theatre and in recovery |
+| **Completed** | Cases signed off as done |
+| **Cancelled** | Cases called off, with their reason on the case |
+
+Rows look exactly as they do on the day list: times, case number, procedure, then patient · theatre · side, with the status badge on the right. Nothing here is ever flagged **Delayed**, because a case from three weeks ago being "late" against today's clock is a meaningless statement.
+
+<Note>
+  The search deliberately does not match patient names. Look a case up by its number or its procedure; if you only have the patient, open their record and work from there instead.
+</Note>
+
+Nothing matching reads **No cases found**, with **Nothing matches this search in the selected period.** underneath. A very busy period returns the first 200 and says so: "Showing the first 200 cases. Narrow the date range or search to see the rest."
+
+## Find and open a case
+
+<Steps>
+  <Step title="Set the period first">
+    The range select is the cheapest filter. A case from last quarter will never appear while the range is **Last 30 days**, however precise your search text is.
+  </Step>
+  <Step title="Search by case number or procedure">
+    Type into **Case number or procedure…**. Results narrow as you type; you do not press anything.
+  </Step>
+  <Step title="Narrow by state">
+    Use **In flight**, **Completed** or **Cancelled** when you know which you want. **All** is the default and is usually the fastest place to start.
+  </Step>
+  <Step title="Open the case">
+    Select the row. The case sheet opens with its **Surgical safety checklist**, **Status** and **Operation note** exactly as they stand — including a **Signed** badge and read-only fields where the note has been signed.
+  </Step>
+  <Step title="Take a copy if you need one">
+    **Download PDF** on the operation note produces the perioperative record. A note that was never signed is stamped as unsigned on the PDF, so a draft cannot be mistaken for a final document.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening a theatre case from history" />
+
+## Correct something you find
+
+History is for reading. A completed case shows **This case is completed. A correction is recorded as an amendment, not a status change.**, and a cancelled one shows **This case was cancelled. Schedule a new case rather than reopening it.** Neither offers a way back — if the record is wrong, record the correction as an amendment so the original stays intact.
+
+## Who can do this
+
+Three things have to line up, and they are different kinds of thing:
+
+| Layer | What it decides |
+| --- | --- |
+| Care area | Whether **Theatre** exists in this hospital at all — **Surgical theatre**, off by default |
+| Role | Whether this page opens for you, including whether an owner hid **Theatre** from your role under [Role navigation](/hospital/settings/role-navigation) |
+| Two-factor | Whether the records load — a verified session is required for theatre history |
+
+Permissions then govern the acts you can perform on a case you have opened:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open and read a past case | Theatre staff | Governed by role and two-factor, not a separate permission |
+| Write the operation note | Theatre staff | **Record the operation note** |
+| Sign the operation note | Surgeons | **Sign the operation note** |
+| Reschedule a live case found here | Theatre staff | **Book and reschedule cases** |
+
+Enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log while an allowed one is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The case you wanted is in the list with its case number and the right status badge.
+- Opening it shows the checklist badges as they were left, not as blanks.
+- A signed operation note carries a **Signed** badge and read-only fields.
+- A downloaded PDF of a signed note carries no unsigned stamp.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Two-factor verification is required to view theatre history.">
+    Your session is signed in but not second-factor verified. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+
+  <Accordion title="That range is too large to search. Choose a shorter period.">
+    The date window is wider than the search will run. Drop to **Last 90 days** or **Last 30 days**, or add search text to narrow it.
+  </Accordion>
+
+  <Accordion title="I cannot find a case I know exists">
+    Check the range first — **Last 90 days** is the default and will hide anything older. Then check you are searching by case number or procedure; patient names are not matched.
+  </Accordion>
+
+  <Accordion title="Showing the first 200 cases">
+    The result set was capped. Narrow the date range or add search text; there is no page two.
+  </Accordion>
+
+  <Accordion title="Could not load theatre history.">
+    A transient failure. Try again, or narrow the search — the message itself suggests both. If it persists with a narrow range, contact support.
+  </Accordion>
+
+  <Accordion title="Case History is missing from the sidebar">
+    The **Surgical theatre** care area is off, or an owner has hidden **Theatre** from your role. See [Care areas](/hospital/get-started/care-areas) and [Role navigation](/hospital/settings/role-navigation).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why does history show upcoming cases too?">
+    Because "find me that case" is not a question about the past. Anything booked in the period is here, which is why the default tab is **All** and why **In flight** exists as its own filter.
+  </Accordion>
+
+  <Accordion title="Can I export the list?">
+    Not as a list. Open a case and use **Download PDF** on its operation note for the perioperative record. Aggregate figures live in [Analytics](/hospital/executive/analytics).
+  </Accordion>
+
+  <Accordion title="Do cancelled cases show why they were cancelled?">
+    Yes. The reason entered at cancellation is recorded on the case and shown when you open it — cancelling without one is not possible.
+  </Accordion>
+
+  <Accordion title="Is opening a case here logged?">
+    Yes. Every view of a theatre case is written to the audit log with your name, the case and the time. Owners and managers can review it under [Audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="Can I reschedule a case from history?">
+    Only if it is still live. A completed or cancelled case refuses: "This case is completed and can no longer be rescheduled."
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/theatre/theatre-history-content.tsx, components/clinic/theatre/theatre-case-detail.tsx, lib/theatre/case-select.ts */}

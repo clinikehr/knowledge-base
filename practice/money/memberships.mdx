@@ -1,0 +1,175 @@
+---
+title: Sell memberships
+description: "Connect a payout account, publish membership plans, and enrol clients into recurring subscriptions that bill themselves."
+icon: /images/icons/id-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and Team; add-ons need Team" roles="Owners and managers only" note="Needs a connected payout account that can accept charges" />
+
+A membership is a recurring plan a client subscribes to — a wellness programme, a chronic-care package, a retainer. The page says what it does: "Create recurring plans your patients subscribe to. Billing settles to your connected payout account; ClinikEHR keeps a 1.9% fee."
+
+<Path steps={['Sidebar', 'Memberships']} />
+
+<TaskHeader
+  before="A connected payout account. Nothing on this page works without one"
+  time="Ten minutes for your first plan"
+  after="A published plan and members billing automatically"
+/>
+
+## Before you start — connect payouts
+
+This is not optional and it cannot be deferred. Until your payout account is connected **and able to accept charges**, the screen shows **Connect payouts to sell memberships** with a **Go to Online Payments** button, and you cannot sell. A half-finished Stripe connection counts as no connection.
+
+Which provider you use is decided by your currency, not by preference:
+
+| Your currency | Provider | The banner you see until it is done |
+| --- | --- | --- |
+| Naira (NGN) | Paystack | "Connect a Paystack bank account in Online Payments to sell memberships." |
+| Anything else | Stripe | "Connect a Stripe account in Online Payments to sell memberships." |
+| Anything else, part-way through | Stripe | "Finish Stripe onboarding (charges not yet enabled) to sell memberships." |
+
+Finish the provider's onboarding all the way through, then come back. See [Online payments](/practice/settings/online-payments).
+
+Two other gates apply before the screen does anything:
+
+- **Plan** — Essential or above. Free and Starter get an upgrade panel instead: "Memberships is a premium feature … Available on the Essential and Team plans." Adding **add-ons** needs Team: "Add-ons require the Team plan. Upgrade your plan to create add-ons." See [Change your plan](/platform/plans/change-plan).
+- **Role** — "Only clinic owners and managers can manage memberships". This one is not adjustable through per-person permissions.
+
+## What you're looking at
+
+| Tab | What it holds |
+| --- | --- |
+| **Plans (\{n\})** | Your recurring plans, counting every plan you have made, active or not |
+| **Add-ons** | One-off extras a member can buy on top of a plan (Team) |
+| **Members** | Who is subscribed, and to what |
+| **Transactions** | Every collection attempt, successful or not |
+| **Overview** | How the programme is performing |
+
+The header carries **Collections**, **Share signup page** (or **Set up link** before you have one), **Enroll member** and **New plan**. Everything happens in a sheet over the list: the plan form, the **Create a plan** template picker — "Start from a template tuned for your vertical, or build from scratch." — **Enroll a member**, the member and transaction sheets, and **Collections**, which groups plans into sets a client can browse.
+
+A practice that has not connected payouts sees the whole screen in this disabled state, with the reason named in the banner — that is the empty state most people meet first, not an empty **Plans** tab.
+
+## Create a plan
+
+<Steps>
+  <Step title="Start from a template or from scratch">
+    Select **New plan**. The form says what it is for: "Define a recurring plan your patients can subscribe to. Billing settles to your connected payout account." The **Create a plan** template picker gives you a shaped plan you can rename and reprice.
+  </Step>
+  <Step title="Set the price and the period">
+    Price it in your practice's currency and choose how often it renews. This is what the client's card is charged, unchanged, each period.
+  </Step>
+  <Step title="Save the plan">
+    It appears under **Plans**, and the count in the tab goes up.
+  </Step>
+  <Step title="Add add-ons if you sell them">
+    On the **Add-ons** tab, **New add-on** creates a one-off extra — an initial visit, a session, a package — and **Sell to patient** on the add-on's card sells one. Add-ons are a Team feature; a plan works perfectly well on its own.
+  </Step>
+</Steps>
+
+## Enrol a member
+
+<Steps>
+  <Step title="Select Enroll member">
+    The **Enroll a member** sheet says exactly what it does: "Subscribe a patient to a membership plan. They'll be billed automatically to your connected payout account."
+  </Step>
+  <Step title="Choose the client and the plan">
+    Use this for people who sign up at the desk. Everyone else signs themselves up on your public membership page.
+  </Step>
+  <Step title="Confirm">
+    The member appears under **Members**, and the first collection appears under **Transactions**.
+  </Step>
+</Steps>
+
+<Warning>
+  Enrolling a member starts a **real recurring charge** against their card. Confirm the plan and the price with them first — the first collection is not a preview, and reversing it is a refund, not an undo.
+</Warning>
+
+To let clients enrol themselves, publish the public signup page under **Settings** → **Membership Page**: claim a page address, write the headline and success message, match your branding, then switch it from **Off** to **Live** and save. See [Membership page](/practice/settings/memberships).
+
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Memberships** | Owner, manager | Role — staff cannot be granted this |
+| Create or edit a plan | Owner, manager | Role |
+| Enrol a member | Owner, manager | Role |
+| Chase a failed collection | Owner, manager | Role |
+| See the **Overview** figures | Owner, manager | **View financial dashboard** |
+
+Memberships are the one money screen where role, not permission, is the whole story: "Only clinic owners and managers can manage memberships".
+
+- **Enforcement is opt-in, per person** elsewhere in billing — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. That does not lift the owner-or-manager rule here.
+- **A denied action is recorded; an allowed one is not.**
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The **Plans** tab shows your plan with a count, and the create buttons are enabled rather than greyed out.
+- Your public membership page loads at the address you chose and shows the plan and its price.
+- After the first enrolment, the member is under **Members** and the collection is under **Transactions**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Connect payouts to sell memberships">
+    Your payout account is not connected, or not yet able to accept charges. The banner names the exact reason — a Stripe account that has not finished onboarding is treated as no account. **Go to Online Payments** on the banner takes you straight there; see [Online payments](/practice/settings/online-payments).
+  </Accordion>
+
+  <Accordion title="Memberships shows an upgrade panel instead of my plans">
+    "Memberships require the Essential plan or higher. Upgrade your plan to sell memberships." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="I cannot create an add-on">
+    "Add-ons require the Team plan. Upgrade your plan to create add-ons." Plans themselves work on Essential.
+  </Accordion>
+
+  <Accordion title="A staff member cannot open Memberships">
+    "Only clinic owners and managers can manage memberships". There is no per-person permission that grants it.
+  </Accordion>
+
+  <Accordion title="My page address is refused">
+    Addresses are checked for format, for reserved words, and for uniqueness across every ClinikEHR workspace — so a plausible address may already be taken. Choose something more specific.
+  </Accordion>
+
+  <Accordion title="A member's payment failed">
+    Failed collections appear under **Transactions**. Open the transaction to see why; an expired card needs the member to update it, and no number of retries will fix it.
+  </Accordion>
+
+  <Accordion title="I connected Paystack but the plan will not price in dollars">
+    Paystack collects in Naira. Your practice bills in one currency, set under **Settings** → **Billing** — see [Currency](/platform/settings/currency).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens if I cancel a member's plan?">
+    Collections stop from that point. Money already collected is not returned automatically — refund it deliberately if that is what you agreed.
+  </Accordion>
+
+  <Accordion title="Can a member be on two plans?">
+    Yes. Each subscription bills on its own cycle and appears as its own row under **Members**.
+  </Accordion>
+
+  <Accordion title="Do membership collections show up in Billing?">
+    They are collected by the provider and listed under **Transactions**, and they roll into the Memberships report. They do not raise an invoice per period. See [Reports and analytics](/practice/insights/analytics).
+  </Accordion>
+
+  <Accordion title="What happens if my subscription drops to Free?">
+    The screen locks behind the Essential gate again. Your plans and members are not deleted, but you cannot manage them until the plan is active.
+  </Accordion>
+
+  <Accordion title="Can I change the price of a live plan?">
+    Repricing affects what new members pay. Change what an existing member is charged deliberately, and tell them before the next collection.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="memberships" />
+
+{/* source of truth: components/clinic/memberships/memberships-content.tsx, components/clinic/memberships/enroll-member-sheet.tsx, components/clinic/memberships/membership-plan-form.tsx, lib/memberships/payout-gating.ts, lib/memberships/authz.ts */}

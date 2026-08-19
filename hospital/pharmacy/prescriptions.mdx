@@ -1,0 +1,157 @@
+---
+title: Work the prescription list
+description: "Open today's prescription queue in the pharmacy unit, find a script, and take it through to dispensing."
+icon: /images/icons/file-prescription.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy staff; only a pharmacist gets the dispensing actions" note="Needs the In-house pharmacy care area" />
+
+**Prescription List** is the pharmacy unit's working queue: every script written across the hospital today, waiting for someone at the dispensary to pick it up. It is where a pharmacy shift starts.
+
+<Path steps={['Sidebar', 'Pharmacy', 'Prescription List']} />
+
+<TaskHeader before="The In-house pharmacy care area switched on, and at least one prescription written" time="A minute per script" after="Each script viewed, dispensed or handed on" />
+
+## What you're looking at
+
+The page opens with a greeting and the line **Here's a list of all prescriptions for today!** — a reminder that this is the day's queue, not the archive. For anything older, go to [Prescription history](/hospital/pharmacy/prescription-history).
+
+Above the table:
+
+| Control | What it does |
+| --- | --- |
+| **Search for prescription** | Filters the list as you type |
+| **New Prescription** | Opens the prescription form on the [pharmacy station](/hospital/pharmacy/station) |
+| **Refresh** | Re-reads the queue — useful when a clinician is writing scripts while you work |
+| **View Columns** | A **Toggle columns** list for showing and hiding columns |
+
+The table itself carries eight columns, five of them on by default:
+
+| Column | Shows | On by default |
+| --- | --- | --- |
+| **Patient ID** | The hospital number you quote back to the ward | Yes |
+| **Patient Name** | Who the script is for | Yes |
+| **Status** | **Pending** or **Dispensed** | Yes |
+| **Prescribed By** | The clinician who wrote it | Yes |
+| **Dispensed By** | Who filled it, once it is filled | Yes |
+| **Patient Type** | Outpatient, or **Ward Patient** | No |
+| **Date** | When it was written | No |
+| **Mode** | How the medication is taken | No |
+
+A **Ward Patient** badge on a row means the script belongs to an admitted patient, and the row's actions change wording to match — **View Ward Prescription**, **Dispense Ward Prescription**.
+
+The footer sets how many rows you see — **5**, **10**, **20** or **50** **per page** — and tells you how many there are in total.
+
+**Empty states.** A hospital with nothing written today shows **No prescriptions found.** If you have typed in the search box and nothing matches, you get **No prescriptions match your search criteria.** instead — clear the search before concluding the queue is empty.
+
+## Open a script
+
+<Steps>
+  <Step title="Find it">
+    Enter the patient's name or hospital number in **Search for prescription**. Selecting anywhere on the row opens it, so you rarely need the menu.
+  </Step>
+  <Step title="Open the row menu">
+    Select **⋯** at the end of the row. **View Details** is always offered, to everyone.
+  </Step>
+  <Step title="Read it in view mode">
+    **View Details** opens the script read-only: the medications, quantities, dosage, frequency, duration and any instructions the prescriber left. Use this when a ward rings to ask what was written.
+  </Step>
+</Steps>
+
+## Dispense from the queue
+
+The dispensing actions appear only for staff signed in as a pharmacist. Everyone else sees **View Details** and nothing more.
+
+<Steps>
+  <Step title="Pick a Pending script">
+    Only a script at **Pending** offers **Dispense**. One already at **Dispensed** offers **Update** instead, for correcting what was recorded.
+  </Step>
+  <Step title="Select Dispense">
+    The script opens in dispensing mode with the prescribed lines in front of you.
+  </Step>
+  <Step title="Draw the stock against it">
+    Recording that medicine physically left the shelf happens in the **Fill Rx** tab of [Inventory](/hospital/supply/inventory) — that is the step that moves stock, links it to the patient, and takes a witness for a controlled item. See [the pharmacy station](/hospital/pharmacy/station) for the full flow.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening a prescription" />
+
+## Who can do this
+
+Two different gates decide what you get here.
+
+**Role** decides whether the module opens at all. The **Pharmacy** group needs the **In-house pharmacy** care area, and on Enterprise an owner can hide the group from a role entirely under **Settings → Role Navigation**.
+
+**Permission** decides what you may do once inside.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the list and **View Details** | Any staff member the role navigation lets in | Role → route |
+| **Dispense** / **Update** a script | Pharmacists, owners and managers | The signed-in user's pharmacist role |
+| Write a new script | Prescribers and pharmacists | Role → route |
+| Draw the stock in **Fill Rx** | Pharmacy and stock staff | Role → route |
+
+Two behaviours surprise people. Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, which is why the sheet warns **"Saving starts enforcing"**. And a **denied action is recorded** while an allowed one is not; hiding the Pharmacy group from a role is a tidiness measure, not a security boundary.
+
+## Check it worked
+
+- A dispensed script shows **Dispensed** in the **Status** column, with your name under **Dispensed By**.
+- The row leaves the pending part of the queue and can be found in [Prescription history](/hospital/pharmacy/prescription-history).
+- If you drew stock in **Fill Rx**, the item's on-hand figure in [Inventory](/hospital/supply/inventory) has dropped by what you gave out.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The list says No prescriptions match your search criteria">
+    There is text in **Search for prescription**. Clear it. The other empty state — **No prescriptions found.** — means the queue genuinely has nothing in it.
+  </Accordion>
+
+  <Accordion title="A script a doctor just wrote is not here">
+    The queue does not poll continuously. Select **Refresh**. If it still does not appear, check the prescriber saved it rather than leaving the form open.
+  </Accordion>
+
+  <Accordion title="I only see View Details, with no Dispense">
+    The dispensing actions are for pharmacists. Ask an owner or manager to check your role — see [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="I can see the row but the columns I need are missing">
+    **Patient Type**, **Date** and **Mode** are hidden by default. Switch them on under **View Columns**.
+  </Accordion>
+
+  <Accordion title="There is no Pharmacy group in my sidebar">
+    It needs the Enterprise plan and the **In-house pharmacy** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this the same list as Prescription History?">
+    No. This is today's working queue. History is the cross-day record of everything ever dispensed, and it is the one to search when a patient asks what they were given last month.
+  </Accordion>
+
+  <Accordion title="Why do some rows say Ward Prescription?">
+    They belong to an admitted patient, written on the ward rather than in an outpatient clinic. They dispense the same way; only the wording changes.
+  </Accordion>
+
+  <Accordion title="Can I correct a script I have already dispensed?">
+    A pharmacist gets **Update** on a dispensed row. The original record is not erased — the change is recorded against your name.
+  </Accordion>
+
+  <Accordion title="Does dispensing here take the medicine off the shelf?">
+    Not on its own. Stock moves when you draw it in the **Fill Rx** tab of Inventory. Keeping the two steps distinct is what makes the stock figure trustworthy.
+  </Accordion>
+
+  <Accordion title="Can I sell a script's items at the counter instead?">
+    Ordinary items, yes — see [the pharmacy counter](/hospital/pharmacy/pos). Anything needing a witnessed dispense is refused at the till by design.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the prescription queue" />
+
+{/* source of truth: components/clinic/pharmacy/ (pharmacy-header, pharmacy-actions, pharmacy-table, table-columns, pharmacy-pagination), app/u/clinic/pharmacy/[clinicId]/page.tsx, lib/clinic-nav-registry.ts */}

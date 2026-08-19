@@ -1,0 +1,166 @@
+---
+title: Run the pharmacy station
+description: "Write a prescription, read the pharmacy unit's analytics, and fill a script from hospital stock with a witness where one is required."
+icon: /images/icons/pill.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Prescribers write; pharmacy staff dispense" note="Needs the In-house pharmacy care area" />
+
+The **Pharmacy Station** is the dispensary's own dashboard: how the unit is performing, the stock behind it, and the form you write a new prescription on. It is the screen a pharmacy lead keeps open.
+
+<Path steps={['Sidebar', 'Pharmacy', 'Pharmacy Station']} />
+
+<TaskHeader before="The In-house pharmacy care area switched on, and the medication received into inventory" time="2 minutes to write a script" after="A prescription recorded, and stock drawn against it" />
+
+## What you're looking at
+
+The heading reads **Pharmacy Station**. Beside it sit a date-range picker, which every figure on the page obeys, and **New Prescription**.
+
+Three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Analytics** | The unit's numbers for the chosen date range |
+| **Inventory** | The same stock screen as the [Inventory](/hospital/supply/inventory) sidebar entry |
+| **Reports** | **Pharmacy AI Reports** — written summaries you generate on demand |
+
+**Analytics** opens with four tiles — **Total Medications**, **Active Prescriptions**, **Dispensed Prescriptions** and **Low Stock Alert** — each with its change on the previous week. Below them are five charts: **Prescription Trends** ("Daily prescription and dispensing patterns"), **Top Medications**, **Inventory Status**, **Staff Performance** and **Predictive Analytics** ("Forecasted medication demands").
+
+If the figures cannot be loaded you get **Could not load pharmacy analytics** rather than a screen of zeros. That distinction is deliberate: a quiet page of zeros looks exactly like a hospital that dispensed nothing, and the two need different responses.
+
+**Reports** carries **Refresh** and **Generate Report**, with a **Report Types** list to pick from. A brand-new unit has no reports until you generate one.
+
+## Write a prescription
+
+<Steps>
+  <Step title="Start it">
+    Select **New Prescription**. You can also reach the same form from the [prescription list](/hospital/pharmacy/prescriptions), or write the script inside the [consultation](/hospital/outpatient/consultation) — prescribing from the consultation keeps it attached to the encounter that justified it.
+  </Step>
+  <Step title="Choose the patient">
+    The **Select Patient** card searches with "Search by name, ID, phone, or email..." — four ways in, so you are not stuck when a patient cannot remember their hospital number.
+  </Step>
+  <Step title="Set the date">
+    **Prescription Date** defaults to today. Change it only if you are recording something written earlier.
+  </Step>
+  <Step title="Add each medication">
+    Search with "Search medications…" to add a line. Every line needs **Mode \***, **Quantity \***, **Dosage \*** (for example "500mg"), **Frequency \*** ("2x daily") and **Duration \*** ("7 days"). **Instructions (Optional)** — "Take with food" — is where you write what the patient needs to hear. Repeat for each drug.
+  </Step>
+  <Step title="Review the total">
+    **Additional Notes** carries anything the pharmacist should know. The **Prescription Summary** panel shows an **Estimated Total** so nobody is surprised at the counter.
+  </Step>
+  <Step title="Save">
+    You get **Prescription created successfully**, then a **Prescription Created** dialog showing a **Reference:**. Quote that number to find the script again, and print it from the dialog if the patient is taking paper away.
+  </Step>
+</Steps>
+
+## Fill a script from stock
+
+Writing a script and moving stock are two steps on purpose. Until stock is drawn, nothing has left the shelf.
+
+<Steps>
+  <Step title="Open Fill Rx">
+    Go to the station's **Inventory** tab and select **Fill Rx**. It lists prescriptions awaiting fulfilment; an empty tab reads **No pending prescriptions. Scripts awaiting fulfillment will show here.**
+  </Step>
+  <Step title="Open the script">
+    Select the row. The **Fill prescription** sheet opens — "Draw from stock against this script — FEFO, patient-linked, audited."
+  </Step>
+  <Step title="Choose the stock and location">
+    Pick the **Stock item**, then the **Location** it comes from. **Quantity** shows the on-hand figure for that item beside the label, so you can see what you have while you type.
+  </Step>
+  <Step title="Name a witness for a controlled item">
+    A controlled drug shows **Witness (controlled item)** and will not let you continue without one — "DEA requires a witness to dispense a controlled substance." Name the colleague who actually watched.
+  </Step>
+  <Step title="Dispense">
+    Select **Dispense**. Stock is drawn earliest-expiry-first, the movement is linked to the patient, and the script moves to **Dispensed**.
+  </Step>
+</Steps>
+
+<Warning>
+  A controlled item cannot be sold at the till. The counter refuses it — "requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." Take the script to **Fill Rx** rather than looking for a way past the message.
+</Warning>
+
+<AuditNote action="Viewing and dispensing a prescription" />
+
+## Who can do this
+
+**Role** decides whether the screen opens. The **Pharmacy** group needs the **In-house pharmacy** care area in **Settings → Facility**, and on Enterprise an owner can hide it from a role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do inside it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the station and read Analytics | Anyone the role navigation lets in | Role → route |
+| Write a prescription | Prescribers and pharmacists | Role → route |
+| **Dispense** a script | Pharmacists, owners and managers | The signed-in user's pharmacist role |
+| Draw stock in **Fill Rx** | Pharmacy and stock staff | Role → route |
+| Witness a controlled dispense | Any colleague the sheet offers | The **Witness (controlled item)** field, which cannot be left empty |
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. Hiding the Pharmacy group from a role tidies a sidebar — it is not a security boundary.
+
+## Check it worked
+
+- The **Prescription Created** dialog showed a **Reference:**, and the script is in the [prescription list](/hospital/pharmacy/prescriptions).
+- After dispensing, the script has left **Fill Rx** and reads **Dispensed** in [prescription history](/hospital/pharmacy/prescription-history).
+- The stock item's on-hand figure in [Inventory](/hospital/supply/inventory) has fallen by the quantity you gave out.
+- A controlled dispense records both your name and the witness's.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Could not load pharmacy analytics">
+    The figures failed to load — this is not a hospital with no activity. Refresh; if it persists, note the time so support can match it against your audit log.
+  </Accordion>
+
+  <Accordion title="The medication is not in the Stock item picker">
+    **Fill Rx** draws from inventory, so a drug never received into stock cannot be dispensed from it. Receive it first — see [Inventory](/hospital/supply/inventory).
+  </Accordion>
+
+  <Accordion title="The quantity I need is more than is on hand">
+    Dispense what you have, or transfer stock in from another location. The **Location** picker only offers what that location actually holds.
+  </Accordion>
+
+  <Accordion title="My colleague is not in the witness list">
+    The list only offers staff accounts in this workspace. Someone standing beside you without an account cannot be named — see [Invite staff](/platform/team/invite-staff).
+  </Accordion>
+
+  <Accordion title="The till refused the item">
+    That is the controlled-substance rule, not a fault. Controlled items are dispensed through **Fill Rx** with a witness, never rung up at the counter.
+  </Accordion>
+
+  <Accordion title="There is no Pharmacy group in my sidebar">
+    It needs the Enterprise plan and the **In-house pharmacy** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why does the Inventory tab look like the Inventory sidebar entry?">
+    Because it is the same screen. The pharmacy unit and the wards draw on one set of hospital stock, and giving the dispensary a private copy is exactly how two stock figures start disagreeing.
+  </Accordion>
+
+  <Accordion title="Does the date-range picker change the whole page?">
+    It changes the Analytics figures and charts. Inventory shows current stock regardless of the range.
+  </Accordion>
+
+  <Accordion title="Can I edit a prescription after saving it?">
+    A pharmacist gets **Update** on a dispensed script from the prescription list. The change is recorded rather than replacing what was originally written.
+  </Accordion>
+
+  <Accordion title="What does FEFO mean on the Fill prescription sheet?">
+    First-expiry-first-out: the oldest-dated stock is drawn first, so short-dated lots leave before they expire. You do not pick a batch by hand.
+  </Accordion>
+
+  <Accordion title="Are the AI reports a clinical record?">
+    No. They are written summaries of the unit's own activity, generated on request. Nothing on the Reports tab belongs in a patient's chart.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the pharmacy station" />
+
+{/* source of truth: components/clinic/dashboard/pharmacy-station/pharmacy-dashboard-content.tsx, .../prescription-form.tsx, .../reports/pharmacy-reports-dashboard.tsx, components/inventory/prescription-dispense-sheet.tsx, app/u/clinic/dashboard/pharmacy-station/[clinicId]/page.tsx */}

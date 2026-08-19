@@ -1,6 +1,6 @@
 ---
 title: File and track claims
-description: "Bill an insurer for care your hospital has already delivered, then follow the claim through to payment or denial."
+description: "Bill an insurer for care your hospital has already delivered, then follow the claim through to approval, payment or denial."
 icon: /images/icons/file-lock.svg
 ---
 
@@ -9,80 +9,161 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billers" note="The Insurance group only appears when the Insurance care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on." />
 
-A claim asks an insurer to pay for care you have already delivered. **Claims** is your hospital's claim register: you prepare each claim here, send it to the insurer the way you already do, and track its answer against the record. Nothing is transmitted to the payer electronically from this screen.
-
-**Claims** needs the **Insurance** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+A claim asks an insurer to pay for care you have already delivered. **Insurance Claims** is your hospital's claim register: you prepare each claim here, send it to the payer the way you already do, and track its answer. Nothing is transmitted electronically to a clearinghouse from this screen — knowing that up front saves waiting for a transmission that will not happen.
 
 <Path steps={['Sidebar', 'Insurance', 'Claims']} />
 
-<TaskHeader before="The insurer added under Companies, and the patient's coverage recorded" time="5 minutes per claim" after="A claim on the register you can track to payment or denial" />
+<TaskHeader before="The insurer added under Companies, its prices set, and the patient's policy on file" time="5 minutes per claim" after="A claim on the register you can track to payment or denial" />
 
-## Prepare the claim
+## What you're looking at
 
-The claim form opens as a set of tabs you work through in order. Each one answers a question the insurer will ask.
+The heading reads **Insurance Claims** with your hospital's name beneath it, and a refresh button and **New Claim** beside it. A row of tiles sits above the tabs: **Total Claims**, **Approval Rate**, **Total Claimed**, **Total Approved**, **Total Paid**, **Pending Claims**, **Denied Claims** and **Pending Appeals**.
 
-<Steps>
-  <Step title="Create the claim">
-    Select **New**.
-  </Step>
-  <Step title="Basic Info">
-    The patient, the encounter and the dates. This is what ties the claim to the care that was actually delivered.
-  </Step>
-  <Step title="Items & Services">
-    Every service, medicine and consumable you are billing for. Prices come from the payer-specific rates on the **Pricing** tab of the Insurance Dashboard, not from your standard [service list](/clinic/revenue/services).
-  </Step>
-  <Step title="Insurance & Diagnosis">
-    The insurer, the patient's cover, and the diagnosis codes that justify every item on the claim. An item with no supporting diagnosis is the denial you will spend next month arguing about.
-  </Step>
-  <Step title="Review & Submit">
-    Read the whole claim, then submit it. If you obtained a [pre-authorization](/hospital/insurance/pre-authorization), quote it — an approved request is the fastest route through an insurer's review.
-  </Step>
-</Steps>
-
-## Track it
-
-The Claims screen has three tabs, and each answers a different question:
+Three tabs, each answering a different question:
 
 | Tab | Answers |
 | --- | --- |
 | **Claims** | Where is this claim now? Work the list by status. |
-| **Analytics** | Which payer is getting slower or denying more? |
+| **Analytics** | Which payer is getting slower, or denying more? |
 | **Activity** | Who did what to this claim, and when? |
 
-Record the payer's decision on the claim when it arrives, and record the money against it when that arrives. A claim marked as paid with nothing reconciled against it is a claim you have not actually been paid for.
+The list carries **Claim #**, **Patient**, **Type**, **Service Date**, **Insurance**, **Amount**, **Approved**, **Status** and **Actions** — **Amount** is what you billed, **Approved** is what the payer allowed, and the gap between them is your write-off or your appeal. Above it, search on "Search by claim number or notes..." and filter by status, by type (**Outpatient**, **Inpatient**, **Emergency**, **Pharmacy**, **Laboratory**, **Radiology**) and by company.
+
+**Empty state.** With nothing raised, or a filter matching nothing, the list reads **No claims found**. Opening a claim that has been removed shows **Claim not found** with a **Back to Claims** button.
+
+### The statuses
+
+| Status | What it means |
+| --- | --- |
+| **Draft** | Being prepared. Still editable. |
+| **AI Reviewed** | An automated check has run. Still yours to send. |
+| **Ready to Submit** | Prepared and checked, not yet sent |
+| **Submitted** | Sent to the payer |
+| **Under Review** | The payer is assessing it |
+| **Approved** | The payer has agreed an amount |
+| **Denied** | Refused |
+| **Paid** | Money received against it |
+| **Appealed** | Being contested after a denial |
+
+## Prepare the claim
+
+The claim form opens as tabs you work through in order.
+
+<Steps>
+  <Step title="Create the claim">
+    Select **New Claim**.
+  </Step>
+  <Step title="Basic Info">
+    The patient, the encounter and the dates. This is what ties the claim to the care that was actually delivered, and it is what a payer checks first.
+  </Step>
+  <Step title="Items & Services">
+    Every service, medicine and consumable you are billing for. Prices come from the payer-specific rates on the **Pricing** tab of the [Insurance dashboard](/hospital/insurance/overview), not from your standard fees.
+  </Step>
+  <Step title="Insurance & Diagnosis">
+    The insurer, the patient's cover, and the diagnosis codes that justify every item. If the form says **No insurance information on file**, select **Add Insurance** and complete the **Add Insurance Details** dialog. An item with no supporting diagnosis is the denial you will spend next month arguing about.
+  </Step>
+  <Step title="Review & Submit">
+    Read the whole claim back, then save it. You are told **Claim created successfully! Starting AI analysis...**, and an **AI Analysis** tab appears alongside the others.
+  </Step>
+</Steps>
+
+## Check it, then submit it
+
+A saved claim is a **Draft** — nothing has left the building yet.
+
+<Steps>
+  <Step title="Open the claim">
+    Select it from the **Claims** list.
+  </Step>
+  <Step title="Run the check">
+    On a draft, **AI Review** looks for gaps a payer would query. It is a prompt to look again, never a decision, and the claim still moves only when a person moves it. **Edit** is available while the claim is a draft.
+  </Step>
+  <Step title="Submit">
+    Select **Submit Claim** — offered on a **Draft** or an **AI Reviewed** claim. You are told **Claim submitted successfully** and the status moves on.
+  </Step>
+  <Step title="Quote the approval">
+    Where you obtained a [pre-authorization](/hospital/insurance/pre-authorization), quote it. An approved request is the fastest route through a payer's review.
+  </Step>
+</Steps>
+
+Record the payer's decision when it arrives, and record the money when that arrives. A claim marked paid with nothing reconciled against it is a claim you have not actually been paid for.
+
+## Who can do this
+
+**Role** decides whether the screen opens. On Enterprise, an owner controls which roles reach **Insurance** under **Settings → Role Navigation**; accountants and billers reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
+
+**Permission** decides what a person may do inside:
+
+| Action | Who can do it by default | Permission |
+| --- | --- | --- |
+| Prepare and submit a claim | Owner, manager, biller | **File insurance claims** |
+| Record a payer's settlement | Owner, manager, biller | **Add insurance payments** |
+| Pull what a payer covers | Owner, manager, accountant, biller | **Request coverage reports** |
+| See the money figures | Owner, manager, biller | **View financial dashboard** |
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary — and a figure that is not yours to see is withheld rather than shown as **0**.
 
 ## Check it worked
 
-- The claim appears in the **Claims** list with a status and the payer's name.
-- Nothing you meant to bill this month is still unclaimed.
-- When money arrives, the claim moves to paid _and_ has a payment recorded against it.
+- The claim appears on **Claims** with a **Claim #**, the payer's name and a status past **Draft**.
+- **Total Claimed** on the tiles has risen by the claim's amount.
+- Nothing you meant to bill this month is still sitting as a **Draft**.
+- When money arrives, the claim reads **Paid** _and_ has a payment recorded against it.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
+  <Accordion title="No claims found, but we filed several">
+    Clear the search box and set the status, type and company filters back to **All**, then refresh. A **Draft** is hidden whenever the status filter is set to anything else.
+  </Accordion>
+
   <Accordion title="The patient's insurer is not in the picker">
-    Add the insurer on the **Companies** tab of the Insurance Dashboard first, then record the patient's cover on **Coverage**. See [Insurance in ClinikEHR](/hospital/insurance/overview).
+    Add the insurer on the **Companies** tab of the [Insurance dashboard](/hospital/insurance/overview), then record the patient's cover from the claim form.
   </Accordion>
 
   <Accordion title="The claim price is not what we negotiated">
     Payer-specific prices live under **Insurance** → **Pricing**. Fix the rate there so every future claim is right, rather than overtyping each one.
   </Accordion>
 
+  <Accordion title="There is no Submit Claim button">
+    It is offered only on a **Draft** or an **AI Reviewed** claim. A claim already submitted has nothing to submit; a claim you may not file will not offer it either — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
   <Accordion title="The payer denied the claim">
-    Read their reason against what you submitted. Most denials are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the patient's cover excludes. Correct the record and re-submit rather than arguing the original.
+    Read their reason against what you submitted. Most denials are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the cover excludes. Correct the record and re-submit rather than arguing the original.
   </Accordion>
 
   <Accordion title="The patient's cover has lapsed">
-    They are self-paying for that visit. Raise an [invoice](/clinic/revenue/invoices) instead — a claim against expired cover is a denial you can see coming.
+    They are self-paying for that visit. Raise an invoice instead — see [Billing](/hospital/revenue/billing). A claim against expired cover is a denial you can see coming.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is the claim sent to the payer for me?">
+    No. It is prepared and tracked here, and you send it to the insurer the way you already do. Marking it **Submitted** records that you sent it.
   </Accordion>
 
-  <Accordion title="Insurance is missing from my sidebar">
-    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
+  <Accordion title="Can I edit a claim after submitting?">
+    **Edit** is offered while the claim is a **Draft**. Once it has gone to the payer, correct the record and re-submit rather than quietly changing what they were sent.
+  </Accordion>
+
+  <Accordion title="What is the difference between Amount and Approved?">
+    **Amount** is what you billed; **Approved** is what the payer allowed. The difference is what you either write off or appeal, which is why **Pending Appeals** has its own tile.
+  </Accordion>
+
+  <Accordion title="Do I have to run the AI review?">
+    No. It is a check, not a gate — a draft can go straight to **Submit Claim**. The form works the same without it.
+  </Accordion>
+
+  <Accordion title="Where do I see denial rates across payers?">
+    On the **Analytics** tab for a quick read, and in the **Insurance** report for volume, denials and aging over a period — see [Reports and analytics](/hospital/executive/analytics).
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a claim" />
 
-{/* source of truth: components/clinic/insurance/claims/claims-form.tsx, components/clinic/insurance/claims/claims-content-dashboard.tsx */}
+{/* source of truth: components/clinic/insurance/claims/claims-content-dashboard.tsx, claims-form.tsx, claims-table.tsx, claims-filters.tsx, claims-stats.tsx, claim-details.tsx, lib/edition-staff-roles.ts, lib/edition.ts */}

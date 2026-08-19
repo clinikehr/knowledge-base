@@ -1,7 +1,7 @@
 ---
-title: Order and report lab tests
-description: "Raise a lab order from a consultation or the Lab Station, run it through the bench, enter results and print the report."
-icon: /images/icons/flask-conical.svg
+title: "Lab test list"
+description: "See every lab request raised in your hospital today, pick one up at the bench, and enter results against its parameters."
+icon: "/images/icons/flask-conical.svg"
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -9,129 +9,140 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Clinical and laboratory staff" note="The Laboratory group only appears when the Diagnostics care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors and nurses" note="Needs the Diagnostics care area" />
 
-Your hospital's laboratory runs inside ClinikEHR as its own service line: a clinician raises the order, the bench picks it up, results are entered against the test's parameters, and the report is signed and printed. This page covers that loop end to end.
+The **Lab Test List** is the bench's inbox: **Here's a list of all lab requests for today!** From here you pick up a request, run it, and record what the analyser or the microscope said.
 
-**Laboratory** and **Radiology** both come from one switch — the **Diagnostics** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+<Path steps={['Sidebar', 'Laboratory', 'Lab Test List']} />
 
-<Path steps={['Sidebar', 'Laboratory', 'Lab Station']} />
+<TaskHeader
+  before="The Diagnostics care area switched on, and at least one lab test in your catalogue"
+  time="A minute to record a result"
+  after="A completed test with a value against every parameter"
+/>
 
-<TaskHeader before="The Diagnostics care area switched on, and at least one lab test in your test list" time="A few minutes to order; reporting depends on the bench" after="A completed, signed test result and a printable report" />
+## Before you start
 
-## Where everything lives
+**Laboratory** and **Radiology** come from one switch — the **Diagnostics** care area in **Settings → Facility**. If the group is missing from your sidebar entirely, that is why; see [Care areas](/hospital/get-started/care-areas).
 
-The **Laboratory** group holds six screens, and knowing which one you want saves most of the hunting.
+Requests reach this list from a [consultation](/hospital/outpatient/consultation) or a ward chart. To raise one yourself, use **New Test Report**, which opens the ordering form on [Lab reports](/hospital/diagnostics/lab-reports).
 
-| Screen | What it is for |
-| --- | --- |
-| **Lab Test List** | Your catalogue of tests and their parameters |
-| **Lab Test History** | Everything already ordered, with statuses |
-| **Lab Station** | The bench view — the day's work |
-| **Worklist** | What is queued and who it belongs to |
-| **Lab Reports** | Finished reports, ready to print or download |
-| **Referring Doctors** | Outside clinicians who send you work |
+## What you're looking at
 
-If the group is missing entirely, the **Diagnostics** care area is off. An owner turns it on under [Care areas](/hospital/get-started/care-areas); a plan below Enterprise does not have it at all.
+Above the table sit four controls: **Search for patient**, **New Test Report**, **Refresh**, and **View Columns** → **Toggle columns**, which is how you switch the optional columns on.
 
-## Order a test
+| Column | Shows | On by default |
+| --- | --- | --- |
+| **Patient ID** | The hospital number | Yes |
+| **Patient Name** | Who the sample belongs to | Yes |
+| **Status** | **Pending** or **Completed** | Yes |
+| **Conducted By** | The scientist who ran it, or **Not conducted yet** | Yes |
+| **Requested By** | The clinician who ordered it | Yes |
+| **Date** · **Patient Type** · **Test Name** · **Result** | Extra detail | No |
 
-There are two ways in, and they produce the same order.
+A quiet day, or a hospital that has not ordered anything yet, reads **No recent lab test data available for this clinic.** That is the state a brand-new workspace lands on, and it is correct rather than broken.
+
+<Note>
+  This list shows a test as **Pending** or **Completed** only. The richer view — **In Progress** and **Cancelled**, the **Critical** badge, and payment status — lives on [Lab reports](/hospital/diagnostics/lab-reports), which is also where ordering and printing happen.
+</Note>
+
+## Run a test and record the result
 
 <Steps>
-  <Step title="Order from the consultation">
-    Open the patient's [consultation](/hospital/outpatient/consultation), go to the **Orders** tab and select the **Labs** sub-tab. This is the normal route, because the order stays attached to the encounter that justified it.
+  <Step title="Open the request">
+    From the row's action menu choose **Conduct Lab Test** on a pending request, or **Update Lab Test** on one already completed. **View Lab Results** opens it read-only, which is what a non-lab role gets.
   </Step>
-  <Step title="Or order from the Lab Station">
-    Open **Lab Station** and start a new lab report. Use this when the request arrives on paper from a referring doctor rather than from a consultation in your own system.
+  <Step title="Check you have the right patient">
+    The form opens on **Patient Information**, badged **Ward Patient** or **Outpatient**, with the patient ID, name, gender, age and weight. The heading underneath says which — "Ward Patient laboratory testing" or "Outpatient laboratory testing" — because the two go to different places afterwards.
   </Step>
-  <Step title="Fill in the order">
-    The form opens with **Patient Details** already resolved, then **Select Lab Test** — "Choose a test to order", with a **Search lab tests...** box. Pick the test, add anything the bench needs under **Additional Notes**, and check the right-hand **Order Summary** → **Order Items** before you save.
+  <Step title="Enter a value for each parameter">
+    Under **Laboratory Tests** each test lists its **Test Parameters**. Type into **Enter \{parameter\}**, or pick from **Select value** where the parameter is a choice. The reference range sits under the field as **Reference: \{range\}**, so you are never converting units in your head.
+  </Step>
+  <Step title="Submit">
+    Select **Submit Lab Results**, or **Update Lab Results** if you are correcting one. You get a confirmation naming the patient type — "Ward lab test results have been submitted successfully".
   </Step>
 </Steps>
 
-The order lands on the worklist as **Pending**.
+Reference ranges come from the test definition, not from this form. A test defined without ranges shows none here and prints none on the report, for every patient.
 
-## Work it through the bench
+## Sign-out is the step that matters
 
-Each row in the station carries a status badge — **Pending**, **In Progress**, **Completed** or **Cancelled** — and a separate payment badge of **Paid**, **Partial** or **Pending**. A result flagged as **Critical** shows a **Critical** badge in place of the status badge, so an urgent result is never buried behind a routine one.
-
-Row actions follow the same order every time: **View Details**, **Start Test**, **Enter Results**, **Edit Results**, **Print Report** and **Print Receipt**.
-
-<Steps>
-  <Step title="Start the test">
-    Select **Start Test**. The row moves to **In Progress**, which is what tells the rest of the hospital the sample is on the bench rather than lost.
-  </Step>
-  <Step title="Enter the results">
-    Select **Enter Results**. The **Test Parameters** card lists every parameter the test defines and counts your progress — "{'\{n\}'} / {'\{n\}'} parameters filled". A value outside its reference range raises the **Critical** badge on the card.
-  </Step>
-  <Step title="Sign it out">
-    Signing the result out as **Completed** is the clinical authority step: it is what turns a set of numbers into a result other clinicians will act on. It is granted separately from entering values, so a technician can run the test while a verifier signs it.
-  </Step>
-</Steps>
+Entering numbers and *releasing* them are two different acts. A test is only a result other clinicians will act on once it moves to **Completed** — that is the clinical authority step, and it is why **Conduct Lab Test** and **Update Lab Test** are restricted to lab scientists while everyone else gets **View Lab Results**.
 
 <Warning>
-  A report that has not been signed yet is stamped as preliminary. Never hand a preliminary report to a patient, an employer or a referring doctor as though it were final — sign it first, or send nothing.
+  A result that has not been signed out is preliminary. Never hand it to a patient, a ward, an employer or a referring doctor as though it were final — complete it first, or send nothing.
 </Warning>
 
-## Print or download the report
+<AuditNote action="Opening a lab request and its results" />
 
-From **Lab Reports** or the row's **Print Report** action you get the finished document. Opening a report also offers **Download report**, which shows "Preparing…" while the file is built. **Print Receipt** prints the money slip, not the clinical report — they are different documents.
+## Who can do this
+
+Your **role** decides whether the **Laboratory** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). What you may do inside it is decided separately:
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Open the list and read results | Clinical and lab staff | Role |
+| **Conduct Lab Test** / **Update Lab Test** | Lab scientists, and the hospital owner | Role — anyone else is told **Only lab scientists can conduct or update lab tests** |
+| Order a new test | Clinicians and lab staff | Role |
+| See the money on a request | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never as a zero |
+
+Enforcement of the per-person permissions is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is written to the audit log**; an allowed one is not. Hiding a module from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The test shows **Completed** in **Lab Test History**, with the reporting clinician's name against it.
-- **Print Report** produces a document with no preliminary stamp.
-- The result is visible on the [patient's record](/hospital/front-desk/patients) alongside the consultation that ordered it.
+- The row's **Status** moves from **Pending** to **Completed**.
+- **Conducted By** shows your name in place of **Not conducted yet**.
+- Switching on the **Result** column shows the value you entered.
+- The result appears on the ordering [consultation](/hospital/outpatient/consultation) or ward chart, under **Results**.
 
-<AuditNote action="Opening, printing and downloading a lab result" />
-
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
+  <Accordion title="Only lab scientists can conduct or update lab tests">
+    Result entry is restricted by role. Ask an owner to set your role correctly, or have a lab scientist enter the values — you can still open the request with **View Lab Results**.
+  </Accordion>
+
+  <Accordion title="Please select a lab test first.">
+    You reached the results form without a request attached — usually from a stale link. Go back to the list and open the row from its action menu.
+  </Accordion>
+
+  <Accordion title="No recent lab test data available for this clinic.">
+    Nothing has been ordered, or the search box still has text in it. Clear **Search for patient** and select **Refresh**.
+  </Accordion>
+
+  <Accordion title="The parameters I expected are not on the form">
+    The form is built from the test's parameter list. Add the missing parameters to the test in your catalogue — see [Lab station](/hospital/diagnostics/lab-station) — and raise the request again.
+  </Accordion>
+
   <Accordion title="There is no Laboratory group in my sidebar">
-    Either the **Diagnostics** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan — the hospital service-line navigation only exists there. See [Change your plan](/platform/plans/change-plan).
-  </Accordion>
-
-  <Accordion title="Enter Results is missing from the row">
-    You can see the order but not report on it. Result entry and sign-out are granted per person under [Permissions](/platform/team/permissions).
-  </Accordion>
-
-  <Accordion title="I need to correct a result I already signed">
-    Amending a verified result is a further permission on top of ordinary result entry, precisely because the first version has already been acted on. Ask an owner or manager to grant it, then use **Edit Results**. The change is on the record.
-  </Accordion>
-
-  <Accordion title="The test I want is not in the picker">
-    **Search lab tests...** only finds tests defined in your **Lab Test List**. Add the test and its parameters first — the parameter list is what the results form is built from.
-  </Accordion>
-
-  <Accordion title="The report prints without reference ranges">
-    Reference ranges come from the test definition, not from the results form. A test defined without ranges prints without them for every patient.
+    Either the **Diagnostics** [care area](/hospital/get-started/care-areas) is off, or the hospital is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 </AccordionGroup>
 
-## Going deeper
+## FAQ
 
-The full laboratory workflow — accessioning, worklists, turnaround time and report layouts — is documented in the Diagnostics edition pages, and the screens are the same ones your hospital lab uses.
+<AccordionGroup>
+  <Accordion title="Can I correct a result I already completed?">
+    Yes — **Update Lab Test** reopens it for a lab scientist. The change is on the record with your name and the time, which is the point: a corrected result is a new clinical statement, not a quiet edit.
+  </Accordion>
 
-<Columns cols={2}>
-  <Card title="Test requests" icon="/images/icons/vial.svg" href="/lims/lab/test-requests">
-    How a request becomes a sample on the bench.
-  </Card>
+  <Accordion title="What is the difference between this and Lab Reports?">
+    This list is the day's requests, for the bench. [Lab reports](/hospital/diagnostics/lab-reports) is the full order-to-report surface: ordering, payment, printing, and the richer status and critical-value badges.
+  </Accordion>
 
-  <Card title="Entering results" icon="/images/icons/microscope.svg" href="/lims/lab/results">
-    Parameters, reference ranges, critical values and verification.
-  </Card>
+  <Accordion title="Why do ward and outpatient tests look different?">
+    They are filed against different records — a ward request belongs to an admission, an outpatient one to a consultation. The form badges which it is so the result lands in the right chart.
+  </Accordion>
 
-  <Card title="Lab reports" icon="/images/icons/file-lines.svg" href="/lims/lab/reports">
-    What the finished report contains and how it is issued.
-  </Card>
+  <Accordion title="Does this list include yesterday's requests?">
+    It is built for today's work. Use [Lab reports](/hospital/diagnostics/lab-reports) with its period filter, or **Lab Test History**, to look back.
+  </Accordion>
 
-  <Card title="Order and report imaging" icon="/images/icons/x-ray.svg" href="/hospital/diagnostics/radiology">
-    The radiology equivalent of this page.
-  </Card>
-</Columns>
+  <Accordion title="Who sees that I opened a patient's results?">
+    Owners and managers, under [Audit log](/platform/security/audit-log). Every read of clinical data is recorded with your name and the time.
+  </Accordion>
+</AccordionGroup>
 
-<StillStuck topic="a lab order or result" />
+<StillStuck topic="a lab request or result" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/lab-report/lab-report-form.tsx, components/clinic/dashboard/lab-station/lab-report/lab-report-table.tsx, components/clinic/dashboard/lab-station/test-list/, lib/clinic-nav-registry.ts, lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/lab/, app/u/clinic/lab/[clinicId]/page.tsx, lib/clinic-nav-registry.ts */}

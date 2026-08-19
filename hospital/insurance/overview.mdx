@@ -1,75 +1,168 @@
 ---
-title: Insurance for hospitals
-description: "Keep a register of your insurers, the prices you negotiated with each, who is covered, and the claims you have raised against them."
+title: Insurance dashboard
+description: "Register the insurers your hospital accepts, price each one separately, set what their plans cover, and put a patient's policy on file."
 icon: /images/icons/shield-check.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billers" note="Needs the Insurance care area switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on." />
 
-The hospital insurance module is a register you maintain yourself: who your insurers are, what you have agreed to charge each of them, which patients are covered, what you have asked approval for, and what you have claimed.
+**Insurance Management** is a register your hospital maintains itself: who your insurers are, what you have agreed to charge each of them, what their plans cover, and which patients hold a policy. Everything on the [Pre-authorization](/hospital/insurance/pre-authorization) and [Claims](/hospital/insurance/claims) screens is built from what you set up here.
 
 <Note>
-  Solo and team practices use a different, electronic claims system — payer directory, eligibility checks and claims transmitted to the payer. It is documented separately in [File insurance claims](/practice/money/insurance-claims). The two share no data.
+  Solo and team practices use a different, electronic claims system that transmits to a payer. It is documented separately in [File insurance claims](/practice/money/insurance-claims), and the two share no data.
 </Note>
 
-<Path steps={['Sidebar', 'Insurance']} />
+<Path steps={['Sidebar', 'Insurance', 'Insurance Dashboard']} />
 
-## What it is for
+<TaskHeader before="The Insurance care area switched on under Settings → Facility" time="20 minutes for the first insurer" after="An insurer you can raise pre-authorizations and claims against" />
 
-It is built for hospitals that deal with insurers directly — an HMO, a corporate scheme, a state programme — and negotiate their own tariffs. Nothing is transmitted electronically to a clearinghouse: claims are prepared here, sent to the insurer the way you already send them, and tracked here afterwards. This module is the record.
+## What you're looking at
 
-## The Insurance Dashboard
+The heading reads **Insurance Management** — "Manage insurance companies, pricing, coverage, and patient insurance details". A date-range picker, **Refresh** and **New Insurance** sit beside it.
 
-| Tab | What you do there |
+Four tabs:
+
+| Tab | What it holds |
 | --- | --- |
-| **Overview** | See the shape of your insurance business |
-| **Companies** | Add and maintain each insurer |
-| **Pricing** | Set payer-specific service and medicine prices |
-| **Coverage** | Record which patients are covered, and by whom |
+| **Overview** | Four count tiles, a **Coverage Distribution** chart and **Recent Activity** |
+| **Companies** | Every insurer you accept, with **Company Details**, **Company Code**, **Point of Contact**, **Contact Phone** and **Status** |
+| **Pricing** | **Service Prices** and **Medicine Prices**, side by side, per insurer |
+| **Coverage** | **Coverage Management** — what each plan actually pays for |
 
-Two further pages hang off it: **Pre-Authorization**, for approval before you treat, and **Claims**, for billing after you have.
+The **Overview** tiles count **Insurance Companies** (with how many are active), **Service Prices**, **Medicine Prices** and **Coverage Items**. They are counts of what you have configured, not money.
 
-## Set it up in three passes
+**Empty states.** A hospital that has configured nothing sees **No Partners Registered** on **Companies**, with an **Add Your First Company** button; **No service prices found** and **No medicine prices found** under **Pricing**; and **No Coverage Profiles** under **Coverage**. Work the tabs in the order below and each fills in turn.
+
+## Add an insurer
 
 <Steps>
-  <Step title="Add your insurers">
-    On **Companies**, add every insurer you deal with. Nothing else in the module works until at least one exists.
+  <Step title="Open the insurance form">
+    Select **New Insurance**. The form opens as five tabs — **Company**, **Plans**, **Services**, **Medicines** and **Coverage** — which is the same order this page's tabs fill up in.
   </Step>
-  <Step title="Set what you charge them">
-    On **Pricing**, enter the negotiated service and medicine prices for that payer. Claims are priced from these, not from your standard [service list](/clinic/revenue/services), so a payer with no pricing produces claims at the wrong value.
+  <Step title="Enter the company">
+    On **Company**, **Company Name** is the only required field. **Company Code**, **Contact Email**, **Contact Phone**, **Website** and **Contact Address** are what your billing clerk needs when chasing a claim. Leave **Active Status** on.
   </Step>
-  <Step title="Record patient coverage">
-    On **Coverage**, record a patient's insurer, plan and membership details. A claim cannot be raised against a payer the patient is not recorded as covered by.
+  <Step title="Add the insurer's plans">
+    On **Plans**, choose the **Insurance Company** and enter a **Plan Name**. Then set **Plan Type**, **Coverage Type**, **Network Type**, **Deductible Amount**, **Maximum Coverage Amount**, **Copay Percentage** and **Waiting Period (Days)**. Switch on **Pre-authorization Required** where the plan demands approval before treatment — that is the flag that tells your team to raise a request first.
   </Step>
 </Steps>
 
-## Pre-authorization
+The insurer now appears on **Companies**. Nothing else in the module works until at least one exists.
 
-**Pre-Authorization** is its own page. Raise a request on the form, which includes a medical-codes picker so the procedures and diagnoses you are seeking approval for are coded from the start. Quote an approved request on the claim that follows — it is the fastest route through an insurer's review, and the cheapest way to avoid a denial you cannot appeal.
+## Set the prices you negotiated
 
-See [Request a pre-authorization](/hospital/insurance/pre-authorization).
+Two insurers paying different amounts for the same procedure is the normal case, and this is where that lives.
 
-## Claims
+<Steps>
+  <Step title="Price the services">
+    On the **Pricing** tab select **Add Service**, or use the **Services** tab of the insurance form. **Service Prices** is "Fee-for-service pricing by insurance company" — each row carries a **Service**, a **Company**, a **Category**, a **Price** and a **Status**.
+  </Step>
+  <Step title="Price the medicines">
+    Select **Add Medicine**. **Medicine Prices** is "Medication pricing with dosage and strength details", so the **Details** column carries dosage and strength — the same drug at two strengths is two rows.
+  </Step>
+</Steps>
 
-**Claims** is a list plus a multi-tab claim form. Create one with **New**, work through the tabs, then submit and track it against the payer. See [File and track claims](/hospital/insurance/claims).
+Pre-authorizations and claims are priced from these rows, not from your standard service list. An insurer with no pricing produces requests and claims at the wrong value.
 
-## What the module assumes
+## Say what the plan covers
 
-- **The patient's coverage is recorded.** No claim can be raised against an insurer the hospital does not know the patient has.
-- **Your services carry codes.** A **Procedure Code** on a [service](/clinic/revenue/services) carries through to the claim.
-- **Insurance sits next to ordinary billing, not instead of it.** Patient responsibility — co-pays, excess, uncovered items — is still an [invoice](/clinic/revenue/invoices).
-- **Prices are per payer.** Two insurers paying different amounts for the same procedure is the normal case, and **Pricing** is where that lives.
+<Steps>
+  <Step title="Add a coverage rule">
+    On **Coverage**, select **Add Coverage**. **Coverage Management** configures "coverage for services, medications, lab tests, and wards", so a rule can attach to any of the four.
+  </Step>
+  <Step title="Set the share and the ceiling">
+    Each rule records a **Medical Item**, the **Insurance Body**, a **Category**, a **Coverage %** and a **Max Benefit**. A blank ceiling shows as **Unlimited**.
+  </Step>
+</Steps>
 
-## If Insurance is missing from your sidebar
+## Record a patient's policy
 
-- It needs the Insurance [care area](/hospital/get-started/care-areas) switched on. Turning that off removes the navigation group, the settings tab and the insurance report together.
-- It is an Enterprise feature — see [Change your plan](/platform/plans/change-plan).
-- If the group is there but you cannot open it, that is your role and permissions — see [Permissions](/platform/team/permissions).
+A patient's own policy is captured from the request or claim you are raising, not from this dashboard.
+
+<Steps>
+  <Step title="Start a request or a claim">
+    Open a new [pre-authorization](/hospital/insurance/pre-authorization) or [claim](/hospital/insurance/claims) and choose the patient.
+  </Step>
+  <Step title="Add their insurance">
+    Where the form says **No insurance information on file**, select **Add Insurance**. The **Add Insurance Details** dialog takes the insurer, the **Policy Number**, the **Expiry Date**, **Coverage %**, **Co-pay %**, **Discount %**, **Payment Terms (Days)** and **Special Instructions**. It is saved against the patient and reused next time.
+  </Step>
+</Steps>
+
+## Who can do this
+
+**Role** decides whether the screen opens at all. On Enterprise, an owner controls which roles reach **Insurance** under **Settings → Role Navigation** — by default the accountant and biller roles do, alongside owners and managers, and a role with no rule of its own is unrestricted.
+
+**Permission** decides what a person may do once inside. The **Billing** section of your staff sheet carries these, in the product's own words:
+
+| Permission | What it is for |
+| --- | --- |
+| **File insurance claims** | Preparing and submitting a claim |
+| **Add insurance payments** | Recording a payer's settlement |
+| **Request coverage reports** | Pulling what a payer covers |
+| **Edit service fees** | Repricing what you charge |
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary.
+
+## Check it worked
+
+- The insurer is on **Companies** with a **Status** of active.
+- **Service Prices** and **Medicine Prices** show rows against that company's name.
+- The **Overview** tiles have moved off zero, and **Coverage Distribution** has something to plot.
+- A new claim offers that insurer in its company picker.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Insurance is missing from my sidebar">
+    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the hospital is not on Enterprise. Turning the care area off removes the navigation group, the settings tab and the insurance report together. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="No Partners Registered, but we have insurers">
+    You are on a hospital with nothing configured yet, or the date-range picker is narrowed past your records. Select **Refresh** first.
+  </Accordion>
+
+  <Accordion title="A claim priced itself at the wrong amount">
+    The payer has no negotiated price for that service or medicine, so nothing overrode your standard fee. Add the row under **Pricing** rather than overtyping each claim.
+  </Accordion>
+
+  <Accordion title="No insurance companies found in the picker">
+    The patient's insurer has not been added on **Companies**. Add it there, then reopen the request.
+  </Accordion>
+
+  <Accordion title="No Coverage Profiles even though prices exist">
+    Pricing and coverage are separate: one is what you charge, the other is what the plan pays. Add rules on the **Coverage** tab.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does this transmit anything to the insurer?">
+    No. Requests and claims are prepared here and sent to the payer the way you already send them. This module is the record and the tracker.
+  </Accordion>
+
+  <Accordion title="Can one insurer have several plans?">
+    Yes, and it usually does. Add each on the **Plans** tab — deductible, ceiling, copay and **Pre-authorization Required** are per plan, not per company.
+  </Accordion>
+
+  <Accordion title="Does insurance replace ordinary billing?">
+    No. Patient responsibility — co-pays, excess and uncovered items — is still an invoice. See [Billing](/hospital/revenue/billing).
+  </Accordion>
+
+  <Accordion title="What happens if I deactivate a company?">
+    It stops being offered on new requests and claims. Existing records keep the insurer they were raised against.
+  </Accordion>
+
+  <Accordion title="Where do I see claim volume and denials over time?">
+    In the **Insurance** report — see [Reports and analytics](/hospital/executive/analytics). It follows this in-house module, not the electronic one.
+  </Accordion>
+</AccordionGroup>
 
 <StillStuck topic="insurance" />
 
-{/* source of truth: components/clinic/insurance/insurance-content-dashboard.tsx, components/clinic/insurance/pre-authorization, components/clinic/insurance/claims/claims-content-dashboard.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/insurance/insurance-content-dashboard.tsx, insurance-form.tsx, insurance-companies-table.tsx, insurance-service-prices-table.tsx, insurance-medicine-prices-table.tsx, insurance-coverage-table.tsx, insurance-stats.tsx, patient-insurance-dialog.tsx, lib/edition-staff-roles.ts */}

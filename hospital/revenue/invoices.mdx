@@ -1,0 +1,165 @@
+---
+title: Create and send an invoice
+description: "Build a hospital invoice from your service catalogue, email it to the patient, an employer or an insurer, and know why some cannot be deleted."
+icon: /images/icons/file-invoice.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone permitted to create billing documents" />
+
+An invoice lists what a patient owes the hospital, in your currency, and can be emailed as a branded PDF to the patient, to whoever is actually paying, or to both. This page covers building one, sending it, and what you can and cannot do to it afterwards.
+
+<Path steps={['Sidebar', 'Billing', 'New Invoice']} />
+
+<TaskHeader before="At least one service in your catalogue, and a patient record to bill" time="2 minutes" after="A Pending invoice, emailed as a PDF to the recipients you chose" />
+
+## What you're looking at
+
+The form is headed **Create Invoice** and three cards long.
+
+**Invoice Details** — "Basic invoice information" — holds **Select Patient \*** ("Search for a patient..."), **Invoice Date \*** (today by default) and **Due Date** (thirty days out, "Payment expected by this date"). A patient on a membership is badged **★ \{plan\} member**, with "Member pricing auto-applies to added services."
+
+**Invoice Items** — "Add services and items to this invoice" — has a service search reading "Search services to add..." and a **Custom Item** button. Each line carries **Description**, **Type**, **CPT/HCPCS**, **Qty**, **Unit Price**, **Disc %** and **Total**. With nothing added it says **No items added yet**.
+
+**Notes & Discounts** holds **Global Discount (%)** ("Applied to subtotal before tax"), **Tax Rate (%)** and **Notes (Optional)**. Alongside sits **Invoice Summary** — the lines, **Subtotal**, discount, tax and **Total** — and a submit button showing the amount you are about to raise.
+
+## Create the invoice
+
+<Steps>
+  <Step title="Open the form">
+    Select **New Invoice** on the **Billing** page, or start one from the patient's record so the patient is filled in for you.
+  </Step>
+  <Step title="Choose who it is for">
+    **Select Patient \*** searches your patient list. The chosen patient's hospital number appears beside the field so you can confirm you have the right person.
+  </Step>
+  <Step title="Set the dates">
+    **Invoice Date \*** is required. **Due Date** is what makes an unpaid invoice tip into **Overdue** later — without one, nothing chases itself.
+  </Step>
+  <Step title="Add the lines">
+    Search "Search services to add..." to pull items from your [service catalogue](/hospital/revenue/services). **Qty**, **Unit Price** and **Disc %** are all editable on the line, so a one-off concession does not mean repricing the underlying service. **Custom Item** adds a line that is not in the catalogue; its description is required.
+  </Step>
+  <Step title="Set the discount and tax">
+    **Global Discount (%)** applies to the subtotal before tax. **Tax Rate (%)** arrives from **Settings → Billing** — change it here only for this invoice.
+  </Step>
+  <Step title="Save it">
+    Add anything the patient must read under **Notes (Optional)** and select the create button. You get **Invoice created successfully** and an **Invoice Created** dialog naming the invoice number, with **Download PDF**, **Send Invoice** and **Done**.
+  </Step>
+</Steps>
+
+<Note>
+  **A new invoice is created as Pending, and there is no status field while you are creating it.** **Status** appears only once the invoice exists and you open it to edit. So if you are assembling a bill over several days — a long admission, for instance — raise it, then edit it and set **Status** to **Draft**.
+</Note>
+
+## Send it
+
+<Steps>
+  <Step title="Open the send dialog">
+    **Send Invoice**, from the row's **Invoice Actions**, from the invoice itself, or from the **Invoice Created** dialog. It says: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
+  </Step>
+  <Step title="Choose the recipients">
+    **Send to** offers three options — the patient's email on file, **A different email**, or **Both — \{patient\} and a different email**.
+  </Step>
+  <Step title="Add the other addresses">
+    Choosing anything but the patient reveals **Other emails**, with the placeholder "billing@employer.com, family@example.com" and the helper "Up to 3 addresses, separated by commas."
+  </Step>
+  <Step title="Send">
+    Select **Send Invoice**. Each recipient gets the same PDF, and the invoice records that it was sent.
+  </Step>
+</Steps>
+
+### A worked example — employer-billed care
+
+An employer sends staff to your occupational health clinic and settles centrally. Set **Send to** to **Both**, enter `accounts@northgate.example, hr@northgate.example` in **Other emails**, and send: the employee keeps their copy and the accounts team gets the bill. The same pattern covers an insurer copied on a self-pay invoice.
+
+<AuditNote action="Creating, sending or downloading an invoice" />
+
+## Cancelling versus deleting
+
+<Warning>
+  **An invoice with a recorded payment cannot be deleted.** The menu item is disabled and reads **Has payments — cancel instead**, with the tooltip "Invoices with recorded payments can't be deleted"; the server refuses it too — "This invoice has recorded payments and cannot be deleted. Cancel it instead to keep the record." Deleting an unpaid invoice is permanent: "Invoice \{number\} and all of its items and recorded payments will be permanently removed. This action cannot be undone."
+</Warning>
+
+Cancel is the right answer far more often than delete: it keeps the invoice on the record and the payment reconciled, so the history explains itself. Delete is for an invoice raised entirely by mistake, before anybody paid against it.
+
+## Who can do this
+
+**Role** decides whether **Billing** opens at all — an owner sets that per role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do with an invoice. The relevant toggles in your staff sheet, in the product's own words:
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Create and edit an invoice | Billers, front desk, managers | **Create billing documents** |
+| Record a payment on it | Billers, front desk | **Add client payments** |
+| Change a service's price | Owners and managers | **Edit service fees** |
+| See the money figures | Owners, managers, executives | **View financial dashboard** |
+| Void a payment already taken | Owners, managers, accountants only | Enforced on the server regardless of the toggles |
+| Delete an invoice that has payments | Nobody | Refused on the server for everyone |
+
+Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not.
+
+## Check it worked
+
+- The invoice appears under **Billing → Invoices** with a **Pending** badge and its number.
+- After sending, you get **Invoice emailed to \{recipients\}** and each address has the PDF.
+- **Download PDF** produces a file that opens. A tiny file that will not open means the download failed, not that it succeeded.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I cannot find the Status field while creating">
+    There is not one. New invoices are **Pending**. Save it, reopen it with **Edit Invoice**, and set **Status** to **Draft**.
+  </Accordion>
+
+  <Accordion title="The service I want is not in the picker">
+    "Search services to add..." only finds your catalogue. Add it under [Services](/hospital/revenue/services), or use **Custom Item** for a one-off — its description is required.
+  </Accordion>
+
+  <Accordion title="The send dialog will not take more addresses">
+    **Other emails** accepts three, separated by commas — "You can add up to 3 other email addresses." For wider distribution, download the PDF and forward it.
+  </Accordion>
+
+  <Accordion title="The patient says they never received it">
+    Check the email on file, then re-send with **A different email**. Ask them to check spam: the message carries a PDF attachment, which some filters treat harshly.
+  </Accordion>
+
+  <Accordion title="Delete Invoice is greyed out">
+    Money has been recorded against it. Cancel it instead; if the payment was itself the mistake, void it first — see [Record and collect payments](/hospital/revenue/payments).
+  </Accordion>
+
+  <Accordion title="The create button is disabled">
+    An invoice needs at least one line. Add a service or a custom item.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do my bank details appear on the PDF?">
+    Only if you added them under **Settings → Payment Details** and switched them on. Nothing else prints them — see [Payment details](/hospital/settings/payment-details).
+  </Accordion>
+
+  <Accordion title="What is the CPT/HCPCS column for?">
+    The billing code for a line, carried onto insurance claims. It fills in from a service that has one.
+  </Accordion>
+
+  <Accordion title="Can I invoice an insurer instead of the patient?">
+    Copy them with **Both**, or raise a claim — see [Insurance claims](/hospital/insurance/claims).
+  </Accordion>
+
+  <Accordion title="Does a member get a different price?">
+    Yes. A patient on a plan is badged in the picker and member pricing applies automatically — see [Memberships](/hospital/revenue/memberships).
+  </Accordion>
+
+  <Accordion title="Can I edit an invoice after sending it?">
+    Yes, with **Edit Invoice**, until it is paid or cancelled. Re-send it so the recipient has the corrected copy.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an invoice" />
+
+{/* source of truth: components/clinic/dashboard/billing/invoice-form.tsx, .../invoice-send-dialog.tsx, .../invoice-actions.tsx, lib/billing/invoice-send.ts, db/actions/billing.ts */}

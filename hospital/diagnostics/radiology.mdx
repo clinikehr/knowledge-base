@@ -1,7 +1,7 @@
 ---
-title: Order and report imaging
-description: "Raise an imaging request, read the study, write findings and an impression, then sign and issue the radiology report."
-icon: /images/icons/scan.svg
+title: "Radiology list"
+description: "Track every imaging request in your hospital, move a study through scheduling and performance, and write the findings and impression."
+icon: "/images/icons/scan.svg"
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -9,117 +9,165 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Clinical and imaging staff" note="The Radiology group only appears when the Diagnostics care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors and managers" note="Needs the Diagnostics care area" />
 
-Imaging works like the lab: a clinician requests the study, the modality performs it, a radiologist reports it, and the signed report goes back to the requester. This page walks that loop inside a hospital workspace.
+The **Radiology List** is every imaging request your hospital has raised: **Manage radiology studies and reports for your clinic.** It is where a study is scheduled, performed, and finally reported.
 
-**Radiology** and **Laboratory** both come from one switch — the **Diagnostics** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+<Path steps={['Sidebar', 'Radiology', 'Radiology List']} />
 
-<Path steps={['Sidebar', 'Radiology', 'Radiology Station']} />
+<TaskHeader
+  before="The Diagnostics care area switched on, and a patient with an imaging request"
+  time="Minutes to move a study on; reporting takes as long as it takes"
+  after="A study marked completed with findings and an impression on the record"
+/>
 
-<TaskHeader before="The Diagnostics care area switched on, and a patient with an imaging request" time="Minutes to request; reporting depends on the radiologist" after="A signed radiology report attached to the patient's record" />
+## Before you start
 
-## Where everything lives
+**Radiology** and **Laboratory** come from one switch — the **Diagnostics** care area in **Settings → Facility**. If the group is missing from your sidebar, that is why; see [Care areas](/hospital/get-started/care-areas).
 
-| Screen | What it is for |
+Requests normally arrive from a [consultation](/hospital/outpatient/consultation) or a ward chart. **Create Report** raises one here, for walk-in and referred work that never had a consultation in your system.
+
+## What you're looking at
+
+Seven tiles run across the top: **Total Studies**, **Pending**, **In Progress**, **Completed**, **Urgent**, **Critical** and **Reports Due**.
+
+Under them, three priority buttons appear **only when they have something to show** — **Critical Findings**, **Pending Reports** and **Urgent Studies**, each with a count. A button that is not on screen means that count is zero, which is the answer you wanted.
+
+| Control | What it does |
 | --- | --- |
-| **Radiology List** | Requests waiting, in progress and done |
-| **Radiology History** | Everything already ordered |
-| **Radiology Station** | The reading view |
-| **Radiology Reports** | Finished reports, ready to print or download |
-| **Modalities** | Your connected imaging equipment |
+| **Search studies, patients, or findings...** | Searches all three |
+| **Create Report** | Raises a new imaging request |
+| **Refresh** · **Export** | Re-read the list; take a copy |
+| **Columns** → **Toggle columns** | Shows the optional columns |
+| **All statuses** | **Pending**, **Scheduled**, **In Progress**, **Completed**, **Reported** |
+| **All urgencies** | **Routine**, **Urgent**, **STAT** |
+| **All modalities** | **X-Ray**, **CT Scan**, **MRI**, **Ultrasound**, **Mammography**, **Fluoroscopy**, **PET Scan**, **DEXA Scan**, **ECG**, **Echo** |
+| **All categories** · **Pick a date range** | Diagnostic, screening, interventional or therapeutic; and the period |
 
-**Modalities** appears only when the imaging bridge is switched on for your workspace. Without it the other four screens still work — you simply attach images by hand rather than receiving them from the equipment.
+The table shows **Patient ID**, **Patient Name**, **Study Type**, **Status**, **Ordered** and **Ordered By** by default. **Accession**, **Scheduled**, **Performed**, **Reported**, **Technician**, **Radiologist**, **Findings**, **Impression** and **Payment** are available under **Toggle columns**.
 
-## Request a study
+Badges follow a strict order of importance: **Critical** outranks **STAT**, which outranks **Urgent**, which outranks the plain status. An empty hospital reads **No radiology studies found for this clinic.**
+
+## Move a study through the list
+
+Each row's menu offers **View Study**, then the one status action that applies:
 
 <Steps>
-  <Step title="Order from the consultation">
-    Open the [consultation](/hospital/outpatient/consultation), go to the **Orders** tab and select the **Imaging** sub-tab. Ordering here keeps the request tied to the encounter and the clinical question behind it.
+  <Step title="Schedule Study">
+    Books the study in. The row moves from **Pending** to **Scheduled**.
   </Step>
-  <Step title="Or order from the station">
-    Open **Radiology Station** and raise the request there. Use this for walk-in and referred work that never had a consultation in your system.
+  <Step title="Conduct Study">
+    Marks it as being performed. The row shows **In progress**, which is what tells the requesting ward the patient is at the machine.
   </Step>
-  <Step title="Say why">
-    Write the clinical indication into the request. The radiologist reads that before they read the images, and a request with no question attached comes back as a description rather than an answer.
+  <Step title="Complete Study">
+    Marks the acquisition finished. Only now is the study ready to report.
   </Step>
 </Steps>
+
+A role without the rights to move a study sees a single disabled item reading **Status: \{Status\}** instead — the state is still visible, the action is not.
 
 ## Report the study
 
 <Steps>
-  <Step title="Open the study">
-    From the imaging list, select **Create Report** on the row. If images are attached the report screen says "{'\{n\}'} images attached" and offers **Open full viewer**, **Download study** and **Archive to cloud**.
+  <Step title="Open the report">
+    **Create Report** on a completed study, or **Update Report** / **Revise Report** on one already written. The heading reads **Create Study Report**, **Edit Study Report** or **View Study Report**.
   </Step>
-  <Step title="Read the images">
-    **Open full viewer** launches the full diagnostic viewer in a new tab. **Download study** takes a copy for offline reading. **Archive to cloud** moves the study into long-term storage — do that once reporting is finished, not before.
+  <Step title="Write the findings">
+    **Findings** is required — "Detailed description of what is observed in the study". Describe what is there, not what it means.
   </Step>
-  <Step title="Write findings and impression">
-    Enter the **Findings** — what you can see — and then the **Impression**, which is the answer to the clinical question. Referring clinicians read the impression first and often only that, so put the conclusion there rather than leaving it implied by the findings.
+  <Step title="Write the impression">
+    **Impression** is also required — "Clinical interpretation and diagnostic conclusion". Referring clinicians read the impression first and often only that, so put the answer here rather than leaving it implied by the findings. **Recommendations** carries any follow-up.
   </Step>
-  <Step title="Sign the report">
-    Sign it. Signing is what makes the report a clinical document rather than a working draft, and it is what releases the report to the requester.
+  <Step title="Record the technique">
+    Under **Technical Details**: **Technique Used**, **Image Quality**, whether a **Contrast agent used**, and the **Radiation Dose**. Dose belongs on the record every time — it is cumulative for the patient across their life.
+  </Step>
+  <Step title="Flag anything critical">
+    Tick **This study contains critical findings** where they exist. ClinikEHR then reminds you: critical findings "require immediate communication to the ordering physician" — the tick records it, it does not deliver it. Pick up the phone.
+  </Step>
+  <Step title="Save">
+    **Save Draft** keeps it editable. **Complete Report** (or **Update Report**) releases it, confirmed with **Report saved successfully**.
   </Step>
 </Steps>
 
 <Warning>
-  An unsigned report is stamped as preliminary and must never leave the building looking final. If a ward needs an urgent read before you can sign, speak to them — do not print the draft.
+  An unreleased report is preliminary and must never leave the building looking final. If a ward needs an urgent read before you can complete it, speak to them directly — do not print or send the draft.
 </Warning>
+
+<AuditNote action="Opening a study and its report" />
+
+## Who can do this
+
+**Role** decides whether the module opens at all — anyone else is told **You don't have permission to access the radiology module. Please contact your clinic administrator.** An owner can also hide **Radiology** from a role under [Role navigation](/hospital/settings/role-navigation).
+
+| Action | Who by default | How it is governed |
+| --- | --- | --- |
+| Open the list and view a study | Clinical and imaging staff | Role |
+| Schedule, conduct or complete a study | Radiology technicians and radiologists | Role — others see a disabled **Status: \{Status\}** item |
+| Write or edit a report | Radiologists and doctors | Role — others get **You don't have permission to edit reports. Only radiologists and doctors can create or modify reports.** |
+| Edit **Technical Details** | Technicians and radiologists | Role — read-only for everyone else |
+| See payment on a study | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+
+Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The study shows as reported in **Radiology History**, with your name on it.
-- The report appears under **Radiology Reports** and prints without a preliminary stamp.
+- The row shows **Reported**, and the **Reports Due** tile drops by one.
+- Switching on the **Findings** and **Impression** columns shows your text.
+- The **Radiologist** column names you.
 - The requesting clinician sees the report on the [patient's record](/hospital/front-desk/patients).
 
-<AuditNote action="Opening a study, and printing or downloading a report" />
-
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
+  <Accordion title="You have read-only access to this report">
+    You can open the study but not write it. Reporting is limited to radiologists and doctors; ask an owner to correct your role under [Staff](/hospital/settings/staff).
+  </Accordion>
+
+  <Accordion title="Create Report is not offered on a row">
+    The study is not completed yet. Work it through **Schedule Study** → **Conduct Study** → **Complete Study** first; a report on an unperformed study would have nothing behind it.
+  </Accordion>
+
+  <Accordion title="Please select a radiology order first.">
+    You reached the report form without a study attached, usually from a stale link. Go back to the list and open the row from its action menu.
+  </Accordion>
+
+  <Accordion title="The priority buttons have disappeared">
+    They only render when their count is above zero. No **Critical Findings** button means there are none — which is the good outcome, not a fault.
+  </Accordion>
+
+  <Accordion title="Failed to mark study completed">
+    The status move did not save. Select **Refresh** and check the current status before trying again — someone else may have moved it.
+  </Accordion>
+
   <Accordion title="There is no Radiology group in my sidebar">
-    Either the **Diagnostics** [care area](/hospital/get-started/care-areas) is off, or your workspace is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
-  </Accordion>
-
-  <Accordion title="Modalities is missing">
-    **Modalities** only appears when the imaging bridge is enabled for your workspace. Everything else on this page works without it — you attach and read images manually instead.
-  </Accordion>
-
-  <Accordion title="The study says no images are attached">
-    The equipment has not delivered them yet, or the study was performed on a modality that is not connected. Check the study on the equipment before you report from memory, and ask the radiographer to re-send it.
-  </Accordion>
-
-  <Accordion title="Open full viewer does nothing">
-    The viewer opens in a new tab. If nothing appears, your browser blocked the pop-up — allow pop-ups for ClinikEHR and select it again.
-  </Accordion>
-
-  <Accordion title="I signed a report with an error in it">
-    Speak to an owner or manager. Correcting a signed report is a deliberate, recorded act rather than a quiet edit, because the first version has already been read and acted on.
+    Either the **Diagnostics** [care area](/hospital/get-started/care-areas) is off, or your hospital is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 </AccordionGroup>
 
-## Going deeper
+## FAQ
 
-The imaging workflow is documented in full in the Diagnostics edition pages — the same screens your hospital's imaging unit uses.
+<AccordionGroup>
+  <Accordion title="Where do the images themselves live?">
+    On your own imaging archive. ClinikEHR stores the addresses, and the viewer reads from your equipment — see [Modalities](/hospital/diagnostics/modalities). Without the imaging bridge, images are attached by hand.
+  </Accordion>
 
-<Columns cols={2}>
-  <Card title="Imaging requests" icon="/images/icons/clipboard-list.svg" href="/lims/imaging/requests">
-    How a request reaches the modality.
-  </Card>
+  <Accordion title="Can I revise a report after releasing it?">
+    Yes — **Revise Report** on the row. The revision is recorded, because the first version has already been read and acted on.
+  </Accordion>
 
-  <Card title="Imaging station" icon="/images/icons/display.svg" href="/lims/imaging/station">
-    Reading, reporting and turnaround.
-  </Card>
+  <Accordion title="What is the difference between this and Radiology Reports?">
+    This list is the request queue with its filters and status actions. [Radiology reports](/hospital/diagnostics/radiology-reports) is the reporting surface, with the study's images, prior comparisons and the download.
+  </Accordion>
 
-  <Card title="Modalities" icon="/images/icons/plug.svg" href="/lims/imaging/modalities">
-    Connecting equipment and archiving studies.
-  </Card>
+  <Accordion title="Does ticking Critical Findings notify anyone?">
+    No. It marks the record and reminds you to communicate them. Telling the ordering physician is still a phone call.
+  </Accordion>
 
-  <Card title="Order and report lab tests" icon="/images/icons/flask.svg" href="/hospital/diagnostics/laboratory">
-    The laboratory equivalent of this page.
-  </Card>
-</Columns>
+  <Accordion title="Is there deeper documentation on imaging requests?">
+    Yes — the Diagnostics edition runs the same screens. See [Imaging requests](/lims/imaging/requests).
+  </Accordion>
+</AccordionGroup>
 
-<StillStuck topic="an imaging request or report" />
+<StillStuck topic="an imaging request" />
 
-{/* source of truth: components/clinic/dashboard/radiology-station/radiology-report/radiology-report-form.tsx, components/clinic/dashboard/radiology-station/modalities/, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/radiology/, app/u/clinic/radiology/[clinicId]/page.tsx */}

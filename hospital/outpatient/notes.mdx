@@ -1,0 +1,160 @@
+---
+title: Write a clinic note
+description: "Create a progress note from a template, a blank page or a recording, sign and lock it, and countersign a colleague's work."
+icon: /images/icons/square-pen.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise — every note feature is included" roles="Any clinical staff member" note="No care area needed — Clinic Notes is always in the Enterprise sidebar" />
+
+**Clinic Notes** is the hospital's standalone documentation surface: a note about a patient written *without* going through a department queue. Use it for a ward review, a handover, a discharge summary or anything else that is clinical writing rather than an outpatient encounter. Documentation that belongs to an outpatient visit goes on the [consultation](/hospital/outpatient/consultation) chart instead.
+
+<Path steps={['Sidebar', 'Outpatient', 'Clinic Notes', 'New Note']} />
+
+<TaskHeader
+  before="The patient must already be registered"
+  time="5 minutes"
+  after="A note saved as a draft, or signed and locked against the patient's chart"
+/>
+
+## Before you start
+
+**Clinic Notes** has no care-area switch — it is always in the sidebar on Enterprise, and every feature on this page is included in the plan. The patient must exist first; register them in [Patients](/hospital/front-desk/patients).
+
+## What you're looking at
+
+The module has its own left rail headed **Clinical Notes**, holding **New Note**, **Templates**, **Custom Templates** and **Snippets**, then an **AI** section with **AI Notes**. **AI Notes** opens a sheet over the page rather than navigating away.
+
+**New Note** opens the **New Progress Note** dashboard, which offers three ways in:
+
+| Card | Use it when |
+| --- | --- |
+| **Use Template** | "Start from a template" — the structure is already decided |
+| **Blank Note** | "Start from scratch" |
+| **AI Note Taker** | "AI-powered note generation" — from a recording or a document |
+
+Below those sit three things. **Waiting on you \{n\}** collects notes needing your countersignature — "Notes signed by a colleague you supervise. They are not final until you countersign." A **Quick Note** card lets you write without opening a full editor. And **Recent Notes** lists what the hospital has written lately, with **Search notes...**, a **Filter by type** control (**All Types** by default) and columns for **Status** — **Draft** or **Final** — plus **Date**, **Created By** and **Patient**.
+
+A brand-new hospital sees the three entry cards and an empty **Recent Notes** list. Nothing is wrong; nobody has written anything yet.
+
+## Write a quick note
+
+<Steps>
+  <Step title="Fill in the Quick Note card">
+    Enter a **Note Title** — "Enter note title..." — then choose a **Template Type**: SOAP Note, Progress Note, Initial Assessment, Therapy Session, Discharge Summary, Treatment Plan or General Note.
+  </Step>
+  <Step title="Attach it to a patient">
+    Use the picker, which is labelled **Client** and searches with "Search clients..." wherever you are on the platform. Choose who the note is about.
+
+    A draft saves without one. A final note does not: you will be told "Please select a client before saving the final note".
+  </Step>
+  <Step title="Add tags and write">
+    **Tags** ("Add a tag...") make the note findable later. Write the body in **Note Content** — "Start typing your note content... Type / for snippets", which is how you pull in a saved snippet mid-sentence.
+  </Step>
+  <Step title="Save, or sign and lock">
+    Saving keeps it as a draft you can come back to — "Draft saved successfully". **Sign & Lock** finishes it.
+  </Step>
+</Steps>
+
+## Sign and lock
+
+Select **Sign & Lock** to open the **Sign & Lock Note** sheet. Choose the **Signing Provider**, then add the **Provider Signature** — type it or draw it, under the heading **Electronic Signature** — and confirm.
+
+A locked note tells anyone who opens it "This note is locked and cannot be modified" and carries a **Locked** badge. To correct it, select **Unlock Note**, amend, and sign again. Both the lock and the unlock are recorded.
+
+## Countersign a colleague's note
+
+Notes signed by someone you supervise appear under **Waiting on you \{n\}**. Select **Read the note**, read it properly, then countersign. Until you do, the note is not final — the supervising signature is what makes it one.
+
+## Use AI, carefully
+
+Three tools, and they are different things:
+
+- **AI Rewrite** rewrites a passage you have selected.
+- **AI Autocomplete** suggests the next few words as you type. Press Tab to accept, or keep typing to ignore it.
+- **AI Note Taker** generates a whole note from a recording or an uploaded document, and its sessions are managed from **AI Notes**.
+
+<Warning>
+  **AI text is a first draft, never a record.** Read every sentence before you sign — your signature is what makes the words yours, and a signed note is a legal document about a real patient. Never sign AI output you have not checked against what actually happened.
+</Warning>
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Clinic Notes** and write | Any clinical staff member the Outpatient group is shown to | Role Navigation |
+| Sign and lock a note | Clinicians | The **Sign and lock a consultation** permission where your hospital has set one |
+| Countersign someone else's note | Supervisors | **Countersign a colleague's note** |
+| Unlock a signed note | Whoever may sign | Same permission as signing |
+| Create and edit shared templates | Owners and managers, in practice | Role |
+
+Two behaviours worth knowing. Permission enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — so nothing changes for existing staff until they are saved once. And a denied action is recorded in the audit log while an allowed one is not, so hiding **Clinic Notes** in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary. See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The note appears under **Recent Notes** with the right patient against it, and on that patient's chart.
+- Its **Status** reads **Final** rather than **Draft**.
+- A signed note shows the signing provider and refuses edits until unlocked.
+- A note you sent for countersignature stays in your supervisor's **Waiting on you \{n\}** list until they act.
+
+<AuditNote action="Opening a clinic note" />
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="It will not save as final">
+    A final note needs a patient selected. Choose one in the picker and save again. If the patient does not exist yet, register them first in [Patients](/hospital/front-desk/patients).
+  </Accordion>
+
+  <Accordion title="It says the note is locked and cannot be modified">
+    It has been signed. Select **Unlock Note**, make the correction and sign it again — amending a signed note is expected, working around it is not.
+  </Accordion>
+
+  <Accordion title="My colleague's note is not appearing in Waiting on you">
+    Countersignature only reaches the supervisor the note was signed to. Check with the author which provider they picked as the **Signing Provider**, and check your own role can countersign.
+  </Accordion>
+
+  <Accordion title="Typing '/' does not bring up snippets">
+    That shortcut works inside **Note Content** only, and needs at least one saved snippet. Create some under **Snippets** in the left rail.
+  </Accordion>
+
+  <Accordion title="The picker says 'Client' but we are a hospital">
+    The picker keeps that label across every plan. It searches your patient list; the word on the button is the only difference.
+  </Accordion>
+
+  <Accordion title="I cannot find the note I wrote yesterday">
+    Use **Search notes...** and clear **Filter by type**, which persists between visits. **Recent Notes** shows the newest first, so an older note may simply be further down.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="When should I use a clinic note instead of a consultation?">
+    A consultation documents an outpatient encounter that came through triage and a department queue, and can carry orders. A clinic note is free-standing documentation about a patient — a ward review, a handover, a discharge summary — with no queue behind it.
+  </Accordion>
+
+  <Accordion title="What is the difference between Templates and Custom Templates?">
+    **Templates** are the ones supplied with the product. **Custom Templates** are the ones your hospital writes, so a department can standardise its own documentation. Both appear in the same picker when you start a note.
+  </Accordion>
+
+  <Accordion title="Can two people write the same note?">
+    One person writes and signs; a supervisor countersigns. There is no simultaneous editing, which is deliberate — a clinical note has an author, and the signature says who it is.
+  </Accordion>
+
+  <Accordion title="Does a note appear on the patient's chart automatically?">
+    Yes, as soon as it is attached to a patient. A draft appears as a draft; the chart shows the current state rather than waiting for a signature.
+  </Accordion>
+
+  <Accordion title="Are notes included on our plan?">
+    Yes. Every note feature — signing, locking, countersignature, templates, snippets and the AI writing tools — is included on Enterprise.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="clinic notes" />
+
+{/* source of truth: components/clinic/notes/ (general/notes-sidebar.tsx, notes-content-dashboard.tsx, new-notes/blank-notes-form.tsx, new-notes/sign-and-lock-sheet.tsx), lib/clinic-nav-registry.ts */}

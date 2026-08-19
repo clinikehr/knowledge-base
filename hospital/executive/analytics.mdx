@@ -6,78 +6,121 @@ icon: /images/icons/chart-column.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager, and staff granted access to figures" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and accountants" />
 
-**Analytics** is the menu of every report your hospital can open. The sidebar entry is a single link, not a menu — the page it opens _is_ the menu, and it lists only the reports that exist for you.
+**Analytics** is the menu of every report your hospital can open. The sidebar entry is a single link rather than a menu — the page it opens _is_ the menu, and it lists only the reports that exist for you.
 
 <Path steps={['Sidebar', 'Executive', 'Analytics']} />
 
-The page counts them for you — "_n_ reports available for this clinic. Each one covers a period you choose and can be exported." — and groups them under **Clinical**, **Operations** and **Money**.
+<TaskHeader before="The care areas your hospital runs, switched on under Settings → Facility" time="Two minutes per report" after="A report read on the period you chose, and a spreadsheet of its rows if you need one" />
+
+## What you're looking at
+
+The heading reads **Analytics**, and the line beneath counts them for you: "17 reports available for this clinic. Each one covers a period you choose and can be exported."
+
+Cards are grouped under **Clinical**, **Operations** and **Money**. Each card names the report, gives a one-line description, and shows small badges for its scope tabs where it has them.
+
+**Empty state.** A hospital with every care area switched off sees **No reports available** — "Reports follow the care areas this clinic runs. Turn one on in Settings → Facility."
 
 ## The reports a hospital gets
 
-Every Enterprise hospital sees these:
+**Clinical**
 
-| Report | Covers | Scopes |
+| Report | Covers | Scopes | Needs the care area |
+| --- | --- | --- | --- |
+| **Out-patient** | OPD throughput by department | **Triage** · **Consultation** | — |
+| **Consultation** | Encounter volume, by status | **Consultations** · **Telehealth** · **Notes** | — |
+| **Nursing** | Observation compliance and nursing notes | **Triage** · **Nursing notes** | In-patient care |
+| **Wards** | Occupancy, length of stay and turnover | — | In-patient care |
+| **Theatre** | Case volume, delays and checklist compliance | — | Surgical theatre |
+| **Diagnostics** | Volume, turnaround and abnormal rate | **Laboratory** · **Radiology** | — |
+
+**Operations**
+
+| Report | Covers | Needs the care area |
 | --- | --- | --- |
-| **Revenue** | Invoices, payments and what is still outstanding | **Invoices** · **Payments** |
 | **Appointments** | Volume, completion and no-show rate | — |
 | **Patients** | New versus returning, and how the list is growing | — |
-| **Consultation** | Encounter volume, by status | **Consultations** · **Telehealth** · **Notes** |
+| **Pharmacy** | Dispensing volume and stock-outs | In-house pharmacy |
 | **Staff** | Headcount by role and activity | — |
 | **Workload** | Cross-department load and peak hours | — |
 | **Inventory** | Valuation, turnover and expiry risk | — |
 | **Predictive Analysis** | Demand, revenue and stock forecasts | — |
+
+**Money**
+
+| Report | Covers | Scopes |
+| --- | --- | --- |
+| **Revenue** | Invoices, payments and what is still outstanding | **Invoices** · **Payments** |
+| **Insurance** | Claim volume, denials and aging | — |
 | **Memberships** | Sign-ups, cancellations and recurring revenue | — |
 | **Store** | Storefront orders and takings | — |
-| **Insurance** | Claim volume, denials and aging | — |
 
-And these, each tied to a service line:
-
-| Report | Covers | Needs the care area |
-| --- | --- | --- |
-| **Out-patient** | OPD throughput by department (**Triage** · **Consultation**) | — |
-| **Nursing** | Observation compliance and nursing notes | **In-patient care** |
-| **Wards** | Occupancy, length of stay and turnover | **In-patient care** |
-| **Theatre** | Case volume, delays and checklist compliance | **Surgical theatre** |
-| **Diagnostics** | Volume, turnaround and abnormal rate (**Laboratory** · **Radiology**) | — |
-| **Pharmacy** | Dispensing volume and stock-outs | **In-house pharmacy** |
-
-Turning a care area off in **Settings → Facility** removes its report along with its navigation group. If the page says **No reports available**, it is telling you the same thing: "Reports follow the care areas this clinic runs. Turn one on in Settings → Facility."
+Turning a care area off under **Settings → Facility** removes its report along with its navigation group. That is the usual reason a report someone remembers has "disappeared" — see [Care areas](/hospital/get-started/care-areas).
 
 <Note>
-  A solo or team practice sees about nine reports where a hospital sees six more, and that is the design rather than a missing feature. A report is a promise that the dataset behind it exists, and a solo practice has no ward, no theatre and no nursing rota. The solo and team set is documented separately in [Reports and analytics](/practice/insights/analytics).
+  A solo or team practice sees twelve reports where a hospital sees seventeen, by design. A report is a promise that the dataset behind it exists, and a solo practice has no out-patient department, no ward, no theatre and no dispensary. It gains two a hospital does not — **e-Prescribing** and **Insurance Claims**, the electronic claims one — and its set is documented in [Reports and analytics](/practice/insights/analytics).
 </Note>
 
-The **Insurance** report here follows the hospital's own in-house insurance module — insurers you maintain, prices you negotiated, claims you prepared. See [Insurance](/hospital/insurance/overview).
+The **Insurance** report here follows the hospital's own in-house module — insurers you maintain, prices you negotiated, claims you prepared. See [Insurance](/hospital/insurance/overview).
 
-## Inside a report
+## Open and read a report
 
-Every report opens in the same workbench, so learning one teaches you all of them:
+Every report opens in the same workbench, so learning one teaches you all of them.
 
-| Part | What it does |
-| --- | --- |
-| Title | The report's name |
-| Period select | **Last 30 days**, **Last 90 days** or **Last 12 months** |
-| Scope tabs | Only on reports that have them, e.g. **Triage** / **Consultation** |
-| Summary tiles | The headline figures for the chosen period |
-| Chart over time | The same figures plotted across the period |
-| Breakdown chart | The composition — by department, status, ward or staff member |
-| Data table | The rows behind the charts, with **Export** |
+<Steps>
+  <Step title="Choose a report">
+    Select its card. The report's name and description appear at the top of the page.
+  </Step>
+  <Step title="Set the period">
+    The select on the right offers **Last 30 days**, **Last 90 days** and **Last 12 months**. It opens on **Last 30 days**.
+  </Step>
+  <Step title="Pick a scope, where there is one">
+    Reports with more than one view show tabs beneath the title — **Triage** / **Consultation**, **Laboratory** / **Radiology**, **Invoices** / **Payments**. The first tab is the default.
+  </Step>
+  <Step title="Read it in order">
+    Summary tiles for the headline figures, then a chart headed "<em>report name</em> over time", then a breakdown headed "<em>report name</em> by category" — by department, status, ward or staff member. The table underneath holds the rows behind both charts.
+  </Step>
+</Steps>
 
-Money is shown in your hospital's own currency — see [Currency](/platform/settings/currency).
+Money is shown in your hospital's own currency — see [Currency](/platform/settings/currency). The footer states the rule the figures follow: "Figures are aggregates for the selected period. Periods longer than 12 months are shortened server-side."
 
-Some reports are snapshots rather than periods, and read **As it stands now** where the period select would be — a stock-at-risk or occupancy figure has no meaningful "last 90 days". Periods longer than twelve months are shortened.
+**When there is nothing to show**, the workbench says **No data for this period** — "Try a longer period, or check back once there is activity." A report that loaded but has no rows to tabulate says **Nothing to tabulate** in place of the table. Neither is an error.
 
-## Export
+## Export the rows
 
-**Export** on the data table takes the rows currently on screen — the period and the scope tab you have selected, not the whole dataset. Set both before you export, or you will reconcile the wrong numbers.
+<Steps>
+  <Step title="Choose the table view">
+    The data table has its own tabs — **Over time**, **Breakdown** and **Summary**. Export takes the one you are on.
+  </Step>
+  <Step title="Set the period and scope first">
+    The export covers exactly what is on screen: the period, the scope tab and the table view you selected. Set all three before exporting, or you will reconcile the wrong numbers.
+  </Step>
+  <Step title="Select Export">
+    Choose **CSV — this view** or **Excel (.xlsx) — this view**. You are told **Exported**, with the row count and the period. Both open in Excel, Numbers or Sheets.
+  </Step>
+</Steps>
 
 <AuditNote action="Opening a report" />
 
-## If something goes wrong
+## Who can do this
+
+**Role** decides whether **Analytics** opens at all. On Enterprise, an owner controls which roles reach the **Executive** group under **Settings → Role Navigation**: owners and managers can never be locked out, accountants reach it by default, and a role with no rule of its own is unrestricted. Clinical and bench roles are scoped to their own units and do not see it.
+
+**Permission** decides what a person may do inside a module. Reports are read-only, so no per-person permission gates the reports a hospital sees — the list narrows by plan and by care areas. Where the product does gate a view it degrades rather than errors: a scope tab you may not open is not rendered, and the workbench moves you to the first tab you can. The related money permissions in your staff sheet are **View financial dashboard** and **View Payment Reports**.
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not, and hiding a module from a role's sidebar is a convenience rather than a security boundary.
+
+## Check it worked
+
+- The count line matches the number of cards on the page.
+- Changing the period changes the summary tiles and redraws both charts.
+- The exported file has the same row count the **Exported** message quoted.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="This report could not be loaded.">
@@ -85,19 +128,19 @@ Some reports are snapshots rather than periods, and read **As it stands now** wh
   </Accordion>
 
   <Accordion title="A report vanished from the list">
-    Usually a care area was switched off in **Settings → Facility**; less often a permission changed or the subscription lapsed. See [Care areas](/platform/team/care-areas) and [Staff permissions](/platform/team/permissions).
+    Usually a care area was switched off under **Settings → Facility**; less often the subscription lapsed. See [Care areas](/hospital/get-started/care-areas).
   </Accordion>
 
   <Accordion title="We run a ward but there is no Wards report">
-    Wards and Nursing both need the **In-patient care** care area switched on. Turn it on and the reports return with the navigation group. See [Care areas](/hospital/get-started/care-areas).
+    **Wards** and **Nursing** both need the **In-patient care** care area switched on. Turn it on and the reports return with the navigation group.
   </Accordion>
 
-  <Accordion title="There is no period select on this report">
-    That report is a snapshot and shows **As it stands now**. There is no range to choose.
+  <Accordion title="No data for this period">
+    The report loaded and found nothing in that window. Widen the period, or switch the scope tab — a **Consultation** report on the **Telehealth** scope is empty for a hospital that runs no video clinics.
   </Accordion>
 
   <Accordion title="The export has fewer rows than expected">
-    It exports what is on screen for the selected period and scope. Widen the period, or switch the scope tab, then export again.
+    It exports the table view you are on, for the selected period and scope. Switch to **Over time** or **Breakdown**, widen the period, then export again.
   </Accordion>
 
   <Accordion title="Selecting Analytics opens a page of cards, not a menu">
@@ -105,6 +148,30 @@ Some reports are snapshots rather than periods, and read **As it stands now** wh
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I choose my own date range?">
+    No. The three fixed periods keep every report comparable. For a bespoke range, export and filter in your spreadsheet.
+  </Accordion>
+
+  <Accordion title="Why do some reports have no period select?">
+    A snapshot report ignores a period and reads **As it stands now** instead of showing a control that changes nothing. Every report a hospital opens covers a period; the snapshot form appears in the Pharmacy and Diagnostics editions.
+  </Accordion>
+
+  <Accordion title="Do reports contain patient names?">
+    No. Every figure is an aggregate — counts, totals and averages. Named records live in the clinical modules.
+  </Accordion>
+
+  <Accordion title="Why do the tiles and the chart use different shapes?">
+    The tiles are the headline for the whole period; the chart plots the same figures day by day. They come from one read, so they cannot disagree.
+  </Accordion>
+
+  <Accordion title="Is this the same list as the executive dashboard?">
+    Yes. [Executive](/hospital/executive/dashboard) shows the same reports beneath its tiles, narrowed the same way.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck />
 
-{/* source of truth: lib/analytics/report-catalog.ts, components/clinic/dashboard/analytics/analytics-index.tsx, components/clinic/dashboard/analytics/report-workbench.tsx */}
+{/* source of truth: lib/analytics/report-catalog.ts, lib/analytics/report-table.ts, components/clinic/dashboard/analytics/analytics-index.tsx, report-workbench.tsx, report-data-table.tsx, lib/edition.ts (ENTERPRISE_ROLE_MODULES) */}

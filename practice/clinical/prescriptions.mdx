@@ -1,0 +1,147 @@
+---
+title: Prescribe and e-prescribe
+description: "Sync a client to the prescribing network, send an electronic prescription to their pharmacy, and keep their medication list current."
+icon: /images/icons/pill.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team — needs an active paid plan plus the ePrescribe add-on for that clinician's seat" roles="Prescribing clinicians" note="The tab says Patient in places where the rest of your practice says Client. It is the same person." />
+
+Electronic prescribing lives on the client's own chart. You sync them to the prescribing network once, write the prescription in the partner's window, and it comes back into their medication list here.
+
+<Path steps={['Sidebar', 'Clients', 'A client', 'Medications']} />
+
+<TaskHeader
+  before="The ePrescribe add-on, a registered practice, and a client with a valid phone number, date of birth and address"
+  time="2 minutes"
+  after="A prescription transmitted to the client's pharmacy and listed on their chart"
+/>
+
+## What you're looking at
+
+A client's chart has seven tabs — **Overview**, **Billing**, **Measures**, **History**, **Medications**, **Labs** and **Files**. **Medications** is the one you want; inside, the section is headed **Medications & ePrescribe** — "Manage active prescriptions and send to pharmacies".
+
+Along the top: **Sync Patient** while the client is unsynced, then **New Prescription** or **Sync & Prescribe**, and **AI Analysis** once there is at least one medication on file. A green dot and **Synced with MDToolbox** replace the sync button once it has worked.
+
+Below that, **Current Medications** lists each drug with its dosage, frequency, an **Active** pill and when it last synced. An empty tab reads "No Active Prescriptions Found — This patient has no medication records synced from MDToolbox."
+
+Before your practice is set up you get a different screen entirely: **Practice Registration Required**, with a **Register for ePrescriber** button.
+
+## Send a prescription
+
+<Steps>
+  <Step title="Check the profile is complete">
+    The sync needs a valid US phone number, a date of birth and an address. Fix the chart first — this is what fails most often, and it fails at the sync, not at the prescription.
+  </Step>
+  <Step title="Sync the client">
+    Select **Sync Patient**. On success you see "Sync Successful" and the header changes to **Synced with MDToolbox**.
+  </Step>
+  <Step title="Open the prescriber">
+    Select **New Prescription**. If the client has never been synced, **Sync & Prescribe** does both in one go. The prescribing partner opens in its own window, and you write the prescription there.
+  </Step>
+  <Step title="Come back to the chart">
+    The prescription returns to **Current Medications** with an **Active** pill and a sync timestamp. The card's footer says where it came from: "Medications are retrieved from the MDToolbox Clinical Network integration."
+  </Step>
+</Steps>
+
+<Warning>
+  **An electronic prescription goes to a real pharmacy.** There is no draft step and no recall once it has been sent. Check the client, the drug, the dose and the pharmacy before you send — and use a test client while you are learning the screen.
+</Warning>
+
+## Refill reminders
+
+Each medication row carries a **Refill reminder** button. Set one and it becomes **View reminder**, so you can see or adjust it later. A reminder is how a long-term prescription gets picked up before the client runs out rather than after.
+
+## Review the list with AI
+
+When there is at least one medication on file, **AI Analysis** appears at the top of the tab. It reads the current list and points out what is worth a second look.
+
+<Note>
+  The analysis is a prompt to check something, never a decision. Nothing it says changes a prescription — you do that yourself, and you remain responsible for the result.
+</Note>
+
+## Who can do this
+
+Role decides whether you can open a client's chart at all. The **add-on** — bought per clinician seat, not per practice — decides whether prescribing works, and permission decides whose charts you may open.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open a client's **Medications** tab | Any clinical staff member | Role |
+| Open the chart of a client who is not yours | Owner, manager, and staff set to **Full client list** or **Entire practice** | The access tier chosen when they were invited |
+| Sync a client and send a prescription | A prescribing clinician with an ePrescribe seat | The ePrescribe add-on, per person |
+| Register the practice with the prescribing partner | Owner | Role — it is a practice-level registration |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Clients** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Opening a client's medication list" />
+
+## Check it worked
+
+The header shows **Synced with MDToolbox**, and **Current Medications** lists what you prescribed with an **Active** pill and a "Synced" timestamp. If you set a reminder, the row now reads **View reminder**. Nothing else needs doing — the pharmacy has it.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Practice Registration Required">
+    Your add-on is active but the practice is not registered with the prescribing partner yet. Select **Register for ePrescriber** and complete it; your credentials are activated once the practice is verified. If you are already registered and still see this, the integration is being finalised — [contact support](/platform/help/contact-support).
+  </Accordion>
+
+  <Accordion title="Sync Error">
+    "Please ensure their profile has a valid US phone number, date of birth, and address." One of those three is missing or malformed on the chart. Fix it and sync again.
+  </Accordion>
+
+  <Accordion title="The tab shows an upgrade prompt">
+    "You need an active paid plan AND the ePrescribe add-on to manage patient medications." Select **Upgrade Plan & Add-ons** on Free, or **Manage Add-ons** if the plan is fine but the seat is not. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="My subscription is past due">
+    "Your subscription payment is past due." A lapsed payment collapses paid features, and prescribing goes with them. Select **Fix Payment**, or update your card under [Payment methods](/platform/plans/payment-methods).
+  </Accordion>
+
+  <Accordion title="No Active Prescriptions Found">
+    Nothing has come back for this client yet. Select **New Prescription** to write one. A newly synced client starts empty even if they take medication — the list is what the network holds, not what you have been told.
+  </Accordion>
+
+  <Accordion title="Prescribing Error when the window opens">
+    "Please check the client's profile has a valid phone number, date of birth, and address, then try again." Same three fields as the sync, checked again at the moment of prescribing.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I cancel a prescription after sending it?">
+    Not from ClinikEHR. It has already been transmitted. Contact the pharmacy directly, then correct the medication list here.
+  </Accordion>
+
+  <Accordion title="Does every clinician in the practice need the add-on?">
+    Yes — it is a per-seat add-on tied to the person prescribing, because prescribing credentials belong to an individual, not to the practice.
+  </Accordion>
+
+  <Accordion title="Why does the list not show medications the client told me about?">
+    **Current Medications** reflects the prescribing network, not your notes. Record a history you were told about in a [clinical note](/practice/clinical/notes) instead.
+  </Accordion>
+
+  <Accordion title="Does a refill reminder contact the client?">
+    It surfaces the refill as a task for your practice at the right time. Whether the client hears from you is governed by your [notification settings](/practice/settings/notifications).
+  </Accordion>
+
+  <Accordion title="Is the client told their prescription was sent?">
+    The pharmacy is. Tell the client which pharmacy you sent it to before they leave — the chart does not do that for you.
+  </Accordion>
+</AccordionGroup>
+
+More about connecting the service: [E-prescribing](/platform/integrations/eprescribe).
+
+<StillStuck />
+
+{/* source of truth: components/clinic/clients-management/client-medications-tab.tsx, medication-reminder-sheet.tsx, client-management-form.tsx */}

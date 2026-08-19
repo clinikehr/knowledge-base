@@ -6,6 +6,7 @@ icon: /images/icons/sparkles.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member" />
@@ -14,51 +15,86 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Path steps={['Sidebar', 'Achievements']} />
 
-## What is on the page
+<TaskHeader
+  before="Nothing — the page fills itself from work you have already done"
+  time="A minute to read; one switch to stop the emails"
+  after="A clear view of what your practice has and has not set up"
+/>
+
+## What you're looking at
 
 At the top, the tier card reads **Your clinic tier** next to a medal, with your totals under it: "\{points\} points · \{earned\}/\{total\} badges". Below that is a progress bar towards the next tier, labelled "\{n\} points to \{Tier\}", and a "\{Tier\} perks" list saying what that tier carries.
 
-Under the card is the badge gallery, grouped by track — so the badges for setting up your practice sit together, the ones for seeing clients sit together, and you can tell at a glance which part of the product you have barely touched.
+Under the card is the badge gallery, grouped by track — the badges for setting up your practice sit together, the ones for seeing clients sit together, and you can tell at a glance which part of the product you have barely touched.
+
+There is a referral card too, "🤝 Climb faster — refer a colleague", with a **Refer a colleague** button.
+
+A brand-new practice sees the full gallery with almost nothing earned and a tier bar at the start of its range. Nothing is missing — an unearned badge is shown, not hidden, because the gallery doubles as a list of what the product can do.
 
 Once you reach the top, the card stops counting and reads "🌟 Top tier reached — you're a Luminary!".
 
 ## How points accrue
 
-Points come from doing ordinary work in the product: completing setup, seeing clients, keeping records, taking payments. There is nothing to claim and nothing to submit — a badge is earned when the underlying thing has happened, and the page updates the next time you open it.
+Points come from doing ordinary work: completing setup, seeing clients, keeping records, taking payments. There is nothing to claim and nothing to submit — a badge is earned when the underlying thing has happened, and the page reflects that the next time you open it.
 
-The one exception is the referral card, "🤝 Climb faster — refer a colleague". Each successful referral earns +200 points, and the **Refer a colleague** button on that card is how you send the invitation.
-
-<Note>
-  The referral card appears on solo and team plans. Enterprise workspaces do not get it, which is why this page lives in the Solo & Team section rather than being shared with hospitals.
-</Note>
-
-## What perks actually do
+The one exception is the referral card. Each successful referral earns **+200 points**, and a referral counts once the colleague has accepted and created their own workspace.
 
 The "\{Tier\} perks" list is the honest answer to "what do I get". Perks are recognition and small platform benefits — they never change your plan, your limits or your billing. If you want more of the product, that is [Change your plan](/platform/plans/change-plan), not a higher tier.
 
-Nothing is lost by ignoring the page entirely. Your records, money and reports are unaffected by whether you ever open it.
+<Note>
+  The referral card appears on solo and team plans. Enterprise workspaces do not get it, which is why this page lives in the Solo &amp; Team section rather than being shared with hospitals.
+</Note>
 
-## Turning the emails off
+## Turn the achievement emails off
 
 Milestone badges and tier-ups can send email. That is one switch, not a per-badge setting.
 
-Go to **Settings** → **Notifications** and turn off **Achievement emails** — "Milestone badges, tier-ups, and your clinic's trophy case". The page keeps working; you simply stop hearing about it by mail. See [Notification settings](/platform/settings/notifications).
+<Steps>
+  <Step title="Open your notification settings">
+    Go to **Settings** → **Notifications**.
+  </Step>
+  <Step title="Turn off Achievement emails">
+    The switch is described as "Milestone badges, tier-ups, and your clinic's trophy case". Turning it off stops the mail; the page keeps working exactly as before.
+  </Step>
+  <Step title="Do it in each workspace">
+    Each workspace carries its own switches, so a second practice you belong to keeps mailing you until you turn it off there as well.
+  </Step>
+</Steps>
 
-Achievement emails are one of the categories under the workspace's master email switch, so turning that master switch off stops them too, along with everything else non-essential.
+Achievement email is one of the categories under the workspace's master email switch, so turning that master switch off stops it too, along with everything else non-essential. See [Notification settings](/practice/settings/notifications).
 
-## If something looks wrong
+## Who can do this
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Achievements** and see the gallery | Any staff member | None — the page is not permission-gated |
+| Send a referral | Any staff member | None |
+| Turn achievement emails off for the practice | Owner, manager | Role — it is a settings tab |
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the permissions sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Achievements** from a sidebar tidies the rail; it is not a security boundary.
+
+Badges describe the practice, not the person — there is no per-staff scoreboard, and no figure on this page is gated to a role. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The points total and the "\{earned\}/\{total\} badges" line agree with the gallery below them.
+- After finishing a setup step, reload the page — the matching badge is filled in.
+- After switching **Achievement emails** off, the next milestone produces a badge on the page and no email.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="A badge I should have earned is not showing">
-    Badges follow real activity, and the page reflects what has been recorded rather than what you remember doing. Reload the page; if the work was genuinely done and the badge is still absent after a day, [contact support](/platform/help/contact-support) with the badge name.
+    Badges follow recorded activity, not memory. Reload the page; if the work was genuinely done and the badge is still absent after a day, [contact support](/platform/help/contact-support) with the badge name.
   </Accordion>
 
   <Accordion title="My points went up but the tier did not change">
-    A tier changes only when you cross its threshold. The progress line tells you exactly how far off you are: "\{n\} points to \{Tier\}".
+    A tier changes only when you cross its threshold. The progress line tells you how far off you are: "\{n\} points to \{Tier\}".
   </Accordion>
 
   <Accordion title="I referred someone and got no points">
-    The +200 points land on a successful referral — the colleague has to accept and create a workspace. An invitation that has been sent but not taken up does not score.
+    The +200 points land on a **successful** referral — the colleague has to accept and create a workspace. An invitation sent but not taken up does not score.
   </Accordion>
 
   <Accordion title="There is no referral card on my screen">
@@ -66,7 +102,31 @@ Achievement emails are one of the categories under the workspace's master email 
   </Accordion>
 
   <Accordion title="I still get achievement email after switching it off">
-    Check you changed it in **Settings** → **Notifications** for this workspace. Each workspace carries its own switches, so a second practice you belong to keeps mailing you until you turn it off there as well.
+    Check you changed it in **Settings** → **Notifications** for *this* workspace. Each workspace is switched separately.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do badges affect my bill or my plan limits?">
+    No. Nothing on this page changes your plan, your seat count, your credits or your invoice. It is recognition only.
+  </Accordion>
+
+  <Accordion title="Can I lose points or drop a tier?">
+    No. Points accumulate; a tier you have reached stays reached.
+  </Accordion>
+
+  <Accordion title="Can I hide the page from my team?">
+    There is no switch for the page itself. Turning off achievement email stops the notifications, which is what most people actually want.
+  </Accordion>
+
+  <Accordion title="Is any of this visible to clients?">
+    No. Badges, points and tiers are internal to your workspace. Nothing appears on your booking page, your invoices or the client portal.
+  </Accordion>
+
+  <Accordion title="What happens if I ignore this page entirely?">
+    Nothing. Your records, money and reports are unaffected by whether you ever open it.
   </Accordion>
 </AccordionGroup>
 

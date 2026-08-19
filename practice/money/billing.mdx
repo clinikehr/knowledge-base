@@ -1,0 +1,169 @@
+---
+title: Billing overview
+description: "How money moves through your practice — the billing dashboard, payments, services, and the settings that decide currency, tax and how clients pay you."
+icon: /images/icons/receipt-text.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers see everything; staff see what their permissions allow" />
+
+Billing is one sidebar entry with three screens under it. You define what you sell, you raise an invoice against a client, and you record what they paid. Statements, memberships, the online store and insurance all hang off those three.
+
+<Path steps={['Sidebar', 'Billing']} />
+
+<TaskHeader
+  before="Your currency set under Settings → Billing"
+  time="Ten minutes to get the shape of it"
+  after="A priced service list, an invoice you can send, and a payment recorded against it"
+/>
+
+## What you're looking at
+
+**Billing** in the sidebar expands into three children.
+
+| Screen | Tabs | Buttons | What it answers |
+| --- | --- | --- | --- |
+| **Billing Dashboard** | **Overview** · **Invoices** · **Insights** | **Refresh**, **New Invoice**, and a date-range picker | What have we billed, and what is owed? |
+| **Payments Management** | **Overview** · **Payments** · **Pending** | **Refresh**, **New Payment** | What has actually come in? |
+| **Services Dashboard** | **Overview** · **Services** · **Categories** | **Refresh**, plus **New Service** — or **New Category** while the **Categories** tab is open | What do we charge for, and how much? |
+
+On the **Billing Dashboard**, **Overview** is the money picture and **Invoices** is the working list of every invoice. **Insights** is headed **Financial Insights** and currently says "Financial analytics and insights will be shown here." — the trend charts live in [Reports and analytics](/practice/insights/analytics), so go there rather than waiting for this tab to fill.
+
+The **New Service** and **New Category** buttons never appear together: the header swaps to **New Category** while you are on the **Categories** tab and back again when you leave it.
+
+A brand-new practice sees empty tabs and zeroes rather than an error. Start at **Services**; an invoice is built from your service list, so an empty catalogue is what makes the invoice form feel broken when it is not.
+
+Money everywhere in this section is shown in your practice's own currency, set once under **Settings** → **Billing**. See [Currency](/platform/settings/currency).
+
+## The order things happen in
+
+<Steps>
+  <Step title="Define your services">
+    An invoice line is a service at a price. Build the list once — see [Your services and prices](/practice/money/services).
+  </Step>
+  <Step title="Raise the invoice">
+    **New Invoice** on the **Billing Dashboard**, or from the client's record. A new invoice is created as **Pending**, not **Draft**, and the create form has no status field at all — see [Create and send an invoice](/practice/money/invoices).
+  </Step>
+  <Step title="Send it">
+    Email it as a branded PDF to the client, to whoever is actually paying, or to both. Or send a secure payment link they can pay by card.
+  </Step>
+  <Step title="Record what you receive">
+    Cash and transfers you record by hand; online payments record themselves. See [Record and collect payments](/practice/money/payments).
+  </Step>
+</Steps>
+
+## Invoice statuses
+
+| Status | Meaning |
+| --- | --- |
+| **Draft** | Not issued. Nothing is owed yet. |
+| **Pending** | Issued and awaiting payment. **This is the default on a new invoice.** |
+| **Paid** | Settled in full. |
+| **Partially Paid** | Some money received, a balance outstanding. |
+| **Overdue** | Past its due date and still unpaid. |
+| **Cancelled** | Withdrawn. Use this instead of deleting once money has been received. |
+
+<Note>
+  People expect a new invoice to be a draft. It is not — it is **Pending** and reads as owed, and there is no **Status** field on the create form to change that. To hold a bill open while you add to it, create it and then reopen it with **Edit Invoice**, where **Status** appears.
+</Note>
+
+## Settings that govern billing
+
+<Path steps={['Sidebar', 'Settings', 'Billing']} />
+
+| Setting | What it does | Who can change it |
+| --- | --- | --- |
+| **Currency** | "Currency for all transactions. Search by name or code." Everything you bill is priced and printed in it. | Owner only |
+| **Tax Rate (%)** | "Applied to invoices and receipts." | Owner only |
+| **Free Clinic Mode** | "Enable this if your clinic provides free services. All charges will be disabled." Your practice then carries a **Free Clinic** badge. | Owner only |
+| **Flat Rate Fee** | A single standard charge you can apply instead of pricing line by line. | Owners and managers |
+
+Two more settings tabs decide how a client can pay you:
+
+- **Settings** → **Payment Details** puts your offline channels on your paperwork — "How patients can pay you — bank transfer, Cash App, Venmo, PayPal and more." Each entry has its own toggle for showing on invoice PDFs and invoice emails while a balance is due. This is the only thing that prints your bank details on an invoice. See [Payment details](/practice/settings/payment-details).
+- **Settings** → **Online Payments** connects card collection — **Stripe Connect**, or **Paystack Connect** in Nigeria. A connected account is what makes payment links and online checkout possible, and it is a hard prerequisite for [memberships](/practice/money/memberships) and the [online store](/practice/money/store). See [Online payments](/practice/settings/online-payments).
+
+## Who can do this
+
+Role decides whether **Billing** opens at all. Permission decides which action inside it is allowed — which matters here, because the person who raises an invoice is not necessarily the person who should be refunding one.
+
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open **Billing** and its children | Owner, manager, front desk | Role — no permission of its own |
+| Create an invoice or receipt | Front desk, billers | **Create billing documents** |
+| Record a payment | Front desk, billers | **Add client payments** |
+| Change a service price | Owner, manager | **Edit service fees** |
+| Reverse or refund a payment | Owner, manager | **Refund payments** |
+| See the money figures on **Overview** | Owner, manager | **View financial dashboard** |
+| Open the payment reports | Owner, manager, billers | **View Payment Reports** |
+
+- **Enforcement is opt-in, per person.** A staff member never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Billing** from someone's sidebar is a convenience, not a security boundary.
+
+A figure you may not see renders as a dash, never as a zero. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- **Services** lists at least one active service with a price in your currency.
+- **New Invoice** produces an invoice that appears under the **Invoices** tab with a **Pending** badge.
+- Recording a payment moves that invoice to **Paid** or **Partially Paid**, and the **Pending** tab on **Payments** drops the balance.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The invoice form finds no services">
+    Your catalogue is empty or every service is inactive. Add one under [Services](/practice/money/services).
+  </Accordion>
+
+  <Accordion title="Prices show in the wrong currency">
+    Currency is a practice-wide setting under **Settings** → **Billing**, and only an owner can change it. See [Currency](/platform/settings/currency).
+  </Accordion>
+
+  <Accordion title="Every charge is zero and I cannot bill anything">
+    **Free Clinic Mode** is on — "All charges will be disabled." Your practice carries a **Free Clinic** badge while it is.
+  </Accordion>
+
+  <Accordion title="My bank details are not on the invoice PDF">
+    They only appear if you added them under **Settings** → **Payment Details** *and* switched that entry on. See [Payment details](/practice/settings/payment-details).
+  </Accordion>
+
+  <Accordion title="I have no New Invoice button">
+    Creating billing documents is granted per person. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The Overview figures are all dashes">
+    You may open the screen but not see financial figures. Viewing the financial dashboard is a separate permission from opening **Billing**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Where do I bill an insurer instead of the client?">
+    Electronic claims are their own workflow — see [Insurance claims](/practice/money/insurance-claims).
+  </Accordion>
+
+  <Accordion title="Can I charge a card automatically after an appointment?">
+    Yes, with a connected payment account and a card on file. See [Auto Pay](/practice/settings/auto-pay).
+  </Accordion>
+
+  <Accordion title="Does changing a service price change existing invoices?">
+    No. An invoice keeps the price it was raised at. Repricing a service affects new invoices only.
+  </Accordion>
+
+  <Accordion title="Where do memberships and store orders show up?">
+    Both keep their own screens and their own reports, and their takings roll into the Revenue report. See [Sell memberships](/practice/money/memberships) and [Run an online store](/practice/money/store).
+  </Accordion>
+
+  <Accordion title="Is this the same billing screen a hospital uses?">
+    The screens are the same; the words differ. A hospital says **patient** where your practice says **client**, and its reporting adds departments you do not have.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="billing" />
+
+{/* source of truth: components/clinic/dashboard/billing/billing-content-dashboard.tsx, components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/settings/billing-settings.tsx, lib/clinic-nav-registry.ts, lib/edition-staff-roles.ts */}

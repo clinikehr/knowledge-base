@@ -1,0 +1,146 @@
+---
+title: Search the prescription history
+description: "Look up what a patient was dispensed on any past date, and open the full detail of a completed prescription."
+icon: /images/icons/clock-rotate-left.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Pharmacy group is open to" note="Needs the In-house pharmacy care area" />
+
+**Prescription History** is the pharmacy unit's record rather than its queue: every prescription the hospital has written and dispensed, across all dates. Use it when someone asks what a patient was given, and when.
+
+<Path steps={['Sidebar', 'Pharmacy', 'Prescription History']} />
+
+<TaskHeader before="At least one prescription already recorded" time="Under a minute to find a script" after="The dispensing record you were asked for, on screen" />
+
+## What you're looking at
+
+The page opens with a greeting and the line **View complete history of all pharmacy prescriptions and dispensing records** — the sentence that tells you this is the archive, not today's work.
+
+Two controls sit above the table: **Search for patient**, which filters by the person rather than by the medicine, and **New Prescription**, which takes you back to the live queue to start a fresh script. A **View Columns** dropdown with a **Toggle columns** list is on the right.
+
+The table is six columns:
+
+| Column | Shows |
+| --- | --- |
+| **Patient ID** | The hospital number, with a badge reading **New Patient**, **Follow Up** or **Ward** |
+| **Patient Name** | Who it was for |
+| **Prescriptions** | How many medications were on the script, as **\{n\} items** |
+| **Status** | **Dispensed** or **Pending** |
+| **Dispensed By** | The pharmacist, shown as **Pharm.** and their name |
+| **Date** | When the record was last updated |
+
+Each row's **⋯** menu offers a single action, **View Details**.
+
+**Empty state.** A pharmacy unit that has never dispensed anything shows **No pharmacy history available.** If something has gone wrong loading the page you get an error message in its place instead — that is a different thing, and refreshing usually clears it.
+
+## Find a past prescription
+
+<Steps>
+  <Step title="Search by the patient">
+    Enter a name or hospital number in **Search for patient**. The box searches people, not drugs, so searching for a medicine name returns nothing.
+  </Step>
+  <Step title="Read the row">
+    **Prescriptions** tells you how many medications were on that script and **Date** when it was last touched, which is enough to pick the right one out of several visits.
+  </Step>
+  <Step title="Open it">
+    Select **⋯** → **View Details**, or select the row. The screen changes to **Prescription Details** with a **Back to History** button in the corner.
+  </Step>
+  <Step title="Read the detail">
+    You get the full script as it was written and filled — each medication with its quantity, dosage, frequency and duration, who prescribed it and who dispensed it.
+  </Step>
+  <Step title="Go back to the list">
+    Select **Back to History**. Your search text is not carried back, so re-enter it if you are working through several records.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening a past prescription" />
+
+## Reading the badges
+
+The badge beside the hospital number tells you how the patient reached the pharmacy, which is often the fastest way to narrow a list:
+
+- **Ward** — an admitted patient, dispensed against a ward prescription.
+- **New Patient** — their first attendance.
+- **Follow Up** — a returning outpatient.
+
+A row still showing **Pending** in history is a script that was written but never dispensed. That is a legitimate record — the patient may have gone elsewhere, or the item may have been out of stock — but if it is recent, check the live queue in [Prescription list](/hospital/pharmacy/prescriptions) before assuming it was abandoned.
+
+## Who can do this
+
+**Role** decides whether the page opens. The **Pharmacy** group needs the **In-house pharmacy** care area, and on Enterprise an owner can hide it from a role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do once inside. History is a read surface, so there is very little to gate:
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the history and search it | Any staff member the role navigation lets in | Role → route |
+| **View Details** on a past script | The same people | Role → route |
+| **New Prescription** from the toolbar | Prescribers and pharmacists | Role → route |
+| Correct a dispensed script | Pharmacists | The live [prescription list](/hospital/pharmacy/prescriptions), not this page |
+
+Two behaviours worth knowing. Enforcement is **opt-in per person** — a colleague who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before you change that. And a **denied action is recorded** while an allowed one is not, so hiding this page from a role is a convenience, not a security boundary.
+
+Reading a patient's dispensing record is a clinical read, and it is written to your hospital's audit log with your name against it.
+
+## Check it worked
+
+- The script you wanted is on screen under **Prescription Details**, for the right patient and the right date.
+- **Dispensed By** names the pharmacist who filled it.
+- **Back to History** returns you to the list without losing your place in the record.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Searching for a drug name finds nothing">
+    **Search for patient** matches the person, not the medication. Find the patient, then read their scripts.
+  </Accordion>
+
+  <Accordion title="A prescription from this morning is not in history">
+    History is built from dispensing records. A script still working its way through today's queue lives in [Prescription list](/hospital/pharmacy/prescriptions) until it is filled.
+  </Accordion>
+
+  <Accordion title="The page shows No pharmacy history available">
+    Nothing has been dispensed yet in this hospital. It is an empty archive, not a fault.
+  </Accordion>
+
+  <Accordion title="A red error appears instead of the table">
+    That is a load failure rather than an empty list. Refresh the page; if it repeats, note the time so support can match it against your audit log.
+  </Accordion>
+
+  <Accordion title="I cannot dispense from here">
+    History is deliberately read-only. Dispensing happens on the live queue and, for stock, in the **Fill Rx** tab of [Inventory](/hospital/supply/inventory).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="How far back does it go?">
+    All of it. History is the complete record for the hospital, not a rolling window, which is why it is the right place to answer a query about last year.
+  </Accordion>
+
+  <Accordion title="Why does the Date column sometimes change?">
+    It shows when the record was last updated, so a script corrected after dispensing shows the correction date. The original detail is still in the record.
+  </Accordion>
+
+  <Accordion title="Can I export the history?">
+    Not from this page. Pharmacy figures over a period are reported on the [pharmacy station](/hospital/pharmacy/station) and in [Analytics](/hospital/executive/analytics).
+  </Accordion>
+
+  <Accordion title="Does a ward prescription appear here too?">
+    Yes, badged **Ward**. Inpatient and outpatient dispensing share one record.
+  </Accordion>
+
+  <Accordion title="Is a counter sale a prescription?">
+    No. Over-the-counter sales are recorded in [Pharmacy sales](/hospital/pharmacy/sales); this page is prescriptions only.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="prescription history" />
+
+{/* source of truth: components/clinic/pharmacy-history/ (header, actions, table, table-columns, past-prescription-form), app/u/clinic/pharmacy/history/[clinicId]/page.tsx */}

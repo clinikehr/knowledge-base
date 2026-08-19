@@ -1,0 +1,187 @@
+---
+title: Manage hospital inventory
+description: "Receive, move and count stock across every room and department, and see how it connects to the pharmacy unit and the wards."
+icon: /images/icons/boxes-stacked.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Stock, pharmacy and management staff" note="Needs the Inventory care area" />
+
+**Inventory** is one stock record for the whole hospital — "Stock, lots, and expiry across your rooms and devices." The dispensary, the wards, theatre and the online store all draw on it, which is what stops two departments holding two different answers to "how many do we have".
+
+<Path steps={['Sidebar', 'Supply Chain', 'Inventory']} />
+
+<TaskHeader before="The Inventory care area switched on" time="Minutes per delivery; longer for a first catalogue" after="Stock that matches the shelf, with lots and expiry dates recorded" />
+
+## What you're looking at
+
+Eight buttons run along the header:
+
+| Button | What it does |
+| --- | --- |
+| **Receive** | Books stock in against an item |
+| **Dispense** | Takes stock out |
+| **Transfer** | Moves stock between locations |
+| **Reports** | Valuation and movement reporting |
+| **Import** | Brings a catalogue in from a file |
+| **Opening stock** | Sets your starting position when you first go live |
+| **Export** | Takes the catalogue or stock out again |
+| **Add item** | Creates one item by hand |
+
+Below them, the tabs. A hospital normally sees eleven, with two more appearing when they apply:
+
+| Tab | What it holds |
+| --- | --- |
+| **Catalog** | Every item you stock |
+| **Stock** | What is on hand, by lot and location |
+| **Ledger** | Every movement — received, dispensed, transferred |
+| **Counts** | Cycle counts, for reconciling the shelf against the record |
+| **Fill Rx** | Prescriptions waiting to be drawn from stock |
+| **Purchasing** | Suppliers and purchase orders |
+| **Vouchers** | Goods received vouchers |
+| **Recalls** | Vendor and regulator recalls, and who was exposed |
+| **Locations** | Your rooms, stores and devices |
+| **Alerts (n)** | Low stock, expiry and other open alerts |
+| **Reconciliation** | Dispensing enforcement and reconciliation |
+| **Vaccines** | Appears where vaccine stock exists |
+| **Ward MAR** | Appears where you run wards |
+
+Where an alert is open, a line above the tabs says so: "\{n\} open inventory alerts — see the Alerts tab." Empty states are per tab — **Stock** reads "No stock on hand. Receive a lot to get started."
+
+## The two tabs that make this a hospital screen
+
+Most of Inventory works the same anywhere. Two tabs exist because the hospital has departments hanging off the stock record:
+
+**Fill Rx** is the bridge to the pharmacy unit. A prescription written anywhere in the hospital waits here until someone draws stock against it, with a witness where the item is controlled. See [the pharmacy station](/hospital/pharmacy/station).
+
+**Ward MAR** is the bridge to the wards, and appears only when your hospital runs them — "Each dose given to an admitted patient depletes stock and is logged here." That is the connection people miss: a nurse signing a dose on the drug chart is a stock movement, not just a clinical note. See [the nursing station](/hospital/inpatient/nursing-station).
+
+## Receive a delivery
+
+<Steps>
+  <Step title="Open Receive">
+    From the header, or from the row of the item you are booking in.
+  </Step>
+  <Step title="Enter the lot and its expiry">
+    Record the lot number and its expiry date. This is the step everything else depends on.
+  </Step>
+  <Step title="Choose the location and save">
+    Say which room, store or device the stock is going to — picking later only offers what that location holds. The on-hand figure rises and a **Ledger** entry records who booked it in.
+  </Step>
+</Steps>
+
+<Note>
+  **Picking is earliest-expiry-first, and an undated lot is invisible to it.** A lot received with no expiry date will not be picked ahead of anything, so short-dated stock sits at the back of the shelf until it expires. Switch on **Require expiry date on new lots** under [Inventory settings](/hospital/settings/inventory) and the problem stops arising.
+</Note>
+
+## Where the deeper mechanics live
+
+Stock control is the same engine the Pharmacy edition documents in depth:
+
+<Columns cols={2}>
+  <Card title="Batches and expiry" icon="/images/icons/calendar-xmark.svg" href="/pharmacy/inventory/batches-and-expiry">
+    How lots, expiry dates and earliest-expiry-first picking work.
+  </Card>
+
+  <Card title="Purchase orders" icon="/images/icons/truck-ramp-box.svg" href="/pharmacy/inventory/purchase-orders">
+    Raising, approving and receiving against an order.
+  </Card>
+
+  <Card title="Stock counts" icon="/images/icons/clipboard-check.svg" href="/pharmacy/inventory/stock-counts">
+    Cycle counting and reconciling the shelf against the record.
+  </Card>
+
+  <Card title="Import and export" icon="/images/icons/file-csv.svg" href="/pharmacy/inventory/import-export">
+    Bringing a catalogue in, and taking your data out.
+  </Card>
+</Columns>
+
+<AuditNote action="Viewing and moving stock" />
+
+## Who can do this
+
+**Role** decides whether the screen opens. **Inventory** needs the **Inventory** care area in **Settings → Facility**, and on Enterprise an owner controls which roles reach the **Supply Chain** group under **Settings → Role Navigation**.
+
+**Permission** decides what you may do inside. The acts a stock screen distinguishes, in the product's own words:
+
+| Action | Permission | Description |
+| --- | --- | --- |
+| Book a delivery in | **Receive deliveries into stock** | "Book a supplier delivery in against its purchase order" |
+| Correct a count or write off damage | **Adjust stock counts** | "Correct a count, write off damages, record expiry losses" |
+| Move stock between sites | **Transfer stock between branches** | "Send and receive stock moves across the business" |
+| Raise and approve orders | **Manage suppliers and purchase orders** | "Add suppliers, raise and approve purchase orders" |
+| Countersign a controlled dispense | **Witness a controlled-drug dispense** | "Countersign the register when a controlled drug leaves the shelf" |
+| See what stock cost | **View cost prices and margin** | "See what stock cost and what each sale makes" |
+
+Two things to know. First, that is the **Pharmacy edition's** permission catalogue: a hospital's own staff sheet offers the clinical and billing toggles instead, so on Enterprise these stock acts are open to anyone whose role reaches the screen. Restrict access at the **Role Navigation** layer, not by hunting for these toggles.
+
+Second, where a cost or valuation figure is withheld it says so plainly — "Hidden — needs authorisation from your clinic owner." — rather than showing **0**, which would be a false statement about what your stock is worth.
+
+Enforcement generally is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not.
+
+## Check it worked
+
+- The item's on-hand figure on **Stock** matches the shelf.
+- A **Ledger** entry names you, the movement and the time.
+- A dispensed script has left **Fill Rx**, and ward doses appear under **Ward MAR** having reduced the stock they came from.
+- **Alerts (n)** falls as low-stock and expiry warnings are resolved.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Stock is right on the shelf but wrong on screen">
+    Run a cycle count from the **Counts** tab rather than adjusting item by item — a count reconciles and records why; an adjustment only changes the number.
+  </Accordion>
+
+  <Accordion title="A short-dated lot is not being picked first">
+    It has no expiry date, so earliest-expiry-first cannot rank it. Add the date, and switch on **Require expiry date on new lots**.
+  </Accordion>
+
+  <Accordion title="The Ward MAR tab is missing">
+    It appears only where wards exist — see [Wards and beds](/hospital/get-started/wards-and-beds).
+  </Accordion>
+
+  <Accordion title="A prescription is not in Fill Rx">
+    Either it is already filled, or it was never saved. Check the [prescription list](/hospital/pharmacy/prescriptions).
+  </Accordion>
+
+  <Accordion title="Valuation reads Hidden — needs authorisation">
+    Cost and margin figures are withheld from your account. The screen still works; the money column does not show.
+  </Accordion>
+
+  <Accordion title="Inventory is missing from the sidebar">
+    It needs the Enterprise plan and the **Inventory** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the pharmacy unit have its own separate stock?">
+    No — one hospital, one stock record. The pharmacy station's **Inventory** tab is this same screen, which is why a counter sale and a ward issue move the same figure.
+  </Accordion>
+
+  <Accordion title="What is Opening stock for?">
+    Setting your starting position when you first go live, so day one's figures are your real shelf rather than zero. Use it once, not as a way to correct a count later.
+  </Accordion>
+
+  <Accordion title="What appears on the Recalls tab?">
+    Vendor or regulator recalls. Opening one quarantines the affected lots and lists the patients who received them — the part you cannot reconstruct by hand.
+  </Accordion>
+
+  <Accordion title="Does the online store take stock from here?">
+    Yes. A store product links to an inventory item, and its stock and cost are read-only in the store — see [the online store](/hospital/revenue/store).
+  </Accordion>
+
+  <Accordion title="Can I stock-take with a handheld scanner?">
+    Yes — see [Stock counts](/pharmacy/inventory/stock-counts) and [CipherLab counting](/pharmacy/inventory/cipherlab).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="inventory" />
+
+{/* source of truth: components/inventory/inventory-content.tsx, components/inventory/prescription-dispense-sheet.tsx, components/inventory/reports-sheet.tsx, components/inventory/permission-lock.tsx, lib/edition-staff-roles.ts, lib/staff-permission-decision.ts */}

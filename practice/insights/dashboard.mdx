@@ -6,71 +6,134 @@ icon: /images/icons/gauge.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, Manager, and staff granted access to figures" />
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers; staff granted access to figures" />
 
-**Executive** is your practice at a glance — each figure opens the report behind it. Six headline tiles, then a card for every report your practice can open.
+**Executive** is your practice at a glance — six headline figures, and a card for every report your practice can open. Each figure is a link to the report that explains it, so a number you do not believe is one select away from its workings.
 
 <Path steps={['Sidebar', 'Executive']} />
 
-## The six tiles
+<TaskHeader
+  before="Nothing — the page fills itself from the work you have already recorded"
+  time="A minute to read"
+  after="A figure you trust, and the report behind it open"
+/>
 
-| Tile | Opens |
-| --- | --- |
-| **Appointments today** | The Appointments report |
-| **Appointments this week** | The Appointments report |
-| **Collected this month** | The Revenue report |
-| **Outstanding** | The Revenue report |
-| **Patients** | The Patients report |
-| **New this month** | The Patients report |
+## What you're looking at
 
-The last two count your client list: how many you have in total, and how many joined this month.
+Six tiles across the top, then the **Reports** list underneath.
 
-Every tile is a link. Selecting one takes you to the report that explains it, so a figure you do not believe is never more than one select from its workings.
+| Tile | Counts | Opens |
+| --- | --- | --- |
+| **Appointments today** | Today's booked appointments | The Appointments report |
+| **Appointments this week** | This week's booked appointments | The Appointments report |
+| **Collected this month** | Money actually received this month | The Revenue report |
+| **Outstanding** | Invoiced and not yet paid | The Revenue report |
+| **Patients** | Everyone on your client list | The Patients report |
+| **New this month** | Clients added this month | The Patients report |
+
+Money is shown in your practice's own currency, taken from your billing settings — see [Currency](/platform/settings/currency). The two money tiles answer different questions, and mixing them up is the commonest misreading of this page: **Collected this month** is what has arrived, **Outstanding** is what has been billed and is still owed.
 
 <Note>
   The count of people is labelled **Patients** here, and its report is called **Patients**, even though the rest of your workspace says **Clients**. It is the same list either way.
 </Note>
 
-Money is shown in your practice's own currency, taken from your billing settings — see [Currency](/platform/settings/currency). The two counts of money answer different questions: **Collected this month** is what has actually arrived, **Outstanding** is what has been invoiced and not yet paid.
+### Em dash, not zero
 
-## Em dash, not zero
+A tile shows an em dash while its figure is still loading, and a number only once the figure has arrived. So a **0** on this screen is a real zero — no appointments, no money — and a dash is "not known yet". A brand-new practice therefore sees zeroes rather than a blank page, and the **Reports** list below is short until you have used the modules the reports describe.
 
-Tiles show an em dash while the page is loading and only ever show a number once the figure has arrived. A zero on this screen is a real zero, not a query that failed. Treat the two differently — the whole point of the distinction is that you can trust a figure the moment you can see it.
+## Open the report behind a figure
 
-## The Reports list
+<Steps>
+  <Step title="Select the tile">
+    Selecting **Outstanding**, for example, opens the Revenue report rather than expanding anything in place.
+  </Step>
+  <Step title="Set the period">
+    Choose **Last 30 days**, **Last 90 days** or **Last 12 months**. Snapshot reports have no period select and read **As it stands now** instead.
+  </Step>
+  <Step title="Read the rows, not just the chart">
+    The data table at the bottom holds the rows behind the headline, and **Export** takes exactly what is on screen. See [Reports and analytics](/practice/insights/analytics).
+  </Step>
+</Steps>
 
-Below the tiles, **Reports** lists every report available to your practice, each with a one-line description of what it covers. It is the same set as the Analytics page and it is filtered the same way — by your plan, the modules you use and your own permissions.
+The **Reports** list below the tiles is the same set as the Analytics page, filtered the same way — by your plan, the modules you actually use, and your own permissions.
 
-See [Reports and analytics](/practice/insights/analytics) for what each report covers.
+## Who can do this
 
-## What this page is not
+Role decides whether **Executive** opens at all. Permission decides whether the figures inside it resolve.
 
-The executive dashboard is aggregates only. There is no client name, no clinical detail and nothing to act on here — it exists to tell you where to look, and then to hand you off to a report. For anything you need to _do_, go to the module: [Appointments](/practice/daily/appointments) for today's diary, [Billing](/clinic/revenue/billing) for money owed.
+| Action | Who by default | The permission, in the product's words |
+| --- | --- | --- |
+| Open the Executive page | Owner, manager | **View financial dashboard** |
+| See the money tiles | Owner, manager | **View financial dashboard** |
+| Open the Revenue report | Owner, manager, whoever handles billing | **View Payment Reports** |
+| Open the Appointments and Patients reports | Owner, manager, granted staff | **View financial dashboard** |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A staff member who has never been saved in the permissions sheet is unrestricted. The sheet says so — **"Saving starts enforcing"** — so the act of saving somebody's permissions for the first time is what begins limiting them.
+- **A denied action is recorded; an allowed one is not.** And hiding a page from somebody's sidebar is a convenience, not a security boundary — the permission is the boundary.
+
+Where a figure is permission-gated it renders as a dash, or the report simply is not listed. It never renders as a zero, because a zero would be a lie. See [Staff permissions](/platform/team/permissions).
 
 <AuditNote action="Opening the executive dashboard" />
 
-## If something goes wrong
+## Check it worked
+
+- All six tiles show either a number or a zero, not a dash, within a few seconds of the page loading.
+- Selecting a tile lands you on the matching report with data in it.
+- **Collected this month** moves after you record a payment and reload — see [Record and collect payments](/practice/money/payments).
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The executive overview could not be loaded.">
-    A temporary read failure. Reload the page. If it persists, note the time — support can match it against your audit log.
+    A temporary read failure. Reload the page. If it keeps happening, note the time — support can match it against your audit log.
   </Accordion>
 
-  <Accordion title="A tile has been showing an em dash for a while">
+  <Accordion title="A tile has shown an em dash for a while">
     The figure has not arrived. Reload rather than assuming a zero; the dash exists precisely so an unknown is never mistaken for none.
   </Accordion>
 
+  <Accordion title="Every money figure is a dash but the appointment counts are fine">
+    You may open the page but not see financial figures. Viewing the financial dashboard is granted per person — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
   <Accordion title="A report I expected is not in the list">
-    Reports follow your plan, the modules you use and your permissions. See [Reports and analytics](/practice/insights/analytics), which lists exactly what a practice gets.
+    Reports follow your plan, the modules you use and your permissions. [Reports and analytics](/practice/insights/analytics) lists exactly what a practice gets.
   </Accordion>
 
   <Accordion title="Collected this month does not match my bank">
-    It counts payments recorded in ClinikEHR, not settlements into your account. Open the Revenue report and compare its **Payments** scope against your provider's payouts.
+    It counts payments recorded in ClinikEHR, not settlements landing in your account. Open the Revenue report and compare its **Payments** scope against your provider's payouts.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I change which tiles appear?">
+    No. The six are fixed. Anything more specific lives in a report, which you can filter, scope and export.
+  </Accordion>
+
+  <Accordion title="How often do the figures refresh?">
+    They are read when the page loads. Reload to refresh — nothing on this page updates itself while you watch it.
+  </Accordion>
+
+  <Accordion title="Does Outstanding include cancelled invoices?">
+    No. Cancelled invoices are withdrawn, so nothing is owed against them. Overdue invoices are still outstanding — see [Billing overview](/practice/money/billing).
+  </Accordion>
+
+  <Accordion title="Can I see client names from here?">
+    No. This page is aggregates only — no names, no clinical detail, nothing to act on. Go to the module for that: [Appointments](/practice/work/appointments) for the diary, [Billing](/practice/money/billing) for money owed.
+  </Accordion>
+
+  <Accordion title="Is this the same screen a hospital sees?">
+    The layout is, but a hospital's report list includes ward, theatre and diagnostics reports that a solo practice has no data for and therefore never sees.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts */}
+{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts, lib/clinic-nav-registry.ts */}

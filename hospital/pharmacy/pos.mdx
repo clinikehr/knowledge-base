@@ -1,20 +1,48 @@
 ---
 title: Sell at the pharmacy counter
-description: Your hospital pharmacy unit uses the same point of sale as the Pharmacy edition — here is what is different inside a hospital.
+description: "Ring up an over-the-counter sale in the hospital pharmacy unit, take payment, and know what the till will refuse."
 icon: /images/icons/calculator.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy staff" note="The Pharmacy group only appears when the In-house pharmacy care area is switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy counter staff" note="Needs the In-house pharmacy care area" />
 
-A hospital pharmacy unit sells over the counter exactly the way a retail pharmacy does. The till in your **Pharmacy** group is the same point of sale that ships as the Pharmacy edition, drawing on the same stock, batches and receipts — so the how-to lives in one place and this page only covers what a hospital needs to know on top.
-
-**POS** arrives with the **In-house pharmacy** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+**POS** is the hospital pharmacy unit's till. It sells from the same stock the wards and the dispensary draw on, takes payment at the counter, and prints a receipt. It is the same point of sale that ships as the standalone Pharmacy edition, so the deep detail lives on those pages and this one covers what a hospital needs on top.
 
 <Path steps={['Sidebar', 'Pharmacy', 'POS']} />
+
+<TaskHeader before="Stock received into inventory, and the In-house pharmacy care area switched on" time="Under a minute per sale" after="A completed sale, stock drawn down, and a receipt" />
+
+## What you're looking at
+
+The till is a two-part screen: a searchable product list on one side, the cart and payment on the other. A scanner works from anywhere on the page — you do not need to click into the search box first.
+
+Above the cart you may see the **offline bar**. It appears when the till has lost its connection or is working from a cached catalogue, and it labels stock figures as stale rather than pretending they are live. Trust the label.
+
+The buyer is whoever is at the counter, which is not always the patient on a script. An anonymous sale is recorded as **Walk-in Customer**.
+
+## Ring up a sale
+
+<Steps>
+  <Step title="Add the items">
+    Scan the barcode or search by name. A scan confirms with **Scanned: \{item\}**; an unrecognised code gives **No medication matches that barcode**.
+  </Step>
+  <Step title="Watch for stock warnings">
+    Selling more than the recorded stock is allowed but flagged — "Beyond recorded stock — the sale will be logged for reconciliation in Inventory." A completely untracked item warns "has no recorded stock — the sale will be logged for reconciliation in Inventory."
+  </Step>
+  <Step title="Park a cart if you need the till">
+    **Hold** parks the cart so you can serve the next person, and **Cart resumed** brings it back. Adding nothing first is refused with **Add items before holding the cart**.
+  </Step>
+  <Step title="Take payment and finish">
+    Choose the tender, complete the sale and issue the receipt. Full detail — cash, card, split payments and change — is on [Taking payment](/pharmacy/pos/payments).
+  </Step>
+</Steps>
+
+<AuditNote action="Completing a counter sale" />
 
 ## What is different inside a hospital
 
@@ -24,49 +52,106 @@ A hospital pharmacy unit sells over the counter exactly the way a retail pharmac
   </Card>
 
   <Card title="Controlled items are refused" icon="/images/icons/shield-halved.svg">
-    An item needing a witnessed dispense cannot be rung up. The till says so — "requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." Take it to [dispensing](/hospital/pharmacy/dispensing).
+    An item needing a witnessed dispense cannot be rung up — "requires a witnessed dispense — use the inventory Fill Rx flow instead of POS."
   </Card>
 
   <Card title="A sale is not an invoice" icon="/images/icons/receipt.svg">
-    Counter sales appear under **Sales** in the Pharmacy group. Patient billing — consultations, procedures, admissions — is separate and lives in [Billing](/clinic/revenue/billing).
+    Counter sales appear under [Pharmacy sales](/hospital/pharmacy/sales). Patient billing — consultations, procedures, admissions — is separate and lives in [Billing](/hospital/revenue/billing).
   </Card>
 
-  <Card title="The buyer is a customer here" icon="/images/icons/user.svg">
-    At the till the person paying is whoever is at the counter, which is not always the patient on the script.
-  </Card>
-</Columns>
-
-## The counter, documented in full
-
-Everything about running the till is in the Pharmacy edition pages. The screens are identical.
-
-<Columns cols={2}>
-  <Card title="Using the point of sale" icon="/images/icons/cash-register.svg" href="/pharmacy/pos/index">
-    Building a cart, searching and scanning, held carts and completing a sale.
-  </Card>
-
-  <Card title="Taking payment" icon="/images/icons/credit-card.svg" href="/pharmacy/pos/payments">
-    Cash, card, split payments and change.
-  </Card>
-
-  <Card title="Receipts" icon="/images/icons/receipt.svg" href="/pharmacy/pos/receipts">
-    Printing, reprinting and what appears on the slip.
-  </Card>
-
-  <Card title="Selling offline" icon="/images/icons/wifi.svg" href="/pharmacy/pos/offline">
-    What still works when the connection drops, and what does not.
+  <Card title="Screening interrupts, rarely" icon="/images/icons/triangle-exclamation.svg">
+    Drug-interaction screening blocks only on contraindicated and major findings, and then only once, with a reason recorded.
   </Card>
 </Columns>
 
-<Note>
-  Offline behaviour is the same here as in a standalone pharmacy: the till keeps selling and replays the sales when the connection returns, but any figure it shows from before the outage is labelled as stale. Trust the label — see [Selling offline](/pharmacy/pos/offline).
-</Note>
+## Interaction screening at the till
 
-## If the POS screen is missing
+Screening is tuned so that it means something when it fires:
 
-- The **Pharmacy** group appears only when the **In-house pharmacy** [care area](/hospital/get-started/care-areas) is switched on, and only on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
-- If the group is there but **POS** is not on your rail, your role does not include the till. Ask an owner or manager to check [Permissions](/platform/team/permissions).
+| Severity | What happens |
+| --- | --- |
+| Contraindicated | Checkout is interrupted; you must acknowledge once and give a reason |
+| Major | The same interruption and acknowledgement |
+| Moderate | An inline badge on the item. Checkout is never blocked |
+| Minor | Never shown |
+
+Over-alerting is how staff learn to dismiss warnings without reading them, which is the outcome this design exists to avoid. Full detail: [Drug interaction screening](/pharmacy/dispensing/interaction-screening).
+
+## Who can do this
+
+**Role** decides whether the till opens. **POS** needs the **In-house pharmacy** care area, and on Enterprise an owner can hide the Pharmacy group from a role under **Settings → Role Navigation**.
+
+**Permission** decides what you may do at the counter.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the till and complete a sale | Anyone the role navigation lets in | Role → route |
+| Sell a controlled item | Nobody — refused at the till by design | The item's controlled status, not a permission |
+| Dispense a controlled item | Pharmacy staff, with a named witness | The **Fill Rx** sheet in [Inventory](/hospital/supply/inventory) |
+| Return or void a sale | Owners, managers and pharmacy leads | Role → route, on the [Sales](/hospital/pharmacy/sales) screen |
+| See cost and margin figures | Owners and managers | The financial figures on Sales, not the till |
+
+Enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not.
+
+## Check it worked
+
+- The sale appears under [Pharmacy sales](/hospital/pharmacy/sales) with its **Sale #** and status **Completed**.
+- The items' on-hand figures in [Inventory](/hospital/supply/inventory) have dropped.
+- The customer has a receipt, printed or downloaded.
+- A sale rung up offline shows **Sale saved — will sync when back online** and appears in Sales once the connection returns.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The till refuses an item as needing a witnessed dispense">
+    That is the controlled-substance rule. Take the script to the **Fill Rx** tab of Inventory and dispense it with a witness — see [the pharmacy station](/hospital/pharmacy/station).
+  </Accordion>
+
+  <Accordion title="An item shows as out of stock but it is on the shelf">
+    The recorded figure is wrong, not the shelf. You can still sell it — the sale is logged for reconciliation — then correct the count in Inventory.
+  </Accordion>
+
+  <Accordion title="The scanner types into the wrong place, or does nothing">
+    A wedge scanner works anywhere on the page, so nothing needs focus first. If it is typing into a field, check the scanner's own suffix setting — see [Barcode scanning](/pharmacy/pos/barcode).
+  </Accordion>
+
+  <Accordion title="A held cart came back with the wrong contents">
+    Clearing a cart starts a new one, so the next **Hold** parks a fresh cart rather than overwriting the one you resumed. See [Held carts](/pharmacy/pos/held-carts).
+  </Accordion>
+
+  <Accordion title="Figures look wrong while the offline bar is showing">
+    They are stale, and the bar says so. Stock levels and totals catch up once the till reconnects — see [Selling offline](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="POS is missing from the sidebar">
+    Either the **In-house pharmacy** care area is off, or your role does not include the till. See [Care areas](/hospital/get-started/care-areas) and [Permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a counter sale create an invoice?">
+    No. A sale is settled on the spot and recorded in Sales. Invoices are for billed care and live in [Billing](/hospital/revenue/billing).
+  </Accordion>
+
+  <Accordion title="Can I sell against a prescription?">
+    Ordinary items, yes. Anything needing a witnessed dispense must go through **Fill Rx** so the witness and the patient link are recorded.
+  </Accordion>
+
+  <Accordion title="Does the till keep working in a power cut?">
+    It keeps selling on battery and replays the sales when the connection returns. Payment by card and any live figure are the parts that stop — see [Selling offline](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Who does the sale belong to if the buyer is not a patient?">
+    It is recorded as **Walk-in Customer**. Nothing is written to a patient's chart.
+  </Accordion>
+
+  <Accordion title="Where do I reprint a receipt?">
+    From [Pharmacy sales](/hospital/pharmacy/sales) — **Print Receipt** or **Download PDF** on the row. See [Receipts](/pharmacy/pos/receipts).
+  </Accordion>
+</AccordionGroup>
 
 <StillStuck topic="the pharmacy counter" />
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx, lib/clinic-nav-registry.ts, lib/pos-sync/ */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx, .../pos/pos-offline-bar.tsx, hooks/use-interaction-screening.ts, lib/pos-sync/, lib/clinic-nav-registry.ts */}
