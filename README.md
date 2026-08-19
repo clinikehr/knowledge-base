@@ -91,7 +91,7 @@ Read [STYLE-GUIDE.md](./STYLE-GUIDE.md) first. The short version:
 ## Keeping it true
 
 Several pages describe screens that are generated from config in the app repo.
-Those pages carry a trailing HTML comment naming their source of truth, so the
+Those pages carry a trailing JSX comment naming their source of truth, so the
 next writer knows what to diff:
 
 | Documented surface | Source of truth |

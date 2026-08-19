@@ -216,11 +216,30 @@ for (const [slug, file] of fileSlugs) {
     warn(`${slug}.mdx mentions plans or upgrading but has no <Availability> strip.`);
   }
 
+  // HTML comments are INVALID MDX. Mintlify's cloud compiler fails the whole
+  // page on one (returning 404 for it), while the local CLI quietly tolerates
+  // it — the worst kind of works-on-my-machine. This took 163 of 165 pages off
+  // the live site once. Comments in MDX are JSX comments: {/* … */}.
+  // Code fences are exempt — an HTML comment inside a ``` block is content.
+  {
+    let fence = false;
+    let lineNo = 0;
+    for (const line of raw.split('\n')) {
+      lineNo += 1;
+      if (line.trim().startsWith('```')) fence = !fence;
+      if (!fence && line.includes('<!--')) {
+        err(`${slug}.mdx line ${lineNo} contains an HTML comment ("<!--"). MDX has no HTML comments — Mintlify's cloud build 404s the entire page. Use {/* … */}.`);
+      }
+    }
+  }
+
   // Internal architecture must never reach a user-facing page. This is a
   // public site: naming our infrastructure is both useless to the reader and a
   // gift to anyone probing the product. Checked on the prose only — the
   // source-of-truth trailer comment is allowed to name app-repo files.
-  const prose = body.replace(/<!--[\s\S]*?-->/g, '');
+  const prose = body
+    .replace(/<!--[\s\S]*?-->/g, '')
+    .replace(/\{\/\*[\s\S]*?\*\/\}/g, '');
   for (const [term, pattern] of ARCHITECTURE_TERMS) {
     const m = prose.match(pattern);
     if (m) {

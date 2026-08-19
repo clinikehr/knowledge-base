@@ -42,7 +42,7 @@ page whose job is to route: a short orientation, then `<Cards>`.
 ---
 title: "Record a sale"
 description: "Ring up a customer at the point of sale, take payment, and print a receipt."
-icon: "cash-register"
+icon: "/images/icons/cash-register.svg"
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -209,9 +209,11 @@ Never phrase gating as a sales pitch. State the fact and move on.
 ## 10. Accuracy maintenance
 
 - When a page documents a screen driven by a config file (navigation, onboarding
-  steps, plan ladders, permission slugs), note the source of truth in an HTML
+  steps, plan ladders, permission slugs), note the source of truth in a JSX
   comment at the bottom of the page so the next writer knows what to re-check:
-  `<!-- source of truth: lib/onboarding-steps.ts -->`
+  `{/* source of truth: lib/onboarding-steps.ts */}`
+  **Never an HTML comment (`<!-- -->`)** — MDX has no HTML comment syntax, and
+  Mintlify's cloud build 404s the entire page on one. The validator blocks it.
 - `node scripts/validate-docs.mjs` must pass before merge; it is enforced in CI.
 - Warnings from the validator are advisory, but a page that mentions plans
   without an `<Availability>` strip is almost always an oversight.
