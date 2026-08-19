@@ -11,7 +11,7 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="The Danger Zone is owner-only" />
 
-The **Inventory** tab — "Expiry alerts, dispensing enforcement and inventory data controls" — is where you set the rules the till and the receiving desk obey. Nothing here is about a single product; it is about how strict the system is with everyone.
+The **Inventory** tab — "Expiry alerts, dispensing enforcement and inventory data controls" — sets the rules the till and the receiving desk obey. Nothing here is about a single product; it is about how strict your pharmacy is with everyone.
 
 <Path steps={['Sidebar', 'Settings', 'Inventory', 'Inventory']} />
 
@@ -40,7 +40,7 @@ The **Inventory** tab — "Expiry alerts, dispensing enforcement and inventory d
   </Step>
 
   <Step title="Add a horizon">
-    Enter a whole number of days between 1 and 365 and select **Add**. Ninety, sixty and thirty is a common set: one warning while you can still sell through it, one while you can still return it, one while you can still move it.
+    Enter a whole number of days between 1 and 365 and select **Add**. Ninety, sixty and thirty is a common set: one warning while you can still sell it through, one while you can still return it, one while you can still discount it.
   </Step>
 
   <Step title="Remove any you do not want">
@@ -56,7 +56,7 @@ See [Batches and expiry](/pharmacy/inventory/batches-and-expiry) for what happen
 
 ## Require an expiry date on new lots
 
-**Receiving quality** carries **Require expiry date on new lots**, and it deserves more attention than a single switch usually gets.
+**Receiving quality** carries **Require expiry date on new lots**, and it earns more attention than a single switch usually gets.
 
 Your picking order sends the earliest-expiring lot out first. A lot received with no expiry date **has nothing to sort on**, so it is invisible to that rule and to every expiry alert you just configured, and it sits on the shelf until somebody finds it by hand.
 
@@ -77,7 +77,7 @@ Turn the switch off and the till goes back to a hard stock check: "Sales are ref
 ## The Danger Zone
 
 <Warning>
-  **Reset inventory…** erases your entire inventory module — catalogue, lots, stock levels, ledger, purchase orders, vendors, locations and device history. It exists for one purpose: a clean re-import when the data is beyond fixing. **This cannot be undone**, and there is no export step built into it. Take a copy from [Data Export](/platform/security/data-export) first. Your medication list and clinical records are kept.
+  **Reset inventory…** erases your entire inventory module — catalogue, lots, stock levels, ledger, purchase orders, vendors, locations and device history. It exists for one purpose: a clean re-import when the data is beyond fixing. **This cannot be undone**, and it has no export step of its own — take a copy from [Data Export](/platform/security/data-export) first. Your medication list and clinical records are kept.
 </Warning>
 
 The reset is owner-only and asks you to type `RESET` into a field before the delete button does anything. The dialog lists exactly what will be removed, counted, before you confirm. Read that list.
@@ -86,8 +86,8 @@ The reset is owner-only and asks you to type `RESET` into a field before the del
 
 - Reopen **Expiry alert horizons**. Your chips are there, four at most.
 - Try receiving a new lot with no expiry date. With the requirement on, it is refused.
-- Try selling an out-of-stock item at the till. With **Selling without stock** on it goes through and is flagged for reconciliation; with it off the sale is refused.
-- Create an item without setting a threshold. It picks up your **New-item defaults**.
+- Try selling an out-of-stock item. With **Selling without stock** on it goes through and is flagged for reconciliation; with it off the sale is refused.
+- Create an item without a threshold. It picks up your **New-item defaults**.
 
 ## If something goes wrong
 
@@ -97,19 +97,19 @@ The reset is owner-only and asks you to type `RESET` into a field before the del
   </Accordion>
 
   <Accordion title="Expiry alerts are not reaching me for some stock">
-    Those lots almost certainly have no expiry date, so nothing can warn on them. Turn on **Require expiry date on new lots** to stop it recurring, then find and date the existing undated lots.
+    Those lots have no expiry date, so nothing can warn on them. Turn on **Require expiry date on new lots** to stop it recurring, then find and date the existing undated lots.
   </Accordion>
 
   <Accordion title="A cashier sold something we had none of">
-    That is **Selling without stock** working as configured. The quantity is recorded and reconciles when the delivery is booked in. Turn the switch off if you would rather the sale had been refused.
+    That is **Selling without stock** working as configured. The quantity reconciles when the delivery is booked in. Turn the switch off if you would rather the sale had been refused.
   </Accordion>
 
   <Accordion title="Imported items have no low-stock threshold">
-    A catalogue import carries none of its own. Set **New-item defaults** before importing, or edit the items afterwards.
+    A catalogue import carries none of its own. Set **New-item defaults** before importing.
   </Accordion>
 
   <Accordion title="I cannot see the Danger Zone">
-    It is owner-only and hidden from managers and accountants entirely.
+    It is owner-only, and hidden from managers and accountants entirely.
   </Accordion>
 
   <Accordion title="The reset was refused">
