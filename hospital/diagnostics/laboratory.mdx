@@ -1,0 +1,137 @@
+---
+title: Order and report lab tests
+description: "Raise a lab order from a consultation or the Lab Station, run it through the bench, enter results and print the report."
+icon: /images/icons/flask-conical.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Clinical and laboratory staff" note="The Laboratory group only appears when the Diagnostics care area is switched on." />
+
+Your hospital's laboratory runs inside ClinikEHR as its own service line: a clinician raises the order, the bench picks it up, results are entered against the test's parameters, and the report is signed and printed. This page covers that loop end to end.
+
+**Laboratory** and **Radiology** both come from one switch — the **Diagnostics** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+
+<Path steps={['Sidebar', 'Laboratory', 'Lab Station']} />
+
+<TaskHeader before="The Diagnostics care area switched on, and at least one lab test in your test list" time="A few minutes to order; reporting depends on the bench" after="A completed, signed test result and a printable report" />
+
+## Where everything lives
+
+The **Laboratory** group holds six screens, and knowing which one you want saves most of the hunting.
+
+| Screen | What it is for |
+| --- | --- |
+| **Lab Test List** | Your catalogue of tests and their parameters |
+| **Lab Test History** | Everything already ordered, with statuses |
+| **Lab Station** | The bench view — the day's work |
+| **Worklist** | What is queued and who it belongs to |
+| **Lab Reports** | Finished reports, ready to print or download |
+| **Referring Doctors** | Outside clinicians who send you work |
+
+If the group is missing entirely, the **Diagnostics** care area is off. An owner turns it on under [Care areas](/hospital/get-started/care-areas); a plan below Enterprise does not have it at all.
+
+## Order a test
+
+There are two ways in, and they produce the same order.
+
+<Steps>
+  <Step title="Order from the consultation">
+    Open the patient's [consultation](/hospital/outpatient/consultation), go to the **Orders** tab and select the **Labs** sub-tab. This is the normal route, because the order stays attached to the encounter that justified it.
+  </Step>
+  <Step title="Or order from the Lab Station">
+    Open **Lab Station** and start a new lab report. Use this when the request arrives on paper from a referring doctor rather than from a consultation in your own system.
+  </Step>
+  <Step title="Fill in the order">
+    The form opens with **Patient Details** already resolved, then **Select Lab Test** — "Choose a test to order", with a **Search lab tests...** box. Pick the test, add anything the bench needs under **Additional Notes**, and check the right-hand **Order Summary** → **Order Items** before you save.
+  </Step>
+</Steps>
+
+The order lands on the worklist as **Pending**.
+
+## Work it through the bench
+
+Each row in the station carries a status badge — **Pending**, **In Progress**, **Completed** or **Cancelled** — and a separate payment badge of **Paid**, **Partial** or **Pending**. A result flagged as **Critical** shows a **Critical** badge in place of the status badge, so an urgent result is never buried behind a routine one.
+
+Row actions follow the same order every time: **View Details**, **Start Test**, **Enter Results**, **Edit Results**, **Print Report** and **Print Receipt**.
+
+<Steps>
+  <Step title="Start the test">
+    Select **Start Test**. The row moves to **In Progress**, which is what tells the rest of the hospital the sample is on the bench rather than lost.
+  </Step>
+  <Step title="Enter the results">
+    Select **Enter Results**. The **Test Parameters** card lists every parameter the test defines and counts your progress — "{'\{n\}'} / {'\{n\}'} parameters filled". A value outside its reference range raises the **Critical** badge on the card.
+  </Step>
+  <Step title="Sign it out">
+    Signing the result out as **Completed** is the clinical authority step: it is what turns a set of numbers into a result other clinicians will act on. It is granted separately from entering values, so a technician can run the test while a verifier signs it.
+  </Step>
+</Steps>
+
+<Warning>
+  A report that has not been signed yet is stamped as preliminary. Never hand a preliminary report to a patient, an employer or a referring doctor as though it were final — sign it first, or send nothing.
+</Warning>
+
+## Print or download the report
+
+From **Lab Reports** or the row's **Print Report** action you get the finished document. Opening a report also offers **Download report**, which shows "Preparing…" while the file is built. **Print Receipt** prints the money slip, not the clinical report — they are different documents.
+
+## Check it worked
+
+- The test shows **Completed** in **Lab Test History**, with the reporting clinician's name against it.
+- **Print Report** produces a document with no preliminary stamp.
+- The result is visible on the [patient's record](/hospital/front-desk/patients) alongside the consultation that ordered it.
+
+<AuditNote action="Opening, printing and downloading a lab result" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Laboratory group in my sidebar">
+    Either the **Diagnostics** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan — the hospital service-line navigation only exists there. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Enter Results is missing from the row">
+    You can see the order but not report on it. Result entry and sign-out are granted per person under [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="I need to correct a result I already signed">
+    Amending a verified result is a further permission on top of ordinary result entry, precisely because the first version has already been acted on. Ask an owner or manager to grant it, then use **Edit Results**. The change is on the record.
+  </Accordion>
+
+  <Accordion title="The test I want is not in the picker">
+    **Search lab tests...** only finds tests defined in your **Lab Test List**. Add the test and its parameters first — the parameter list is what the results form is built from.
+  </Accordion>
+
+  <Accordion title="The report prints without reference ranges">
+    Reference ranges come from the test definition, not from the results form. A test defined without ranges prints without them for every patient.
+  </Accordion>
+</AccordionGroup>
+
+## Going deeper
+
+The full laboratory workflow — accessioning, worklists, turnaround time and report layouts — is documented in the Diagnostics edition pages, and the screens are the same ones your hospital lab uses.
+
+<Columns cols={2}>
+  <Card title="Test requests" icon="/images/icons/vial.svg" href="/lims/lab/test-requests">
+    How a request becomes a sample on the bench.
+  </Card>
+
+  <Card title="Entering results" icon="/images/icons/microscope.svg" href="/lims/lab/results">
+    Parameters, reference ranges, critical values and verification.
+  </Card>
+
+  <Card title="Lab reports" icon="/images/icons/file-lines.svg" href="/lims/lab/reports">
+    What the finished report contains and how it is issued.
+  </Card>
+
+  <Card title="Order and report imaging" icon="/images/icons/x-ray.svg" href="/hospital/diagnostics/radiology">
+    The radiology equivalent of this page.
+  </Card>
+</Columns>
+
+<StillStuck topic="a lab order or result" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/lab-report/lab-report-form.tsx, components/clinic/dashboard/lab-station/lab-report/lab-report-table.tsx, components/clinic/dashboard/lab-station/test-list/, lib/clinic-nav-registry.ts, lib/edition-staff-roles.ts */}

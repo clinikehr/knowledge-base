@@ -1,0 +1,120 @@
+---
+title: "Facility: care areas and unit thresholds"
+description: "Set which units this hospital runs, and the observation, shift, waiting and records thresholds that decide when a screen flags something."
+icon: /images/icons/hospital.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner or manager to change anything" />
+
+The **Facility** tab does two jobs. The top half decides which units this hospital runs — the card says so plainly: "Which departments this hospital runs. These control what appears in navigation." The bottom half carries the timing thresholds that decide when the Nursing Station, the Front Desk board and the Records desk start flagging things, and those exist nowhere else in the product.
+
+<Path steps={['Sidebar', 'Settings', 'Facility']} />
+
+<TaskHeader
+  before="Owner or manager access, and a decision about which units you run today"
+  time="10 minutes"
+  after="Navigation that matches your building, and boards that flag at your own timings"
+/>
+
+## Care areas — the top half
+
+Eight switches, grouped under **Clinical units** and **Operational units**, above an alert stating the whole rule: "Turning an area off hides it from menus for everyone in this clinic. It does not delete anything, and existing records stay reachable by direct link."
+
+| Area | Default | Card wording |
+| --- | --- | --- |
+| **Front desk** | On | "Check-in board, appointments, registration and contacts." |
+| **In-patient care** | On | "Ward admissions, discharges and bed management." |
+| **Surgical theatre** | **Off** | "Theatre scheduling and perioperative records." |
+| **In-house pharmacy** | On | "Dispensing, prescriptions and the pharmacy station." |
+| **Diagnostics** | On | "Laboratory and radiology ordering, stations and reports." |
+| **Records** | On | "The records officer's queues, documents and patient records." |
+| **Insurance** | On | "Claims, pre-authorisation and the insurance dashboard." |
+| **Inventory** | On | "Stock, purchase orders and consumables. The Store is separate." |
+
+Switching one off removes **three things together** — its navigation group, its settings tab and its analytics report. Turning it back on restores all three exactly as they were.
+
+Setting a hospital up from scratch? Work through [Turn on your care areas](/hospital/get-started/care-areas) instead, which covers the sequence. This page is for changing an area later, and for the thresholds below it.
+
+## The thresholds nobody finds
+
+Each threshold block appears only while its care area is on, and each has its own **Save** button — saving one does not save another.
+
+### Nursing observations
+
+Shown while **In-patient care** is on. "How often ward observations are expected, and how long after that a patient is marked overdue on the Nursing Station."
+
+- **Every (minutes)** — the observation interval. This is what makes an observation due on the [Nursing Station](/hospital/inpatient/nursing-station).
+- **Grace (minutes)** — how long past due before the patient is actually marked overdue, so a round running five minutes late does not turn the board red.
+
+Select **Save cadence**. It confirms with "The nursing station will use the new cadence."
+
+### Nursing shifts
+
+Also shown while **In-patient care** is on, and the single most consequential setting on this page. "When shifts change over. This decides which handover a shift note belongs to, how the fluid balance chart is split, and what 'nothing charted this shift' means on the Nursing Station."
+
+Choose a **Pattern** from the presets — the shipped default is two 12-hour shifts — or build your own by naming each shift and giving it a **Starts at** hour. A ward needs at least two shifts, every shift needs a name, and two shifts cannot start at the same hour. Whatever you pick, the boundaries are spelled out underneath as ranges, so there is no guessing where a shift begins.
+
+Select **Save shifts**; it confirms with "The nursing station, shift notes and fluid charts now split on these times." Notes already written are not re-filed — each one stays filed against the shift it was written in.
+
+<Warning>
+  The shift pattern is one definition feeding three surfaces at once — handover notes, the fluid balance chart's buckets, and the Nursing Station's "nothing charted this shift" flag. Changing it mid-week moves the boundary under staff who are on the ward now, and a patient can look charted or uncharted purely because the boundary moved. Change it at a quiet changeover and tell the ward first.
+</Warning>
+
+### Front desk waiting
+
+Shown while **Front desk** is on. "How long a visitor waits before the check-in board flags them. This colours a badge and sorts them to the top — it notifies nobody."
+
+Set **Long wait after (minutes)** and select **Save threshold**. That is the number that turns a waiting patient amber on the [front desk board](/hospital/front-desk/overview) — nothing more, so set it to the wait your team would actually want flagged, not an aspiration.
+
+### Records chase
+
+Shown while **Records** is on. "When the Records queue flags a document request. An expiring link needs re-sending rather than another reminder, so it has its own band."
+
+Three numbers, all in days, behind the Signature chase queue on the [records desk](/hospital/records/overview):
+
+- **Not opened after (days)** — the patient has not opened the request at all.
+- **No response after (days)** — they opened it and did not sign.
+- **Expiring within (days)** — the link is about to expire and needs re-sending rather than another nudge.
+
+Select **Save bands**; it confirms with "The records queues will use the new bands."
+
+## Check it worked
+
+- The sidebar lists the groups you left on and nothing for an area you switched off. Refresh if an old group is still there.
+- The settings rail shows a tab for each area you kept, and none for one you removed.
+- Open the Nursing Station: a patient's next observation is due at your new interval, and the shift shown at the top matches the pattern you saved.
+- Open the front desk board: a patient waiting longer than your threshold is flagged and sorted to the top.
+- Open the records desk: the chase queue counts change to match the new bands.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I can see the switches but cannot move them">
+    "Only the clinic owner or a manager can change these." An accountant can open **Facility** and read it but not change it. Ask an owner or a manager.
+  </Accordion>
+
+  <Accordion title="There is no Nursing shifts block">
+    The observation and shift blocks appear only while **In-patient care** is on, **Front desk waiting** only while **Front desk** is on, and **Records chase** only while **Records** is on. Turn the area on and the block appears underneath.
+  </Accordion>
+
+  <Accordion title="I saved a shift pattern and it did not stick">
+    "Every shift needs a name" and "Two shifts start at the same hour — the later one would be unreachable" both block the save. Fix the named problem and select **Save shifts** again.
+  </Accordion>
+
+  <Accordion title="I changed the interval but the Nursing Station still flags at the old one">
+    Each block saves separately. Confirm you selected **Save cadence**, not a Save further down the page, then refresh the Nursing Station.
+  </Accordion>
+
+  <Accordion title="There is no Facility tab at all">
+    **Facility** exists on the Enterprise plan of the Clinic and Hospital edition only. If you opened a link with `?tab=facility` and landed on **General Settings**, that is the fallback for a tab this workspace does not have. See [Plans](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="facility settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav.ts, lib/settings-tabs.ts */}

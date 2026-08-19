@@ -1,0 +1,143 @@
+---
+title: Departments, wards and theatres
+description: "Build the structure clinicians pick from — service departments and sub-units, wards down to bed spaces, and theatres with their safety checklist rule."
+icon: /images/icons/sitemap.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Theatre needs the Surgical theatre care area on" />
+
+Three tabs in the **Departments settings** group build the structure everyone else works inside. Until they are filled in, clinicians cannot open a consultation list, nurses cannot see a bed, and a theatre case has nowhere to happen. This page covers what each one holds and the order to build it in.
+
+<Path steps={['Sidebar', 'Settings', 'Departments settings']} />
+
+<TaskHeader
+  before="Care areas set, and a list of your real units, wards and theatres"
+  time="Two hours for a first build"
+  after="Every unit, bed and theatre a member of staff needs to pick from exists"
+/>
+
+## Departments — build these first
+
+**Departments** carries the wording "Clinic service departments", and the card inside is **Department Management** — "Manage your clinic departments, sub-units, and consultation rates."
+
+This one is not optional. A clinician opening the consultation module meets a mandatory **Select a Department** screen before any patient list appears, and triage routes a patient into a department's queue. With no departments, that screen has nothing to select and the day stops there.
+
+<Steps>
+  <Step title="Add each department">
+    Add a department for each service line you run — Medicine, Surgery, Paediatrics, and so on. Only the owner can add one.
+  </Step>
+  <Step title="Add its sub-units">
+    Select a department to open **Sub-Units** for it — "Manage specialties and sub-units for this department." A sub-unit is the specialty a patient is actually seen in and filed under.
+  </Step>
+  <Step title="Set consultation rates">
+    Select a sub-unit to open **Consultation Rates** — "Configure consultation types, pricing, and validity periods." This is what a consultation in that unit charges, and a validity period is what stops a patient paying twice for one episode.
+  </Step>
+</Steps>
+
+The setup-sequence view lives on [Departments and sub-units](/hospital/get-started/departments); how the structure is used day to day is on [Consultation](/hospital/outpatient/consultation).
+
+## Ward Management — wards, sub-wards and beds
+
+**Ward Management** carries the wording "Inpatient and ward setup", and its card is **Ward Management** — "Manage your clinic wards, sub-wards, and bed spaces."
+
+The structure is three deep and staff walk all three levels. Admitting a patient means picking a **ward**, then a **sub-ward**, and only then do beds appear — skipping the middle level is the usual reason someone reports "there are no beds" on a ward that clearly has them.
+
+<Steps>
+  <Step title="Add each ward">
+    A ward is the named unit — Male Medical, Maternity, Paediatric. Only the owner can add one.
+  </Step>
+  <Step title="Add sub-wards inside it">
+    Select the ward to open **Sub-wards**. Bays, rooms or sides — whatever your floor actually calls them, because this is the word staff will read at the bedside.
+  </Step>
+  <Step title="Add bed spaces">
+    Select a sub-ward to open **Bed Spaces**. Every bed on the floor needs one here, or a patient cannot be admitted into it.
+  </Step>
+</Steps>
+
+With nothing configured, staff see "No wards available — Please contact your administrator". That message means the structure is empty, not that their access is wrong.
+
+See [Wards, sub-wards and beds](/hospital/get-started/wards-and-beds) for the build, and [Wards](/hospital/inpatient/wards) for admissions and the bed grid.
+
+## Theatre — rooms and the safety checklist
+
+**Theatre** carries the wording "Theatres, safety checklist & enforcement", and it appears only once the **Surgical theatre** care area is on in [Facility](/hospital/settings/facility). That area ships off.
+
+### Theatres
+
+The **Theatres** card — "The rooms cases are booked into." Two cases cannot hold the same theatre at overlapping times; the booking is refused. Each theatre carries a status of **Active**, **Maintenance** or **Closed**, so a room going out of service need not be deleted.
+
+You do not have to build this before booking starts: "No theatres yet. A case can still be booked without one and assigned later."
+
+### The safety checklist
+
+The **Safety checklist** card — "Which items your theatre confirms, and whether an incomplete phase stops a case." It ships as the standard **WHO Surgical Safety Checklist (2009)** in three phases:
+
+| Phase | When it is done |
+| --- | --- |
+| **Sign in** | Before induction of anaesthesia |
+| **Time out** | Before incision |
+| **Sign out** | Before the patient leaves theatre |
+
+Select **Customise the checklist** to edit wording, reorder items, retire ones you do not use or add your own. Your current items are copied in as the starting point, so customising is an edit rather than a rebuild.
+
+### The enforcement choice
+
+One switch: **Require the checklist before a case advances**. Off is the default.
+
+| Setting | What happens at the case |
+| --- | --- |
+| **Off** | A gap is shown and recorded, but the case proceeds. Gaps are recorded but do not stop the case. |
+| **On** | The status change is refused until the phase is complete. Each phase must be complete before the case advances. |
+
+The product argues against turning it on, and the argument is worth reading before you decide: "a system that refuses to let an operation proceed because a box is unticked tends to get worked around, after which the record is wrong *and* the checklist is theatre. Turn it on only if your governance requires it."
+
+<Warning>
+  Switching enforcement on blocks a case from advancing in a live theatre until the phase is complete. Decide it with your theatre leads, not on your own, and tell them before you switch it — a surgeon meeting a refused status change mid-list will find a way round the system, and the record you are trying to protect is the thing that suffers.
+</Warning>
+
+Setup order and the checklist in use are covered on [Theatres and the safety checklist](/hospital/get-started/theatre-setup) and [Theatre](/hospital/theatre).
+
+## Check it worked
+
+- A clinician opens the consultation module and **Select a Department** lists every department, each with its sub-units.
+- Triage can route a patient into a department queue and someone in that department sees them arrive.
+- Admitting a patient offers your wards, then the sub-wards inside the one chosen, then real beds.
+- The theatre list offers each **Active** theatre by name, and a **Maintenance** or **Closed** room is visibly out.
+- Opening a case shows the three checklist phases with your items in them.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Staff see Select a Department with nothing to select">
+    No departments exist yet, or none has a sub-unit. A department with no sub-units gives a clinician nowhere to file the consultation.
+  </Accordion>
+
+  <Accordion title="No wards available — Please contact your administrator">
+    Nothing is configured under **Ward Management**. Build a ward, at least one sub-ward inside it and its beds; staff see them without signing out.
+  </Accordion>
+
+  <Accordion title="I picked a ward and no beds appeared">
+    Beds hang off sub-wards, not wards. Pick the sub-ward as well. If it is picked and still empty, that sub-ward has no bed spaces yet.
+  </Accordion>
+
+  <Accordion title="There is no Theatre tab">
+    Turn on the **Surgical theatre** care area in [Facility](/hospital/settings/facility). It is the only care area that ships off, and the tab, the navigation group and the theatre permissions all follow it.
+  </Accordion>
+
+  <Accordion title="A theatre booking was refused">
+    Two cases cannot hold the same theatre at overlapping times. Move one, or use another theatre. A room set to **Maintenance** or **Closed** is also unavailable.
+  </Accordion>
+
+  <Accordion title="Only the owner can add anything here">
+    Adding departments, sub-units, wards, sub-wards and beds is an owner action. Managers and accountants can open these tabs to read them.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="departments, wards or theatres" />
+
+{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, ward-settings.tsx, theatre-settings.tsx, lib/theatre/who-checklist.ts */}

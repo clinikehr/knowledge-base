@@ -1,0 +1,76 @@
+---
+title: The executive dashboard
+description: "Read your whole practice on one screen — appointments, money and client growth — and open the report behind any figure."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, Manager, and staff granted access to figures" />
+
+**Executive** is your practice at a glance — each figure opens the report behind it. Six headline tiles, then a card for every report your practice can open.
+
+<Path steps={['Sidebar', 'Executive']} />
+
+## The six tiles
+
+| Tile | Opens |
+| --- | --- |
+| **Appointments today** | The Appointments report |
+| **Appointments this week** | The Appointments report |
+| **Collected this month** | The Revenue report |
+| **Outstanding** | The Revenue report |
+| **Patients** | The Patients report |
+| **New this month** | The Patients report |
+
+The last two count your client list: how many you have in total, and how many joined this month.
+
+Every tile is a link. Selecting one takes you to the report that explains it, so a figure you do not believe is never more than one select from its workings.
+
+<Note>
+  The count of people is labelled **Patients** here, and its report is called **Patients**, even though the rest of your workspace says **Clients**. It is the same list either way.
+</Note>
+
+Money is shown in your practice's own currency, taken from your billing settings — see [Currency](/platform/settings/currency). The two counts of money answer different questions: **Collected this month** is what has actually arrived, **Outstanding** is what has been invoiced and not yet paid.
+
+## Em dash, not zero
+
+Tiles show an em dash while the page is loading and only ever show a number once the figure has arrived. A zero on this screen is a real zero, not a query that failed. Treat the two differently — the whole point of the distinction is that you can trust a figure the moment you can see it.
+
+## The Reports list
+
+Below the tiles, **Reports** lists every report available to your practice, each with a one-line description of what it covers. It is the same set as the Analytics page and it is filtered the same way — by your plan, the modules you use and your own permissions.
+
+See [Reports and analytics](/practice/insights/analytics) for what each report covers.
+
+## What this page is not
+
+The executive dashboard is aggregates only. There is no client name, no clinical detail and nothing to act on here — it exists to tell you where to look, and then to hand you off to a report. For anything you need to _do_, go to the module: [Appointments](/practice/daily/appointments) for today's diary, [Billing](/clinic/revenue/billing) for money owed.
+
+<AuditNote action="Opening the executive dashboard" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The executive overview could not be loaded.">
+    A temporary read failure. Reload the page. If it persists, note the time — support can match it against your audit log.
+  </Accordion>
+
+  <Accordion title="A tile has been showing an em dash for a while">
+    The figure has not arrived. Reload rather than assuming a zero; the dash exists precisely so an unknown is never mistaken for none.
+  </Accordion>
+
+  <Accordion title="A report I expected is not in the list">
+    Reports follow your plan, the modules you use and your permissions. See [Reports and analytics](/practice/insights/analytics), which lists exactly what a practice gets.
+  </Accordion>
+
+  <Accordion title="Collected this month does not match my bank">
+    It counts payments recorded in ClinikEHR, not settlements into your account. Open the Revenue report and compare its **Payments** scope against your provider's payouts.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts */}

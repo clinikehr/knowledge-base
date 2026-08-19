@@ -1,0 +1,88 @@
+---
+title: File and track claims
+description: "Bill an insurer for care your hospital has already delivered, then follow the claim through to payment or denial."
+icon: /images/icons/file-lock.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billers" note="The Insurance group only appears when the Insurance care area is switched on." />
+
+A claim asks an insurer to pay for care you have already delivered. **Claims** is your hospital's claim register: you prepare each claim here, send it to the insurer the way you already do, and track its answer against the record. Nothing is transmitted to the payer electronically from this screen.
+
+**Claims** needs the **Insurance** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+
+<Path steps={['Sidebar', 'Insurance', 'Claims']} />
+
+<TaskHeader before="The insurer added under Companies, and the patient's coverage recorded" time="5 minutes per claim" after="A claim on the register you can track to payment or denial" />
+
+## Prepare the claim
+
+The claim form opens as a set of tabs you work through in order. Each one answers a question the insurer will ask.
+
+<Steps>
+  <Step title="Create the claim">
+    Select **New**.
+  </Step>
+  <Step title="Basic Info">
+    The patient, the encounter and the dates. This is what ties the claim to the care that was actually delivered.
+  </Step>
+  <Step title="Items & Services">
+    Every service, medicine and consumable you are billing for. Prices come from the payer-specific rates on the **Pricing** tab of the Insurance Dashboard, not from your standard [service list](/clinic/revenue/services).
+  </Step>
+  <Step title="Insurance & Diagnosis">
+    The insurer, the patient's cover, and the diagnosis codes that justify every item on the claim. An item with no supporting diagnosis is the denial you will spend next month arguing about.
+  </Step>
+  <Step title="Review & Submit">
+    Read the whole claim, then submit it. If you obtained a [pre-authorization](/hospital/insurance/pre-authorization), quote it — an approved request is the fastest route through an insurer's review.
+  </Step>
+</Steps>
+
+## Track it
+
+The Claims screen has three tabs, and each answers a different question:
+
+| Tab | Answers |
+| --- | --- |
+| **Claims** | Where is this claim now? Work the list by status. |
+| **Analytics** | Which payer is getting slower or denying more? |
+| **Activity** | Who did what to this claim, and when? |
+
+Record the payer's decision on the claim when it arrives, and record the money against it when that arrives. A claim marked as paid with nothing reconciled against it is a claim you have not actually been paid for.
+
+## Check it worked
+
+- The claim appears in the **Claims** list with a status and the payer's name.
+- Nothing you meant to bill this month is still unclaimed.
+- When money arrives, the claim moves to paid _and_ has a payment recorded against it.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The patient's insurer is not in the picker">
+    Add the insurer on the **Companies** tab of the Insurance Dashboard first, then record the patient's cover on **Coverage**. See [Insurance in ClinikEHR](/hospital/insurance/overview).
+  </Accordion>
+
+  <Accordion title="The claim price is not what we negotiated">
+    Payer-specific prices live under **Insurance** → **Pricing**. Fix the rate there so every future claim is right, rather than overtyping each one.
+  </Accordion>
+
+  <Accordion title="The payer denied the claim">
+    Read their reason against what you submitted. Most denials are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the patient's cover excludes. Correct the record and re-submit rather than arguing the original.
+  </Accordion>
+
+  <Accordion title="The patient's cover has lapsed">
+    They are self-paying for that visit. Raise an [invoice](/clinic/revenue/invoices) instead — a claim against expired cover is a denial you can see coming.
+  </Accordion>
+
+  <Accordion title="Insurance is missing from my sidebar">
+    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a claim" />
+
+{/* source of truth: components/clinic/insurance/claims/claims-form.tsx, components/clinic/insurance/claims/claims-content-dashboard.tsx */}

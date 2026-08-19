@@ -1,0 +1,104 @@
+---
+title: Communications and AI
+description: "Set up the hospital's messaging channels, manage AI agents and credits, and choose which notifications your team receives."
+icon: /images/icons/bot.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" />
+
+The **AUTOMATION & AI** section holds two tabs — **Communications** and **AI Settings**. A third tab belongs with them in practice but sits elsewhere in the rail: **Notifications**, under **PRACTICE**. All three answer the same question — what leaves this hospital automatically, and to whom.
+
+<Path steps={['Sidebar', 'Settings', 'AUTOMATION & AI']} />
+
+<TaskHeader
+  before="A decision about which channels you want to run, and who owns each inbox"
+  time="30 minutes"
+  after="Channels connected, notification categories set, and AI agents scoped"
+/>
+
+## Communications
+
+Described in the rail as "SMS, voice, fax & email channels". This is where the hospital's outbound channels are set up. Each is independent — running SMS does not require fax, and turning one off does not affect the others.
+
+Two rules are worth knowing before you start:
+
+- **A channel that is not connected is not a queue.** Nothing waits to be sent later. If SMS is not set up, the message is simply not sent by SMS.
+- **Set the channel up once, hospital-wide.** These are not per-department settings, so agree who owns each channel before you connect it — a fax line nobody watches is worse than no fax line.
+
+## AI Settings
+
+Described as "Agents, credits & MCP tools". It covers the AI agents available to this hospital, the credits they consume and the tools they may use.
+
+<Warning>
+  AI agent runs consume your hospital's credits, and an agent you leave running on a schedule keeps consuming them whether anyone reads the output or not. Check your credit balance on this tab before you turn on anything automatic, and switch off agents you are only trialling.
+</Warning>
+
+AI output is always presented for review, never saved on a patient's record on its own. A clinician has to read it and accept it, and anything generated is marked as such on screen. That is the case whatever you configure here.
+
+## Notifications
+
+Described as "Alerts and communication", and found under **PRACTICE › Practice notifications** rather than in this section. It decides what your own team is told about.
+
+<Steps>
+  <Step title="Check the master switch">
+    **Email notifications** is the switch above everything else. With it off, the category switches below it stop sending email.
+  </Step>
+  <Step title="Set each category">
+    Switch on the categories your team acts on — appointments, patients, staff, billing, subscription, documents, insurance and the rest. Switch off the ones that are noise for you.
+  </Step>
+  <Step title="Leave System alone">
+    **System** cannot be switched off. It carries the messages you would want even if you had muted everything.
+  </Step>
+</Steps>
+
+Two things this does **not** touch, and both matter:
+
+- **Transactional email is never affected.** A password reset, an invitation, an appointment confirmation to a patient — those are sent regardless of what is set here, because they are the direct result of something someone did.
+- **Patient-facing reminders are set per patient**, on their intake sheet, not on this tab. Muting a category here quietens your own team, not your patients.
+
+Platform-wide preferences, including the ones attached to your personal account rather than the hospital, are on [Notification settings](/platform/settings/notifications).
+
+## Check it worked
+
+- Send a test message on each channel you connected and confirm it arrives.
+- Trigger something in a category you switched on — raise an invoice, say — and confirm the notification reaches the right people.
+- Switch a noisy category off and confirm the next one of those events produces nothing.
+- Confirm a password reset still arrives with the master switch off, proving transactional email is unaffected.
+- Run one AI agent by hand, check the credits used on **AI Settings**, and multiply by how often you intend it to run.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Nobody is getting notification email">
+    Check the master **Email notifications** switch first. With it off, no category sends, however each one is set.
+  </Accordion>
+
+  <Accordion title="I switched everything off and still get messages">
+    **System** cannot be switched off, and transactional email is never gated by these switches. If what you are getting is neither, check whether it is going to your personal account preferences instead — see [Notification settings](/platform/settings/notifications).
+  </Accordion>
+
+  <Accordion title="Patients are still getting reminders after I muted a category">
+    Patient reminders are set per patient on their intake sheet. This tab governs what your own team receives.
+  </Accordion>
+
+  <Accordion title="Credits ran down faster than expected">
+    A scheduled agent consumes credits every time it runs, not only when someone reads the result. Review what is scheduled on **AI Settings** and switch off anything you are not using.
+  </Accordion>
+
+  <Accordion title="A channel says it is connected but nothing sends">
+    Send a test message from the channel itself rather than by triggering a real event, so you are testing one thing at a time. If the test fails, the channel is not connected however it looks.
+  </Accordion>
+
+  <Accordion title="AI wrote something into a patient's record on its own">
+    It cannot. Every AI output is presented for a clinician to review and accept, and is marked as AI-generated on screen. If something looks otherwise, contact support with the time it happened.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="communications or AI settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx, ai-settings.tsx, notification-preferences.tsx */}

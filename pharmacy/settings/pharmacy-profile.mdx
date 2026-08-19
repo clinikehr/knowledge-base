@@ -1,0 +1,122 @@
+---
+title: Your pharmacy profile and notifications
+description: "Fill in the details that print on receipts and invoices, set the timezone your sales are bucketed into, and choose which emails you receive."
+icon: /images/icons/shop.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" />
+
+Two tabs, both under **PHARMACY**. **General Settings** holds the details a customer sees — your name, address, phone number and email — plus the timezone that decides which business day a sale lands on. **Notifications** decides which emails and in-app alerts reach you.
+
+<Path steps={['Sidebar', 'Settings', 'Profile', 'General Settings']} />
+
+<TaskHeader
+  before="Nothing — a brand-new pharmacy can do this first"
+  time="About three minutes"
+  after="Your name, address, phone and email print on every receipt and invoice"
+/>
+
+<Note>
+  **General Settings** is a screen shared with the clinical editions, so a few of its field labels still say **Clinic** — **Clinic Name**, **Clinic Logo** and so on. They are your pharmacy's name and your pharmacy's logo. Nothing else on the screen behaves differently.
+</Note>
+
+## Fill in your pharmacy details
+
+<Steps>
+  <Step title="Open General Settings">
+    In the sidebar footer select **Settings**, then **Profile** → **General Settings**. On a phone, choose **General Settings** from the dropdown at the top.
+  </Step>
+
+  <Step title="Enter the four that matter">
+    **Clinic Name**, address, phone number and email. These four are the ones that reach your customers — they print on receipts and appear on invoices — and filling all four is what ticks the profile step of your setup.
+  </Step>
+
+  <Step title="Add the optional detail">
+    Website, description and **Clinic Logo** are optional. The logo appears on invoice PDFs, so upload it if you send invoices to account customers or institutional buyers.
+  </Step>
+
+  <Step title="Set your Timezone">
+    Under regional preferences, choose the timezone your counter actually operates in. This is not cosmetic — see below.
+  </Step>
+
+  <Step title="Save">
+    Select the save button at the foot of the card. A confirmation toast appears.
+  </Step>
+</Steps>
+
+## Why the timezone matters more than it looks
+
+Your timezone sets the **business-day boundary** that sales are bucketed into. A sale rung at 11 pm belongs to today or tomorrow depending on that one setting, so a wrong timezone quietly puts a night shift's takings on the wrong day and your daily totals never reconcile against the cash drawer.
+
+Set it before your first busy day. Changing it later does not move sales that were already recorded. See [Sales and reporting](/pharmacy/money/sales) for how the day is totalled.
+
+## Choose which notifications you get
+
+<Path steps={['Sidebar', 'Settings', 'Pharmacy notifications', 'Notifications']} />
+
+The **Notifications** tab — "Choose which in-app and email notifications your clinic receives" — has one master switch and a list of categories beneath it.
+
+<Steps>
+  <Step title="Set the master switch">
+    **Email notifications** is described as "Master switch for all clinic emails. Turn off to pause non-essential email." Turning it off pauses the lot without you having to work through the categories one at a time.
+  </Step>
+
+  <Step title="Turn categories on or off">
+    Each category has its own switch and governs both the email and the in-app alert for that kind of event.
+  </Step>
+
+  <Step title="Leave System alone">
+    **System** cannot be switched off: "System notifications cannot be disabled as they contain important updates about your clinic." Its switch is fixed on.
+  </Step>
+
+  <Step title="Save">
+    Your choices apply from the next event onwards. Anything already queued still arrives.
+  </Step>
+</Steps>
+
+The category list adapts to your edition, so you only see categories that can actually happen in a pharmacy. If a colleague on a clinical edition describes a category you cannot find, that is why.
+
+**Transactional email is never affected by any of these switches.** Security alerts, password resets and a receipt a customer asked you to email still go out with every category turned off. You cannot mute those, and you should not want to.
+
+## Check it worked
+
+- Ring up a test sale and print or preview the receipt. Your pharmacy name, address and phone number appear in the header.
+- Reopen **General Settings**. The fields hold what you typed, and the timezone shows your own.
+- Reopen **Notifications**. Every switch is where you left it, and **System** is still on.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The fields say Clinic Name and Clinic Logo">
+    Expected. **General Settings** is shared across editions and keeps those labels. Treat them as your pharmacy's name and logo — the values print on your receipts exactly as you enter them.
+  </Accordion>
+
+  <Accordion title="My receipt header is blank or missing the address">
+    The receipt prints what the profile holds. Fill in address, phone and email in **General Settings**, save, then print a fresh receipt — an already-printed one does not change.
+  </Accordion>
+
+  <Accordion title="Yesterday's sales are showing under today">
+    The timezone is wrong. Correct it in **General Settings**. Sales recorded before the change keep the day they were filed under, so compare against the till only from the correction onwards.
+  </Accordion>
+
+  <Accordion title="I turned everything off and still get email">
+    Check what arrived. Security alerts, password resets and receipts are transactional and ignore these switches by design. If it is genuinely a category alert, confirm the master **Email notifications** switch is off and that you saved.
+  </Accordion>
+
+  <Accordion title="A notification category a colleague mentions is not in my list">
+    The list is filtered to your edition. Categories that only apply to appointments, wards or insurance never appear for a pharmacy.
+  </Accordion>
+
+  <Accordion title="The fields are greyed out">
+    You are signed in as an accountant, or as a manager on an owner-only control. Ask the owner to make the change — see [Settings](/pharmacy/settings/index).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, components/clinic/dashboard/settings/notification-preferences.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

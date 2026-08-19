@@ -1,0 +1,126 @@
+---
+title: Billing and payments
+description: "Set the hospital's currency and tax, connect card processing, choose what prints on an invoice, and turn on auto pay and memberships."
+icon: /images/icons/credit-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Currency, tax and free clinic mode are owner-only" />
+
+The **BILLING** section decides what money looks like across the whole hospital — the currency every price is quoted in, the tax added, how cards are taken, what a patient sees printed on an invoice, and which services are bookable. Set the currency first; everything else assumes it.
+
+<Path steps={['Sidebar', 'Settings', 'BILLING']} />
+
+<TaskHeader
+  before="Owner access for currency and tax, and a payment account you can connect"
+  time="30 minutes"
+  after="Prices, invoices and receipts that read correctly, and a way to take payment"
+/>
+
+## Billing and Plans
+
+Described in the rail as "Subscription and payments". It holds your subscription alongside four hospital-wide money settings, and three of the four are **owner-only** — a manager can read them and not change them.
+
+| Setting | Who | What it does |
+| --- | --- | --- |
+| **Currency** | Owner only | The currency every price, invoice and receipt is quoted in |
+| **Tax Rate** | Owner only | The rate applied to billable items |
+| **Free Clinic Mode** | Owner only | Runs the hospital without charging patients |
+| **Flat Rate Fee** | Owner or manager | A single fee applied in place of itemised pricing |
+
+**Currency also picks how cards are taken.** Choosing the Naira routes card payments through Paystack; every other currency routes through Stripe. So the currency is not only a symbol — pick it before you connect anything.
+
+<Steps>
+  <Step title="Set the currency first">
+    Do this before you price a single service. See [Currency](/platform/settings/currency) for the full list and what each one changes.
+  </Step>
+  <Step title="Set your tax rate">
+    Enter the rate that applies to billable items here rather than building it into each price.
+  </Step>
+  <Step title="Decide on free clinic mode">
+    Leave it off unless you genuinely do not charge patients.
+  </Step>
+</Steps>
+
+Changing the currency later does **not** re-price anything that already exists. Invoices, receipts and services keep the numbers they were saved with; only the symbol changes on new ones. If you switch currency after going live, expect to re-check your price list by hand.
+
+## Online Payments
+
+Described as "Stripe and Paystack setup". Connect the account that takes card payments — **Stripe Connect** or **Paystack Connect**, matching the currency you set above. Until one is connected, patients can be invoiced but cannot pay by card, and **Auto Pay** cannot be turned on at all.
+
+## Payment Details
+
+Described as "Bank, Cash App, Venmo & more on invoices". These are the channels you want printed on an invoice so a patient knows how else to pay you — bank transfer details, a mobile money handle, whatever your finance office actually accepts.
+
+They print on an invoice **while a balance is due**, and drop off once it is settled, so a paid invoice does not go out looking like a request for money.
+
+## Auto Pay
+
+Described as "Auto-charge saved cards after visits". It charges a card the patient has already saved once their visit is confirmed or completed, so the front desk is not chasing small balances the next morning.
+
+Two things must be true before it can be switched on: your plan is **Essential or above**, and **Stripe is connected** under **Online Payments**.
+
+<Warning>
+  Auto Pay carries a **1.9% platform fee** on every charge it takes, on top of what your card processor charges. That fee is stated on the tab itself. Work out what it costs you at your volume before you turn it on, and tell patients their saved card will be charged automatically.
+</Warning>
+
+## Memberships
+
+Described as "Public membership signup page & embed". A recurring plan a patient signs up to and is billed for on a schedule, with a public signup page you can link to or embed on your own site. It needs a connected payment account, so do **Online Payments** first.
+
+## Appointment Services
+
+Described as "Manage appointment services and configurations". Anything bookable lives here, with its duration and its price in your chosen currency. A service that does not exist here cannot be booked on the booking page or by the front desk. See [Services](/clinic/revenue/services).
+
+Consultation rates are separate and belong to a sub-unit — they are set under [Departments](/hospital/settings/departments-wards-theatre), not here.
+
+## Store Page
+
+Described as "Public storefront branding & embed". The public-facing storefront and its branding, for a hospital that sells products directly. It has its own gating and is not affected by the **Inventory** care area.
+
+## Where insurance went
+
+There is no **Insurance Settings** tab on Enterprise. It exists on the Solo and Team plans only, because the two use different insurance systems. A hospital's payers, coverage, pre-authorisations and claims live in their own module — see [Insurance](/hospital/insurance/overview).
+
+## Check it worked
+
+- A new invoice shows your currency symbol, your tax rate and your payment channels while a balance is due.
+- **Online Payments** shows the account as connected, and a test invoice offers a card payment.
+- With Auto Pay on, a completed visit for a patient with a saved card is charged without anyone touching it, and the charge appears against that visit.
+- The booking page lists exactly the services you configured, at the prices you set.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The currency selector is greyed out">
+    Currency, tax rate and free clinic mode are owner-only, even for a manager. Ask an owner.
+  </Accordion>
+
+  <Accordion title="I changed currency and old invoices still show the old amounts">
+    That is intended. Changing currency does not re-price existing records — an invoice keeps the amount it was raised at. Re-check your service prices by hand after a currency change.
+  </Accordion>
+
+  <Accordion title="Auto Pay will not switch on">
+    It needs the Essential plan or above and a connected Stripe account. Connect Stripe under **Online Payments** first, and check your plan on [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="My payment details are not printing on an invoice">
+    They print only while a balance is due. On a settled invoice they are deliberately omitted.
+  </Accordion>
+
+  <Accordion title="I cannot find Insurance Settings">
+    It is not part of the Enterprise plan. Payers and claims are a module of their own — see [Insurance](/hospital/insurance/overview).
+  </Accordion>
+
+  <Accordion title="A service will not appear on the booking page">
+    Check it exists and is active under **Appointment Services**. A consultation rate set against a sub-unit is a different thing and is not bookable by itself.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="billing settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/billing-settings.tsx, online-payments-settings.tsx, payment-details-settings.tsx, auto-pay-settings.tsx, membership-page-settings.tsx, store-page-settings.tsx */}

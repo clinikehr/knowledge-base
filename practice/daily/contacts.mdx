@@ -1,0 +1,107 @@
+---
+title: Contacts and enquiries
+description: "Track enquiries on a pipeline board, publish a public contact form, and see what each plan includes."
+icon: /images/icons/book-user.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member with access to Contacts" note="Every plan includes Contacts; the limits below differ." />
+
+**Contacts** is where people who are not yet clients live: enquiries from your website, referrals, callbacks and anyone you are still following up. They move across a board of stages until they become a client or drop out.
+
+<Path steps={['Sidebar', 'Contacts']} />
+
+<TaskHeader before="Nothing to start; a website you can paste a snippet into if you want to embed the form" time="10 minutes to set the form up" after="A pipeline of enquiries, and a public form that files into it" />
+
+## The tabs
+
+| Tab | What it holds |
+| --- | --- |
+| **Board** | Contacts as cards in stage columns — drag between stages |
+| **Contacts** | The same people as a searchable table, with the count |
+| **Follow-ups** | What is due and who owes it |
+| **Campaigns** | Marketing sends against a saved segment |
+| **Insights** | Lead scoring and pipeline analysis |
+
+**Campaigns** and **Insights** only appear for staff who may manage the CRM, and only on the plans that include them. On a plan without them they are simply not in the tab strip — nothing is shown greyed out with a padlock.
+
+## Work the board
+
+Drag a contact's card from one column to the next to move it a stage. Search across the list with **Search by name, email, phone, or company…**, save the current filters with **Save segment** for reuse in a campaign, and bring an existing list in with **Import** or take yours out with **Export**.
+
+**Manage stages** opens the stage manager, where you can rename, recolour, reorder, add and remove stages, and mark which one counts as won and which as lost. A pipeline must keep at least one stage.
+
+<Note>
+  Customising the board — adding, renaming, reordering or deleting stages, or running more than one pipeline — needs the Essential plan or above. Below that you get the default pipeline and its default stages, which is a complete working board. See [Change your plan](/platform/plans/change-plan).
+</Note>
+
+## Publish the public enquiry form
+
+<Steps>
+  <Step title="Open the form settings">
+    Go to **Settings → Contact Form** — described as "Where people fill out the form." Everything about the public form is configured here.
+  </Step>
+  <Step title="Choose the fields">
+    The field editor explains itself: "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." Custom fields need the Team plan or above.
+  </Step>
+  <Step title="Take the hosted link">
+    **Copy link** gives you the address of the hosted form. This works on every plan — put it on your website, in an email or on a printed card.
+  </Step>
+  <Step title="Embed it, if your plan allows">
+    "Copy this snippet into your site's HTML, just before `</body>`." There are two levels: a widget snippet that drops a floating button onto your site, and a raw iframe for full control over placement. The iframe is a Team feature.
+  </Step>
+</Steps>
+
+Submissions arrive on the board in your first stage, ready to work.
+
+## What each plan includes
+
+|  | Free | Starter | Essential | Team |
+| --- | --- | --- | --- | --- |
+| Contacts | 100 | 2,000 | 5,000 | Unlimited |
+| Saved segments | 1 | 2 | 10 | Unlimited |
+| Campaigns | 1 | 2 | 10 | Unlimited |
+| Pipelines | 1 | 1 | 3 | Unlimited |
+| Form customisation | None | Basic | Basic | Advanced |
+| Embedding | None | None | Basic widget | Widget and iframe |
+
+When you reach a limit the product says so plainly and names the next plan — "Your Free plan includes up to 100 contacts. Upgrade to Starter for more." A subscription that has lapsed falls back to the Free limits until it is active again.
+
+## Check it worked
+
+- A contact dragged to a new stage stays there after **Refresh**.
+- Opening your hosted form link in a private browser window shows the fields you configured.
+- A test submission appears on the **Board** within moments.
+- The embedded widget shows on your own site after you paste the snippet before the closing `</body>` tag.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Campaigns or Insights tab">
+    Either your plan does not include them, or your account cannot manage the CRM. They are hidden rather than disabled, so an absent tab is the answer, not a fault.
+  </Accordion>
+
+  <Accordion title="Manage stages will not let me add a stage">
+    Custom pipelines and stages start at Essential. Below that the default pipeline is fixed.
+  </Accordion>
+
+  <Accordion title="New contacts are refused">
+    You are at your plan's contact limit. The message names your plan, the limit and the next plan up.
+  </Accordion>
+
+  <Accordion title="The embed snippet does nothing on my site">
+    It must go inside the page's HTML just before `</body>`, not inside a text block or a page builder's plain-text field. If your plan only includes the hosted link, use **Copy link** instead.
+  </Accordion>
+
+  <Accordion title="An enquiry has become a real client">
+    Register them under **Clients** — see [Manage your client list](/practice/daily/clients) — and move their card to the stage you have marked as won. The contact and the client record are separate things, and both are worth keeping.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/crm/crm-content.tsx, components/clinic/crm/crm-stage-manager.tsx, lib/crm/plan-limits.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

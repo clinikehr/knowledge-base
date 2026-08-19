@@ -1,0 +1,124 @@
+---
+title: Staff and permissions
+description: "Add colleagues to your lab, choose their role and access tier, decide who verifies their results, and grant individual acts."
+icon: /images/icons/users-gear.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans — seats are included up to your plan's cap" roles="Owner, manager or accountant" />
+
+**Staff & Teams** is the whole of your lab's people admin: who has an account, what they can open, which acts they may perform, and — the one that matters most in a laboratory — whose results need someone else's signature before they can be reported.
+
+<Path steps={['Sidebar', 'Settings', 'Staff & Teams']} />
+
+<TaskHeader before="The person's name and work email, and a free seat on your plan" time="About 2 minutes per person" after="A colleague with an account, a role, an access tier and, where they need one, a named verifier" />
+
+## Add a team member
+
+The tab — "Manage practitioners and roles" — lists your staff, your pending invitations, and the seat count. The **Add team member** sheet runs five steps: **1 Profile → 2 Specialty → 3 Supervisor → 4 Permissions → 5 Review**.
+
+<Steps>
+  <Step title="Enter their profile">
+    First name, last name and work email. The email is where the invitation lands and becomes their sign-in.
+  </Step>
+  <Step title="Choose the specialty and access tier">
+    The specialty decides which pages exist for them. The access tier decides how much of the lab they see: **Own bench**, **Whole lab** or **All sites**.
+  </Step>
+  <Step title="Answer the supervision question">
+    The sheet asks "Do \{name\}'s results need verifying before release?" Read the section below before you answer — this is the question with clinical consequences.
+  </Step>
+  <Step title="Grant the acts they perform">
+    On **Permissions**, switch on the individual acts this person does. Leaving everything untouched keeps them on their role's defaults.
+  </Step>
+  <Step title="Review and send">
+    Check the summary, then send the invitation. They appear in the staff list straight away and in **Pending Invitations** until they accept.
+  </Step>
+</Steps>
+
+## Roles and access tiers
+
+Four administrative roles bundle a job rather than a screen: **Lab Manager**, **Accessioning Clerk**, **Referrer Liaison** and **QC Officer**.
+
+| Access tier | What they see |
+| --- | --- |
+| **Own bench** | Only the samples and results on the bench they work |
+| **Whole lab** | Every sample, result and patient at this site, across all benches |
+| **All sites** | Every collection site and bench, plus pricing, referrer accounts and lab-wide reports |
+
+## The acts you can grant
+
+The permissions step groups the acts the way the sheet does:
+
+| Group | Acts |
+| --- | --- |
+| **Specimens** | Accession an incoming specimen · reject an unsuitable specimen |
+| **Results** | Enter results at the bench · verify and authorise results · amend a verified result |
+| **Quality** | Review QC runs · configure analysers and interfaces · view turnaround-time analytics |
+| **Referrers** | Access the referrer portal · release a report to a referrer |
+
+For how these behave across the product, see [Permissions](/platform/team/permissions).
+
+## Supervision — the question that matters most
+
+A technician may run the sample and enter the reading. The Lab Director — or another scientist qualified to verify — has to authorise the result before it can be reported, and is the only person who may amend it afterwards. Answering yes to "Do \{name\}'s results need verifying before release?" is what sets that up.
+
+Eligible verifiers are lab scientists, doctors, radiologists and the owner. Invite the senior person first and the bench after — you cannot name a verifier who has no account. See [Enter and verify results](/lims/lab/results).
+
+## Enforcement is opt-in, per person
+
+Permissions start off doing nothing. **Saving starts enforcing** — the first time you save the permissions step for someone, that person becomes governed by exactly what you granted. Anyone you have never saved permissions for is unrestricted within their role and access tier.
+
+So a half-finished pass is worse than none: saving a person with only "enter results at the bench" granted leaves them unable to accession, even if they did it yesterday. Grant the full set of acts they actually perform before you save them the first time.
+
+## Seats are included, up to a cap
+
+On Diagnostics, seats are **included** in the plan up to its cap — nothing is ever billed per seat. An invitation that would take you past the cap is refused, with an offer of the next tier.
+
+Every account counts, and there are no free roles: a receptionist occupies a seat exactly as a scientist does. At the cap, remove someone who has left before upgrading. See [Staff seats](/platform/plans/seats).
+
+<Note>
+  This is the reverse of the Clinic & Hospital edition, where every seat is billed. If a colleague there tells you an extra account costs money, that is true for them and not for you.
+</Note>
+
+## Check it worked
+
+- The person appears under the staff list, and the seat count has moved by one.
+- They can sign in and reach the screens their role allows, and no others.
+- Someone set to need verification can enter a result but cannot release it.
+- Someone whose permissions you saved is refused an act you did not grant, with a message rather than a silent failure.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The invitation never arrived">
+    Check the address on the staff list, then their spam folder. Cancel the pending invitation and send it again if the address was wrong.
+  </Accordion>
+
+  <Accordion title="They cannot open a screen they need">
+    That is the specialty — the role decides which pages exist at all. Change it, or grant the specific act on the permissions step. See [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="They can enter results but not complete a test">
+    They have "enter results at the bench" without "verify and authorise results" — supervision working as intended. See [Enter and verify results](/lims/lab/results).
+  </Accordion>
+
+  <Accordion title="Someone lost an ability after I edited their permissions">
+    Saving enforces exactly what is granted. Reopen the permissions step and switch on the acts they genuinely perform.
+  </Accordion>
+
+  <Accordion title="Nobody is offered as a verifying scientist">
+    Only lab scientists, doctors, radiologists and the owner qualify. Invite one, then return to the technician's supervisor step.
+  </Accordion>
+
+  <Accordion title="The invitation is refused at the seat cap">
+    Every account counts and there are no free roles. Remove a leaver or move to the next tier. See [Staff seats](/platform/plans/seats).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="staff and permissions" />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, components/clinic/dashboard/settings/invite-staff-sheet.tsx, lib/edition-staff-roles.ts, lib/staff-permissions.ts, lib/settings-tabs.ts */}

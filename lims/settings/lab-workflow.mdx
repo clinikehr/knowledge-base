@@ -1,0 +1,108 @@
+---
+title: Choose your lab workflow mode
+description: "Pick which laboratory workflow your bench runs — standard clinical, full DOT/SAMHSA, reference-lab intake only, or both — and switch safely."
+icon: /images/icons/test-tube.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" />
+
+**Lab Workflow** decides which laboratory module your staff see. It is the one settings tab that exists only on a Diagnostics workspace, and it is the setting that determines whether your sidebar carries **DOT Testing**, **Lab Intake**, or neither. This page is about choosing and switching the mode — for running the workflow itself, see [DOT drug testing](/lims/dot/index).
+
+<Path steps={['Sidebar', 'Settings', 'Lab Workflow']} />
+
+<TaskHeader before="Agreement on which kind of work the lab does, and a moment when nobody is mid-order" time="Under a minute to switch; a reload for everyone else" after="A bench running the right workflow, with existing orders untouched" />
+
+## The four modes
+
+The card states its own scope: "Determines which laboratory module is shown to your staff. Switching modes does not delete any data — orders remain in their original workflow."
+
+| Mode | What it is for |
+| --- | --- |
+| **Standard Clinical Lab** | "In-house lab orders for clinical care. No DOT-specific workflow." |
+| **DOT / SAMHSA — Full Workflow** | "End-to-end federal workplace drug testing: collection → laboratory → MRO review → DER reporting." |
+| **Reference Lab — Intake to Report Only** <br />(badged **New**) | "For laboratories that receive sealed specimens from external collection sites and produce a PDF report for an external MRO. Hides collection, MRO, and DER modules." |
+| **Both — Standard + DOT Full Workflow** | "Clinics that do both in-house clinical lab work and DOT testing on-site." |
+
+Choose on the work you actually receive. Donors coming to you means you need collection — full DOT. Sealed specimens arriving by courier with the chain-of-custody form already complete means you do not — reference lab. Doing both means **Both**, rather than switching back and forth.
+
+## Switch the mode
+
+<Steps>
+  <Step title="Open the tab">
+    Under the **LABORATORY** section, open **Lab workflow › Lab Workflow** — "Clinical, DOT/SAMHSA or intake-only mode".
+  </Step>
+  <Step title="Select a mode">
+    Choose one of the four options. **Reset** abandons an unsaved change and puts the card back to the mode currently in force.
+  </Step>
+  <Step title="Read the alert, if one appears">
+    Choosing **Reference Lab — Intake to Report Only** shows an alert headed **Reference Lab mode**: "This mode hides the collection, MRO review, and DER reporting modules from the DOT-LIMS sidebar. Orders move from intake → screening → confirmation → finalized PDF report. Existing in-flight orders are unaffected."
+  </Step>
+  <Step title="Save">
+    Select **Save Workflow Mode**. The toast reads **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode.**
+  </Step>
+  <Step title="Tell the bench to reload">
+    Anyone with a laboratory page already open keeps the old mode until they reload it. Say so in the room rather than waiting for someone to notice a menu that has stopped matching the work.
+  </Step>
+</Steps>
+
+## What actually changes
+
+Three things move, and one deliberately does not.
+
+**The navigation changes.** In **Reference Lab** mode, **DOT Testing** in the sidebar is renamed **Lab Intake** and **DOT History** becomes **Intake History**. In **Standard Clinical Lab** mode both entries disappear entirely — there is no DOT workflow to reach.
+
+**Page headings and status filters change** to match the shape of the work. A reference lab's queue filters by intake, analysis and finalized states rather than collection and MRO review.
+
+**Reference Lab mode reveals two more cards** on this same tab: **Lab Report Branding** and **Custom Panels**. Set both up before your first report goes out to an external Medical Review Officer.
+
+**Nothing migrates.** Orders already in flight stay in the workflow they were raised under and finish there, so a lab that switches mid-week runs both shapes side by side until the older orders clear. That is intended.
+
+<Note>
+  Because nothing migrates, switching is safe to do and safe to undo. It only changes which module your staff are shown next time they load a page.
+</Note>
+
+For the full reference on intake-only working, including booking in a sealed specimen and everything the mode renames, see [Reference lab mode: intake to report](/lims/dot/lab-intake-mode).
+
+## Check it worked
+
+- The sidebar shows what the mode implies: **Lab Intake** and **Intake History** in reference-lab mode, **DOT Testing** and **DOT History** in full DOT mode, neither in standard clinical mode.
+- The queue's status filter offers the states that belong to your mode.
+- In reference-lab mode, **Lab Report Branding** and **Custom Panels** now appear on the **Lab Workflow** tab.
+- An order raised before the switch still shows its original stages.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="My team still sees the old sidebar">
+    They have not reloaded. The success message says so directly: **Reload your DOT-LIMS pages to see the new mode.** A refresh is all it takes.
+  </Accordion>
+
+  <Accordion title="An old order still shows MRO Review">
+    Orders raised before the switch finish in the workflow they started in. Nothing was migrated and nothing was lost — let them run out.
+  </Accordion>
+
+  <Accordion title="The Lab Workflow tab is not in my settings">
+    It exists only on a Diagnostics workspace. If you are in a clinic or pharmacy workspace, a link to it lands on **General Settings** instead.
+  </Accordion>
+
+  <Accordion title="I cannot save the mode">
+    Settings needs an owner, manager or accountant. A bench scientist cannot open the screen at all. See [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="I switched to reference-lab mode and lost the collection screens">
+    They are hidden, not deleted — that is what the mode does. Switch back to **DOT / SAMHSA — Full Workflow** or to **Both** and they return after a reload.
+  </Accordion>
+
+  <Accordion title="The panel I need is missing from a new order">
+    Build it under **Custom Panels** on this tab, which appears in reference-lab mode. See [MRO review and the employer report](/lims/dot/reports).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="lab workflow modes" />
+
+{/* source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, components/clinic/dot-lims/dot-lims-content.tsx, lib/settings-tabs.ts */}

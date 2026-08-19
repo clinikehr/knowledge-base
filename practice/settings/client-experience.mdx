@@ -1,0 +1,122 @@
+---
+title: "Booking, portal and documents"
+description: "Configure availability, the public booking page, the contact form, the client portal and the documents sent with appointments."
+icon: /images/icons/globe.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant — Calendar Integrations is owner and manager only" />
+
+Everything a client touches before and after a visit is configured in one section — headed **PATIENT EXPERIENCE** on the settings screen, even though the rest of your workspace calls them clients. Six tabs across three groups: scheduling, the portal, and documents.
+
+<Path steps={['Sidebar', 'Settings']} />
+
+<TaskHeader
+  before="At least one service, so there is something to book"
+  time="Twenty minutes for a first pass"
+  after="A published booking page, a live portal, and documents that go out on their own"
+/>
+
+## Scheduling
+
+Four tabs, in the order you normally need them.
+
+| Tab | What it sets |
+| --- | --- |
+| **Calendar Integrations** | "Sync external .ics calendars" — pull an outside calendar in so its busy time blocks your availability. Visible to owners and managers only. |
+| **Booking Settings** | "Appointment availability & working hours" — schedules, special dates, resources, and per-provider booking policies. |
+| **Booking Page Designer** | "Design & customize your booking page" — the look and content of the page clients actually book on. |
+| **Contact Form** | "Public web-to-lead form & embed widget" — for enquiries from people who are not clients yet. |
+
+<Steps>
+  <Step title="Set availability before you design anything">
+    **Booking Settings** decides which slots exist. Working hours come first, then special dates for closures and one-off openings, then any resources a booking consumes, then per-provider policies such as how far ahead someone may book. A beautiful booking page over empty availability shows a client nothing.
+  </Step>
+  <Step title="Design and publish the page">
+    **Booking Page Designer** gives the page its slug, branding and content, and an embed snippet for your own website. The full walkthrough is in [Your booking page](/practice/daily/booking-page).
+  </Step>
+  <Step title="Add the contact form if you take enquiries">
+    **Contact Form** produces a public form and an embed widget that turns submissions into leads. See [Contacts and enquiries](/practice/daily/contacts).
+  </Step>
+</Steps>
+
+Day-to-day booking and rescheduling is covered in [Appointments](/practice/daily/appointments), and the bookable catalogue itself in [Add the services you offer](/practice/get-started/services).
+
+## The client portal
+
+<Path steps={['Sidebar', 'Settings', 'Patient Portal']} />
+
+The tab is labelled **Patient Portal** ("Patient access settings") and carries seven tabs of its own:
+
+**Branding · Appointments · Messaging · Telehealth · Documents · Notifications · Privacy**
+
+Work through them in that order — branding first so the page looks like you, then one tab per capability you want to offer, then privacy last as a check on what you have just enabled. What each tab controls is documented in [Portal features](/portal/setup/features), and turning the portal on for the first time in [Enable the portal](/portal/setup/enable).
+
+<Warning>
+  Once the portal is live, the publish button becomes a green pulsing **Live** badge — and selecting it **unpublishes** the portal. It is a toggle, not a status light. Clients lose access the moment you press it, without a second confirmation.
+</Warning>
+
+## Documents sent with appointments
+
+<Path steps={['Sidebar', 'Settings', 'Sharable Documents']} />
+
+**Sharable Documents** ("Default docs for appointments") does exactly what its own line says: "Select which documents are automatically sent to clients during appointments."
+
+<Steps>
+  <Step title="Review what is already selected">
+    Anything ticked here goes out on every appointment, so an intake form left selected after a pilot keeps arriving for returning clients.
+  </Step>
+  <Step title="Select the documents you want sent automatically">
+    Consent forms and intake paperwork are the usual candidates — things every client should see before they arrive.
+  </Step>
+  <Step title="Leave one-off paperwork off the list">
+    A document only some clients need is better sent from the client's record when it applies.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- Open your booking page in a private browser window. Slots appear on the days you expect, and the branding is yours.
+- Book a test appointment as a client would, and confirm the selected documents arrive.
+- Open the portal link as a client. The features you enabled are visible; the ones you did not are absent.
+- On **Calendar Integrations**, an external calendar's busy periods appear as unavailable on your booking page.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The booking page shows no available slots">
+    Availability comes from **Booking Settings**, not the designer. Check working hours, then special dates for a closure covering today, then whether the service has a provider who works those hours.
+  </Accordion>
+
+  <Accordion title="Calendar Integrations is not in my sidebar">
+    It is visible to owners and managers only. An accountant does not see it.
+  </Accordion>
+
+  <Accordion title="An external calendar's events are not blocking time">
+    Check the calendar is still connected and its address has not changed. External calendars refresh on their own schedule, so a change made minutes ago may not have arrived yet.
+  </Accordion>
+
+  <Accordion title="Clients say the portal is down">
+    Check the publish control. If it shows the green **Live** badge the portal is up; if someone selected that badge, the portal was unpublished. Publish it again from the same control.
+  </Accordion>
+
+  <Accordion title="Documents are not reaching clients">
+    Confirm the document is selected on **Sharable Documents**, then check the client record holds a valid email address. Documents go with the appointment, so a walk-in with no booking gets nothing automatically.
+  </Accordion>
+
+  <Accordion title="A client received a form they should not have">
+    It is selected as a default. Remove it from **Sharable Documents** and send it individually from the client's record instead.
+  </Accordion>
+
+  <Accordion title="The settings screen says Patient but my sidebar says Clients">
+    Both refer to the same people. The settings section heading and the portal tab still use "Patient"; nothing behaves differently because of it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="booking and portal settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/client-portal-settings.tsx, sharable-documents-settings.tsx, calendar-integrations-settings.tsx, crm-intake-form-settings.tsx, clinic-settings-sidebar.tsx, lib/settings-tabs.ts */}

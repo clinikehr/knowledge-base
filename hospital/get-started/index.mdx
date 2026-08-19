@@ -1,0 +1,116 @@
+---
+title: Set up your hospital
+description: "How a hospital workspace differs from a single practice, and the order to build it in — care areas, units, wards, theatres, staff, then go live."
+icon: /images/icons/hospital.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner sets it up; everyone else works inside it" />
+
+A hospital workspace is organised by service line rather than by task. The sidebar is grouped — **Front Desk**, **Outpatient**, **Inpatient**, **Theatre**, **Diagnostics**, **Pharmacy**, **Revenue**, **Insurance**, **Records**, **Executive** — and the people you serve are called **Patients** on every screen.
+
+Which of those groups exist is your decision, not ours. Each one is switched on by a **care area**, so a hospital with no operating theatre never sees a **Theatre** group, and a hospital that sends its bloods out never sees **Laboratory**. This page is the order to build it in; each stage links to the page that covers it properly.
+
+<Path steps={['Sidebar', 'Settings', 'Facility']} />
+
+## The setup sequence
+
+Work down this table. Each stage assumes the one above it is done — you cannot put a patient in a bed that does not exist, and you cannot give a nurse the ward if the ward has no care area.
+
+| # | Stage | Takes about | Done when |
+| --- | --- | --- | --- |
+| 1 | [Choose your care areas](/hospital/get-started/care-areas) | 10 min | The sidebar shows every group you run, and none you do not |
+| 2 | [Build departments and sub-units](/hospital/get-started/departments) | An hour | Every unit a patient can be routed to exists, with its consultation rate |
+| 3 | [Create wards, sub-wards and beds](/hospital/get-started/wards-and-beds) | An hour | Every bed on the floor exists on the bed grid |
+| 4 | [Set up theatres](/hospital/get-started/theatre-setup) | 20 min | Each theatre exists and the safety checklist rule is set |
+| 5 | [Invite your team](/hospital/get-started/invite-team) | 5 min per person | Everyone has an account, a department and a role |
+| 6 | Services and billing | Half a day | Consultation rates, bookable services, currency and payers are set |
+| 7 | Go live | One quiet afternoon | One patient has been walked end to end |
+
+Stages 1 to 4 are structure and can be done by one person in a day. Stage 5 is the one that takes calendar time, because it waits on people accepting invitations.
+
+## Why care areas come first
+
+Navigation follows the care areas. Turn one on and its whole group appears; turn it off and the group goes, along with every entry inside it.
+
+| Care area | Turns on |
+| --- | --- |
+| **Front desk** | The check-in board, appointments, patient registration and contacts |
+| **In-patient care** | Ward admissions, bed management, the nursing station and discharges |
+| **Surgical theatre** | The theatre list, safety checklists and operation notes — **off by default** |
+| **Diagnostics** | Laboratory and radiology ordering, stations and reports |
+| **In-house pharmacy** | Dispensing, the pharmacy station and the counter |
+| **Insurance** | Claims, pre-authorisation and the insurance dashboard |
+| **Inventory** | Stock, purchase orders and consumables |
+| **Records** | The records desk queues, documents and patient records |
+
+Switching an area off later is safe — it hides navigation rather than deleting anything, and existing records stay reachable by direct link. Even so, decide before you invite staff: people learn where things are in their first week, and moving the furniture afterwards costs more than getting it right once.
+
+Triage, consultation and clinical notes have no switch. They are always present on Enterprise, because every hospital sees patients.
+
+## Stage 6 — services, billing and payers
+
+Four settings decide what anything costs and who pays for it:
+
+- **Consultation rates** per sub-unit, set while you build [departments](/hospital/get-started/departments).
+- **Appointment services** for anything bookable — see [Services](/clinic/revenue/services).
+- **Currency**, before you price anything, so receipts and reports read correctly from day one — see [Currency](/platform/settings/currency).
+- **Payers and coverage**, if the **Insurance** care area is on — see [Insurance](/hospital/insurance/overview).
+
+## Stage 7 — walk one patient end to end
+
+Before you announce the switch, take one test patient the whole way: register at the front desk, triage into a department, consult, order a lab test, dispense a drug, raise the bill. Every hand-off that does not work is a missing care area, a missing sub-unit or a missing permission — cheap to fix on a quiet afternoon, expensive at 9am on a Monday.
+
+You are ready when a staff member from each unit signs in and sees their own queues, and nobody sees a group they have no business in.
+
+## Build it
+
+<Columns cols={2}>
+  <Card title="Choose your care areas" icon="/images/icons/toggle-on.svg" href="/hospital/get-started/care-areas">
+    Every switch on the Facility card, what it turns on, and what happens when you turn one off.
+  </Card>
+
+  <Card title="Departments and sub-units" icon="/images/icons/sitemap.svg" href="/hospital/get-started/departments">
+    The units a patient is routed to and billed under, and the consultation rate each one charges.
+  </Card>
+
+  <Card title="Wards, sub-wards and beds" icon="/images/icons/bed.svg" href="/hospital/get-started/wards-and-beds">
+    Build the floor plan a bed grid is drawn from, down to the individual bed space.
+  </Card>
+
+  <Card title="Theatres and the safety checklist" icon="/images/icons/scissors.svg" href="/hospital/get-started/theatre-setup">
+    Add each theatre and decide whether an incomplete checklist phase stops a case.
+  </Card>
+
+  <Card title="Invite your team" icon="/images/icons/users.svg" href="/hospital/get-started/invite-team">
+    Send invitations, set each person's department and role, and scope what their role can open.
+  </Card>
+
+  <Card title="Roles and permissions" icon="/images/icons/user-shield.svg" href="/platform/team/permissions">
+    What someone may do on a page they can already open — signing, discharging, dispensing.
+  </Card>
+</Columns>
+
+## Then run it
+
+<Columns cols={2}>
+  <Card title="The front desk" icon="/images/icons/concierge-bell.svg" href="/hospital/front-desk/overview">
+    The live check-in board, registration and the day's appointments.
+  </Card>
+
+  <Card title="Triage" icon="/images/icons/heart-pulse.svg" href="/hospital/outpatient/triage">
+    Record vitals and route a patient into the right department's consultation queue.
+  </Card>
+
+  <Card title="Wards" icon="/images/icons/bed-double.svg" href="/hospital/inpatient/wards">
+    Admissions, bed management, the drug round, nursing notes and discharge.
+  </Card>
+
+  <Card title="Laboratory" icon="/images/icons/flask-conical.svg" href="/hospital/diagnostics/laboratory">
+    Ordering, the bench worklist, entering results and issuing the report.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/ (facility-settings.tsx, department-settings.tsx, ward-settings.tsx, theatre-settings.tsx, role-navigation-settings.tsx), lib/clinic-nav-registry.ts, lib/clinic-nav.ts (DEFAULT_CARE_AREAS) */}

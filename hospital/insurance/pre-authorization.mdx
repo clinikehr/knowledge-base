@@ -1,0 +1,87 @@
+---
+title: Request a pre-authorization
+description: "Ask an insurer to approve treatment before you deliver it, with the codes, quantities and costs the payer needs to decide."
+icon: /images/icons/clipboard-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billers" note="The Insurance group only appears when the Insurance care area is switched on." />
+
+A pre-authorization asks an insurer to agree, in advance, that they will pay for something. Get it before you treat and a claim is a formality; skip it and a claim for a procedure that needed approval is a denial waiting to happen.
+
+**Pre-Authorization** needs the **Insurance** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+
+<Path steps={['Sidebar', 'Insurance', 'Pre-Authorization']} />
+
+<TaskHeader before="The Insurance care area switched on, the insurer added under Companies, and the patient's coverage recorded" time="5 minutes" after="A submitted request you can track to approval or denial" />
+
+## Raise the request
+
+<Steps>
+  <Step title="Open a new request">
+    From **Pre-Authorization**, start a new request. The form opens on **Patient & Request Information**.
+  </Step>
+  <Step title="Identify the patient and the request">
+    Choose the **Patient** — the picker says "Select patient..." — then the **Request Type** and a **Priority Level**. The first two are required. Priority is what tells your own team which requests cannot wait, so set it honestly.
+  </Step>
+  <Step title="Set the deadlines">
+    **Submission Deadline** is when you must have sent it; **Authorization Deadline** is when you need an answer by. Both drive your follow-up, so fill them in even when the payer has not stated one.
+  </Step>
+  <Step title="Add the items">
+    Add a line for each thing you want approved. Each line takes an **Item Type**, the item itself, a **Description**, a **Quantity** and a **Unit Cost** — all required. **Tariff Code**, **Tariff ID** and **Diagnosis** carry the payer's own reference where you have one.
+  </Step>
+  <Step title="Attach the codes">
+    Under **ICD 10/CPT CODE**, search with "Search ICD-10, CPT, or HCPCS codes..." and attach the codes that justify the request. This is the field payers read first: a request with a procedure code and no diagnosis code supporting it is the most common avoidable denial.
+  </Step>
+  <Step title="Review and submit">
+    Add anything else under **Additional Notes**, then use **Review & Submit**. Read the summary before you send — you are asking a payer to commit money against what is on that screen.
+  </Step>
+</Steps>
+
+<Note>
+  Prices on the request come from the payer-specific rates you set under **Insurance** → **Pricing**, not from your standard [service list](/clinic/revenue/services). If a figure looks wrong, the negotiated price is where to fix it.
+</Note>
+
+## Track the answer
+
+The **Pre-Authorization Requests** list is where you chase. Search across "Search requests, patients, insurance...", or filter by status and by type. The stats above it show **Total Requests**, **Pending**, **Approved** and your **Approval Rate** — a falling approval rate is usually a coding problem, not bad luck.
+
+When an insurer responds, record their decision on the request. An approval is what you quote on the [claim](/hospital/insurance/claims) later.
+
+## Check it worked
+
+- The request appears in **Pre-Authorization Requests** with a status, the patient and the insurer.
+- The **Pending** count on the stats row has gone up by one.
+- Every item you expect to deliver is on the request — an item that is not on it is not approved, even if the rest of the request is.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The patient's insurer is not in the picker">
+    Add the insurer on the **Companies** tab of the Insurance Dashboard first, then record the patient's cover on **Coverage**.
+  </Accordion>
+
+  <Accordion title="I cannot find the right code">
+    "Search ICD-10, CPT, or HCPCS codes..." matches on name, code and description, so try the clinical term rather than the number. If nothing fits, describe it precisely under **Description** — a payer will query a vague description, and a query costs more time than the search did.
+  </Accordion>
+
+  <Accordion title="The unit cost is not what we agreed with this payer">
+    Payer-specific prices live under **Insurance** → **Pricing**. Fix the negotiated price there so every future request is right, rather than overtyping it on each one.
+  </Accordion>
+
+  <Accordion title="The request was denied">
+    Read the payer's reason against the codes you submitted. Most denials at this stage are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the patient's cover excludes. Correct it and raise a new request rather than arguing the old one.
+  </Accordion>
+
+  <Accordion title="Pre-Authorization is not in my sidebar">
+    Either the **Insurance** [care area](/hospital/get-started/care-areas) is off, or the workspace is not on the Enterprise plan. An owner can turn the care area on in **Settings → Facility**; see [Change your plan](/platform/plans/change-plan) for the plan.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a pre-authorization" />
+
+{/* source of truth: components/clinic/insurance/pre-authorization/pre-auth-form.tsx, components/clinic/insurance/pre-authorization/pre-auth-table.tsx, components/clinic/insurance/pre-authorization/pre-auth-stats.tsx */}

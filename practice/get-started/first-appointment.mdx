@@ -1,0 +1,97 @@
+---
+title: Schedule your first appointment
+description: "Book someone into the calendar with a service, a provider, a time and a confirmation email."
+icon: /images/icons/calendar-days.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member with access to the calendar" note="Group sessions, recurring bookings, and SMS and voice reminders need a paid plan." />
+
+Step 3 of the [setup checklist](/practice/get-started). One appointment of any kind completes it.
+
+<Path steps={['Sidebar', 'Appointment', 'Create']} />
+
+You can also select an empty slot on the calendar, which opens the same sheet with that time pre-filled.
+
+<TaskHeader before="One client record. A service makes the booking useful but is not strictly required" time="1 minute" after="An appointment on the calendar, with a confirmation email sent by default" />
+
+## Book it
+
+The sheet is titled **Initial Entry** and has three tabs — **Appointment**, **Event** and **Task**. Stay on **Appointment**. (**Event** and **Task** are disabled on the free plan.)
+
+<Steps>
+  <Step title="Choose individual or group">
+    The toggle reads **Individual or couple** / **Group**. Group sessions are a paid feature; on the free plan the option shows **Upgrade for group sessions**.
+  </Step>
+  <Step title="Pick the person">
+    Select **Search Client** and type a name. Each result shows their ID. If they are not in the system yet, the inline **Create client** link opens the intake sheet without losing your place — see [Add your first client](/practice/get-started/add-clients).
+  </Step>
+  <Step title="Choose the service">
+    Under **Services**, switch between **Practice** and **Clinic**, then select **Select clinic service**. The **Fee** fills from the service's price and stays editable. **ADD SERVICE** adds another line to the same appointment.
+
+    If the picker says **No clinic services configured**, use **CONFIGURE** to go and create one — see [Add the services you offer](/practice/get-started/services).
+
+    A client on a membership plan shows a **member pricing applied** badge and the fee adjusts automatically.
+  </Step>
+  <Step title="Set the time">
+    Under **Schedule**, enter the date, then a start and end time. The **Duration** row below updates itself. **All day** replaces the times.
+  </Step>
+  <Step title="Choose where it happens">
+    **Location** offers **Video Office** for a telehealth visit or **Physical Office**, which reveals a box for the room or address. Choosing **Video Office** is what makes it a video visit — there is no separate telehealth switch.
+  </Step>
+  <Step title="Choose the provider">
+    **Select Provider** defaults to **Any available provider**. Picking a named person is what makes the slot checks and the double-booking warning meaningful.
+  </Step>
+  <Step title="Add notes and check the reminders">
+    **Internal Memo** (**ADD**) opens **Symptoms Description**, **Patient Notes** and **Clinic Notes** — all staff-visible only.
+
+    Under **Notification**, **Email** / **Auto-sent** is on by default, so the person is emailed a confirmation when you book. **SMS** and **Voice** are plan-gated.
+  </Step>
+  <Step title="Book it">
+    Check the **Appointment Summary**, then select **Book appointment**. The button reads **Creating...** while it saves.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- A toast reads **Appointment created successfully**, the sheet closes and the appointment is on the calendar in its chosen colour.
+- If **Email** was left on, a confirmation has gone to the address on the record — so if nothing arrived, check that the record has an email and that its permission is not **No Email**.
+- The **Get Started** checklist ticks **Schedule your first appointment**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'No bookable slots for this date in your configured schedule'">
+    Your working hours have not been set, or the day is outside them. Open **Settings › Booking Settings** to set availability, or use the **CONFIGURE AVAILABILITY** button on the message.
+  </Accordion>
+
+  <Accordion title="'No bookable slots — the provider, room, or equipment this service needs isn't free'">
+    The service reserves resources and one of them is taken for every slot that day. Pick another day, another provider, or edit the service's resource requirements.
+  </Accordion>
+
+  <Accordion title="'This overlaps an existing appointment for this staff member'">
+    A warning, not a block — "You can still book — pick another time to avoid the clash." Deliberate double-booking is allowed; accidental double-booking is what the warning is for.
+  </Accordion>
+
+  <Accordion title="'This appointment would run past midnight'">
+    The end time has crossed into the next day. Pick an earlier start or a shorter duration — appointments do not span two dates.
+  </Accordion>
+
+  <Accordion title="'No provider configured for this service'">
+    That service restricts which providers can deliver it, and none of them are assigned. Edit the service's **Providers** section, or leave every provider unchecked there so any available provider can take it.
+  </Accordion>
+
+  <Accordion title="Book appointment stays disabled">
+    No one is selected. The button unlocks once a client is chosen (or, in group mode, at least one person has been added).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="booking an appointment" />
+
+Day-to-day scheduling — rescheduling, cancellations, the waitlist and check-in — is covered in [Appointments](/practice/daily/appointments).
+
+{/* source of truth: components/clinic/appointment/calendar/appointment-create-sheet.tsx, components/clinic/appointment/calendar/calendar-view.tsx, components/clinic/appointment/calendar/slot-conflict-warning.tsx, lib/onboarding-steps.ts */}

@@ -1,0 +1,109 @@
+---
+title: Set up departments and sub-units
+description: "Step 2 of hospital setup — build the departments clinicians work in, so triage can route patients and consultations can be filed and charged."
+icon: /images/icons/sitemap.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner (adding); owner or manager to view" />
+
+This is **step 2 of 5**. A department is the unit a consultation is filed under, and it is what [triage](/hospital/outpatient/triage) routes a patient into. Until you have one, your clinicians cannot open a consultation list at all.
+
+<Path steps={['Sidebar', 'Settings', 'Departments']} />
+
+<TaskHeader before="Step 1 done — your care areas decided" time="15 minutes for a typical hospital" after="Departments, sub-units and consultation rates your clinicians and front desk can both use" />
+
+## Why a clinician cannot work without this
+
+Before a clinician sees any consultation list, they pass through a **Select a Department** screen. It is not decorative — the department they pick decides which patients they see. If a department has more than one sub-unit, they pick the sub-unit too, and that choice becomes part of the page's address, so the same clinician can keep two units open in two tabs.
+
+At the other end, the triage form's assignment card tells the nurse exactly what a department does: "Patient will appear in this department's consultation queue".
+
+## Three levels, and the one that catches people out
+
+**Department Management** — "Manage your clinic departments, sub-units, and consultation rates." — is three cards, each opening the next.
+
+**Consultation rates hang off the sub-unit, not the department.** That is the part people miss: a department with no sub-unit has nowhere to put a price, so every department you intend to charge for needs at least one sub-unit, even if the department works as a single team.
+
+<Steps>
+  <Step title="Add a department">
+    Select **Add Department**. Give it a **Department Name** — the placeholder's example is "e.g., Internal Medicine" — and optionally a **Department Code** ("e.g., INT-MED") and a **Description**. Set **Status** to **Active**.
+
+    Name it the way your staff say it out loud. Nurses read this list under pressure at triage, so the name on screen should be the name on the door.
+  </Step>
+  <Step title="Add its sub-units">
+    Open the department and select **Add Sub-Unit** — "Manage specialties and sub-units for this department." Each takes a **Sub-Unit Name** ("e.g., Gastroenterology"), an optional **Sub-Unit Code**, a **Description** and a **Status**.
+
+    Add a sub-unit wherever the split changes who should see the patient — **Cardiology → Ward A**. A department that always works as one team still needs one, so that it can carry a rate; name that one after the department itself.
+  </Step>
+  <Step title="Add the consultation rates">
+    Open the sub-unit and select **Add Rate** — "Configure consultation types, pricing, and validity periods." Each rate takes a **Consultation Name** ("e.g., Standard Consultation"), a **Consultation Type** — **Initial Consultation**, **Follow-up**, **Extended Consultation**, **Emergency** or **Telemedicine** — a **Price**, a **Duration (minutes)**, and a **Validity Duration** with its **Validity Unit** in hours, days, weeks or months.
+
+    Validity is what decides how long a paid consultation lasts. Set it to the window in which you would see the patient again without charging twice.
+  </Step>
+  <Step title="Repeat for every unit you run">
+    Cover the whole hospital before you invite staff. It is far cheaper to add a department on a quiet afternoon than to explain to a consultant on their first morning why their clinic is not listed.
+  </Step>
+</Steps>
+
+## How the pieces connect
+
+| Screen | What the department does there |
+| --- | --- |
+| [Triage](/hospital/outpatient/triage) | The nurse ticks the departments — and sub-units — that should see this patient |
+| [Consultation](/hospital/outpatient/consultation) | The clinician picks a department, then a sub-unit, and gets that queue |
+| Payments | The consultation rate on the chosen sub-unit is what the front desk collects |
+
+## Check it worked
+
+- Each department row shows a **Sub-Units** count, and each sub-unit row shows a **Rates** count. A zero in either column is unfinished work.
+- Open **Outpatient → Consultation**. The **Select a Department** screen lists your departments, and a department with two or more sub-units asks for a second choice.
+- Record a test triage and tick a department. The patient appears in that department's consultation queue with a **Pending** status.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="No departments found. Add your first department to get started.">
+    Exactly what it says — the list is empty. Select **Add Department**.
+  </Accordion>
+
+  <Accordion title="I cannot find where to set a price">
+    Rates live on the **sub-unit**, not the department. Open the department, open a sub-unit, then **Add Rate**. If the department has no sub-units, add one first.
+  </Accordion>
+
+  <Accordion title="A clinician opens Consultation and sees nothing to choose">
+    No departments exist yet, or none their role may open. Add them here, then check [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="A patient will not appear at triage">
+    The triage picker only lists patients with a valid consultation payment, and a payment is against a sub-unit's rate. A sub-unit with no rate cannot be paid for.
+  </Accordion>
+
+  <Accordion title="The patient went to the wrong department">
+    Open the triage record from the list, change the assignment on the **Update Triage** form and save. The patient moves to the new department's queue.
+  </Accordion>
+
+  <Accordion title="A department has closed">
+    Set its **Status** to **Inactive** rather than deleting it, so past consultations keep their unit.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="departments" />
+
+## Next step
+
+<Columns cols={2}>
+  <Card title="Step 3 — Wards and beds" icon="/images/icons/bed.svg" href="/hospital/get-started/wards-and-beds">
+    Wards, sub-wards and the bed spaces patients are admitted to.
+  </Card>
+
+  <Card title="Record triage and route a patient" icon="/images/icons/heart-pulse.svg" href="/hospital/outpatient/triage">
+    See a department do its job on the floor.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/triage/new-triage-form.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

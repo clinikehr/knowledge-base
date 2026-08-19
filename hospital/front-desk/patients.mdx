@@ -1,0 +1,137 @@
+---
+title: Register and find patients
+description: "Create a patient record, search the list, import in bulk, and work the self-registration waitlist at a hospital front desk."
+icon: /images/icons/hospital-user.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Front desk and records staff; editing is role-gated" note="Needs the Front desk or Records care area" />
+
+Everything downstream — triage, consultation, admission, dispensing, billing — starts from a patient record. This is the screen where one is created and found.
+
+<Path steps={['Sidebar', 'Front Desk', 'Patients']} />
+
+<TaskHeader before="Nothing — this is usually the first record a hospital creates" time="A minute to register someone" after="A patient record the whole hospital can work from" />
+
+## One screen, two doors
+
+On the hospital navigation this list is reachable from **two** places: **Front Desk → Patients** and **Records → Patient Records**. Open either and **both entries highlight at once**.
+
+That is correct, not a fault. Reception registers patients and the records office manages them, but there is only one patient list, so both service lines get a door onto it. Whichever door you came through, you are looking at the same records.
+
+## Register a patient
+
+<Steps>
+  <Step title="Select New Patient">
+    From the toolbar. The form collects the identity and contact details the rest of the hospital will read.
+  </Step>
+  <Step title="Enter what you have">
+    Take the time to get the name and date of birth right at the counter. Every clinician after you searches on them, and a mistyped name is how one person ends up with two charts.
+  </Step>
+  <Step title="Save">
+    The patient appears in **All Patients** and is immediately available to triage, appointments and admissions.
+  </Step>
+</Steps>
+
+## Find and open a record
+
+**Patients Management** — "Register, view, and manage patient records across your clinic" — opens on the **All Patients** tab. Search it with **Search patients...**, then use the row's **⋯** menu:
+
+- **View details** opens the record.
+- **Edit** changes it, for staff whose role may edit.
+- **Send Consent** sends a consent document to the patient.
+
+The page header carries **Refresh**, **Import**, **Export** and **New Patient**. **Columns** sits with the search box on the table itself, under a **Visible Columns** list.
+
+Six stat cards run above the list — **Total Patients**, **New Patients**, **Active Patients**, **Consultations**, **Triages** and **Top Blood Type** — and an **Analytics** tab breaks your population down under **Gender Distribution**, **Age Distribution**, **Country Distribution** and **Chronic Conditions**. Useful when a service line is arguing for a clinic and needs to know who actually attends.
+
+<Note>
+  A brand-new hospital sees **Your patient registry is empty** rather than a blank table, with three ways forward: **Explore with sample patients**, **Import patients**, or **Add your first patient**. The sample tour takes "About 60 seconds · nothing is saved to your clinic" — a record only becomes real if you choose **Add to my clinic**.
+</Note>
+
+## Work the self-registration waitlist
+
+Patients who register themselves do not go straight onto your list. They arrive as requests, which you find with the **Waitlist** filter. Each row offers two actions:
+
+<Steps>
+  <Step title="Read the request">
+    Check the details are a real person and not a duplicate of someone you already hold.
+  </Step>
+  <Step title="Approve or decline">
+    **Approve request** opens **Approve patient request** and turns the request into an active patient. **Decline request** archives it and removes it from the waitlist — "This does not notify the requester."
+  </Step>
+  <Step title="Decide about the portal, deliberately">
+    The approval dialog carries an **Enable client portal access** checkbox — "Lets them sign in via magic link to view records, book appointments, and message your team." It arrives **already selected**, so approving grants a portal login unless you clear it.
+
+    Creating a record and giving someone a login are two different decisions, and the second is the one with a security consequence. Clear the box for anyone who should be on your list but not signing in.
+  </Step>
+</Steps>
+
+## Import and export
+
+**Import** takes an existing list in bulk, which is how most hospitals arrive. **Export** takes it out again. Both are in the toolbar. Check a handful of imported records by hand before you rely on the batch — a column mapped to the wrong field is far cheaper to catch at ten records than at ten thousand.
+
+<AuditNote action="Opening a patient record" />
+
+## Check it worked
+
+- The new patient appears in **All Patients** and can be found by name.
+- They appear in the picker at [triage](/hospital/outpatient/triage) once a consultation has been paid for.
+- An approved waitlist request has left the **Waitlist** filter and joined the main list.
+- A patient you approved with the portal box cleared cannot sign in to the portal — which is what you intended.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Both Patients and Patient Records are highlighted">
+    Expected. They are two doors onto one list — one for reception, one for the records office.
+  </Accordion>
+
+  <Accordion title="Everything is read-only and there is no Edit">
+    Editing is role-gated, and a user without an editing role gets the read-only view with no error to explain it. Ask an owner or manager to check your role — see [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="A patient I registered is not at triage">
+    Almost always the consultation payment. The triage picker only lists patients who have paid, unless your hospital runs in free-clinic mode.
+  </Accordion>
+
+  <Accordion title="An approved patient cannot sign in to the portal">
+    The **Enable client portal access** box was cleared at approval. Grant access from their record.
+  </Accordion>
+
+  <Accordion title="The Edit item is missing from the ⋯ menu">
+    Same cause as the read-only view — your role may not edit patient records. **View details** stays available.
+  </Accordion>
+
+  <Accordion title="My import brought in the wrong data">
+    Export the list, correct it outside the product, and import the corrected file. Fix the column mapping before you re-run a large batch.
+  </Accordion>
+
+  <Accordion title="There is no Patients entry in my sidebar">
+    Both doors depend on care areas — **Front desk** for **Patients**, **Records** for **Patient Records**. See [Turn on your care areas](/hospital/get-started/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="patient records" />
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card title="The appointment book" icon="/images/icons/calendar-days.svg" href="/hospital/front-desk/appointments">
+    Book the patient you just registered.
+  </Card>
+
+  <Card title="Record triage and route a patient" icon="/images/icons/heart-pulse.svg" href="/hospital/outpatient/triage">
+    Send them to the right department's queue.
+  </Card>
+
+  <Card title="Records" icon="/images/icons/folder-open.svg" href="/hospital/records/overview">
+    The other door onto this list, and what the records office does with it.
+  </Card>
+</Columns>
+
+{/* source of truth: app/u/clinic/patients-management/, components/clinic/patients/ (list, analytics tab, waitlist actions), lib/clinic-nav-registry.ts */}

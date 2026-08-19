@@ -1,0 +1,109 @@
+---
+title: Set up your theatres
+description: "Step 4 of hospital setup — add your operating theatres and decide whether an incomplete safety checklist stops a case or is only recorded."
+icon: /images/icons/clipboard-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager" note="Also needs the Surgical theatre care area, which is off by default" />
+
+This is **step 4 of 5**, and the only one you can skip — a hospital that does not operate does not need it. If you do operate, this page does two jobs: it lists the rooms cases are booked into, and it sets how strictly the surgical safety checklist is enforced.
+
+<Path steps={['Sidebar', 'Settings', 'Theatre']} />
+
+<TaskHeader before="The Surgical theatre care area switched on in Settings → Facility" time="10 minutes, plus a conversation with your governance lead" after="Named theatres to book cases into, and a checklist policy your whole hospital follows" />
+
+<Note>
+  **Surgical theatre is off by default.** If there is no **Theatre** tab in Settings and no **Theatre** group in your sidebar, switch the area on first — see [Turn on your care areas](/hospital/get-started/care-areas).
+</Note>
+
+## Add your theatres
+
+The **Theatres** card is "The rooms cases are booked into." Adding one is a single field, not a dialog: enter the name — the box prompts with "New theatre name, e.g. Theatre 1" — and select **Add**. Name them the way the list is called on the day: **Theatre 1**, **Day Case Theatre**, **Obstetric Theatre**.
+
+Each theatre then carries a status you can change as your estate changes: **Active**, **Maintenance** or **Closed**.
+
+Two cases can never occupy the same theatre at overlapping times. An overlapping booking is refused outright rather than warned about, so the list you see is always a list that can physically run.
+
+Theatres are deliberately optional at booking time. With none created, the card says "No theatres yet. A case can still be booked without one and assigned later." That lets a new hospital start scheduling before its estate is entered — but an unassigned case is a case nobody knows where to send, so do not leave it there.
+
+## The surgical safety checklist
+
+Every case carries the standard **WHO Surgical Safety Checklist (2009)** in three phases, and the phases match the moments a real team already pauses:
+
+| Phase | When it is worked |
+| --- | --- |
+| **Sign in** | Before induction of anaesthesia |
+| **Time out** | Before skin incision |
+| **Sign out** | Before the patient leaves theatre |
+
+Ticking is open to everyone in the room. The checklist is a team instrument, not a surgeon's form, and the person who notices the gap is often not the person holding the knife.
+
+To change the wording, reorder items, retire ones you do not use or add your own, select **Customise the checklist**. Your current items are copied in as the starting point, so you edit rather than rebuild.
+
+## Choose your enforcement policy
+
+One switch on the **Safety checklist** card decides what an **incomplete** phase does: **Require the checklist before a case advances**.
+
+| Switch | What happens on an incomplete phase | Staff see |
+| --- | --- | --- |
+| **Off** (the default) | The gap is shown and recorded, and the case proceeds | "You can continue, and the gap will be recorded." |
+| **On** | The status change is refused until the phase is complete | "This clinic requires the checklist to be completed before continuing." |
+
+Either way the case sheet names the gap precisely — "**Sign in** is incomplete — 2 of 7 items not confirmed" — so nothing is hidden by leaving the switch off.
+
+The product's own advice is worth repeating, because it runs against instinct: most theatres leave this **off** deliberately. A system that refuses to let an operation proceed because a box is unticked tends to get worked around, after which the record is wrong **and** the checklist is theatre. Turn it on only if your governance requires it. That makes this a decision for your clinical governance lead, not one to take at a keyboard.
+
+<Warning>
+  Change this switch deliberately and tell the theatre team. Turning it **on** mid-list will stop cases that were about to advance; turning it **off** removes a stop your team may be relying on.
+</Warning>
+
+## Check it worked
+
+- **Settings → Theatre** lists every theatre you operate, each with a status.
+- Open **Theatre → Theatre List** and select **Book case**. The **Theatre** picker offers your theatres by name instead of only **Unassigned**.
+- Open a booked case. Each checklist phase shows its checked-of-total badge, and an incomplete phase gives the message that matches the policy you chose.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Theatre tab in Settings">
+    The **Surgical theatre** care area is off — it starts that way for every hospital. Switch it on in **Settings → Facility**.
+  </Accordion>
+
+  <Accordion title="The Theatre field on a booking only offers Unassigned">
+    No theatres have been added yet. Add them here; a case already booked can be assigned to a theatre afterwards.
+  </Accordion>
+
+  <Accordion title="A booking was refused for a time the theatre looked free">
+    Another case already overlaps that slot in the same theatre. Overlaps are refused, not warned about — check the list for the same day.
+  </Accordion>
+
+  <Accordion title="A Move to button is disabled on a case">
+    With enforcement on, an incomplete phase stops the case advancing, and the message above the button names the phase and the count. If the checklist is complete, it is a permission — advancing a case is granted separately.
+  </Accordion>
+
+  <Accordion title="Staff can see the theatre list but cannot book">
+    Booking, advancing, cancelling, recording an operation note, signing one and managing theatre setup are six separate permissions. See [Permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="theatre setup" />
+
+## Next step
+
+<Columns cols={2}>
+  <Card title="Step 5 — Invite hospital staff" icon="/images/icons/user-plus.svg" href="/hospital/get-started/invite-team">
+    Bring people in by department, with the right role and permissions.
+  </Card>
+
+  <Card title="Run the theatre list" icon="/images/icons/scissors.svg" href="/hospital/theatre">
+    Book a case, work the checklist and sign the operation note.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/theatre-settings.tsx, lib/theatre/who-checklist.ts, components/clinic/theatre/theatre-case-detail.tsx */}

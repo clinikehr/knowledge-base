@@ -1,0 +1,67 @@
+---
+title: The client chart
+description: "Find everything recorded about one person — history, medications, labs, files, billing and notes — and check them in from the same screen."
+icon: /images/icons/folder-open.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { AuditNote, StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member with access to the client list" />
+
+The chart is the one screen that holds everything recorded about a single person — their details, their visits, what they were prescribed, what was ordered, what they owe and what they have signed. Everything else you do writes into it, so it is the right place to start when you need context before you act.
+
+<Path steps={['Sidebar', 'Clients', 'A client']} />
+
+<AuditNote action="Opening a chart" />
+
+## What is on it
+
+The header carries the name, client type and status badges, date of birth and age, email and phone, with **Edit profile** beside it. Under that sits a row of actions — **Intakes**, **Upload**, **Message**, and a **⋯** menu whose **Change status** option moves the person between **Active**, **Inactive**, **Prospective** and **Archived**.
+
+| Tab | What is on it |
+| --- | --- |
+| **Overview** | **Balance**, **Invoices**, **Consults** and **Next Appt**; the current check-in state; **Current Medications** and **Recent Diagnoses** |
+| **Billing** | Invoices and payments for this person |
+| **Measures** | Recorded measurements over time |
+| **History** | The visit and activity trail |
+| **Medications** | Prescriptions and e-prescribing — see [Prescribe and e-prescribe](/clinic/clinical/prescriptions) |
+| **Labs** | Test results filed against this person |
+| **Files** | The health-records vault and shared forms |
+
+A right-hand sidebar stays with you across tabs: **Billing** (Balance, Total Paid, Billing Type), **Upcoming** appointments, **Client Info** and **Contacts**.
+
+## Sticky notes and status notes
+
+A floating dock sits on the edge of the chart: two draggable vertical tabs, **Sticky Notes** in amber and **Status Notes** in blue, each with a count badge. Pinned sticky notes also render as dismissible cards on the chart itself.
+
+To add one, open **Sticky Notes** and fill in **Title**, **Note**, a **Colour** and a **Priority**, then decide whether to pin it — the toggle reads "Keep this note above the others" — and select **Add note**.
+
+<Note>
+  **A sticky note belongs to the person, not the visit.** It follows them into every future visit, so it is the right place for "always needs a chaperone" or "prefers afternoon appointments" — and the wrong place for something that only matters today. Anything clinical belongs in a [clinical note](/clinic/clinical/notes).
+</Note>
+
+## Check someone in from the chart
+
+**Overview** carries a check-in card. When nobody is checked in it reads **Not checked in** with a **Check in** button; once they are, it shows the arrival time, who they are with and where, and offers **View** and **Check out**.
+
+Selecting **Check in** opens the **Check In Patient** sheet: pick the check-in time, choose an appointment (or leave it on **No appointment**), add **Visit items** — a service, a lab test or a custom label — set **Assign to**, and enter a **Reason for visit**.
+
+The sheet refuses to save an empty visit: "Add a reason, appointment, or at least one item". The full workflow, including checking out and issuing the visit record, is in [Check a client in and out](/practice/daily/check-in).
+
+## Where the chart gets its content
+
+| You want to | Go to |
+| --- | --- |
+| Add a new person | [Manage your client list](/practice/daily/clients) |
+| Book them in | [Manage the appointment book](/practice/daily/appointments) |
+| Document an appointment | [Write a clinical note](/clinic/clinical/notes) |
+| Prescribe something | [Prescribe and e-prescribe](/clinic/clinical/prescriptions) |
+| Send a form to be signed | [Send a document for signature](/clinic/clinical/documents) |
+| Invoice them | [Invoices](/clinic/revenue/invoices) |
+| See who opened a record | [Audit log](/platform/security/audit-log) |
+
+<StillStuck />
+
+{/* source of truth: components/clinic/clients-management/client-management-form.tsx, components/clinic/clients-management/client-profile-sidebar.tsx, components/clinic/clients-management/patient-notes-dock.tsx, lib/clinic-nav-registry.ts */}

@@ -1,0 +1,86 @@
+---
+title: The executive dashboard
+description: "Read the whole hospital on one screen — activity, money and patient growth — then open the report or the unit behind any figure."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager, and staff granted access to figures" />
+
+**Executive** is the hospital at a glance, across every department at once: headline tiles at the top, then a card for each report your hospital can open. It is a page you read, not a page you act on — its job is to tell you where to look, and then hand you off.
+
+<Path steps={['Sidebar', 'Executive', 'Executive']} />
+
+## The tiles, and where each one leads
+
+| Tile | What it means | Where to act |
+| --- | --- | --- |
+| **Appointments today** | Booked activity for today across the hospital | [Front desk](/hospital/front-desk/overview) |
+| **Appointments this week** | The week's booked load, for staffing | [Front desk](/hospital/front-desk/overview) |
+| **Collected this month** | Money that has actually arrived | [Billing](/clinic/revenue/billing) |
+| **Outstanding** | Invoiced and not yet paid | [Billing](/clinic/revenue/billing) |
+| **Patients** | The size of your patient list | [Patients](/hospital/front-desk/patients) |
+| **New this month** | Patients registered this month | [Patients](/hospital/front-desk/patients) |
+
+Every tile is also a link to the report that explains it, so a figure you do not believe is one selection away from its workings. The two money tiles answer different questions and are routinely confused: **Collected this month** is receipts, **Outstanding** is debt.
+
+Money is shown in your hospital's own currency, taken from your billing settings — see [Currency](/platform/settings/currency).
+
+## An em dash is not a zero
+
+Tiles show **—** while a figure is still loading, and only ever show a number once the real value has arrived. A zero on this screen is a true zero.
+
+The same honesty applies to permissions. If your role is not allowed to see a figure, you get a dash or the row is simply not shown — you are never given a fabricated zero standing in for something you cannot see. If a colleague quotes a number you cannot find, that is a permissions difference, not a discrepancy in the data. See [Staff permissions](/platform/team/permissions).
+
+## The Reports list
+
+Below the tiles, **Reports** lists every report available to your hospital with a one-line description of what each covers. It is the same set as the Analytics page, filtered the same way — by your plan, your care areas and your own permissions — so turning a care area off removes its report from here too.
+
+For what each report contains and why the list differs between hospitals, see [Hospital reports and analytics](/hospital/executive/analytics).
+
+## Where to go next
+
+The dashboard is aggregates only: no patient names, no clinical detail, nothing to act on. For the work itself, go to the unit:
+
+- The day's queue and arrivals — [Front desk](/hospital/front-desk/overview)
+- Beds, admissions and occupancy — [Wards](/hospital/inpatient/wards)
+- Today's list and case flow — [Theatre](/hospital/theatre)
+- Samples and turnaround — [Laboratory](/hospital/diagnostics/laboratory)
+- Invoices, payments and debt — [Billing](/clinic/revenue/billing)
+
+<AuditNote action="Opening the executive dashboard" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The executive overview could not be loaded.">
+    A temporary read failure. Reload the page. If it keeps happening, note the time — support can match it against your audit log.
+  </Accordion>
+
+  <Accordion title="A tile has shown an em dash for a while">
+    The figure has not arrived, or you are not permitted to see it. Reload first; if the dash persists while a colleague sees a number, compare roles under [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="A whole row is missing compared with what a colleague sees">
+    Figures degrade by permission rather than erroring, so a row you may not see is hidden rather than blanked. This is deliberate.
+  </Accordion>
+
+  <Accordion title="A report I expected is not in the list">
+    Reports follow your plan, your care areas and your permissions. See [Hospital reports and analytics](/hospital/executive/analytics), which lists which report needs which care area.
+  </Accordion>
+
+  <Accordion title="Collected this month does not match the bank">
+    It counts payments recorded in ClinikEHR, not settlements into your account. Open the Revenue report and compare its **Payments** scope against your provider's payouts.
+  </Accordion>
+
+  <Accordion title="Ward or theatre activity is not on the dashboard">
+    The tiles are hospital-wide headlines. Occupancy, length of stay and case volume live in their own reports and on the unit screens — [Wards](/hospital/inpatient/wards) and [Theatre](/hospital/theatre).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/analytics/executive-content.tsx, lib/analytics/report-catalog.ts */}

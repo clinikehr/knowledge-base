@@ -1,0 +1,113 @@
+---
+title: Set up wards and beds
+description: "Step 3 of hospital setup — create wards, sub-wards and bed spaces so patients can be admitted and charted."
+icon: /images/icons/bed.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager" note="Also needs the In-patient care area switched on" />
+
+This is **step 3 of 5**. Your ward estate is three levels deep — **wards contain sub-wards, and sub-wards contain bed spaces** — and a patient can only be admitted to a bed space that exists. Skip this step and your ward staff open **Ward Admissions** to nothing.
+
+<Path steps={['Sidebar', 'Settings', 'Ward Management']} />
+
+<TaskHeader before="Steps 1 and 2 done, with the In-patient care area switched on" time="20 minutes for a small hospital" after="A bed grid your nurses can admit into and chart on" />
+
+## The three levels
+
+The **Ward Management** card — "Manage your clinic wards, sub-wards, and bed spaces." — builds all three, in order. A sub-ward needs its ward, and a bed space needs its sub-ward.
+
+| Level | What it is | Example |
+| --- | --- | --- |
+| **Ward** | The named unit staff talk about | Medical Ward |
+| **Sub-ward** | A bay, side room or wing inside it | Bay 1 |
+| **Bed Space** | The place a patient occupies | Bed 3 |
+
+## Build the estate
+
+<Steps>
+  <Step title="Add each ward">
+    Select **Add Ward** and give it a **Ward Name**, a **Description**, a **Location** and a **Status** of **Open** or **Closed**. Name the ward as your staff name it — the ward list is how a nurse coming on shift orients themself, so do not fold two physically separate wards into one entry to save typing.
+  </Step>
+  <Step title="Add the sub-wards inside it">
+    Open the ward and select **Add Sub-ward**. Each one takes a **Sub-ward Name**, a **Type** — **Single**, **General**, **Double**, **Room**, **VIP**, **Suite** or **Penthouse** — and a **Capacity**, "Maximum number of beds in this sub-ward."
+
+    Even a ward with one bay needs one sub-ward, because ward staff must choose a ward **and** a sub-ward before any beds appear. A single sub-ward named after the ward itself is a perfectly good answer for a small unit.
+  </Step>
+  <Step title="Add the bed spaces">
+    Open the sub-ward and select **Add Bed Space**. Each takes a **Bed Space Number** and **Bed Space Name**, a **Type** — **Cot**, **Bed** or **Bunk** — and a **Status**: **Available**, **Occupied**, **Reserved** or **Under Maintenance**.
+
+    Match the labels on the wall. Bed numbers are what get quoted on the phone.
+  </Step>
+  <Step title="Walk it as a nurse would">
+    Open **Inpatient → Ward Admissions** and go **Select Ward** → **Select Sub-ward**. The bed grid should appear with every bed available.
+  </Step>
+</Steps>
+
+## What ward staff see
+
+**Ward Admissions** walks the same levels you just built and will not skip one.
+
+- **Select Ward** — "Select a ward to view its sub-wards". With nothing created at all, it reads **No wards available** / **Please contact your administrator**. That message is aimed at you: it means this page has not been done.
+- **Select Sub-ward** — until a ward is chosen this panel says **Select a ward first**, and trying to go further is refused with "Please select a ward first." A ward with no sub-wards reads **No sub-wards available**.
+- The bed grid then appears, above it a stats strip — **Bed Status**, **Patient Status**, **Occupancy Rate** and **Availability**.
+
+Each bed is a tile carrying its number and status. Selecting one opens **Bed \{number\} Details**, which is where the occupant's story lives: **Patient**, **Admitted**, **Diagnosis**, **Attending Doctor**, **Notes** and **Last Updated**, plus **New Vitals**, **View Patient** and the estate controls **Mark as Available**, **Mark for Maintenance** and **Reserve Bed**.
+
+## Check it worked
+
+- **Settings → Ward Management** lists every ward, each with its sub-wards and their bed spaces.
+- **Inpatient → Ward Admissions** shows a bed grid after you pick a ward and a sub-ward, and the **Availability** tile matches the number of beds you created.
+- Admit one test patient from a consultation, open the bed and confirm the details are there, then discharge them again.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Ward Admissions says No wards available">
+    Nothing has been created yet. Build the estate here — ward, then sub-ward, then bed spaces.
+  </Accordion>
+
+  <Accordion title="I picked a ward but no beds appeared">
+    You have not picked a sub-ward. The panel says **Select a ward first** until both levels are chosen, and the page refuses to go further with "Please select a ward first." If the ward genuinely has no sub-wards, add one.
+  </Accordion>
+
+  <Accordion title="There is nowhere to admit a patient to">
+    Bed spaces are the last level and the one most often forgotten. A ward with sub-wards but no bed spaces looks configured and admits nobody.
+  </Accordion>
+
+  <Accordion title="I get a permission error adding a ward">
+    You will see "Database permission issue detected" — "Please contact your administrator to grant the necessary database permissions or ask them to create the ward for you." Ask an owner to create it.
+  </Accordion>
+
+  <Accordion title="There is no Ward Management in Settings">
+    Either the **In-patient care** care area is off — see [Turn on your care areas](/hospital/get-started/care-areas) — or the workspace is not on the Enterprise plan.
+  </Accordion>
+
+  <Accordion title="A ward is closed for refurbishment">
+    Set its **Status** to **Closed** rather than deleting it. Its history stays attached, and you will want the beds back.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="wards and beds" />
+
+## Next step
+
+<Columns cols={2}>
+  <Card title="Step 4 — Set up your theatres" icon="/images/icons/clipboard-check.svg" href="/hospital/get-started/theatre-setup">
+    Theatres and the surgical safety checklist.
+  </Card>
+
+  <Card title="Admit, chart and discharge" icon="/images/icons/bed-double.svg" href="/hospital/inpatient/wards">
+    What your ward staff do on the estate you just built.
+  </Card>
+
+  <Card title="The nursing station" icon="/images/icons/user-doctor.svg" href="/hospital/inpatient/nursing-station">
+    Observations, the drug round and shift handover.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/ward-settings.tsx, components/clinic/ward-admissions/ (ward-select.tsx, bed-grid.tsx, ward-stats.tsx), components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

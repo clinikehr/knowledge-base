@@ -1,0 +1,96 @@
+---
+title: Reports and analytics
+description: "Open a report, choose its period and scope, export the data, and understand why your workspace sees the reports it does."
+icon: /images/icons/chart-line.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, Manager, and staff granted access to figures" />
+
+**Analytics** is the menu of every report your practice can open. It is not a menu in the sidebar — the sidebar entry is a single link, and the page it opens _is_ the menu.
+
+<Path steps={['Sidebar', 'Analytics']} />
+
+The page tells you how many you have: "_n_ reports available for this clinic. Each one covers a period you choose and can be exported." They are grouped under **Clinical**, **Operations** and **Money**, each card naming the report and what it covers.
+
+## Which reports you get
+
+Three things filter the list: your plan, the modules you use, and your own permissions.
+
+| Report | Covers | Scopes |
+| --- | --- | --- |
+| **Revenue** | Invoices, payments and what is still outstanding | **Invoices** · **Payments** |
+| **Appointments** | Volume, completion and no-show rate | — |
+| **Patients** | New versus returning, and how the list is growing | — |
+| **Consultation** | Encounter volume, by status | **Consultations** · **Telehealth** · **Notes** |
+| **Staff** | Headcount by role and activity | — |
+| **Workload** | Cross-department load and peak hours | — |
+| **Inventory** | Valuation, turnover and expiry risk | — |
+| **Predictive Analysis** | Demand, revenue and stock forecasts | — |
+| **Memberships** | Sign-ups, cancellations and recurring revenue | — |
+| **Store** | Storefront orders and takings | — |
+| **Insurance Claims** | Electronic claims: volume, status and what has been paid | — |
+| **e-Prescribing** | Prescriptions transmitted, and how many landed | — |
+
+The last two are specific to solo and team plans, because the [electronic claims](/practice/money/insurance-claims) and [e-prescribing](/platform/integrations/eprescribe) workflows they report on are too.
+
+A report only appears once the module behind it is in use, and a report you are not permitted to see is simply not listed. If the page says **No reports available**, nothing is broken — there is nothing yet for a report to describe.
+
+<Note>
+  A solo or team practice seeing about nine reports is deliberate, not a missing feature: a report is a promise that the data behind it exists, and a practice has no ward, no theatre and no nursing rota to report on. Hospitals get six further reports, documented in [Hospital reports and analytics](/hospital/executive/analytics).
+</Note>
+
+## Inside a report
+
+Every report opens in the same workbench, so learning one teaches you all of them:
+
+| Part | What it does |
+| --- | --- |
+| Title | The report's name |
+| Period select | **Last 30 days**, **Last 90 days** or **Last 12 months** |
+| Scope tabs | Present only on reports that have them, e.g. **Invoices** / **Payments** |
+| Summary tiles | The headline figures for the chosen period |
+| Chart over time | The same figures plotted across the period |
+| Breakdown chart | The composition — by category, status, department or staff member |
+| Data table | The rows behind the charts, with **Export** |
+
+Money is shown in your practice's own currency — see [Currency](/platform/settings/currency).
+
+Some reports are snapshots rather than periods. Those have no period select and say **As it stands now** in its place, and their footer reads "as it stands now" rather than naming a range. A stock-at-risk figure has no meaningful "last 90 days"; it is either at risk today or it is not.
+
+## Export
+
+**Export** on the data table takes the rows currently shown — the period and scope you selected, not the whole dataset. Set both before exporting, or you will reconcile the wrong numbers.
+
+<AuditNote action="Opening a report" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="This report could not be loaded.">
+    A temporary read failure. Reload the page, or choose a shorter period and try again.
+  </Accordion>
+
+  <Accordion title="A report vanished from the list">
+    Two usual causes: the subscription lapsed and every gate fell back to Free, or a permission was changed. See [Change your plan](/platform/plans/change-plan) and [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="There is no period select">
+    That report is a snapshot and shows **As it stands now**. There is no range to choose.
+  </Accordion>
+
+  <Accordion title="The export has fewer rows than I expected">
+    It exports what is on screen for the selected period and scope. Widen the period, or switch the scope tab, then export again.
+  </Accordion>
+
+  <Accordion title="Selecting Analytics opens a page of cards, not a menu">
+    That page is the menu. Each card opens a report.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: lib/analytics/report-catalog.ts, components/clinic/dashboard/analytics/analytics-index.tsx, components/clinic/dashboard/analytics/report-workbench.tsx */}

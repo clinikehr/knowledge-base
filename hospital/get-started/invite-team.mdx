@@ -1,0 +1,153 @@
+---
+title: Invite hospital staff
+description: "Step 5 of hospital setup — bring people in unit by unit, scope what each role sees, and grant the acts a hospital keeps separate."
+icon: /images/icons/user-plus.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner (inviting); owner or manager for navigation and permissions" />
+
+This is **step 5 of 5**, the last one, and the one to do only after the first four. A hospital is staffed **by unit**, so the departments, wards and theatres a person will work in should already exist when they arrive.
+
+<Path steps={['Sidebar', 'Settings', 'Staff & Teams']} />
+
+<TaskHeader before="Steps 1 to 4 done, and a list of who works in which unit" time="2 minutes per person" after="Staff who sign in to their own unit's queues, able to do their job and nothing more" />
+
+## Invite a team member
+
+On the **Staff Members** card, select **Invite Staff**. The sheet that opens is titled **Add team member** and runs in five steps:
+
+<Steps>
+  <Step title="Profile">
+    **First name**, **Last name** and the email the invitation goes to. Use a work address — it becomes their sign-in.
+  </Step>
+  <Step title="Specialty">
+    "Choose roles for \{their name\}." On a hospital this is what puts a consultant in the right unit's pickers. **Administrative roles** are grouped separately.
+  </Step>
+  <Step title="Supervisor">
+    Who they report to — what makes countersigning meaningful, because a junior's work then has a named senior behind it.
+  </Step>
+  <Step title="Permissions">
+    The toggles that go with the role. The hospital-specific acts are **not** set here — see below.
+  </Step>
+  <Step title="Review">
+    **Changes to your plan** shows what this person costs before you commit. Select **Send invitation**.
+  </Step>
+</Steps>
+
+They receive an email with login instructions and a temporary password, and must reset it on first sign-in.
+
+Work unit by unit rather than role by role. That is how you notice the ward has no night nurse before your first live day.
+
+## Seats cost money
+
+<Warning>
+  Staff seats on the Clinic & Hospital edition are **billed**. The **Staff Members** card shows where you stand — "\{n\} of \{limit\} seats used", with the per-seat monthly fee beside it — and every billable seat is charged from the first one. Enterprise is uncapped but still charged per seat, so a hospital that invites its whole payroll on day one will see it on the next invoice.
+</Warning>
+
+Step 5 spells this out under **Recurring cost** — "Added to your monthly billing cycle" — and warns that "A prorated charge will be applied immediately for the remaining time in your current billing period."
+
+Three roles carry a **Free** badge in step 2 and count towards nothing: **supervisor**, **biller** and **scheduler**. Use them — a ward clerk who only schedules does not need a clinical seat. Full detail: [Staff seats](/platform/plans/seats).
+
+## Scope what each role sees
+
+Getting the role right is half the job. The other half is making sure a lab scientist never opens the ward round.
+
+<Path steps={['Sidebar', 'Settings', 'Role Navigation']} />
+
+Two cards work together. **Role-based navigation** — "Show each staff member only the parts of the hospital their role works in" — holds the master switch, **Scope navigation by role**. Below it, the **Role navigation** editor takes a role on the left and its modules on the right, grouped exactly as your sidebar is, then **Save** or **Reset to default**.
+
+Three things to know before you use it:
+
+- **The first ticked module is where that role lands** — "Lands on \{module\} after sign-in." A pharmacist should land in the pharmacy.
+- **Owners, managers and clinicians are never restricted.** That is why an owner's sidebar is the reference when someone else's looks wrong.
+- **This is navigation, not security**: "it is not a security control. What each person may read and write is still decided by their permissions." Settings and the audit log stay reachable for every role.
+
+Changes reach signed-in staff within five minutes. Set this before your first live day.
+
+## Grant the acts a hospital keeps separate
+
+Role Navigation governs **pages**. Permissions govern **acts** on a page someone can already open — and these are set **after** the invite, not during it. On the **Staff Members** list, open the person's row menu and choose **Permissions**: "What \{they\} may do on the pages their role already opens."
+
+For a hospital it has three sections:
+
+| Section | Acts you can grant |
+| --- | --- |
+| **Consultation** | **Sign and lock a consultation** · **Countersign a colleague's note** · **Admit a patient to a ward** |
+| **Ward** | **Give a medication** · **Record observations** · **Discharge a patient** · **Amend the problem list** · **Change or stop a medication** |
+| **Theatre** | **Book and reschedule cases** · **Advance a case through theatre** · **Cancel a case** · **Record the operation note** · **Sign the operation note** · **Manage theatres and the safety checklist** |
+
+The pattern to notice: **doing** and **signing** are always separate, and so are **giving** a drug and **changing** the order for it. Full detail: [Permissions](/platform/team/permissions).
+
+<Warning>
+  **Saving this sheet starts enforcing.** Until you save it, a staff member is unrestricted and no permission checks apply to them. From the first save, they can only do what is switched on — so read the whole sheet before saving, not just the act you came to change.
+</Warning>
+
+<Note>
+  The **Theatre** section only appears while the **Surgical theatre** care area is on. If it is missing, that is why.
+</Note>
+
+## Check it worked
+
+- Each new person is on the **Staff Members** list with the role you gave them, and can sign in.
+- Your seat count matches the number of billable people you meant to add.
+- Ask one person from each unit to describe their sidebar: their own unit's modules, opening on the page they actually start the day with.
+- A permission you switched off is genuinely refused when that person tries the act.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The invitation never arrived">
+    Ask them to check spam, then re-send from the staff list. See [Invite staff](/platform/team/invite-staff).
+  </Accordion>
+
+  <Accordion title="I have used all my seats">
+    You will see "You've used all \{n\} seats on your plan." Either move someone non-clinical onto a free role, or select **View plans**.
+  </Accordion>
+
+  <Accordion title="The hospital permissions were not in the invite wizard">
+    Correct — they are not. Step 4 only sets the role's own toggles. Open the person's row menu on the staff list and choose **Permissions**.
+  </Accordion>
+
+  <Accordion title="A staff member lands on the wrong page">
+    Their role's first ticked module in **Role navigation** is where they land. Reorder it.
+  </Accordion>
+
+  <Accordion title="Role navigation seems to do nothing">
+    The master switch, **Scope navigation by role**, is off — the editor warns you when it is. Configure the roles first, then turn it on.
+  </Accordion>
+
+  <Accordion title="An owner cannot reproduce what a staff member is missing">
+    Owners, managers and clinicians bypass role navigation and will never see the restriction. Check the role's ticked modules directly.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="inviting hospital staff" />
+
+## Where to go next
+
+That is the setup sequence finished. Before you announce the switch, walk one patient end to end — register, triage, consult, order a test, dispense, bill. Every hand-off that breaks is a care area, a department or a permission, and all three are cheap to fix on a quiet afternoon.
+
+<Columns cols={2}>
+  <Card title="Roles" icon="/images/icons/id-badge.svg" href="/platform/team/roles">
+    What each role is for, and role-based navigation in full.
+  </Card>
+
+  <Card title="Permissions" icon="/images/icons/sliders.svg" href="/platform/team/permissions">
+    Every grantable act, and how denials are recorded.
+  </Card>
+
+  <Card title="The front desk" icon="/images/icons/concierge-bell.svg" href="/hospital/front-desk/overview">
+    Where your hospital starts its day.
+  </Card>
+
+  <Card title="Hospital setup overview" icon="/images/icons/hospital.svg" href="/hospital/get-started">
+    The whole sequence, end to end.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, staff-permissions-sheet.tsx, role-scoped-nav-setting.tsx, role-navigation-settings.tsx, lib/edition-staff-roles.ts */}

@@ -1,0 +1,133 @@
+---
+title: Billing, plans and taking payment
+description: "Set your currency and tax rate, manage your subscription, connect a card processor, and put your bank details on invoices."
+icon: /images/icons/credit-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Currency, tax rate and the free-clinic switch are owner-only" />
+
+Three tabs sit under **BILLING**, and they answer three different questions. **Billing & Plans** is what you pay ClinikEHR and how your money is denominated. **Online Payments** is how a customer pays you by card. **Payment Details** is what prints on an invoice when someone is paying you by transfer.
+
+<Path steps={['Sidebar', 'Settings', 'Pharmacy Billing', 'Billing & Plans']} />
+
+<TaskHeader
+  before="Your bank details, and your business registration if you are connecting a card processor"
+  time="Ten minutes for the first pass"
+  after="A currency set, a plan active, and a way for customers to pay you"
+/>
+
+## Set your currency and tax rate
+
+**Billing & Plans** carries four controls, all owner-only:
+
+| Control | What it does |
+| --- | --- |
+| **Currency** | "Currency for all transactions. Search by name or code." |
+| **Tax Rate (%)** | "Applied to invoices and receipts." |
+| **Free Clinic Mode** | Switches the workspace to operating without charging |
+| **Flat Rate Fee** | A single fixed charge in place of itemised pricing |
+
+<Steps>
+  <Step title="Choose your currency first">
+    A pharmacy defaults to **Naira**. Search the picker by name or code and select yours.
+  </Step>
+
+  <Step title="Enter your tax rate">
+    Enter the percentage applied to invoices and receipts. Leave it at zero if you do not add tax at the counter.
+  </Step>
+
+  <Step title="Save">
+    Prices you enter from now on are in the currency you chose.
+  </Step>
+</Steps>
+
+Two things about currency are worth knowing before you change it.
+
+**It picks your payment provider.** Naira routes card payments to Paystack; every other currency routes to Stripe. Changing currency therefore changes which connection you need on the **Online Payments** tab.
+
+**It does not re-price anything already recorded.** Existing prices, past sales and issued invoices keep the numbers they were saved with — only the symbol in front of them changes. Set your currency before you price your catalogue, not after. See [Currency](/platform/settings/currency).
+
+## Connect a card processor
+
+<Path steps={['Sidebar', 'Settings', 'Payment processing', 'Online Payments']} />
+
+This tab is how **customers pay you**. It is entirely separate from how you pay ClinikEHR for your subscription — those two are often confused, and they use different accounts.
+
+<Steps>
+  <Step title="Pick the connection your currency needs">
+    **Stripe Connect** for most currencies, **Paystack Connect** for Naira.
+  </Step>
+
+  <Step title="Enter your business details">
+    For Paystack that is your business name, your bank from the picker, and your account number — the field prompts you to "Enter 10-digit NUBAN".
+  </Step>
+
+  <Step title="Finish on the provider's site">
+    You are handed to the provider to verify the business, then returned here. The tab shows the connection as active when it is done.
+  </Step>
+</Steps>
+
+## Put your bank details on invoices
+
+<Path steps={['Sidebar', 'Settings', 'Payment processing', 'Payment Details']} />
+
+Not every customer pays at the counter. An account customer or an institutional buyer gets an invoice and pays it by transfer, and this tab is what tells them where to send the money.
+
+<Steps>
+  <Step title="Select Add payment details">
+    Choose a **Type** — a bank account, Cash App, Venmo and so on.
+  </Step>
+
+  <Step title="Give it a label">
+    Something a customer will recognise on the page, such as "GTBank Business Account".
+  </Step>
+
+  <Step title="Add the fields">
+    **Fields** are repeatable pairs of **Label** and **Value** — account name, account number, sort code, whatever that method needs. Add as many as the method requires.
+  </Step>
+
+  <Step title="Turn it on">
+    Each entry has its own toggle. Only the entries you switch on are printed.
+  </Step>
+</Steps>
+
+Enabled entries appear on **invoice PDFs and invoice emails while a balance is due**, and drop off once the invoice is settled — so a paid invoice does not keep advertising your account number. See [Billing and invoices](/pharmacy/money/billing).
+
+## Check it worked
+
+- **Billing & Plans** shows your chosen currency, and a fresh receipt prints its symbol.
+- **Online Payments** shows the connection as active, and a test payment link opens the provider's checkout.
+- Send yourself an invoice with a balance due. Your enabled payment details appear on the PDF under the amount owed.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Currency and Tax Rate will not change">
+    They are owner-only. A manager and an accountant see the fields but cannot edit them. Ask the owner.
+  </Accordion>
+
+  <Accordion title="I changed currency and my old prices look wrong">
+    Nothing was converted — only the symbol changed. Re-price the affected catalogue items, and read past sales as being in the old currency.
+  </Accordion>
+
+  <Accordion title="Stripe is offered but I need Paystack">
+    The provider follows your currency. Set **Currency** to Naira on **Billing & Plans**, then return to **Online Payments**.
+  </Accordion>
+
+  <Accordion title="My bank details are not on the invoice">
+    Check the entry's own toggle is on, and that the invoice still has a balance due — settled invoices do not print payment details.
+  </Accordion>
+
+  <Accordion title="Tax is not appearing on receipts">
+    Confirm **Tax Rate (%)** is saved as a number above zero, then ring a new sale. Receipts already printed do not change.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/billing-settings.tsx, components/clinic/dashboard/settings/online-payments-settings.tsx, components/clinic/dashboard/settings/payment-details-settings.tsx, lib/currencies.ts */}

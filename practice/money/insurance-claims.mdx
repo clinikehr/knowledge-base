@@ -1,0 +1,109 @@
+---
+title: File insurance claims
+description: "Add payers, check a client's eligibility, then create, submit and reconcile electronic insurance claims from your unbilled appointments."
+icon: /images/icons/shield-halved.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owners, managers and billers" note="Blocked on the Free plan — the upgrade prompt names Starter." />
+
+Insurance in a solo or team practice is electronic end to end: you add the payers you bill, enrol your providers with them, check a client's cover before the visit, and turn appointments you have not billed yet into real claims that are transmitted, tracked and reconciled.
+
+<Path steps={['Sidebar', 'Insurance']} />
+
+<TaskHeader
+  before="At least one payer added and one provider enrolled with it"
+  time="About half an hour to set up; a couple of minutes per batch of claims after that"
+  after="Submitted claims you can follow through to payment or denial"
+/>
+
+The job in order: add payers → enrol providers → record coverage → check eligibility → open unbilled appointments → create and submit claims → reconcile payments. The panel has tabs for **Unbilled appointments**, **Claims**, **Payments** and **Analytics**, over a stats bar counting **Draft**, **In Progress**, **Paid** and **Denied**.
+
+## Set up payers and enrollment
+
+<Steps>
+  <Step title="Fill in your insurance profile">
+    Go to **Settings** → **Insurance**. **Insurance Profile** holds your practice's billing identity, and everything else reads from it.
+  </Step>
+  <Step title="Add the payers you bill">
+    On **Payers**, open the payer search sheet — "Search by payer name, ID, or alias (e.g. Aetna, Blue Cross, 62308)…" — and add each one. Afterwards you can switch a payer active or remove it.
+  </Step>
+  <Step title="Enrol each provider with each payer">
+    On **Enrollment**, create an enrollment, submit the draft, then sync its status. Upload any enrollment documents the payer asks for and complete the tasks it raises. Transaction types are handled separately and cover claim status, professional claims, eligibility and remittance.
+
+    This is the step people skip and the one that blocks everything: a payer accepts nothing from a provider it has not enrolled, however correct the claim is.
+  </Step>
+</Steps>
+
+## Record coverage and check eligibility
+
+On the client's record, add their cover — "Add the client's insurance coverage to enable eligibility checks and claims." Once it is saved you can run an eligibility check, and the result shows as an **Eligible** or **Ineligible** badge.
+
+Check before the appointment, not after: an **Ineligible** badge on the morning of the visit is a conversation about self-pay, and the same badge a fortnight later is unpaid work.
+
+<Warning>
+  **Create and submit claims** transmits to the payer immediately — there is no review step between the button and the payer. Eligibility checks and claim submissions are also charged per use, and the rate depends on your plan, so a mistaken batch costs money as well as rework. Use **Create claims** while you are learning. See [Plans](/platform/plans/overview).
+</Warning>
+
+## Create the claims
+
+<Steps>
+  <Step title="Open Unbilled appointments">
+    The tab lists appointments with no claim against them. Select the ones you are billing.
+  </Step>
+  <Step title="Choose how to create them">
+    The split button offers **Create claims**, which produces drafts for you to read first, and **Create and submit claims**, which creates and sends them in one action.
+  </Step>
+  <Step title="Work the Claims tab">
+    After either action the view jumps to **Claims**. Submit any drafts from there and watch the status move through the stats bar.
+  </Step>
+</Steps>
+
+## Reconcile what the payer sends
+
+The **Payments** tab is where remittances land. Record what actually arrived against the claims it covers, choosing the method — **Check**, **EFT / ACH**, **Card** or **Other**. A claim showing **Paid** with nothing reconciled against it is money you have not received yet.
+
+**Analytics** shows the pipeline as a whole: how much you are submitting, how much is being denied, and how long each payer takes.
+
+## Check it worked
+
+- Every appointment you meant to bill has left **Unbilled appointments**.
+- Each new claim appears on **Claims** with a status and the payer's name.
+- The stats bar totals match what you submitted.
+- When money arrives, the claim is both **Paid** and reconciled on **Payments**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The payer rejected the claim straight away">
+    Usually enrollment rather than coding — the payer does not recognise that provider for that transaction type. Go to **Settings** → **Insurance** → **Enrollment**, submit the enrollment and sync its status.
+  </Accordion>
+
+  <Accordion title="The eligibility check says Ineligible">
+    Check the member number, the payer and the date of birth on the client's coverage; one wrong digit reads as no cover. If the details are right, the cover has genuinely lapsed — raise an ordinary [invoice](/clinic/revenue/invoices) instead.
+  </Accordion>
+
+  <Accordion title="I removed a payer and it is still listed">
+    A payer with claims against it is deactivated rather than deleted: "This payer has existing claims and will be deactivated (not deleted)." That keeps your claim history readable. It stops appearing on new claims either way.
+  </Accordion>
+
+  <Accordion title="I submitted a batch by mistake">
+    Submission cannot be recalled. Follow the claims on **Claims** and settle the outcome with the payer. Use **Create claims** in future so there is a draft to read first.
+  </Accordion>
+
+  <Accordion title="Insurance is missing from my sidebar">
+    It is blocked on the Free plan, and the upgrade prompt names **Starter**. If the plan is right and you still cannot open it, it is your role — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="Nothing appears under Unbilled appointments">
+    Only completed appointments with no claim against them are listed. If yours are still open, close them off first — see [Appointments](/practice/daily/appointments).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a claim" />
+
+{/* source of truth: components/clinic/insurance-management/insurance-content.tsx, components/clinic/insurance-management/payments-tab.tsx, components/clinic/dashboard/settings/insurance-settings.tsx, components/clinic/dashboard/settings/payer-search-sheet.tsx */}

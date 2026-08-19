@@ -1,0 +1,122 @@
+---
+title: Inventory rules and alerts
+description: "Set expiry alert horizons, decide whether the till may sell what is not booked in, require expiry dates on new lots, and use the reset safely."
+icon: /images/icons/boxes-stacked.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="The Danger Zone is owner-only" />
+
+The **Inventory** tab — "Expiry alerts, dispensing enforcement and inventory data controls" — is where you set the rules the till and the receiving desk obey. Nothing here is about a single product; it is about how strict the system is with everyone.
+
+<Path steps={['Sidebar', 'Settings', 'Inventory', 'Inventory']} />
+
+<TaskHeader
+  before="Stock already in the system, so you can see the effect of a rule"
+  time="Ten minutes"
+  after="Expiry warnings on your schedule, and a till that behaves the way you decided"
+/>
+
+## The cards on this tab
+
+| Card | What it decides |
+| --- | --- |
+| **Expiry alert horizons** | How many days ahead of expiry you are warned |
+| **New-item defaults** | The low-stock threshold and reorder quantity a new item starts with |
+| **Selling without stock** | Whether the till may sell an item with no recorded stock |
+| **Receiving quality** | Whether an expiry date is required on a new lot |
+| **Enforce inventory on dispense** | Whether dispensing is blocked when stock is not linked |
+| **Danger Zone** | A full inventory reset — owner only |
+
+## Set your expiry horizons
+
+<Steps>
+  <Step title="Open Expiry alert horizons">
+    The card is headed "Get alerted as stock approaches expiry" and shows the days already in use as removable chips.
+  </Step>
+
+  <Step title="Add a horizon">
+    Enter a whole number of days between 1 and 365 and select **Add**. Ninety, sixty and thirty is a common set: one warning while you can still sell through it, one while you can still return it, one while you can still move it.
+  </Step>
+
+  <Step title="Remove any you do not want">
+    Select the cross on a chip. You can hold **up to four** at once.
+  </Step>
+
+  <Step title="Save horizons">
+    Alerts follow the new schedule from the next sweep.
+  </Step>
+</Steps>
+
+See [Batches and expiry](/pharmacy/inventory/batches-and-expiry) for what happens once stock is inside a horizon.
+
+## Require an expiry date on new lots
+
+**Receiving quality** carries **Require expiry date on new lots**, and it deserves more attention than a single switch usually gets.
+
+Your picking order sends the earliest-expiring lot out first. A lot received with no expiry date **has nothing to sort on**, so it is invisible to that rule and to every expiry alert you just configured, and it sits on the shelf until somebody finds it by hand.
+
+Turn the switch on and receiving refuses an undated new lot at the door — "Receiving without an expiry is refused." Leave it off and undated lots are allowed, which the card itself flags as "not recommended for pharmacies". Topping up an existing dated lot is unaffected either way.
+
+## Decide whether the till may sell what is not booked in
+
+**Selling without stock** is **on by default**, and it is what lets a cashier sell an item whose recorded stock is zero — the everyday case of goods on the shelf that nobody has booked in yet. Each oversold quantity is recorded and reconciled automatically once the stock is received, and anything still unreconciled turns up in your inventory digest.
+
+Turn the switch off and the till goes back to a hard stock check: "Sales are refused when stock is insufficient." Leave it on if your shelves run ahead of your paperwork; turn it off if you would rather a sale stop than your figures drift. See [Ring up a sale](/pharmacy/pos/index).
+
+## New-item defaults and dispensing
+
+**New-item defaults** sets the **Low-stock threshold** and **Reorder quantity** applied to items created without their own values — including catalogue imports, which arrive with no thresholds at all. Leave a field empty for no default.
+
+**Enforce inventory on dispense** decides whether a dispense is blocked when the medication is not linked to stock. Off is the default — "Best-effort — never blocks" — and drift is logged rather than stopping the counter. On is "Strict — blocks off-ledger dispensing".
+
+## The Danger Zone
+
+<Warning>
+  **Reset inventory…** erases your entire inventory module — catalogue, lots, stock levels, ledger, purchase orders, vendors, locations and device history. It exists for one purpose: a clean re-import when the data is beyond fixing. **This cannot be undone**, and there is no export step built into it. Take a copy from [Data Export](/platform/security/data-export) first. Your medication list and clinical records are kept.
+</Warning>
+
+The reset is owner-only and asks you to type `RESET` into a field before the delete button does anything. The dialog lists exactly what will be removed, counted, before you confirm. Read that list.
+
+## Check it worked
+
+- Reopen **Expiry alert horizons**. Your chips are there, four at most.
+- Try receiving a new lot with no expiry date. With the requirement on, it is refused.
+- Try selling an out-of-stock item at the till. With **Selling without stock** on it goes through and is flagged for reconciliation; with it off the sale is refused.
+- Create an item without setting a threshold. It picks up your **New-item defaults**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I cannot add a fifth expiry horizon">
+    Four is the maximum. Remove one first — "Up to 4 horizons."
+  </Accordion>
+
+  <Accordion title="Expiry alerts are not reaching me for some stock">
+    Those lots almost certainly have no expiry date, so nothing can warn on them. Turn on **Require expiry date on new lots** to stop it recurring, then find and date the existing undated lots.
+  </Accordion>
+
+  <Accordion title="A cashier sold something we had none of">
+    That is **Selling without stock** working as configured. The quantity is recorded and reconciles when the delivery is booked in. Turn the switch off if you would rather the sale had been refused.
+  </Accordion>
+
+  <Accordion title="Imported items have no low-stock threshold">
+    A catalogue import carries none of its own. Set **New-item defaults** before importing, or edit the items afterwards.
+  </Accordion>
+
+  <Accordion title="I cannot see the Danger Zone">
+    It is owner-only and hidden from managers and accountants entirely.
+  </Accordion>
+
+  <Accordion title="The reset was refused">
+    The message reads "The reset was refused: clinical administration records now exist." Stock that has been administered cannot be erased from underneath those records.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/inventory-settings.tsx, components/inventory/expiry-alert-settings.tsx, components/inventory/dispense-enforcement-settings.tsx */}

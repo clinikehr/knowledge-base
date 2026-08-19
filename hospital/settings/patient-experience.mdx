@@ -1,0 +1,122 @@
+---
+title: Booking, portal and documents
+description: "Everything a patient meets before they arrive — booking availability, the booking page, the contact form, the portal and sharable documents."
+icon: /images/icons/globe.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Calendar Integrations is owners and managers only" />
+
+The **PATIENT EXPERIENCE** section is every surface a patient touches without a member of staff present — how they book, how they enquire, what they can see afterwards and what they are asked to sign. It is grouped into **Scheduling**, **Patient portal** and **Documents**.
+
+<Path steps={['Sidebar', 'Settings', 'PATIENT EXPERIENCE']} />
+
+<TaskHeader
+  before="Appointment services created, and a decision on which units accept public bookings"
+  time="45 minutes"
+  after="A live booking page, a working enquiry form, and a portal your patients can sign in to"
+/>
+
+## Scheduling
+
+Four tabs, and they build on each other: availability decides what can be booked, the designer decides how it looks, the contact form catches everyone who did not book.
+
+### Calendar Integrations
+
+Described as "Sync external .ics calendars". It brings an outside calendar in so time already committed elsewhere stops showing as bookable.
+
+This tab is visible to **owners and managers only**. An accountant with settings access will not see it at all — that is the gate working, not a fault.
+
+### Booking Settings
+
+Described as "Appointment availability & working hours". Your opening hours, how far ahead a patient may book and how close to the time. This is the layer that decides what is offered; the designer below only decides how it is presented.
+
+### Booking Page Designer
+
+Described as "Design & customize your booking page". The public page a patient lands on — branding, wording, and which services they can choose from. Services themselves come from **Appointment Services**, so add a service there before you expect it here.
+
+### Contact Form
+
+Described as "Public web-to-lead form & embed widget". A public enquiry form with an embed you can put on your own website. Enquiries arrive as leads for someone to follow up rather than as appointments, which is the point — the person who is not ready to book yet still reaches you.
+
+## Patient Portal
+
+Described in the rail as "Patient access settings". This is the largest single tab in the section, laid out as seven tabs of its own:
+
+| Tab | Decides |
+| --- | --- |
+| **Branding** | How the portal looks to your patients |
+| **Appointments** | Whether patients may book, reschedule or cancel |
+| **Messaging** | Whether secure messaging is open, and to whom |
+| **Telehealth** | Whether video visits are offered through the portal |
+| **Documents** | What patients can see and download |
+| **Notifications** | What the portal emails patients about |
+| **Privacy** | What is visible and what is withheld |
+
+<Steps>
+  <Step title="Set branding and features first">
+    Work through the seven tabs before you publish. A portal that goes live with messaging open and nobody watching the inbox is worse than one that is not live yet.
+  </Step>
+  <Step title="Publish it">
+    The button at the top shows the portal's state.
+  </Step>
+  <Step title="Tell patients where it is">
+    Only once you are happy with all seven tabs.
+  </Step>
+</Steps>
+
+<Warning>
+  The green pulsing **Live** button does not mean "publish" — it is the control that **unpublishes**. It shows Live because the portal is live, and selecting it takes the portal down for every patient immediately, including anyone signed in at that moment. Read it as a state, not an instruction.
+</Warning>
+
+Feature-by-feature detail is on [Portal features](/portal/setup/features).
+
+## Sharable Documents
+
+Described as "Default docs for appointments". These are the documents attached to an appointment by default — consent forms, intake questionnaires, information sheets — sent to a patient to read or sign before they arrive.
+
+Setting a default here saves the front desk attaching the same form to every booking by hand, and it is what feeds the Signature chase queue on the [records desk](/hospital/records/overview). The bands that decide when the queue starts chasing are set under [Facility](/hospital/settings/facility).
+
+## Check it worked
+
+- Open your booking page in a private window as a patient would. The branding is yours, the services listed are the ones you configured, and the times offered match your working hours.
+- Block an hour in your external calendar and confirm it stops being offered.
+- Submit your own contact form and confirm the enquiry reaches whoever is meant to act on it.
+- Sign in to the portal as a test patient: they see what you enabled across the seven tabs and nothing you switched off.
+- Book a test appointment and confirm the default documents are attached to it.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Calendar Integrations tab">
+    It is shown to owners and managers only. An accountant with settings access will not see it.
+  </Accordion>
+
+  <Accordion title="A service is missing from my booking page">
+    Services come from **Appointment Services** under [Billing and payments](/hospital/settings/billing-and-payments). Add it there, then include it in the designer.
+  </Accordion>
+
+  <Accordion title="Patients are offered times we are closed">
+    Working hours live in **Booking Settings**, not in the designer. Set them there. If a specific hour is wrong, check whether an external calendar is still connected and syncing.
+  </Accordion>
+
+  <Accordion title="My portal went offline and nobody touched anything">
+    Somebody selected the green pulsing **Live** button, which unpublishes. Publish it again from the same control.
+  </Accordion>
+
+  <Accordion title="Patients can see something we did not intend">
+    Work through the portal's **Documents** and **Privacy** tabs. Those two decide what is visible, and they are separate from **Messaging** and **Appointments**.
+  </Accordion>
+
+  <Accordion title="Contact form enquiries are not arriving">
+    Check the form is enabled and that the embed on your website points at the current one. Enquiries arrive as leads, not as appointments, so look in the leads list rather than the diary.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the patient-facing settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/client-portal-settings.tsx, calendar-integrations-settings.tsx, crm-intake-form-settings.tsx, sharable-documents-settings.tsx, clinic-settings-sidebar.tsx */}

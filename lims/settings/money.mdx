@@ -1,0 +1,118 @@
+---
+title: Billing, plans and taking payment
+description: "Set your lab's currency and tax rate, manage your ClinikEHR plan, connect card payments, and print bank details on your invoices."
+icon: /images/icons/credit-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant — currency, tax rate and free-clinic mode are owner-only" />
+
+The **BILLING** section covers two separate things people often confuse: what your patients and referring practices pay **you**, and what you pay ClinikEHR. Three tabs — **Billing & Plans**, **Online Payments** and **Payment Details** — sit under it.
+
+<Path steps={['Sidebar', 'Settings', 'Billing & Plans']} />
+
+<TaskHeader before="Your lab's trading currency, your tax rate, and the bank details you want printed on invoices" time="About 10 minutes for all three tabs" after="Invoices in the right currency with the right tax, and at least one way for a payer to pay you" />
+
+## Billing & Plans
+
+This tab holds your ClinikEHR subscription and four lab-wide money settings:
+
+| Control | What it does |
+| --- | --- |
+| **Currency** | The currency every price, invoice and receipt is shown in |
+| **Tax Rate (%)** | The rate applied to invoices |
+| **Free Clinic Mode** | Turns off charging for services entirely |
+| **Flat Rate Fee** | A single fee applied in place of per-item pricing |
+
+A Diagnostics workspace defaults to Naira. Currency does more than change a symbol: it also selects which payment provider handles a card payment — Naira routes to Paystack, everything else routes to Stripe. Set it once, at the start.
+
+<Warning>
+  Changing the currency does not re-price anything. Existing invoices, receipts and price lists keep the numbers they already hold and are simply displayed under the new symbol, so a switch mid-trading turns ₦15,000 into $15,000 on screen. Set the currency before you price your tests, and if you must change it later, review your service prices and any unpaid invoices immediately afterwards.
+</Warning>
+
+<Note>
+  **Currency**, **Tax Rate (%)** and the free-clinic switch are **owner-only**. A manager or accountant sees them on the screen but cannot change them — the controls render disabled rather than hidden, so you can see what is set without being able to set it.
+</Note>
+
+For how these figures land on an invoice, see [Invoicing and payments](/lims/business/billing). For the currency list and how amounts are formatted across the product, see [Currency](/platform/settings/currency).
+
+## Online Payments
+
+<Path steps={['Sidebar', 'Settings', 'Online Payments']} />
+
+"Stripe and Paystack setup" — this is how patients and referring practices pay **you** by card, and it is entirely separate from how you pay for your ClinikEHR plan.
+
+<Steps>
+  <Step title="Choose your provider">
+    Connect through **Stripe Connect** or **Paystack Connect**, matching the currency you set on **Billing & Plans**.
+  </Step>
+  <Step title="Complete the connect flow">
+    For Paystack in Nigeria you supply the business name, choose your bank from the picker, and enter the account number — the field prompts **Enter 10-digit NUBAN**. Stripe runs its own onboarding in a new window.
+  </Step>
+  <Step title="Come back and confirm the status">
+    The tab shows the connection state when the provider hands you back. An incomplete connection takes no payments, so check rather than assume.
+  </Step>
+</Steps>
+
+## Payment Details
+
+<Path steps={['Sidebar', 'Settings', 'Payment Details']} />
+
+"Bank, Cash App, Venmo & more on invoices" — the channels you want a payer to see **printed on the invoice itself**, for anyone who is not paying by card.
+
+<Steps>
+  <Step title="Add a channel">
+    Select **Add payment details**, choose a **Type**, and give it a label a payer will recognise — "GTBank Business Account" rather than "Account 2".
+  </Step>
+  <Step title="Enter the fields">
+    Add as many **Fields** as the channel needs, each a **Label** and a **Value** — account name, account number, sort code, a handle, a reference to quote.
+  </Step>
+  <Step title="Switch it on">
+    Each channel has its own toggle. Only the ones switched on are printed.
+  </Step>
+</Steps>
+
+Enabled channels appear on invoice PDFs and invoice emails while a balance is still due, and drop off once the invoice is paid. That makes this tab particularly useful for employer-billed drug testing, where the payer is an accounts department that will pay by transfer and needs your bank details in front of them. See [Invoicing and payments](/lims/business/billing).
+
+## Check it worked
+
+- A new invoice shows the currency symbol you chose and the tax rate you set.
+- The **Online Payments** tab reports a completed connection for your provider.
+- A test invoice PDF carries every payment channel you switched on, with the labels and values you entered.
+- A paid invoice no longer shows the payment channels.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Currency and tax rate are greyed out">
+    Those are owner-only, even for a manager or accountant. Ask the workspace owner to change them.
+  </Accordion>
+
+  <Accordion title="My prices look wrong after changing currency">
+    Amounts are not converted. Review your service prices and re-price them in the new currency, then check any invoice still awaiting payment.
+  </Accordion>
+
+  <Accordion title="A card payment will not go through">
+    Confirm the provider connection is complete on **Online Payments**, and that the provider matches your currency — Naira goes through Paystack, other currencies through Stripe.
+  </Accordion>
+
+  <Accordion title="My bank details are not on the invoice">
+    Check the channel's own toggle is on, and that the invoice still has a balance due. Paid invoices do not print payment channels.
+  </Accordion>
+
+  <Accordion title="I am being asked for a NUBAN and do not know it">
+    It is the ten-digit account number on your Nigerian bank account. Your bank's app or a statement shows it.
+  </Accordion>
+
+  <Accordion title="I want to change the ClinikEHR plan, not my prices">
+    That is the subscription part of this same tab. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="billing settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/billing-settings.tsx, components/clinic/dashboard/settings/online-payments-settings.tsx, components/clinic/dashboard/settings/payment-details-settings.tsx, lib/settings-tabs.ts, lib/currencies.ts */}

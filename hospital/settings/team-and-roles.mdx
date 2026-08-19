@@ -1,0 +1,142 @@
+---
+title: Staff, roles and role navigation
+description: "Invite staff through the five-step wizard, understand what a seat costs, and set what each role sees in the sidebar."
+icon: /images/icons/users-gear.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Role Navigation needs owner or manager to change" />
+
+Two tabs sit in the **Team** group. **Staff & Teams** is where people are invited and managed; **Role Navigation** decides what each role finds in their sidebar once they arrive.
+
+<Path steps={['Sidebar', 'Settings', 'Team']} />
+
+<TaskHeader
+  before="Departments built, so each person can be given one"
+  time="5 minutes per person"
+  after="Everyone has an account, a role, and a sidebar that shows their own work"
+/>
+
+## Staff and Teams
+
+Described in the rail as "Manage practitioners and roles". It holds three lists you should read as one picture:
+
+- **Staff** — everyone with access today.
+- **Pending invitations** — sent, not yet accepted.
+- **Invites awaiting seat payment** — accepted or ready to send, waiting on the seat being paid for.
+
+That third list is the one that surprises people, so deal with it before you invite a shift's worth of staff.
+
+### Seats are billed on this plan
+
+Enterprise does not cap how many people you add, but each clinical seat is still charged. Three roles are free and do not consume a paid seat: **supervisor**, **biller** and **scheduler**.
+
+<Warning>
+  Inviting a member of staff on this plan adds a billable seat. An invitation sitting in **Invites awaiting seat payment** has not cost anything yet, but accepting it does — so remove invitations you sent in error rather than leaving them to be accepted later.
+</Warning>
+
+### Add a team member
+
+<Steps>
+  <Step title="Open Add team member">
+    The wizard runs in five steps, shown across the top: **1 Profile → 2 Specialty → 3 Supervisor → 4 Permissions → 5 Review**.
+  </Step>
+  <Step title="Profile">
+    Name, email and role. The email is where the invitation goes, so check it — a typo means an invitation nobody can accept.
+  </Step>
+  <Step title="Specialty">
+    Choose the specialty and the department this person works in. This is what puts them in the right consultation queue.
+  </Step>
+  <Step title="Supervisor">
+    Say whether this person supervises others, or who supervises them. Supervisor is one of the free roles.
+  </Step>
+  <Step title="Permissions">
+    Set what they may do on the pages they can open — signing, discharging, dispensing and the rest. This is separate from what they can see; see [Permissions](/platform/team/permissions).
+  </Step>
+  <Step title="Review and send">
+    Check the summary and send. They appear under **Pending invitations** until they accept.
+  </Step>
+</Steps>
+
+Inviting during the initial build is covered end to end on [Invite your team](/hospital/get-started/invite-team).
+
+## Role Navigation
+
+Described in the rail as "What each role sees in the sidebar". The card is **Role navigation** — "Which parts of the clinic each role sees and can open. This governs pages, not actions — what someone may *do* on a page stays with their staff permissions. Owners and managers always see everything."
+
+### The master switch
+
+Above the editor sits **Role-based navigation**. Until it is on, everything below is configured but inert, and the page says so: "Role-scoped navigation is switched off, so these rules are not being applied yet. Configure them here, then turn the switch above on when ready."
+
+That order is deliberate — set the rules first, check them, then switch on. When you do, "Signed-in staff see the change within 5 minutes."
+
+### Setting a role's modules
+
+<Steps>
+  <Step title="Pick a role">
+    The role list runs down the left. Each role is tagged **Custom** or **default**, so you can see at a glance where this hospital has diverged from the shipped rules.
+  </Step>
+  <Step title="Tick the modules they need">
+    The modules are grouped the same way the sidebar is. Tick what this role should be able to open.
+  </Step>
+  <Step title="Save">
+    Select **Save**. **Reset to default** appears on any role you have customised, and puts the shipped rules back.
+  </Step>
+</Steps>
+
+### Two things that catch people out
+
+**The first ticked module becomes their landing page.** The header under the role name tells you which: "Lands on \{module\} after sign-in", or "Choose at least one section — the first becomes where this role lands." A role must have at least one module — a sidebar with nothing in it has nowhere to send anyone.
+
+**Toggles work at the rule's own level.** Insurance is one rule covering the dashboard, pre-authorisation and claims together, so turning Insurance off for a role removes all three. There is no half-off.
+
+### Who this does not apply to
+
+Owners and managers are deliberately absent from the role list and bypass role navigation entirely. If an owner can see a module and a colleague cannot, that difference is per-role and this is the page that explains it.
+
+**Settings and the audit log stay reachable for every role**, whatever is ticked here.
+
+Hiding a module is a convenience, not a security control. Someone who reaches a page by a direct link is still checked against their permissions and refused if they lack them — so use [Permissions](/platform/team/permissions) for anything that genuinely must not happen, and this page to keep a nurse's sidebar free of the finance module. Role definitions are on [Roles](/platform/team/roles).
+
+## Check it worked
+
+- A new invitation appears under **Pending invitations**, and the person receives it at the address you entered.
+- Once they accept, they move into the **Staff** list with their role and department shown.
+- Ask someone in a role you edited to sign out and back in: their sidebar shows exactly the ticked modules, and they land on the first one.
+- An owner's sidebar is unchanged, confirming the rules apply to roles rather than to everyone.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I saved role navigation and nobody's sidebar changed">
+    Check the **Role-based navigation** master switch above the editor. With it off the rules are stored and not applied. With it on, signed-in staff see the change within 5 minutes.
+  </Accordion>
+
+  <Accordion title="Save is greyed out">
+    Save is unavailable when nothing has changed, or when the role has no module ticked. Tick at least one.
+  </Accordion>
+
+  <Accordion title="A role landed somewhere unexpected after sign-in">
+    The landing page is the first ticked module in navigation order, not the first one you ticked. Untick and re-tick to get the order you want, and read the line under the role name to confirm where they will land.
+  </Accordion>
+
+  <Accordion title="I hid a module but staff can still reach the page">
+    Hiding is a sidebar convenience. What someone may actually do is set by their permissions, and that check happens whichever way they reach the page. Use [Permissions](/platform/team/permissions) for the real limit.
+  </Accordion>
+
+  <Accordion title="An invitation is stuck in Invites awaiting seat payment">
+    The seat has not been paid for. Resolve it under [Billing and payments](/hospital/settings/billing-and-payments), and the invitation continues from where it stopped.
+  </Accordion>
+
+  <Accordion title="I cannot change Role Navigation">
+    Changing it needs owner or manager. An accountant can open the tab and read it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="staff and roles" />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, role-navigation-settings.tsx, role-scoped-nav-setting.tsx */}

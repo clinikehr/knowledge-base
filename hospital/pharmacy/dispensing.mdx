@@ -1,0 +1,129 @@
+---
+title: Dispense a prescription
+description: "Write a prescription from a consultation, then fill it from stock in the pharmacy unit with batch tracking and a witness where required."
+icon: /images/icons/pill.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Prescribers write; pharmacy staff dispense" note="The Pharmacy group only appears when the In-house pharmacy care area is switched on." />
+
+A hospital pharmacy unit does two separate jobs: a clinician writes the prescription, and pharmacy staff fill it from stock. This page covers both, and the batch and witness controls that sit between them.
+
+The whole group needs the **In-house pharmacy** care area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
+
+<Path steps={['Sidebar', 'Pharmacy', 'Pharmacy Station']} />
+
+<TaskHeader before="The In-house pharmacy care area switched on, and the medication in stock in your inventory" time="2 minutes" after="A dispensed prescription with stock drawn down against the patient" />
+
+## Where everything lives
+
+| Screen | What it is for |
+| --- | --- |
+| **Prescription List** | Scripts waiting to be filled |
+| **Prescription History** | Everything already dispensed |
+| **Pharmacy Station** | The dispensing bench |
+| **POS** | The retail counter — see [Sell at the pharmacy counter](/hospital/pharmacy/pos) |
+| **Sales** | Counter takings |
+
+## Write the prescription
+
+<Steps>
+  <Step title="Start it">
+    Either open the [consultation](/hospital/outpatient/consultation) and use the **Orders** tab, or open **Pharmacy Station** and select **New Prescription**. Prescribing from the consultation keeps the script attached to the encounter that justified it.
+  </Step>
+  <Step title="Choose the patient and date">
+    Fill **Select Patient** and **Prescription Date**.
+  </Step>
+  <Step title="Add each medication">
+    Use **Search medications...** to add a line, then complete **Mode**, **Quantity**, **Dosage**, **Frequency** and **Duration** — all five are required — and, if it helps whoever dispenses, **Instructions (Optional)**. Repeat for every drug on the script.
+  </Step>
+  <Step title="Review and save">
+    **Additional Notes** carries anything the pharmacist needs to know. The **Prescription Summary** panel shows an **Estimated Total** so nobody is surprised at the counter. Save, and the **Prescription Created** dialog appears with a **Reference:** — quote that number if you need to find the script again.
+  </Step>
+</Steps>
+
+## Fill it from stock
+
+Filling happens against inventory, so the stock that leaves the shelf is the stock the system knows about.
+
+<Steps>
+  <Step title="Open Fill Rx">
+    In the pharmacy unit's inventory area, open the **Fill Rx** tab. It lists prescriptions waiting to be dispensed.
+  </Step>
+  <Step title="Open the script">
+    Select the row. The **Fill prescription** sheet opens — "Draw from stock against this script — FEFO, patient-linked, audited."
+  </Step>
+  <Step title="Pick the stock and quantity">
+    Choose the **Stock item** and the **Location** it comes from, then enter the **Quantity**. Stock is drawn oldest-expiry-first, so you are not choosing a batch by hand and short-dated stock does not sit at the back of the shelf.
+  </Step>
+  <Step title="Add a witness for a controlled item">
+    If the item is a controlled drug the sheet shows **Witness (controlled item)** in red and will not let you continue without one — "DEA requires a witness to dispense a controlled substance." Choose the colleague who actually watched, not whoever is nearest.
+  </Step>
+  <Step title="Dispense">
+    Select **Dispense**. Stock comes off, the script is marked filled, and the dispense is recorded against the patient with your name and the witness's.
+  </Step>
+</Steps>
+
+<Warning>
+  A controlled item cannot be sold at the till. If you try, the counter refuses it — "requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." Take the script to **Fill Rx** rather than looking for a way past the message.
+</Warning>
+
+## Check it worked
+
+- The script no longer appears under **Fill Rx**, and shows as dispensed in **Prescription History**.
+- The stock item's on-hand figure has dropped by the quantity you dispensed — see [Inventory](/pharmacy/inventory/index).
+- A controlled dispense shows both your name and the witness's.
+
+<AuditNote action="Viewing and dispensing a prescription" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The medication is not in the stock item picker">
+    **Fill Rx** draws from inventory, so a drug that has never been received into stock cannot be dispensed from it. Receive the stock first, then fill the script.
+  </Accordion>
+
+  <Accordion title="The quantity I need is more than is on hand">
+    Dispense what you have and leave the rest outstanding, or move stock in from another location — the **Location** picker only offers what that location holds.
+  </Accordion>
+
+  <Accordion title="The witness field will not accept my colleague">
+    It only lists staff in this workspace who are permitted to witness. If the person is standing with you but not in the list, they need a staff account — see [Invite staff](/platform/team/invite-staff).
+  </Accordion>
+
+  <Accordion title="The till refuses the item">
+    That is the controlled-substance rule, not a fault. Controlled items are dispensed through **Fill Rx** with a witness, never rung up at the counter.
+  </Accordion>
+
+  <Accordion title="There is no Pharmacy group in my sidebar">
+    Either the **In-house pharmacy** [care area](/hospital/get-started/care-areas) is off, or your workspace is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="The pharmacy counter" icon="/images/icons/cash-register.svg" href="/hospital/pharmacy/pos">
+    Selling over the counter from the same stock.
+  </Card>
+
+  <Card title="Drug interaction screening" icon="/images/icons/triangle-exclamation.svg" href="/pharmacy/dispensing/interaction-screening">
+    Automatic interaction checks — available from the Professional plan upward on the Pharmacy edition.
+  </Card>
+
+  <Card title="Inventory" icon="/images/icons/boxes-stacked.svg" href="/pharmacy/inventory/index">
+    Receiving stock, batches and expiry.
+  </Card>
+
+  <Card title="Prescriptions in the chart" icon="/images/icons/file-prescription.svg" href="/clinic/clinical/prescriptions">
+    How prescriptions appear to clinicians.
+  </Card>
+</Columns>
+
+<StillStuck topic="dispensing" />
+
+{/* source of truth: components/inventory/prescription-dispense-sheet.tsx, components/inventory/inventory-content.tsx (Fill Rx tab), components/clinic/dashboard/pharmacy-station/prescription-form.tsx, components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx */}

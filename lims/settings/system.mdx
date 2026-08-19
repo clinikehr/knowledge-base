@@ -1,0 +1,108 @@
+---
+title: Security, data export and reagent inventory
+description: "Require two-factor sign-in, export your own lab data, and set the alert and dispensing rules that govern reagent stock."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" />
+
+Three tabs that protect the lab rather than run it: **Security** and **Data Export** under the **SYSTEM** section, and **Inventory** under **LABORATORY**, which is where the rules governing your reagents and consumables live.
+
+<Path steps={['Sidebar', 'Settings', 'Security']} />
+
+<TaskHeader before="A decision on whether every member of staff must use two-factor sign-in, and your reagent alert thresholds" time="About 10 minutes across the three tabs" after="A lab with enforced sign-in security, a way to get your data out, and reagent alerts that fire before a bench runs dry" />
+
+## Security
+
+"Clinic-wide security rules" — the settings that apply to everyone who signs in.
+
+<Steps>
+  <Step title="Decide on two-factor">
+    **Require Two-Factor Authentication** makes every member of your team confirm a second factor. On a lab holding patient results this is worth the small friction; a shared bench computer is exactly the machine a password alone does not protect.
+  </Step>
+  <Step title="Let people register passkeys">
+    Passkeys let staff sign in with the device's own fingerprint, face or PIN rather than typing a password on a gloved hand. See [Two-factor authentication and passkeys](/platform/security/mfa).
+  </Step>
+  <Step title="Leave security alerts on">
+    Security alerts tell you about new sign-ins and changes to the account. They are the only warning you get that someone else is using a colleague's credentials.
+  </Step>
+</Steps>
+
+Turning the requirement on takes effect at the next sign-in, so warn the bench first — a scientist who arrives at 6am to a two-factor prompt they were not expecting will call you rather than set it up.
+
+## Data Export
+
+<Path steps={['Sidebar', 'Settings', 'Data Export']} />
+
+"Export clinic data as CSV or ZIP. Large exports run in the background…" — your own data, in a format you can open elsewhere.
+
+Choose what to export, start it, and leave the page — a large export keeps running after you navigate away and tells you when it is ready. Use it for an accountant who wants figures in a spreadsheet, a regulator asking for records, or your own archive.
+
+An export is a copy of patient data. Store the file where you would store the records themselves, and delete it when you are done. See [Export your data](/platform/security/data-export).
+
+## Inventory
+
+<Path steps={['Sidebar', 'Settings', 'Inventory']} />
+
+"Alerts, dispensing rules & reset" — for a lab, this governs **reagents and consumables**. The tab appears when the Inventory care area is switched on for your workspace.
+
+| Setting | What it controls |
+| --- | --- |
+| **Expiry alerts** | How far ahead of an expiry date you want warning |
+| **Dispensing enforcement** | Whether the product blocks a draw against stock that is expired, quarantined or absent |
+| **Danger Zone** | Resetting your inventory entirely |
+
+Set the expiry window to your real lead time. A reagent you can reorder in three days needs more than three days' warning; one that ships from abroad needs weeks. Dispensing enforcement is what stops a run consuming stock it should not — leave it on unless you have a specific reason not to.
+
+<Note>
+  A newly received reagent lot arrives **quarantined** when it is set to require lot-to-lot validation. It shows in your stock and cannot be used until somebody validates it — that is intended, and it is why a delivery can sit on the shelf looking unusable. Release it from the validation queue. See [Reagents and consumables](/lims/inventory/reagents).
+</Note>
+
+<Warning>
+  The **Danger Zone** reset wipes your inventory. It asks you to type `RESET` to confirm, because there is no undo and no restore — your reagent catalogue, stock levels, lot numbers and expiry dates all go, and the validation history with them. Use it only on a workspace you are deliberately starting over, never to tidy up a mistaken receipt.
+</Warning>
+
+## Check it worked
+
+- With the two-factor requirement on, sign out and back in: you are asked for the second factor.
+- A colleague who has registered a passkey can sign in with it.
+- A small export finishes and downloads; a large one keeps running while you work elsewhere and notifies you when it is ready.
+- A reagent approaching your expiry window raises an alert with enough notice to reorder.
+- A quarantined lot cannot be drawn against until it is validated.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Someone is locked out after I required two-factor">
+    They need to complete the second-factor setup at sign-in rather than being let past it. Walk them through it on the phone — see [Two-factor authentication and passkeys](/platform/security/mfa).
+  </Accordion>
+
+  <Accordion title="My export never arrives">
+    Large exports run in the background and finish out of sight. Check for the notification before starting another one — a second run of the same export does not make the first any faster.
+  </Accordion>
+
+  <Accordion title="I cannot find the Inventory tab">
+    It appears only when the Inventory care area is switched on for your workspace. Ask the owner to enable it — see [Care areas](/platform/team/care-areas).
+  </Accordion>
+
+  <Accordion title="Stock is on the shelf but cannot be used">
+    The lot is quarantined awaiting lot-to-lot validation. Release it from the validation queue — see [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+
+  <Accordion title="Expiry alerts arrive too late to act on">
+    Widen the alert window to more than your reorder lead time, not less.
+  </Accordion>
+
+  <Accordion title="I typed RESET and lost my catalogue">
+    There is no undo. Rebuild the catalogue from your last export, which is the reason to take one before any large change.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="security and inventory settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, components/clinic/dashboard/settings/data-export-settings.tsx, components/clinic/dashboard/settings/inventory-settings.tsx, lib/settings-tabs.ts */}

@@ -1,0 +1,117 @@
+---
+title: Manage your client list
+description: "Create a client record, find and edit one, import or export a list, and work the self-registration waitlist."
+icon: /images/icons/user-plus.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member with access to the client list" />
+
+The client list is the single place a person is created, found and edited. Every other part of the product — appointments, notes, billing, documents — reads from it.
+
+<Path steps={['Sidebar', 'Clients']} />
+
+<TaskHeader before="Nothing — this is usually the first record a new practice creates" time="Under a minute for one client" after="A client record you can book, chart and bill against" />
+
+## What the list gives you
+
+The page is headed **Clients Management**, with four figures across the top:
+
+| Card | Counts |
+| --- | --- |
+| **Total Clients** | Everyone registered in your clinic |
+| **New Clients** | Added in the last 30 days |
+| **Active Clients** | Those with recent activity |
+| **Consultations** | Consultations in the last 30 days |
+
+Below them sits the list itself. The toolbar carries **Import**, **Export** and **Create client**; the row above the table carries **Search clients...**, the **Client status**, **Billing type** and **Waitlist** filters, and a **Sort** control offering **Sort by last name**, **Sort by first name** and **Sort by date added**.
+
+A practice with no records yet gets **Your client registry is empty** instead of a table, offering three ways forward: **Explore with sample clients**, **Import clients** and **Add your first client**. The sample tour is for clicking around in — nothing in it is a real person, and nothing you do there reaches a real record.
+
+## Add one client
+
+<Steps>
+  <Step title="Select Create client">
+    The intake sheet opens over the list. It runs to three steps and shows its position as **Step 1 of 3 • Basic information**.
+  </Step>
+  <Step title="Enter who they are">
+    **Legal first name** and **Legal last name** are required; name they go by, gender and date of birth are worth filling but optional. Enter what you have — the record is editable forever and a booking does not wait on a complete profile.
+  </Step>
+  <Step title="Set how they pay and their status">
+    **Billing type** is **Self-pay** or **Insurance**, set separately for individual and group appointments. **Status** is required: **Active** or **Prospective**.
+  </Step>
+  <Step title="Save">
+    Select **Create client**. The toast reads **Client created successfully!** and they appear in the list.
+  </Step>
+</Steps>
+
+The full intake form, field by field, is walked through in [Add your first client](/practice/get-started/add-clients).
+
+## Open or edit a record
+
+Select the **⋯** menu at the end of a row:
+
+- **View details** opens the full chart — visits, documents, billing, files. See [The client chart](/practice/daily/client-chart).
+- **Edit** reopens the record for changes.
+
+## Work the self-registration waitlist
+
+If people can register themselves, their requests arrive as a waitlist rather than as live records. Anyone waiting carries a **Waitlist** badge, and the **Waitlist** filter shows only them. Then use the row menu:
+
+- **Approve request** opens **Approve client request** — "They'll become an active client in your clinic." Confirm with **Approve**.
+- **Decline request** archives it and removes it from the waitlist. It does not notify the person who asked.
+
+The approval dialog carries an **Enable client portal access** checkbox — "Lets them sign in via magic link to view records, book appointments, and message your team."
+
+<Note>
+  **That checkbox is ticked by default**, so approving someone normally grants portal access as well as creating the record. Untick it if you do not want them signing in yet. See [Turn on the patient portal](/portal/setup/enable).
+</Note>
+
+## Import and export a list
+
+**Import** opens **Bulk-import patients** — "Upload a CSV to register multiple patients in this clinic at once. Each row creates one adult patient with primary contact info." Start from **Start from the template** so your columns match, upload the file, check the **Preview**, then run it. The **Result** panel reports **Submitted**, **Created** and **Failed**, and failed rows come back as their own CSV you can fix and re-upload.
+
+**Export** opens **Export patient registry** and downloads every record as a single file.
+
+Import in one pass rather than in fragments — a half-imported list is harder to reconcile than a missing one.
+
+<AuditNote action="Opening a client record" />
+
+## Check it worked
+
+- The client appears in the list and can be found by searching their name.
+- Opening **View details** shows the details you entered.
+- They can be selected when booking an appointment and when writing a note.
+- An approved waitlist request is gone from the **Waitlist** filter and present in the main list.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A client I just created is not in the list">
+    Check whether a **Client status**, **Billing type** or **Waitlist** filter is still applied from earlier, and clear it. Each filter carries a **Clear filter** item at the bottom of its menu.
+  </Accordion>
+
+  <Accordion title="Create client is greyed out">
+    You have reached your plan's record limit. Hovering the disabled button shows the upgrade prompt. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="An approved client cannot sign in to the portal">
+    The **Enable client portal access** checkbox was unticked at approval. Open the record and grant access from there — see [Turn on the patient portal](/portal/setup/enable).
+  </Accordion>
+
+  <Accordion title="Some rows failed on import">
+    The sheet gives you the failures as their own CSV. Correct those rows and upload that file — do not re-upload the whole list, or you will create duplicates of the rows that already worked.
+  </Accordion>
+
+  <Accordion title="Sample clients appeared that nobody created">
+    That is **Explore with sample clients**. It is a preview of the screen, separate from your real list, and nothing in it is saved to your clinic.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/clients-management/client-management-dashboard.tsx, components/clinic/clients-management/enhanced-clients-table.tsx, components/clinic/clients-management/clients-actions.tsx, components/clinic/clients-management/patients-empty-state.tsx, components/clinic/clients-management/patient-import-sheet.tsx */}

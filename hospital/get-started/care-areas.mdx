@@ -1,0 +1,114 @@
+---
+title: Turn on your care areas
+description: "Step 1 of hospital setup — tell ClinikEHR which departments you run, and the navigation, settings and reports follow."
+icon: /images/icons/toggle-on.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager" />
+
+This is **step 1 of 5** in setting up a hospital, and everything after it depends on this page. Care areas are your statement of which departments this hospital actually runs — the **Facility** card puts it plainly: "Which departments this hospital runs. These control what appears in navigation."
+
+<Path steps={['Sidebar', 'Settings', 'Facility']} />
+
+<TaskHeader before="An enterprise workspace, owner or manager access, and a decision about which units you really run today" time="5 minutes" after="A sidebar, a settings rail and a set of reports that match your building" />
+
+## Why this comes first
+
+Switching a care area off removes **three things at once** — its navigation group, its settings tab, **and** its analytics report.
+
+A hospital with no operating theatre does not simply lose the **Theatre** group from the sidebar. It also loses the **Theatre** tab from Settings and the **Theatre** report from analytics, together, for everyone. That is why care areas come before departments, wards, theatres and staff: there is no point building inside a department you are about to switch off, and no point inviting a nurse into a hospital whose shape changes under them next week.
+
+## Switch your areas on and off
+
+<Steps>
+  <Step title="Open the Facility card">
+    The areas are grouped under two headings — **Clinical units** and **Operational units**. Every hospital sees the same eight switches, above an alert that states the whole rule: "Turning an area off hides it from menus for everyone in this clinic. It does not delete anything, and existing records stay reachable by direct link."
+  </Step>
+  <Step title="Turn on what you run">
+    Turning one on confirms **Area enabled** — "It now appears in navigation."
+  </Step>
+  <Step title="Turn off what you do not">
+    Turning one off confirms **Area hidden** — "It no longer appears in navigation. Existing records stay accessible by direct link." Nothing is deleted, and switching it back on restores the group, the tab and the report exactly as they were.
+  </Step>
+</Steps>
+
+## The eight areas and their defaults
+
+| Area | Default | Switching it off removes |
+| --- | --- | --- |
+| **Front desk** | On | Front Desk board, Appointments, Patients, Contacts |
+| **In-patient care** | On | Ward Admissions, Ward Discharges, Nursing Station — and the Nursing and Wards reports |
+| **Surgical theatre** | **Off** | The whole Theatre group, the Theatre settings tab, and the Theatre report |
+| **In-house pharmacy** | On | The Pharmacy group and the Pharmacy report |
+| **Diagnostics** | On | Laboratory and Radiology |
+| **Records** | On | Records, Documents, Patient Records |
+| **Insurance** | On | Insurance Dashboard, Pre-Authorization, Claims |
+| **Inventory** | On | Inventory — but **not** the Store |
+
+An area that is on may bring its own settings with it. **In-patient care** adds **Nursing observations** and **Nursing shifts**; **Front desk** adds **Front desk waiting**; **Records** adds **Records chase**. Those sub-sections disappear with their area too.
+
+**Surgical theatre is the only one that starts off**, because most sites that sign up do not operate. If you have a theatre, switch it on now — [step 4](/hospital/get-started/theatre-setup) needs it.
+
+<Note>
+  **Inventory and the Store are different surfaces.** The **Inventory** area covers stock, purchase orders and consumables. The Store is a revenue surface with its own gating and stays where it is whatever you do here.
+</Note>
+
+## What has no switch
+
+**Triage**, **Consultation**, **Clinic Notes** and **Telehealth** have no care-area switch. Every hospital on the Enterprise plan runs them, so they are always present. If one of those is missing for a particular person, it is their role or their permissions — not a care area.
+
+<Warning>
+  Switching an area off hides it from **everyone in this hospital immediately**, including staff who are mid-shift in that department. Do not switch off **In-patient care** while there are patients on a ward.
+</Warning>
+
+## Check it worked
+
+- The sidebar lists exactly the groups you expect, and nothing for a unit you do not run. Refresh if an old group is still showing.
+- **Settings** shows a tab for each area you left on, and no tab for one you switched off.
+- Your analytics show the matching reports and no others.
+- Sign in as a colleague, or ask one to look: the change applies to the whole hospital, not only to you.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Facility card in my Settings">
+    Care areas exist on the Enterprise plan of the Clinic & Hospital edition only. A solo or team plan has one flat navigation with no departments to switch between. See [Plans and what they include](/platform/plans/overview).
+  </Accordion>
+
+  <Accordion title="The switches are there but I cannot move them">
+    "Only the clinic owner or a manager can change these." Ask an owner.
+  </Accordion>
+
+  <Accordion title="I switched an area on and a staff member still cannot see it">
+    Care areas are one gate of several. Check that their role may open the pages — see [Roles](/platform/team/roles) — and that role-based navigation is not excluding the group for them. Compare against an owner's sidebar; owners are never restricted by role navigation, so if the owner sees it the difference is per-role.
+  </Accordion>
+
+  <Accordion title="I turned off Front desk and lost my patient list">
+    **Front desk** carries registration and contacts as well as the check-in board. Switch it back on — nothing was lost.
+  </Accordion>
+
+  <Accordion title="Theatre permissions are missing when I set up a staff member">
+    The Theatre permission group only appears while the **Surgical theatre** area is on. Switch it on first, then set the permissions.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="care areas" />
+
+## Next step
+
+<Columns cols={2}>
+  <Card title="Step 2 — Departments and sub-units" icon="/images/icons/sitemap.svg" href="/hospital/get-started/departments">
+    Build the units a consultation is filed under, and that triage routes patients into.
+  </Card>
+
+  <Card title="Care areas in full" icon="/images/icons/hospital.svg" href="/platform/team/care-areas">
+    Every switch, what it covers, and what it does not touch.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts, lib/edition.ts */}

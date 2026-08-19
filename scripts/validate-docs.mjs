@@ -76,11 +76,23 @@ function collectPages(node, out = []) {
 const navPages = collectPages(config.navigation);
 const navSet = new Set(navPages);
 
-if (navPages.length !== navSet.size) {
-  const seen = new Set();
-  for (const p of navPages) {
-    if (seen.has(p)) err(`docs.json lists "${p}" in the navigation more than once.`);
-    seen.add(p);
+// A page may appear in more than one dropdown ON PURPOSE. Billing and the
+// clinical notes screens are identical for a solo practice and a hospital, so
+// each audience finds them inside its own product section instead of being
+// bounced somewhere that speaks the other one's vocabulary. Duplicates WITHIN
+// a single dropdown are still a mistake — that is a genuine double-listing.
+{
+  const perDropdown = new Map();
+  for (const dd of config.navigation?.dropdowns ?? []) {
+    const pages = collectPages(dd);
+    const seen = new Set();
+    for (const p of pages) {
+      if (seen.has(p)) {
+        err(`docs.json lists "${p}" twice inside the "${dd.dropdown}" dropdown.`);
+      }
+      seen.add(p);
+    }
+    perDropdown.set(dd.dropdown, seen);
   }
 }
 
