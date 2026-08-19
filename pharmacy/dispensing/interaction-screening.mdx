@@ -1,0 +1,166 @@
+---
+title: "Drug interaction screening"
+description: "How ClinikEHR screens a cart or a script for interactions, why only some alerts stop you, and how to clear a product that cannot be screened."
+icon: "shield-heart"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="Professional and above" roles="Any staff member at the till or the dispensing form" />
+
+Every cart at the till and every script on the dispensing form is checked for
+drug-drug interactions, drug-food interactions, allergies on file and duplicate
+therapy. Alerts appear in the cart column as you add lines — you do not run
+anything.
+
+<Path steps={['Sidebar', 'POS']} />
+<Path steps={['Sidebar', 'Pharmacy Station', 'Inventory', 'Fill Rx']} />
+
+## Why some alerts stop you and others do not
+
+This is the question the counter asks first, and the ranking is deliberate.
+Alerting on everything trains people to dismiss everything, which is worse than
+not screening at all. So the product is loud exactly four times and quiet the
+rest of the time.
+
+| What was found | What you see | Does it stop the sale? |
+|---|---|---|
+| Contraindicated | A red panel badged **Do not dispense** | Yes — one acknowledgement required |
+| Major | An orange panel badged **Major interaction** | Yes — one acknowledgement required |
+| Moderate | An amber badge, **Moderate interaction**, inline in the cart | No |
+| Minor | Nothing at all | No |
+
+A contraindicated or major finding opens the **Interaction detected** sheet —
+"Review before dispensing. Advisory only — it does not replace your
+professional judgement." It lists what was found, the mechanism and the
+management, and offers two ways out: **Cancel sale** (**Cancel** on the
+dispensing form) or **Acknowledge and dispense**.
+
+Before you acknowledge there is a **Reason for proceeding** box, marked
+"(optional — recorded in the audit log)". Fill it. "e.g. prescriber contacted
+and confirmed" is the shape of a useful entry, and it is the only thing that
+explains the decision to whoever reads the record later.
+
+The sheet interrupts **once** per cart. Acknowledging clears it for that sale;
+changing the cart re-screens and can raise it again.
+
+<Warning>
+  Screening is a decision aid, not a second pharmacist. The rules cover what is
+  in the dataset and the ingredients recorded against your products — nothing
+  else. The acknowledgement is recorded against the person who gave it, by name,
+  with the time. Never acknowledge a finding you have not read.
+</Warning>
+
+Some findings carry an **AI counselling** note under the rule, with a
+**Watch for:** line. It is always secondary to the rule above it, always badged
+as AI-generated, and sometimes absent. Treat it as counselling copy for the
+customer, not as the finding.
+
+## Products that cannot be screened
+
+An item with no ingredients recorded is not silently passed — the cart shows a
+dashed panel saying how many items were **not screened**, names them, and states
+that interactions were **not** checked for them.
+
+That panel is fixable where you feel it. Select **Add ingredients to screen it**
+to open the **Unscreened products** sheet.
+
+<Steps>
+  <Step title="Pick the product">
+    The sheet lists everything in your catalogue with nothing on file. Choose
+    the one the cart named.
+  </Step>
+
+  <Step title="Answer 'How should this be screened?'">
+    Four choices, and picking the right one matters:
+
+    - **Medication** — "Screened for interactions."
+    - **Supplement** — "Screened, but interaction coverage for supplements is weaker."
+    - **Consumable (not a medicine)** — "Excluded from screening by design (gloves, saline, dressings)."
+    - **Contents unknown** — "Not screened — use only if the contents are genuinely unknown."
+  </Step>
+
+  <Step title="Declare the ingredients">
+    For a medication or a supplement, search under **Declare ingredients** —
+    "Search ingredients…" — and add each active ingredient.
+  </Step>
+
+  <Step title="Save">
+    Select **Save and screen**. The sheet confirms the product is now
+    screenable, and the cart re-screens with it included.
+  </Step>
+</Steps>
+
+Clear these as you meet them. An unscreenable product is a silent gap: the
+customer's other medicines are checked, that one is not, and nothing about the
+sale looks unusual. When nothing is left the sheet reads **Everything is
+mapped**.
+
+## The provisional dataset
+
+Screening ships with a ruleset that starts **provisional**. Until a pharmacist
+at your branch has looked at it, the cart carries a small line — "Provisional
+dataset — pending pharmacist review." — and the alerts still fire.
+
+Select the review link to open **Interaction rules**, which shows the rule count,
+the version, the source, and every drug-drug and drug-food rule with its
+severity, mechanism and management. A **Reviewer note**
+("(optional — recorded in the audit log)") lets you record what you checked it
+against, and **Accept for clinical use** ends the provisional state.
+
+Accepting applies to your branch only, and a new dataset version has to be
+accepted again. Once accepted the panel reads **In clinical use here** and the
+provisional line disappears.
+
+If the ruleset is older than it should be, the cart says so rather than
+presenting stale rules as current. Trust the label.
+
+## Without the Professional plan
+
+Screening is gated. On Starter, the place the alerts would sit shows a quiet
+dashed card headed **Drug & food interaction screening** with an **Upgrade**
+button, and it says "Available on Professional and above". Checkout and
+dispensing are otherwise untouched — nothing is blocked, and nothing is
+screened. See [Change your plan](/platform/plans/change-plan).
+
+A plan that lapses out of active or trialing loses the feature the same way.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A sale is blocked and I disagree with the finding">
+    Use **Acknowledge and dispense** and put your reasoning in **Reason for
+    proceeding**. The decision is yours; the record of it is the point.
+  </Accordion>
+
+  <Accordion title="No alerts appear at all, on any cart">
+    Check the plan first — Starter shows the upgrade card instead of alerts. If
+    you are on Professional or above, check that the products in the cart have
+    ingredients recorded; a cart of entirely unscreened items produces the
+    dashed "not screened" panel, not silence.
+  </Accordion>
+
+  <Accordion title="An allergy the customer told us about was not caught">
+    Allergy findings read the allergy list on the customer's record. If it was
+    never recorded there, it cannot be matched. Add it to the record — see
+    [Customers](/pharmacy/customers/index).
+  </Accordion>
+
+  <Accordion title="The same product keeps appearing as unscreened">
+    Saving **Contents unknown** deliberately leaves it unscreened. Re-open the
+    sheet and choose **Medication** or **Supplement**, then declare the
+    ingredients.
+  </Accordion>
+
+  <Accordion title="Screening while the till is offline">
+    Screening runs against the ruleset the device already holds, and the cart
+    labels it as stale rather than hiding its age. See
+    [Selling offline](/pharmacy/pos/offline).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an interaction alert" />
+
+<!-- source of truth: components/clinic/dashboard/pharmacy-station/pos/pos-screening-alerts.tsx, pos-screening-ack-sheet.tsx, pos-screening-upgrade-notice.tsx, components/clinic/dashboard/pharmacy-station/inventory/medication-mapping-sheet.tsx, interaction-dataset-review-sheet.tsx, lib/pharmacy-screening/engine.ts -->

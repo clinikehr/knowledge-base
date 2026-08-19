@@ -1,0 +1,142 @@
+---
+title: "DOT and workplace drug testing"
+description: "How your lab runs federally regulated workplace drug testing — the four workflow modes, the specimen lifecycle, and where each step happens."
+icon: "vial-circle-check"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner or Manager to set the mode; bench and MRO permissions per step" />
+
+Workplace drug testing is not clinical lab work with different paperwork. It is a
+regulated chain that a lawyer may read years later, and every stage of it —
+who held the specimen, which seal was intact, which cutoff a value was measured
+against, who certified the result — has to survive that reading. ClinikEHR's
+DOT-LIMS module is built around that chain rather than around the result.
+
+This section covers the whole lifecycle for a diagnostic centre running
+Department of Transportation and SAMHSA-regulated testing, and the lighter
+reference-lab variant for labs that only receive and report.
+
+## Choose how your lab runs
+
+The module has four shapes, set once by an owner or manager. The card is titled
+**Lab Workflow** and explains itself: "Determines which laboratory module is
+shown to your staff. Switching modes does not delete any data — orders remain in
+their original workflow."
+
+<Path steps={['Settings', 'Lab Workflow']} />
+
+| Mode | What it gives you |
+|---|---|
+| **Standard Clinical Lab** | "In-house lab orders for clinical care. No DOT-specific workflow." The DOT entries are hidden from the sidebar entirely. |
+| **DOT / SAMHSA — Full Workflow** | "End-to-end federal workplace drug testing: collection → laboratory → MRO review → DER reporting." |
+| **Reference Lab — Intake to Report Only** (carries a **New** badge) | "For laboratories that receive sealed specimens from external collection sites and produce a PDF report for an external MRO. Hides collection, MRO, and DER modules." |
+| **Both — Standard + DOT Full Workflow** | "Clinics that do both in-house clinical lab work and DOT testing on-site." |
+
+Choose a mode, then select **Save Workflow Mode** — **Reset** puts the card back
+as you found it. On success you get **Lab workflow updated — Reload your DOT-LIMS
+pages to see the new mode.**
+
+<Note>
+  Switching modes does not migrate orders already in flight. They stay in the
+  workflow they were raised under and finish there. Anyone with a DOT-LIMS page
+  already open must reload before the new mode reaches their screen.
+</Note>
+
+Reference Lab mode renames the navigation rather than removing it: **DOT
+Testing** becomes **Lab Intake** and **DOT History** becomes **Intake History**.
+The full detail of that mode, including the intake order form, is on
+[Reference lab mode](/lims/dot/lab-intake-mode).
+
+## The lifecycle
+
+In full DOT mode a specimen moves through five stages, each owned by a different
+person and each writing its own custody event.
+
+| Stage | Who does it | Where it happens |
+|---|---|---|
+| Collection and the CCF | Collector at the collection site | [Collect a specimen and complete the CCF](/lims/dot/collection) |
+| Accessioning and seal check | Accessioning clerk at the full lab | [Accession an incoming specimen](/lims/lab/accessioning) |
+| Initial immunoassay screen | Bench technician | [Screen and confirm a specimen](/lims/dot/screening-and-confirmation) |
+| GC-MS / LC-MS/MS confirmation | Bench technician, certified by the lab director | [Screen and confirm a specimen](/lims/dot/screening-and-confirmation) |
+| MRO review and the DER report | Medical Review Officer | [MRO review and the employer report](/lims/dot/reports) |
+
+In Reference Lab mode the first and last stages fall away: the specimen arrives
+already sealed and already documented, and the finished report goes to an
+external Medical Review Officer as a PDF.
+
+## The rule the whole module exists to enforce
+
+<Warning>
+  An unconfirmed screen is **never** reported as Positive. Per HHS Mandatory
+  Guidelines an analyte cannot be designated **Positive** without GC-MS or
+  LC-MS/MS confirmation. If you finalize a specimen that was screened but not
+  confirmed, ClinikEHR raises the **SAMHSA Compliance Check** dialog and the
+  report lists those analytes as **Non-Negative** (presumptive screen result)
+  with a footnote citing § 40.97. Reporting a presumptive screen as a positive
+  costs someone their job on evidence that would not stand up.
+</Warning>
+
+Two further rules are enforced for you and worth knowing before you meet them:
+
+- **Methamphetamine needs amphetamine alongside it.** 49 CFR § 40.97(b)(3):
+  methamphetamine above its cutoff with amphetamine below the linkage threshold
+  **cannot** be reported as confirmed positive, and ClinikEHR downgrades it to
+  Negative.
+- **Some drugs can never be verified Negative.** 49 CFR § 40.151(f): THC, PCP
+  and 6-acetylmorphine cannot be verified as Negative by the MRO regardless of
+  any prescription or medical explanation the donor provides.
+
+## Seals and the chain of custody
+
+Every handoff is recorded. The **Laboratory Accession** card asks for an
+**Accession Number \***, a **Received Date & Time \***, and the condition of both
+seals — **Primary Specimen Seal (Bottle A) \*** and **Split Specimen Seal
+(Bottle B) \*** — as Yes/No answers. Answering "no" to either makes **Seal
+Condition Notes \*** required, and a broken seal raises a confirmation before the
+order can proceed. **Bottle B Storage Location** records where the split went, in
+enough detail that a colleague can retrieve it ("Freezer A-2, Rack 3, Position
+7").
+
+The **Chain of Custody** tab groups every event into **Specimen Intake**,
+**Laboratory Analysis**, **Reporting** and **Post-Report**. Each event shows a
+**Seal Intact** or **Seal Broken** pill, the released-by → received-by handoff,
+any notes, its timestamp and the elapsed time since the previous event. Full
+detail on [Accession an incoming specimen](/lims/lab/accessioning).
+
+## The people the module talks about
+
+In drug testing the person tested is the **donor**, not the patient — that is the
+word the CCF, the collector and the MRO all use, and it is the word the forms
+use. Elsewhere in your lab they are patients as usual.
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card title="Collect a specimen and complete the CCF" icon="clipboard-check" href="/lims/dot/collection">
+    The five-step custody and control form, temperature, volumes, seals and
+    shipping. Full DOT mode only.
+  </Card>
+  <Card title="Screen and confirm a specimen" icon="flask-vial" href="/lims/dot/screening-and-confirmation">
+    Cutoffs for urine and oral fluid, specimen validity testing, and why a
+    non-negative screen is not a positive.
+  </Card>
+  <Card title="MRO review and the employer report" icon="user-doctor" href="/lims/dot/reports">
+    Fatal and correctable flaws, donor contact, verified results, and the report
+    that reaches the employer.
+  </Card>
+  <Card title="Reference lab mode: intake to report" icon="inbox" href="/lims/dot/lab-intake-mode">
+    Receive a sealed specimen from an external collection site and produce a
+    branded PDF for an external MRO.
+  </Card>
+  <Card title="Accession an incoming specimen" icon="barcode" href="/lims/lab/accessioning">
+    Accession numbers, seal checks and reading the chain of custody.
+  </Card>
+  <Card title="Work the bench queue" icon="list-check" href="/lims/lab/worklist">
+    The queue every drug-testing specimen sits on between stages.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, lib/dot-lims-cutoffs.ts, components/clinic/dot-lims/general/chain-of-custody-timeline.tsx -->

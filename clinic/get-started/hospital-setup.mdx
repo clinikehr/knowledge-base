@@ -1,0 +1,183 @@
+---
+title: "Set up a multi-department hospital"
+description: "Turn on care areas, build departments and wards, staff them by unit, and go live in the right order."
+icon: "building"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner" />
+
+A hospital workspace looks different from a solo practice from the first screen:
+the people you serve are called **Patients**, and the sidebar is grouped by
+service line — **Front Desk**, **Outpatient**, **Inpatient**, **Theatre**,
+**Diagnostics**, **Pharmacy**, **Revenue**, **Insurance**, **Executive**,
+**Supply Chain**, **Records** — instead of one flat list.
+
+This page is the order to do things in. Each stage links to the page that covers
+it properly.
+
+<TaskHeader
+  before="An enterprise workspace, owner access, and a decision about which units you actually run"
+  time="Half a day for the structure; longer to staff it"
+  after="A hospital where each unit sees its own queues and nothing else"
+/>
+
+## Why order matters
+
+A group only appears in the sidebar when its **care area** is switched on — a
+hospital with no operating theatre never sees a **Theatre** group. Navigation
+follows the care areas, so decide those first, rather than inviting staff into a
+hospital whose shape you then change under them.
+
+## Stage 1 — Decide your care areas
+
+<Path steps={['Sidebar', 'Settings', 'Facility']} />
+
+The **Facility** card — "Which departments this hospital runs. These control
+what appears in navigation." — has a switch per area:
+
+| Switch | Turns on |
+|---|---|
+| **Front desk** | Check-in board, appointments, registration and contacts |
+| **In-patient care** | Ward admissions, discharges and bed management |
+| **Surgical theatre** | Theatre scheduling and perioperative records |
+| **Diagnostics** | Laboratory and radiology ordering, stations and reports |
+| **In-house pharmacy** | Dispensing, prescriptions and the pharmacy station |
+| **Insurance** | Claims, pre-authorisation and the insurance dashboard |
+| **Inventory** | Stock, purchase orders and consumables |
+| **Records** | The records officer's queues, documents and patient records |
+
+Turn on only what you run today. Switching one off later is safe — "It does not
+delete anything, and existing records stay reachable by direct link." Full
+detail: [Care areas](/platform/team/care-areas).
+
+## Stage 2 — Build the structure inside each area
+
+<Steps>
+  <Step title="Departments and sub-units">
+    **Settings › Departments** — "Manage your clinic departments, sub-units, and
+    consultation rates." Select **Add Department**, then open it to add
+    **Sub-Units** and their **Consultation Rates**. A department is the unit a
+    patient is routed to and the unit a consultation is billed under, so name
+    them the way your staff say them out loud.
+  </Step>
+
+  <Step title="Wards, sub-wards and beds">
+    **Settings › Ward Management**, if **In-patient care** is on. Add each ward,
+    then its sub-wards, then its **Bed Spaces**. A bed has to exist before
+    anyone can be admitted to it.
+  </Step>
+
+  <Step title="Shift pattern and theatres">
+    The **Facility** card also holds the shift pattern the nursing station,
+    shift notes and fluid charts split on — set it to your real handover times.
+    **Settings › Theatre** covers theatres and the safety checklist.
+  </Step>
+</Steps>
+
+## Stage 3 — Staff it
+
+<Steps>
+  <Step title="Invite people with the right specialty and access level">
+    Follow [Invite your team](/clinic/get-started/invite-team) for each person.
+    The **Specialty** picker is narrower on enterprise than on a solo plan, and
+    the administrative roles — **Clinic Manager**, **Clinic Biller**, **Clinic
+    Scheduler** — are what most non-clinical hospital staff need.
+  </Step>
+
+  <Step title="Scope what each role can open">
+    **Settings › Role Navigation** — "Which parts of the clinic each role sees
+    and can open." This is what stops a lab scientist opening the ward round and
+    a receptionist opening the theatre list. Owners and managers are not
+    affected by it.
+
+    It governs pages, not actions — what someone may *do* on a page they can
+    open is set by their permissions. See [Roles](/platform/team/roles) and
+    [Permissions](/platform/team/permissions).
+  </Step>
+</Steps>
+
+<Note>
+  Set role navigation before your first live day, not after. Staff learn where
+  things are in their first week, and moving the furniture afterwards costs more
+  than getting it right once.
+</Note>
+
+## Stage 4 — Services, billing and insurance
+
+- **Consultation rates** per sub-unit, from **Settings › Departments**.
+- **Appointment Services** for anything bookable — see
+  [Add the services you offer](/clinic/get-started/services).
+- **Currency** and billing settings, from **Settings › Billing & Plans**.
+- **Insurance**, if the care area is on — payers, pre-authorisation and claims.
+
+## Stage 5 — Go live
+
+Walk one patient end to end before you announce the switch: register at the
+front desk, triage, consult, order a lab test, dispense, bill. Every hand-off
+you find missing is a care area, a department or a permission — cheap to fix on
+a quiet afternoon, expensive at 9am on a Monday.
+
+## Check it worked
+
+- The sidebar shows exactly the groups you expect, and no group for a unit you
+  do not run.
+- A staff member from each unit signs in and sees their own queues — and not
+  each other's.
+- **Front Desk › Patients** can register someone, and that person can be
+  admitted to a real bed.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A group is missing from the sidebar">
+    Its care area is off. **Settings › Facility**. The **Theatre** group in
+    particular is hidden entirely until **Surgical theatre** is on.
+  </Accordion>
+
+  <Accordion title="A staff member cannot see a page they should">
+    Check **Role Navigation** for their role first — that is the page-level gate
+    — before touching their individual permissions.
+  </Accordion>
+
+  <Accordion title="I cannot admit a patient — there is nowhere to put them">
+    Beds are the last level of ward setup. Ward, then sub-ward, then **Bed
+    Spaces**.
+  </Accordion>
+
+  <Accordion title="The sidebar says Clients, not Patients">
+    That is the solo/team layout, which means the workspace is not on the
+    enterprise plan. See [Choose a plan](/clinic/get-started/choose-plan).
+  </Accordion>
+
+  <Accordion title="Nursing notes are landing in the wrong handover">
+    The shift pattern on **Settings › Facility** does not match your real shift
+    times. Correcting it changes how future notes are filed; notes already
+    written keep the shift they were saved under.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="hospital setup" />
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card title="Front desk" icon="desktop" href="/clinic/front-desk/overview">
+    The check-in board, registration and the day's appointments.
+  </Card>
+  <Card title="Wards" icon="bed" href="/clinic/inpatient/wards">
+    Admissions, bed management, nursing notes and discharges.
+  </Card>
+  <Card title="Laboratory" icon="flask" href="/clinic/diagnostics/lab">
+    Ordering, the lab station worklist and reporting results.
+  </Card>
+  <Card title="Care areas" icon="toggle-on" href="/platform/team/care-areas">
+    Every switch on the Facility card and what it turns on.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/settings/ (facility-settings.tsx, department-settings.tsx, ward-settings.tsx, theatre-settings.tsx, role-navigation-settings.tsx), lib/clinic-nav-registry.ts, lib/clinic-nav.ts (DEFAULT_CARE_AREAS) -->

@@ -1,0 +1,107 @@
+---
+title: "Settings: what's where"
+description: "The full catalogue of settings tabs, who sees each one, and why a tab you were told about might not be on your screen."
+icon: "sliders"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} />
+
+Settings is one page with a rail of tabs down the left — a dropdown at the top
+on a phone. Which tabs are in that rail is not the same for every workspace, so
+this page is the map: every tab that exists, who gets it, and what it controls.
+
+<Path steps={['Sidebar', 'Settings']} />
+
+## The rule that explains a missing tab
+
+Four things decide whether a tab is in your rail:
+
+1. **Your edition** — Clinic & Hospital, Pharmacy or Diagnostics. See
+   [The three editions](/start/editions).
+2. **Your plan** — some tabs only exist on the enterprise plan, and a couple
+   only on solo and team.
+3. **Your [care areas](/platform/team/care-areas)** — on a hospital, switching a
+   care area off removes its settings tab along with its navigation group.
+4. **Your role** — owners can change everything on a tab; managers and staff see
+   most tabs read-only or not at all. See
+   [Roles and access](/start/roles-and-access).
+
+<Note>
+  **A link to a tab your workspace does not have opens **General** instead of an
+  error.** So if you followed a link and landed somewhere unexpected, the tab
+  does not exist for you — nothing is broken. Work down the four points above to
+  find out which one is responsible.
+</Note>
+
+## The full catalogue
+
+In the order they appear in the rail.
+
+| Tab | Who sees it | What it does |
+|---|---|---|
+| **General** | Every workspace | Your name, address, phone, email, website, description, logo and timezone. See [Your business profile](/platform/settings/business-profile). |
+| **Staff** | Every workspace | Add, edit and remove staff, and track pending invitations. On Clinic & Hospital it also lists invites waiting for seat payment. See [Invite staff](/platform/team/invite-staff). |
+| **Role Navigation** | Clinic & Hospital, enterprise plan | Which modules each role is allowed to open. See [Roles](/platform/team/roles). |
+| **Facility** | Clinic & Hospital, enterprise plan | Which departments this hospital runs — the care areas that control what appears in navigation. See [Care areas](/platform/team/care-areas). |
+| **Theatre** | Clinic & Hospital, enterprise plan, with the theatre care area on | Your theatres, the surgical safety checklist, and whether an incomplete checklist blocks a case or only warns. |
+| **Wards** | Clinic & Hospital, enterprise plan | Wards and the beds in them. |
+| **Departments** | Clinic & Hospital, enterprise plan | The clinical and administrative departments staff are assigned to. |
+| **Billing** | Every workspace | Free Clinic Mode, currency, tax rate and flat rate fee. See [Currency, tax and free-clinic mode](/platform/settings/currency). |
+| **Online Payments** | Every workspace | Connect Stripe or Paystack so you can take money from patients or customers. See [Payments](/clinic/revenue/payments). |
+| **Payment Details** | Every workspace | Bank transfer, Cash App, Venmo, PayPal and similar channels, printed on your invoices. |
+| **Auto Pay** | Clinic & Hospital | Charging a card on file automatically. The feature inside the tab needs Essential or above. |
+| **Loyalty** | Pharmacy | Reward repeat customers with automatic rebates. |
+| **Inventory** | Any workspace with the inventory care area on | Expiry alerts, dispensing enforcement and inventory data controls. |
+| **Insurance** | Clinic & Hospital, solo and team plans | Electronic claims setup. See [Insurance](/clinic/insurance/overview). |
+| **Security** | Every workspace | Require two-factor authentication, manage passkeys, and turn on security alerts. See [Two-factor authentication](/platform/security/mfa). |
+| **Notifications** | Every workspace | Which in-app notices and emails your workspace receives. See [Notification and email preferences](/platform/settings/notifications). |
+| **Client Portal** | Clinic & Hospital, Diagnostics | Turning the portal on, its features and its branding. See [Enable the portal](/portal/setup/enable). |
+| **Sharable Documents** | Clinic & Hospital, Diagnostics | Which documents are automatically sent to clients during appointments. |
+| **Lab Workflow** | Diagnostics | Accessioning and result rules, plus **Report Branding** for the signature block on lab reports. |
+| **Calendar Integrations** | Clinic & Hospital | Connected Google and Outlook accounts, and read-only calendar subscriptions. See [Connect an external calendar](/platform/integrations/calendar). |
+| **Data Export** | Every workspace | Export workspace data as CSV or ZIP. Large exports run in the background. See [Export your data](/platform/security/data-export). |
+| **Appointment Services** | Clinic & Hospital | The services patients can be booked for. See [Services](/clinic/revenue/services). |
+| **Booking Page Designer** | Clinic & Hospital | The look, content and forms of your public booking page. See [Your booking page](/clinic/front-desk/booking-page). |
+| **Contact Form** | Clinic & Hospital | Your public enquiry form, its fields and its website embed. See [Contacts](/clinic/front-desk/contacts). |
+| **Communications** | Clinic & Hospital | Which channels are enabled, messaging and voice, and connecting a Gmail or Outlook mailbox. |
+| **AI Settings** | Clinic & Hospital | External tool connectors for your assistants, and the agent webhook trigger. See [AI agents](/platform/ai/agents). |
+| **Membership Page** | Clinic & Hospital | Your public membership signup page. See [Memberships](/clinic/revenue/memberships). |
+| **Store Page** | Clinic & Hospital | Your public storefront. See [Your store](/clinic/revenue/store). |
+| **Booking Settings** | Clinic & Hospital | Availability, schedules, special dates, resources and per-provider booking policies. |
+
+## Tabs most people are looking for
+
+| You want to change | Go to |
+|---|---|
+| The name and address on your invoices | **General** |
+| The currency prices are shown in | **Billing** |
+| Who can open which screen | **Staff**, then **Role Navigation** on a hospital |
+| Whether staff must use two-factor | **Security** |
+| Emails your workspace sends and receives | **Notifications** |
+| The look of a page patients or customers see | The tab for that page — see [Branding your public pages](/platform/settings/branding) |
+| Serving a page on your own web address | The same tab, under **Custom domain** — see [Use your own domain](/platform/settings/custom-domain) |
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Roles and access" icon="user-shield" href="/start/roles-and-access">
+    The four things that decide what a person can see and do.
+  </Card>
+  <Card title="Care areas" icon="hospital" href="/platform/team/care-areas">
+    How a hospital switches whole departments on and off.
+  </Card>
+  <Card title="Change your plan" icon="arrow-up-right-dots" href="/platform/plans/change-plan">
+    What each plan unlocks, and how to move between them.
+  </Card>
+  <Card title="Your business profile" icon="building" href="/platform/settings/business-profile">
+    The four fields that appear on every document you issue.
+  </Card>
+</Columns>
+
+<StillStuck topic="a settings tab you cannot find" />
+
+<!-- source of truth: lib/settings-tabs.ts (SETTINGS_TABS, tabAvailable, resolveActiveTab), components/clinic/dashboard/settings/clinic-settings-sidebar.tsx -->

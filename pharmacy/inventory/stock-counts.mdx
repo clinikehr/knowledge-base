@@ -1,0 +1,162 @@
+---
+title: "Run a stock count"
+description: "Snapshot what the system thinks you hold, enter what is physically on the shelf, and approve the count to post the variances to stock."
+icon: "clipboard-list"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Staff with the adjust stock permission; controlled counts also need a witness" />
+
+A count compares what the system holds against what is actually on the shelf,
+and then makes the system agree with the shelf. Opening a count takes a snapshot
+of current stock, so counting and selling can carry on side by side without the
+figures moving underneath you.
+
+<Path steps={['Sidebar', 'Inventory', 'Counts', 'New count']} />
+
+<TaskHeader
+  before="Stock on hand, and a colleague free to witness if you are counting controlled items"
+  time="5 minutes to open and approve; the counting itself is the long part"
+  after="Stock that matches the shelf, with every variance recorded in the ledger"
+/>
+
+## Open the count
+
+<Steps>
+  <Step title="Start a new count">
+    On the **Counts** tab, select **New count**. The sheet explains itself:
+    "Snapshot current stock into a worksheet, then enter what you physically
+    count."
+  </Step>
+
+  <Step title="Set the scope">
+    **Scope** is either **Whole clinic** — meaning your whole pharmacy — or a
+    single location. A scoped count is far easier to finish in one go, and a
+    count you finish is worth more than a count you abandon.
+  </Step>
+
+  <Step title="Choose the count type">
+    | Type | What it means |
+    |---|---|
+    | **Cycle count** | "A routine spot count of one location." |
+    | **Full physical** | "Count everything in scope." |
+    | **DEA CII count** | "Controlled (CII) items only — dual sign-off." |
+    | **Biennial DEA inventory** | "All controlled items — dual sign-off." |
+  </Step>
+
+  <Step title="Say how it was counted">
+    **How was it counted?** has two answers.
+
+    **Type counts by hand (worksheet)** — "Open a worksheet and key each
+    quantity against the system snapshot." This page covers that route.
+
+    **Portable scanner (CipherLab terminal)** — "Walk the shelves with the
+    terminal first, then upload the scans here." See
+    [Count with a CipherLab scanner](/pharmacy/inventory/cipherlab).
+  </Step>
+
+  <Step title="Open it">
+    A toast confirms **"Count opened"**. The worksheet now holds a frozen
+    snapshot of the scope.
+  </Step>
+</Steps>
+
+## Enter what you counted
+
+The worksheet lists every lot in scope with its **Location** and the **System**
+quantity. Enter the real number in **Counted**.
+
+- Leave a row blank if you have not reached it yet. Blank is "not counted", not
+  "zero".
+- Enter `0` when there is genuinely none on the shelf. That is a real count and
+  it produces a real variance.
+- Select save as you go — a toast confirms **"Counts saved"** — and come back to
+  it. A count stays open until you approve or cancel it.
+
+## Approve it
+
+Approving is what actually changes stock. Up to that point nothing has moved.
+
+<Steps>
+  <Step title="Add a witness if the scope is controlled">
+    A controlled-drug scope requires dual sign-off. Choose the colleague from
+    **Select a witnessing staff member**; the count cannot be approved without
+    one.
+  </Step>
+
+  <Step title="Approve">
+    Saving happens first, then the approval. Where the shelf and the system
+    already agreed, the toast reads **"Approved — no variances"**. Where they
+    did not, the differences are posted to stock and to the ledger.
+  </Step>
+</Steps>
+
+<Warning>
+  Approving posts every variance to stock and closes the count — it cannot be
+  reopened or reversed. Check the outliers before you approve: a mistyped
+  quantity on a controlled line becomes a discrepancy you have to explain.
+  **Cancel count** discards an open count without touching stock, and is the
+  right move if the counting went wrong.
+</Warning>
+
+## Reading the variances
+
+The reconciliation totals name the direction rather than making you work out a
+sign: **More than expected**, **Less than expected** and **Net difference**,
+each valued in your currency.
+
+Treat a large "less than expected" as an event, not a correction. It is the
+signal for shrinkage, an unrecorded dispense, or a sale that ran ahead of stock
+— which shows up separately on the **Reconciliation** tab, covered in
+[Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+
+## Check it worked
+
+- The count shows as closed, and the sheet reads "This count is closed.
+  Variances were posted to the ledger."
+- The **Stock** tab now matches what you counted.
+- The **Ledger** tab shows a movement for each variance, against your name and
+  your witness's.
+- The **Counts** tab lists the count with its type, scope and date. An empty
+  tab reads "No counts yet. Start a cycle count to reconcile physical stock
+  against the system."
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I cannot approve — the button does nothing useful">
+    A controlled scope needs a witness selected. Nothing else blocks approval.
+  </Accordion>
+
+  <Accordion title="The witness list does not include the person standing next to me">
+    Only staff accounts in this pharmacy can witness. Invite them first — see
+    [Invite your team](/pharmacy/get-started/invite-team).
+  </Accordion>
+
+  <Accordion title="Stock moved while I was counting">
+    The snapshot is taken when the count is opened, so sales during the count do
+    not shift the **System** column. If a delivery arrived mid-count, cancel and
+    re-open so the snapshot includes it.
+  </Accordion>
+
+  <Accordion title="A product on the shelf is not on the worksheet">
+    It has no stock line in this scope — either it is at another location, or it
+    was never received. Receive it, then run the count again. If you are
+    scanning, the reconciliation sheet lets you assign it; see
+    [Count with a CipherLab scanner](/pharmacy/inventory/cipherlab).
+  </Accordion>
+
+  <Accordion title="I approved a count with a wrong number in it">
+    An approved count cannot be reopened. Correct the stock with an adjustment
+    from the toolbar's **Dispense**, giving the reason, so the ledger carries
+    both the error and the correction.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a stock count" />
+
+<!-- source of truth: components/inventory/count-worksheet-sheet.tsx, count-reconcile-sheet.tsx, inventory-content.tsx -->

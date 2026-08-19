@@ -1,0 +1,159 @@
+---
+title: "Choose which emails you get"
+description: "Turn off product, marketing and login emails sent to you personally — and tell them apart from a workspace's own notification settings."
+icon: "envelope"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Anyone with an account" />
+
+Three switches control the email ClinikEHR sends **to you as a person**, in
+every workspace you belong to. They are not the same as the notification
+settings inside a clinic, and mixing the two up is the single most common reason
+people say "I turned it off and it still arrives".
+
+<Path steps={['Your avatar', 'Profile and Settings']} />
+
+<TaskHeader
+  before="Nothing"
+  time="1 minute"
+  after="Only the email you actually want, across every workspace"
+/>
+
+## The three personal switches
+
+They are deliberately on three different tabs, because they mean three
+different things.
+
+| Switch | Tab | What it stops |
+|---|---|---|
+| **Product & account emails** | **Notifications** | Product updates, tips and account notices |
+| **Marketing Emails** | **Account** | Emails about new features and promotions |
+| **Login Notifications** | **Security** | The alert when your account is signed in to (off by default) |
+
+<Steps>
+  <Step title="Set Product & account emails">
+    Open the **Notifications** tab, headed **Notification Preferences** over
+    "Manage the emails you receive from ClinikEHR." The switch reads:
+
+    > **Product & account emails** — Product updates, tips, and account notices.
+    > Turn this off to stop all non-essential email. Security alerts, password
+    > resets, and receipts are always sent.
+
+    Select **Update Notification Settings**.
+  </Step>
+
+  <Step title="Set Marketing Emails">
+    Open the **Account** tab and find **Marketing Emails** — "Receive emails
+    about new features and promotions." Select
+    **Update Account & Credentials** to save it, along with anything else on
+    that tab.
+  </Step>
+
+  <Step title="Set Login Notifications">
+    Open the **Security** tab and switch **Login Notifications** on if you want
+    an email with the time, device and IP address whenever your account is
+    signed in to. Select **Update Security Settings**.
+  </Step>
+</Steps>
+
+## What you can never switch off
+
+Transactional email always arrives, whatever these switches say: **security
+alerts**, **password resets** and **receipts**. Those are the messages that
+prove something happened to your account or your money, so there is no opt-out
+for them.
+
+## Your switches are not the workspace's switches
+
+This is the part worth getting right. There are four separate places
+notification preferences live, and each one governs a different recipient.
+
+| Where | Who sets it | Who it affects |
+|---|---|---|
+| **Your account settings** — the three switches above | You | Email to **you as a person**, in every workspace |
+| Clinic Settings → **Notification Preferences** → **Email notifications** | An owner or manager | The master switch for **all** non-essential email from that workspace |
+| The per-category switches in the same card | An owner or manager | In-app notifications and workspace email, per category |
+| The patient or customer record | Any staff member | What **the patient** receives — reminders and confirmations |
+
+So if a colleague's appointment reminders are still going out after you switched
+off your own product emails, that is the workspace's setting, not yours. See
+[Notification settings](/platform/settings/notifications).
+
+<Note>
+  The **Notifications** tab points at this itself: "Marketing & promotional
+  email preferences live on the Account tab, and login-alert preferences on the
+  Security tab."
+</Note>
+
+## The workspace's categories, in brief
+
+For context when you go looking: a workspace's notification card holds a master
+**Email notifications** switch — "Master switch for all clinic emails. Turn off
+to pause non-essential email." — over per-category switches for
+**Appointment**, **Patient**, **Staff**, **Billing**, **Subscription**,
+**Document**, **Insurance** and **System**, plus **Achievement emails**
+("Milestone badges, tier-ups, and your clinic's trophy case") and
+**Daily operational digests** ("Morning owner summaries for inventory,
+pharmacy, and lab").
+
+Two things to know about that card:
+
+- **System cannot be switched off** — "System notifications cannot be disabled
+  as they contain important updates about your clinic."
+- The category list adapts to your edition, so you only see categories that
+  apply to your kind of business.
+
+## Check it worked
+
+- Reopen each tab: the switches hold the position you left them in.
+- Give it a working day. Product and marketing email is periodic, so the real
+  test is the absence of the next one, not an immediate change.
+- With **Login Notifications** on, sign out and back in — the alert email should
+  arrive within a minute.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I turned everything off and email still arrives">
+    Check what kind it is. Receipts, password resets and security alerts are
+    always sent. Appointment, billing and staff notices come from a
+    **workspace**, and are switched off in that workspace's
+    [notification settings](/platform/settings/notifications), not here.
+  </Accordion>
+
+  <Accordion title="I only want to stop email from one clinic">
+    The personal switches are all-or-nothing across every workspace. To silence
+    one workspace only, ask its owner to switch off the categories you do not
+    need there.
+  </Accordion>
+
+  <Accordion title="Nothing arrives at all, even receipts">
+    Check your spam folder and any mail rules first, then confirm the email on
+    your [profile](/platform/account/profile) is the address you are watching.
+  </Accordion>
+
+  <Accordion title="Failed to update notification settings. Please try again.">
+    The save did not reach us. Check your connection and select the update
+    button again.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Workspace notification settings" icon="bell" href="/platform/settings/notifications">
+    The master switch and per-category switches an owner controls.
+  </Card>
+  <Card title="Secure your account" icon="lock" href="/platform/account/security">
+    Where the login-alert switch lives, alongside two-factor and passkeys.
+  </Card>
+</Columns>
+
+<StillStuck />
+
+<!-- source of truth: components/home/dashboard/settings/notification-settings.tsx, account-settings.tsx, security-settings.tsx; docs/Notifications/NOTIFICATION_SYSTEM_WIRING_PLAN.md -->

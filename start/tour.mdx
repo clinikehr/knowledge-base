@@ -1,0 +1,163 @@
+---
+title: "A tour of your workspace"
+description: "Find your way around the header, the sidebar, search, Quick Add, notifications and the help floats."
+icon: "compass"
+---
+
+import { Path } from '/snippets/path.mdx';
+
+Every working screen in ClinikEHR sits in the same frame: a thin header across
+the top, a narrow icon rail down the left, and your work in the middle. Learn
+the frame once and every module is navigable.
+
+## The header
+
+A 48-pixel strip pinned to the top of every page. Reading left to right:
+
+| Control | What it does |
+|---|---|
+| Menu button | Opens the navigation drawer. Phones and tablets only. |
+| Logo, workspace switcher, breadcrumbs | The switcher moves you between workspaces; the breadcrumbs show where you are. Desktop only. |
+| **Search** | Finds a person or a screen. See [Search](#search-finds-people-and-screens). |
+| **+** (Quick Add) | Creates the two or three things your edition makes most often. |
+| Secure messages | Opens your message threads. Not shown on the Pharmacy edition. |
+| **Get 1 month free** | Opens the referral dialog. Clinic & Hospital only, and not on the enterprise plan. |
+| Notifications bell | Unread activity and outstanding setup steps. |
+| Your avatar | Profile and settings, theme, and log out. |
+
+<Note>
+  If a control in this list is not on your screen, it is hidden for your edition
+  or plan rather than broken — the table says which. See
+  [Who can see and do what](/start/roles-and-access).
+</Note>
+
+## The sidebar
+
+<Tabs>
+  <Tab title="Desktop">
+    The sidebar is a 48-pixel rail of icons. Move your pointer over it and it
+    slides open to 260 pixels, showing every label; move away and it closes
+    again. There is no pin — the rail is meant to be glanced at, not parked
+    open, and it floats over the page rather than pushing your work sideways.
+
+    - **Collapsed**, each icon shows a tooltip naming its group and section, in
+      the form "Front Desk — Appointments".
+    - **Expanded**, each group gets a small uppercase heading; collapsed, the
+      same groups are separated by a hairline.
+    - **Workload counts** — waiting patients, queued samples — appear as a
+      number when the rail is open and shrink to a single dot when it is
+      closed. No badge at all means nothing is waiting.
+
+    The footer of the rail always holds three items: **Feedback**,
+    **Audit Log** and **Settings**.
+  </Tab>
+
+  <Tab title="Phone and tablet">
+    There is no rail. Select the menu button at the top left to slide out the
+    navigation drawer, titled with your own word for the business —
+    **Clinic Navigation**, **Pharmacy Navigation** or **Lab Navigation** — over
+    the line "Access clinic features and switch between clinics."
+
+    The drawer holds the same sections as the desktop rail, plus the workspace
+    switcher at the top and **Audit Log** and **Settings** at the bottom.
+    Select anything to navigate; the drawer closes behind you.
+  </Tab>
+</Tabs>
+
+## Search finds people and screens
+
+Select the **Search** box in the header and start typing. Results appear in two
+groups: the people you serve first — **Patients**, **Clients** or **Customers**
+depending on your edition — then **Go to**, which jumps you to any screen in the
+product.
+
+- Use the up and down arrows to move through results and **Enter** to open one.
+- While a lookup is running you see "Searching patients…".
+- With no match you get `No results found for "{query}"` and the hint
+  `Try a patient name, or "Dashboard", "Billing", "Appointment"`.
+
+<Note>
+  There is no keyboard shortcut that opens search from anywhere — select the box
+  in the header. The arrow keys and **Enter** work once you are typing in it.
+</Note>
+
+## Quick Add
+
+The round **+** button creates the thing your edition creates most often,
+without navigating first.
+
+| Edition | What **+** offers |
+|---|---|
+| Clinic & Hospital | **New Appointment**, **New Note** |
+| Pharmacy | **New Sale**, **New Customer** |
+| Diagnostics | **New Test Request**, **New Appointment**, **New Patient** |
+
+## The notification bell
+
+The number on the bell combines unread activity with setup steps you have not
+finished yet, and stops counting at **9+**. Inside are two tabs.
+
+- **Activity** lists unread items only. Selecting one marks it read and takes
+  you to the record. **Mark all read** appears whenever anything is unread, and
+  an empty tab reads "You're all caught up".
+- **Setup** shows your onboarding progress as a bar, then **To do ({n})** and
+  **Completed ({n})**. Once everything is done it reads "All set!".
+
+What arrives here — and what is emailed instead of shown — is controlled per
+workspace. See [Notification settings](/platform/settings/notifications).
+
+## Your avatar menu
+
+Select your avatar at the far right of the header for your name and email, then:
+
+- **Profile and Settings** — your personal account, shared across every
+  workspace. See [Your profile and credentials](/platform/account/profile).
+- **Theme** — **Light**, **Dark** or **System**. This follows you, not the
+  workspace.
+- **Log out**.
+
+## Sending feedback
+
+<Path steps={['Sidebar', 'Feedback']} />
+
+Opens a small panel titled **Send Feedback** over "We'd love to hear from you!"
+with **Full Name** (already filled in) and **Message**. Select **Send Feedback**
+and you get a confirmation panel back. Use it for suggestions; for anything
+blocking you, [contact support](/platform/help/contact-support) instead, because
+that route can carry your workspace details.
+
+## The two floats
+
+Bottom right, one above the other:
+
+- **Setup** — a ring showing how many onboarding steps you have completed. Open
+  it for the remaining list, minimise it, or dismiss it for good. It disappears
+  by itself once setup is complete, and it never appears on the till or inside a
+  full-screen clinical workspace, where it would sit on top of your work.
+- **Help** — a pill offering **Schedule a Demo**, **Live Chat** and
+  **Discord Community**.
+
+## Achievements
+
+<Path steps={['Sidebar', 'Achievements']} />
+
+Your workspace collects badges and points for everyday work — patients
+registered, notes written, invoices raised. The page opens on **Your clinic
+tier** with your points and badge count, tells you how many points remain to the
+next tier, lists that tier's perks, and shows the full badge gallery grouped by
+track. Reach the end and it reads "🌟 Top tier reached — you're a Luminary!".
+
+None of it changes what the product does — it is a nudge, not a gate.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="How ClinikEHR is organised" icon="sitemap" href="/start/concepts">
+    Workspaces, editions, plans, staff and care areas.
+  </Card>
+  <Card title="Work across more than one workspace" icon="arrows-repeat" href="/platform/account/switching-workspaces">
+    The switcher, the personal home, and where you land after sign-in.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/general/clinic-header.tsx, sidebar-nav.tsx, mobile-nav.tsx, search.tsx, notifications-dropdown.tsx, feedback-dropdown.tsx; components/clinic/general/user-nav-client.tsx, onboarding-float.tsx, help-float.tsx; components/clinic/achievements/achievements-content.tsx; lib/clinic-nav-registry.ts -->

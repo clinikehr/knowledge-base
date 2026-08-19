@@ -1,0 +1,142 @@
+---
+title: "Check a patient in and out"
+description: "Record an arrival, attach the services and labs the visit is for, then check the patient out and issue the visit record."
+icon: "user-check"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member with access to the patient record" />
+
+Checking a patient in puts them on the waiting list, records what they came for
+and who they are waiting to see. Checking them out closes the visit and lets you
+issue a visit record.
+
+<Path steps={['Patient chart', 'Overview', 'Check-in']} />
+<Path steps={['Sidebar', 'Front Desk', 'Front Desk', 'Check in']} />
+
+<TaskHeader
+  before="An existing patient record"
+  time="Under a minute"
+  after="A visit on the check-in board, and a visit record you can print or email"
+/>
+
+The **Check-in** button sits on the patient chart's **Overview** and on the
+consultation header. From the front desk board you can start the same sheet with
+**Check in** and search for the person first.
+
+## Check someone in
+
+<Steps>
+  <Step title="Open the Check In Patient sheet">
+    Select **Check-in**. The sheet opens with the current time already chosen.
+  </Step>
+
+  <Step title="Confirm the arrival time">
+    Under **Pick check-in date & time**, change it if the patient arrived
+    earlier than you got to the screen. This is the time the waiting clock runs
+    from.
+  </Step>
+
+  <Step title="Attach the appointment, if there is one">
+    Choose it under **Appointment (optional)**. Leave it on **No appointment**
+    for a walk-in.
+  </Step>
+
+  <Step title="Say what the visit is for">
+    **Visit items — services, labs, custom** takes a service, a lab test, or a
+    custom label typed in yourself. Add as many as the visit needs; they are
+    what the **For** column on the board shows.
+  </Step>
+
+  <Step title="Assign the patient">
+    Pick the clinician or team member under **Assign to**, or leave it on
+    **Unassigned** and assign later. Enter a **Location / room** if your clinic
+    tracks rooms.
+  </Step>
+
+  <Step title="Enter the reason for visit">
+    Free text in **Reason for visit**, plus anything the care team should know
+    under **Notes (optional)**.
+  </Step>
+
+  <Step title="Select Check in">
+    The patient appears on the front desk board as waiting.
+  </Step>
+</Steps>
+
+<Note>
+  The sheet refuses to save an empty visit: **Add a reason, appointment, or at
+  least one item**. A check-in with none of the three tells the clinician
+  nothing, so at least one is required.
+</Note>
+
+## After the check-in
+
+Reopening the visit gives you **Edit Check-In**, where you can:
+
+- **Save changes** — update the items, assignment, room or reason.
+- **Check out** — close the visit. It also appears inline on each board row.
+- **Cancel check-in** — remove a visit recorded in error.
+
+## Issue the visit record
+
+The same sheet has **Download PDF** and **Email patient**. Emailing confirms
+with **Visit record sent** and names the address it went to.
+
+<AuditNote action="Opening a patient's check-in" />
+
+## Why the buttons are greyed out on the consultation chart
+
+On the consultation chart, **Intakes**, **Upload** and **Check-in** stay
+disabled until the patient record has finished loading. That is deliberate — a
+check-in recorded before the chart knows whose it is would be attached to
+nobody. Wait a moment and they enable themselves.
+
+## Check it worked
+
+- The patient is on the front desk board under **Waiting**, with a running wait
+  time.
+- The **For** column shows the visit items you attached and **With** shows the
+  assigned staff member.
+- After checking out, they move to the **Checked out** tab and **Seen today**
+  goes up by one.
+- **Email patient** reports **Visit record sent**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Check in is greyed out">
+    On the consultation chart it stays disabled until the patient record
+    resolves. Give it a moment. If it never enables, reopen the chart from the
+    patient list.
+  </Accordion>
+
+  <Accordion title="The sheet will not save">
+    You have no reason, no appointment and no visit item. Add any one of the
+    three.
+  </Accordion>
+
+  <Accordion title="The wait time is wrong">
+    The clock runs from the time under **Pick check-in date & time**, not from
+    when you saved. Reopen the visit and correct it.
+  </Accordion>
+
+  <Accordion title="Checked out by mistake">
+    Check the patient back in. There is no confirmation on check-out precisely
+    because it is reversible this way.
+  </Accordion>
+
+  <Accordion title="A visit is flagged as a long wait too soon">
+    The threshold is set for the whole clinic in **Settings → Facility** under
+    **Front desk waiting**. The board prints the current figure beneath the
+    table.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/clients-management/patient-checkin-sheet.tsx, components/clinic/front-desk/check-in-board.tsx, db/actions/check-ins.ts -->

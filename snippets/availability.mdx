@@ -1,0 +1,68 @@
+export const EDITION_LABELS = {
+  clinic: 'Clinic & Hospital',
+  pharmacy: 'Pharmacy',
+  lims: 'Diagnostics',
+  portal: 'Patient Portal',
+};
+
+/**
+ * Availability strip — put this directly under the H1 of any page that
+ * documents a gated feature.
+ *
+ * Why it exists: nearly every screen in ClinikEHR is gated on three
+ * independent axes — the product EDITION (which modules exist at all), the
+ * subscription PLAN (which features are entitled), and the staff ROLE or
+ * PERMISSION (who may act). A reader who cannot use a feature must learn that
+ * in the first two seconds, not after following eight steps to a button that
+ * is not on their screen.
+ *
+ * Usage:
+ *   import { Availability } from '/snippets/availability.mdx';
+ *
+ *   <Availability
+ *     editions={['clinic', 'lims']}
+ *     plans="Essential and above"
+ *     roles="Owner, Manager"
+ *   />
+ *
+ * Pass editions={['all']} for something every edition has.
+ * Omit `plans` when a feature is included on every plan.
+ * Omit `roles` when any signed-in staff member can use it.
+ */
+export const Availability = ({ editions = ['all'], plans, roles, note }) => {
+  const list = editions.includes('all')
+    ? ['clinic', 'pharmacy', 'lims']
+    : editions;
+
+  return (
+    <div className="ck-avail" role="note" aria-label="Feature availability">
+      <span className="ck-avail__label">Available in</span>
+
+      {list.map((e) => (
+        <span key={e} className={`ck-pill ck-pill--${e}`}>
+          {EDITION_LABELS[e] ?? e}
+        </span>
+      ))}
+
+      {plans ? (
+        <>
+          <span className="ck-avail__label">Plan</span>
+          <span className="ck-pill ck-pill--plan">{plans}</span>
+        </>
+      ) : null}
+
+      {roles ? (
+        <>
+          <span className="ck-avail__label">Who</span>
+          <span className="ck-pill ck-pill--role">{roles}</span>
+        </>
+      ) : null}
+
+      {note ? (
+        <span style={{ color: 'var(--ck-text-muted)', flexBasis: '100%' }}>
+          {note}
+        </span>
+      ) : null}
+    </div>
+  );
+};

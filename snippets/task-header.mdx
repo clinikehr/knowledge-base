@@ -1,0 +1,41 @@
+/**
+ * Task recipe header — the three questions a reader asks before committing to
+ * a procedure: what do I need first, how long will it take, what will I have
+ * at the end.
+ *
+ * Use on task pages ("Record a sale", "Publish your booking page"). Do NOT use
+ * on concept or reference pages — there is no task, so the frame is noise.
+ *
+ * Usage:
+ *   import { TaskHeader } from '/snippets/task-header.mdx';
+ *
+ *   <TaskHeader
+ *     before="At least one stock item, and a printer if you issue receipts"
+ *     time="2 minutes"
+ *     after="A completed sale, stock drawn down, and a printed receipt"
+ *   />
+ */
+export const TaskHeader = ({ before, time, after }) => (
+  <div className="ck-task">
+    {before ? (
+      <div className="ck-task__cell">
+        <div className="ck-task__title">Before you start</div>
+        <p className="ck-task__body">{before}</p>
+      </div>
+    ) : null}
+
+    {time ? (
+      <div className="ck-task__cell">
+        <div className="ck-task__title">Takes about</div>
+        <p className="ck-task__body">{time}</p>
+      </div>
+    ) : null}
+
+    {after ? (
+      <div className="ck-task__cell">
+        <div className="ck-task__title">When you're done</div>
+        <p className="ck-task__body">{after}</p>
+      </div>
+    ) : null}
+  </div>
+);

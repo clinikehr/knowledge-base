@@ -1,0 +1,131 @@
+---
+title: "Plans and what they include"
+description: "How the plan ladders work in each edition, what a plan controls, and why a lapsed subscription loses paid features until billing is fixed."
+icon: "table-list"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owners see the plan page; anyone feels the result" />
+
+Your plan decides **which features are unlocked and how much capacity you get**
+inside your workspace. It does not decide which modules exist — that is your
+edition — and it does not decide who may do what — that is roles and
+permissions. See [Who can see and do what](/start/roles-and-access).
+
+<Path steps={['Dashboard', 'Subscription']} />
+
+## The ladders
+
+Each edition has its own ladder, and you move up and down within it. You never
+move between editions. See [The three editions](/start/editions).
+
+| Edition | Plan ladder, cheapest to richest |
+|---|---|
+| Clinic & Hospital | Free → Starter → Essential → Team → Enterprise |
+| Pharmacy | Starter → Professional → Business → Enterprise |
+| Diagnostics | Starter → Professional → Business → Enterprise |
+
+Only Clinic & Hospital has a **Free** plan. Pharmacy and Diagnostics start at
+**Starter**.
+
+**Enterprise is priced individually.** It is the plan for hospitals, multi-branch
+pharmacy groups and multi-site labs, and its cost depends on your size and
+structure. Ask us rather than looking for a price on the card.
+
+## What your plan actually controls
+
+Four different things, and it helps to keep them apart.
+
+| What the plan sets | What you notice |
+|---|---|
+| **Which features are unlocked** | Locked cards and upgrade prompts instead of the feature |
+| **How much capacity you have** | Caps on records, contacts in the CRM, products in the store, published AI agents |
+| **How many staff seats you may have** | The invite is blocked, or charged, at the cap. See [Staff seats](/platform/plans/seats) |
+| **Your monthly AI credit allowance** | How many agent runs you get before you top up. See [AI credits](/platform/plans/credits) |
+
+On Clinic & Hospital, the plan also decides the **shape of your navigation**:
+solo and team plans get one flat list and call the people you serve **clients**,
+while the enterprise plan gets a hospital layout grouped by service line and
+calls them **patients**.
+
+## AI credits by plan
+
+Clinic & Hospital workspaces are granted these every month:
+
+| Plan | Monthly agent credits |
+|---|---|
+| Free | 50 |
+| Starter | 1,000 |
+| Essential | 2,500 |
+| Team | 5,000 |
+
+Refill packs are bought separately and never expire. See
+[AI credits](/platform/plans/credits).
+
+## The free trial
+
+A workspace that is on Free and has never trialled gets 7 days of full access,
+and it takes **no card**.
+
+There are two ways in, and both are normal:
+
+- **From the plan page.** The **Try ClinikEHR Free for 7 Days** section offers
+  **Start 7-Day Free Trial**. You get "Your 7-day free trial has started! Let's
+  finish setup..."
+- **From the first-run page.** Many new workspaces land on "Let's get your clinic
+  set up" — "You've got full access for 7 days — no card needed." — with a single
+  **Start for free** button, **No credit card required**, and **Or compare plans**
+  underneath if you would rather pick a paid plan now.
+
+One trial per workspace. If it has already been used you get **Trial Already
+Used** — "This clinic has already used its free trial period." — and the plan
+comparison instead.
+
+When the 7 days end, a Clinic & Hospital workspace moves to Free. Your records,
+notes and history stay fully accessible; the premium features stop.
+
+## The rule that surprises people
+
+<Warning>
+  **A subscription that is not active or trialing is treated as Free.** A failed
+  card, a cancellation that has run out, an unpaid renewal — any of these drop
+  every paid feature to the Free floor immediately, on every screen, for
+  everybody in the workspace. Nothing is deleted and nobody is locked out of
+  their records, but the paid capabilities are gone until the billing is fixed.
+</Warning>
+
+This is why a workspace can appear to "lose" telehealth, insurance or the store
+overnight with no setting having changed. Check the subscription before you
+check anything else: under **Billing**, a clinic card reads **Active**, **Trial
+Active**, **Past Due**, **Cancelled** or **No Subscription**. Anything other
+than **Active** or **Trial Active** explains the missing features on its own.
+
+## Where to see your plan
+
+<Path steps={['Personal home', 'Billing', 'Plan Subscriptions']} />
+
+Each workspace you own gets a card showing its plan, its status, its **Current
+Plan** features, its patient or customer usage against the cap, and either
+**Trial ends** or **Next billing**. Inside a workspace, the same detail is on
+**Dashboard** → **Subscription**.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Change your plan" icon="arrow-up-right-dots" href="/platform/plans/change-plan">
+    Upgrade, downgrade, cancel and reactivate — and what a downgrade costs you.
+  </Card>
+  <Card title="Staff seats" icon="users" href="/platform/plans/seats">
+    Billed per seat in one edition, included in the other two.
+  </Card>
+  <Card title="Your subscription invoices" icon="file-invoice-dollar" href="/platform/plans/invoices-and-receipts">
+    Past charges, receipts, and what a failed payment does.
+  </Card>
+  <Card title="Who can see and do what" icon="user-lock" href="/start/roles-and-access">
+    The four gates — edition, plan, role and permission — and which one is hiding your feature.
+  </Card>
+</Columns>
+
+<!-- source of truth: lib/edition.ts (EDITION_PLAN_TIERS), lib/subscription-features.ts, app/subscription/plan/[clinicId]/page.tsx, app/subscription/start-for-free/[clinicId]/page.tsx, components/subscription/free-trial-section.tsx, components/home/billing/clinic-subscriptions.tsx -->

@@ -1,0 +1,179 @@
+---
+title: "Give a patient portal access"
+description: "Enable portal access for one person from their record, when sharing documents, or when you approve a self-registration request."
+icon: "user-check"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="Essential and above" roles="Owner" />
+
+Turning the portal on for your clinic does not let anybody in. Access is granted
+one person at a time, and there are three ways to do it. This page covers all
+three and the one mistake that matters.
+
+<Path steps={['Clients', 'open a client', 'Edit Client', 'Portal']} />
+
+<TaskHeader
+  before="A published portal and a client record with a correct, personal email address"
+  time="Under a minute per person"
+  after="That person can sign in at your portal address with a code sent to their email"
+/>
+
+<Warning>
+  **Sign-in is by the email address on the record — check it before you enable
+  access.** Anyone who can read that inbox can read that person's appointments,
+  documents, results and messages. A shared family address, an old work address,
+  or a typo that happens to be a real mailbox all send health information to the
+  wrong person. Confirm the address with the patient, and never enter one relative's
+  address on another adult's record.
+</Warning>
+
+## Route 1 — enable it from the client record
+
+The route to use when someone asks for access at the desk or on the phone.
+
+<Steps>
+  <Step title="Open the client and check the email address">
+    Find the person under **Clients**, open their record, and confirm the email
+    address on file is personal to them and spelled correctly. Fix it here first
+    if it is not.
+  </Step>
+
+  <Step title="Open the Portal tab">
+    Select **Edit Client**, then the **Portal** tab. You see a panel headed
+    "Engage through our Client Portal".
+
+    If instead you see an amber notice — "Clinic portal is currently disabled" —
+    the clinic-wide switch is off. Turn it on first: [Turn on the patient
+    portal](/portal/setup/enable).
+  </Step>
+
+  <Step title="Select Enable portal access">
+    The button changes to **Portal access enabled** and you get the message
+    "Portal access enabled successfully".
+  </Step>
+
+  <Step title="Give them the address">
+    There is no "send invite" button. Hand over your portal address —
+    `client.clinikehr.com/` followed by your slug — by reading it out, writing it
+    down, or including it in an email you send them.
+
+    Tell them there is no password: they enter their email address and we send
+    them a code. See [Sign in to your patient
+    portal](/portal/patients/sign-in), which you can safely send to patients.
+  </Step>
+</Steps>
+
+## Route 2 — enable it by sharing a document
+
+The most practical invitation, because the email carries the link.
+
+When you share documents with a client, the share flow tells you the person will
+receive portal access and enables it as you send. The email they get includes
+your portal address, so they can go straight from the message to signing in and
+signing the document.
+
+Use this for new patients you are sending intake or consent paperwork to — it
+grants access and delivers the link in a single action.
+
+## Route 3 — approve a self-registration request
+
+People who use the **New Patient** button on your portal's welcome page land on
+your waitlist. They do not have an account and cannot sign in.
+
+<Steps>
+  <Step title="Find the pending requests">
+    In your client list, switch on the **Waitlist** filter to see people who
+    have asked to join.
+  </Step>
+
+  <Step title="Review what they submitted">
+    A request carries their name, email, date of birth, what brings them in, how
+    they heard about you, and their preferred way to pay — plus partner or
+    guardian details where the request was for a couple or made on someone
+    else's behalf.
+  </Step>
+
+  <Step title="Approve, and tick the portal box">
+    Select **Approve**. The dialog has a checkbox to grant portal access —
+    **tick it** if you want them to be able to sign in.
+
+    Selecting **Decline** archives the request instead.
+  </Step>
+</Steps>
+
+<Warning>
+  Approving a request does **not** grant portal access unless that checkbox is
+  ticked. An approved patient with the box left unticked is a real client record
+  with no way in — and when they try, they see "This account doesn't have patient
+  portal access yet." That is the single most common cause of a patient calling to
+  say the portal will not let them in.
+</Warning>
+
+## Check it worked
+
+1. Reopen **Edit Client › Portal** — the button reads **Portal access
+   enabled**.
+2. Ask the patient to sign in, or test it yourself with a colleague's record and
+   their agreement. They should reach the **Enter your code** screen and, after
+   entering the code, land on a dashboard greeting them by first name.
+3. If they instead see "This account doesn't have patient portal access yet",
+   access was not saved — repeat route 1.
+
+## Turning access off
+
+Use the same **Portal** tab to withdraw access — when a record is closed or
+merged, when an email address turns out to be wrong, or at the person's request.
+They then see "Your portal access is currently disabled by the clinic. Please
+contact them directly for assistance." and cannot sign in until you re-enable
+it.
+
+Withdraw access straight away if you learn an email address reached the wrong
+person, then correct the address before enabling it again.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Portal tab on the client record">
+    Per-person portal access needs Essential and above. On a lower plan the tab
+    is not there. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="The Portal tab shows an amber notice">
+    "Clinic portal is currently disabled — The client portal is globally disabled
+    for your clinic. You can enable it in Settings > Client Portal to allow
+    clients to log in." Turn the clinic-wide switch on first: [Turn on the
+    patient portal](/portal/setup/enable).
+  </Accordion>
+
+  <Accordion title="The patient never receives a code">
+    Almost always the email address. Compare what is on the record with what they
+    are typing, character by character, and ask them to check junk or spam.
+    Correct the address on the record and have them try again — the code is only
+    ever sent to the address you hold.
+  </Accordion>
+
+  <Accordion title="Two people share one email address">
+    Give each adult their own address. Two records on one mailbox means either
+    person can request a code for the other and read their health information.
+    For a child or a dependent adult, use the guardian's address on the
+    dependant's record deliberately, and record why.
+  </Accordion>
+
+  <Accordion title="I cannot change portal settings at all">
+    Only the practice owner can edit them; everyone else sees them read-only. See
+    [Roles and permissions](/platform/team/roles).
+  </Accordion>
+</AccordionGroup>
+
+Portal access is access to health information, so treat it with the same care as
+handing over a printed record. See [HIPAA and your
+data](/platform/security/hipaa).
+
+<StillStuck />
+
+<!-- source of truth: ClinikEHR components/clinic/clients/ (Edit Client → Portal tab), the share-documents flow, waitlist approve action; components/clinic/dashboard/settings/client-portal-settings.tsx -->

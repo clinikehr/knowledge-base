@@ -1,0 +1,167 @@
+---
+title: "Connect your analysers"
+description: "Register an analyser, receive its results into a review queue, and accept them into the bench workflow — nothing an instrument sends reports itself."
+icon: "microscope"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Registering an analyser needs “Configure analysers and interfaces”. Accepting a result also needs “Verify and authorise results”." />
+
+**Nothing an instrument sends enters a report on its own.** Results arrive in a
+review queue, a scientist accepts each one, and accepting runs exactly the same
+path as typing the result in by hand. The screen's own subtitle says it:
+"Register each analyzer (or its bridge PC) with a private key. Incoming results
+queue below for review — nothing enters a report until a scientist accepts it."
+
+<Path steps={['Sidebar', 'Analyzers']} />
+
+<TaskHeader
+  before="An analyser, or the bridge PC that talks to it, and someone who can configure that machine"
+  time="5 minutes to register, seconds per result"
+  after="A registered analyser and a review queue you accept results from"
+/>
+
+## Register an analyser
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **Register analyzer**. It explains what is about to happen: "A
+    private key is generated for the analyzer's bridge — it authenticates every
+    result it posts."
+  </Step>
+
+  <Step title="Name the instrument">
+    Enter a **Name** the bench will recognise (for example
+    `Chemistry bench analyzer`) and, optionally, the **Model** (for example
+    `Mindray BS-240`). Select **Register**.
+  </Step>
+
+  <Step title="Copy the key immediately">
+    The **Bridge key for {name}** dialog appears with the key in a read-only
+    field. Select the copy button — the toast reads **Key copied** — then paste
+    it into the analyser bridge's configuration before you close the dialog with
+    **Done**.
+  </Step>
+</Steps>
+
+<Warning>
+  The bridge key is shown **once**, at the moment it is generated, and is never
+  shown again. If you close the dialog without copying it, the only way forward
+  is **New key** on that row — which issues a fresh key and stops the old one
+  working, so the bridge goes silent until you reconfigure it.
+</Warning>
+
+## The registry
+
+Each registered instrument gets a row: **Analyzer**, **Model**, **Status**,
+**Last seen** and **Actions**.
+
+| Column or action | What it tells you |
+|---|---|
+| **Status** | **Active** or **Paused**. A paused analyser's results are not taken. |
+| **Last seen** | When it last posted. **never** means nothing has arrived yet — the bridge is not talking to you. |
+| **New key** | Issues a replacement key and immediately invalidates the old one. |
+| **Pause** / **Resume** | Takes an instrument out of service without deleting it. |
+
+Before anything is registered the table reads **No analyzers registered yet.**
+
+## Accept a result
+
+The queue is headed **Results awaiting review ({n})**, with the rule underneath:
+"Accept runs the same screen + finalize path as the manual form. Urine payloads
+without SVT values must be entered manually."
+
+<Steps>
+  <Step title="Read the row">
+    Each payload shows **Received**, **Analyzer**, **Specimen / LAN**,
+    **Matched** and **Values**. **Matched** means ClinikEHR has tied the payload
+    to an order on your worklist; **Unmatched** means it has not.
+  </Step>
+
+  <Step title="Check the values against the specimen">
+    This is the review. Compare the reported values and the specimen or
+    accession number on the row with the order you expect them to belong to.
+  </Step>
+
+  <Step title="Accept or discard">
+    Select **Accept** — the toast reads **Result accepted into screening** and
+    the result travels the same screening and finalisation path as a manually
+    entered one. Select **Discard** for a payload that should not be used at
+    all; the toast reads **Payload discarded**.
+  </Step>
+</Steps>
+
+When there is nothing to do the queue reads **Nothing waiting — new analyzer
+payloads appear here.**
+
+## Two things the instrument cannot finish for you
+
+<AccordionGroup>
+  <Accordion title="An unmatched result cannot be accepted">
+    **Accept** stays disabled on any row badged **Unmatched**. There is no order
+    for the result to attach to — usually the specimen or accession identifier
+    the instrument sent does not match the one on the order. Correct the
+    identifier at the bench and let the analyser resend, or enter the result
+    manually against the order. See
+    [Accession an incoming specimen](/lims/lab/accessioning).
+  </Accordion>
+
+  <Accordion title="A urine payload with no validity-testing values must be typed in">
+    Specimen validity testing is part of the screen, and an instrument that
+    sends only the drug results has not completed it. Enter that result manually
+    on the screening form instead — see
+    [Screening and confirmation](/lims/dot/screening-and-confirmation).
+  </Accordion>
+</AccordionGroup>
+
+## Check it worked
+
+- The analyser appears in the registry as **Active**, and **Last seen** changes
+  from **never** to a timestamp once its first payload arrives.
+- New payloads raise the count in **Results awaiting review ({n})**.
+- An accepted result appears on the bench workflow exactly as a hand-entered one
+  does — see [Enter and verify results](/lims/lab/results).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The page shows a locked card instead of the registry">
+    You are on Starter Lab. The card reads **Analyzer interfacing is a
+    Professional feature — Register your analyzers, receive their results
+    automatically, and accept them into the screening workflow with one click.
+    Included from the Professional Lab plan.** See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Last seen still says never">
+    The bridge is not reaching you. Confirm it is configured with the key you
+    copied at registration, that the analyser is **Active** rather than
+    **Paused**, and that nobody has since issued a **New key** on that row.
+  </Accordion>
+
+  <Accordion title="Accept is greyed out on a row I can see">
+    Either the row is **Unmatched**, or you hold "Configure analysers and
+    interfaces" but not "Verify and authorise results". Accepting a result is
+    the sign-out step, so it needs the verify grant as well — see
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="I lost the key">
+    Select **New key** on that analyser's row, copy the replacement, and update
+    the bridge. The old key stops working the moment the new one is issued.
+  </Accordion>
+
+  <Accordion title="Analyzers is not in the sidebar at all">
+    Analyser integration is still rolling out and is priced per interface. If
+    you are on a plan that includes it and want an instrument connected,
+    [contact support](/platform/help/contact-support).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an analyser interface" />
+
+<!-- source of truth: components/clinic/dashboard/lab-station/analyzers/analyzers-content.tsx, db/actions/lab-analyzers.ts, lib/lims-pricing-config.ts, lib/edition-staff-roles.ts -->

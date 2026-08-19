@@ -1,0 +1,187 @@
+---
+title: "Publish an agent"
+description: "Put a deployed agent on a public web address as a branded chat assistant, and understand the plan limits before you hit them."
+icon: "globe"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability
+  editions={['clinic', 'pharmacy']}
+  plans="Public agent UIs need Starter and above"
+/>
+
+Two different things are called "publishing", and confusing them wastes an
+afternoon:
+
+| | What it does | Who can reach it |
+|---|---|---|
+| **Deploy** | Makes an agent's trigger live | Only your workspace — schedules, events and webhooks start firing |
+| **Public UI** | Puts a branded chat assistant on a public web address | Anyone with the link, no sign-in |
+
+Deploying is covered in [Build an AI agent](/platform/ai/agents). This page is
+about the second one.
+
+<Path steps={['Sidebar', 'AI Agents', 'Public UIs']} />
+
+<TaskHeader
+  before="A deployed agent, and the Starter plan or above"
+  time="10 minutes"
+  after="A public chat link your patients or customers can use without signing in"
+/>
+
+## Plan limits, before you build
+
+Both limits are enforced **at the moment you publish**, not while you build. It
+is entirely normal to design four agents on Free and discover the cap only when
+you deploy the second — so check the numbers first.
+
+**Published agents** — deployed agents live in your workspace at any one time:
+
+| Plan | Published agents |
+|---|---|
+| Free | 1 |
+| Starter | 5 |
+| Essential | Unlimited |
+| Team | Unlimited |
+
+On Free, the message reads "Your Free plan can publish 1 agent or automation at
+a time. Drafts are always unlimited. Upgrade to Starter to publish more."
+Drafting really is unlimited on every plan.
+
+**Public agent UIs** — chat assistants exposed on the web:
+
+| Plan | Public UIs | Address | Embedding |
+|---|---|---|---|
+| Free | 0 | — | — |
+| Starter | 2 | Generated | Hosted link only |
+| Essential | 5 | Generated | Widget snippet |
+| Team | Unlimited | Your own custom address | Widget plus raw `<iframe>` |
+
+On Free the **Public UIs** button is not shown at all: "Public Agent UIs are
+available on the Starter plan and above."
+
+## Publish a public UI
+
+<Steps>
+  <Step title="Open Public UIs">
+    Select **Public UIs** on the **Agent Builder** page. The **Public Agent
+    UIs** screen shows a live preview beside the editor and a badge counting how
+    many of your allowance you have used.
+  </Step>
+
+  <Step title="Choose an agent">
+    Under **Choose an agent**, select **Enable** on the one you want. Only
+    deployed agents that are set to de-identified and use safe tools can be
+    made public; anything ineligible says why on its row.
+  </Step>
+
+  <Step title="Set the address">
+    Your link appears under **Your link**. On Team you can set your own address;
+    on lower plans the address is generated and **Regenerate** issues a new
+    random one. Custom links are a Team feature.
+  </Step>
+
+  <Step title="Write what visitors see">
+    Under **Content**, set the **Title**, **Headline**, **Welcome message**,
+    **Input placeholder**, up to six **Suggested prompts** and a **Footer
+    note**. Under **Branding**, set an accent colour, a **Theme** and a logo.
+  </Step>
+
+  <Step title="Set the abuse caps">
+    Under **Access & limits**, keep **Live** on, and set **Messages / minute per
+    visitor**, **Daily messages per visitor** and a **Monthly run cap**. Turn on
+    **Require email to chat** if you want visitors identified before they can
+    ask anything — disposable addresses are blocked.
+  </Step>
+
+  <Step title="Save changes">
+    Select **Save changes**. The preview and the live page both update.
+  </Step>
+</Steps>
+
+<Warning>
+  Every visitor message on a public UI spends your
+  [agent credits](/platform/ai/credits), and the page is reachable by anyone who
+  has the link. Set the **Monthly run cap** before you share the address — with
+  it blank, the only thing limiting spend is your balance.
+</Warning>
+
+## Put it on your website
+
+The **Add to your website** card gives you what your plan allows: a hosted link
+on Starter, a widget snippet on Essential, and on Team the full widget options
+(**Floating button** or **Inline on the page**, its position and its **Button
+text**) plus the raw `<iframe>`. Paste the snippet into your site's HTML. See
+[Embeds](/platform/integrations/embeds).
+
+A public UI can also live on your own domain — `assistant.yourclinic.com` — via
+[Custom domains](/platform/settings/custom-domain).
+
+## Take one offline
+
+**Live** switches the page off without losing the configuration. **Take offline
+& remove** deletes the public UI entirely: the link stops working immediately,
+and a new one later gets a new address.
+
+## Check it worked
+
+- The counter at the top of **Public Agent UIs** has gone up.
+- Opening your link in a private browser window shows the branded chat, with
+  your headline and suggested prompts.
+- A message sent from that window appears on the **Runs** page and debits
+  credits.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I don't have a Public UIs button">
+    You are on Free. Public agent UIs start at Starter — see
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Deploy failed because of a limit">
+    You have reached your plan's published-agent cap (Free 1, Starter 5). Take
+    an agent offline, or move up a plan. Nothing you have drafted is lost.
+  </Accordion>
+
+  <Accordion title="My agent isn't in the list to enable">
+    Only deployed agents can be made public, and only ones set to de-identified
+    that use safe tools. Deploy it first, and check the reason shown on its row.
+  </Accordion>
+
+  <Accordion title="I can't set my own address">
+    Custom addresses are a Team feature. On Starter and Essential use the
+    generated link, or **Regenerate** for a different one.
+  </Accordion>
+
+  <Accordion title="Visitors are burning through credits">
+    Lower **Messages / minute per visitor** and **Daily messages per visitor**,
+    set a **Monthly run cap**, and turn on **Require email to chat**. Switching
+    **Live** off stops it immediately.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Build an AI agent" icon="robot" href="/platform/ai/agents">
+    Drafting, triggers, and deploying inside your workspace.
+  </Card>
+  <Card title="Agent credits" icon="coins" href="/platform/ai/credits">
+    What public conversations cost you.
+  </Card>
+  <Card title="Custom domains" icon="link" href="/platform/settings/custom-domain">
+    Serve the assistant from your own address.
+  </Card>
+  <Card title="Change your plan" icon="arrow-up-right-dots" href="/platform/plans/change-plan">
+    Raise the publishing and public-UI limits.
+  </Card>
+</Columns>
+
+<StillStuck topic="a public agent link" />
+
+<!-- source of truth: components/clinic/agents/agent-ui-settings.tsx; lib/agents/agent-plan.ts; lib/agents/agent-ui-plan.ts -->

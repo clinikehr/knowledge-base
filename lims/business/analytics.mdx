@@ -1,0 +1,162 @@
+---
+title: "Reports, Lab Analytics and the owner summary"
+description: "Three different reporting surfaces, what each one answers, and the one definition of revenue that stops people reconciling against the wrong number."
+icon: "chart-column"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Lab Analytics needs Business Lab. Executive needs Professional Lab." roles="Owner, Manager and management roles. Bench and imaging roles do not see these screens." />
+
+The lab has **three** reporting surfaces, and they are constantly mistaken for
+each other. They answer different questions, sit at different addresses, and
+unlock on different plans.
+
+| Surface | Where | Answers |
+|---|---|---|
+| **Lab Analytics** | <Path steps={['Sidebar', 'Lab Analytics']} /> | How is the lab trading — trends, mix, revenue by test and by referrer |
+| **Analytics** | <Path steps={['Sidebar', 'Analytics']} /> | The report catalogue — one workbench per subject, with an export |
+| **Executive** | <Path steps={['Sidebar', 'Executive']} /> | Today and this week, for the owner |
+
+## One definition of revenue
+
+On both **Lab Analytics** and the report catalogue, revenue means **money
+collected, on orders created in the range you picked**. Not money invoiced.
+
+That distinction is the single most common reason two people quote different
+numbers for the same month. An order raised in March and paid in April counts in
+March, at the amount collected. An invoice raised and never paid counts as
+nothing. If you are reconciling against a billed figure, you are reconciling
+against a number this page does not report — see
+[Billing and payments](/lims/business/billing).
+
+## Lab Analytics — the lab's own dashboard
+
+Headed **Analytics**, with the subtitle "Trends and mix across drug testing, lab
+and imaging. Revenue = collected on orders created in the range."
+
+Pick a range — **Last 30 days**, **Last 90 days** or **Last 180 days** — and
+everything below follows it.
+
+| Tile | Reads |
+|---|---|
+| **Orders** | Every order created in the range, across all three work types |
+| **Collected revenue** | Money collected on those orders |
+| **Patients (lab + imaging)** | With "{n} new · {n} returning" beneath it |
+| **Avg collected per order** | Your real average ticket |
+
+Below the tiles: **Collected revenue by day**, **Orders by day**, **Revenue by
+test** and **Revenue by referring doctor**. The last of those is the one to read
+before renegotiating a commission — see
+[Referral commissions](/lims/business/commissions).
+
+Lab Analytics needs the Business Lab plan; below it the page reads **Advanced
+analytics is a Business feature**.
+
+## Analytics — the report catalogue
+
+A catalogue of subject-specific reports. Each opens a workbench with a period
+select, optional scope tabs, tiles, charts and a data table with **Export**.
+
+| Report | Scopes | Notes |
+|---|---|---|
+| **Revenue** | **Invoices** · **Payments** | |
+| **Appointments** | — | Collection slots and bookings |
+| **Patients** | — | |
+| **Diagnostics** | **Laboratory** · **Radiology** | The core report for a lab — volume, turnaround, abnormal rate |
+| **Referrals** | — | Needs the referral-network capability and "Access the referrer portal" |
+| **Turnaround Time** | **Laboratory** · **Radiology** | Needs the turnaround capability and "View turnaround-time analytics" |
+| **Quality Control** | — | Needs the quality-control capability |
+| **Staff** | — | |
+| **Workload** | — | Cross-department load and peak hours |
+| **Reagents** | — | Valuation, turnover and expiry risk |
+| **Expiry Risk** | — | A snapshot as things stand — it has no period picker. Needs the expiry-risk capability |
+| **Predictive Analysis** | — | Demand, revenue and stock forecasts |
+
+A report you cannot see is missing for one of two reasons, and they have
+different fixes: the **capability** is not on your plan
+([Change your plan](/platform/plans/change-plan)), or the **permission** is not
+on your account ([Permissions](/platform/team/permissions)).
+
+The deeper turnaround measure has its own dashboard as well —
+see [Turnaround time](/lims/lab/turnaround-time).
+
+## Executive — the owner summary
+
+Headed **Owner Summary** (or **All Sites**, or the name of the site you have
+selected), with the subtitle "Today's intake and the week at a glance — the same
+numbers as your morning digest email."
+
+| Tile | Reads |
+|---|---|
+| **Orders today** | With "{n} drug testing · {n} lab · {n} imaging" beneath |
+| **Collected today** | Today's takings |
+| **This week** | The week so far |
+| **Backlog** | Everything still open, split the same three ways |
+| **Lab TAT (7d median)** · **Imaging TAT (7d median)** · **Drug-testing TAT (7d median)** | Seven-day medians. On the all-sites view these read "per site — pick a site" |
+| **Reagents at risk** | Value projected to expire unsold, with low-stock count |
+
+Below them: **By site**, **Top tests this week** and **Top referring doctors**.
+The site select reads **All sites ({n})**, and a collection centre is marked
+**(center)** so you can tell a draw station from a full laboratory.
+
+Executive needs the Professional Lab plan — below it the card reads **Owner
+dashboard is a Professional feature**. Two parts of the page have their own
+gates: **By site** needs multi-location reporting, and the reagent-risk tile
+needs the expiry-risk capability. Without the latter the tile falls back to a
+plain **Reagent alerts** count.
+
+## Who can open these
+
+A lab scientist cannot open **Executive** or **Lab Analytics**, and that is
+deliberate — bench roles get the bench, not the lab's revenue. Management roles
+and the owner get both. Where a permission rather than a plan is missing, the
+screen degrades quietly to **Analytics is hidden — Needs authorisation from your
+clinic owner or manager** rather than erroring. See
+[Roles](/platform/team/roles).
+
+<AuditNote action="Opening a report" />
+
+## If the numbers look wrong
+
+<AccordionGroup>
+  <Accordion title="Two people quote different revenue for the same month">
+    Almost always billed versus collected. These surfaces report **collected**
+    money on orders **created** in the range. Compare against the payments
+    figure, not the invoice total — see
+    [Billing and payments](/lims/business/billing).
+  </Accordion>
+
+  <Accordion title="Revenue looks low in a month you know was busy">
+    Work created in the range but paid later has not been collected yet. Widen
+    the range, or check the **Pending** tab on **Payments** for money that was
+    received but never matched to an invoice.
+  </Accordion>
+
+  <Accordion title="Revenue by referring doctor is empty">
+    Orders are not being attributed to referrers at intake. The referrer has to
+    be picked on the intake or order form — see
+    [Referring doctors](/lims/business/referrers).
+  </Accordion>
+
+  <Accordion title="Expiry Risk ignores the period I picked">
+    It has no period. It is a snapshot of what is at risk as things stand now —
+    see [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+
+  <Accordion title="Executive shows no By site section">
+    Either your lab runs a single site, or multi-location reporting is not on
+    your plan — see [Plans](/platform/plans/overview).
+  </Accordion>
+
+  <Accordion title="A scientist says the sidebar has no Executive entry">
+    Correct, and intentional. Those screens are not offered to bench or imaging
+    roles — see [Roles](/platform/team/roles).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a report" />
+
+<!-- source of truth: components/clinic/dashboard/lab-station/analytics/analytics-content.tsx, components/clinic/dashboard/lab-station/admin/admin-dashboard-content.tsx, lib/analytics/report-catalog.ts, lib/clinic-nav-registry.ts (LIMS) -->

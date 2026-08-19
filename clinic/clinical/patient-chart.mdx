@@ -1,0 +1,121 @@
+---
+title: "The patient chart"
+description: "Find everything recorded about one person — history, medications, labs, files, billing and notes — and learn how the chart changes with your plan."
+icon: "folder-open"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { AuditNote, StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member with access to the module" />
+
+The chart is the one screen that holds everything recorded about a single
+person — their details, their visits, what they were prescribed, what was
+ordered, what they owe and what they have signed. Every clinical module writes
+into it, so it is the right place to start when you need context before you act.
+
+The Clinic & Hospital edition ships two versions of it. Solo and team plans open
+a **client** chart built around the relationship; the enterprise plan opens a
+**patient** record built around the demographics a hospital has to hold. Both
+describe the same person, and both are reached the same way.
+
+<Tabs>
+  <Tab title="Solo and team">
+    <Path steps={['Sidebar', 'Clients', 'A client']} />
+  </Tab>
+  <Tab title="Enterprise">
+    <Path steps={['Sidebar', 'Front Desk', 'Patients', 'Patient List']} />
+  </Tab>
+</Tabs>
+
+<AuditNote action="Opening a chart" />
+
+## What you get on each plan
+
+<Tabs>
+  <Tab title="Solo and team — the client chart">
+    The header carries the name, client type and status badges, date of birth
+    and age, email and phone, with **Edit profile** beside it. Under that sits a
+    row of actions — **Intakes**, **Upload**, **Message**, and a **⋯** menu whose
+    **Change status** option moves the person between **Active**, **Inactive**,
+    **Prospective** and **Archived**.
+
+    | Tab | What is on it |
+    |---|---|
+    | **Overview** | Balance, invoices, consults and next appointment; the current check-in state (**Not checked in** until someone checks them in); **Current Medications** and **Recent Diagnoses** |
+    | **Billing** | Invoices and payments for this person |
+    | **Measures** | Recorded measurements over time |
+    | **History** | The visit and activity trail |
+    | **Medications** | Prescriptions and e-prescribing — see [Prescribe and e-prescribe](/clinic/clinical/prescriptions) |
+    | **Labs** | Test results filed against this person |
+    | **Files** | The health-records vault and shared forms |
+
+    A right-hand sidebar stays with you across tabs: **Billing** (Balance, Total
+    Paid, Billing Type), **Upcoming** appointments, **Client Info** and
+    **Contacts**.
+  </Tab>
+
+  <Tab title="Enterprise — the patient record">
+    The enterprise record opens as a demographic form rather than a summary,
+    because a hospital is required to hold more about each person: Title, names,
+    Gender, DOB, Marital Status, National ID, Occupation, Employment,
+    Nationality, Country of Residence, email and phone numbers, Residential
+    Address, **Next of Kin**, Blood Type, Genotype and Current Medications.
+
+    Alongside it are **Insurance** and **Recent Activity** tabs. Clinical
+    activity lives in the modules that produced it — [triage](/clinic/clinical/triage),
+    [consultation](/clinic/clinical/consultation), [the lab](/clinic/diagnostics/lab),
+    [radiology](/clinic/diagnostics/radiology) and
+    [wards](/clinic/inpatient/wards) — and is summarised on **Recent Activity**.
+  </Tab>
+</Tabs>
+
+## Sticky notes and status notes
+
+A floating dock sits on the edge of the chart: two draggable vertical tabs,
+**Sticky Notes** in amber and **Status Notes** in blue, each with a count badge.
+Pinned sticky notes also render as dismissible cards on the chart itself.
+
+To add one, open **Sticky Notes** and fill in **Title**, **Note**, a **Colour**
+and a **Priority**, then decide whether to pin it — the toggle reads "Keep this
+note above the others" — and select **Add note**.
+
+<Note>
+  **A sticky note belongs to the person, not the visit.** It follows them into
+  every future visit and every module, so it is the right place for "always
+  needs a chaperone" or "prefers afternoon appointments" — and the wrong place
+  for something that only matters today. Anything clinical belongs in a
+  [clinical note](/clinic/clinical/notes).
+</Note>
+
+## Check a person in from the chart
+
+Select **Check-in** to open the **Check In Patient** sheet. Pick the check-in
+date and time, choose an appointment (or leave it on **No appointment**), add
+**Visit items** — a service, a lab test or a custom label — set **Assign to**
+(a staff member, or **Unassigned**) and enter a **Reason for visit**. Select
+**Check in** to finish.
+
+The sheet refuses to save an empty visit: "Add a reason, appointment, or at
+least one item". Once checked in you can **Save changes**, check the person out,
+or cancel the visit, and the visit record can be downloaded or emailed — you
+will see "Visit record sent" when it goes.
+
+The full front-desk workflow, including the queue view, is in
+[Check patients in](/clinic/front-desk/check-in).
+
+## Where the chart gets its content
+
+| You want to | Go to |
+|---|---|
+| Add a new person | [Register patients](/clinic/front-desk/register-patients) |
+| Record vitals and route them to a department | [Record triage](/clinic/clinical/triage) |
+| Document an encounter | [Run a consultation](/clinic/clinical/consultation) |
+| Write a standalone note | [Write a clinical note](/clinic/clinical/notes) |
+| Send a form to be signed | [Send a document for signature](/clinic/clinical/documents) |
+| See who opened a record | [Audit log](/platform/security/audit-log) |
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/clients-management/, components/clinic/patients-management/, lib/clinic-nav-registry.ts -->

@@ -1,0 +1,179 @@
+---
+title: "Your subscription invoices and receipts"
+description: "Find every charge ClinikEHR has made, download a receipt or a PDF, and understand what a failed payment does to your workspace."
+icon: "file-invoice-dollar"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner" />
+
+<Info>
+  **Two different things are called "invoices" in ClinikEHR.** This page is about
+  what **you pay us** — subscriptions, staff seats, add-ons and credit packs. The
+  invoices you raise for your own patients or customers are a separate module
+  inside the workspace: see [Invoices](/clinic/revenue/invoices). Nothing on this
+  page affects them, and nothing there appears here.
+</Info>
+
+Your own billing lives outside every workspace, on your personal home.
+
+<Path steps={['Personal home', 'Billing', 'Payment History']} />
+
+<TaskHeader
+  before="Ownership of at least one workspace"
+  time="2 minutes"
+  after="The charge you were looking for, with a receipt you can file"
+/>
+
+## Find a charge
+
+<Steps>
+  <Step title="Open Billing on your personal home">
+    The top navigation is **Dashboard**, **Clinics**, **Billing** and
+    **Settings**. **Billing & Subscriptions** covers every workspace you own, not
+    just the one you were last in.
+  </Step>
+
+  <Step title="Go to the Payment History tab">
+    The four tabs are **Overview**, **Plan Subscriptions**, **Add-on Features**
+    and **Payment History**. The last one is the ledger.
+
+    Above the table, **Total Payments**, **Successful**, **Pending/Failed** and
+    **This Month** give you the shape of it at a glance.
+  </Step>
+
+  <Step title="Narrow it down">
+    Search with **Search payments...**, or filter by **Status** (**All Status**,
+    **Paid**, **Pending**, **Overdue**), **Type** (**All Types**,
+    **Subscription**, **Add-ons**, **Metered**, **Top-Up**), **Date** and
+    **Clinic**.
+
+    **Type** is the fastest way to answer "what was this?" — a staff seat or a
+    plan renewal is a **Subscription**, a credit pack is a **Top-Up**, and
+    per-use clinical charges are **Metered**.
+  </Step>
+
+  <Step title="Open the row">
+    The **Invoice Details** sheet shows **Invoice**, **Clinic**, **Plan**, the
+    **Dates** block (**Invoice Date**, **Due Date**, **Period Start**, **Period
+    End**, **Payment Date**), a **Breakdown** with **Discount** and **Total**,
+    and **Payment Information** naming the **Provider**, **Billing Cycle** and
+    **Reference**.
+  </Step>
+</Steps>
+
+## Get the paperwork
+
+- **Download Receipt** — the icon on each row of the table, for a single charge.
+- **Download PDF** — inside the **Invoice Details** sheet, for the full document.
+- **Export** — at the top of **Payment History**, for the whole filtered list.
+  **Export Data** on the page header does the same for your billing overall.
+
+Receipts are also emailed by the payment provider when a charge succeeds, to the
+address on the account that owns the workspace. If your bookkeeper needs them,
+the reliable route is to download from here rather than to forward mail — this
+list is the record that stays complete.
+
+## Add-on subscriptions
+
+<Path steps={['Personal home', 'Billing', 'Add-on Features']} />
+
+**Premium Add-ons** are billed alongside your plan and managed on their own tab —
+**AI Note Taker**, **ePrescribe**, **ePrescribe PDMP** and **eLabs Access**. Each
+card shows its price, whether it is **Active** or **Not Subscribed**, and either
+**Add Feature**, **Included with your plan**, or **Requires Paid Plan** if your
+plan cannot carry it yet.
+
+Cancelling one warns you: "You'll lose access at the end of your current billing
+period. This action cannot be undone." The charge then stops at the next cycle,
+not immediately.
+
+## When a payment fails
+
+<Warning>
+  **A failed renewal takes your paid features away.** A subscription that is not
+  active or trialing is treated as Free across the whole workspace — for every
+  member, immediately, even though the plan name still shows. Your records,
+  notes and history stay fully accessible and nobody is locked out, but the paid
+  capabilities stop until the payment goes through.
+</Warning>
+
+You will see the row as **Overdue** under **Payment History**, and the workspace
+card under **Plan Subscriptions** as **Past Due**. Fix it from the **Fix
+Payment** prompt or by going through checkout again — see
+[Payment methods](/platform/plans/payment-methods).
+
+The **Overview** tab is the quickest health check: **Billing Alerts** reads "All
+Payments Up to Date" — "No outstanding invoices or payment issues" — when there
+is nothing to do.
+
+## Check it worked
+
+- The charge you were looking for is in **Payment History** with the right
+  **Clinic**, **Date** and **Amount**.
+- Its **Status** reads **Paid**.
+- **Download Receipt** produces a file that opens.
+- **Overview** shows **Monthly Spend** matching what you expect across your
+  workspaces.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="No Payment History">
+    Either nothing has been charged yet — normal on Free and during the no-card
+    trial — or your filters are excluding it. The empty state distinguishes the
+    two: "No payment history available for your clinics yet." versus "No payments
+    match your current search criteria."
+  </Accordion>
+
+  <Accordion title="No Clinics Found">
+    You are signed in with an account that owns no workspace. If you are staff
+    somewhere rather than its owner, your workspace's billing belongs to its
+    owner and is not yours to see. See
+    [Work across more than one workspace](/platform/account/switching-workspaces).
+  </Accordion>
+
+  <Accordion title="A charge I do not recognise">
+    Open the row and read **Type** and **Clinic**. A **Subscription** charge
+    partway through a month is usually a staff seat — those are prorated the
+    moment the seat is added. See [Staff seats](/platform/plans/seats).
+  </Accordion>
+
+  <Accordion title="I need an invoice addressed to my company">
+    The billing details come from the payment provider's record, not from your
+    workspace profile. [Contact support](/platform/help/contact-support) with the
+    invoice reference from the **Invoice Details** sheet.
+  </Accordion>
+
+  <Accordion title="I cancelled but was charged again">
+    Cancellation takes effect at the end of the billing period, so one more
+    charge is normal only if it predates the cancellation. Check **Period Start**
+    and **Period End** in the sheet, then
+    [contact support](/platform/help/contact-support) with the reference.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Payment methods" icon="credit-card" href="/platform/plans/payment-methods">
+    Which provider bills you, and how to change the card.
+  </Card>
+  <Card title="Change your plan" icon="arrow-up-right-dots" href="/platform/plans/change-plan">
+    Upgrade, downgrade, cancel or reactivate.
+  </Card>
+  <Card title="Invoices for your patients" icon="receipt" href="/clinic/revenue/invoices">
+    The other kind of invoice — the ones you send out.
+  </Card>
+  <Card title="Delete your account" icon="trash" href="/platform/account/delete-account">
+    What to settle before you close everything down.
+  </Card>
+</Columns>
+
+<StillStuck topic="a subscription charge" />
+
+<!-- source of truth: components/home/billing/billing-content.tsx, components/home/billing/invoices-history.tsx, components/home/billing/invoice-detail-sheet.tsx, components/home/billing/addon-subscriptions.tsx, components/home/billing/billing-overview.tsx, components/home/dashboard/general/main-nav.tsx -->

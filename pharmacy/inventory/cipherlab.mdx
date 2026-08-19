@@ -1,0 +1,200 @@
+---
+title: "Count with a CipherLab scanner"
+description: "Walk the shelves with a CipherLab terminal, upload the scans over its cradle, and reconcile them against expected stock before applying the count."
+icon: "barcode"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Staff with the adjust stock permission" />
+
+A CipherLab 8000-series terminal counts a whole pharmacy far faster than a
+worksheet does: you scan and key quantities on the shelf, then dock the terminal
+and send the batch to ClinikEHR in one transfer. This page covers the transfer
+and the reconciliation. Opening the count is the same as any other — see
+[Run a stock count](/pharmacy/inventory/stock-counts).
+
+<Path steps={['Sidebar', 'Inventory', 'Counts', 'New count']} />
+
+<TaskHeader
+  before="A CipherLab terminal holding a completed count, its USB cradle plugged into this computer, and Chrome, Edge or the ClinikEHR desktop app"
+  time="5 minutes for the transfer, longer for reconciling unmatched barcodes"
+  after="A physical count reconciled against expected stock, ready to apply"
+/>
+
+## Before you dock the terminal
+
+Three things have to be true, and each one fails in a way that looks like a
+dead port:
+
+- The cradle is plugged into **this** computer by USB — not into a hub on
+  another machine, and not only into power.
+- You are in **Chrome** or **Edge**, or in the ClinikEHR desktop app. Any other
+  browser shows "This browser cannot talk to a serial scanner. Use Chrome, Edge,
+  or the ClinikEHR desktop app on the machine the cradle is plugged into." See
+  [The desktop app](/pharmacy/hardware/desktop-app).
+- The terminal actually holds the count. Nothing is read off the shelves during
+  the transfer — only what is already stored on the device.
+
+## Transfer the count
+
+The order of these steps matters. Do them as written.
+
+<Steps>
+  <Step title="Choose the scanner route on the new count">
+    On **New count**, set your **Scope** and **Count type**, then set
+    **How was it counted?** to **Portable scanner (CipherLab terminal)** —
+    "Walk the shelves with the terminal first, then upload the scans here."
+    The collection panel appears with the same three instructions repeated
+    below.
+  </Step>
+
+  <Step title="Seat the terminal in its cradle">
+    "Seat the CipherLab terminal in its cradle (USB plugged into this
+    computer)." Check it is properly seated — the contacts, not just the
+    housing.
+  </Step>
+
+  <Step title="Select Connect scanner and pick the port">
+    "Press **Connect scanner** below and choose the cradle's port." Your browser
+    asks which serial port to use; choose the cradle. The badge reads
+    **Opening port…**, then **Connected — start the upload on the terminal**.
+  </Step>
+
+  <Step title="Start the upload on the terminal">
+    "On the terminal, choose **2. Upload** (Upload Data). This app keeps
+    requesting the transfer, so either order works." The badge changes to
+    **Receiving…** and the tally starts filling.
+  </Step>
+
+  <Step title="Wait for Upload complete">
+    When the terminal has finished, the badge turns green — **Upload complete**.
+    **Finish now** ends a transfer early if you are sure it has stalled, and
+    **Collect again** starts over from an empty tally.
+  </Step>
+</Steps>
+
+<Note>
+  The transfer is a conversation between this computer and the terminal, not a
+  plain dump of text — the app requests each block and acknowledges it. So if
+  the terminal reports a successful upload but nothing arrived here, the
+  conversation never started: select **Disconnect**, then **Connect scanner**
+  again, rather than re-running the upload into a port that is not listening.
+</Note>
+
+## Read the tally before you go on
+
+The panel reports what actually arrived — for example "42 products, 1,180
+units" — plus, in amber, how many unreadable lines were skipped.
+
+A skipped line is a record the app could not parse. A handful is normal on a
+long count; a large number means the transfer is being read at the wrong speed,
+and the count is not trustworthy. See the 9600-baud fallback below.
+
+## Reconcile the scans
+
+Opening the count moves you to the **Physical count** sheet, headed with the
+scope — **Physical count — Whole clinic**, or the location you scoped to.
+
+<Steps>
+  <Step title="Deal with unmatched barcodes first">
+    Barcodes that matched nothing in your catalogue are surfaced at the top,
+    deliberately, because silently dropping them would understate the count. Use
+    **Assign to a product…** against each one to attach it to the right item. It
+    then joins the table below.
+
+    If a barcode belongs to a product that has no stock line in this count's
+    scope you get "That product has no stock line in this count's scope." —
+    the item is at a different location, or it was never received here.
+  </Step>
+
+  <Step title="Check the table">
+    Each row shows **Barcode**, **Location**, **Expected** and **Counted**. The
+    scanned figure lands in **Counted**; you can correct any of them by hand
+    before applying.
+  </Step>
+
+  <Step title="Review the totals">
+    **More than expected**, **Less than expected** and **Net difference** are
+    valued in your currency. Investigate the outliers now, not after applying.
+  </Step>
+
+  <Step title="Add a witness if the scope is controlled">
+    A controlled scope requires dual sign-off — choose the colleague from
+    **Select a witnessing staff member**.
+  </Step>
+
+  <Step title="Apply the count">
+    Select **Apply changes to inventory** and confirm with **Apply changes**.
+  </Step>
+</Steps>
+
+<Warning>
+  Applying posts every difference to stock and closes the count. It cannot be
+  reopened or reversed, and an unassigned barcode is applied as though the stock
+  was never counted. Clear the unmatched list first.
+</Warning>
+
+## Check it worked
+
+- The count is closed and the sheet reads "This count is closed — the lines are
+  the record of what was counted."
+- The **Stock** tab matches your scanned quantities.
+- The **Ledger** tab carries a movement for each variance.
+- If the shelf already agreed with the system, the confirmation reads
+  **"Applied — stock already matched the count"**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'This browser cannot talk to a serial scanner…'">
+    Serial devices only work in Chrome, Edge, or the ClinikEHR desktop app, and
+    only on the machine the cradle is physically plugged into. Safari and
+    Firefox cannot do it at all.
+  </Accordion>
+
+  <Accordion title="No port appears in the chooser">
+    The cradle is not being seen by the computer. Re-seat the USB cable, try
+    another port, and check the cradle has power. On a shared machine, another
+    tab or app may already hold the port — close it and try again.
+  </Accordion>
+
+  <Accordion title="'Data is arriving but none of it reads as records — try the 9600-baud option.'">
+    The terminal is talking at a different speed than the default. Select
+    **Disconnect**, then **Try at 9600 baud**, and start the upload again. The
+    default is 115200; older or reconfigured terminals often sit at 9600.
+  </Accordion>
+
+  <Accordion title="The terminal says it uploaded, but the tally stayed at zero">
+    The app was not listening when the terminal sent. **Disconnect**, select
+    **Connect scanner**, wait for **Connected — start the upload on the
+    terminal**, and only then choose **2. Upload** on the device.
+  </Accordion>
+
+  <Accordion title="A lot of unreadable lines were skipped">
+    Almost always the baud rate. Select **Collect again**, reconnect with
+    **Try at 9600 baud**, and re-upload. Do not open a count off a partial
+    transfer — an under-read count applies as missing stock.
+  </Accordion>
+
+  <Accordion title="Barcodes are unmatched that I know we stock">
+    The barcode on the pack is not the one on the catalogue entry. Assign it
+    here to get the count done, then add the barcode to the product so the next
+    count matches automatically — see
+    [Stock control](/pharmacy/inventory/index) and
+    [Barcode scanners](/pharmacy/hardware/barcode-scanner).
+  </Accordion>
+
+  <Accordion title="The transfer stalls halfway">
+    Select **Finish now** to keep what arrived, check the tally against roughly
+    what you expect, and if it is short, **Collect again** from the start rather
+    than applying a partial count.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a CipherLab upload" />
+
+<!-- source of truth: components/inventory/count-device-collect.tsx, count-reconcile-sheet.tsx, count-worksheet-sheet.tsx, hooks/use-cipherlab-collector.ts, lib/cipherlab-collect.ts -->

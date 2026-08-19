@@ -1,0 +1,152 @@
+---
+title: "Send a document for signature"
+description: "Email a consent form or agreement to a patient, track whether they opened and signed it, and file the signed copy to their chart."
+icon: "file-signature"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Any staff member with access to Documents" />
+
+Send a consent form, an intake pack or an agreement to a patient by email, watch
+its status change as they open and sign it, and keep the signed copy on their
+record. Nothing is printed and nothing comes back by post.
+
+<Tabs>
+  <Tab title="Solo and team">
+    <Path steps={['Sidebar', 'Documents']} />
+  </Tab>
+  <Tab title="Enterprise">
+    <Path steps={['Sidebar', 'Records', 'Documents']} />
+  </Tab>
+</Tabs>
+
+<TaskHeader
+  before="An active document template, and a patient with an email address on file"
+  time="Under a minute per document"
+  after="A document sent, tracked by status, and filed to the patient's record once signed"
+/>
+
+The dashboard has four tabs — **Overview**, **Documents**, **Analytics** and
+**Templates** — a period filter of **Today**, **This Month** or **All Time**,
+and a split **New Document** button offering **Create Document** or **Upload
+Document**.
+
+## Send a document
+
+<Steps>
+  <Step title="Make sure a template exists">
+    Everything you send is built from a template. If there is none you will be
+    stopped with "No active document templates found. Please create a template
+    first." — build one on the **Templates** tab before you go further.
+  </Step>
+
+  <Step title="Start from the patient">
+    Find the person in your patient or client list, open the row's **⋯** menu
+    and select **Send Consent**.
+  </Step>
+
+  <Step title="Fill in the send sheet">
+    The sheet is headed **Send Document for Signature**. Choose the **Document
+    Template** — it is required — and add **Additional Notes (Optional)** if the
+    patient needs context about why they are being asked to sign.
+  </Step>
+
+  <Step title="Send it">
+    The patient receives an email with their own link. The document appears in
+    your **Documents** list at **Pending**.
+  </Step>
+</Steps>
+
+## Track what happens next
+
+| Status | What it means |
+|---|---|
+| **Pending** | Sent, not yet opened |
+| **Viewed** | The patient has opened it but not signed |
+| **Signed** | Done — the signed copy is on their record |
+| **Expired** | The link ran out before they signed |
+| **Declined** | The patient refused to sign |
+| **Cancelled** | You withdrew it |
+
+Each row's **⋯** menu offers **View Details**, and two actions that only appear
+when they make sense: **Resend Document** on an expired document, and **Cancel
+Document** on one that is still **Pending** or **Viewed**. Cancelling asks
+"Cancel Document?" and lets you back out with **Keep Document**.
+
+<Warning>
+  **Cancelling a document kills the patient's link for good.** They cannot open
+  it again, and there is no undo — you have to send a fresh one. If you are
+  only chasing a slow signer, leave the document where it is and ring them.
+</Warning>
+
+## Documents on the patient's chart
+
+The **Files** tab of a patient's chart holds two things.
+
+**Health Records** is a vault for files you hold about the person. An empty one
+says "Vault is empty"; select **Select files to upload** to add to it, and each
+file's **File Options** menu can download it, move it or send it to trash.
+
+Below that is the shared-forms section — "No shared forms" until something has
+been sent — with **Send documents to sign** as a second route into the same send
+sheet.
+
+Patients see and sign these from their portal; that side is described in
+[Documents to sign](/portal/patients/documents).
+
+## Check it worked
+
+The document is in the **Documents** list against the right patient, at
+**Pending**. When the patient opens it the status becomes **Viewed**, and once
+they sign it becomes **Signed** and the signed copy is on their chart. The
+**Overview** and **Analytics** tabs count the same documents over your chosen
+period.
+
+<AuditNote action="Sending or opening a signed document" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="No active document templates found">
+    Nothing can be sent without a template. Create one on the **Templates** tab,
+    make sure it is active, then send again.
+  </Accordion>
+
+  <Accordion title="The patient has no email address">
+    The document is delivered by email, so the patient needs one on their chart.
+    Add it in
+    [Register patients](/clinic/front-desk/register-patients) and send again.
+  </Accordion>
+
+  <Accordion title="Send Documents is locked behind an upgrade">
+    Sending documents for signature needs the Starter plan or above. See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="The document expired before they signed">
+    Use **⋯** → **Resend Document**. It is offered only on expired documents,
+    and gives the patient a fresh link.
+  </Accordion>
+
+  <Accordion title="The patient says they never got the email">
+    Ask them to check their spam folder first. If it is genuinely missing,
+    confirm the email address on their chart is right, cancel the outstanding
+    document and send a new one. Patients with portal access can also open it
+    from the portal without the email — see
+    [Turn on the patient portal](/portal/setup/features).
+  </Accordion>
+
+  <Accordion title="I cannot cancel a document">
+    **Cancel Document** only appears while a document is **Pending** or
+    **Viewed**. Once it is signed, declined or expired there is nothing to
+    withdraw.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: app/u/clinic/dashboard/documents/, components/clinic/documents/, components/clinic/clients-management/ (Files tab) -->

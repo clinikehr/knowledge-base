@@ -1,0 +1,174 @@
+---
+title: "Invoices and payments"
+description: "Raise an invoice for an account or institutional buyer, record a payment against it, and keep your service list tidy."
+icon: "file-invoice-dollar"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+
+In a pharmacy the till is the rule and an invoice is the exception. Reach for
+**Billing** when money is not changing hands at the counter: a clinic or company
+you supply on account, a school or care home buying in bulk, a delivery you will
+bill at the end of the month.
+
+For anything a customer pays for at the counter, use the till instead — see
+[Ring up a sale](/pharmacy/pos/index).
+
+<Path steps={['Sidebar', 'Billing']} />
+
+<TaskHeader
+  before="A buyer you are billing rather than charging at the till"
+  time="2 minutes for an invoice"
+  after="An invoice you can send, and a payment recorded against it when it settles"
+/>
+
+**These three screens are shared with the other ClinikEHR editions, so their
+wording is clinic-flavoured.** You will see "patient", "clinic" and
+"consultation" in places where your pharmacy would say customer, pharmacy and
+sale. The screens work exactly as described here — the vocabulary simply has not
+been translated for the Pharmacy edition. Do not go looking for a separate
+pharmacy billing screen; this is it.
+
+## The three screens
+
+<Columns cols={3}>
+  <Card title="Billing Dashboard" icon="file-invoice">
+    Tabs **Overview**, **Invoices** and **Insights**. Buttons **Refresh** and
+    **New Invoice**.
+  </Card>
+  <Card title="Payments" icon="money-bill-transfer">
+    Headed **Payments Management**. Tabs **Overview**, **Payments** and
+    **Pending**. Button **New Payment**.
+  </Card>
+  <Card title="Services" icon="list-check">
+    Headed **Services Dashboard**. Tabs **Overview**, **Services** and
+    **Categories**. Buttons **New Service** and **New Category**.
+  </Card>
+</Columns>
+
+**Billing** is a collapsible entry in the sidebar; the three screens are its
+sub-items.
+
+## Raise an invoice
+
+<Steps>
+  <Step title="Open the Billing Dashboard">
+    Select **Billing** in the sidebar, then **Billing Dashboard**.
+  </Step>
+
+  <Step title="Select New Invoice">
+    The invoice form opens.
+  </Step>
+
+  <Step title="Choose who it is for">
+    Pick the buyer, then add the lines — products or services with their
+    quantities and prices.
+  </Step>
+
+  <Step title="Check the status">
+    A new invoice is created as **Pending**, not as a draft. It is live and
+    awaiting payment the moment you save it, and it appears in every
+    awaiting-payment view straight away. Set it to **Draft** deliberately if you
+    genuinely want it hidden from those views while you finish it.
+  </Step>
+
+  <Step title="Save, then send it">
+    Save the invoice, then send it from its row action. You choose the
+    recipients on the send dialog rather than mailing everyone on file.
+  </Step>
+</Steps>
+
+## Record a payment
+
+<Steps>
+  <Step title="Open Payments">
+    **Billing** › **Payments**. The **Pending** tab is what is still owed.
+  </Step>
+  <Step title="Select New Payment">
+    Record a **Direct Payment**, or **Pay Invoice** against an existing one.
+  </Step>
+  <Step title="Enter the amount, method and reference">
+    A part-payment is allowed — the invoice moves to partially paid and the
+    remainder stays outstanding.
+  </Step>
+</Steps>
+
+## Cancel, do not delete
+
+An invoice with a payment recorded against it cannot be deleted:
+
+> This invoice has recorded payments and cannot be deleted. Cancel it instead to
+> keep the record.
+
+Cancelling keeps the invoice and the payment history intact, which is what your
+books and your buyer both need. Deleting would remove the only record that money
+moved.
+
+## Services and categories
+
+**Services** is your list of chargeable things that are not stock items —
+delivery, a compounding fee, a blood-pressure check, a monthly account charge.
+Group them with **New Category** so long invoices stay readable.
+
+## Currency, tax and payment details
+
+- **Currency and tax** are set once in **Settings** › **Billing** and apply
+  everywhere money is shown. See
+  [Currency and tax](/platform/settings/currency).
+- **The offline payment channels printed on your invoices** — bank account,
+  mobile money, whatever you want a buyer to pay into — live in **Settings** ›
+  **Payment Details**. Fill them in before you send your first invoice, or it
+  goes out with no way to pay it.
+
+## Check it worked
+
+- The invoice appears on the **Invoices** tab with the buyer, the total and a
+  **Pending** status.
+- After sending, the recipients you chose have it.
+- Once paid, the invoice shows as paid or partially paid, and the payment is
+  listed on the **Payments** tab.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The screen says 'patient' and 'clinic' everywhere">
+    Expected. These three screens are shared across editions and have not been
+    relabelled for pharmacies. Read "patient" as your customer or buyer.
+  </Accordion>
+
+  <Accordion title="The invoice I just made is already Pending, not Draft">
+    That is the default, deliberately: a draft invoice is invisible to every
+    awaiting-payment view, and invoices that quietly sat in draft went unchased.
+    Set it to draft yourself if you want that.
+  </Accordion>
+
+  <Accordion title="I cannot delete an invoice">
+    It has a payment recorded against it. Cancel it instead — the record of the
+    money stays, which is the point.
+  </Accordion>
+
+  <Accordion title="The invoice went out with no way to pay it">
+    Your offline payment channels are empty. Fill in **Settings** › **Payment
+    Details**, then re-send.
+  </Accordion>
+
+  <Accordion title="The amounts are in the wrong currency">
+    Currency comes from **Settings** › **Billing**, not from the invoice. Change
+    it there — see [Currency and tax](/platform/settings/currency).
+  </Accordion>
+
+  <Accordion title="I cannot see Billing in the sidebar">
+    A cashier reaches only **POS** and **Sales**, and a pharmacy technician is
+    kept off the money surfaces. See
+    [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an invoice" />
+
+<!-- source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, invoice-form.tsx), components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, db/actions/billing.ts, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS) -->

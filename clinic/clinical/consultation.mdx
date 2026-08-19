@@ -1,0 +1,176 @@
+---
+title: "Run a consultation"
+description: "Open a patient from a department queue, document the encounter, place orders, admit if needed, then sign and lock the record."
+icon: "stethoscope"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager, doctor, physiotherapist" />
+
+A consultation is the encounter record: the note you write, the orders you
+place, the results that come back, and the signature that closes it. Patients
+arrive in a consultation queue from [triage](/clinic/clinical/triage).
+
+<Path steps={['Sidebar', 'Outpatient', 'Consultation', 'Consultation List']} />
+
+<TaskHeader
+  before="A patient routed to your department at triage"
+  time="As long as the encounter takes — the note saves itself throughout"
+  after="A signed, locked consultation record with any orders sent to the lab, imaging, pharmacy or billing"
+/>
+
+## Open the encounter
+
+<Steps>
+  <Step title="Choose your department">
+    The module opens on a **Select a Department** grid — "Choose the department
+    you'd like to access for consultations." Pick yours. If that department has
+    more than one sub-unit, choose the sub-unit next.
+
+    The queue that follows covers the last 48 hours only. An empty one reads "No
+    consultation data available in the last 48 hours."; older encounters are
+    under **Consultation History**.
+  </Step>
+
+  <Step title="Open the patient">
+    What the row offers depends on its status. A **Pending** patient offers
+    **New consultation**. A **Completed** one offers **View consultation** and
+    **Update Consultation**.
+
+    A new consultation lands on the **Note** tab; viewing or updating an
+    existing one lands on **Results**.
+  </Step>
+</Steps>
+
+## The consultation chart
+
+Eight tabs, plus a header row of actions that stays with you.
+
+| Tab | What it holds |
+|---|---|
+| **Overview** | The encounter at a glance |
+| **Chart** | Everything previously recorded, with an Out-patient / In-patient filter. Empty it reads "Nothing recorded for this patient yet." |
+| **Results** | Results against this encounter. On a new one: "Nothing ordered on this encounter yet" |
+| **Note** | Your documentation and diagnoses |
+| **Orders** | Medications, labs, imaging and services |
+| **Vitals** | Vital / Value / Normal range / Status, plus an **Over time** chart |
+| **History** | Past encounters |
+| **Files** | Documents attached to this patient |
+
+The header carries **Back**, **Intakes**, **Upload**, **Check-in**, **Admit
+patient**, **Sign & lock** and Save. Your typing is saved as you go — the chip
+reads **Draft saved**, which is exactly what it is: a draft, not a signed record.
+
+## Write the note
+
+The **Note** tab has two sub-tabs, **Documentation** and **Diagnosis (n)**.
+
+- Select **Select template** to insert a template. The popover searches as you
+  type — "Search templates..." — and tells you plainly when nothing matches:
+  "No template found."
+- The violet **Dictate** microphone opens the ambient note taker, which turns a
+  recording into structured note text. See
+  [Generate a note with AI](/clinic/clinical/ai-notes).
+- On **Diagnosis**, select **Add first diagnosis**, then fill in the diagnosis
+  description and "Clinical notes for this diagnosis...". There is a separate
+  field for "Additional clinical notes or impression...".
+
+## Place orders
+
+The **Orders** tab has four sub-tabs, each showing a live count:
+**Medications**, **Labs**, **Imaging** and **Services**.
+
+| Sub-tab | What you fill in |
+|---|---|
+| **Labs** | "Select lab test...", then "Select parameters...". You will see "Lab test added" |
+| **Imaging** | "Select test...", an urgency of **Routine**, **Urgent** or **STAT**, "Reason for test..." and "Relevant history..." |
+| **Medications** | "Select mode..." (Oral, Tabs, Susp, Syrup, Inhal, Drops and so on), "Select medication...", then "Special instructions or notes..." |
+| **Services** | Billable services performed during the encounter |
+
+Orders go straight to the unit that fulfils them —
+[the lab](/clinic/diagnostics/lab), [radiology](/clinic/diagnostics/radiology)
+and [pharmacy dispensing](/clinic/pharmacy/dispensing).
+
+## Admit the patient
+
+Select **Admit patient** to open the admission dialog. Once the patient is
+admitted the button reads **Admitted** and is disabled — everything else on the
+chart stays usable, so you can carry on documenting. Ward workflow continues in
+[Wards](/clinic/inpatient/wards).
+
+## Sign and lock
+
+Select **Sign & lock** when the encounter is finished. A locked record can be
+reopened with **Unlock**.
+
+<Warning>
+  **AI-generated sections must be read before you sign.** If any part of the
+  note came from AI, signing is refused with "Review the N AI-generated sections
+  before signing." Your signature says a clinician stands behind every word — go
+  through each flagged section, correct it, and sign only then.
+</Warning>
+
+## Working offline
+
+Documentation keeps working without a connection. You will see "Captured
+offline … It will sync when you are back online." and an amber banner across the
+top.
+
+Three actions are deliberately switched off, each saying why: **Sign & lock**
+and co-signing ("Signing needs a connection") and **Admit patient**
+("Admission needs a connection — a bed is a shared resource"). Everything you
+typed is still there when you reconnect. See
+[Working offline](/platform/apps/offline).
+
+## Check it worked
+
+The encounter shows as **Completed** in the queue, the chip has stopped saying
+**Draft saved** and the record reads as signed. Any order you placed is now
+visible to the unit that has to fulfil it, and the counts on the **Orders**
+sub-tabs match what you entered.
+
+<AuditNote action="Opening a consultation record" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Every field is read-only">
+    Editing a consultation needs the owner, a doctor, a physiotherapist or a
+    manager. Anyone else opens the chart read-only with no error — check your
+    role in [Roles](/platform/team/roles). Signing, countersigning and admitting
+    are separately grantable on top of that; see
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The patient is not in the queue">
+    Consultation queues are filled by triage. If they are not there, they have
+    not been triaged into your department, or they were triaged more than 48
+    hours ago — look under **Consultation History**. See
+    [Record triage](/clinic/clinical/triage).
+  </Accordion>
+
+  <Accordion title="Sign & lock will not do anything">
+    Two causes. Either the note still has AI-generated sections you have not
+    reviewed, or you are offline — the button says "Signing needs a connection".
+  </Accordion>
+
+  <Accordion title="Admit patient is greyed out">
+    Either the patient is already admitted (the button then reads **Admitted**),
+    or you are offline. Beds are shared between everyone in the hospital, so
+    ClinikEHR will not let a device claim one from a queue.
+  </Accordion>
+
+  <Accordion title="There is no Consultation in my sidebar">
+    Consultation exists only on the **enterprise** plan, and only when the
+    matching care area is on. See [Change your plan](/platform/plans/change-plan)
+    and [Care areas](/platform/team/care-areas).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/consultation/ (department-selector.tsx, consultation-surface.tsx, consultation-header.tsx, chart/) -->

@@ -1,0 +1,195 @@
+---
+title: "File and track claims"
+description: "Bill an insurer for care you have delivered, then follow the claim through to payment or denial — in whichever of the two claim systems your plan gives you."
+icon: "file-shield"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise for the hospital system; Starter and above for the electronic system" roles="Owners, managers and billers" />
+
+A claim asks an insurer to pay for care you have already delivered. Which
+screens you use depends entirely on your plan, because ClinikEHR has
+[two separate insurance systems](/clinic/insurance/overview) — pick the tab that
+matches what your sidebar shows.
+
+<TaskHeader
+  before="A payer set up, and the patient's coverage recorded"
+  time="5 minutes per claim"
+  after="A submitted claim you can track to payment or denial"
+/>
+
+<Warning>
+  On the electronic system, claim submissions and eligibility checks are charged
+  per use, and **Create and submit claims** sends them to the payer immediately
+  with no second confirmation. Use **Create claims** while you are learning, and
+  review before you submit. See [Plans](/platform/plans/overview).
+</Warning>
+
+<Tabs>
+  <Tab title="Enterprise hospitals">
+
+## Prepare the claim
+
+<Path steps={['Sidebar', 'Insurance', 'Claims']} />
+
+Claims here are prepared by you and tracked by you. Nothing is transmitted
+electronically — you send the claim to the insurer the way you already do, and
+this is the record of it.
+
+<Steps>
+  <Step title="Create the claim">
+    Select **New**. The claim form opens as a set of tabs you work through in
+    order.
+  </Step>
+
+  <Step title="Basic Info">
+    The patient, the encounter and the dates. This is what ties the claim to the
+    care that was actually delivered.
+  </Step>
+
+  <Step title="Items & Services">
+    Every service, medicine and consumable you are billing for. Prices come from
+    the payer-specific rates on the **Pricing** tab of the Insurance Dashboard,
+    not from your standard [service list](/clinic/revenue/services).
+  </Step>
+
+  <Step title="Insurance & Diagnosis">
+    The insurer, the patient's cover, and the diagnosis codes that justify every
+    item on the claim. An item with no supporting diagnosis is the denial you
+    will spend next month arguing about.
+  </Step>
+
+  <Step title="Review & Submit">
+    Read the whole claim, then submit it. If you obtained a
+    [pre-authorization](/clinic/insurance/pre-authorization), quote it — an
+    approved request is the fastest route through an insurer's review.
+  </Step>
+</Steps>
+
+## Track it
+
+The Claims screen has **Claims**, **Analytics** and **Activity**. Work the
+**Claims** list by status; **Analytics** is where you notice a payer whose
+denial rate is climbing, and **Activity** is the history of who did what to a
+claim.
+
+  </Tab>
+
+  <Tab title="Solo and team practices">
+
+## Create claims from unbilled work
+
+<Path steps={['Sidebar', 'Insurance']} />
+
+This system starts from your calendar rather than a blank form: it lists
+appointments you have not billed, and turns them into electronic claims.
+
+<Steps>
+  <Step title="Finish the setup first">
+    Under **Settings** → **Insurance**, complete **Insurance Profile**, add your
+    payers on **Payers**, and enrol each provider on **Enrollment**. Claims to a
+    payer you are not enrolled with will not be accepted, however correct they
+    are.
+  </Step>
+
+  <Step title="Record the patient's coverage">
+    On the client record — "Add the client's insurance coverage to enable
+    eligibility checks and claims." Run the eligibility check and read the badge:
+    **Eligible** or **Ineligible**. Checking before the visit is what stops you
+    working for nothing.
+  </Step>
+
+  <Step title="Open Unbilled appointments">
+    The **Unbilled appointments** tab lists completed appointments with no claim
+    against them. Select the ones you are billing.
+  </Step>
+
+  <Step title="Create the claims">
+    Use the split button. **Create claims** produces drafts you can check;
+    **Create and submit claims** creates them and sends them to the payer in one
+    action. After either, the view jumps to the **Claims** tab.
+  </Step>
+
+  <Step title="Submit and follow up">
+    From **Claims**, submit any drafts and watch the status. The stats bar counts
+    **Draft**, **In Progress**, **Paid** and **Denied**.
+  </Step>
+</Steps>
+
+## Reconcile the money
+
+The **Payments** tab is where remittances land. Record what the payer actually
+sent against the claims it covers, choosing the method — **Check**, **EFT /
+ACH**, **Card** or **Other**. A claim marked **Paid** with nothing reconciled
+against it is a claim you have not actually been paid for.
+
+**Analytics** shows how the whole pipeline is performing — submission volume,
+denial rate, and how long payers take.
+
+## Adding and removing payers
+
+Add payers from the search sheet — "Search by payer name, ID, or alias (e.g.
+Aetna, Blue Cross, 62308)..." — then switch them active or remove them. A payer
+that already has claims is never deleted: "This payer has existing claims and
+will be deactivated (not deleted)." That is deliberate, so your claim history
+does not lose the name of who you billed.
+
+  </Tab>
+</Tabs>
+
+## Check it worked
+
+- The claim appears in the **Claims** list with a status and the payer's name.
+- Nothing you meant to bill is still sitting on **Unbilled appointments** (on
+  the electronic system) or unclaimed (on the hospital one).
+- When money arrives, the claim moves to paid *and* has a payment reconciled
+  against it.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="My old claims have disappeared">
+    You are almost certainly looking at the other system. The hospital register
+    and the electronic workflow share no data, and a plan change moves you
+    between them. See [Insurance in ClinikEHR](/clinic/insurance/overview).
+  </Accordion>
+
+  <Accordion title="The payer rejected the claim immediately">
+    On the electronic system that usually means enrollment, not coding: the
+    payer does not recognise the provider for that transaction type. Check
+    **Settings** → **Insurance** → **Enrollment**, submit the enrollment, and
+    sync its status.
+  </Accordion>
+
+  <Accordion title="The eligibility check says Ineligible">
+    Confirm the member number, the payer and the date of birth on the client's
+    coverage — a single wrong digit reads as no cover. If the details are right,
+    the patient's cover has genuinely lapsed and they are self-paying; raise an
+    [invoice](/clinic/revenue/invoices) instead.
+  </Accordion>
+
+  <Accordion title="I need to remove a payer we no longer bill">
+    Remove it. If it has claims it is deactivated rather than deleted, which
+    keeps your history readable. It stops appearing on new claims either way.
+  </Accordion>
+
+  <Accordion title="The claim price is not what we negotiated">
+    On the hospital system, payer-specific prices live under **Insurance** →
+    **Pricing**. Fix the rate there rather than overtyping each claim.
+  </Accordion>
+
+  <Accordion title="Insurance is blocked on my plan">
+    The electronic system is not available on the Free plan; the upgrade prompt
+    names **Starter**. The hospital system needs Enterprise plus the insurance
+    [care area](/platform/team/care-areas). See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a claim" />
+
+<!-- source of truth: components/clinic/insurance/claims/claims-form.tsx, components/clinic/insurance/claims/claims-content-dashboard.tsx, components/clinic/insurance-management/insurance-content.tsx, components/clinic/insurance-management/payments-tab.tsx, components/clinic/dashboard/settings/insurance-settings.tsx, components/clinic/dashboard/settings/payer-search-sheet.tsx -->

@@ -1,0 +1,151 @@
+---
+title: "Enter and verify results"
+description: "Record bench readings against each parameter, then authorise the result — two separate permissions, and the difference matters."
+icon: "flask"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Entering results needs “enter results at the bench”. Moving a test to Completed needs “verify and authorise results”. Changing a completed result needs “amend a verified result”." />
+
+Entering a result and authorising it are two different acts, held by two
+different permissions, and often by two different people. A technician can run
+the sample and type the reading. Moving that test into **Completed** is the
+clinical sign-out — the point at which the result becomes reportable — and only
+someone who may verify can do it.
+
+<Path steps={['Sidebar', 'Lab Station', 'Test List']} />
+
+<TaskHeader
+  before="A test request in Pending or In Progress, and a bench reading to enter"
+  time="2 minutes per test"
+  after="A Completed, verified result ready to report"
+/>
+
+## Who may do what
+
+| Act | Needs | Typically |
+|---|---|---|
+| Enter results at the bench | "enter results at the bench" | Any technician, including own-bench-only access |
+| Verify and authorise results | "verify and authorise results" | Lab Director, senior scientist, doctor, owner |
+| Amend a verified result | "amend a verified result" | The verifier only |
+
+A lab can require that a named technician's work is checked. The setting asks
+**Do {name}'s results need verifying before release?** — meaning that person may
+run the sample and enter the reading, but a qualified verifier has to authorise
+the result before it can be reported, and is the only one who may change it
+afterwards. Verifiers can be lab scientists, doctors, radiologists or the owner.
+See [Permissions](/platform/team/permissions).
+
+## Enter the readings
+
+<Steps>
+  <Step title="Start the test">
+    Find the request and select **Start Test**. The toast reads **Test marked as
+    in progress**, and the status moves from **Pending** to **In Progress** so
+    the rest of the bench can see it is being worked.
+  </Step>
+
+  <Step title="Open the result form">
+    Select **Enter Results**. Each analyte on the test appears as its own field,
+    typed from your catalogue — a number with its unit, or a picker showing
+    **Select value** for a list like Positive / Negative / Indeterminate.
+  </Step>
+
+  <Step title="Enter every parameter">
+    Work down the list. The form shows how many are done as
+    **{n} / {n} parameters filled**, and marks the analytes that carry critical
+    limits with a **Critical** badge.
+  </Step>
+
+  <Step title="Save">
+    Save the form. The toast reads **Lab results saved successfully**. The test
+    stays **In Progress** — saving a reading is not signing it out.
+  </Step>
+</Steps>
+
+## Verify and complete
+
+Moving the test into **Completed** is the verification step. Read every value
+against its reference range before you do it, and give critical values the extra
+look their badge is asking for: anything outside the critical low or high limits
+you set on the catalogue test raises a **Critical** flag that overrides the
+status badge and is counted on the **Lab Station** as **Critical Results**
+("Requires immediate attention").
+
+<Warning>
+  Completing a test is the clinical sign-out. Once it is **Completed** the
+  result is reportable and can reach a clinician who will treat from it. Verify
+  each value first, and act on a critical result by phone rather than waiting
+  for someone to open a report.
+</Warning>
+
+To change a value after completion, use **Edit Results** — that needs the
+"amend a verified result" grant, and the change is recorded.
+
+## What completing also does
+
+Completing a test draws down the reagents attached to it in your catalogue, so
+your stock reflects the run without anyone counting bottles. The drawdown rides
+alongside the status change and can occasionally fall behind, so treat your
+reagent counts as very good rather than perfect, and spot-check with a stock
+count. See [Reagents and consumables](/lims/inventory/reagents).
+
+## If your site is a collection centre
+
+Result entry is disabled at a collection centre. Attempting it returns **This
+site is a collection center — results are entered at your full laboratory**, and
+bench screens carry a banner saying the same. Register and dispatch the specimen
+instead; the full lab enters and verifies.
+
+<AuditNote action="Opening a patient's results" />
+
+## Check it worked
+
+- The test shows **Completed** on the **Test Requests** table, and any critical
+  analyte shows a **Critical** badge.
+- **Lab Station › Analytics** moves **Pending Tests** down and **Completed
+  Tests** up, with its "{n}% completion rate" caption.
+- A report can now be produced from the test — see
+  [Produce and release a report](/lims/lab/reports).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I can save results but cannot complete the test">
+    You hold "enter results at the bench" but not "verify and authorise
+    results". Hand it to a verifier. This is usually deliberate supervision, not
+    a misconfiguration.
+  </Accordion>
+
+  <Accordion title="Enter Results is not offered">
+    Either you are not a lab scientist — the request sheet then opens read-only
+    with **Only lab scientists can conduct or update lab tests** — or the test
+    is already **Completed**, where the action becomes **Edit Results**.
+  </Accordion>
+
+  <Accordion title="A parameter has no unit or reference range">
+    Those come from the catalogue, not the result form. Fix them on the test's
+    **Parameters** tab and every future run inherits the correction — see
+    [Add your tests and panels](/lims/get-started/tests-and-panels).
+  </Accordion>
+
+  <Accordion title="Reagent stock did not move">
+    Check the test has reagents attached in the catalogue. If it does, run a
+    stock count to reconcile — see
+    [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+
+  <Accordion title="I entered a result on the wrong patient">
+    Tell a verifier immediately. Amending a completed result needs the amend
+    grant, and both the original entry and the correction stay in the record —
+    see [Audit log](/platform/security/audit-log).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="results" />
+
+<!-- source of truth: components/clinic/dashboard/lab-station/, components/clinic/lab/lab-table.tsx, lib/edition-staff-roles.ts -->

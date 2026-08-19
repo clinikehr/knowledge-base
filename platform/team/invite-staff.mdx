@@ -1,0 +1,205 @@
+---
+title: "Invite someone to your team"
+description: "Send a staff invitation through the five-step wizard, track it until they sign in, and clear an invite that stalled at payment."
+icon: "user-plus"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans, within your seat cap" roles="Owner, Manager" />
+
+Adding a colleague is one sheet with five steps. By the end they have an account,
+a role, a set of permissions and an email telling them how to sign in.
+
+<Path steps={['Settings', 'Staff & Teams', 'Invite Staff']} />
+
+<TaskHeader
+  before="Their name and work email, and a free seat — or a card, if this seat is billable"
+  time="5 minutes"
+  after="A colleague who can sign in and see exactly the part of the workspace you meant them to"
+/>
+
+<Warning>
+  **On Clinic & Hospital, inviting a clinician charges money.** The **Review**
+  step says so: "A prorated charge will be applied immediately for the remaining
+  time in your current billing period." Supervisor, biller and scheduler seats are
+  free and are badged **Free** on the same step. Pharmacy and Diagnostics never
+  charge per seat — they refuse the invite once the plan's cap is full. Read
+  [Staff seats](/platform/plans/seats) before you invite your first paid one.
+</Warning>
+
+## Send the invitation
+
+Select **Invite Staff** on the **Staff Members** card. The sheet is titled **Add
+team member** and steps through **Profile**, **Specialty**, **Supervisor**,
+**Permissions** and **Review**. **Cancel** or **Back** is on the left,
+**Continue** on the right, and the send action is on the last step only.
+
+<Steps>
+  <Step title="1 — Profile">
+    "Enter the basic details for the new team member." Fill in **First name**,
+    **Last name** and **Email**.
+
+    Use their real work address: "They'll use this email to sign in to ClinikEHR",
+    and the invitation goes nowhere else.
+  </Step>
+
+  <Step title="2 — Specialty">
+    "Select the specialty and access level for this team member."
+
+    Choose a **Specialty** from the picker, then pick from **Clinical roles** and
+    **Administrative roles**. The **Clinician** checkbox — "For team members who
+    treat clients" — is the one that decides whether this is a billable seat on
+    Clinic & Hospital. Roles that cost nothing carry a **Free** badge.
+
+    Which roles exist depends on your edition. See [Roles](/platform/team/roles).
+  </Step>
+
+  <Step title="3 — Supervisor">
+    Who countersigns the work this person is not licensed to complete alone.
+
+    The question is asked in your edition's language — "Will this person need
+    supervision?" in a clinic, "Does this person work under a
+    Pharmacist-in-Charge?" in a pharmacy, "Do their results need verifying before
+    release?" in a lab. Name the supervisor from the picker.
+
+    You can also record credentials here — **License number**, **License type**,
+    **Issuing state** and **Expiration date**, with **Add a license or degree**
+    for more than one. It is optional at this point and can be added later, but a
+    licence recorded now is what prints on their signed reports.
+  </Step>
+
+  <Step title="4 — Permissions">
+    The switches on this step reflect the roles you chose, grouped under headings
+    such as **Client care**, **Add-ons** and **Security**. Typical ones are
+    **Unlock progress notes**, **Secure message with clients**, **ePrescribe** and
+    **Require MFA on login**.
+
+    If the step is empty it will tell you why: "Select a clinical or
+    administrative role in the previous step to configure permissions." Go back to
+    step 2.
+
+    This is the starting position, not the final word — you can refine it any time
+    from the staff row afterwards. See
+    [Permissions](/platform/team/permissions).
+  </Step>
+
+  <Step title="5 — Review, then Send invitation">
+    **Changes to your plan** lists what this person adds: **New team member**,
+    their administrative role, any add-ons, and the **Recurring cost** line
+    "Added to your monthly billing cycle".
+
+    It also tells you what happens next: "An account will be created with a
+    temporary password. They will receive an email with login instructions and
+    must reset their password on first sign-in."
+
+    Select **Send invitation**. The button shows **Adding...**, then a toast
+    confirms they have been added to your clinic.
+  </Step>
+</Steps>
+
+## What they do next
+
+They get an email, follow the link, and set their own password on first sign-in.
+
+If they type the password they have just chosen a second time, ClinikEHR treats
+that as confirmation rather than an error and tells them "You're all set" — "Your
+password is confirmed." — and lets them through. Nobody gets stuck in a loop for
+choosing the same password twice.
+
+**Where they land depends on their role.** A cashier lands on the till; a
+phlebotomist lands on intake; a manager lands on the dashboard. That is by
+design, and on hospitals it can be tuned further — see **Role Navigation** in
+[Roles](/platform/team/roles).
+
+## Track it
+
+The **Staff & Teams** screen has three lists, and knowing which one your person
+is in tells you what to do.
+
+| List | Means | Your move |
+|---|---|---|
+| **Staff Members** | The account exists and they can sign in | Nothing |
+| **Pending Invitations** | Invitation sent, not yet accepted. Shows **Sent** and **Expires** | Wait, or cancel and resend |
+| **Pending Seat Payments** | The seat checkout was not completed | **Retry Payment**, or cancel |
+
+**Pending Seat Payments** explains itself: "Staff invites awaiting seat payment
+via Stripe Checkout. Use Retry to generate a new payment link or Cancel to
+discard." It appears on Clinic & Hospital only.
+
+## Check it worked
+
+- They appear under **Staff Members** with their **Name**, **Email** and
+  **Specialty**, and **Last active** reading **Never** until they sign in.
+- The seat counter above the table has gone up — for example "3 of 5 seats used".
+- They can sign in and reach the part of the workspace you intended.
+- Nothing of theirs is sitting under **Pending Seat Payments**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A user with this email already exists. They may already be a member of this clinic.">
+    That address already has a ClinikEHR account. If they work with you
+    elsewhere, they sign in with their existing password and switch workspace —
+    no second account is needed. Check **Staff Members** first; they may already
+    be there.
+  </Accordion>
+
+  <Accordion title="Staff Limit Reached">
+    "Your current plan includes up to 5 staff." You are at your cap. Either free a
+    seat by removing someone, or
+    [change your plan](/platform/plans/change-plan). On Pharmacy and Diagnostics
+    the banner also offers a "+5 staff pack".
+  </Accordion>
+
+  <Accordion title="Your subscription payment is past due">
+    A lapsed subscription drops the workspace to the Free seat allowance, so the
+    invite is refused until billing is fixed. Select **Fix Payment** — see
+    [Payment methods](/platform/plans/payment-methods).
+  </Accordion>
+
+  <Accordion title="The invitation never arrived">
+    Ask them to check spam, then confirm the address on the **Pending
+    Invitations** row is spelled correctly. If it is wrong, cancel that row and
+    send a fresh invitation — an address cannot be edited on an invite in flight.
+  </Accordion>
+
+  <Accordion title="They signed in but can see almost nothing">
+    Their role decides which pages open at all, and their permissions decide what
+    they may do there. Review both:
+    [Roles](/platform/team/roles) and
+    [Permissions](/platform/team/permissions). On a hospital, also check that the
+    department they work in is switched on — see
+    [Care areas](/platform/team/care-areas).
+  </Accordion>
+
+  <Accordion title="The seat checkout closed before I paid">
+    The invite is waiting under **Pending Seat Payments**. Select **Retry
+    Payment** for a fresh link, or cancel the row — nothing was charged and no
+    account was created.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Roles" icon="id-badge" href="/platform/team/roles">
+    What each role can open, in each edition.
+  </Card>
+  <Card title="Permissions" icon="sliders" href="/platform/team/permissions">
+    Narrow what an individual may do, once they are in.
+  </Card>
+  <Card title="Staff seats" icon="users" href="/platform/plans/seats">
+    Billed or included, and what happens at the cap.
+  </Card>
+  <Card title="Build your clinic team" icon="hospital-user" href="/clinic/get-started/invite-team">
+    The same job, walked through for a new clinic.
+  </Card>
+</Columns>
+
+<StillStuck topic="an invitation that will not go through" />
+
+<!-- source of truth: components/clinic/dashboard/settings/invite-staff-sheet.tsx, components/clinic/dashboard/settings/staff-settings.tsx, lib/edition-staff-roles.ts (supervisionModel), components/clinic/general/upgrade-overlay.tsx -->

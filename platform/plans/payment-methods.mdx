@@ -1,0 +1,159 @@
+---
+title: "Payment methods"
+description: "Which provider bills your ClinikEHR subscription, where to see it, and why that is a different thing from the account your patients pay into."
+icon: "credit-card"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner" />
+
+There are **two payment arrangements** in ClinikEHR and they get confused
+constantly. One is how you pay us. The other is how the people you serve —
+patients or customers — pay you. They use different providers, live on different
+screens, and fixing one never fixes the other.
+
+<Columns cols={2}>
+  <Card title="How you pay ClinikEHR" icon="arrow-up-from-bracket">
+    Your subscription, staff seats and credit packs. Set up at checkout. Shown
+    under **Billing**. This page.
+  </Card>
+  <Card title="How your patients pay you" icon="arrow-down-to-bracket" href="/clinic/revenue/payments">
+    Your own merchant account, connected under Settings → **Online Payments**.
+    The money lands in your bank, not ours.
+  </Card>
+</Columns>
+
+## Who bills your subscription
+
+You do not choose the provider — it is picked from where your workspace bills
+from.
+
+| What you are paying for | Billed through |
+|---|---|
+| Your monthly or yearly subscription | **Dodo** in most of the world, **Paystack** in Nigeria |
+| A staff seat on Clinic & Hospital | **Stripe** |
+| The no-card free trial | **Stripe** |
+| AI credit packs | **Dodo** |
+
+There is no provider picker anywhere in the product. If you see a provider name
+you did not expect, that is the routing above doing its job, not an error.
+
+## Where to see the one you are on
+
+<Path steps={['Personal home', 'Billing', 'Plan Subscriptions']} />
+
+Each workspace card carries a **Billing Information** block with a **Payment
+method** line, whose value is the provider name — **Stripe**, **Paystack**,
+**Dodo** or **None**. Individual charges name theirs too: open a row under
+**Payment History** and the **Payment Information** section shows **Provider**.
+
+## Changing the card
+
+The card details themselves are held by the payment provider, not by ClinikEHR,
+and there is no card-editing screen in the app. What to do therefore depends on
+why you are changing it.
+
+<Steps>
+  <Step title="If the subscription is already Past Due">
+    Fix it from the prompt you are being shown. Anywhere a paid feature is
+    blocked because payment failed, the message reads "Your subscription payment
+    is past due. Please update your payment method to restore your plan's staff
+    capacity." with a **Fix Payment** button, which takes you back through
+    checkout with a fresh card.
+  </Step>
+
+  <Step title="If you are changing plan anyway">
+    Go through [Change your plan](/platform/plans/change-plan). Checkout collects
+    the payment details again, so a plan change is also the natural moment to
+    move to a different card.
+  </Step>
+
+  <Step title="If the card is simply expiring">
+    [Contact support](/platform/help/contact-support) **before** your next
+    billing date, naming the workspace. Waiting for the renewal to fail works,
+    but it costs you the paid features in between — see the warning below.
+  </Step>
+</Steps>
+
+## What a failed payment does
+
+<Warning>
+  **A subscription that is not active or trialing is treated as Free** — every
+  paid feature in the workspace drops to the Free floor immediately, for every
+  member, even though the plan name still shows on the card. Records, notes and
+  history stay readable and nobody is locked out, but telehealth, insurance, the
+  store, extra staff seats and the rest stop until the payment succeeds. Fix a
+  declined card the same day.
+</Warning>
+
+The workspace card under **Billing** shows the status honestly: **Active**,
+**Trial Active**, **Past Due**, **Cancelled** or **No Subscription**.
+
+## Not this: the account your patients pay into
+
+Taking money from the people you serve is a separate setup, done inside the
+workspace rather than on your personal home.
+
+<Path steps={['Settings', 'Online Payments']} />
+
+That screen connects **Stripe Connect**, or **Paystack Connect** if your
+workspace bills in naira, and it is what powers card payments on your booking
+page, payment links, saved cards and the till. Its status is independent: your
+ClinikEHR subscription can be perfectly healthy while "No Stripe account
+connected" blocks your patients from paying you, and the reverse is equally
+possible. Full detail in [Taking payments](/clinic/revenue/payments).
+
+Only an owner can connect it — the screen says so: "Only clinic owners can
+connect a Stripe account."
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Payment method reads None">
+    No card is on file for that workspace — normal on Free and during the no-card
+    trial. A method is captured the first time you check out.
+  </Accordion>
+
+  <Accordion title="My card was declined at checkout">
+    You get **Payment Cancelled**: "Your payment was cancelled. No charges were
+    made to your account." Nothing was taken. Select **Try Again** with a
+    different card; if it keeps failing, the refusal is coming from your bank and
+    only they can tell you why.
+  </Accordion>
+
+  <Accordion title="I was charged by a provider I have never heard of">
+    The provider is chosen from where your workspace bills from, and its name is
+    what appears on your statement rather than ours. Check **Provider** on the
+    matching row under **Payment History** — it will match.
+  </Accordion>
+
+  <Accordion title="I connected Stripe but my subscription is still unpaid">
+    Those are the two different arrangements at the top of this page. **Online
+    Payments** is how your patients pay you; it has no effect on what you owe
+    ClinikEHR.
+  </Accordion>
+
+  <Accordion title="I need a card change on a workspace I do not own">
+    Only the owner can. If the owner has left, this becomes an ownership
+    question — [contact support](/platform/help/contact-support) rather than
+    creating a second workspace.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Your subscription invoices and receipts" icon="file-invoice-dollar" href="/platform/plans/invoices-and-receipts">
+    Every charge, with a downloadable receipt.
+  </Card>
+  <Card title="Taking payments from patients" icon="hand-holding-dollar" href="/clinic/revenue/payments">
+    Connecting your own merchant account and getting paid.
+  </Card>
+</Columns>
+
+<StillStuck topic="a subscription payment" />
+
+<!-- source of truth: components/home/billing/clinic-subscriptions.tsx, components/home/billing/invoice-detail-sheet.tsx, components/clinic/dashboard/settings/online-payments-settings.tsx, components/clinic/general/upgrade-overlay.tsx, app/subscription/cancel/page.tsx -->

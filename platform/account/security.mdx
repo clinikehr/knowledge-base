@@ -1,0 +1,197 @@
+---
+title: "Secure your account"
+description: "Change your password, add a passkey, turn on two-factor authentication and get an email whenever your account is signed in to."
+icon: "shield-halved"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Anyone with an account" />
+
+Your sign-in protects patient records in every workspace you belong to, so it is
+worth five minutes. Everything here lives on one screen.
+
+<Path steps={['Your avatar', 'Profile and Settings', 'Security']} />
+
+<TaskHeader
+  before="Your current password, and a phone with an authenticator app if you are turning on two-factor"
+  time="5 minutes"
+  after="A strong password, a second factor, and an alert if anyone signs in as you"
+/>
+
+## Change your password
+
+<Steps>
+  <Step title="Fill in the Change Password card">
+    Enter **Current Password**, then **New Password** and **Confirm New
+    Password**. The new password must be at least 8 characters.
+  </Step>
+
+  <Step title="Select Update Password">
+    You get **Password updated successfully**. If the current password is wrong
+    you get "Incorrect current credential. Please check and try again." and
+    nothing changes.
+  </Step>
+</Steps>
+
+<Note>
+  If you have forgotten your password, use the reset link on the sign-in page
+  instead. That screen shows a strength meter and requires all five of: at least
+  8 characters, one uppercase letter, one lowercase letter, one number, and one
+  special character.
+</Note>
+
+## Turn on two-factor authentication
+
+A second factor means a stolen password is not enough to reach patient data.
+Some workspaces require it — see
+[Two-factor on patient data](/platform/security/mfa).
+
+<Steps>
+  <Step title="Select Enable on the Two-Factor Authentication card">
+    The card carries an **On** or **Off** badge so you can see its state at a
+    glance.
+  </Step>
+
+  <Step title="Scan the QR code">
+    The dialog reads "Scan this QR code with an authenticator app (Google
+    Authenticator, 1Password, Authy), then enter the 6-digit code." If your phone
+    cannot scan it, use the "Can't scan? Enter this key manually:" text instead.
+  </Step>
+
+  <Step title="Enter the 6-digit code">
+    Type the code your app is showing right now. A stale code gives "That code
+    didn't match. Enter the current one from your app."
+  </Step>
+
+  <Step title="Save your recovery codes">
+    You reach **Save your recovery codes**: "Store these somewhere safe. Each
+    works once if you lose your authenticator. They won't be shown again."
+
+    Select **Copy codes**, put them somewhere that is not the same phone, then
+    select **I've saved my codes — continue**.
+  </Step>
+</Steps>
+
+<Warning>
+  Recovery codes are shown once and never again. If you lose both your
+  authenticator app and your codes, only support can get you back in, and that
+  takes an identity check — plan for it now, not later.
+</Warning>
+
+Once two-factor is on, the card offers two more actions:
+
+- **Recovery codes** issues a fresh set and copies them to your clipboard, with
+  the reminder "Old codes are now invalid."
+- **Turn off** removes the authenticator, and asks for a current 6-digit code
+  first.
+
+<Note>
+  If a workspace you belong to requires two-factor, **Turn off** is disabled and
+  reads "Required by one of your clinics — you can replace your authenticator
+  but not turn it off." You can still swap to a different authenticator app by
+  turning it off and on from a workspace that does not require it — or by asking
+  that workspace's owner. You also cannot skip enrolment: the only ways past the
+  enrolment screen are to finish it or sign out.
+</Note>
+
+## Add a passkey
+
+The **Passkeys** card, badged **Passwordless**, offers sign-in with Face ID,
+Touch ID, Windows Hello or a security key — no password, and it cannot be
+phished.
+
+<Steps>
+  <Step title="Select Add">
+    Your device prompts you for its own biometric or PIN. On success you get
+    "Passkey added. You can now sign in with it."
+  </Step>
+
+  <Step title="Name it">
+    Select the rename icon, and give it something you will recognise — the
+    dialog suggests "e.g. MacBook Touch ID". Do this now if you will add
+    passkeys on more than one device.
+  </Step>
+</Steps>
+
+Remove one with the remove icon and confirm at "Remove this passkey?". Before
+you remove your last one, make sure you still know your password.
+
+<Warning>
+  **A passkey counts as one factor only.** It replaces your password; it does
+  not satisfy a workspace's two-factor requirement for viewing patient data. If
+  your clinic requires two-factor, you still need an authenticator app enrolled,
+  even with passkeys set up.
+</Warning>
+
+The card is hidden entirely on browsers that do not support passkeys and where
+you have none saved.
+
+## Get an email when your account is signed in to
+
+Switch on **Login Notifications**: "Get an email whenever your account is signed
+in to, with the time, device, and IP address. Off by default."
+
+It is the cheapest way to notice a compromised account, and it is worth turning
+on even if nothing has gone wrong.
+
+Select **Update Security Settings** to save it.
+
+## Check it worked
+
+- The **Two-Factor Authentication** card shows the **On** badge.
+- Sign out and back in: you are asked for a 6-digit code.
+- Your passkey appears in the list with the name you gave it, and selecting it
+  on the sign-in screen gets you in without a password.
+- With login alerts on, that sign-in produces an email within a minute.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="That code didn't match. Enter the current one from your app.">
+    Codes expire every 30 seconds. Wait for the next one and enter it
+    immediately. If it still fails, your phone's clock is probably out of sync —
+    turn on automatic date and time on the device and try again.
+  </Accordion>
+
+  <Accordion title="I lost my authenticator app">
+    Use a recovery code in place of the 6-digit code, then enrol a new
+    authenticator from this page straight away and regenerate your codes. With
+    no codes left, [contact support](/platform/help/contact-support).
+  </Accordion>
+
+  <Accordion title="Turn off is greyed out">
+    A workspace you belong to requires two-factor. That requirement is set by
+    the workspace's owner, not by you. See
+    [Two-factor on patient data](/platform/security/mfa).
+  </Accordion>
+
+  <Accordion title="This browser doesn't support passkeys.">
+    Passkeys need a current browser and an operating system with a biometric or
+    a security key. Update the browser, or use a different device — your
+    password still works everywhere.
+  </Accordion>
+
+  <Accordion title="I signed in with a passkey and still got asked for a code">
+    That is correct. The workspace requires two factors and the passkey is one.
+    Enter the code from your authenticator app.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Two-factor on patient data" icon="user-shield" href="/platform/security/mfa">
+    Why a workspace can require a second factor, and what staff see when it does.
+  </Card>
+  <Card title="Audit log" icon="list-check" href="/platform/security/audit-log">
+    Every sign-in, view and change, kept for seven years.
+  </Card>
+</Columns>
+
+<StillStuck />
+
+<!-- source of truth: components/home/dashboard/settings/security-settings.tsx; components/auth/mfa-settings-section.tsx, mfa-enroll-dialog.tsx, mfa-enroll-body.tsx, passkey-settings-section.tsx; lib/auth/password-reset.ts -->

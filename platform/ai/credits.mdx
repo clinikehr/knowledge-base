@@ -1,0 +1,120 @@
+---
+title: "How agent credits are used"
+description: "What spends an agent credit, how many your plan grants each month, and how to top up without being surprised by a schedule."
+icon: "coins"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability
+  editions={['clinic', 'pharmacy']}
+  plans="Every plan gets a monthly allowance; refill packs are on sale to all"
+/>
+
+Agent credits are what your AI agents spend when they run. Your plan grants a
+fresh allowance every month, and you can buy refill packs on top. Building
+agents costs nothing — only running them does.
+
+<Path steps={['Sidebar', 'AI Agents']} />
+
+The **Agent credits** card at the top of the **Agent Builder** page shows your
+balance, a **Top up** button, and a **Recent activity** list of the last few
+grants, refills and runs.
+
+## What spends a credit
+
+Two nodes, and only two: **Agent** and **Classify**. Everything else on the
+canvas — **File search**, **Guardrails**, **MCP**, **If / else**, **While**,
+**User approval**, **Transform**, **Set state**, **End**, **Note** — costs
+nothing at all.
+
+That makes the cost of a workflow easy to read off the canvas: count the
+**Agent** and **Classify** nodes a run will actually pass through. A branch the
+run does not take costs nothing.
+
+## Your monthly allowance
+
+Clinic & Hospital plans grant, per month:
+
+| Plan | Monthly agent credits |
+|---|---|
+| Free | 50 |
+| Starter | 1,000 |
+| Essential | 2,500 |
+| Team | 5,000 |
+
+## The two rules that decide what gets spent
+
+1. **Monthly plan credits are always spent first.** Refill packs are only
+   touched once the month's allowance runs out.
+2. **Refill packs never expire.** An unused pack carries over indefinitely, so
+   buying ahead of a busy period is never wasted.
+
+## A schedule multiplies everything
+
+This is where a small workflow becomes a large bill. The same two-step agent
+costs wildly different amounts depending on what starts it:
+
+| Trigger | Runs per month | Billable steps per run | Credit-consuming steps per month |
+|---|---|---|---|
+| **Manual / Preview**, run a few times a day | ~90 | 2 | ~180 |
+| **Every day** | ~30 | 2 | ~60 |
+| **Every hour** | ~730 | 2 | ~1,460 |
+| **Every 15 minutes** | ~2,920 | 2 | ~5,840 |
+
+An **Every 15 minutes** schedule on a two-step agent will exhaust a Team
+allowance on its own — before a second agent has run at all. A **Public UI** is
+the other multiplier: every visitor message is a run, which is why the abuse
+caps on [publishing an agent](/platform/ai/publishing-agents) matter.
+
+Sensible habits:
+
+- Use the slowest schedule that still meets the need. Most "overdue" work is
+  fine on **Every day**.
+- Do the filtering in free nodes. Let **If / else** decide whether the run is
+  worth an **Agent** step, rather than having the **Agent** step decide there
+  was nothing to do.
+- Use **Classify** for sorting and a single **Agent** step for the writing,
+  rather than several **Agent** steps in a row.
+- Watch **Recent activity** on the **Agent credits** card for the first few days
+  after deploying anything scheduled.
+
+## Top up
+
+Select **Top up** on the **Agent credits** card. The **Top up agent credits**
+dialog explains: "Refill packs never expire and are used after your monthly plan
+credits. You'll complete payment securely on the next screen." Choose a pack and
+you are taken to checkout.
+
+<Warning>
+  Buying a refill pack charges your payment method immediately. Packs are not
+  refundable once the credits land in your balance, so buy the size you will
+  use — they never expire, but they also do not come back.
+</Warning>
+
+## When you run out
+
+Runs stop. A scheduled agent simply does not fire, and a public UI stops
+answering, until either your monthly allowance renews or you top up. Nothing is
+deleted and nothing needs re-deploying — the agent resumes on its next trigger
+once there is a balance.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Credits" icon="wallet" href="/platform/plans/credits">
+    The plans-side view of credits across the platform.
+  </Card>
+  <Card title="Change your plan" icon="arrow-up-right-dots" href="/platform/plans/change-plan">
+    A bigger monthly allowance, and higher publishing limits.
+  </Card>
+  <Card title="Build an AI agent" icon="robot" href="/platform/ai/agents">
+    Which nodes are billable, and how triggers work.
+  </Card>
+  <Card title="Publish an agent" icon="globe" href="/platform/ai/publishing-agents">
+    Abuse caps on a public chat assistant.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/agents/agent-credits-card.tsx, node-catalog.ts (billable flags); lib/dodo-payments/product-mapping.ts (AGENT_PACK_CREDITS) -->

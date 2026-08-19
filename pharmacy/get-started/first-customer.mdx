@@ -1,0 +1,149 @@
+---
+title: "Add your first customer"
+description: "Register a customer so repeat buyers, their purchase history, their debts and their money on account are one click away at the till."
+icon: "user"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Any staff member with access to Customers" />
+
+Step 4 of the [setup checklist](/pharmacy/get-started). Registering someone
+takes about a minute and one customer of any kind completes the step.
+
+<Path steps={['Sidebar', 'Customers', 'New customer']} />
+
+<TaskHeader
+  before="Nothing. A customer record does not need stock, a sale or a plan"
+  time="1 minute"
+  after="A customer you can pick at the till, with purchase history, debts and money on account tracked against them"
+/>
+
+## Why bother, when the till takes walk-ins
+
+The point of sale sells to **Walk-in** without any record at all, so a customer
+is never mandatory. What a record buys you is everything that has to persist
+between visits:
+
+- **Money on account.** A prepaid balance the customer spends at the till with
+  the **Account balance** tender — see
+  [Customer wallets](/pharmacy/customers/wallet).
+- **Debt.** Part-payment at the till creates a balance due, and that balance has
+  to belong to somebody. See
+  [Returns, voids and amendments](/pharmacy/pos/returns) for the **Debtors**
+  sheet.
+- **History and loyalty.** Purchases, average basket and loyalty rewards all
+  accumulate on the record.
+- **Who may collect.** Dependents are the family members and errand runners
+  allowed to pick up on someone's behalf — see
+  [Dependents](/pharmacy/customers/dependents).
+
+## Register a customer
+
+The **New customer** sheet is two steps, shown as **Step 1 of 2 • Who they are**
+and **Step 2 of 2 • Account & address**.
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Customers** in the sidebar, then **New customer**. The page header
+    reads **Customers** — "Purchases, debts, money on account, and who may
+    collect."
+  </Step>
+
+  <Step title="Enter who they are">
+    Under **Identity**, **First name** and **Last name** are the only required
+    fields — they carry an asterisk and **Next** stays disabled until both are
+    filled.
+
+    **Preferred name** ("What they answer to") is worth filling for anyone your
+    counter greets by a different name. **Gender**, **Date of birth** and
+    **ID number** are optional.
+  </Step>
+
+  <Step title="Add contact details">
+    **Phone numbers** and **Email addresses** each take more than one entry, so
+    a customer with a work line and a mobile keeps both. The phone number is
+    what your counter searches on most, so add at least one.
+
+    An email address is what makes reminder emails possible later — a record
+    with no email silently receives nothing.
+  </Step>
+
+  <Step title="Take an opening deposit, if there is one">
+    Select **Next**. **Opening deposit** is money left with you now, spendable
+    at the till — "Money left with you now, spendable at the till. Leave blank
+    if none." Enter an amount and the sheet confirms "\{amount\} will be credited
+    to their account."
+
+    Leave it blank for an ordinary registration. You can top an account up at
+    any time afterwards.
+  </Step>
+
+  <Step title="Add the address">
+    **Address**, **City**, **Country** and **Occupation** are all optional.
+    Fill the address for anyone you deliver to.
+  </Step>
+
+  <Step title="Create the record">
+    Select **Create customer**. The button reads **Creating…** while it saves.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- A toast confirms the registration — **"\{First name\} registered"**, or
+  **"\{First name\} registered with \{amount\} on account"** when you took an
+  opening deposit.
+- The person appears in the **Customer accounts** table on the **Customers**
+  tab, searchable by **Search name, phone, ID…**.
+- At the till, the **Customer** card's **Customer** tab now finds them, and
+  **Account balance** appears as a tender if they have money on account. See
+  [Ring up a sale](/pharmacy/pos/index).
+
+## Customers and prospects are different things
+
+The **Customers** page has two tabs. **Customers** are people with an account,
+purchases and a balance. **Prospects** are leads with none of those — someone
+who enquired but has never bought. A prospect is promoted to a customer from
+its own row action; it is not a customer until you do that.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Next stays disabled on step 1">
+    **First name** and **Last name** are both required. Nothing else on step 1
+    blocks you.
+  </Accordion>
+
+  <Accordion title="'Customer created, but the opening deposit did not go through. Add it from their account.'">
+    The record saved and the money did not. Open the customer's profile and add
+    the deposit there — do not create a second record. See
+    [Customer wallets](/pharmacy/customers/wallet).
+  </Accordion>
+
+  <Accordion title="'The opening deposit must be a number, zero or more.'">
+    The deposit field rejects text and negative amounts. Leave it blank rather
+    than entering a zero if there is no deposit.
+  </Accordion>
+
+  <Accordion title="'Showing the closest matches only — narrow the search to see the rest.'">
+    Your search matched more people than the list will show at once. Add a
+    surname or the phone number rather than paging through.
+  </Accordion>
+
+  <Accordion title="I cannot find the Customers item in the sidebar">
+    Your permissions decide which sidebar items you get; a cashier reaches only
+    **POS** and **Sales**. Ask an owner or manager — see
+    [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="registering a customer" />
+
+Day-to-day customer work — profiles, top-ups, statements and reminder
+preferences — is covered in [Customers](/pharmacy/customers/index).
+
+<!-- source of truth: components/clinic/customers-management/new-customer-sheet.tsx, customer-identity-fields.tsx, customers-content.tsx, lib/onboarding-steps.ts -->

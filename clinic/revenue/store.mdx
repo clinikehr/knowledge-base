@@ -1,0 +1,192 @@
+---
+title: "Run an online store"
+description: "List products from your inventory, publish a storefront at your own address, and take orders online alongside your clinical work."
+icon: "store"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above; Free has no storefront" roles="Owners and managers" />
+
+The store sells what your inventory already holds — supplements, devices,
+dressings, anything you stock — at a public address your patients can reach
+without signing in. Stock and cost stay in inventory; the store is the shop
+window.
+
+<Path steps={['Sidebar', 'Store']} />
+
+<TaskHeader
+  before="Inventory items to sell, and a plan above Free"
+  time="15 minutes for your first product and a published page"
+  after="A live storefront taking orders, with stock drawn from inventory"
+/>
+
+## The Store screen
+
+| Tab | What it holds |
+|---|---|
+| **Products** | Everything you have listed |
+| **Orders** | What customers have bought |
+| **Overview** | **Revenue (paid)**, **Orders**, **Avg. order value** and **Active products** |
+
+## List something for sale
+
+There are two routes in, and the fast one is usually right.
+
+<Tabs>
+  <Tab title="Sell from inventory">
+    Select **Sell from inventory**, search with "Search inventory by name or
+    SKU…", and select **Sell** on the item. That publishes it as a product with
+    one variant, linked to the inventory item it came from. Use this for
+    anything you already stock and are not fussy about presenting.
+  </Tab>
+
+  <Tab title="Build the product">
+    Open the product editor — "Details, variants, and photos. Stock + cost come
+    from the linked inventory item." Use this when the product needs a
+    description, photographs, or more than one size.
+  </Tab>
+</Tabs>
+
+### Building a product
+
+<Steps>
+  <Step title="Enter the details">
+    Give it a **Title** and a **Description**, assign a collection, and set the
+    tax rate and label if this product is taxed differently from your default.
+  </Step>
+
+  <Step title="Save once to create it">
+    The product is created on the first save. Photos and extra variants attach
+    to a product that exists, so save before you try to add them.
+  </Step>
+
+  <Step title="Add variants">
+    Under **Variants**, select **Add variant** and name it — "Variant name
+    (e.g. 100ml)". The variant you start with is named **Default**; rename it if
+    you are selling more than one size. Link each variant to the inventory item
+    it draws from.
+  </Step>
+
+  <Step title="Save each variant">
+    Variants save one at a time, not in a batch. Save each one before moving to
+    the next.
+  </Step>
+</Steps>
+
+<Note>
+  **Stock and cost are not editable in the store.** They come from the linked
+  inventory item, so there is one number for how many you have, wherever you
+  look. Change stock in [Inventory](/pharmacy/inventory/index), not here.
+</Note>
+
+## Publish the storefront
+
+<Path steps={['Sidebar', 'Settings', 'Store Page']} />
+
+<Steps>
+  <Step title="Claim your store address">
+    Enter a **Store address**. It is checked for format, for reserved words, and
+    for uniqueness across every ClinikEHR workspace, so a common name may
+    already be gone. Your shop then lives at that address.
+  </Step>
+
+  <Step title="Write the shopfront">
+    **Announcement bar (optional)**, **Headline**, **Subheadline**, **Intro
+    (optional)** and **Footer note (optional)** are the page copy. **Success
+    title** and **Success message** are what a customer sees after they order —
+    say what happens next and when.
+  </Step>
+
+  <Step title="Style it">
+    Set an **Accent color** and **Theme**, choose a **Layout** and **Products per
+    row**, and pick a **Featured collection** and **Featured products** for the
+    top of the page.
+  </Step>
+
+  <Step title="Set tax">
+    Set your default tax rate and its label here, so new products start correct
+    rather than needing fixing one by one.
+  </Step>
+
+  <Step title="Go live">
+    Flip the switch from **Off** to **Live** and select **Save**. The page is
+    not public until you do both.
+  </Step>
+</Steps>
+
+## What your plan allows
+
+| Plan | Active products | Also |
+|---|---|---|
+| Free | No storefront at all | — |
+| Starter | 100 | — |
+| Essential | 1,000 | — |
+| Team | Unlimited | Digital products, embeddable storefront, abandoned-cart recovery |
+| Enterprise | Unlimited | Same as Team |
+
+Two limits people meet early:
+
+- "Digital products are available on the Team plan. Upgrade to sell downloads."
+- "Embedding your storefront is a Team feature. Upgrade to add it to your
+  website."
+
+A custom domain such as `shop.yourclinic.example` is available on Team and
+Enterprise — see [Custom domains](/platform/settings/custom-domain).
+
+<Warning>
+  A subscription that lapses drops you to Free, and Free has no storefront. Your
+  products are not deleted, but the public page stops selling until the plan is
+  active again. See [Change your plan](/platform/plans/change-plan).
+</Warning>
+
+## Check it worked
+
+- The product appears under **Products** and counts toward **Active products**
+  on the **Overview** tab.
+- Your store address loads in a private browser window, with the product and its
+  price visible.
+- A test order appears under **Orders**, and the linked inventory item's on-hand
+  figure has dropped.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I cannot edit the stock level or the cost">
+    That is deliberate. Both come from the linked inventory item — change them
+    in [Inventory](/pharmacy/inventory/index).
+  </Accordion>
+
+  <Accordion title="My variant did not save">
+    Variants save individually, and only after the product itself exists. Save
+    the product first, then save each variant in turn.
+  </Accordion>
+
+  <Accordion title="The store address is refused">
+    It is checked for format, reserved words, and uniqueness across all
+    ClinikEHR workspaces. Choose something more specific to your clinic.
+  </Accordion>
+
+  <Accordion title="The page is not public">
+    The switch must read **Live** *and* you must select **Save**. Setting one
+    without the other leaves the store off.
+  </Accordion>
+
+  <Accordion title="I have hit the product limit">
+    Starter allows 100 active products and Essential 1,000. Deactivate what you
+    are not selling, or move up a plan.
+  </Accordion>
+
+  <Accordion title="An order came in for something out of stock">
+    The store sells against inventory, so this means the inventory figure was
+    wrong. Reconcile with a stock count — see
+    [Inventory](/pharmacy/inventory/index).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the online store" />
+
+<!-- source of truth: components/clinic/store/store-content.tsx, components/clinic/store/product-editor-sheet.tsx, components/clinic/store/sell-from-inventory-sheet.tsx, components/clinic/dashboard/settings/store-page-settings.tsx, lib/store/plan-limits.ts -->

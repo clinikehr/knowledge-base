@@ -1,0 +1,142 @@
+---
+title: "Customer records"
+description: "Find a customer, read their purchases and debts, change their status and email a statement from one screen at the counter."
+icon: "users"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+
+**Customers** is where a repeat buyer stops being an anonymous till transaction.
+It answers the four questions your counter actually asks about a person:
+what did they buy, what do they owe, what have they prepaid, and who is allowed
+to collect for them.
+
+<Path steps={['Sidebar', 'Customers']} />
+
+## What is on the screen
+
+The header reads **Customers** — "Purchases, debts, money on account, and who
+may collect." — with **Refresh** and **New customer** beside it, and two tabs
+below: **Customers** and **Prospects**.
+
+Three tiles sit above the table:
+
+| Tile | What it counts |
+|---|---|
+| **Customers** | How many customer accounts your pharmacy has in total |
+| **On account (this page)** | Prepaid money held for the customers **currently listed** |
+| **Owed (this page)** | Outstanding debt across the customers **currently listed** |
+
+**Two of those three tiles are page totals, not book totals.** They say "(this
+page)" for a reason: they add up only the rows the table is showing right now,
+so filtering or searching changes them. Never quote **On account (this page)** or
+**Owed (this page)** as what your whole business holds or is owed — for the
+business-wide figure, use the [Expenses page](/pharmacy/money/expenses) and the
+[reports workbench](/pharmacy/money/analytics).
+
+Below them is the **Customer accounts** table, with **Search name, phone, ID…**
+and a status filter (**All statuses**, **Active**, **Prospect**, **Inactive**,
+**Blocked**). Search matches on name, phone and ID number.
+
+<Note>
+  **"Showing the closest matches only — narrow the search to see the rest."**
+  Your search matched more people than the table will list at once. Add a
+  surname or a phone number rather than paging through — the missing rows are
+  not missing records.
+</Note>
+
+## The customer profile
+
+Selecting a row opens the profile. Three figures sit across the top:
+
+- **On account** — prepaid money the customer has already handed you.
+- **Owed** — what they still owe on part-paid sales.
+- **Lifetime** — everything they have spent with you.
+
+Next to them are a status select, **Money on account**, **Email statement**, and
+a **{n} reward(s) available** badge when loyalty is running.
+
+Underneath, five tabs:
+
+| Tab | What it holds |
+|---|---|
+| **Purchases** | Every sale: its number, date, item count, payment method and total |
+| **Debts** | Part-paid sales with a balance due, each with **Settle from account** |
+| **Account** | The running list of deposits, cash-outs, corrections and spends |
+| **People** | Who may collect on this customer's behalf |
+| **Insights** | Loyalty, reminder preferences and a **Most bought** analysis |
+
+### Purchases state refunds, they never net them away
+
+A sale that was partly refunded or discounted says so on its own line —
+**"{amount} refunded or discounted"** — as well as showing the net total. A
+figure that quietly shrank is a figure someone will query at the counter, so the
+screen shows both halves.
+
+### Insights
+
+The loyalty panel names your programme, the spend threshold and the reward, and
+tells you how far off the next one is. With no programme configured it reads
+**"No loyalty programme running — Set one up in Settings → Loyalty to reward
+repeat customers."**
+
+The same tab carries **Reminders to this customer** — **Outstanding balance
+reminders** and **Loyalty reward emails**. Both are per-customer switches on top
+of your pharmacy's own settings: "Only sent while your clinic has the matching
+reminder switched on." A customer with no email address on file receives
+nothing regardless.
+
+## Email a statement
+
+**Email statement** sends the customer their balance and what they owe. It is
+disabled when there is nothing to send, with the tooltip **"Nothing to send — no
+debt and no balance"**. On success you get **"Statement emailed to the
+customer"**.
+
+## Prospects are a different shape
+
+The **Prospects** tab lists enquiries — people who have contacted you but never
+bought. A prospect has no account, no purchases and no balance, which is exactly
+why they get their own tab instead of appearing in the customer table as a
+dormant account. Promote one from its own row action; until you do, none of the
+account machinery applies to them.
+
+## Statuses
+
+**Active**, **Prospect**, **Inactive** and **Blocked**. Only one has teeth:
+**Blocked** stops the account taking on new credit, so a blocked customer cannot
+walk out part-paid. The rest are labels for your own filtering.
+
+<AuditNote action="Opening a customer record, and every change you make to it," />
+
+## Who can open this screen
+
+A cashier cannot reach **Customers** at all — the till role is deliberately
+narrow, and reaches only **POS** and **Sales**. A pharmacy technician reaches
+customers but not the money surfaces. See
+[Staff permissions](/platform/team/permissions).
+
+<StillStuck topic="a customer record" />
+
+## Next
+
+<Columns cols={2}>
+  <Card title="Money on account" icon="wallet" href="/pharmacy/customers/wallet">
+    Deposits, cash-outs, corrections, and paying from the balance at the till.
+  </Card>
+  <Card title="Who may collect" icon="user-group" href="/pharmacy/customers/dependents">
+    Family members and errand runners allowed to pick up an order.
+  </Card>
+  <Card title="Add your first customer" icon="user-plus" href="/pharmacy/get-started/first-customer">
+    The **New customer** sheet, field by field.
+  </Card>
+  <Card title="Ring up a sale" icon="cash-register" href="/pharmacy/pos/index">
+    Attaching a customer to a sale at the counter.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/customers-management/ (customers-content.tsx, customer-profile-sheet.tsx, customer-commerce-tabs.tsx, customer-loyalty-panel.tsx, customer-reminder-prefs.tsx), lib/customer-wallet.ts, lib/edition.ts (EDITION_ROLE_MODULES.pharmacy) -->

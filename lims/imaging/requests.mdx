@@ -1,0 +1,164 @@
+---
+title: "Raise an imaging request"
+description: "Order a study for a patient from the Imaging Requests queue, set its urgency, and track it through to a report."
+icon: "x-ray"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Raising and reporting studies is limited to imaging staff. Everyone else gets a view-only queue." />
+
+**Imaging Requests** is the working list of every study your diagnostic centre
+has been asked for — what is booked, what is on the machine, what is waiting on a
+radiologist. This page covers raising a request and reading the queue.
+
+<Path steps={['Sidebar', 'Imaging Requests']} />
+
+<TaskHeader
+  before="A registered patient, and at least one imaging study in your test catalogue"
+  time="2 minutes"
+  after="A study on the queue, ready for acquisition and reporting"
+/>
+
+## Read the queue
+
+Three counters sit across the top:
+
+| Counter | Shows |
+|---|---|
+| **Total Studies** | Everything on the queue |
+| **In Progress** | Studies being acquired now |
+| **Reports Due** | Acquired studies with no report yet |
+
+Below them, three priority buttons carry their own counts and filter the list
+when you select them: **Critical Findings**, **Pending Reports** and **Urgent
+Studies**. On a busy morning those three are the whole triage — work **Critical
+Findings** first, always.
+
+Narrow the list further with the search box — "Search studies, patients, or
+findings..." — and the **All statuses**, **All urgencies** and **All modalities**
+filters. **Toggle columns** hides the columns you do not use, per person.
+
+Statuses you will see on rows are **Pending**, **Scheduled**, **In Progress**,
+**Completed**, **Reported** and cancelled; urgencies are **Routine**, **Urgent**
+and **STAT**.
+
+## Raise a request
+
+<Steps>
+  <Step title="Start the order">
+    Select **Create Report** on the **Imaging Requests** toolbar. The order sheet
+    opens.
+  </Step>
+
+  <Step title="Choose the patient">
+    Under **Select Patient**, search by name, ID, phone or email. The patient must
+    already be registered — see
+    [Register your first patient](/lims/get-started/first-patient).
+  </Step>
+
+  <Step title="Add the studies">
+    Use **Add New Study** to put each study on the order — the picker is headed
+    **Choose an imaging study to order**. Everything offered comes from your test
+    catalogue, so a missing study is a catalogue gap rather than a permissions
+    problem. See [Add your tests and panels](/lims/get-started/tests-and-panels).
+
+    Studies you add appear under **Studies Ordered** with the **Order Summary**
+    beside them. An order with nothing on it is refused with **Please add at
+    least one radiology study to the order.**
+  </Step>
+
+  <Step title="Record why the study is being done">
+    Fill in **Clinical Indication** ("Reason for ordering this study..."),
+    **Clinical History** ("Relevant medical history...") and **Body Part**
+    ("e.g., Left knee, Chest"). The reporting radiologist reads these before they
+    read the images; a study with no indication gets a weaker report.
+  </Step>
+
+  <Step title="Set the urgency">
+    Choose **Routine**, **Urgent** or **STAT (Emergency)**. **STAT** puts the
+    study in front of the **Urgent Studies** count, so keep it meaning something.
+  </Step>
+
+  <Step title="Attribute the referral">
+    **Referring Doctor / Facility** credits the work to a referrer and feeds
+    referral reporting. Leave it as **No referrer** for a walk-in. See
+    [Referring clinics](/lims/business/referrers).
+  </Step>
+
+  <Step title="Add anything the radiographer needs">
+    **Special Instructions** ("Any special requirements...") carries mobility
+    needs, contrast allergies, sedation, an interpreter — anything the person at
+    the machine has to know before the patient arrives.
+  </Step>
+
+  <Step title="Save the order">
+    Save. The toast reads **Radiology orders created successfully** and the
+    studies appear on the queue as **Pending**.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening a patient's imaging request" />
+
+## Capturing an order offline
+
+Order capture keeps working when the connection drops. If it does, you get
+**Connection dropped — imaging order queued** and then **Imaging order saved
+offline**; the order replays as soon as the device is back online. Reporting,
+result entry and payment never happen offline. See
+[Working offline](/platform/apps/offline).
+
+## If your access is view-only
+
+Staff without reporting access get the queue in view-only mode — they can see
+studies and track progress but cannot raise or report them. Attempting to submit
+returns **You are not authorized to submit radiology orders.** That is role
+enforcement, not a fault: a radiologist reaches only the imaging screens, and a
+lab scientist does not reach them at all. See [Roles](/platform/team/roles).
+
+## Check it worked
+
+- The study appears on **Imaging Requests** as **Pending**, with the patient,
+  modality and urgency you set.
+- **Total Studies** has gone up by one.
+- A **STAT** or **Urgent** study is counted under **Urgent Studies**.
+- The study is visible on the [radiology station](/lims/imaging/station) for the
+  radiographer to work.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Create Report is missing or the order will not submit">
+    You are in view-only mode — the message is **You are not authorized to submit
+    radiology orders.** Ask an owner or manager about your role.
+  </Accordion>
+
+  <Accordion title="The study I need is not in the picker">
+    It is not in your catalogue yet. Add it there and it becomes orderable
+    everywhere — see
+    [Add your tests and panels](/lims/get-started/tests-and-panels).
+  </Accordion>
+
+  <Accordion title="I cannot find the patient">
+    Search by phone or patient ID rather than name — a spelling difference is the
+    usual cause. If they genuinely are not there, register them first.
+  </Accordion>
+
+  <Accordion title="The order will not save">
+    An order needs at least one study — **Please add at least one radiology study
+    to the order.** — and a patient. Check both before retrying.
+  </Accordion>
+
+  <Accordion title="The queue is empty but I know studies exist">
+    Clear the search box and set the filters back to **All statuses**, **All
+    urgencies** and **All modalities**. A priority button left selected also
+    filters the list.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an imaging request" />
+
+<!-- source of truth: components/clinic/radiology/radiology-actions.tsx, components/clinic/radiology/radiology-table.tsx, components/clinic/radiology/radiology-report-form.tsx, lib/clinic-nav-registry.ts -->

@@ -1,0 +1,125 @@
+---
+title: "Two-factor authentication"
+description: "The difference between your own second factor and a workspace-wide requirement, and why patient data can ask for a code even when you are signed in."
+icon: "key"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['all']} roles="Anyone can enrol; only an owner can require it" />
+
+Two-factor authentication exists in ClinikEHR at two levels, and almost every
+question about it comes from mixing them up.
+
+| | Who turns it on | What it does |
+|---|---|---|
+| **Your own second factor** | You | Adds an authenticator code to your sign-in |
+| **A workspace requirement** | An owner of that workspace | Makes it mandatory for everyone in that workspace, and puts a wall in front of patient data |
+
+## Your own second factor
+
+You enrol an authenticator app and save a set of recovery codes, from
+<Path steps={['Your avatar', 'Profile and Settings', 'Security']} />. The full
+procedure is on [Secure your account](/platform/account/security) — it is one
+screen and about three minutes.
+
+Do it whether or not anyone requires it. A password that has leaked elsewhere is
+the most common way an account is taken, and a second factor makes a leaked
+password worthless.
+
+## A workspace-wide requirement
+
+An owner turns on **Require Two-Factor Authentication** under
+<Path steps={['Settings', 'Security']} />. The setting says: "Require all staff
+members to set up two-factor authentication for their accounts. When enabled,
+every staff member is prompted to set up an authenticator app on their next
+sign-in before they can access any clinic data."
+
+Two consequences follow, and both surprise people.
+
+**Enrolment cannot be skipped.** At the next sign-in, staff meet the enrolment
+screen. There is no "later". The only two ways past it are to finish enrolling
+or to sign out.
+
+**Nobody can turn it off for themselves.** On the security screen, **Turn off**
+becomes unavailable and explains: "Required by one of your clinics — you can
+replace your authenticator but not turn it off." Someone can swap to a different
+authenticator app; they cannot leave the requirement.
+
+The requirement follows the workspace, not the person. If you belong to two
+workspaces and only one requires it, you are still enrolled everywhere — because
+a person has one account, not one per workspace. See
+[Switching workspaces](/platform/account/switching-workspaces).
+
+## The wall in front of patient data
+
+This is the behaviour worth understanding properly, because it looks like a bug
+the first time it happens.
+
+In a workspace that requires two-factor, **being signed in is not enough to open
+patient data**. The session itself has to have passed the second factor. So you
+can be working normally — dashboard, settings, your own profile — and then be
+asked for a code the moment you open a clinical screen. Theatre history, for
+example, refuses with "Two-factor verification is required to view theatre
+history." Ward observations, the check-in board and the records queues say the
+same thing in their own words.
+
+Enter your current code and the screen opens. Nothing is broken and nothing was
+lost.
+
+<Warning>
+  **Signing in with a passkey counts as one factor only.** A passkey is a
+  strong, phishing-resistant replacement for your *password* — it is not a
+  second factor and it does not satisfy a workspace's two-factor requirement. If
+  you sign in with a passkey in a workspace that requires two-factor, you will
+  still be asked for your authenticator code before any patient data opens.
+  Enrol an authenticator app even if you never type a password again.
+</Warning>
+
+## Recovery codes
+
+You are shown a set at enrolment — "Save your recovery codes" — with a **Copy
+codes** button and a confirmation, **I've saved my codes — continue**. Each code
+works once, in place of the six-digit code, and they are never shown again.
+
+Put them somewhere that is not the phone holding the authenticator app. A
+password manager on a different device, or printed and locked away, both work; a
+screenshot in the phone's photo library does not, because you lose both together.
+
+Issue a fresh set at any time with **Recovery codes** on the security screen —
+"Old codes are now invalid." Regenerate after using one, and after anyone who
+might have seen the old set leaves.
+
+If you lose both your authenticator and your codes, you cannot recover the
+account yourself. Ask an owner of your workspace for help; they can start the
+process with support, which involves an identity check. Plan for this before it
+happens.
+
+## Turning it off
+
+Turning off your own two-factor requires a current six-digit code from the app —
+so you cannot remove it from a session someone else has walked up to. If any
+workspace you belong to requires it, you cannot turn it off at all.
+
+An owner turning the requirement off for a whole workspace does not un-enrol
+anyone; it only stops the product insisting.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Secure your account" icon="shield-halved" href="/platform/account/security">
+    Enrol an authenticator, add a passkey, and turn on sign-in alerts.
+  </Card>
+  <Card title="HIPAA and compliance" icon="scale-balanced" href="/platform/security/hipaa">
+    Why patient data sits behind an extra check.
+  </Card>
+  <Card title="Single sign-on" icon="right-to-bracket" href="/platform/security/sso">
+    Signing in with Google, and what enterprise sign-on looks like today.
+  </Card>
+  <Card title="Theatre" icon="hospital" href="/clinic/inpatient/theatre">
+    One of the screens that asks for verification before it opens.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/settings/security-settings.tsx (require_staff_2fa); components/auth/mfa-settings-section.tsx, mfa-enroll-body.tsx; components/clinic/theatre/theatre-history-content.tsx; hooks/use-theatre-board.ts, use-check-in-board.ts, use-records-queues.ts -->

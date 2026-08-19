@@ -1,0 +1,169 @@
+---
+title: "Import and export your catalogue"
+description: "Bulk-load products from a spreadsheet and export your catalogue to Excel or CSV — and understand why neither one moves stock."
+icon: "file-csv"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans, subject to your item quota" roles="Staff with inventory access" />
+
+Import loads products into your catalogue from a spreadsheet. Export takes your
+catalogue back out as Excel or CSV. Both are on the **Inventory** toolbar.
+
+<Path steps={['Sidebar', 'Inventory', 'Import']} />
+<Path steps={['Sidebar', 'Inventory', 'Export']} />
+
+<TaskHeader
+  before="A spreadsheet of products, ideally started from the sample file"
+  time="5 minutes for a few hundred rows"
+  after="Your products in the catalogue, ready to receive stock into"
+/>
+
+## The two things people get wrong
+
+Read these before you build a file. Almost every support question about
+import and export is one of them.
+
+<Note>
+  **Import creates catalogue rows only.** A row becomes a product, not a
+  quantity on a shelf. Stock arrives afterwards, through **Receive** or
+  **Opening stock** — see [Stock control](/pharmacy/inventory/index).
+
+  **Export deliberately leaves on-hand quantities out.** A trip through a
+  spreadsheet therefore cannot overwrite your live stock, no matter what
+  somebody types in the file before re-importing it.
+</Note>
+
+Together those two rules mean one thing worth saying plainly: your stock levels
+live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue
+and a way to read one, never a way to set what you hold.
+
+## Import your catalogue
+
+<Steps>
+  <Step title="Open the importer">
+    Select **Import** in the toolbar. The **Bulk-import items** sheet explains
+    the contract up front: "Upload a CSV or Excel file… Each row creates one
+    catalog item — stock is added afterwards through Receive".
+  </Step>
+
+  <Step title="Start from the template">
+    Under **Start from the template**, select **Download sample CSV** — a toast
+    confirms **"Sample template downloaded"**. Fill your products into that
+    file rather than inventing your own column names; the headers are what the
+    importer matches on.
+  </Step>
+
+  <Step title="Upload the file">
+    Select **Click to upload or drag and drop**. `.csv`, `.xlsx` and `.xls` are
+    accepted, up to 5 MB. The sheet reads **Reading spreadsheet…** while it
+    parses, and **Replace file** if you need to swap it.
+  </Step>
+
+  <Step title="Review what it found">
+    The sheet shows how the rows were read before anything is created. Fix
+    problems in the spreadsheet and re-upload — that is faster than correcting
+    products one at a time afterwards.
+  </Step>
+
+  <Step title="Import">
+    Confirm the import. Every accepted row becomes a catalog entry.
+  </Step>
+</Steps>
+
+<Tip>
+  Import in batches by supplier or category rather than in one 3,000-row file.
+  A batch that goes wrong is quick to identify and quick to redo.
+</Tip>
+
+## Export your catalogue
+
+<Steps>
+  <Step title="Open the exporter">
+    Select **Export** in the toolbar to open **Export inventory catalog**.
+  </Step>
+
+  <Step title="Choose the file format">
+    **File format** offers **Excel (.xlsx)** — "Formatted workbook — opens
+    natively in Excel." — and **CSV (.csv)** — "Plain text — universal, opens
+    anywhere." Choose CSV if the file is going into another system, Excel if a
+    person is going to read it.
+  </Step>
+
+  <Step title="Check the columns">
+    **Columns included** lists exactly what the file will contain. On-hand
+    quantities are not among them, by design.
+  </Step>
+
+  <Step title="Generate it">
+    Start the export and save the file when it downloads.
+  </Step>
+</Steps>
+
+An export of stock movements and valuations, rather than the catalogue, comes
+from **Reports** on the same toolbar. Sales figures live under
+[Sales analytics](/pharmacy/money/analytics).
+
+## Check it worked
+
+- **After an import:** the new products appear on the **Catalog** tab and are
+  searchable at the till. Their on-hand quantity is zero until you receive
+  stock — that is correct, not a failed import.
+- **After an export:** the file opens, the row count matches your catalogue,
+  and the columns match the **Columns included** list.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'File exceeds the 5MB limit'">
+    Split the file. A catalogue large enough to exceed 5 MB is nearly always
+    several suppliers' lists in one workbook.
+  </Accordion>
+
+  <Accordion title="'Could not read that file. Re-save it as .csv or .xlsx and try again.'">
+    The file is not in a format the importer can parse — often a spreadsheet
+    exported from another tool with an unusual encoding, or a file renamed to
+    `.csv` without being converted. Open it in Excel or Sheets and save it again
+    as `.csv` or `.xlsx`.
+  </Accordion>
+
+  <Accordion title="'The file has no data rows below the header.'">
+    The importer found a header row and nothing under it. Check you have not
+    uploaded an empty template, and that the products start on the row directly
+    below the headers with no blank separator row.
+  </Accordion>
+
+  <Accordion title="'No valid rows to import'">
+    Every row failed validation. Compare your headers against the sample CSV —
+    a renamed or missing required column invalidates every row at once.
+  </Accordion>
+
+  <Accordion title="'Re-select the file and try again'">
+    The file was released before the import ran, usually after a long pause.
+    Choose it again and import straight away.
+  </Accordion>
+
+  <Accordion title="The import stopped at my plan's item limit">
+    Starter caps the number of catalogue items. The **Free plan** strip on the
+    **Inventory** screen shows your usage; **Upgrade for unlimited** removes the
+    cap. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="'No items to export'">
+    Your catalogue is empty, or your filters have excluded everything. Clear the
+    filters on the **Catalog** tab and try again.
+  </Accordion>
+
+  <Accordion title="I imported the same file twice">
+    You will have duplicate catalogue entries, not doubled stock — import never
+    touches quantities. Delete the duplicates on the **Catalog** tab.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an import or export" />
+
+<!-- source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, lib/inventory-csv.ts -->

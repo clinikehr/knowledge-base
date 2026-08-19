@@ -1,0 +1,162 @@
+---
+title: "Write a clinical note"
+description: "Create a progress note from a template, a blank page or a recording, then sign and lock it — and countersign a colleague's."
+icon: "pen-to-square"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans — signing, locking and the AI writing tools need a paid plan" roles="Any clinical staff member" />
+
+Notes are the standalone documentation surface: a note you write about a person
+without going through a department queue. Solo and team plans do all their
+clinical documentation here.
+
+<Tabs>
+  <Tab title="Solo and team">
+    <Path steps={['Sidebar', 'Notes', 'New Note']} />
+  </Tab>
+  <Tab title="Enterprise">
+    <Path steps={['Sidebar', 'Outpatient', 'Clinic Notes', 'New Note']} />
+  </Tab>
+</Tabs>
+
+<TaskHeader
+  before="The person you are documenting must already exist as a client or patient"
+  time="5 minutes"
+  after="A note saved as a draft, or signed and locked against the person's chart"
+/>
+
+## Where everything is
+
+The left rail is headed **Clinical Notes** and holds **New Note**,
+**Templates**, **Custom Templates** and **Snippets**, then an **AI** section
+with **AI Notes**. **AI Notes** opens a sheet over the page rather than taking
+you somewhere else.
+
+**New Note** opens the **New Progress Note** dashboard, which offers three ways
+in:
+
+| Card | Use it when |
+|---|---|
+| **Use Template** | "Start from a template" — the structure is already decided |
+| **Blank Note** | "Start from scratch" |
+| **AI Note Taker** | "AI-powered note generation" — from a recording or a document |
+
+Below those sit **Waiting on you (n)** — notes needing your countersignature — a
+**Quick Note** card, and **Recent Notes**.
+
+## Write a quick note
+
+<Steps>
+  <Step title="Fill in the Quick Note card">
+    Enter a **Note Title**, then choose a **Template Type**: SOAP Note, Progress
+    Note, Initial Assessment, Therapy Session, Discharge Summary, Treatment Plan
+    or General Note.
+  </Step>
+
+  <Step title="Attach it to a person">
+    Use the **Client** picker — "Search clients..." — to choose who the note is
+    about.
+
+    A draft saves without one. A final note does not: you will be told "Please
+    select a client before saving the final note".
+  </Step>
+
+  <Step title="Add tags and write">
+    **Tags** ("Add a tag...") make the note findable later. Write the body in
+    **Note Content**.
+  </Step>
+
+  <Step title="Save, or sign and lock">
+    Save keeps it as a draft you can come back to. **Sign & Lock** finishes it —
+    see below.
+  </Step>
+</Steps>
+
+## Sign and lock
+
+Select **Sign & Lock** to open the **Sign & Lock Note** sheet. Choose the
+**Signing Provider**, then add the **Provider Signature** — type it or draw it,
+under the heading **Electronic Signature** — and confirm.
+
+A locked note tells anyone who opens it "This note is locked and cannot be
+edited". If you need to change it, select **Unlock Note**.
+
+## Countersign a colleague's note
+
+The **Waiting on you (n)** card collects notes signed by someone you supervise:
+"Notes signed by a colleague you supervise. They are not final until you
+countersign."
+
+Select **Read the note**, read it properly, then countersign. Until you do, the
+note is not final. Countersigning can be granted to specific people — see
+[Permissions](/platform/team/permissions).
+
+## The AI writing tools
+
+Two tools sit in the editor toolbar, both on the text you have already written:
+
+- **AI Rewrite** — rewrites a passage you select.
+- **AI Autocomplete** — suggests the next few words as you type. Press Tab to
+  accept the suggestion, or keep typing to ignore it.
+
+Both need the Essential plan or above. To generate a whole note from a recording
+or an uploaded document instead, use
+[the AI Note Taker](/clinic/clinical/ai-notes).
+
+<Note>
+  AI text is a first draft, never a record. Read every sentence before you sign —
+  your signature makes it yours.
+</Note>
+
+## Check it worked
+
+The note appears under **Recent Notes** with the right person's name against it,
+and on that person's chart. A signed note shows the signing provider and cannot
+be edited until it is unlocked. If you sent it for countersignature, it stays in
+your supervisor's **Waiting on you (n)** list until they act.
+
+<AuditNote action="Opening a clinical note" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Sign & Lock is locked behind an upgrade">
+    **eSignatures & Locking** needs the Starter plan or above. On the Free plan
+    you can write and save drafts but not sign them. See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="I have hit a limit on new notes">
+    The Free plan caps how many clinical notes you can write each month. The
+    count resets at the start of the next month; the Starter plan and above
+    remove the cap.
+  </Accordion>
+
+  <Accordion title="AI Rewrite or AI Autocomplete is not there">
+    Both need the Essential plan or above. They are separate from the AI Note
+    Taker, which is an add-on rather than a plan feature.
+  </Accordion>
+
+  <Accordion title="It will not save as final">
+    A final note needs a client or patient selected. Choose one in the
+    **Client** picker and save again — and if the person does not exist yet,
+    add them first in
+    [Register patients](/clinic/front-desk/register-patients).
+  </Accordion>
+
+  <Accordion title="A locked note needs correcting">
+    Select **Unlock Note**, make the correction and sign it again. Both the lock
+    and the unlock are recorded in your
+    [audit log](/platform/security/audit-log), so amend rather than working
+    around it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/notes/ (general/notes-sidebar.tsx, notes-content-dashboard.tsx, new-notes/blank-notes-form.tsx) -->

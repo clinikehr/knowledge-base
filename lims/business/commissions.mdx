@@ -1,0 +1,170 @@
+---
+title: "Referral commissions"
+description: "Generate a monthly commission statement for a referring doctor, finalise it, send it, and record the payment — with rates frozen at generation."
+icon: "file-invoice-dollar"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Business Lab and above" roles="Anyone granted “Access the referrer portal”." />
+
+Turn a month of referred orders into a statement of what you owe the doctor who
+sent them. The page states the rule it runs on: "Generate monthly statements
+from the orders each referring doctor sent you. Rates are frozen into the
+statement, so later changes never rewrite history."
+
+<Path steps={['Sidebar', 'Referral Commissions']} />
+
+<TaskHeader
+  before="A referring doctor with a commission arrangement set on their record"
+  time="3 minutes per statement"
+  after="A finalised statement, sent to the referrer and marked paid once you settle it"
+/>
+
+## Rates are frozen when the statement is generated
+
+This is what makes a statement worth arguing from. The percentage and flat
+amount in force at generation are written into the statement and stay there.
+Raise a referrer's rate next quarter and every past statement still says what
+you agreed at the time — nothing is recalculated behind you.
+
+The same applies to currency: each statement renders in the currency it was
+generated in, even if the lab's billing currency changes afterwards. See
+[Set your currency](/platform/settings/currency).
+
+## Generate a statement
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **New statement**.
+  </Step>
+
+  <Step title="Pick the referrer and the month">
+    Choose from **Select referrer** under **Referring doctor**, then set
+    **Month**. If that referrer has no arrangement yet, the dialog says so and
+    tells you where to fix it — set their rates first on
+    [Referring doctors](/lims/business/referrers).
+  </Step>
+
+  <Step title="Preview before you commit">
+    Select **Preview**. You get the order-by-order list with its **Collected**
+    and **Commission** columns, the order count, and the totals. A month with
+    nothing to bill reads **No eligible orders in this period — nothing new to
+    commission.**
+  </Step>
+
+  <Step title="Generate">
+    Select **Generate statement**. The toast reads **Statement generated** and
+    the row appears in the table as **Draft**.
+  </Step>
+</Steps>
+
+## Finalise, send, settle
+
+<Steps>
+  <Step title="Finalize">
+    Open the row menu and select **Finalize**. The toast reads **Statement
+    finalized** and the badge changes from **Draft** to **Finalized**. This is
+    the step that makes it sendable — **Email referrer** is only offered on a
+    finalised or paid statement.
+  </Step>
+
+  <Step title="Send it">
+    Select **View details**. From that dialog you can take a **CSV**, select
+    **Download PDF**, or select **Email referrer** — the toast reads **Statement
+    emailed to {address}**.
+  </Step>
+
+  <Step title="Record the payment">
+    When you have paid them, select **Mark paid**. The dialog asks **Mark
+    statement as paid?** and takes a **Payment reference (optional)** — the
+    placeholder suggests "Bank transfer ref, cash, etc.". The badge becomes
+    **Paid**.
+  </Step>
+</Steps>
+
+## Reading the table
+
+| Column | What it is |
+|---|---|
+| **Period** | The month the statement covers |
+| **Referrer** | Their name, with their facility beneath it |
+| **Orders** | How many referred orders are on it |
+| **Collected basis** | The money actually collected on those orders — the base the commission is worked out from |
+| **Commission** | What you owe |
+| **Status** | **Draft**, **Finalized**, **Paid** or **Void** |
+
+Before your first statement the page reads **No statements yet. Set a commission
+arrangement on a referring doctor, then generate their first monthly statement
+here.**
+
+## Correcting a mistake
+
+Voiding is how you correct a statement. Select **Void** from the row menu; the
+dialog asks **Void this statement?** and explains that its orders become
+eligible for a future statement again. The toast confirms: **Statement voided —
+its orders can be commissioned again**. You can then generate a replacement.
+
+<Warning>
+  Voiding cannot be undone. The statement stays on the list marked **Void** as a
+  record that it existed, and its orders are released back into the pool — so if
+  you have already paid against it, record that against the replacement or you
+  will pay twice.
+</Warning>
+
+## Check it worked
+
+- The statement's badge reads **Finalized** after finalising, and **Paid** after
+  you record the payment.
+- **View details** lists each order with its date, type, test, collected amount
+  and commission, and totals them.
+- The orders on a finalised statement no longer appear in a preview for a later
+  period — each order is commissioned once.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The page shows a locked card">
+    You are on Starter Lab or Professional Lab. The card reads **Referral
+    commissions is a Business feature** and describes what it unlocks. See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="The page reads “Referral commissions are hidden”">
+    A referrer's statements are their account, so the screen needs the same
+    grant as the referrer portal — "Access the referrer portal". An owner or
+    manager grants it; see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The preview totals zero">
+    Either the referrer has no arrangement (the dialog warns when both the
+    percentage and the flat amount are zero), or nothing was collected on their
+    orders in that month. Commission is worked out on money **collected**, not
+    money invoiced — see [Billing and payments](/lims/business/billing).
+  </Accordion>
+
+  <Accordion title="An order I expected is missing">
+    Either it was never attributed to that referrer at intake, or it is already
+    on an earlier statement. Attribution happens on the order form, not
+    afterwards — see [Referring doctors](/lims/business/referrers).
+  </Accordion>
+
+  <Accordion title="Email referrer is not offered">
+    The statement is still **Draft**. Finalise it first. If it is finalised and
+    the action still does nothing useful, check the referrer has an email
+    address on their record.
+  </Accordion>
+
+  <Accordion title="I changed a referrer's rate and the old statement did not move">
+    That is the design. Rates are frozen into a statement when it is generated.
+    To apply a new rate to a past month, void the statement and generate it
+    again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a commission statement" />
+
+<!-- source of truth: components/clinic/lab-referrers/commissions/ (commissions-content.tsx, generate-statement-dialog.tsx, statement-detail-dialog.tsx, mark-paid-dialog.tsx), db/actions/lab-referrer-commissions.ts -->

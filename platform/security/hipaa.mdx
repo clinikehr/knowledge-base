@@ -1,0 +1,142 @@
+---
+title: "HIPAA and compliance"
+description: "How ClinikEHR records access to clinical data, how long it keeps the trail, who can read it, and what you must do to stay compliant."
+icon: "shield-halved"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['all']} />
+
+ClinikEHR is built for HIPAA-regulated work. A Business Associate Agreement is
+part of signing up — the checkbox on the sign-up form references it, and
+accepting it is what puts your workspace under that agreement.
+
+Compliance is a partnership. The product handles recording, retention and
+access control. You handle who has an account, what they may do, and what leaves
+the building.
+
+## What the product does
+
+<Columns cols={2}>
+  <Card title="Every clinical action is recorded" icon="list-check">
+    Creating, updating and deleting a clinical record is recorded
+    automatically. So is **viewing** one — the hard part, and the one most
+    systems skip. Signing in and signing out are recorded too.
+  </Card>
+
+  <Card title="Records are kept for seven years" icon="clock-rotate-left">
+    The audit trail is retained for seven years, which is what
+    HIPAA requires. Nothing you do in the product shortens that.
+  </Card>
+
+  <Card title="Only owners and managers can read the log" icon="user-lock">
+    Everyone else sees **Access Restricted**. The trail is evidence, so the
+    people it is evidence about cannot curate it.
+  </Card>
+
+  <Card title="Patient data can sit behind two-factor" icon="key">
+    An owner can require a second factor for the whole workspace, after which a
+    clinical screen will not open from a session that has not passed it.
+  </Card>
+
+  <Card title="Access is scoped, twice" icon="layer-group">
+    Staff see only their own workspace's data, and within it only what their
+    role and permissions allow. A person in two workspaces sees each one
+    separately.
+  </Card>
+
+  <Card title="Your data stays yours" icon="file-export">
+    You can export your records at any time, in your own time, without asking
+    anyone.
+  </Card>
+</Columns>
+
+Detail lives on [The audit log](/platform/security/audit-log),
+[Two-factor authentication](/platform/security/mfa) and
+[Export your data](/platform/security/data-export).
+
+## What you have to do
+
+The controls above only work if the accounts behind them are honest.
+
+- **Give every person their own account.** A shared login makes the audit trail
+  useless — it records which account acted, and if that account is "the front
+  desk" you have recorded nothing. Invite people individually; see
+  [Invite staff](/platform/team/invite-staff).
+- **Use roles and permissions rather than making everyone an owner.** Owner is
+  for the people who run the business. Everyone else gets the narrowest role
+  that lets them work — see [Roles](/platform/team/roles) and
+  [Permissions](/platform/team/permissions).
+- **Review the audit log periodically.** Once a month, filter to **Viewed** and
+  look for access that does not match anyone's job. Nobody will tell you.
+- **Remove people the day they leave.** An account that still works is an
+  account that can still open records, and it will do so under a name you trust.
+- **Turn on two-factor for the workspace** if you handle clinical data at all.
+- **Never put patient details in a support message or a screenshot.** Send
+  record identifiers, the workspace name and a timestamp — that is enough for
+  anyone to find the entry.
+
+<Warning>
+  A screenshot containing a patient's name, date of birth, address or phone
+  number is a disclosure, whoever you send it to. Crop it, or describe the
+  screen instead. This is the single most common way clinical information leaves
+  a compliant system.
+</Warning>
+
+## Handling a patient access request
+
+Someone is entitled to a copy of their record, and you have a deadline.
+
+1. Confirm the requester's identity through your own process before you go near
+   the record.
+2. Export the relevant data from
+   <Path steps={['Settings', 'Data Export']} />, restricting the date range to
+   what was asked for. See [Export your data](/platform/security/data-export).
+3. Deliver it by whatever secure channel your policy requires. The export
+   itself is recorded, so you have proof you responded and when.
+
+## Handling a suspected breach
+
+Move in this order.
+
+1. **Contain it.** Change the affected person's access first — suspend or
+   remove the account, and reset credentials. Do not wait until you understand
+   the whole picture.
+2. **Establish the facts from the audit log.** Filter by the person and by date
+   to see exactly which records were opened, changed or exported, and when.
+   Export that range so you have a fixed copy before anything else happens.
+3. **Determine the scope** from the entries themselves — the resource
+   identifiers tell you which records were touched, without you having to open
+   each one.
+4. **Follow your own breach notification obligations.** The product gives you
+   the evidence; the notification duty is yours.
+5. **Contact us if you need help reading the trail** — with no patient
+   identifiers in the message. See
+   [Contact support](/platform/help/contact-support).
+
+## What this page does not claim
+
+This describes what the product does. It is not a certification, and it is not
+legal advice about your own obligations. Your policies, your training, your
+physical security and your breach procedures remain yours.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="The audit log" icon="list-check" href="/platform/security/audit-log">
+    Read it, filter it, export it, and build an accreditation packet.
+  </Card>
+  <Card title="Two-factor authentication" icon="key" href="/platform/security/mfa">
+    Requiring a second factor, and the wall in front of patient data.
+  </Card>
+  <Card title="Export your data" icon="file-export" href="/platform/security/data-export">
+    Getting a copy of your records out.
+  </Card>
+  <Card title="Roles and access" icon="users-gear" href="/start/roles-and-access">
+    Who sees what, and why.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/audit-log/audit-log-content.tsx; components/clinic/dashboard/settings/security-settings.tsx, data-export-settings.tsx -->

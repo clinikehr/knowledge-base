@@ -1,0 +1,191 @@
+---
+title: "Create and send an invoice"
+description: "Build an invoice from your services, choose exactly who receives the emailed PDF, and download or cancel it later."
+icon: "file-invoice"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Anyone permitted to create billing documents" />
+
+An invoice lists what a patient owes you, in your clinic's currency, and can be
+emailed as a branded PDF to the patient, to whoever is actually paying, or to
+both. This page covers creating one, sending it, and what you can and cannot do
+to it afterwards.
+
+<Path steps={['Sidebar', 'Billing', 'New Invoice']} />
+
+<TaskHeader
+  before="At least one service in your price list, and a patient record to bill"
+  time="2 minutes"
+  after="A Pending invoice, emailed as a PDF to the recipients you chose"
+/>
+
+## Create the invoice
+
+<Steps>
+  <Step title="Open the form">
+    Select **New Invoice** on the **Billing** page. You can also start one from
+    the patient's record, which fills the patient in for you.
+  </Step>
+
+  <Step title="Choose who it is for">
+    **Select Patient *** — on solo and team plans the field is **Select Client
+    ***. Both use the same picker, with the placeholder "Search for a patient…".
+  </Step>
+
+  <Step title="Set the dates">
+    **Invoice Date *** is required. **Due Date** is optional, and it is what
+    makes an unpaid invoice tip into **Overdue** later — without one, nothing
+    ever chases itself.
+  </Step>
+
+  <Step title="Check the status">
+    **Status** defaults to **Pending**, which means issued and awaiting payment.
+    If you are still assembling the bill, change it to **Draft** now rather than
+    after you have sent it.
+  </Step>
+
+  <Step title="Add the lines">
+    Use the service picker — "Search services to add…" — to pull in items from
+    your [price list](/clinic/revenue/services). Each line carries a
+    **CPT/HCPCS Code**, **Qty**, **Price** and **Disc %**, all editable on the
+    line, so a one-off discount does not require changing the underlying
+    service.
+  </Step>
+
+  <Step title="Save it">
+    Add anything the patient needs to read under **Notes (Optional)** and save.
+    A success dialog confirms the invoice, and it appears under the **Invoices**
+    tab.
+  </Step>
+</Steps>
+
+<Note>
+  Money on the invoice is shown in your clinic's currency, taken from
+  **Settings → Billing**. Your tax rate is applied automatically. If your clinic
+  has **Free Clinic Mode** switched on, charges are disabled entirely.
+</Note>
+
+## Send it
+
+Select **Send** from the invoice's actions. The **Send Invoice** dialog appears:
+"A branded email with invoice *number* attached as a PDF will be sent to the
+recipients you choose."
+
+**Send to** offers three choices:
+
+| Choice | Goes to |
+|---|---|
+| The patient's email on file | Just the patient |
+| **A different email** | Only the addresses you type |
+| **Both** | The patient *and* the addresses you type |
+
+Choosing anything but the patient reveals **Other emails**, with the
+placeholder "billing@employer.com, family@example.com" and the helper "Up to 3
+addresses, separated by commas".
+
+### A worked example
+
+An employer sends staff to you for pre-employment medicals and pays for them
+centrally. The patient still needs their copy, and the employer's accounts team
+needs the bill.
+
+<Steps>
+  <Step title="Choose Both">
+    Set **Send to** to **Both**, so the patient keeps a record of what was done
+    and who paid.
+  </Step>
+  <Step title="Add the payer's addresses">
+    In **Other emails**, enter
+    `accounts@northgate-logistics.example, hr@northgate-logistics.example` —
+    separated by a comma, up to three in total.
+  </Step>
+  <Step title="Send">
+    One email goes out per recipient, each with the same PDF attached. The
+    invoice records that it was sent.
+  </Step>
+</Steps>
+
+The same pattern covers family-billed care: send to **Both** so an adult child
+paying for a parent's care receives the bill while the patient still gets their
+copy.
+
+## Download a copy
+
+Select download from the invoice's actions. You get the same branded PDF the
+email attaches, and a "Invoice PDF downloaded" confirmation. Use this when
+somebody wants a paper bill at the desk.
+
+<Note>
+  Your bank details, mobile-money handle or other offline payment channels
+  appear on the PDF and the email only if you added them under **Settings →
+  Payment Details** and switched them on. See
+  [Billing overview](/clinic/revenue/billing).
+</Note>
+
+## Cancelling versus deleting
+
+<Warning>
+  Deleting an invoice removes it permanently. An invoice that has a payment
+  recorded against it cannot be deleted at all — the menu item is disabled and
+  reads "Invoices with recorded payments can't be deleted" / "Has payments —
+  cancel instead". **Cancel** it instead: the invoice stays on the record, the
+  payment stays reconciled, and the history explains itself.
+</Warning>
+
+Cancel is the right answer far more often than delete. Delete is for an invoice
+raised entirely by mistake, before anybody paid anything against it.
+
+## Check it worked
+
+- The invoice appears under **Billing** → **Invoices** with a **Pending** badge
+  and the number you will quote to the patient.
+- After sending, the invoice shows as sent, and each recipient has an email with
+  the PDF attached.
+- The download produces a PDF that opens — not a small file that will not open,
+  which means the download failed rather than succeeded.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The invoice says Pending and I expected a draft">
+    That is the default. **Pending** means issued and awaiting payment. Change
+    **Status** to **Draft** on the form if you are still building the bill.
+  </Accordion>
+
+  <Accordion title="The service I want is not in the picker">
+    "Search services to add…" only finds services in your price list. Add it
+    under [Services](/clinic/revenue/services), or type the line in manually
+    with its own price.
+  </Accordion>
+
+  <Accordion title="The send dialog will not let me add more addresses">
+    **Other emails** takes up to three addresses, separated by commas. For a
+    wider distribution, download the PDF and forward it yourself.
+  </Accordion>
+
+  <Accordion title="The patient says they never received it">
+    Check the patient's email on file is correct, then re-send using **A
+    different email** with an address they confirm. Ask them to check spam — the
+    email carries a PDF attachment, which some filters treat harshly.
+  </Accordion>
+
+  <Accordion title="Delete is greyed out">
+    Money has been recorded against this invoice. Cancel it instead. If the
+    payment itself was a mistake, deal with the payment first — see
+    [Record and collect payments](/clinic/revenue/payments).
+  </Accordion>
+
+  <Accordion title="I do not have a New Invoice button">
+    Creating billing documents is granted per person. Ask an owner or manager —
+    see [Permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an invoice" />
+
+<!-- source of truth: components/clinic/dashboard/billing/invoice-form.tsx, components/clinic/dashboard/billing/invoice-send-dialog.tsx, components/clinic/dashboard/billing/invoice-actions.tsx, lib/billing/invoice-send.ts -->

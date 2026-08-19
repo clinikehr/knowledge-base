@@ -1,0 +1,198 @@
+---
+title: "Build an AI agent"
+description: "Draft a workflow on the agent canvas, preview it against your own data, and deploy it so its trigger goes live in your workspace."
+icon: "robot"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability
+  editions={['clinic', 'pharmacy']}
+  plans="Drafting on every plan including Free — deploying is capped by plan"
+/>
+
+An agent is a small workflow you draw on a canvas: something starts it, one or
+more steps do the work, and it ends. Building one is free and unlimited on every
+plan. **Nothing an agent does takes effect until you deploy it.**
+
+<Path steps={['Sidebar', 'AI Agents']} />
+
+<TaskHeader
+  before="Nothing. Drafts cost nothing and are unlimited — the limit applies at deploy time"
+  time="About 10 minutes for your first agent"
+  after="A deployed agent that runs on its own when its trigger fires"
+/>
+
+## Create the agent
+
+<Steps>
+  <Step title="Select + Create">
+    The **Agent Builder** page opens with an **Agent credits** card, your
+    existing agents, and a gallery of one-select templates. If a template
+    already does roughly what you want, choose it — it lands on the canvas
+    fully wired and you edit from there.
+  </Step>
+
+  <Step title="Name it">
+    The **Create a workflow** dialog says "Name your agent. You can design it on
+    the canvas next." Give it a name that says what it does — the placeholder
+    suggests "Agent name (e.g. Appointment reminder)". A **Description
+    (optional)** helps whoever inherits it.
+  </Step>
+
+  <Step title="Select Create">
+    You land on the canvas. The top bar shows a **Draft · v1** badge, your
+    credit balance, and a save indicator that reads **Saved** once your work is
+    stored. Drafts save themselves as you work.
+  </Step>
+</Steps>
+
+## Build it on the canvas
+
+The palette on the left is grouped into four sets. A **Start** node is always
+present; you drag in the rest.
+
+| Group | Nodes | What they are for |
+|---|---|---|
+| **Core** | **Agent**, **Classify**, **End**, **Note** | The thinking steps, the exit, and a comment that does nothing at run time |
+| **Tools** | **File search**, **Guardrails**, **MCP** | Give the agent your own material, constrain it, or let it call an outside tool |
+| **Logic** | **If / else**, **While**, **User approval** | Branch, repeat, or stop and wait for a person |
+| **Data** | **Transform**, **Set state** | Reshape values between steps |
+
+Select a node to configure it in the panel on the right. See
+[Agent tools and knowledge](/platform/ai/agent-tools) for what each tool node
+needs.
+
+<Warning>
+  **Agent** and **Classify** are the two steps that spend
+  [agent credits](/platform/ai/credits). Every other node is free. A workflow
+  with several **Agent** steps on a **Every 15 minutes** schedule will spend
+  credits around the clock once deployed — count the billable steps before you
+  deploy a schedule.
+</Warning>
+
+## Choose what starts it
+
+Select the **Start** node and pick a trigger.
+
+| Trigger | Fires when |
+|---|---|
+| **Manual / Preview** | You run it yourself. Nothing happens on its own. |
+| **Schedule** | On a fixed cadence — **Every 15 minutes**, **Every 30 minutes**, **Every hour**, **Every day** or **Every week**. |
+| An event | Something happens in your workspace — for example **Appointment rescheduled**, **Invoice paid**, **Document signed** or **Lab result ready**. |
+| An inbound channel | A message arrives — **Inbound SMS**, **Inbound WhatsApp**, **Inbound email** or **Inbound fax**. |
+| **Inbound phone call (voice)** | Someone calls. Fill in **Voice greeting (spoken on answer)** — the placeholder suggests "Thank you for calling. How can I help?" |
+| **Webhook / API call** | An outside system calls your workspace's endpoint. |
+
+<Note>
+  There is no "when an invoice becomes overdue" trigger, because that is not an
+  event — it is the passage of time. For anything time-based (overdue invoices,
+  following up submitted claims, expiring memberships) use a **Schedule**
+  trigger with a worklist tool, and let the agent find the records that now
+  qualify.
+</Note>
+
+## Preview it
+
+Select **Preview** in the top bar and talk to the agent in a sandbox before
+anyone else can. Use **Playbooks** to hand it reusable instructions and
+**Evals** to check it still answers correctly after you change something.
+Preview runs are real runs and spend credits.
+
+## Deploy it
+
+This is the step everyone misses. A saved draft with a schedule trigger does
+absolutely nothing — the canvas only becomes live when you deploy it.
+
+<Steps>
+  <Step title="Select Deploy">
+    The button sits at the top right and reads **Deploy** the first time,
+    **Redeploy** afterwards.
+  </Step>
+
+  <Step title="Confirm it went live">
+    You get "Deployed — v1 is now live" and a green **● Live · v1** badge
+    appears next to the agent's name. A fresh **Draft** version opens so you can
+    keep editing without disturbing the live one.
+  </Step>
+
+  <Step title="Redeploy after every change">
+    Editing a deployed agent edits the draft, not the live version. Your change
+    reaches the running agent only when you select **Redeploy**.
+  </Step>
+</Steps>
+
+If your agent uses the **Webhook / API call** trigger, one more thing has to be
+switched on before anything can reach it. Open
+<Path steps={['Settings', 'AI Settings']} />, expand **Webhook / API trigger**
+("let any external system fire your agents") and turn it on — you get
+**Webhook endpoint enabled**. Copy the endpoint and its signing secret from
+there. You can rotate the secret or disable the endpoint at any time.
+
+## Check it worked
+
+- The agent shows a green **● Live** badge on the canvas and a **published**
+  badge on the **Agent Builder** page.
+- The **Runs** page lists a run after the trigger has fired once. A manual agent
+  will not appear there until you run it.
+- Your credit balance drops after a run that contains an **Agent** or
+  **Classify** step.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="My scheduled agent never runs">
+    It is almost certainly still a draft. Open it and check for the green
+    **● Live** badge — if you only see **Draft**, select **Deploy**. Editing a
+    live agent also needs a **Redeploy** before the change takes effect.
+  </Accordion>
+
+  <Accordion title="Nothing arrives at my webhook trigger">
+    The endpoint is off by default. Turn on **Webhook / API trigger** under
+    <Path steps={['Settings', 'AI Settings']} />, then confirm you are sending a
+    signed `POST` to the endpoint shown there. If you rotated the signing
+    secret, update whatever is calling you.
+  </Accordion>
+
+  <Accordion title="Deploy failed and mentions a limit">
+    Your plan caps how many agents can be published at once. Free publishes 1,
+    Starter 5, and Essential and Team are unlimited. Take another agent offline
+    or see [Publish an agent](/platform/ai/publishing-agents).
+  </Accordion>
+
+  <Accordion title="The agent runs but produces nothing useful">
+    Open **Preview** and step through it there. Most empty results come from a
+    step whose output the next step never reads, or an **Agent** node with no
+    instructions. **Evals** will tell you whether a change made it better or
+    worse.
+  </Accordion>
+
+  <Accordion title="Runs stop and the balance is zero">
+    You are out of credits. Top up from the **Agent credits** card — see
+    [How agent credits are used](/platform/ai/credits).
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Agent tools and knowledge" icon="toolbox" href="/platform/ai/agent-tools">
+    Knowledge bases, guardrails, outside tools and human approval.
+  </Card>
+  <Card title="Publish an agent" icon="globe" href="/platform/ai/publishing-agents">
+    The difference between deploying and putting a chat assistant on the web.
+  </Card>
+  <Card title="Agent credits" icon="coins" href="/platform/ai/credits">
+    What a run costs and how a schedule multiplies it.
+  </Card>
+  <Card title="AI safety and patient data" icon="shield-heart" href="/platform/ai/safety">
+    What an agent may touch, and what you must review.
+  </Card>
+</Columns>
+
+<StillStuck topic="an agent that will not run" />
+
+<!-- source of truth: components/clinic/agents/agent-builder.tsx, agents-content.tsx, node-catalog.ts, webhook-trigger-settings.tsx; lib/agents/agent-plan.ts -->

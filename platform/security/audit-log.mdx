@@ -1,0 +1,138 @@
+---
+title: "The audit log"
+description: "Read, filter and export the record of every view, change and sign-in in your workspace, kept for seven years."
+icon: "list-check"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner, Manager" />
+
+The audit log answers three questions that nothing else can: who looked at this
+record, who changed it, and when. Every workspace has one, on every plan, and it
+is kept for seven years.
+
+<Path steps={['Dashboard', 'Audit Log']} />
+
+The **HIPAA Audit Log** card carries a running count of events and a
+one-line description of what it is: an immutable record of clinical data access
+and modifications, retained for seven years.
+
+Anyone who is not an owner or a manager sees **Access Restricted** instead:
+"Only clinic owners and managers can access the HIPAA audit log."
+
+## What is recorded
+
+| Action | Written when |
+|---|---|
+| **Created** | A record is added |
+| **Updated** | A record is changed |
+| **Deleted** | A record is removed |
+| **Viewed** | Someone opens a clinical record |
+| **Exported** | Data is exported, including from an individual screen |
+| **Printed** | A record is printed |
+| **Signed In** / **Signed Out** | Someone starts or ends a session |
+| **Access Denied** | Someone attempted something their permissions do not allow |
+
+Every entry falls into one category, which is what makes filtering usable:
+**Clinical**, **Prescription**, **Laboratory**, **Radiology**, **Document**,
+**Billing**, **Insurance**, **Admin**, **Scheduling**, **Auth** and **General**.
+
+Two things people do not expect to find, and should:
+
+- **Opening an analytics report is recorded.** Money reports land under
+  **Billing**; everything else under **Admin**.
+- **Refusals are recorded.** When someone tries an action their permissions do
+  not allow, that attempt is written as **Access Denied**. A pattern of them is
+  worth a conversation.
+
+Entries read as plain sentences — roughly "*Consultation was viewed by Dr A.
+Bello for patient P-1042*" — so you can scan a day without decoding anything.
+Select an entry to expand its detail.
+
+## Find what you need
+
+The toolbar carries everything:
+
+- **Search events, staff names...** — free text across the entries.
+- **All Categories** — narrow to one of the eleven categories.
+- **All Actions** — narrow to one action, such as **Viewed**.
+- The date range picker — **Filter by date range**.
+- **Clear** — resets every filter at once.
+
+Combine them. "Everything a named person **Viewed** in the **Clinical**
+category last Tuesday" is three selections and a date.
+
+## Export it
+
+Two buttons, for two different jobs.
+
+**Export CSV** takes what your current filters describe. The button reads
+**Exporting…** while it works, and you get **Export started**; a failure says
+**Export failed**. Use this for an investigation, a spreadsheet, or a copy of a
+specific range.
+
+**Accreditation packet** opens the **Accreditation audit packet** dialog. Set
+**From** and **To** dates and it builds a file containing the complete trail for
+that period plus a cover summary — totals, retention and integrity statements,
+and breakdowns by category, action, month and staff member. When it is finished
+you see **Packet ready — {file name}** with a **Download** button.
+
+<Note>
+  A large export runs in the background rather than downloading instantly. You
+  can navigate away and come back — the job keeps going, and you are told when
+  the file is ready. Do not sit on the page waiting, and do not start it again
+  because nothing appeared to happen.
+</Note>
+
+## Three things you will actually use it for
+
+### "Who looked at this patient's record?"
+
+Set the date range to the period in question, choose **Viewed** under **All
+Actions**, and search for the patient's identifier. Every entry names the person
+and the moment. **Export CSV** with those filters still applied gives you a fixed
+copy for the file — and that export is itself recorded, which is the proof you
+responded.
+
+### "Who changed this, and what did it look like before?"
+
+Filter to **Updated** and search for the record. Expand the entry to see the
+detail. Work backwards from the most recent change — the sequence usually
+explains itself faster than any one entry does, and **Created** at the bottom
+tells you who put the record there in the first place.
+
+### "We have an accreditation visit"
+
+Use **Accreditation packet** with the assessor's period, not **Export CSV**. The
+packet includes the cover summary an assessor asks for — totals, the retention
+statement, and the breakdowns by category, action, month and person — so you
+hand over one file instead of building a spreadsheet the night before. Generate
+it a few days early so you have read it before they do.
+
+## Two facts worth knowing
+
+- **A large export is a background job.** It finishes on its own and tells you.
+- **Record-type names are resolved when you read the log, not when the entry was
+  written.** So a seven-year-old entry never shows a label the product has since
+  renamed — you always read today's vocabulary, whatever the entry's age.
+
+## Related
+
+<Columns cols={2}>
+  <Card title="HIPAA and compliance" icon="shield-halved" href="/platform/security/hipaa">
+    Retention, access requests, and what to do about a suspected breach.
+  </Card>
+  <Card title="Export your data" icon="file-export" href="/platform/security/data-export">
+    Getting your records out, separately from the audit trail.
+  </Card>
+  <Card title="Permissions" icon="user-lock" href="/platform/team/permissions">
+    What produces an Access Denied entry.
+  </Card>
+  <Card title="Two-factor authentication" icon="key" href="/platform/security/mfa">
+    The check in front of clinical screens.
+  </Card>
+</Columns>
+
+<!-- source of truth: components/clinic/dashboard/audit-log/audit-log-content.tsx (ACTION_META, category filters), audit-export-packet.tsx; components/clinic/general/clinic-view-auditor.tsx -->

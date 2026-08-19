@@ -1,0 +1,120 @@
+---
+title: "The radiology station"
+description: "Where your imaging workload is measured — volumes, pending and completed studies, critical findings, turnaround time and staff performance."
+icon: "gauge-high"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans — the Modalities tab needs Professional" roles="Imaging staff. A lab scientist does not reach the imaging screens at all." />
+
+The **Radiology Station** is the imaging side's control room. **Imaging
+Requests** is the queue you work; the station is where you see whether the
+department is keeping up — how much came in, what is stuck, how long it takes,
+and what needs a phone call rather than a report.
+
+<Path steps={['Sidebar', 'Radiology Station']} />
+
+## The four counters
+
+| Card | Reads |
+|---|---|
+| **Total Radiology Tests** | Everything ordered in the period |
+| **Pending Tests** | Ordered but not yet completed |
+| **Completed Tests** | Acquired and finished |
+| **Critical Findings** | Studies flagged as needing immediate attention |
+
+**Critical Findings** is not a statistic to review at the end of the week. A
+critical finding is a phone call to the referrer, and the counter exists so
+nobody has to notice it by reading a report.
+
+## The tabs
+
+| Tab | What it is for |
+|---|---|
+| **Analytics** | The counters and every chart below |
+| **Test Catalog** | The imaging studies your centre offers, and their prices |
+| **Reports** | The reporting workspace — see [Report an imaging study](/lims/imaging/reports) |
+| **Modalities** | Registering imaging machines — see [Connect your imaging machines](/lims/imaging/modalities) |
+
+**Modalities** appears only when the imaging bridge is switched on for your
+workspace, which is a **Professional** feature. Without it the tab is simply not
+there.
+
+## Reading the charts
+
+Seven charts sit on the **Analytics** tab, and each answers a different question
+about the department.
+
+| Chart | Its own caption | Use it to |
+|---|---|---|
+| **Test Volume Trends** | "Daily radiology ordering and completion patterns" | See whether completions are keeping pace with orders |
+| **Most Requested Tests** | "Most frequently ordered radiology tests" | Decide what to staff and stock for |
+| **Turnaround Time** | "Average hours to process tests" | Spot a backlog before referrers do |
+| **Staff Performance** | "Radiologist and technician activity metrics" | See where the reporting load actually sits |
+| **Modality Distribution** | "Breakdown by imaging type" | Check machine utilisation |
+| **Patient Demographics** | "Age and gender distribution of radiology patients" | Understand who your imaging serves |
+| **Urgency Distribution** | "Test priority breakdown" | Notice when everything has become **STAT** |
+
+Turnaround time is the number a referring clinic judges you by, and it is
+measured across the lab as a whole under
+[Turnaround time](/lims/lab/turnaround-time).
+
+<Note>
+  A figure of zero and a figure that could not be calculated are different
+  things, and the station distinguishes them. Where a number cannot be worked out
+  for your role or period you will see a dash rather than a nought — do not read
+  a dash as "nothing happened".
+</Note>
+
+## Who sees the station
+
+Imaging is a separate world from the bench, and access follows the role rather
+than the plan:
+
+- A **radiologist** or **radiologist technician** reaches the imaging screens —
+  the station, **Imaging Requests** and patient records — and nothing else.
+- A **lab scientist** does not reach the imaging screens at all.
+- Owners and managers see everything.
+
+Figures a person may not see are hidden or shown as a dash; they do not produce
+an error. See [Roles](/platform/team/roles) and
+[Permissions](/platform/team/permissions).
+
+## If something looks wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Modalities tab">
+    The imaging bridge is a **Professional** feature — the tab is hidden below
+    that plan, and the page it leads to says **Modality integration is a
+    Professional feature**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Critical Findings is higher than I expect">
+    Every study flagged critical counts until it is dealt with. Work them from
+    the **Critical Findings** button on
+    [Imaging Requests](/lims/imaging/requests), which filters the queue to
+    exactly those studies.
+  </Accordion>
+
+  <Accordion title="Turnaround time looks impossible">
+    Turnaround runs from the time a study was ordered, not from when someone got
+    to it. A study raised on Friday and acquired on Monday carries the weekend.
+  </Accordion>
+
+  <Accordion title="Staff Performance is missing names I expect">
+    Someone whose work is attributed to another account, or who is not an imaging
+    role, will not appear. Check their role rather than their output.
+  </Accordion>
+
+  <Accordion title="I cannot open the station at all">
+    You are on a bench role. Imaging and the bench are deliberately separate —
+    ask an owner or manager if your role is wrong.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the radiology station" />
+
+<!-- source of truth: components/clinic/dashboard/radiology-station/radiology-dashboard-content.tsx, lib/edition.ts (EDITION_ROLE_MODULES), lib/clinic-nav-registry.ts -->

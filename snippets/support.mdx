@@ -1,0 +1,32 @@
+/**
+ * Standard end-of-page escape hatch. Every task page ends with one of these so
+ * a reader who is stuck never has to hunt for a way out.
+ *
+ * Usage:
+ *   import { StillStuck } from '/snippets/support.mdx';
+ *
+ *   <StillStuck />
+ *   <StillStuck topic="a sale that will not sync" />
+ */
+export const StillStuck = ({ topic }) => (
+  <Note>
+    **Still stuck{topic ? ` with ${topic}` : ''}?** Check
+    [Troubleshooting](/platform/help/troubleshooting) first — it covers the
+    failures we see most often. If that does not resolve it,
+    [contact support](/platform/help/contact-support) and include your
+    workspace name and the time the problem happened, so we can find the matching
+    entry in your audit log.
+  </Note>
+);
+
+/**
+ * Reminder that a clinical action is recorded. Used on pages describing
+ * viewing or exporting patient data, so nobody is surprised later.
+ */
+export const AuditNote = ({ action = 'This action' }) => (
+  <Info>
+    {action} is written to your workspace's audit log with your name, the
+    record touched and the time — a HIPAA requirement, and one you can review
+    yourself under **Audit Log**. See [Audit log](/platform/security/audit-log).
+  </Info>
+);

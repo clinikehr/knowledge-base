@@ -1,0 +1,166 @@
+---
+title: "Add your first stock item"
+description: "Create a catalogue entry, give it a price and a barcode, and receive opening stock so the till can sell it."
+icon: "boxes-stacked"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Receive deliveries into stock'" />
+
+Step 2 of the [setup checklist](/pharmacy/get-started) — "Stock your shelves so
+you can dispense and sell from live inventory." One item of any kind completes
+it, and it is the one step the till genuinely depends on.
+
+<Path steps={['Sidebar', 'Inventory', 'Add item']} />
+
+<TaskHeader
+  before="Your currency set, so the price you enter is the price you charge"
+  time="3 minutes for the first one, under a minute once you have the habit"
+  after="A product on the shelf list, priced, sellable at the till, and counted"
+/>
+
+## Catalogue entry, then stock
+
+Two different things, and separating them is what makes expiry control possible:
+
+- **The catalogue entry** is the product — its name, strength, price and
+  barcode. You create it once.
+- **The stock** is the physical quantity, held per lot with its own batch number
+  and expiry date. You receive it over and over.
+
+The **Add item** sheet says as much: 'A catalog entry — e.g. "Botox 100U vial".
+Stock is tracked per lot.'
+
+## Create the item
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Inventory** in the sidebar, then **Add item**.
+  </Step>
+
+  <Step title="Look the drug up, if it is a known one">
+    **Look up drug (NDC or name)** searches a drug reference and fills the
+    details for you. Type a name or an NDC ("e.g. Oxycodone or 0406-8530"). For
+    anything not in the reference — a local brand, a consumable, a device —
+    ignore it and type the details yourself.
+  </Step>
+
+  <Step title="Give it a barcode">
+    **Barcode / UPC (optional)** is what makes the item scannable at the till.
+    Use **Camera scan** to read the code off the pack, or **Generate in-house
+    code** for anything unbarcoded, repackaged or split down from bulk.
+
+    Skip this and the item still sells — you just have to find it by name every
+    time. See [Scan barcodes at the till](/pharmacy/pos/barcode).
+  </Step>
+
+  <Step title="Name and classify it">
+    **Name** is what your counter will see and search, so write it the way your
+    staff say it — strength included. Then set **Type**, **Unit** ("U / mL /
+    vial") and, if you sort your shelves, **Category (optional)**.
+
+    Under **Drug details**, **Generic name**, **Brand name**, **Strength**,
+    **Dosage form**, **Manufacturer**, **NAFDAC/FDA No** and **Storage
+    instructions** are all optional — but the generic name is what makes the
+    product findable when a customer asks for the other brand.
+  </Step>
+
+  <Step title="Price it and set your reorder points">
+    **Unit cost** is what you paid; **Sale price** is what you charge. Only the
+    sale price reaches the till.
+
+    **Low-stock threshold** and **Reorder qty** drive the low-stock badge and
+    your purchasing suggestions. Set them roughly now; they are easy to tune
+    once you know your turnover.
+  </Step>
+
+  <Step title="Decide how it is controlled">
+    The checkboxes at the bottom change how the item behaves everywhere else:
+
+    - **Sell at the pharmacy POS** — leave this on for anything you sell over
+      the counter. It is what puts the item in the till's product grid.
+    - **Track by lot / expiry** — on for medicines. This is what gives you batch
+      numbers, expiry alerts and first-expiry-first-out dispensing.
+    - **Refrigerated** — for the cold chain.
+    - **Witness required (controlled)** — for controlled drugs. It also means
+      the item **cannot be sold at the till**; it must go through the dispensing
+      flow, where a second person countersigns.
+  </Step>
+
+  <Step title="Receive opening stock">
+    **Opening stock (optional)** with **Into location** puts quantity on the
+    shelf as you create the item. Enter what is physically there now.
+
+    You do not have to: you can create the entry today and receive the delivery
+    properly later — see
+    [Batches and expiry](/pharmacy/inventory/batches-and-expiry).
+  </Step>
+
+  <Step title="Save it">
+    Save the sheet. The item appears in the inventory list with its row actions
+    — **Receive**, **Dispense** and **Label**.
+  </Step>
+</Steps>
+
+## Add its ingredients, if you want screening
+
+**Add ingredients** records what is actually in the product. Interaction
+screening can only check items whose ingredients are on file — anything without
+them is listed at the till as "not screened", which is honest but not useful.
+See
+[Interaction screening](/pharmacy/dispensing/interaction-screening).
+
+## Check it worked
+
+- The item is in the inventory list with the quantity you received.
+- Open **POS**: it appears in the **Available Products** grid, or comes up when
+  you search or scan it. If it does not, check **Sell at the pharmacy POS**.
+- Selecting the tile adds it to the cart at your **Sale price**.
+- The setup checklist's stock step is done.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The item does not appear at the till">
+    Three usual causes: **Sell at the pharmacy POS** is off, the item is hidden
+    from inventory, or it is one of the 100 grid tiles that did not fit —
+    search or scan for it before assuming it is missing.
+  </Accordion>
+
+  <Accordion title="The till refuses to sell it, mentioning a witnessed dispense">
+    **Witness required (controlled)** is ticked. That is the point of the flag:
+    controlled items go through the dispensing station so a second person can
+    countersign, not through the till. See
+    [The dispensing station](/pharmacy/dispensing/station).
+  </Accordion>
+
+  <Accordion title="It sells at zero, or at the wrong price">
+    **Sale price** is empty or wrong on the catalogue entry — **Unit cost** is
+    not used at the counter. Edit the item and set the sale price.
+  </Accordion>
+
+  <Accordion title="I cannot generate a barcode">
+    **Generate in-house code** is disabled while the field already holds a code:
+    "Clear the field to generate a new code." Empty it first.
+  </Accordion>
+
+  <Accordion title="It sold even though stock was zero">
+    **Selling without stock** is on by default, so the till logs an oversell for
+    reconciliation rather than blocking the sale. Turn it off, or clear the
+    shortfalls on **Inventory › Reconciliation** — see
+    [Ring up a sale](/pharmacy/pos/index).
+  </Accordion>
+
+  <Accordion title="I have hundreds of lines to load">
+    Do not type them. Import the catalogue from a spreadsheet — see
+    [Import and export](/pharmacy/inventory/import-export).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="adding stock" />
+
+<!-- source of truth: components/inventory/item-form-sheet.tsx, components/inventory/inventory-content.tsx, components/inventory/barcode-label-sheet.tsx, lib/onboarding-steps.ts -->

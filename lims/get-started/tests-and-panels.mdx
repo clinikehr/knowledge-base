@@ -1,0 +1,177 @@
+---
+title: "Add your tests and panels"
+description: "Set up what your lab charges for and what the bench runs — prices in Services, analytes and reference ranges in the test catalogue."
+icon: "vials"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans — custom analytes and custom test panels are included on Starter Lab" roles="Owner, Manager, Lab Manager" />
+
+Step 2 of the [setup checklist](/lims/get-started), **Add your first test or
+panel** — "Define the tests and panels you offer so requests can be priced and
+billed."
+
+There are two catalogues behind that sentence, and knowing which is which saves
+an afternoon:
+
+| Screen | Holds | Answers |
+|---|---|---|
+| **Billing › Services** | Name, price, type, category | What do we charge for this? |
+| **Lab Station › Test List** | Analytes, units, reference ranges, critical limits | What does the bench measure, and what is normal? |
+
+The checklist step opens **Services** and ticks as soon as one service exists.
+Do the bench definition straight afterwards — a test with no parameters produces
+a result form with nothing to type into.
+
+<TaskHeader
+  before="Nothing. Have your price list and your reference ranges to hand."
+  time="~3 minutes for the checklist step"
+  after="A priced test your desk can bill and your bench can run"
+/>
+
+## 1. Price it under Services
+
+<Path steps={['Sidebar', 'Billing', 'Services']} />
+
+<Steps>
+  <Step title="Open the Services Dashboard">
+    The page is headed **Services Dashboard** — "Manage your clinic's services,
+    prices, and categories". It has a date range picker, **Refresh**, and
+    **New Service** or **New Category** depending on the tab you are on.
+  </Step>
+
+  <Step title="Group your work first">
+    On the categories tab, select **New Category** and create the groupings you
+    will still be using at two hundred tests — Haematology, Chemistry,
+    Microbiology, Serology.
+  </Step>
+
+  <Step title="Add the service">
+    Select **New Service**. The sheet is titled **New service** — "Add a new
+    service to your clinic's catalogue". Fill in **Service Name\***, **Price\***
+    and **Service Type\***, choose a **Service Category**, and add a
+    **Procedure Code** and **Description** if you bill against codes.
+  </Step>
+
+  <Step title="Leave it Active">
+    **Active** controls whether the service can be charged. Turning it off later
+    retires a test without breaking the invoices that already reference it.
+  </Step>
+</Steps>
+
+Price is what requests bill from, so a test with no price produces an order with
+no charge.
+
+## 2. Define what the bench measures
+
+<Path steps={['Sidebar', 'Lab Station', 'Test List']} />
+
+<Steps>
+  <Step title="Open the test catalogue">
+    On the **Lab Station**, open the **Test List** tab — the catalogue, not your
+    workload. Its toolbar carries **Back to Lab Tests**, **Search lab tests**,
+    **New Test Record** and **View Columns**.
+  </Step>
+
+  <Step title="Start a test record">
+    Select **New Test Record**. The form opens on **Basic Information**, with a
+    **Parameters** tab beside it.
+  </Step>
+
+  <Step title="Name, price and categorise it">
+    Enter the name as it should print on a report ("e.g., Complete Blood
+    Count"), set the price, and choose a category — or select **Create New
+    Category** and give it a name ("e.g., Blood Chemistry"), a department and a
+    description.
+  </Step>
+
+  <Step title="Add one row per analyte">
+    On **Parameters**, each analyte takes a name ("e.g., Hemoglobin"), a type, a
+    unit ("e.g., g/dL") and a reference range ("e.g., 12.0-15.5"). For a result
+    that is a choice rather than a number, fill the option list —
+    "Comma-separated values, e.g., Positive, Negative, Indeterminate".
+  </Step>
+
+  <Step title="Set the critical limits">
+    Enter the critical low and critical high wherever a value outside them means
+    someone must be told today. Those limits raise the **Critical** badge on a
+    result and feed **Critical Results** ("Requires immediate attention") on the
+    **Lab Station**.
+  </Step>
+</Steps>
+
+### Let it fill the analytes in
+
+For a well-known test, use the action that applies standard parameters for the
+test type — the toast reads **Standard parameters applied successfully**. If the
+type is not recognised you get **No standard parameters available for this test
+type**, which means "type them yourself", not "something broke".
+
+<Note>
+  Standard parameters are a starting point. Reference ranges vary by method,
+  analyser, population and age. Check every range against your own SOP before
+  you run a patient sample against it.
+</Note>
+
+## Panels
+
+A panel is one catalogue entry whose parameter list covers several analytes — a
+full blood count, a liver panel, a lipid profile. One entry, one price, ordered
+once, resulted once, reported as one document.
+
+## Attach the reagents a test consumes
+
+Each catalogue test carries a **Reagents consumed** card. Fill it in and
+completing a run draws that stock down, which is what makes your reagent levels
+mean anything without a daily count. See
+[Reagents and consumables](/lims/inventory/reagents).
+
+## Check it worked
+
+- The service is listed on the **Services Dashboard** with its price.
+- The test is found by **Search lab tests** on **Test List**, and by **Search
+  lab tests...** on the ordering form, with its price in the **Order Summary**.
+- Opening a request for it shows one input per parameter, with the right unit.
+- The floating **Setup** checklist ticks **Add your first test or panel**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The step will not tick">
+    It ticks on the first **service**, not the first test record. Add one under
+    **Billing › Services**.
+  </Accordion>
+
+  <Accordion title="The test does not appear when I try to order it">
+    The ordering form only offers catalogue tests. Check it saved, and that you
+    are searching the name you actually entered.
+  </Accordion>
+
+  <Accordion title="A result field expects a number but should be a choice">
+    Change the parameter's type and fill its option list with comma-separated
+    values. The result form follows the parameter definition.
+  </Accordion>
+
+  <Accordion title="Critical results are not flagging">
+    An analyte with no critical low and high cannot flag. Set both on the
+    **Parameters** tab.
+  </Accordion>
+
+  <Accordion title="I need the same test at two prices">
+    Create two entries with distinct names — a routine and an urgent version.
+    One entry carries one price.
+  </Accordion>
+
+  <Accordion title="This is an imaging study, not a lab test">
+    Imaging has its own catalogue and request path. See
+    [Imaging requests](/lims/imaging/requests).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="your test catalogue" />
+
+<!-- source of truth: lib/onboarding-steps.ts (lims, step `services`), components/clinic/dashboard/services/service-form-sheet.tsx, components/clinic/dashboard/lab-station/test-list/ -->

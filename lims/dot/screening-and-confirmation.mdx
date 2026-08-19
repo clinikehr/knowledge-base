@@ -1,0 +1,285 @@
+---
+title: "Screen and confirm a specimen"
+description: "Run the immunoassay screen with the right cutoffs for your matrix, add specimen validity testing, and confirm non-negatives by GC-MS or LC-MS/MS."
+icon: "flask-vial"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Entering screen and confirmation results needs “Enter results at the bench”. Reporting to MRO needs “Verify and authorise results”." />
+
+The bench does two separate things to a drug-testing specimen, and the whole
+regulatory framework hangs on the difference between them. The **initial
+immunoassay screen** says an analyte is present above a threshold — that is a
+presumptive finding and its name is **Non-Negative**. Only **GC-MS or LC-MS/MS
+confirmation** can call an analyte **Positive**.
+
+<Path steps={['Sidebar', 'Worklist']} />
+
+<TaskHeader
+  before="An accessioned specimen with both seals recorded, and instrument readings to enter"
+  time="5 minutes per specimen at each stage"
+  after="A screened specimen, its non-negatives confirmed and certified, ready for MRO review"
+/>
+
+## The analytes and the panels
+
+| Code | Analyte |
+|---|---|
+| THC | Marijuana (THC) |
+| COC | Cocaine |
+| COD | Codeine |
+| MOR | Morphine |
+| SAM | 6-Acetylmorphine (Heroin) |
+| HYD | Hydrocodone |
+| HYM | Hydromorphone |
+| OXY | Oxycodone |
+| OXM | Oxymorphone |
+| PCP | Phencyclidine (PCP) |
+| AMP | Amphetamine |
+| MET | Methamphetamine |
+| MDMA | MDMA (Ecstasy) |
+| MDA | MDA |
+
+The **DOT 5-Panel** is the mandatory federal panel: THC, COC, MOR, AMP and PCP.
+The **DOT 14-Panel** is all fourteen analytes above. Labs that also run non-DOT
+work can define their own panels — see
+[Reference lab mode](/lims/dot/lab-intake-mode).
+
+## The matrix decides the cutoffs
+
+Urine and oral fluid are governed by different guidelines and different numbers,
+and the form tells you which set it is applying before you enter anything:
+
+- **Specimen matrix: Oral Fluid — HHS OFMG cutoffs apply. SVT is not required
+  for oral fluid.**
+- **Specimen matrix: Urine — HHS MG urine cutoffs apply. SVT is required.**
+
+You do not choose the cutoffs. Each field shows **Cut: {cutoff}** beside it, and
+ClinikEHR badges the value **Negative** or **Non-Negative** against that number
+as you type.
+
+### Urine — 49 CFR Part 40 and the HHS Mandatory Guidelines
+
+All values in ng/mL.
+
+| Analyte | Initial screen | GC-MS / LC-MS/MS confirmation |
+|---|---|---|
+| THC | 50 | 15 |
+| COC | 150 | 100 |
+| COD | 2000 | 2000 |
+| MOR | 2000 | 2000 |
+| SAM | 10 | 10 |
+| HYD | 300 | 100 |
+| HYM | 300 | 100 |
+| OXY | 100 | 100 |
+| OXM | 100 | 100 |
+| PCP | 25 | 25 |
+| AMP | 500 | 250 |
+| MET | 500 | 250 |
+| MDMA | 500 | 250 |
+| MDA | 500 | 250 |
+
+In urine, 6-acetylmorphine is only evaluated when morphine screens at or above
+2000 ng/mL, because 6-AM degrades to morphine in urine.
+
+### Oral fluid — HHS Oral Fluid Mandatory Guidelines, effective 2020-01-01
+
+All values in ng/mL.
+
+| Analyte | Initial screen | GC-MS / LC-MS/MS confirmation |
+|---|---|---|
+| THC | 4 | 2 |
+| COC | 15 | 8 |
+| COD | 30 | 15 |
+| MOR | 30 | 15 |
+| SAM | 4 | 2 |
+| HYD | 30 | 15 |
+| HYM | 30 | 15 |
+| OXY | 30 | 15 |
+| OXM | 30 | 15 |
+| PCP | 3 | 2 |
+| AMP | 50 | 25 |
+| MET | 50 | 25 |
+| MDMA | 50 | 25 |
+| MDA | 50 | 25 |
+
+The gap between the two matrices is large — THC screens at 50 and confirms at 15
+in urine, but at 4 and 2 in oral fluid. Entering an oral-fluid reading against a
+urine expectation, or the reverse, is the mistake to watch for; the form's matrix
+banner is there so you never have to remember which set you are on.
+
+In oral fluid, 6-acetylmorphine is always evaluated — saliva is fresher and 6-AM
+is the primary heroin marker.
+
+## Run the initial screen
+
+<Steps>
+  <Step title="Open the screen form">
+    Find the specimen on the **Worklist** and open it. The **Workflow** tab shows
+    **Initial Screen** for an accessioned specimen, with the matrix banner at the
+    top.
+  </Step>
+
+  <Step title="Record when and who">
+    **Screen Date & Time \*** and **Technician Name \*** are both required. The
+    technician's name is part of the custody record, not a convenience field.
+  </Step>
+
+  <Step title="Enter each analyte">
+    The **Immunoassay Screen Results** card lists one row per analyte on the
+    panel: a value box, **Cut: {cutoff}**, and a **Negative** or **Non-Negative**
+    badge that updates as you enter. Enter the instrument's reading, not your
+    reading of it.
+  </Step>
+
+  <Step title="Complete specimen validity testing — urine only">
+    For urine, the **Specimen Validity Testing (SVT)** card is required:
+    Creatinine (mg/dL), Specific Gravity, pH, Nitrites (µg/mL), and an oxidant
+    checkbox with **Oxidant Type** ("e.g., Bleach, Peroxide"). A verdict badge
+    shows the outcome. Oral fluid has no SVT card, correctly — saliva volume and
+    chemistry are not meaningful adulteration markers.
+  </Step>
+
+  <Step title="Read a failed validity result">
+    A failing SVT raises a red alert: **SVT result: ADULTERATED/SUBSTITUTED/
+    INVALID. This result will affect the final lab result status even if drug
+    screens are negative.** A specimen can be entirely negative for drugs and
+    still be reportable as adulterated or substituted.
+  </Step>
+
+  <Step title="Finalize the screen">
+    Select **Finalize Screen Results**. That single action records and finalizes
+    the screen, and writes an **Initial Immunoassay Screen** event to the chain
+    of custody.
+  </Step>
+</Steps>
+
+## Confirm the non-negatives
+
+The confirmation form only shows the analytes that came back non-negative on the
+screen — you do not confirm a whole panel to prove a single finding.
+
+If nothing screened non-negative you get **No Non-Negative Analytes — All
+analytes were negative on the initial screen. No GC-MS confirmation is required.
+The result can be reported to MRO directly.**
+
+<Steps>
+  <Step title="Record when and who">
+    **Confirmation Date & Time \*** and **Technician / Lab Director \***.
+  </Step>
+
+  <Step title="Enter the confirmation values">
+    Under **GC-MS / LC-MS/MS Confirmation Results**, enter each non-negative
+    analyte's confirmed quantitation against its confirmation cutoff for the
+    matrix.
+  </Step>
+
+  <Step title="Read the methamphetamine rule if it fires">
+    ClinikEHR applies **49 CFR § 40.97(b)(3)** for you and tells you when it
+    has: **Methamphetamine ≥ {cutoff} ng/mL but Amphetamine &lt; {threshold}
+    ng/mL. Per HHS mandatory guidelines, methamphetamine CANNOT be reported as
+    confirmed positive — this result will be reported as Negative.** Do not
+    override it or re-enter the amphetamine value to make it go away.
+  </Step>
+
+  <Step title="Read the confirmed positive alert">
+    Where analytes genuinely confirm above cutoff, a red **Confirmed Positive**
+    alert lists them. That list is what reaches the MRO.
+  </Step>
+
+  <Step title="Certify as lab director">
+    Tick the **Lab Director Certification** box: "I certify that these
+    GC-MS/LC-MS/MS confirmation results are accurate, have been reviewed and
+    approved by a qualified laboratory director, and comply with 49 CFR Part 40
+    and HHS Mandatory Guidelines." Without it you get **Lab director must certify
+    results before saving** or **Lab director must certify before reporting to
+    MRO**.
+  </Step>
+
+  <Step title="Save, then report">
+    **Save Results** keeps the work on the bench. **Report to MRO** hands it on —
+    the toast reads **Results reported to MRO** — and that is the sign-out act,
+    so it needs the "Verify and authorise results" grant. See
+    [Permissions](/platform/team/permissions).
+  </Step>
+</Steps>
+
+## Finalizing without confirmation
+
+If you try to finalize a specimen that was screened but never confirmed,
+ClinikEHR raises the **SAMHSA Compliance Check** dialog, subtitled "49 CFR
+§ 40.97 / HHS Mandatory Guidelines".
+
+<Warning>
+  The dialog reads: "Per HHS Mandatory Guidelines, an analyte cannot be
+  designated **Positive** without confirmation. If you finalize now, the report
+  will list these analytes as **Non-Negative** (presumptive screen result) with a
+  footnote citing § 40.97." Your choices are **Cancel** and **Finalize as
+  Non-Negative** — there is no third option that produces a Positive, and there
+  must not be. An unconfirmed screen reported as Positive is an employment
+  decision made on evidence that will not stand up.
+</Warning>
+
+## Check it worked
+
+- The specimen has moved off the screening stage of the **Worklist** and carries
+  its result status.
+- The **Chain of Custody** tab shows an **Initial Immunoassay Screen** event, and
+  a **GC-MS / LC-MS-MS Confirmation** event where confirmation was needed, each
+  with the technician's name and time.
+- Every analyte you entered shows its badge against the cutoff for the correct
+  matrix.
+- After **Report to MRO**, the order appears on the MRO's queue — see
+  [MRO review and the employer report](/lims/dot/reports).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The cutoffs on screen are not the ones I expected">
+    Check the matrix banner at the top of the form. Urine and oral fluid use
+    different guidelines and very different numbers. If the banner names the
+    wrong matrix, the specimen type on the order is wrong — fix that rather than
+    entering values against the wrong cutoffs.
+  </Accordion>
+
+  <Accordion title="An analyte I screened is missing from the confirmation form">
+    The confirmation form lists only the non-negatives. An analyte that screened
+    negative needs no confirmation, and that is the correct handling.
+  </Accordion>
+
+  <Accordion title="Methamphetamine was downgraded to negative">
+    That is 49 CFR § 40.97(b)(3) working. Methamphetamine cannot be reported as
+    confirmed positive without amphetamine co-present at the matrix threshold.
+    The alert names both values so you can check the run, but the rule is not
+    negotiable.
+  </Accordion>
+
+  <Accordion title="I cannot save the confirmation">
+    The **Lab Director Certification** box is required — **Lab director must
+    certify results before saving**. It is an attestation by a qualified lab
+    director, so it must be ticked by one.
+  </Accordion>
+
+  <Accordion title="There is no SVT card on the screen form">
+    You are working an oral-fluid specimen. Specimen validity testing is required
+    for urine only, and its absence here is correct.
+  </Accordion>
+
+  <Accordion title="I cannot report to MRO, only save">
+    You hold "Enter results at the bench" but not "Verify and authorise results".
+    That separation is usually deliberate supervision — hand it to your verifier.
+  </Accordion>
+
+  <Accordion title="Everything on the bench is disabled">
+    You are at a collection centre. Screening happens at the full lab — see
+    [Collect a specimen and complete the CCF](/lims/dot/collection).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="screening or confirmation" />
+
+<!-- source of truth: lib/dot-lims-cutoffs.ts, components/clinic/dot-lims/lab/initial-screen-form.tsx, components/clinic/dot-lims/lab/confirmation-form.tsx, components/clinic/dot-lims/general/panel-selector.tsx -->

@@ -1,0 +1,168 @@
+---
+title: "Choose which notifications your workspace gets"
+description: "Turn workspace email on or off as a whole, mute individual categories, and understand which switch governs which recipient."
+icon: "bell"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner, Manager" />
+
+This tab controls in-app notices and email **for the workspace**. It is not the
+only place notification settings live, and picking the wrong one is the usual
+reason a change appears to do nothing — so the map of all four is below.
+
+<Path steps={['Sidebar', 'Settings', 'Notifications']} />
+
+<TaskHeader
+  before="Nothing"
+  time="1 minute"
+  after="Only the notices your team actually wants, in-app and by email"
+/>
+
+## What is on the tab
+
+The card is headed **Notification Preferences** — "Choose which in-app and email
+notifications your clinic receives. Essential emails (receipts, security, and
+billing alerts) always send."
+
+### The master switch
+
+**Email notifications** — "Master switch for all clinic emails. Turn off to
+pause non-essential email." Turning this off pauses workspace email without
+touching any of the category switches, so you can turn it back on and get your
+previous settings back exactly as they were.
+
+### The categories
+
+| Switch | Covers |
+|---|---|
+| **Appointment** | New bookings, cancellations, and reminders |
+| **Patient** | New patient registrations and updates |
+| **Staff** | Staff invitations accepted and role changes |
+| **Billing** | Payment received, invoices, and overdue alerts |
+| **Subscription** | Plan changes, trial expiry, and payment status |
+| **Document** | Document signed, viewed, or expired |
+| **Insurance** | Claim status changes and approvals |
+| **System** | System updates and maintenance notices |
+| **Achievement emails** | Milestone badges, tier-ups, and your clinic's trophy case |
+| **Daily operational digests** | Morning owner summaries for inventory, pharmacy, and lab |
+
+You will not see every row. **The list adapts to your edition** — a category for
+something your workspace does not do is not offered, because a switch that
+governs nothing is worse than no switch. Your stored settings are not touched by
+this; a hidden category keeps whatever it was set to.
+
+**System cannot be switched off.** Its switch is fixed on, and the tab says so:
+"System notifications cannot be disabled as they contain important updates about
+your clinic."
+
+## Turn something off
+
+<Steps>
+  <Step title="Open Settings and select Notifications">
+    On a phone, choose it from the dropdown at the top.
+  </Step>
+
+  <Step title="Flip the switch you want">
+    Each switch saves on its own the moment you change it — there is no Save
+    button. You get **Notifications enabled** or **Notifications muted** as
+    confirmation, naming the category you changed.
+  </Step>
+
+  <Step title="To pause everything at once, use the master switch instead">
+    **Email notifications** at the top. Muting categories one by one and turning
+    them back on later is more work than flipping the master switch twice.
+  </Step>
+</Steps>
+
+## Four places, four different recipients
+
+This is the part worth reading twice. There are four preference stores, and each
+one owns a different recipient. Changing the wrong one looks like a setting that
+does not work.
+
+| What it controls | Where you set it |
+|---|---|
+| All non-essential email to the workspace | **Settings → Notifications** → the **Email notifications** master switch |
+| In-app notices and email, per category | **Settings → Notifications** → the category switches |
+| Email to **you as a person**, across every workspace you belong to | [Your notification settings](/platform/account/notifications) |
+| What a **patient or customer** receives | That person's own record, on their notification preferences |
+
+So: an owner who is still getting mail after muting a category here is probably
+receiving it as a *person*, not as the workspace — that one is in
+[your account settings](/platform/account/notifications). And a patient still
+getting appointment reminders is set on their own record, not here.
+
+## Transactional email is never affected
+
+Receipts, password resets, sign-in and security alerts, and billing alerts about
+your own subscription send regardless of every switch on this page and every
+switch in your account. They are not marketing and they are not optional — they
+are the record of something that happened to your account or your money.
+
+If you are trying to stop one of those arriving, the answer is to change the
+address it goes to, not to mute a category.
+
+## Check it worked
+
+- The switch you moved holds its position after a page reload.
+- You saw the **Notifications muted** or **Notifications enabled** confirmation
+  naming the right category.
+- The **System** switch is on and cannot be moved — that is correct, not a fault.
+- A test of the thing you muted (book a test appointment, raise a test invoice)
+  produces no email to the workspace.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I muted a category and I am still getting the emails">
+    Check which of the four stores owns that recipient, using the table above.
+    Mail to you as a person is governed by
+    [your notification settings](/platform/account/notifications), not by this
+    tab.
+  </Accordion>
+
+  <Accordion title="Nobody is getting any workspace email at all">
+    The **Email notifications** master switch is off. Turn it back on — your
+    category settings are exactly as you left them.
+  </Accordion>
+
+  <Accordion title="A category I was told about is not in the list">
+    It does not apply to your edition, so it is not offered. See
+    [The three editions](/start/editions).
+  </Accordion>
+
+  <Accordion title="The System switch will not move">
+    It is not meant to. System notices carry important updates about your
+    workspace and cannot be disabled.
+  </Accordion>
+
+  <Accordion title="A patient is still getting appointment reminders">
+    Patient-directed mail is set on the patient's own record, not here. Open
+    their record and change their notification preferences.
+  </Accordion>
+
+  <Accordion title="The switch flipped back by itself">
+    The change failed to save and was rolled back — you will have seen an error
+    message. Check your connection and try again.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Your own notification settings" icon="user-gear" href="/platform/account/notifications">
+    Email to you as a person, across every workspace.
+  </Card>
+  <Card title="Account security" icon="lock" href="/platform/account/security">
+    Sign-in alerts and the mail you cannot switch off.
+  </Card>
+</Columns>
+
+<StillStuck topic="email that is or is not arriving" />
+
+<!-- source of truth: components/clinic/dashboard/settings/notification-preferences.tsx, types/notifications.ts (notificationCategoriesFor), docs/Notifications/NOTIFICATION_SYSTEM_WIRING_PLAN.md -->

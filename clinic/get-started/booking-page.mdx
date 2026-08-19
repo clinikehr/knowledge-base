@@ -1,0 +1,151 @@
+---
+title: "Publish your booking page"
+description: "Design your public booking page, choose which services appear on it, and take it live."
+icon: "globe"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager" />
+
+Step 5 of the [setup checklist](/clinic/get-started). Your booking page is a
+public web page where anyone with the link can pick a service, pick a time and
+book themselves in. Until you publish it, the link returns a **Booking Page Not
+Found** message.
+
+<Path steps={['Sidebar', 'Settings', 'Booking Page Designer']} />
+
+<TaskHeader
+  before="At least one service, so visitors have something to book"
+  time="2 minutes to publish; longer if you design it properly"
+  after="A live public page at your own address, ready to share"
+/>
+
+## Design and publish
+
+The designer has five tabs — **Design**, **Content**, **Services**, **Forms**
+and **Settings** — plus a **Preview** toggle and **Save** and **Publish**
+buttons in the header. **Save** and **Publish** are separate actions: saving
+stores your edits, publishing makes them visible to the public.
+
+<Steps>
+  <Step title="Set your page address">
+    On the **Design** tab, under **Page Settings**, enter a **Page Slug** —
+    "This will be part of your booking page URL". The indicator next to it reads
+    **Checking availability…** then **Available**; neither **Save** nor
+    **Publish** will run while the slug is unavailable.
+
+    Pick something short and permanent. It is what you print, email and put in
+    your bio.
+  </Step>
+
+  <Step title="Choose a look">
+    Still on **Design**: **Choose Template**, then **Customize Colors**
+    (**Primary Color**, **Secondary Color**, **Accent Color**, **Background
+    Color**, or a **Quick Preset**) and **Typography**.
+  </Step>
+
+  <Step title="Say who you are">
+    The **Content** tab holds **Clinic Information** (name, tagline,
+    description), **Contact Information** (**Phone Number**, **Email Address**,
+    **Website**, **Address**), **Branding & Images** (**Clinic Logo**,
+    **Profile Image**, an optional banner) and **Page Content & SEO** — the
+    **Page Title (SEO)** and **Meta Description** that appear in search results
+    and link previews.
+
+    <Note>
+      This is a public page. Everything you type here is visible to anyone with
+      the link, so use the clinic's public contact details, not a personal
+      number.
+    </Note>
+  </Step>
+
+  <Step title="Choose the services visitors can book">
+    On the **Services** tab, each of your clinic's services has an **Add to
+    Page** button that becomes **Added to Page**. The badge at the top counts
+    how many are on the page, and **Make Featured** promotes one.
+
+    If you see **No Services Found** — "You haven't added any appointment
+    services yet." — use **Manage Appointment Services** and go build one first.
+    See [Add the services you offer](/clinic/get-started/services).
+  </Step>
+
+  <Step title="Decide what you ask for">
+    The **Forms** tab builds the intake questions the visitor answers while
+    booking. Each field has a **Field Label**, **Field Type**, **Placeholder**
+    and **Required** and **Visible** switches. Ask for the minimum you need at
+    booking time — anything else can be collected at check-in.
+  </Step>
+
+  <Step title="Set the booking and payment rules">
+    The **Settings** tab holds **Allow Online Booking**, **Clinic Timezone**,
+    **Advance Booking Days** ("How many days in advance patients can book") and
+    the **Booking Confirmation Message**. **Payment Settings** below it controls
+    **Accept Payments**, **Require Upfront Payment**, **Deposit Percentage**,
+    **Refund Policy** and the **Currency** (which shows your clinic default).
+  </Step>
+
+  <Step title="Preview, save, publish">
+    Select **Preview** to see the visitor's view, **Edit** to come back, then
+    **Save Changes** — the banner "You have unsaved changes. Don't forget to
+    save your work!" tells you when there is something outstanding. Finally
+    select **Publish**.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- The toast reads **Page Published** — "Your booking page is now live and
+  accessible to patients."
+- The badge on the **Booking Page URL** card changes from **Draft** to **Live**,
+  and the button now reads **Unpublish**.
+- Select **Open** to load the real page, or **Copy** to put the link on your
+  clipboard ("Booking page URL has been copied to clipboard.").
+- The **Get Started** checklist ticks **Publish your booking page**.
+
+Book a test appointment through the public page yourself, then cancel it. It is
+the only way to see what a patient actually sees.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The link shows 'Booking Page Not Found'">
+    The page is saved but not published, or the slug has changed. Check the
+    badge reads **Live**, and that the link you shared matches the current
+    **Booking Page URL**.
+  </Accordion>
+
+  <Accordion title="Publish and Save are both disabled">
+    The **Page Slug** is empty or taken. Fix it on the **Design** tab and wait
+    for the indicator to read **Available**.
+  </Accordion>
+
+  <Accordion title="Visitors see no available times">
+    Opening hours are not set in the designer — they live in
+    **Settings › Booking Settings**, a separate tab. Set your working hours
+    there, and check **Allow Online Booking** is on in the designer's
+    **Settings** tab.
+  </Accordion>
+
+  <Accordion title="My changes are live before I wanted them to be">
+    Publishing is a state, not a snapshot: a saved change to a published page is
+    public. Use **Unpublish** ("Your booking page has been taken offline.")
+    while you rework it.
+  </Accordion>
+
+  <Accordion title="I want the page on my own domain">
+    A published page can be served from your clinic's own domain instead of the
+    default address. [Contact support](/platform/help/contact-support) to set it
+    up.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the booking page" />
+
+Handling the bookings that arrive is covered in
+[Booking page](/clinic/front-desk/booking-page).
+
+<!-- source of truth: components/clinic/appointment/page-designer/ (booking-page-designer.tsx, design-tab.tsx, content-tab.tsx, services-tab.tsx, forms-tab.tsx, settings-tab.tsx), app/book/[pageSlug]/ -->

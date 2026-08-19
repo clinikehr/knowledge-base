@@ -1,0 +1,142 @@
+---
+title: "Raise a test request"
+description: "Order a test for a patient from the Lab Station or the Test Requests table, and put it on the bench queue."
+icon: "vial"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans — test requests are unlimited on every plan" roles="Lab scientist, Lab Manager, Owner. Receptionists and phlebotomists can raise a request but not work it." />
+
+A test request is the record everything else hangs off: the specimen you
+accession against it, the results you enter, the report you release and the
+invoice you raise. This page covers the two ways to create one.
+
+<Path steps={['Sidebar', 'Test Requests']} />
+
+<TaskHeader
+  before="At least one test in your catalogue and a registered patient"
+  time="2 minutes"
+  after="A Pending request on the bench queue, ready to accession and run"
+/>
+
+## The full ordering form
+
+Use this when you are ordering for a patient at the desk and want the price and
+the parameters in front of you.
+
+<Steps>
+  <Step title="Open the form">
+    Go to **Lab Station** and select **New Lab Test**.
+  </Step>
+
+  <Step title="Choose the patient">
+    Fill in **Patient Details**. If the patient has no record yet, create one
+    first — see [Register your first patient](/lims/get-started/first-patient).
+  </Step>
+
+  <Step title="Pick the tests">
+    Under **Select Lab Test** ("Choose a test to order"), use **Search lab
+    tests...** to find each test. Everything you add builds up in the
+    **Order Summary** rail on the right under **Order Items**, priced from your
+    catalogue.
+  </Step>
+
+  <Step title="Fill in what you already know">
+    **Test Parameters** lists every analyte on the test, with a counter reading
+    **{n} / {n} parameters filled** and a **Critical** badge on the ones that
+    trigger a critical flag. You do not have to complete these now — the bench
+    normally does, on [Enter and verify results](/lims/lab/results).
+  </Step>
+
+  <Step title="Add context and submit">
+    Use **Additional Notes** for clinical details the scientist needs — the
+    indication, current medication, a fasting state. Submit the order. The toast
+    reads **Lab test orders created successfully**.
+  </Step>
+</Steps>
+
+## The quick way, from the table
+
+<Path steps={['Sidebar', 'Test Requests']} />
+
+The **Test Requests** table is the working list of everything ordered. Its
+toolbar carries **Search for patient**, **New Test Report**, **Refresh** and
+**View Columns** ("Toggle columns"). Select **New Test Report** to raise a
+request without leaving the list.
+
+Each row's menu offers **View Details**, **Conduct Test** and **Update
+Results**. Selecting one opens a sheet whose header changes to match what you
+are doing — **Conduct Lab Test**, **View Lab Results** or **Update Lab
+Results** — with **Patient Information** and **Laboratory Tests** cards and a
+field per parameter (**Enter test result**, **Enter {parameterName}**, **Select
+value**).
+
+<Note>
+  Only lab scientists may conduct or update a test through this path. Everyone
+  else who opens the sheet gets read-only view mode and the message **Only lab
+  scientists can conduct or update lab tests**. That is a role limit, not a
+  fault — see [Roles](/platform/team/roles).
+</Note>
+
+## Raising a request with no connection
+
+Order capture works offline. Raise the request as normal and it queues on the
+device, then syncs when the connection returns. The offline bar reads
+**Offline · reference data {staleness} — new lab orders queue and sync on
+reconnect** and carries a **Sync now** button.
+
+Two things change offline. Patient search is reduced to name and patient number
+and returns at most 25 matches, so search precisely. And payment is never taken
+offline — a replayed order arrives unpaid and settles at the desk. Accessioning,
+screening, result entry and verification all stay online. See
+[Working offline](/platform/apps/offline).
+
+## Check it worked
+
+- The request appears in **Test Requests** with the status **Pending** and a
+  payment badge of **Paid**, **Partial** or **Pending**.
+- The **Lab Station** **Analytics** tab counts it under **Total Lab Tests** and
+  **Pending Tests** ("Awaiting processing").
+- The patient's record lists the request.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The test I want is not in the search">
+    The search only offers tests in your catalogue. Add it under **Lab
+    Station › Test List** — see
+    [Add your tests and panels](/lims/get-started/tests-and-panels).
+  </Accordion>
+
+  <Accordion title="The order has no price">
+    Price lives on the catalogue test, not the request. Open the test in
+    **Test List** and set a price on the **Basic Information** tab; new orders
+    then price themselves.
+  </Accordion>
+
+  <Accordion title="Conduct Test is missing from the row menu">
+    You are not signed in as a lab scientist. Ask an owner or manager to change
+    your role, or hand the request to someone at the bench. See
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="My offline order has not appeared">
+    Open the offline bar and select **Sync now**. If the bar shows a rejected
+    count, the order needs a person to look at it — rejected items are never
+    retried silently. See [Working offline](/platform/apps/offline).
+  </Accordion>
+
+  <Accordion title="This is a drug test, not a clinical one">
+    Regulated collections go through the DOT workflow, which carries its own
+    chain of custody and forms. See [DOT testing](/lims/dot/index) and
+    [Lab intake mode](/lims/dot/lab-intake-mode).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a test request" />
+
+<!-- source of truth: components/clinic/lab/, components/clinic/dashboard/lab-station/lab-dashboard-content.tsx, lib/clinic-nav-registry.ts (LIMS), lib/lab-offline/ -->

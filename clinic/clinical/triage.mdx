@@ -1,0 +1,145 @@
+---
+title: "Record triage and route a patient"
+description: "Take a patient's vital signs at triage and send them to the right department's consultation queue."
+icon: "heart-pulse"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctors and nurses (and the clinic owner)" />
+
+Triage is where a patient's vital signs are recorded and where they are routed
+to the department that will see them. Saving a triage record is what puts the
+patient into a consultation queue, so nothing downstream happens until this is
+done.
+
+<Path steps={['Sidebar', 'Outpatient', 'Triage', 'Triage List']} />
+
+<TaskHeader
+  before="A registered patient who has paid for a consultation, unless your clinic runs in free-clinic mode"
+  time="2 minutes"
+  after="A triage record with vitals, and the patient waiting in the chosen department's consultation queue"
+/>
+
+<Note>
+  **The patient picker only lists patients with a valid consultation payment.**
+  This is the single most common reason a patient you can see at the front desk
+  does not appear at triage. If the list is empty you will read: "No patients
+  with valid payments … This clinic requires consultation payment. Only patients
+  who have paid for a consultation will appear here. Please process payment at
+  the payments desk first." Take the payment first — see
+  [Payments](/clinic/revenue/payments) — and the patient appears. Clinics running
+  in free-clinic mode do not have this restriction.
+</Note>
+
+## Record the triage
+
+<Steps>
+  <Step title="Open a new triage record">
+    On the **Triage** list, select **New Triage**. The list itself only shows
+    the last 48 hours; when there is nothing in that window it reads "No recent
+    triage data available for this clinic." Anything older is under **Triage
+    History**.
+
+    If the patient is not registered yet, select **New Patient** from the same
+    toolbar, or use **Search for patient** to find someone already on the list.
+  </Step>
+
+  <Step title="Choose the patient">
+    The form is headed **New Triage**, with the subtitle "Patient vital signs
+    assessment". Choose the patient in the **Patient Information** card.
+
+    If the patient has paid for exactly one department, that department is
+    selected for you.
+  </Step>
+
+  <Step title="Assign the department and sub-unit">
+    Tick the departments — and sub-units where they exist — that should see this
+    patient. Each one tells you what it does: "Patient will appear in this
+    department's consultation queue".
+
+    Select **Clear** to start the assignment again.
+  </Step>
+
+  <Step title="Enter the vital signs">
+    Fill in the **Vital Signs** card. Nothing is mandatory; record what you took.
+
+    | Field | Notes |
+    |---|---|
+    | **Blood Pressure (mmHg)** | Entered as one value, `e.g. 120/80` |
+    | **Pulse Rate** | Beats per minute |
+    | **Temperature** | In your clinic's usual unit |
+    | **Respiratory Rate** | Breaths per minute |
+    | **Oxygen Saturation** | Percentage |
+    | **Weight** and **Height** | BMI is calculated from these two |
+    | **Fasting Blood Sugar** | |
+    | **Random Blood Sugar** | |
+
+    BMI appears on its own as soon as both weight and height are in, with an
+    **Underweight**, **Normal**, **Overweight** or **Obese** badge beside it.
+  </Step>
+
+  <Step title="Save">
+    Select **Save Triage**, or press Ctrl+S (⌘+S on a Mac). You will see the
+    toast "Triage record created successfully".
+  </Step>
+</Steps>
+
+## Abnormal readings
+
+A value outside the normal range turns its field red and shows an **Abnormal**
+chip. This is a flag for the clinician, not a block — an abnormal reading never
+stops you saving, because the reading you took is the reading you record.
+
+## Check it worked
+
+The new record is at the top of the **Triage** list, and the patient now appears
+in the consultation queue for every department you ticked. Open
+[Consultation](/clinic/clinical/consultation), choose that department, and the
+patient is there with a **Pending** status.
+
+<AuditNote action="Opening or saving a triage record" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The patient is not in the list">
+    Almost always the consultation payment. Check the empty-state message: if it
+    mentions valid payments, the patient needs to pay at the payments desk
+    first. If the patient is genuinely new, register them with **New Patient**
+    from the triage toolbar or in
+    [Register patients](/clinic/front-desk/register-patients).
+  </Accordion>
+
+  <Accordion title="The fields are read-only and I cannot save">
+    Only doctors and nurses — and the clinic owner — can create or edit a triage
+    record. Everyone else gets the form in read-only mode, and a blocked save
+    shows "Only doctors and nurses can modify triage records". Ask an owner or
+    manager to check your role in [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="There is no Triage in my sidebar">
+    Triage exists only on the **enterprise** plan. Solo and team plans have no
+    departments to route between, so there is no triage step — document the
+    visit in [Notes](/clinic/clinical/notes) instead. See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="An older record has disappeared from the list">
+    The list is a rolling 48-hour window. Older records are under **Triage
+    History**.
+  </Accordion>
+
+  <Accordion title="The patient went to the wrong department">
+    Open the record from the list, change the assignment on the **Update
+    Triage** form and save again. The patient moves to the new department's
+    queue.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/triage/new-triage-form.tsx, triage-actions.tsx, lib/clinic-nav-registry.ts -->

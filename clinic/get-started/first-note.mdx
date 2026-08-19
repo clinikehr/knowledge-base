@@ -1,0 +1,170 @@
+---
+title: "Write your first clinical note"
+description: "Document a visit from a template, from a blank page, or with the AI Note Taker, then sign and lock it."
+icon: "notes-medical"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans; AI Note Taker, AI Rewrite and AI Autocomplete need a paid plan" roles="Any clinical staff member" />
+
+This is step 1 of the [setup checklist](/clinic/get-started), and the step most
+clinics do first because it is the fastest way to see what the product actually
+does. Any saved note completes it — including a draft.
+
+<Path steps={['Sidebar', 'Notes', 'New Note']} />
+
+<TaskHeader
+  before="Nothing. A client or patient record is optional for a draft, and required before you sign"
+  time="2 minutes"
+  after="A saved note, either a draft you can come back to or a signed, locked record"
+/>
+
+## Pick how you want to write it
+
+The **New Progress Note** page opens with three cards under **Quick Actions**:
+
+| Card | Use it when |
+|---|---|
+| **Use Template** | You want a structured note — SOAP sections, an intake assessment, a treatment plan |
+| **Blank Note** | You want a free-text page with formatting and `/` commands |
+| **AI Note Taker** | You want a note drafted from a recording or an uploaded file |
+
+There is also a **Quick Note** card further down the same page for something
+short you want to save without leaving the dashboard.
+
+## Write it from a template
+
+<Steps>
+  <Step title="Open the template editor">
+    Select **Use Template**. To browse first instead, open **Templates** in the
+    Notes sidebar — the pre-built library, with a **Use** button on every card.
+  </Step>
+
+  <Step title="Choose the template">
+    Under **Select Template**, select **Choose a template...** and pick one. The
+    card heading becomes **Progress Note - {template name}** and the form fills
+    with that template's sections — for a SOAP template these are
+    **Subjective**, **Objective**, **Assessment** and **Plan**.
+  </Step>
+
+  <Step title="Attach the client or patient">
+    Use the **Client:** picker at the top of the form — it says **Patient** on
+    the enterprise plan. It is optional for a draft, required before signing,
+    and the AI Note Taker refuses to run without it.
+  </Step>
+
+  <Step title="Fill the sections">
+    Type into each section. `/` opens the snippet menu anywhere in a note body,
+    so a phrase you use constantly can be inserted rather than retyped — see
+    [Note templates and snippets](/clinic/clinical/note-templates).
+  </Step>
+
+  <Step title="Save it">
+    Select **Save Draft**. You get **Success** / "Draft saved successfully", and
+    the note appears in **Recent Notes** with a **Draft** badge. The checklist
+    step is now complete.
+  </Step>
+</Steps>
+
+## Let the AI draft it
+
+<Availability editions={['clinic']} plans="Paid plans" roles="Any clinical staff member" note="The AI Note Taker is not available on the free plan." />
+
+Select **AI Note Taker** from the Quick Actions cards, or from either editor's
+toolbar. The sheet walks through **Select a Template**, **Customize Output**
+(**Note Tone**, **Speaker Mode**, **Custom AI Instructions**), then capture —
+**Live Recording** or **Upload File**.
+
+<Warning>
+  Recording a consultation requires consent. The sheet says so — "Always obtain
+  verbal or written consent from all session participants before recording." —
+  and that obligation is yours, not the product's.
+</Warning>
+
+While it works you see **Generating Notes ✨**, then **Notes Ready!** with the
+draft and a reminder that it is *generated in memory only* until you select
+**Apply to Form**. Applying it inserts the text under an `--- AI Generated
+Note ---` marker and toasts "Review and save."
+
+<Note>
+  AI output is a draft for you to check, never a record on its own. Read every
+  section, correct what is wrong, and only then save or sign. More in
+  [AI clinical notes](/clinic/clinical/ai-notes).
+</Note>
+
+## Sign and lock it
+
+A draft completes the checklist step; signing is what makes it a clinical
+record.
+
+<Steps>
+  <Step title="Select Sign & Lock">
+    In any editor, select **Sign & Lock**. The sheet summarises **Note**,
+    **Client** and **Date**.
+  </Step>
+
+  <Step title="Add your signature">
+    Under **Provider Signature**, either **Typed** or **Draw**.
+  </Step>
+
+  <Step title="Accept the attestation and sign">
+    Tick the attestation confirming the note is accurate and that signing locks
+    it, then select **Sign & Lock**.
+  </Step>
+</Steps>
+
+<Warning>
+  A signed note cannot be edited — the tooltip on the button says "Locked notes
+  can't be edited afterwards". Owners and managers can **Unlock Note** if a
+  correction is genuinely needed, and both the signing and the unlocking are
+  recorded.
+</Warning>
+
+## Check it worked
+
+- The note is listed under **Recent Notes** with a **Draft** or **Final** badge.
+- The **Get Started** checklist shows **Write your first clinical note** as
+  complete, with no refresh needed.
+- If you signed it, the editor shows **Read-Only (Locked)** and **Export** (or
+  **Export PDF**) produces the PDF version.
+
+<AuditNote action="Opening, signing and exporting a note" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Export is disabled">
+    Exporting needs a saved note — "Please save the note as a draft before
+    exporting." Save the draft first, then export.
+  </Accordion>
+
+  <Accordion title="The AI Note Taker will not start">
+    It needs a client or patient selected on the note. If the button is greyed
+    out rather than complaining, your plan does not include it — see
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A template has the wrong sections for my specialty">
+    Copy the closest pre-built template and edit it under **Custom Templates**.
+    See [Note templates and snippets](/clinic/clinical/note-templates).
+  </Accordion>
+
+  <Accordion title="I signed a note with a mistake in it">
+    Ask an owner or manager to **Unlock Note**, correct it, and sign again. Do
+    not write a second note describing the error — the unlock and the
+    re-signature are both on the record.
+  </Accordion>
+
+  <Accordion title="The checklist step has not ticked">
+    It completes on the first saved note of any kind. An AI draft you never
+    selected **Apply to Form** on was never saved, so it does not count.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="clinical notes" />
+
+<!-- source of truth: components/clinic/notes/notes-content-dashboard.tsx, components/clinic/notes/new-notes/ (blank-notes-form.tsx, template-notes-form.tsx, ambient-note-taker-sheet.tsx, sign-and-lock-sheet.tsx), lib/onboarding-steps.ts -->

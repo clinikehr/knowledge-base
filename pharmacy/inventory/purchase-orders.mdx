@@ -1,0 +1,161 @@
+---
+title: "Purchase orders and suppliers"
+description: "Raise a purchase order, email it to your vendor, receive it line by line, and keep the goods-received voucher behind every delivery."
+icon: "file-invoice"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans, with a purchase-order quota on Starter" roles="Staff with the manage suppliers and purchase orders permission" />
+
+A purchase order is what you send a supplier and what you receive against when
+the delivery arrives. Raising one from ClinikEHR means the received quantities,
+the costs and the lots all land back on the same document instead of on a
+printout somebody has to reconcile later.
+
+<Path steps={['Sidebar', 'Inventory', 'Purchasing']} />
+
+<TaskHeader
+  before="At least one vendor and the products you are ordering already in your catalogue"
+  time="3 minutes to raise, a minute per line to receive"
+  after="A submitted PO with the vendor emailed, ready to receive against"
+/>
+
+## Raise a purchase order
+
+<Steps>
+  <Step title="Open a new order">
+    On the **Purchasing** tab, select **New PO**.
+  </Step>
+
+  <Step title="Choose the vendor and the date">
+    Pick the **Vendor**, then set the **Expected date** you have been promised.
+    That date is what the delivery is chased against.
+  </Step>
+
+  <Step title="Add the lines">
+    Add each product with its quantity and **Unit cost**. The **Est. total**
+    updates as you go — check it against the quote before you send anything.
+  </Step>
+
+  <Step title="Submit it">
+    Select submit. A toast confirms **"PO submitted"** and the order is emailed
+    to the vendor. Until it is submitted it is a draft nobody has seen.
+  </Step>
+</Steps>
+
+## Receive against it
+
+Deliveries rarely arrive complete, so receiving is per line rather than all or
+nothing.
+
+<Steps>
+  <Step title="Open the submitted PO">
+    Find it on the **Purchasing** tab.
+  </Step>
+
+  <Step title="Receive each line into a location">
+    Enter what actually arrived for that line and the location it is going into.
+    A line you leave alone stays outstanding, so a part-delivery is recorded as
+    a part-delivery.
+  </Step>
+
+  <Step title="Record lot and expiry as you go">
+    Every received line becomes a lot. Scan the pack where you can — see
+    [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry) for why an
+    undated lot causes trouble later.
+  </Step>
+</Steps>
+
+Receiving through a PO and receiving through the toolbar's **Receive** button
+end in the same place: stock on hand, and a movement on the **Ledger** tab.
+
+## Vendors
+
+**Vendors** on the **Purchasing** tab opens the supplier manager — the
+addresses, contacts and account details you order against.
+
+Without the "manage suppliers and purchase orders" permission the manager opens
+**read-only**. The same permission also hides negotiated unit costs and supplier
+account numbers, so a person who can see your stock does not automatically see
+what you pay for it. See [Staff permissions](/platform/team/permissions).
+
+**New PO** and **Draft PO from these** are both locked without it.
+
+## Ordering from the reorder suggestions
+
+The **Catalog** and **Alerts** tabs carry a strip counting the items
+**at/below threshold**, with **Draft PO from these**. It builds a draft order
+from exactly those items — and deliberately skips any that are also projected to
+expire unsold, telling you how many it skipped. See
+[Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+
+## Vouchers — the goods-received record
+
+<Path steps={['Sidebar', 'Inventory', 'Vouchers']} />
+
+A voucher is the document behind a delivery: what arrived, from whom, against
+which invoice, at what cost. The tab opens on three figures — **Voucher value**
+for the chosen period, **Stock received**, and the number of **Vouchers** — with
+a period and status filter, and a **Receive stock** button that starts a new one.
+
+A voucher takes a **Vendor**, a **Receiving location**, a
+**Vendor invoice #**, a **Funding source** and a line per product with **Qty**,
+**Cost price**, **Markup %**, **Sale price**, **Lot** and **Expiry**. Two
+shortcuts save most of the typing: "Scan a pack to add it…" adds a line from the
+pack itself, and **Add from a purchase order** pulls the lines straight off an
+order you already raised.
+
+**Notes** — "Delivery condition, discrepancies, credit notes…" — is where a
+short delivery or a damaged carton gets written down while somebody still
+remembers it.
+
+Each row can be downloaded or printed as a PDF for the supplier file.
+
+## Check it worked
+
+- The order shows as submitted on the **Purchasing** tab, not as a draft.
+- Your vendor has the email.
+- After receiving, the **Stock** tab shows the new lots at the location you
+  chose, and the **Ledger** tab shows the movements.
+- The voucher for the delivery appears on the **Vouchers** tab and the
+  **Stock received** figure has moved.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="New PO is greyed out">
+    You do not have the "manage suppliers and purchase orders" permission, or
+    you are at your plan's purchase-order limit on Starter. The **Free plan**
+    strip shows which.
+  </Accordion>
+
+  <Accordion title="I can see vendors but cannot change them">
+    The supplier manager opens read-only without the permission. That is the
+    same permission that hides negotiated costs.
+  </Accordion>
+
+  <Accordion title="Unit costs show as hidden">
+    Viewing cost and margin is granted separately from viewing stock. Ask an
+    owner or manager — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The vendor says they never got the order">
+    The email goes out on submit, so check the order is submitted rather than
+    still a draft, and check the address on the vendor record. Download the PDF
+    from the voucher or the order and send it manually in the meantime.
+  </Accordion>
+
+  <Accordion title="Only part of the delivery arrived">
+    Receive the quantities that arrived and leave the rest of the line
+    outstanding. Do not receive the full quantity and adjust it afterwards —
+    that hides the shortfall from the supplier record.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a purchase order" />
+
+<!-- source of truth: components/inventory/po-sheet.tsx, vendor-manager-dialog.tsx, voucher-sheet.tsx, vouchers-panel.tsx, inventory-content.tsx -->

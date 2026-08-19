@@ -1,0 +1,181 @@
+---
+title: "Embed ClinikEHR on your website"
+description: "Put your contact form, store, membership signup or AI assistant on your own site with a copy-paste snippet, or a raw iframe on Team."
+icon: "code"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential for the contact form; Team for everything else" roles="Owner, Manager" />
+
+Four ClinikEHR pages can live inside your own website instead of being linked
+from it. You copy a snippet from the settings tab and paste it into your site;
+nothing else is required.
+
+## What can be embedded
+
+| Page | Set it up on | Plan |
+|---|---|---|
+| Contact form | <Path steps={['Settings', 'Contact Form']} /> | Essential to embed, Team to customise |
+| Store | <Path steps={['Settings', 'Store Page']} /> | Team |
+| Membership page | <Path steps={['Settings', 'Membership Page']} /> | Team |
+| Published AI assistant | <Path steps={['Agents', 'Public UIs']} /> | See [AI agents](/platform/ai/agents) |
+
+**Booking pages are linked, not embedded.** A booking flow needs the whole page,
+so it gets a [custom domain](/platform/settings/custom-domain) instead — you
+point `book.yourclinic.com` at it and link to that from your site.
+
+<TaskHeader
+  before="Access to edit your website's HTML"
+  time="5 minutes"
+  after="The page running inside your own site, in your own layout"
+/>
+
+## Add an embed
+
+<Steps>
+  <Step title="Open the settings tab for that page">
+    Scroll to the card headed **Add to your website**.
+  </Step>
+
+  <Step title="Set the widget options, if your plan offers them">
+    On Team you choose a **Style** — **Floating button** or **Inline on the
+    page** — and for a floating button, a **Position** (**Bottom right** or
+    **Bottom left**), the **Button text**, and a **Theme** (**Light**, **Dark**
+    or **Match visitor's device**). On Essential the contact form embeds with
+    sensible defaults and no options.
+  </Step>
+
+  <Step title="Save the settings tab">
+    The embed reads your **saved** settings, not what is open in the editor. If
+    you have unsaved changes the card warns you to save them so the embedded page
+    reflects them.
+  </Step>
+
+  <Step title="Copy the snippet">
+    Use the copy button rather than selecting the text by hand.
+  </Step>
+
+  <Step title="Paste it into your site's HTML, just before the closing body tag">
+    That is the instruction the card itself gives: "Copy this snippet into your
+    site's HTML, just before `</body>`." Most website builders have a place for
+    this — usually called custom code, a footer script, or a raw HTML block.
+  </Step>
+
+  <Step title="Publish your site and load the page">
+    A floating button appears in the corner you chose; an inline embed appears
+    where you put the snippet.
+  </Step>
+</Steps>
+
+## The raw iframe
+
+On the **Team** plan each embed card also has an
+**Advanced — raw &lt;iframe&gt; (full control)** section. Use it when the widget
+does not fit — you are placing the page inside your own grid, sizing it against
+a design system, or your site's builder will not run a script.
+
+The trade-off is that the widget's convenience goes with it: positioning, the
+floating button and the theme options are all things the widget does for you and
+the iframe leaves to you.
+
+## Two things people ask about security
+
+**No patient data goes into an embed.** These are the same public pages a
+visitor reaches by link — a contact form, a shop, a membership signup, a chat
+assistant. None of them show a record, and none of them can be made to.
+
+**The embed runs in an isolated frame that resizes itself.** Your site and the
+embedded page cannot read each other's contents, and the frame grows and shrinks
+to fit the page inside it rather than showing its own scrollbar. You do not need
+to guess a height.
+
+## Plan limits, stated plainly
+
+- **Contact form, Essential** — "The Essential plan lets you drop your contact
+  form right onto your own website. Upgrade to get the embed snippet."
+- **Contact form, Team** — "Upgrade to Team for inline mode, button position,
+  theme, accent, and the raw iframe for full styling control."
+- **Store, Team** — "Embedding your storefront is a Team feature. Upgrade to add
+  it to your website."
+- **Membership page, Team** — the same rule; the hosted link works on every plan.
+
+On every one of these, **the hosted link works on all plans**. Embedding is
+about where the page lives, not whether you have the page. See
+[Change your plan](/platform/plans/change-plan).
+
+## Check it worked
+
+- Load your site in a private browser window, signed out of ClinikEHR.
+- The button or the inline block appears where you expected.
+- Submit a test enquiry, or start a test order, and confirm it arrives in
+  ClinikEHR — see [Contacts](/clinic/front-desk/contacts) or
+  [Your store](/clinic/revenue/store).
+- Check it on a phone. The frame resizes itself, but your own page's layout
+  around it might not.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Nothing appears on my site">
+    Three usual causes: the snippet went into the page's head instead of just
+    before `</body>`; your website builder stripped the script tag from a rich
+    text block, which most of them do; or the page was not published after you
+    pasted. Use the builder's dedicated custom-code or footer-script field.
+  </Accordion>
+
+  <Accordion title="It shows my old branding or old fields">
+    The embed reads saved settings. Save the settings tab, then hard-refresh your
+    site. The card warns you about this when you have unsaved changes.
+  </Accordion>
+
+  <Accordion title="I only see an upgrade message where the snippet should be">
+    Your plan does not include that embed. The contact form needs Essential; the
+    store and membership page need Team.
+  </Accordion>
+
+  <Accordion title="The style options are not there">
+    Style, position, button text and theme are Team-plan options. On Essential
+    the contact form embeds with defaults.
+  </Accordion>
+
+  <Accordion title="The embed is cut off or has its own scrollbar">
+    The frame sizes itself, so this is nearly always a fixed height or an
+    `overflow` rule in your own site's CSS around the container. Remove the fixed
+    height. If you need to control the box precisely, use the raw iframe instead.
+  </Accordion>
+
+  <Accordion title="Can I embed the booking page?">
+    No — booking is a linked page, not an embedded one. Give it a
+    [custom domain](/platform/settings/custom-domain) and link to it.
+  </Accordion>
+
+  <Accordion title="Can I embed the patient portal?">
+    No. The portal is where patients see their own records and is only ever
+    reached by signing in at its own address.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Use your own domain" icon="globe" href="/platform/settings/custom-domain">
+    Serving a whole page on an address you own.
+  </Card>
+  <Card title="Brand your public pages" icon="palette" href="/platform/settings/branding">
+    Making the embedded page look like your site.
+  </Card>
+  <Card title="Contacts" icon="address-book" href="/clinic/front-desk/contacts">
+    Where enquiries from the embedded form arrive.
+  </Card>
+  <Card title="AI agents" icon="robot" href="/platform/ai/agents">
+    Publishing an assistant, and embedding its chat.
+  </Card>
+</Columns>
+
+<StillStuck topic="an embed that will not appear" />
+
+<!-- source of truth: components/clinic/dashboard/settings/crm-intake-form-settings.tsx, store-page-settings.tsx, membership-page-settings.tsx; components/clinic/agents/agent-ui-settings.tsx -->

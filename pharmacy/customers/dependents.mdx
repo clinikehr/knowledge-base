@@ -1,0 +1,146 @@
+---
+title: "Who may collect on someone's behalf"
+description: "Record the family members and errand runners allowed to pick up for a customer, so your counter can check in one glance."
+icon: "user-group"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+
+Someone is at the counter collecting for a regular customer. Is that expected?
+The **People** tab on a customer's profile is the answer: a short list of who
+that customer has said may pick up for them, with the relationship and anything
+your counter should check.
+
+<Path steps={['Sidebar', 'Customers', 'a customer', 'People']} />
+
+<TaskHeader
+  before="A registered customer"
+  time="Under a minute per person"
+  after="A named list your counter can check before handing anything over"
+/>
+
+## Add someone who may collect
+
+<Steps>
+  <Step title="Open the People tab">
+    Find the customer under **Customers**, open their profile, and select
+    **People**. An empty list reads **No dependents** — "Add a family member or
+    errand runner allowed to collect."
+  </Step>
+
+  <Step title="Select Add someone who may collect">
+    The **Add dependent** dialog opens — "Someone allowed to collect products on
+    this customer's behalf."
+  </Step>
+
+  <Step title="Enter who they are">
+    **Full name** is the only required field; without it you get **"A dependent
+    needs a name."**
+
+    **Phone** is optional but worth having — it is what lets your counter ring
+    the customer's contact rather than the customer themself when something is
+    unclear.
+  </Step>
+
+  <Step title="Say how they are connected">
+    **Relationship** takes a free-text description — "e.g. Daughter, Driver".
+    Write what your staff would actually say out loud, because this is the line
+    they read at the counter.
+  </Step>
+
+  <Step title="Add anything the counter should check">
+    **Notes** — "Anything the counter should check". This is the field that
+    earns the feature its keep: "collects the monthly repeat only", "must show
+    her own ID", "not authorised for controlled items".
+  </Step>
+
+  <Step title="Save">
+    Select **Save**. You get **"Dependent added"**, and the person appears in the
+    list with their relationship and phone.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- The **People** tab lists the person, with their relationship and phone
+  underneath the name.
+- If the dependent is themselves a registered customer, their row carries an
+  **Own profile** badge naming that record.
+- **Edit** on the row reopens the same dialog for changes.
+
+## Deactivate — do not delete
+
+When someone should no longer collect, open their row and select
+**Deactivate**. Confirm on the **Deactivate dependent** dialog, which spells out
+what happens:
+
+> {Name} will no longer be listed as allowed to collect. The record is kept, so
+> who was authorised and when can still be answered.
+
+That last sentence is the whole reason deactivation exists. If a collection is
+ever questioned — the wrong person picked up, a family disagreement, a supply
+query — the useful answer is *who was on the list at the time*, and a deleted
+record cannot give it. A deactivated person stays visible, dimmed, with an
+**Inactive** badge, and can be reactivated by editing them again.
+
+## Using the list at the counter
+
+Dependents are a **record, not a rule**. Nothing in the till blocks a sale to
+someone who is not on the list — the judgement stays with your staff, which is
+where it belongs. What the list gives them is a fast, unambiguous check instead
+of a phone call:
+
+<Steps>
+  <Step title="Find the customer">
+    Search **Customers** by name or phone. See
+    [Customer records](/pharmacy/customers/index).
+  </Step>
+  <Step title="Open People">
+    Read the name, the relationship and the notes.
+  </Step>
+  <Step title="Hand over, or don't">
+    An **Inactive** badge means this person was authorised once and is not now.
+    Treat it as a "no", not as an out-of-date entry.
+  </Step>
+</Steps>
+
+<Note>
+  A dependent is not a login. They cannot see the customer's records, and adding
+  them grants no access to anything — it only records that the customer said
+  they may collect.
+</Note>
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'A dependent needs a name.'">
+    **Full name** is required. Everything else on the dialog is optional.
+  </Accordion>
+
+  <Accordion title="I cannot find the Deactivate button">
+    It shows only on someone who is currently active. A person already
+    deactivated carries an **Inactive** badge instead; edit them and save to put
+    them back on the list.
+  </Accordion>
+
+  <Accordion title="The dependent also shops with us in their own right">
+    That is fine — they can have their own customer record as well. Where the
+    two are linked, the dependent's row shows an **Own profile** badge. Their own
+    purchases, debts and money on account stay entirely separate from the
+    customer they collect for.
+  </Accordion>
+
+  <Accordion title="I cannot open the Customers screen at all">
+    A cashier reaches only **POS** and **Sales**. Ask an owner or manager to
+    check your role — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="dependents" />
+
+<!-- source of truth: components/clinic/customers-management/dependent-sheet.tsx, customer-commerce-tabs.tsx (dependents panel) -->

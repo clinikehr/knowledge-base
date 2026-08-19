@@ -1,0 +1,164 @@
+---
+title: "Brand your public pages"
+description: "Where each public surface is branded, what you can change on it, and the image sizes that come out looking right."
+icon: "palette"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'lims']} plans="Varies by surface" roles="Owner" />
+
+Every public page you publish is branded on its **own** settings tab, not in one
+central place. That is the thing worth knowing before you go looking — there is
+no single "Branding" screen, and the tab you want is the tab for the page you
+are branding.
+
+## Where each surface is branded
+
+| Public surface | Branded at |
+|---|---|
+| The patient portal | <Path steps={['Settings', 'Client Portal', 'Branding']} /> |
+| Your booking page | <Path steps={['Settings', 'Booking Page Designer', 'Design']} /> |
+| Your store | <Path steps={['Settings', 'Store Page']} /> |
+| Your membership page | <Path steps={['Settings', 'Membership Page']} /> |
+| Your contact form | <Path steps={['Settings', 'Contact Form']} /> |
+| Lab reports (Diagnostics) | <Path steps={['Settings', 'Lab Workflow', 'Report Branding']} /> |
+
+**Store Page**, **Membership Page**, **Contact Form** and **Booking Page
+Designer** are Clinic & Hospital only. **Client Portal** is on Clinic & Hospital
+and Diagnostics. **Lab Workflow** is Diagnostics only. See
+[Settings: what's where](/platform/settings/overview) if a tab is missing.
+
+## What you can change
+
+The controls differ a little from page to page, but the vocabulary is shared.
+
+| Control | Typical use |
+|---|---|
+| **Logo** | Header of the page and of the emails it sends |
+| **Banner** / **Hero image** | Full-width image across the top |
+| **Favicon** | The browser tab icon |
+| **Primary Theme**, **Secondary**, **Accent Details** | The colour palette |
+| **Headline**, **Subheadline**, **Intro** | The copy a visitor reads first |
+| **Welcome Message** / **Footer note** | Framing text at the top or bottom |
+| **Success title**, **Success message** | What a visitor sees after they book, buy or submit |
+| **URL Slug** | The web address the page is published at |
+
+Most surfaces also let you hide an element rather than delete it — the portal's
+logo and banner each have their own visibility switch, so you can drop the
+banner for a season without losing the file.
+
+## Image sizes that come out right
+
+The uploader accepts **JPEG, PNG, WebP and GIF, up to 5 MB**. Within that:
+
+- **Logo** — square. It is displayed in a square frame, so a wide logo is
+  cropped or letterboxed.
+- **Banner or hero** — wide. Around **1920 × 480** is the recommendation the
+  uploader itself gives.
+- **Favicon** — **32 × 32** (64 × 64 also works). Anything larger is scaled down
+  to a size where detail disappears, so a simplified mark beats a full logo here.
+
+A photograph straight off a phone is usually several times the 5 MB limit.
+Export it at the size above before uploading rather than trying the original.
+
+## What comes from your business profile instead
+
+Your **name**, **address**, **phone number** and **email** are not set per page.
+They come from **Settings → General** and flow onto documents and public pages
+from there — see [Your business profile](/platform/settings/business-profile).
+Your **Clinic Logo** on that tab is the default used on prescriptions and
+invoices, and on any public page where you have not uploaded a page-specific
+one.
+
+So if the wrong address is on your store page, fix it on **General**, not on
+**Store Page**.
+
+## Lab report branding is different
+
+**Report Branding** on the Diagnostics **Lab Workflow** tab is not a colour
+picker. It sets the parts of a report that carry professional weight:
+
+- **Lab Director Name** and **Title / Credentials** — the signature block.
+- **HHS NLCP Certification Number** — optional, and rendered in the report header
+  for federally regulated tests.
+- **Disclaimer Override** and footer text.
+
+The letterhead itself — your name, address and logo — comes from your business
+profile. See [Lab reports](/lims/lab/reports).
+
+## Check it worked
+
+- Open the page's public link in a private browser window, signed out. That is
+  the only honest test — a page can look right to you and be unbranded to a
+  visitor.
+- The browser tab shows your favicon and the page name you set.
+- The colours and copy on the live page match the editor's preview.
+- On a phone, the banner is not cropping the part of the image that mattered.
+- If you use a custom domain, load the page on that domain too — see
+  [Use your own domain](/platform/settings/custom-domain).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I changed the branding and the live page still looks old">
+    Save the tab, then reload the public page with a hard refresh. If you edited
+    an embedded version of the page, the editor tells you to save your changes so
+    the embed reflects them — the embed reads the saved settings, not the ones
+    open in your editor.
+  </Accordion>
+
+  <Accordion title="The logo is squashed or cropped">
+    It is displayed in a square frame. Re-export it square, with padding around
+    the mark rather than a wide lockup.
+  </Accordion>
+
+  <Accordion title="The upload is refused">
+    The uploader takes JPEG, PNG, WebP and GIF up to 5 MB. An SVG, a PDF or a
+    full-resolution camera photo will not go in. Export a smaller PNG.
+  </Accordion>
+
+  <Accordion title="The favicon is a blurry smudge">
+    It is being displayed at 32 × 32 whatever you upload. Use a simplified mark —
+    a monogram or a single icon — not the full logo.
+  </Accordion>
+
+  <Accordion title="The address on my public page is wrong">
+    That comes from **Settings → General**, not from the page's own tab. See
+    [Your business profile](/platform/settings/business-profile).
+  </Accordion>
+
+  <Accordion title="The fields are read-only">
+    Branding is owner-only on most surfaces. See
+    [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="The URL slug says it is taken">
+    Slugs are unique across ClinikEHR. Pick another — lowercase letters, numbers
+    and hyphens only — and watch the availability indicator beside the field
+    before you save.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Portal branding" icon="hospital-user" href="/portal/setup/branding">
+    The patient portal's own branding, in detail.
+  </Card>
+  <Card title="Your booking page" icon="calendar-check" href="/clinic/front-desk/booking-page">
+    Designing and publishing the page patients book on.
+  </Card>
+  <Card title="Use your own domain" icon="globe" href="/platform/settings/custom-domain">
+    Serving these pages on an address you own.
+  </Card>
+  <Card title="Embed on your website" icon="code" href="/platform/integrations/embeds">
+    Putting the contact form, store or membership signup on your own site.
+  </Card>
+</Columns>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/dashboard/settings/client-portal-settings.tsx, store-page-settings.tsx, membership-page-settings.tsx, crm-intake-form-settings.tsx, lab-report-branding-settings.tsx, image-uploader.tsx; components/clinic/appointment/page-designer/design-tab.tsx -->

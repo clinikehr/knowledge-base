@@ -1,0 +1,131 @@
+---
+title: "Produce and release a report"
+description: "Turn a completed test into a report, download it, and release it to the requesting doctor without letting a draft look final."
+icon: "file-lines"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans. Releasing to a referring doctor through the referrer portal is a Business feature." roles="Anyone who can view the test can download its report. Releasing to a referrer needs “release a report to a referrer”." />
+
+A report is the document that leaves the building. It is produced from a
+completed test, so the work of getting it right happens on
+[Enter and verify results](/lims/lab/results) — this page covers producing it,
+finding it later, and getting it to whoever asked for the test.
+
+<Path steps={['Sidebar', 'Lab Reports']} />
+
+<TaskHeader
+  before="A test in Completed status"
+  time="Under a minute"
+  after="A downloaded report, and a referrer who has it"
+/>
+
+## Produce the report
+
+<Steps>
+  <Step title="Open the completed test">
+    From **Test Requests** or the **Lab Station** test list, open the test in
+    view mode. A test that is not yet **Completed** has nothing final to print.
+  </Step>
+
+  <Step title="Download it">
+    Select **Download report**. The button reads **Preparing…** while the
+    document is built, then the file arrives. The report is assembled from the
+    saved record — your lab's details, the patient, each analyte with its
+    reference range, and the verifying scientist's credentials.
+  </Step>
+
+  <Step title="Print or send it">
+    **Print Report** prints the clinical report. **Print Receipt** is the money
+    slip and is a different document — do not hand one out in place of the
+    other.
+  </Step>
+</Steps>
+
+<Warning>
+  A report produced before the test is signed out is stamped as preliminary. Do
+  not remove that stamp, screenshot around it, or pass a preliminary result on
+  as a final one — a draft must never leave the building looking final. Verify
+  the test first, then produce the report.
+</Warning>
+
+## The Lab Reports page
+
+**Lab Reports** is where reports are found afterwards. It has a period select
+and four tabs — **Overview**, **Lab Reports**, **Analytics** and **Documents**.
+
+The stat cards read **Total Tests**, **Pending Tests**, **Completed** and
+**Critical Results**, over cards for **Test Volume Trends**, **Status
+Distribution** and **Recent Lab Reports**.
+
+The **Lab Test Reports** table has **Search reports…** and a status filter of
+**Pending**, **Completed** or **Cancelled**. When the period holds nothing you
+get **No lab reports found for this period** — widen the period before you
+conclude a report is missing.
+
+## Releasing to a referring doctor
+
+A doctor who sent you the patient sees results through the referrer portal, and
+putting a report in front of them is its own grant: "release a report to a
+referrer". The **Referrer Liaison** admin role exists for exactly this work and
+carries portal access, report release and turnaround-time analytics together.
+
+Set the doctor up first — see
+[Referring doctors](/lims/business/referrers) — and, if you pay for referrals,
+[Referral commissions](/lims/business/commissions).
+
+<AuditNote action="Downloading or releasing a report" />
+
+## Check it worked
+
+- The downloaded file opens as a report, not a short error file. If it is tiny
+  and unreadable, the download did not complete — try again.
+- The report carries no preliminary stamp.
+- The test appears under **Recent Lab Reports** on the **Overview** tab.
+- The referring doctor can see it in their portal.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The report says preliminary">
+    The test is not signed out. Complete and verify it — see
+    [Enter and verify results](/lims/lab/results) — then produce the report
+    again.
+  </Accordion>
+
+  <Accordion title="No credentials appear under the signature">
+    The verifying scientist has no licence recorded on their profile. Ask them
+    to add it under their account, then reproduce the report — see
+    [Your profile](/platform/account/profile).
+  </Accordion>
+
+  <Accordion title="The download produced a tiny unreadable file">
+    That is a failed download rather than a report. Retry it; if it keeps
+    happening on one test, note the test and
+    [contact support](/platform/help/contact-support).
+  </Accordion>
+
+  <Accordion title="No lab reports found for this period">
+    The period select filters everything on the page. Widen it, and clear the
+    status filter, before assuming the report is gone.
+  </Accordion>
+
+  <Accordion title="I cannot release to the referrer">
+    You do not hold "release a report to a referrer". An owner or manager can
+    grant it, or assign the **Referrer Liaison** role — see
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="This is a DOT report">
+    Regulated drug-testing reports have their own release path, including the
+    MRO and employer steps. See [DOT reports](/lims/dot/reports).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a lab report" />
+
+<!-- source of truth: components/clinic/dashboard/lab-station/reports/, components/clinic/dashboard/lab-station/lab-report/, components/clinic/lab-referrers/ -->

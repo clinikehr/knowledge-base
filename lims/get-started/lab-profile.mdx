@@ -1,0 +1,131 @@
+---
+title: "Complete your lab profile"
+description: "Fill in your lab's name, address, phone, email, logo and timezone — the details that print on every report you release."
+icon: "hospital"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager" />
+
+Step 6 of the [setup checklist](/lims/get-started) — "Add your lab address,
+phone number, and email so patients can reach you." This is not admin
+housekeeping: your address and phone number are printed on every report that
+leaves the lab, and a referring doctor with a query calls the number on that
+page.
+
+<Path steps={['Settings', 'General Settings']} />
+
+<TaskHeader
+  before="Your lab's registered address, a phone number someone answers, and a logo file"
+  time="~3 minutes"
+  after="Reports and invoices that carry your lab's identity, and a ticked checklist step"
+/>
+
+<Note>
+  The fields on this screen are labelled **Clinic Name**, **Clinic Logo** and
+  **Clinic Description** in every edition. On a Diagnostics workspace they mean
+  your lab — enter your lab's details into them.
+</Note>
+
+## Fill in the profile
+
+<Steps>
+  <Step title="Open General Settings">
+    Go to **Settings › General Settings** — "Clinic profile and basic info". The
+    card is headed **General Information**, "Your clinic's basic information and
+    regional preferences."
+  </Step>
+
+  <Step title="Upload your logo">
+    Under **Clinic Branding**, upload a **Clinic Logo** — "Used on
+    prescriptions, invoices, and general clinic branding." Use the file your
+    letterhead uses, at a size that stays readable when printed small.
+  </Step>
+
+  <Step title="Enter the name people should see">
+    **Clinic Name** is the name that appears on reports and invoices. Enter your
+    registered lab name, not an abbreviation the bench uses.
+  </Step>
+
+  <Step title="Set the timezone">
+    **Timezone** — "Used for scheduling and appointment reminders." Set it to
+    where the lab physically is. Get this wrong and collection slots, received
+    times and every turnaround figure shift by hours.
+  </Step>
+
+  <Step title="Enter address, phone and email">
+    Fill in **Address**, **Phone Number** and **Email Address**. Those three,
+    plus the name, are what the checklist step checks for. Use a phone number
+    and an inbox that are monitored during opening hours — a referrer chasing a
+    critical result uses whatever is on the report.
+  </Step>
+
+  <Step title="Add the optional detail">
+    **Website** and **Clinic Description** are optional. The description "may be
+    shown on your public booking page", so write it for a patient booking a
+    collection slot, not for a regulator.
+  </Step>
+
+  <Step title="Save">
+    Select **Save Changes**. The toast reads **Clinic settings updated
+    successfully**.
+  </Step>
+</Steps>
+
+## While you are in Settings
+
+Two more settings shape how the lab runs, and both are worth setting now rather
+than after your first busy morning:
+
+- **Settings › Lab Workflow** — "Clinical, DOT/SAMHSA or intake-only mode". This
+  decides whether your sidebar carries **DOT Testing** or **Lab Intake**, and
+  which forms the bench sees. See
+  [Lab intake mode](/lims/dot/lab-intake-mode).
+- **Currency** lives in your billing settings and defaults to NGN for a
+  Diagnostics workspace. Every price, invoice and receipt follows it — see
+  [Currency](/platform/settings/currency).
+
+## Check it worked
+
+- **General Settings** shows your saved values after a refresh.
+- A report produced from a completed test carries your lab name, logo, address
+  and phone — see [Produce and release a report](/lims/lab/reports).
+- The floating **Setup** checklist ticks **Complete your lab profile**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The step will not tick">
+    It needs the name, address, phone number and email all filled. An empty
+    field, or one holding a placeholder like "TBC", leaves it incomplete.
+  </Accordion>
+
+  <Accordion title="My old details are still on a report">
+    Reports are built when they are produced. Produce the report again after
+    saving; documents generated earlier keep the details they were made with.
+  </Accordion>
+
+  <Accordion title="The logo prints blurry or crops oddly">
+    Upload a larger, square-ish version. A wide letterhead strip loses its edges
+    when scaled into a report header.
+  </Accordion>
+
+  <Accordion title="Times are hours out across the product">
+    That is the **Timezone** field. Set it to the lab's own timezone and check
+    a recent received time afterwards — see
+    [Turnaround time](/lims/lab/turnaround-time).
+  </Accordion>
+
+  <Accordion title="I cannot edit these fields">
+    General settings are owner and manager territory. See
+    [Roles](/platform/team/roles).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="your lab profile" />
+
+<!-- source of truth: components/clinic/dashboard/settings/general-settings.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, lib/settings-tabs.ts, lib/onboarding-steps.ts (lims, step `profile`) -->

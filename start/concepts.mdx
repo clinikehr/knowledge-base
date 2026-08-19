@@ -1,0 +1,136 @@
+---
+title: "How ClinikEHR is organised"
+description: "The handful of ideas everything else is built on — workspaces, editions, plans, the people you serve, staff and care areas."
+icon: "sitemap"
+---
+
+Almost every question about ClinikEHR — "why can't I see that screen?", "who
+gets billed for this?", "why is it called a customer here and a patient
+there?" — comes back to six ideas. Learn them once and the rest of the product
+stops surprising you.
+
+## The workspace is the unit of everything
+
+A **workspace** is one business: one clinic, one pharmacy, one diagnostic
+centre. It owns its own patients, staff, stock, appointments, settings,
+subscription and audit trail, and none of that is visible from any other
+workspace.
+
+Your login is not a workspace. One account can belong to several workspaces —
+as an owner of one and a nurse in another — and you move between them with the
+switcher in the header. See
+[Work across more than one workspace](/platform/account/switching-workspaces).
+
+<Note>
+  The product calls a workspace by the name your edition uses: **clinic**,
+  **pharmacy** or **lab / diagnostic centre**. This help centre says
+  "workspace" only on shared pages that must cover all three.
+</Note>
+
+## Edition decides which modules exist
+
+An **edition** is the kind of business you are. It is set when the workspace is
+created and it decides which modules exist at all — a pharmacy has no ward
+screen, a diagnostic centre has no consultation screen, and no amount of
+upgrading adds one.
+
+There are three: Clinic & Hospital, Pharmacy and Diagnostics. See
+[The three editions](/start/editions).
+
+## Plan decides which features are unlocked
+
+A **plan** is what you pay for inside your edition. It controls capabilities
+(telehealth, insurance claims, analytics, quality control) and capacity (how
+many staff seats, how many branches). Every edition has its own plan ladder,
+and changing plan never changes your edition.
+
+| | Sets | Changes how? |
+|---|---|---|
+| Edition | Which modules exist | Support-side only, not a setting |
+| Plan | Which features are unlocked, and capacity | Any time, by an owner |
+
+See [Plans and billing](/platform/plans/overview) and
+[Change your plan](/platform/plans/change-plan).
+
+## The people you serve have three names
+
+The product deliberately uses a different noun per edition, so this help centre
+does too. If the word on this page is not the word on your screen, you are
+reading the wrong section.
+
+| Edition | What they are called | Where they live |
+|---|---|---|
+| Clinic & Hospital, enterprise plan | **Patients** | Front Desk and Records |
+| Clinic & Hospital, solo and team plans | **Clients** | The **Clients** module |
+| Pharmacy | **Customers** | The **Customers** module |
+| Diagnostics | **Patients** | Intake and the worklist |
+
+They are the same kind of record underneath. A pharmacy customer additionally
+carries a wallet balance and dependants, because a till needs those; a
+diagnostics patient carries samples and results.
+
+## Staff, roles and permissions
+
+Everyone who signs in to a workspace holds a **role** there — the top three
+being **owner**, **manager** and **staff** — plus a **job title** (Doctor,
+Pharmacist, Receptionist, Cashier, Records Officer, and around sixty others)
+that shapes their avatar, their credentials and where they land after sign-in.
+
+On top of that, individual **permissions** decide what one specific person may
+do: refund a sale, discount an invoice, void a payment, sign off a result. Two
+people can share a job title and still have different permissions.
+
+Seats are counted per workspace, and they behave differently by edition — on
+Clinic & Hospital every billable seat is charged, on Pharmacy and Diagnostics
+the seats are included and the cap simply blocks the next invite. See
+[Staff seats](/platform/plans/seats),
+[Roles](/platform/team/roles) and
+[Permissions](/platform/team/permissions).
+
+## Care areas, on hospitals only
+
+An enterprise Clinic & Hospital workspace also declares which departments it
+actually runs — **In-patient care**, **Surgical theatre**, **In-house
+pharmacy**, **Diagnostics**, **Front desk**, **Records**, **Insurance** and
+**Inventory**. A hospital with no operating theatre never sees a Theatre group
+in its sidebar.
+
+Care areas are a statement of fact about your building, not a purchase and not
+a permission. See [Care areas](/platform/team/care-areas).
+
+## What is yours, and what belongs to the workspace
+
+This is the distinction people get wrong most often, because both are reached
+from the same header.
+
+| Yours, across every workspace | The workspace's, and different in each |
+|---|---|
+| Your name, avatar and contact details | Business name, address and branding |
+| Your professional credentials and licences | Currency, timezone and opening hours |
+| Your password, passkeys and two-factor | Which staff exist, and what they may do |
+| **Product & account emails**, **Marketing Emails**, **Login Notifications** | The clinic's own notification categories |
+| Your theme (light, dark or system) | The subscription, invoices and payment method |
+
+Change the left column once in
+[your account settings](/platform/account/profile). Change the right column per
+workspace in [Settings](/platform/settings/overview) — and remember that
+turning something off in one workspace leaves the others untouched.
+
+## Where to go next
+
+<Columns cols={2}>
+  <Card title="A tour of your workspace" icon="compass" href="/start/tour">
+    The header, the sidebar, search, Quick Add and the notification bell.
+  </Card>
+  <Card title="Who can see and do what" icon="user-lock" href="/start/roles-and-access">
+    Why a screen is missing, and which of the four gates is responsible.
+  </Card>
+  <Card title="Glossary" icon="book" href="/start/glossary">
+    Every term the product uses, defined once.
+  </Card>
+  <Card title="The three editions" icon="layer-group" href="/start/editions">
+    Which edition you are running, and what each one includes.
+  </Card>
+</Columns>
+
+<!-- source of truth: lib/edition.ts (EDITION_VOCAB, staffSeatEnforcement), lib/roles.ts, types/clinic.ts (CareAreaKey), lib/clinic-nav.ts (DEFAULT_CARE_AREAS), components/clinic/dashboard/settings/facility-settings.tsx -->

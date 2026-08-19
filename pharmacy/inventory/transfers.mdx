@@ -1,0 +1,166 @@
+---
+title: "Transfer stock between branches"
+description: "Dispatch stock from one pharmacy branch to another and receive it at the far end — and tell a branch apart from a stock location."
+icon: "truck-ramp-box"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="Plans that include branch transfers" roles="Staff with the transfer stock between branches permission" />
+
+**Branch transfers** moves stock from this pharmacy to another pharmacy you own
+— "Move stock between your pharmacy branches." The sending branch loses the
+stock on dispatch; the receiving branch gains it when someone there confirms it
+arrived.
+
+<Path steps={['Sidebar', 'Transfers']} />
+
+<TaskHeader
+  before="A second pharmacy branch under the same owner, and stock on hand to send"
+  time="2 minutes to dispatch, a moment to receive"
+  after="Stock out of this branch, in transit, and on the other branch's shelves once confirmed"
+/>
+
+## A branch is not a location — read this first
+
+This is the single thing that catches people out, because the product uses the
+word **Transfer** for two different moves.
+
+| | **Transfer** on the Inventory toolbar | **Transfer to branch** on this screen |
+|---|---|---|
+| What it moves between | Two rooms, shelves or fridges **inside this branch** | Two separate pharmacy branches |
+| Where the stock ends up | Still yours, still on this screen | On a different branch's stock ledger |
+| Who confirms it | Nobody — it is immediate | Someone at the receiving branch |
+| Where you find it | **Inventory** toolbar | **Transfers** in the sidebar |
+
+A **branch** is a whole separate pharmacy workspace under the same owner, with
+its own staff, its own till and its own stock. Adding a fridge or a back room is
+**not** a branch — that is a location, created on **Inventory** ›
+**Locations**.
+
+If you run one pharmacy, this screen tells you so: "You have no other pharmacy
+branches to transfer to.", and **Transfer to branch** is disabled. That is not a
+fault, and it is not fixed by adding a location. Everything you need is the
+Inventory toolbar's **Transfer** — see
+[Stock control](/pharmacy/inventory/index).
+
+## Dispatch a transfer
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **Transfer to branch**. The dialog states what is about to happen:
+    "Stock is drawn from this branch now and lands when the receiving branch
+    confirms receipt."
+  </Step>
+
+  <Step title="Choose where it is going">
+    **Destination branch** — "Choose a branch…". Only branches under the same
+    owner are listed.
+  </Step>
+
+  <Step title="Add the items">
+    Under **Add items**, search — "Search medications…" — and add each product
+    with the quantity you are sending. You cannot send more than this branch
+    holds.
+  </Step>
+
+  <Step title="Say why, if it matters">
+    **Notes (optional)** — "e.g. urgent restock" — is read by whoever receives
+    it at the other end. Use it for anything they need to act on, such as a
+    short-dated lot to sell first.
+  </Step>
+
+  <Step title="Dispatch">
+    Select **Dispatch**. The button reads **Dispatching…** while it saves, then
+    a toast confirms the transfer number and its state — for example
+    **"Transfer TRF-1042 dispatched — now in transit"**.
+  </Step>
+</Steps>
+
+<Warning>
+  Dispatching removes the stock from this branch immediately, and it stays **In
+  transit** — on nobody's sellable shelf — until the receiving branch confirms
+  it. A transfer nobody receives is stock you cannot sell at either end. Tell
+  the far branch it is coming.
+</Warning>
+
+## Receive a transfer
+
+At the receiving branch, **Incoming transfers** — "Stock dispatched to this
+branch, awaiting receipt." — lists everything on its way.
+
+<Steps>
+  <Step title="Find the transfer">
+    Open **Transfers** at the receiving branch. If there is nothing to collect
+    the card reads "Nothing incoming."
+  </Step>
+
+  <Step title="Check the goods against the lines">
+    Match what is physically in the box against the lines on the transfer before
+    confirming. Confirming is what puts the stock on your shelf in the system.
+  </Step>
+
+  <Step title="Receive it">
+    Select **Receive**. The button reads **Receiving…**, then a toast confirms
+    how many lines landed — for example **"Received 4 line(s) into stock"**.
+  </Step>
+</Steps>
+
+## Check it worked
+
+- At the sending branch, the transfer appears under **Sent transfers** marked
+  **In transit**, and the quantities have left the **Stock** tab. An empty card
+  reads "No transfers sent yet."
+- At the receiving branch, the lines appear on the **Stock** tab after
+  receiving, with a movement on the **Ledger** tab.
+- Once received, the transfer no longer sits in **Incoming transfers**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'You have no other pharmacy branches to transfer to.'">
+    This owner has only one pharmacy workspace. A second **location** does not
+    create a branch. Use the Inventory toolbar's **Transfer** for room-to-room
+    moves, or [contact support](/platform/help/contact-support) about opening a
+    second branch.
+  </Accordion>
+
+  <Accordion title="'Choose a destination branch.'">
+    Nothing is selected in **Destination branch**. The dispatch is refused
+    before any stock moves.
+  </Accordion>
+
+  <Accordion title="'Add at least one item.'">
+    The transfer has no lines, or every line has a quantity of zero.
+  </Accordion>
+
+  <Accordion title="Transfer to branch is disabled and I do have other branches">
+    Either your plan does not include branch transfers, or you do not hold the
+    "transfer stock between branches" permission. See
+    [Change your plan](/platform/plans/change-plan) and
+    [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The stock left but never arrived">
+    It is still **In transit**. Somebody at the receiving branch has to select
+    **Receive**. Until they do, it belongs to neither shelf.
+  </Accordion>
+
+  <Accordion title="I sent it to the wrong branch">
+    Have the receiving branch confirm it, then dispatch it onward from there.
+    Do not adjust stock at either end to compensate — that leaves two false
+    entries in the ledger instead of one honest pair of transfers.
+  </Accordion>
+
+  <Accordion title="The search cannot find a product I know we stock">
+    The search reads this branch's catalogue and stock. A product held only at
+    the other branch is not sendable from here.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a branch transfer" />
+
+<!-- source of truth: components/clinic/dashboard/pharmacy-station/transfers/branch-transfers-content.tsx, components/inventory/stock-movement-sheet.tsx -->

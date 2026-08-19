@@ -1,0 +1,198 @@
+---
+title: "Connect an external calendar"
+description: "Bring commitments from Google, Outlook, Apple or a therapy network into ClinikEHR so your availability accounts for them."
+icon: "calendar-days"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager to add a subscription; any staff member for their own account" />
+
+If a provider's real commitments live in Google, Outlook or a therapy network,
+ClinikEHR needs to know about them — otherwise your booking page happily offers
+a slot that is already gone. Connecting a calendar brings those events **into**
+ClinikEHR so availability is calculated against them.
+
+<Path steps={['Sidebar', 'Settings', 'Calendar Integrations']} />
+
+<TaskHeader
+  before="The calendar you want to bring in, and the ability to get a link or sign in to it"
+  time="5 minutes per calendar"
+  after="External commitments visible on your clinic calendar, and slots protected from double booking"
+/>
+
+## Two ways in, and they are not the same
+
+The tab has two sections, and picking the right one saves a lot of confusion.
+
+| | **Connected Accounts** | **Calendar Subscriptions (read-only)** |
+|---|---|---|
+| How you connect | Sign in to Google or Outlook | Paste a secret `.ics` link |
+| Direction | Two-way | One-way, into ClinikEHR only |
+| Who sets it up | Each staff member connects **their own** account | An owner or manager, for any calendar |
+| Good for | A provider's own working calendar | Apple calendars, and platforms like **Headway, Alma, Rula or Grow Therapy** |
+
+A subscription is read-only in the strictest sense: ClinikEHR reads those
+calendars and **never writes back to them**. Nothing you do in ClinikEHR appears
+on the subscribed calendar.
+
+## Subscribe to a calendar
+
+<Steps>
+  <Step title="Get the secret .ics link from your calendar">
+    The tab's **How to connect a calendar** panel gives the path for each
+    provider. In short: Google — Settings → your calendar → "Integrate calendar"
+    → the *Secret address in iCal format*. Outlook / Microsoft 365 — Settings →
+    Calendar → Shared calendars → *Publish a calendar* → the *ICS* link. Apple
+    iCloud — make the calendar public and copy the shared link. Headway, Alma,
+    Rula and Grow Therapy — enable calendar export in your account settings and
+    copy the personal iCal feed URL.
+  </Step>
+
+  <Step title="Select Add calendar">
+    A sheet opens with a **Calendar URL** field.
+  </Step>
+
+  <Step title="Paste the link and select Test connection">
+    You get a preview before you commit anything: the calendar's name, how many
+    upcoming events it holds, a sample of them, how many are recurring series,
+    and how many all-day events will be skipped. If the preview is empty or wrong,
+    you have the wrong link.
+  </Step>
+
+  <Step title="Name it and assign it">
+    Give it a **Display name** you will recognise in a list. **Assign to staff**
+    is optional but is what ties the calendar to a person's availability. Set the
+    **Default venue** to **In person** or **Online**.
+  </Step>
+
+  <Step title="Choose a Sync frequency">
+    From **Every 15 minutes** through **Hourly** to **Daily**. Pick against how
+    often that calendar actually changes — see the honest note below.
+  </Step>
+
+  <Step title="Select Connect & import">
+    The first sync runs immediately and reports what it found: so many new, so
+    many updated, so many cancelled.
+  </Step>
+</Steps>
+
+## Connect a Google or Outlook account
+
+Under **Connected Accounts**, select **Google** or **Outlook** and sign in. Each
+staff member links their own account — you cannot connect a colleague's calendar
+for them, and trying produces "That calendar can only be connected by its own
+staff member."
+
+Once connected, choose which of that account's calendars to sync. The row shows
+**Connected** with a count of calendars syncing, and gives you **Sync now** and
+a way to disconnect. If the badge turns to **Reconnect**, the permission has
+lapsed at the provider's end — sign in again from that row.
+
+An owner or manager can also set a clinic-wide policy for **how much patient
+identity appears on synced calendars**, on the same tab. Set that before you
+connect anyone.
+
+## What a synced event actually does
+
+This is the part people expect to work differently than it does.
+
+- **A synced event blocks a slot. It does not become a ClinikEHR appointment.**
+  There is no patient, no service and no invoice behind it. It is a hole in the
+  diary.
+- **Whether it blocks at all is a per-calendar switch.** Each row toggles between
+  **Blocks booking** and **Info only**. On **Blocks booking**, events prevent
+  that provider being booked. On **Info only** they are visible but do not
+  protect anything. Get this wrong and you either double-book or block a day for
+  no reason.
+- **All-day events are skipped**, and the preview tells you how many will be. An
+  all-day "Conference" does not close the day; block the day in
+  [Booking Settings](/platform/settings/overview) instead.
+
+## Sync is on a schedule, not instant
+
+Set expectations with your team here. A calendar is fetched on the frequency you
+chose — as often as every 15 minutes, as rarely as daily — so an event added
+elsewhere five minutes ago is very likely not in ClinikEHR yet. Each row shows
+when it last synced and how often it runs, and **Sync now** pulls immediately
+when you need certainty before booking someone in.
+
+If a feed fails repeatedly it is paused automatically, and the tab shows an amber
+banner saying so. Check the URL, then re-enable it.
+
+<Note>
+  Treat a secret `.ics` link like a password. Anyone holding it can read that
+  calendar. Only owners can reveal a stored URL on this tab, and it is masked for
+  everyone else.
+</Note>
+
+## Check it worked
+
+- The feed row shows a **Synced** time and its interval.
+- An event you know about appears on the clinic calendar at the right time.
+- That provider's slots for that period are no longer offered on your
+  [booking page](/clinic/front-desk/booking-page) — check it signed out, as a
+  patient would.
+- The row shows **Blocks booking**, not **Info only**, if you meant it to protect
+  the diary.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Test connection fails or the preview is empty">
+    You almost certainly copied the calendar's public web link rather than its
+    secret `.ics` address. Go back to the provider and take the iCal / ICS link
+    specifically. If it starts `webcal://`, change that to `https://`.
+  </Accordion>
+
+  <Accordion title="Events arrived but slots are still being offered">
+    The feed is set to **Info only**. Select the badge on the row to switch it to
+    **Blocks booking**. Also check the feed is assigned to the right staff member
+    — an unassigned feed has no one's diary to protect.
+  </Accordion>
+
+  <Accordion title="A new event has not come through">
+    Sync runs on the interval you chose. Select **Sync now** on that row for an
+    immediate pull, and shorten the interval if it matters routinely.
+  </Accordion>
+
+  <Accordion title="The feed auto-paused">
+    Repeated sync errors pause a feed rather than retrying forever. The usual
+    cause is a link that was regenerated or revoked at the provider. Get a fresh
+    link, edit the feed, then re-enable it.
+  </Accordion>
+
+  <Accordion title="An all-day event did not block anything">
+    All-day events are skipped on purpose — they are usually labels, not
+    commitments. Block the day in your booking availability instead.
+  </Accordion>
+
+  <Accordion title="I cannot connect a colleague's Google account">
+    Each staff member connects their own. Ask them to open the tab and connect it
+    themselves.
+  </Accordion>
+
+  <Accordion title="An appointment I made in ClinikEHR is not on my Google calendar">
+    A **subscription** is one-way — ClinikEHR reads it and never writes to it. If
+    you want your ClinikEHR appointments to appear in Google or Outlook, use
+    **Connected Accounts** instead, which syncs both ways.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Appointments" icon="calendar-check" href="/clinic/front-desk/appointments">
+    Booking, rescheduling and the clinic calendar.
+  </Card>
+  <Card title="Your booking page" icon="globe" href="/clinic/front-desk/booking-page">
+    The public page whose availability these calendars protect.
+  </Card>
+</Columns>
+
+<StillStuck topic="a calendar that will not sync" />
+
+<!-- source of truth: components/clinic/dashboard/settings/calendar-integrations-settings.tsx (INTERVAL_OPTIONS, FeedRow), connected-calendars-section.tsx, external-calendar-privacy-card.tsx -->

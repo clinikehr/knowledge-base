@@ -1,0 +1,149 @@
+---
+title: "Create your account"
+description: "Sign up for a clinic workspace, verify your email address, and sign in for the first time."
+icon: "user-plus"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="No plan needed to sign up" roles="Anyone — you become the owner of the workspace you create" />
+
+Signing up creates both your personal account and the clinic workspace it owns.
+It is a four-step wizard, and it finishes with an email you must open before you
+can log in.
+
+<Path steps={['clinikehr.com', 'Sign up']} />
+
+<TaskHeader
+  before="A permanent personal or work email address you can open right now"
+  time="3 minutes"
+  after="A verified account and an empty clinic workspace, ready for setup"
+/>
+
+## Fill in the wizard
+
+The progress line under the heading reads **Step {n} of 4**. **Continue** moves
+forward, **Back** returns, and nothing is submitted until the last step.
+
+<Steps>
+  <Step title="Say what brings you here">
+    **What brings you to ClinikEHR?** — "Choose all that fit — we'll shape your
+    setup around them." Select any number of chips: **Clinical notes**,
+    **AI note taker**, **AI Agents**, **AI Automations**, **Telehealth**,
+    **ePrescribing**, **Scheduling**, **Online booking**, **Patient portal**,
+    **Billing & payments**, **Insurance & claims**, **Lab & imaging**,
+    **Pharmacy & inventory**, **Intake forms**, **Reminders**, **Analytics**,
+    **Marketing**, **CRM**, **Membership Plans**, **Online Store**. An
+    **Other…** chip reveals a **Tell us what you're looking for** box.
+
+    Pick at least one — the wizard refuses to continue otherwise ("Pick at least
+    one — it personalises your setup"). What you choose floats the matching
+    setup steps to the top of your checklist afterwards, badged **For you**.
+  </Step>
+
+  <Step title="Create your account">
+    Enter **First name**, **Last name**, **Email** and **Password** (at least 8
+    characters), then tick "I agree to the Business Associate Agreement, Terms
+    of Service, and Privacy Policy."
+
+    Below an **Or** divider there is a Google sign-in option. Using it skips the
+    rest of the wizard and finishes your details on a separate form after you
+    sign in.
+  </Step>
+
+  <Step title="Describe your clinic">
+    **About your clinic** asks for **I am a…** (your role), **The kind of care I
+    provide is…**, **Clinic / practice name**, and **Practice size** — one of
+    **Solo (1–3 providers)**, **Team (4–20 providers)** or **Enterprise (21+
+    providers)**.
+
+    Practice size is the one answer with a lasting effect: it decides whether
+    your workspace opens with the solo/team layout, which calls the people you
+    see **Clients**, or the hospital layout, which calls them **Patients** and
+    groups the sidebar by service line. See
+    [The three editions](/start/editions).
+  </Step>
+
+  <Step title="Add the optional extras and submit">
+    **Almost there** asks how you heard about us, how long you have been
+    practicing, a phone number and a country. Every field on this step is
+    optional.
+
+    Complete the verification challenge, then select **Get started**. The button
+    reads **Creating your workspace…** while it works.
+  </Step>
+</Steps>
+
+## Verify your email
+
+Success looks like **You're all set! 🎉** — "We've sent a verification link to
+{your address}. Verify your email to log in and finish setting up your clinic."
+
+<Warning>
+  Nothing is usable until you open that link. There is no automatic login, and
+  signing in before you have verified will not work. If the mail has not
+  arrived, check your spam folder and wait a minute before trying again.
+</Warning>
+
+Open the link, then select **Log in** and sign in with the email and password
+you just chose.
+
+## Check it worked
+
+You are signed in, and one of two pages is showing:
+
+- **"Let's get your clinic set up"** with a **Start for free** button — the
+  usual landing. Select it to start a 7-day trial with no card. You then arrive
+  on Get Started with the message "You're in! 🎉".
+- The plan comparison page. Also normal, not an error — pick a plan or start the
+  trial from there. See [Choose a plan](/clinic/get-started/choose-plan).
+
+Either way the sidebar now shows **Get Started**, and that is where the
+[eight-step checklist](/clinic/get-started) lives.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="'You already have an account'">
+    The wizard returns you to step 2 with "An account with this email already
+    exists." and a **Log in instead →** link. Use it. If you cannot remember the
+    password, use **Forgot password** on the sign-in page rather than creating a
+    second account with a different address — a second account is a second
+    workspace, and patient data cannot be moved between them.
+  </Accordion>
+
+  <Accordion title="'Please use a permanent personal or work email'">
+    Temporary, disposable and relay or alias addresses are refused: "Temporary
+    or relay/alias email addresses aren't allowed." Use your work address, or a
+    personal one you will still have in a year — it is the address that receives
+    password resets and every clinical notification.
+  </Accordion>
+
+  <Accordion title="The verification email never arrives">
+    Check spam and any quarantine your workplace mail filter runs. Links can
+    take a minute. If it still has not arrived, ask
+    [support](/platform/help/contact-support) to re-send it rather than signing
+    up again — a second signup on the same address returns the "You already have
+    an account" message.
+  </Accordion>
+
+  <Accordion title="The verification challenge will not complete">
+    The challenge on the last step needs to reach Cloudflare. A corporate
+    firewall, a VPN or an aggressive tracker blocker can stop it loading, which
+    leaves **Get started** disabled. Try a different network or a private
+    window.
+  </Accordion>
+
+  <Accordion title="I chose the wrong practice size">
+    Practice size sets the shape of your workspace. It is not a setting you can
+    flip yourself — [contact support](/platform/help/contact-support) and ask
+    for the change rather than starting again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="signing up" />
+
+<!-- source of truth: components/auth/signup-wizard.tsx, lib/edition.ts (EDITION_VOCAB), app/subscription/start-for-free/[clinicId]/page.tsx -->

@@ -1,0 +1,171 @@
+---
+title: "Run quality control"
+description: "Record daily control values, read the Levey-Jennings chart, and act on the Westgard verdict the lab gets back the moment a run is saved."
+icon: "chart-line"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “Review QC runs”. QC Officer holds it by default." />
+
+Record the day's control values against each material and ClinikEHR evaluates
+every run for you. The page says so in its own subtitle: "Record daily controls
+per material; every run is evaluated against Westgard rules (1-3s, 2-2s, R-4s,
+4-1s, 10x — 1-2s warns) the moment it's saved." You enter a number; you get back
+a verdict and a charted point.
+
+<Path steps={['Sidebar', 'Quality Control']} />
+
+<TaskHeader
+  before="A control material, with the target mean and SD from its package insert or your lot validation"
+  time="Under a minute per run"
+  after="A charted run carrying an in-control, warning or rejection verdict"
+/>
+
+## Set up a control material
+
+Do this once per analyte and level. Until you do, the page shows **No control
+materials yet. Add your first control (analyte, target mean and SD from the
+package insert or your lot validation) to start charting.**
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **Add control material**. It opens explaining where the numbers come
+    from: "Target mean and SD come from the package insert or your lot
+    validation — Westgard rules evaluate every run against them."
+  </Step>
+
+  <Step title="Identify the control">
+    Enter an **Analyte code** (for example `GLU`), a **Material name** (for
+    example `Glucose Control`), and pick the **Level** — **Level 1 (normal)**,
+    **Level 2 (abnormal)** or **Level 3 (high)**. Add the **Lot number** so the
+    picker can tell two lots of the same control apart.
+  </Step>
+
+  <Step title="Enter the targets">
+    Fill **Target mean**, **Target SD** and **Unit** (for example `mg/dL`). The
+    SD must be greater than zero — it is what every z-score is measured in.
+  </Step>
+
+  <Step title="Save">
+    Select **Add material**. The toast reads **Control material added** and the
+    control joins the picker as `{code} — {name} (lot {lot})`, with its target
+    and SD shown beside it.
+  </Step>
+</Steps>
+
+## Record a run
+
+<Steps>
+  <Step title="Choose the control">
+    Pick it from **Select control material**. The **Levey-Jennings** chart
+    redraws for that material, with reference bands at the mean and ±1, ±2 and
+    ±3 SD, and the last 30 runs plotted in sequence.
+  </Step>
+
+  <Step title="Enter the measured value">
+    Type the reading into **Measured value**. The field's placeholder is the
+    target mean, so a value far from it is visible before you save.
+  </Step>
+
+  <Step title="Name who ran it">
+    Enter the person in **Technician**. It is the column a reviewer reads first
+    when a run fails.
+  </Step>
+
+  <Step title="Record it">
+    Select **Record run**. ClinikEHR evaluates the run against every Westgard
+    rule as it saves and returns one of three verdicts — you do not apply the
+    rules yourself.
+  </Step>
+</Steps>
+
+## The three verdicts
+
+| You see | Means |
+|---|---|
+| **In control (z {z})** | Nothing tripped. Report patients. |
+| **1-2s warning (z {z}) — inspect before accepting the run.** | A warning, not a rejection. Look before you accept. |
+| **Run REJECTED — {violations} (z {z}). Stop and troubleshoot before reporting patients.** | One or more rejection rules tripped. |
+
+The run then appears in the table below the chart under **When**, **Value**,
+**z**, **Verdict**, **Rules** and **Technician**, badged **In control**,
+**Warning (1-2s)** or **Rejection**.
+
+<Warning>
+  A rejected run means **stop**. Do not report patient results on that analyte
+  until you have found and fixed the cause and a fresh control passes. The
+  verdict names the rules it broke so you know what you are looking for.
+</Warning>
+
+## What each rule is telling you
+
+ClinikEHR decides which of these applies. This is what it has spotted.
+
+| Rule | One control run in plain terms | Usually |
+|---|---|---|
+| **1-2s** | One value fell between 2 and 3 SD from the mean. | A warning to inspect, nothing more |
+| **1-3s** | One value fell beyond 3 SD. | Random error — a bubble, a bad pipette, a mis-made control |
+| **2-2s** | Two runs in a row fell beyond the same 2 SD limit. | Systematic error — calibration or reagent |
+| **R-4s** | Two consecutive runs sat on opposite sides, 4 SD apart. | Imprecision — the method has got noisy |
+| **4-1s** | Four runs in a row fell beyond the same 1 SD limit. | A shift — something changed and stayed changed |
+| **10x** | Ten runs in a row sat on the same side of the mean. | Drift or bias — often a new reagent or calibrator lot |
+
+## Check it worked
+
+- The toast names the verdict and the z-score.
+- A new point appears on the **Levey-Jennings** chart, coloured for its verdict,
+  with its value and any violated rules on hover.
+- The run heads the table below the chart with its **Verdict** badge and the
+  technician's name.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The page shows a locked card instead of the chart">
+    You are on Starter Lab. The card reads **QC management is a Professional
+    feature — Daily controls with Levey-Jennings charts and automatic Westgard
+    flagging. Included from the Professional Lab plan.** See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="The material would not save">
+    The toast reads **Analyte, name, target mean and a positive SD are
+    required**. An SD of zero or blank is the usual cause — take it from the
+    package insert or from your own lot validation, never leave it at nothing.
+  </Accordion>
+
+  <Accordion title="Every run comes back rejected on a new lot">
+    The targets belong to the old lot. Add the new lot as its own control
+    material with its own mean and SD rather than charting it against the
+    previous one. New reagent lots are also quarantined until validated — see
+    [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+
+  <Accordion title="The chart says there are no runs">
+    It reads **No runs recorded yet for this control — record the first run
+    below.** The material exists but has no history; record a run and the first
+    point appears.
+  </Accordion>
+
+  <Accordion title="I can open QC but cannot fix anything on the bench">
+    That is deliberate. The QC role is oversight — it reviews control runs,
+    verified results and turnaround, and stays read-only on patient records.
+    Entering and authorising results are separate grants — see
+    [Enter and verify results](/lims/lab/results) and
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="Quality Control is not in the sidebar at all">
+    Quality control management is still rolling out and reaches labs
+    progressively on the Professional Lab plan. If your plan includes it and the
+    entry is absent, [contact support](/platform/help/contact-support).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="quality control" />
+
+<!-- source of truth: components/clinic/dashboard/lab-station/qc/qc-content.tsx, lib/lims-pricing-config.ts, lib/edition-staff-roles.ts (LIMS_PERMISSIONS) -->

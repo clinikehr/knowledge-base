@@ -1,0 +1,172 @@
+---
+title: "Change your plan"
+description: "Upgrade, downgrade, cancel or reactivate a workspace subscription, and understand what you lose when you drop a tier."
+icon: "arrow-up-right-dots"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner" />
+
+Moving between plans is a checkout, not a support ticket. Pick a plan card, pay,
+and the new entitlements apply to everyone in the workspace within moments.
+
+<Path steps={['Dashboard', 'Subscription', 'Manage Plan']} />
+<Path steps={['Personal home', 'Billing', 'Plan Subscriptions', 'Manage Plan']} />
+
+<TaskHeader
+  before="Owner access to the workspace, and a payment card"
+  time="3 minutes"
+  after="The workspace on its new plan, with the new features live for every member"
+/>
+
+## Upgrade
+
+<Steps>
+  <Step title="Open the plan page">
+    The heading reads **Choose Your Plan** if you are on Free, or **Manage Your
+    Subscription** if you already pay. Anywhere you hit a cap you also get a
+    **View plans** or **Upgrade** button that lands in the same place.
+  </Step>
+
+  <Step title="Choose Monthly or Yearly">
+    The toggle at the top switches between **Monthly** and **Yearly**. Yearly
+    cards show the effective monthly price and the amount billed annually, so
+    compare on the same footing before you decide.
+  </Step>
+
+  <Step title="Select the plan card">
+    The button reads **Upgrade to Essential**, **Select Team** and so on. Your
+    existing plan is badged **Current Plan** and cannot be selected again.
+  </Step>
+
+  <Step title="Complete checkout">
+    You get **Redirecting to Payment** — "Setting up secure payment..." — and land
+    on your payment provider's page. Which provider that is depends on where your
+    workspace bills from; see [Payment methods](/platform/plans/payment-methods).
+
+    Two variants of that message tell you something important:
+
+    - **Trialing now:** "Setting up your paid subscription. Your trial will end
+      immediately after payment." Your remaining trial days are not added on.
+    - **Trial-eligible:** "Your 7-day free trial will be activated after setting
+      up payment..." You are starting the trial, not being charged today.
+  </Step>
+
+  <Step title="Come back">
+    On success you land on **Payment Successful!** — "Payment successful! Your
+    subscription is now active." — and are returned to your dashboard. If you
+    back out you get **Payment Cancelled**: "Your payment was cancelled. No
+    charges were made to your account."
+  </Step>
+</Steps>
+
+## Downgrade
+
+There is no separate downgrade control. Select the lower plan's card and
+complete checkout the same way.
+
+<Warning>
+  **A downgrade takes features away the moment it applies**, and the caps on the
+  lower plan are enforced from then on. Nothing you already created is deleted —
+  but where you are over a cap, the surface stops accepting **new** entries.
+  Over the CRM contact cap, you cannot add a contact. Over the store product cap,
+  you cannot publish another product. Over the published-agent cap, you cannot
+  publish another agent. Existing records stay exactly where they are and stay
+  readable; you simply cannot add to them until you are back under the limit or
+  back on the higher plan.
+</Warning>
+
+Before you drop a tier, check what sits above the new one: telehealth, insurance,
+the store, memberships and AI features are the usual casualties. Staff seats are
+capped by plan too, and on Clinic & Hospital they are charged individually — see
+[Staff seats](/platform/plans/seats).
+
+## Cancel, and change your mind
+
+<Steps>
+  <Step title="Select Cancel Subscription">
+    On the workspace's card under **Billing** → **Plan Subscriptions**. The
+    dialog spells out **What you'll lose:** and confirms the date access runs to.
+  </Step>
+
+  <Step title="Confirm">
+    You get **Subscription Cancelled** — "Your subscription will be cancelled at
+    the end of the billing period." The card then shows **Ending** with the date.
+  </Step>
+
+  <Step title="Change your mind before that date">
+    Select **Keep Plan** on the card, or **Reactivate Subscription** once it has
+    ended, and you are back on **Active**.
+  </Step>
+</Steps>
+
+Cancelling does not lock you out: "your patient records, clinical notes, and
+history stay fully accessible. You're never locked out."
+
+## The rule to read twice
+
+<Info>
+  **Anything other than active or trialing counts as Free.** A failed renewal,
+  a lapsed cancellation or a **Past Due** card collapses every paid feature to
+  the Free floor for the whole workspace until billing is fixed — even though
+  the plan name still appears on the card. If features vanished and nobody
+  changed a setting, look at the subscription status first. See
+  [Plans and what they include](/platform/plans/overview).
+</Info>
+
+## Check it worked
+
+- The workspace card shows **Active** (or **Trial Active**) and the new plan name.
+- Inside the workspace, the banner reads **Active Essential Plan**, or whichever
+  plan you chose, with **Next billing** and a date.
+- The feature you upgraded for is now usable rather than showing an upgrade
+  prompt.
+- The charge appears under **Billing** → **Payment History**. See
+  [Your subscription invoices and receipts](/platform/plans/invoices-and-receipts).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Payment Cancelled">
+    You closed the provider's page, or the card was refused there. Nothing was
+    charged and your plan choice is kept. Select **Try Again**.
+  </Accordion>
+
+  <Accordion title="I paid but the workspace is still on the old plan">
+    Select **Refresh** on the **Billing** page. Confirmation from the payment
+    provider can take a minute. If it has not moved after five,
+    [contact support](/platform/help/contact-support) with the time of the
+    payment.
+  </Accordion>
+
+  <Accordion title="Trial Not Available — You have already used your free trial for this clinic.">
+    One trial per workspace, ever. Creating a second workspace to get another
+    trial gives you an empty workspace you then have to maintain — pick a paid
+    plan on this one instead.
+  </Accordion>
+
+  <Accordion title="The card says Past Due">
+    The renewal failed. Paid features are already off. Fix the payment before
+    anything else — see [Payment methods](/platform/plans/payment-methods).
+  </Accordion>
+
+  <Accordion title="Cancel Subscription is greyed out">
+    You have no paid subscription to cancel: "No paid subscriptions found 🎉".
+    A free trial needs no cancelling — it becomes the Free plan by itself when
+    the 7 days end.
+  </Accordion>
+
+  <Accordion title="I own several workspaces and changed the wrong one">
+    Every workspace has its own subscription and its own card. Check the name on
+    the card before you confirm. See
+    [Work across more than one workspace](/platform/account/switching-workspaces).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: app/subscription/plan/[clinicId]/page.tsx, app/subscription/success/page.tsx, app/subscription/cancel/page.tsx, components/subscription/plan-card.tsx, components/ui/billing-toggle.tsx, components/home/billing/clinic-subscriptions.tsx, components/home/billing/billing-overview.tsx -->

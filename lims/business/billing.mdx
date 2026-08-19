@@ -1,0 +1,162 @@
+---
+title: "Billing and payments"
+description: "Price your tests, invoice the patient, employer or referring facility that owes for the work, and record what you collect against each invoice."
+icon: "receipt"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, Accessioning Clerk" />
+
+A lab's money runs on three things: a **test has a price**, the **work is
+invoiced** to whoever owes for it — the patient, an employer or a referring
+facility — and **payments are recorded against invoices**. Those three live on
+three screens under **Billing**.
+
+<Path steps={['Sidebar', 'Billing']} />
+
+| Screen | Tabs | What it is for |
+|---|---|---|
+| **Billing Dashboard** | **Overview** · **Invoices** · **Insights** | Raising and tracking invoices. Buttons **Refresh** and **New Invoice**. |
+| **Payments** | **Overview** · **Payments** · **Pending** | Recording money received. Button **New Payment**. |
+| **Services** | **Overview** · **Services** · **Categories** | The priced catalogue. Buttons **New Service** and **New Category**. |
+
+<Note>
+  These three screens are shared across every ClinikEHR edition, so their
+  wording is clinic-flavoured — you will see "patient" and "clinic" on them even
+  though the rest of your navigation says lab. The behaviour is the same; only
+  the nouns differ.
+</Note>
+
+<TaskHeader
+  before="Your tests priced in the services catalogue"
+  time="2 minutes per invoice"
+  after="A sent invoice and a recorded payment against it"
+/>
+
+## Price the work first
+
+A test gets its price in the services catalogue, and that is where an invoice
+line finds its amount. Set it up before you invoice anything — see
+[Add your tests and panels](/lims/get-started/tests-and-panels). Use
+**Categories** to group panels the way your price list is organised, so the
+catalogue stays navigable once it holds a few hundred tests.
+
+## Raise and send an invoice
+
+<Steps>
+  <Step title="Create the invoice">
+    On **Billing Dashboard**, select **New Invoice** and add the tests being
+    billed. The amounts come from the services catalogue.
+  </Step>
+
+  <Step title="Expect Pending, not Draft">
+    A new invoice is created as **Pending** — it is a live receivable from the
+    moment you save it, not a draft you have to promote. If you are only
+    exploring what something would cost, do not save an invoice for it.
+  </Step>
+
+  <Step title="Choose who receives it">
+    Sending opens **Send Invoice**, which attaches the invoice as a PDF and asks
+    **Send to**. The choices are the patient's **email on file**, **A different
+    email**, or **Both**. Picking either of the last two reveals **Other
+    emails**, which takes up to three addresses separated by commas.
+  </Step>
+
+  <Step title="Send it">
+    The confirmation names the invoice number. The recipients you picked each
+    get the branded email with the PDF attached.
+  </Step>
+</Steps>
+
+### The case this exists for: employer-billed drug testing
+
+Regulated collections are almost never paid by the person who gave the specimen.
+The employer pays. So on a DOT invoice, choose **A different email**, put the
+employer's accounts address in **Other emails**, and the invoice goes to the
+people who will actually pay it — without sending an employee an invoice for
+their own test. Where the employer wants a copy and the patient needs one too,
+choose **Both**. See [DOT testing](/lims/dot/index).
+
+## Record the payment
+
+On **Payments**, select **New Payment** and record what you received against the
+invoice it settles. The **Pending** tab is where money that has not yet been
+matched to an invoice waits — work it down rather than leaving it, because an
+unmatched payment leaves the invoice looking unpaid and keeps the patient or
+employer on your chase list.
+
+Money collected here is also what feeds the lab's revenue figures and any
+referral commission you owe — both are worked out on money **collected**, not
+money invoiced. See [Reports and analytics](/lims/business/analytics) and
+[Referral commissions](/lims/business/commissions).
+
+## Cancel, do not delete
+
+<Warning>
+  An invoice with a payment recorded against it cannot be deleted — cancel it
+  instead. Deleting removes the record; cancelling leaves it visible with its
+  history intact, which is what an auditor and your own reconciliation both
+  need.
+</Warning>
+
+## Where the settings live
+
+| Setting | Where |
+|---|---|
+| Currency and tax | <Path steps={['Settings', 'Billing']} /> |
+| The payment channels printed on an invoice — bank account, transfer details | <Path steps={['Settings', 'Payment Details']} /> |
+
+Currency is set once for the whole lab and every amount follows it; see
+[Set your currency](/platform/settings/currency).
+
+## Check it worked
+
+- The invoice appears on the **Invoices** tab as **Pending**, and moves once
+  payment is recorded.
+- The recipients you chose received the email, with the invoice PDF attached.
+- The payment appears on the **Payments** tab against the right invoice, and not
+  on **Pending**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="An invoice line has no price">
+    The test is not priced in the services catalogue. Price it there and it
+    carries through to every future invoice — see
+    [Add your tests and panels](/lims/get-started/tests-and-panels).
+  </Accordion>
+
+  <Accordion title="The invoice went to the patient when the employer is paying">
+    **Send to** defaults to the address on file. Re-send with **A different
+    email** and the employer's accounts address in **Other emails**.
+  </Accordion>
+
+  <Accordion title="I cannot delete an invoice">
+    It has a payment recorded against it. Cancel it instead, then raise a
+    corrected one.
+  </Accordion>
+
+  <Accordion title="A payment is sitting on the Pending tab">
+    It has not been matched to an invoice. Open it and attach it to the invoice
+    it settles, or the invoice will keep showing as owed.
+  </Accordion>
+
+  <Accordion title="Amounts show in the wrong currency">
+    Currency is a lab-wide billing setting, not a per-invoice one. Change it
+    under **Settings › Billing** — see
+    [Set your currency](/platform/settings/currency).
+  </Accordion>
+
+  <Accordion title="The invoice PDF has no bank details on it">
+    Those come from **Settings › Payment Details**, not from the invoice.
+    Fill them in once and every invoice carries them.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an invoice" />
+
+<!-- source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, invoice-send-dialog.tsx), components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS) -->

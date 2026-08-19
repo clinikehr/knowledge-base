@@ -1,0 +1,149 @@
+---
+title: "Install ClinikEHR on your phone or tablet"
+description: "Add ClinikEHR to your home screen so it opens like an app, keeps working through a weak signal, and updates without an app store."
+icon: "mobile-screen"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Any staff member" />
+
+ClinikEHR installs straight from the browser. There is no app store, no separate
+download, and no second login — you get the same workspace in its own window,
+with an icon on your home screen.
+
+<TaskHeader
+  before="A signed-in session in a current browser"
+  time="Under a minute"
+  after="ClinikEHR on your home screen, opening full-screen without browser chrome"
+/>
+
+## Install it
+
+<Steps>
+  <Step title="Wait for the install card, or trigger it yourself">
+    After a little use, a card appears at the bottom of the screen:
+    **Install ClinikEHR** over "Install our app for quick access and offline
+    support", with **Install** and **Not Now**.
+
+    If you dismiss it, it stays away for **7 days** — you do not have to wait
+    that long, see the next step.
+  </Step>
+
+  <Step title="Or install from the browser menu">
+    - **Android / Chrome / Edge** — browser menu → **Install app** or
+      **Add to Home screen**.
+    - **iPhone and iPad / Safari** — the Share button → **Add to Home Screen**.
+      Safari does not show the in-page card; this is the only route.
+    - **Desktop Chrome or Edge** — the install icon at the right of the address
+      bar.
+  </Step>
+
+  <Step title="Open it from your home screen">
+    ClinikEHR launches in its own window with no address bar. You are still
+    signed in; nothing needs setting up again.
+  </Step>
+</Steps>
+
+<Note>
+  The install card never appears when you are already running the installed
+  app — that is how you can tell which one you have opened.
+</Note>
+
+## Updates
+
+ClinikEHR updates itself. When a new version is ready you get a toast:
+**Update available** over "A new version of ClinikEHR is ready.", with a
+**Refresh** action.
+
+Three things about that toast are deliberate:
+
+- **It never reloads on its own.** A till may have a sale on screen, so the
+  refresh happens when you choose it.
+- **It waits.** Leave it and keep working; it stays until you act on it.
+- **It does not appear while you are offline**, because there is nothing to
+  fetch.
+
+Select **Refresh** at a natural break — between patients, or after a sale is
+finished — and you are on the new version.
+
+## Connection warnings
+
+The app tells you about the network rather than failing quietly.
+
+| What you see | What it means |
+|---|---|
+| **You're offline** — "Please check your internet connection." with **Refresh page** | No connection. It stays on screen until dismissed. |
+| **Weak connection** — "Your internet connection is slow. Some features may not work properly." | Still connected, but not reliably. |
+| **Connected** — "Your internet connection has been restored." | You are back. |
+
+If you navigate somewhere that has not been cached while offline, you get the
+offline page: **You're Offline**, some troubleshooting tips, and **Try Again**.
+When the connection returns a **Back Online** pill appears at the top and the
+heading changes to **Connection Restored!**.
+
+## What works without a connection
+
+Installing does **not** make the whole product available offline. A specific,
+deliberately narrow set of screens keeps capturing work during an outage; most
+do not. Read [Working without internet](/platform/apps/offline) before you
+depend on it — especially the rule that you must open a screen once while online
+before it works offline.
+
+## Check it worked
+
+- ClinikEHR has an icon on your home screen or in your applications list.
+- Opening it shows no address bar and no browser tabs.
+- Your workspace loads without a fresh sign-in.
+- Turning airplane mode on and reloading gives the ClinikEHR offline page rather
+  than the browser's own error page.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="No install card ever appears">
+    On iPhone and iPad it never does — use Share → **Add to Home Screen**.
+    Elsewhere, the card is suppressed for 7 days after a dismissal and never
+    shows when the app is already installed. Use the browser's own install menu
+    item instead.
+  </Accordion>
+
+  <Accordion title="The installed app shows an old version">
+    Select **Refresh** on the update toast. If you have not seen one, close the
+    app completely and reopen it — the check runs on launch and then
+    periodically.
+  </Accordion>
+
+  <Accordion title="It opens in a browser tab instead of its own window">
+    You have opened a bookmark rather than the installed app. Launch it from the
+    home-screen icon.
+  </Accordion>
+
+  <Accordion title="I signed out and now the app asks for a password every time">
+    That is normal. To sign in without a password, add a passkey — see
+    [Secure your account](/platform/account/security).
+  </Accordion>
+
+  <Accordion title="Offline it says the page is not available">
+    That screen had not been opened on this device while online. Open it once
+    with a connection, then it is available. Not every screen works offline
+    regardless — see [Working without internet](/platform/apps/offline).
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Working without internet" icon="wifi-slash" href="/platform/apps/offline">
+    Exactly what keeps working during an outage, and what has to wait.
+  </Card>
+  <Card title="The desktop app" icon="display" href="/platform/apps/desktop">
+    For a till or a bench that needs printers, scanners and a durable queue.
+  </Card>
+</Columns>
+
+<StillStuck />
+
+<!-- source of truth: components/pwa-install-prompt.tsx, components/pwa-provider.tsx, lib/pwa-register.ts, components/network-status-monitor.tsx, app/offline/page.tsx, public/sw.js -->

@@ -1,0 +1,204 @@
+---
+title: "Connect your imaging machines"
+description: "Register each imaging machine with its own key so finished studies attach themselves to the right order, and set up the full-resolution viewer."
+icon: "plug"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Professional and above" roles="Anyone granted “Configure analysers and interfaces”. Radiologists and lab scientists do not have it by default." />
+
+Once your machines are registered, a finished study finds its own order. The
+**Modalities** page explains itself in a line: "Register each imaging machine (or
+its bridge PC) with a private key. Finished studies with a matching accession
+attach automatically; anything ambiguous waits below for review."
+
+<Path steps={['Sidebar', 'Modalities']} />
+
+<TaskHeader
+  before="Professional plan, the “Configure analysers and interfaces” grant, and whoever looks after your imaging machines available"
+  time="10 minutes per machine"
+  after="A registered modality whose finished studies attach to orders by themselves"
+/>
+
+## Your images stay in your building
+
+This is the first question every lab asks, so here is the plain answer: **the
+image pixels never leave your premises.** ClinikEHR stores two addresses and
+nothing else. The viewer runs inside the radiologist's own browser and reads the
+images directly from your on-site archive over an authenticated connection. No
+study is copied to us in order to be viewed.
+
+The one exception is the optional **Auto-archive to cloud** setting further down
+this page, which you switch on deliberately and can leave off.
+
+## Register a machine
+
+<Steps>
+  <Step title="Open the registry">
+    The registry table lists **Modality**, **AE title**, **Type**, **Status**,
+    **Last seen** and **Actions**. **Status** is **Active** or **Paused**, and
+    **Last seen** is the honest answer to "is this thing actually talking to us".
+    **Refresh** re-reads it.
+  </Step>
+
+  <Step title="Add the modality">
+    Select **Register modality** and fill in **Name** ("CT Room 1"), **AE title
+    (optional)** ("CT_SCANNER") and **Type (optional)** ("CT"). The AE title is
+    what the machine calls itself; getting it right is what lets studies match
+    without a human.
+  </Step>
+
+  <Step title="Copy the key — now">
+    Registering opens **Bridge key for {name}** with a copy button; **Copy key**
+    gives you **Key copied**. Paste it straight into whatever configuration your
+    bridge PC uses, then select **Done**.
+  </Step>
+
+  <Step title="Check it is talking">
+    Back on the registry, the modality should show **Active** and pick up a
+    **Last seen** time once the bridge connects. If it never does, the key was
+    not saved on the bridge.
+  </Step>
+</Steps>
+
+<Warning>
+  The bridge key is shown **once**. Close the dialog without copying it and it
+  cannot be retrieved — you have to issue a new one with **New key**, which
+  invalidates the old key and stops that machine's bridge until it is
+  reconfigured. Copy it before you close.
+</Warning>
+
+Use **Pause** to stop accepting studies from a machine — during maintenance, or
+when a bridge PC is being replaced — and **Resume** to bring it back. **New key**
+issues a replacement key when one has been lost or should be rotated.
+
+## Studies that arrive without a match
+
+Automatic attachment depends on a matching accession number. Anything else waits
+for a person, under **Studies awaiting review ({n})** — "These arrived without a
+matching accession. Attach each to the right order so its images show up for
+reporting."
+
+The table shows **Received**, **Modality**, **Patient / accession** and
+**Study**, with two actions:
+
+- **Attach to order** opens a picker — "Search by accession, patient or test…" —
+  and on success gives **Study attached — images are now on the order**.
+- **Discard** removes it, confirmed with **Study discarded**.
+
+Work this queue daily. A study sitting here is a study a radiologist cannot
+report, and the usual cause is a typo in the accession number at the machine
+rather than anything wrong with the bridge.
+
+## Prior-image sources (PACS)
+
+**Prior-image sources (PACS)** lists the remote archives the bridge may pull
+prior studies from, so a radiologist can compare today's film against last
+year's. Add one with **Add a PACS source**, giving its **Name** ("Regional
+PACS"), **AE Title** ("REMOTEPACS"), **Host** and **Port**. Each source can be
+removed again from its row.
+
+## Auto-archive to cloud
+
+**Auto-archive to cloud** is a switch, and it is off until you turn it on.
+
+| Setting | What it does |
+|---|---|
+| **Modalities to auto-archive** | Choose which machines archive. "None selected = all modalities." |
+| **Minimum images** | "Skip trivial studies below this image count." |
+
+Select **Save auto-archive policy** to apply it — the toast reads **Auto-archive
+policy saved**. Set **Minimum images** deliberately: without it, every stray
+single-frame acquisition is archived alongside the studies you actually want
+kept.
+
+## The full-resolution viewer
+
+Two addresses turn on **Open full viewer** in the reporting form:
+
+| Field | Holds |
+|---|---|
+| **OHIF viewer URL** | Where the viewer itself is served from |
+| **Orthanc DICOMweb URL (tunnelled)** | Where the viewer reads your images from |
+
+Select **Save viewer settings** — the toast reads **Viewer settings saved**.
+Once both are set, **Open full viewer** becomes available on any study that has
+images. See [Report an imaging study](/lims/imaging/reports).
+
+## Roles and permissions
+
+Configuring this page is a separate grant — **Configure analysers and
+interfaces** — from anything else in imaging, because it changes how machines
+talk to the system rather than what a report says. A radiologist reaches only the
+imaging screens and does not hold it by default; a lab scientist does not reach
+imaging at all. See [Permissions](/platform/team/permissions).
+
+<Note>
+  The hardware half of this integration is rolling out site by site, and what
+  your machines and bridge PC need varies with the make and age of the equipment.
+  Talk to [support](/platform/help/contact-support) about your specific room
+  before you plan a cutover date.
+</Note>
+
+## Check it worked
+
+- The machine appears in the registry as **Active**, with a **Last seen** time
+  that keeps moving.
+- A test acquisition with a correct accession number lands straight on its order
+  rather than in **Studies awaiting review**.
+- The report's **Study Information** card reads **{n} images attached**.
+- **Open full viewer** opens the study for a radiologist.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The page says Modality integration is a Professional feature">
+    The imaging bridge is gated on **Professional** and above, and **View plans**
+    on that screen takes you to the ladder. See
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="I closed the key dialog without copying the key">
+    Issue a replacement with **New key** on that modality's row, and reconfigure
+    the bridge with it. The old key stops working, so expect a gap until the
+    bridge is updated.
+  </Accordion>
+
+  <Accordion title="Last seen is never set">
+    The bridge is not reaching us with that key. Check the key was pasted in full
+    and that the modality is **Active** rather than **Paused**.
+  </Accordion>
+
+  <Accordion title="Every study lands in Studies awaiting review">
+    The accession number entered at the machine is not matching the order. Check
+    how your radiographers are keying it — a leading zero or a prefix dropped at
+    the console is the usual cause — and attach the waiting studies in the
+    meantime.
+  </Accordion>
+
+  <Accordion title="Open full viewer does nothing">
+    Both **OHIF viewer URL** and **Orthanc DICOMweb URL (tunnelled)** must be
+    saved, and the study must have images. Save the pair, reload the report and
+    try again.
+  </Accordion>
+
+  <Accordion title="Nothing is archiving to the cloud">
+    Check the **Auto-archive to cloud** switch is on, that the machine is in
+    **Modalities to auto-archive** (or that none are selected, which means all),
+    and that the study clears **Minimum images**.
+  </Accordion>
+
+  <Accordion title="I cannot open the Modalities page at all">
+    You do not hold **Configure analysers and interfaces**. It is granted
+    separately from reporting — ask an owner or manager, see
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a modality connection" />
+
+<!-- source of truth: components/clinic/dashboard/radiology-station/modalities/modalities-content.tsx, .../pacs-sources.tsx, .../archive-policy.tsx, .../viewer-config.tsx, lib/edition-staff-roles.ts (manage_analyzers) -->

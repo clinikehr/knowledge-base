@@ -1,0 +1,188 @@
+---
+title: "The desktop app"
+description: "Install the Windows, macOS or Linux shell to get silent receipt printing, scanner support and a sale queue that survives a browser wipe."
+icon: "display"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Any staff member" note="Required for silent receipt printing and serial scanners." />
+
+The desktop app is the same ClinikEHR you use in a browser, in a window that can
+reach hardware. It contains no copy of the product — it loads the hosted app
+every time — so it never falls behind the web version, and there is nothing to
+"upgrade" when a feature ships.
+
+<TaskHeader
+  before="A workstation you control, and one working internet connection for the first run"
+  time="5 minutes"
+  after="A till or bench that prints receipts without a dialog and keeps selling through an outage"
+/>
+
+## When you need it
+
+Use the browser for everything except these, which a browser cannot do:
+
+| You need | Why the browser cannot |
+|---|---|
+| Receipts that print with no dialog and no focus stolen | A web page must ask before printing |
+| A barcode or count scanner on a serial cradle | The browser cannot choose a port unattended |
+| A sale queue that survives clearing the browser or reinstalling it | Browser storage is not durable enough for money |
+| A machine dedicated to one screen all day | Tabs and address bars invite drift |
+
+Everything else — appointments, notes, results, billing — is identical in a
+browser, and a browser is the right choice for staff who move between machines.
+
+## Which build to install
+
+Three builds, one for each edition. Install only the one matching your
+workspace.
+
+| Build | For | Opens |
+|---|---|---|
+| **ClinikEHR Pharmacy POS** | A pharmacy till | The pharmacy app |
+| **ClinikEHR Desktop** | A clinic or hospital workstation | The main app |
+| **ClinikEHR LIMS Desktop** | A diagnostics bench | The diagnostics app |
+
+Each keeps its own session, its own settings and its own local queue, so two
+builds on one machine never interfere.
+
+## Install it
+
+<Steps>
+  <Step title="Download the installer for your platform">
+    - **Windows** — an `.exe` installer. It installs for the current user and
+      lets you choose the folder.
+    - **macOS** — a `.dmg` (or a `.zip`), for both Intel and Apple silicon.
+    - **Linux** — an `AppImage` or a `.deb`.
+
+    Ask [support](/platform/help/contact-support) for the current download link
+    for your edition.
+  </Step>
+
+  <Step title="Run it, and expect a warning">
+    The builds are not code-signed yet, so Windows SmartScreen shows an
+    "unknown publisher" warning. Choose **More info** → **Run anyway**. macOS
+    may need you to open it from the Applications folder the first time.
+  </Step>
+
+  <Step title="Sign in, online, once">
+    Sign in exactly as you would in a browser — same email, same password, same
+    passkey or authenticator code. The first run **must** have a connection:
+    the app has nothing cached yet, and offline it shows "Can't reach ClinikEHR"
+    with the note that the terminal needs to connect once to finish setting up.
+  </Step>
+
+  <Step title="Set the receipt printer, if this is a till">
+    Print one receipt and check it comes out on the right printer at the right
+    width. See [Thermal printers](/pharmacy/hardware/thermal-printer).
+  </Step>
+</Steps>
+
+<Note>
+  Launching the app a second time focuses the window that is already open rather
+  than starting another. One machine runs one till.
+</Note>
+
+## What the desktop app adds
+
+- **Silent receipt printing.** Receipts go straight to the printer with no
+  dialog and without taking focus off the till, including a scannable barcode of
+  the sale number. Prescriptions, payment slips, lab and imaging orders and
+  invoices print the same way.
+- **Serial and barcode hardware.** Scanners and count-scanner cradles on a USB
+  serial bridge are picked up without a port picker. See
+  [Barcode scanners](/pharmacy/hardware/barcode-scanner) and
+  [Stock counts](/pharmacy/inventory/cipherlab).
+- **A durable local queue.** Sales and captured orders are stored in a file the
+  app owns, outside the browser's data. Clearing browsing data, or the browser
+  profile being wiped by IT, does not touch queued sales.
+- **Automatic updates.** The shell checks on launch and every few hours, and
+  installs quietly when you quit. Nothing in the queue is affected.
+- **Screen-capture protection**, on the Desktop and Diagnostics builds: the
+  window renders black in screenshots, recordings and screen shares. Useful on a
+  workstation showing patient data; it also means a screen share during a
+  support call shows a black rectangle.
+
+## Kiosk mode and idle locking
+
+Two options exist for machines nobody supervises. Both are set when the
+terminal is installed, not from inside the app — ask
+[support](/platform/help/contact-support) to configure them.
+
+- **Kiosk mode** runs full-screen with no window controls. It is **off by
+  default**, including on tills, because staff multitask and a window with no
+  controls traps them. Turn it on only for a genuinely dedicated,
+  customer-facing terminal.
+- **Idle lock** signs the session out — properly, not just showing a lock
+  screen — after a period with no keyboard or mouse activity. It is **off by
+  default** on the Pharmacy POS and ClinikEHR Desktop builds, where a session
+  ends when the person ends it, and set to **15 minutes** on the Diagnostics
+  build.
+
+A workspace that requires two-factor still requires it here, regardless of
+either setting. See [Two-factor on patient data](/platform/security/mfa).
+
+## Check it worked
+
+- The app opens straight into your workspace, with no address bar.
+- A test receipt prints on the correct printer without a print dialog.
+- A scanned barcode drops into the till without you selecting a port.
+- Unplug the network and the till keeps ringing up sales — see
+  [Working without internet](/platform/apps/offline).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Windows blocks the installer">
+    The builds are unsigned. Choose **More info** → **Run anyway**. If your
+    organisation blocks unsigned installers outright, ask
+    [support](/platform/help/contact-support).
+  </Accordion>
+
+  <Accordion title="Can't reach ClinikEHR">
+    The terminal has never completed a run online, so there is nothing cached.
+    Fix the connection and sign in once. Sales already saved on the device are
+    safe and sync automatically.
+  </Accordion>
+
+  <Accordion title="Nothing prints, or the receipt comes out blank">
+    Check the printer is installed in the operating system and selected as the
+    receipt printer, and that the paper size matches the roll. See
+    [Thermal printers](/pharmacy/hardware/thermal-printer).
+  </Accordion>
+
+  <Accordion title="The scanner does nothing">
+    Confirm the cradle is on a USB serial adapter and plugged in before you open
+    the scan screen. See
+    [Barcode scanners](/pharmacy/hardware/barcode-scanner).
+  </Accordion>
+
+  <Accordion title="The macOS app never updates itself">
+    Unsigned macOS builds cannot self-update. Download and install the current
+    version manually until signed builds are available. Windows updates itself
+    fine.
+  </Accordion>
+
+  <Accordion title="A screen share shows a black window">
+    Screen-capture protection is on for that build. It is deliberate; for a
+    support call, share a photo of the screen or describe what you see.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Working without internet" icon="wifi-slash" href="/platform/apps/offline">
+    What the till keeps doing during an outage, and what waits.
+  </Card>
+  <Card title="Set up the till hardware" icon="cash-register" href="/pharmacy/hardware/desktop-app">
+    Pharmacy-specific setup for the POS terminal.
+  </Card>
+</Columns>
+
+<StillStuck />
+
+<!-- source of truth: apps/apps-desktop/src/config.ts, main.ts, printing.ts, offline.html; apps/apps-desktop/BUILD.md -->

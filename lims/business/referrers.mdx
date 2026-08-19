@@ -1,0 +1,166 @@
+---
+title: "Referring doctors and their portal"
+description: "Register the doctors who send you work, attribute orders to them, and give each one a private portal where they collect released results."
+icon: "user-doctor"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Anyone granted “Access the referrer portal”. Releasing a report to one needs “Release a report to a referrer”." />
+
+Register the doctors and facilities that send you tests, attribute each order to
+the person who sent it, and hand them a private link where they follow their own
+work. The page puts it plainly: "Register the doctors and facilities that send
+you tests. Each referrer gets a private portal link where they can follow their
+orders and pick up released results."
+
+<Path steps={['Sidebar', 'Referring Doctors']} />
+
+<TaskHeader
+  before="The referring doctor's name, and their email if you want the lab to send them the link"
+  time="2 minutes per referrer"
+  after="A registered referrer with a working portal link, ready to be picked on orders"
+/>
+
+## Add a referring doctor
+
+<Steps>
+  <Step title="Open the form">
+    Select **Add referring doctor**.
+  </Step>
+
+  <Step title="Enter who they are">
+    Fill **Name** (for example `Dr. Adaeze Okafor`) and, where you have them,
+    **Facility (optional)** (for example `Sunrise Medical Centre`),
+    **Email (optional)** and **Phone (optional)**. The email is what lets the
+    lab send their portal link for you rather than you pasting it somewhere.
+  </Step>
+
+  <Step title="Set a commission arrangement, if you pay one">
+    On the Business Lab plan the form also carries **Percent of collected (%)**
+    and a flat amount per order. Leave both at zero if you do not pay this
+    referrer — see [Referral commissions](/lims/business/commissions).
+  </Step>
+
+  <Step title="Save">
+    The toast reads **Referring doctor added** (or **Referring doctor updated**
+    when you edit an existing one), and their portal link is offered
+    straight away.
+  </Step>
+</Steps>
+
+## Give them their portal link
+
+The link is shown **only at the moment it is generated**. To obtain one later,
+open the referrer's row menu and select **Get portal link**; the confirmation
+asks **Generate a new portal link?** and warns that generating a new link
+"will immediately stop the previous link from working". Select
+**Generate new link** and the **Portal link for {name}** dialog opens.
+
+From that dialog you can:
+
+- copy the link — the toast reads **Portal link copied**
+- select **Email link** to have the lab send it to the address on file
+- select **Share on WhatsApp**
+- select **Done** to close
+
+<Warning>
+  The portal link is a bearer link: **anyone holding it can open that referrer's
+  account** and see every order attributed to them. Share it with the referrer
+  directly, never in a group thread or a shared inbox, and if it is ever exposed
+  generate a new one — which invalidates the old link immediately.
+</Warning>
+
+If the send fails you will see **Could not email the link — copy it and share
+directly instead**, or **Could not copy the link — select and copy it manually**.
+Both are recoverable: the link in the field is the real one.
+
+## Attribute work to a referrer
+
+A referrer only sees orders that name them. Pick them on the **lab intake form**
+or the **lab order form** when the work is registered — see
+[Register a test request](/lims/lab/test-requests) and
+[DOT testing](/lims/dot/index). Nothing is attributed retrospectively, so the
+habit has to start at the front desk.
+
+## What the referrer sees
+
+Their portal opens with **{lab} · Referring-doctor results portal**, greets them
+with **Welcome, {name}**, and explains its own scope: "Orders you referred and
+their released results. Contact the laboratory on {phone} for anything urgent."
+
+Work is split into tabs by type with counts — **Laboratory**, **Imaging** and
+**Drug testing**. Lab results appear as a table of **Parameter**, **Result**,
+**Reference range** and **Flag**, with values marked **Critical**, **Abnormal**
+or left unmarked when normal.
+
+**Only released results appear.** Work in progress, and results that have not
+been released to them, are not in the portal — which is why an urgent critical
+value is still a phone call, not a link.
+
+Until you attribute anything, their portal reads **No orders have been
+attributed to you yet. Once the laboratory registers your next referral, it will
+appear here.**
+
+## Managing the list
+
+The table shows **Referrer**, **Contact**, **Status**, **Last portal visit** and
+**Link generated**. **Last portal visit** is the honest answer to "did they ever
+use it". The row menu also offers:
+
+- **Edit** — change their details or commission rates
+- **Pause portal access** / **Re-enable portal access** — stops the link working
+  without deleting anything
+- **Remove** — their link stops working immediately; orders already attributed
+  keep their history but are no longer linked to a referrer
+
+<AuditNote action="Opening a referrer's orders and results" />
+
+## Check it worked
+
+- The referrer appears in the table badged **Active**.
+- **Link generated** carries today's date after you generate a link.
+- Attribute a test request to them, release the report, and it appears under the
+  matching tab in their portal — see
+  [Produce and release a report](/lims/lab/reports).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The page reads “Referring doctors are hidden”">
+    You do not hold "Access the referrer portal". The card adds **Needs
+    authorisation from your clinic owner or manager** — the wording is shared
+    across editions. An owner or manager grants it; see
+    [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="The referrer says their link stopped working">
+    Someone generated a new one. Only the newest link works. Open **Get portal
+    link**, generate, and send them the fresh link. Check too that their status
+    is **Active** rather than **Paused**.
+  </Accordion>
+
+  <Accordion title="Their portal is empty but you know you ran their work">
+    Either the orders were never attributed to them — the referrer has to be
+    picked on the intake or order form — or the results have not been released
+    yet. Only released results reach the portal.
+  </Accordion>
+
+  <Accordion title="Email link is not offered">
+    There is no **Email (optional)** address on the referrer. Add one with
+    **Edit**, or copy the link and send it yourself.
+  </Accordion>
+
+  <Accordion title="Commission statements is missing from the toolbar">
+    That button appears only on the Business Lab plan — see
+    [Referral commissions](/lims/business/commissions) and
+    [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a referrer portal link" />
+
+<!-- source of truth: components/clinic/lab-referrers/ (lab-referrers-content.tsx, lab-referrer-form.tsx, lab-referrers-table.tsx, portal-link-dialog.tsx), lib/edition-staff-roles.ts -->

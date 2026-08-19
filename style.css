@@ -1,0 +1,226 @@
+/* ============================================================================
+   ClinikEHR Help Center — custom styling
+   ----------------------------------------------------------------------------
+   Only two kinds of rule belong in this file:
+
+   1. Tokens + styling for the components WE own (the `ck-` prefixed classes
+      rendered by /snippets/*.mdx). These are safe: nothing upstream can break
+      them.
+   2. A small, deliberate set of refinements to Mintlify's own chrome, each
+      written so that if the upstream class name disappears the page still
+      reads correctly — no layout depends on them.
+
+   Never style a Mintlify internal by a hashed/utility class. If a selector
+   here stops matching, the page must degrade to Mintlify's default, not break.
+   ========================================================================== */
+
+:root {
+  --ck-teal-50: #f0fdfa;
+  --ck-teal-100: #ccfbf1;
+  --ck-teal-500: #14b8a6;
+  --ck-teal-600: #0d9488;
+  --ck-teal-700: #0f766e;
+
+  --ck-surface: #ffffff;
+  --ck-surface-muted: #f8fafc;
+  --ck-border: #e2e8f0;
+  --ck-text: #0f172a;
+  --ck-text-muted: #64748b;
+
+  /* Edition accent colours — one hue per product edition, used by the
+     availability pills so a reader can tell at a glance which product a
+     paragraph applies to. */
+  --ck-edition-clinic: #0d9488;
+  --ck-edition-pharmacy: #7c3aed;
+  --ck-edition-lims: #0284c7;
+  --ck-edition-portal: #db2777;
+}
+
+.dark {
+  --ck-surface: #0b1120;
+  --ck-surface-muted: #111827;
+  --ck-border: #1f2937;
+  --ck-text: #e2e8f0;
+  --ck-text-muted: #94a3b8;
+
+  --ck-edition-clinic: #2dd4bf;
+  --ck-edition-pharmacy: #a78bfa;
+  --ck-edition-lims: #38bdf8;
+  --ck-edition-portal: #f472b6;
+}
+
+/* ---------------------------------------------------------------------------
+   Availability strip — "who can see this feature"
+   Rendered by /snippets/availability.mdx. Sits directly under the H1 on any
+   page describing a gated feature, so the reader learns they cannot use
+   something BEFORE reading ten steps that end in a locked button.
+   ------------------------------------------------------------------------ */
+
+.ck-avail {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.5rem;
+  margin: 1.25rem 0 1.75rem;
+  padding: 0.75rem 0.9rem;
+  border: 1px solid var(--ck-border);
+  border-radius: 0.75rem;
+  background: var(--ck-surface-muted);
+  font-size: 0.8125rem;
+  line-height: 1.4;
+}
+
+.ck-avail__label {
+  font-weight: 600;
+  color: var(--ck-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  font-size: 0.6875rem;
+  margin-right: 0.15rem;
+}
+
+.ck-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid currentColor;
+  font-weight: 600;
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.ck-pill--clinic { color: var(--ck-edition-clinic); }
+.ck-pill--pharmacy { color: var(--ck-edition-pharmacy); }
+.ck-pill--lims { color: var(--ck-edition-lims); }
+.ck-pill--portal { color: var(--ck-edition-portal); }
+
+.ck-pill--plan {
+  color: var(--ck-text-muted);
+  border-style: dashed;
+}
+
+.ck-pill--role {
+  color: var(--ck-text-muted);
+  border-color: var(--ck-border);
+  background: var(--ck-surface);
+}
+
+/* ---------------------------------------------------------------------------
+   Task recipe — the "you'll need / you'll get" header on a how-to page
+   Rendered by /snippets/task-header.mdx.
+   ------------------------------------------------------------------------ */
+
+.ck-task {
+  display: grid;
+  gap: 0.75rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  margin: 1.5rem 0;
+}
+
+.ck-task__cell {
+  border: 1px solid var(--ck-border);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  background: var(--ck-surface);
+}
+
+.ck-task__title {
+  font-size: 0.6875rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ck-teal-600);
+  margin-bottom: 0.35rem;
+}
+
+.dark .ck-task__title { color: var(--ck-teal-500); }
+
+.ck-task__body {
+  font-size: 0.875rem;
+  color: var(--ck-text);
+  margin: 0;
+}
+
+/* ---------------------------------------------------------------------------
+   Where-to-find-it breadcrumb — the literal click path through the product.
+   Rendered by /snippets/path.mdx. Users skim for this before anything else,
+   so it is visually distinct from body copy and from code.
+   ------------------------------------------------------------------------ */
+
+.ck-path {
+  display: inline-flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 0.5rem;
+  background: var(--ck-teal-50);
+  border: 1px solid var(--ck-teal-100);
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--ck-teal-700);
+}
+
+.dark .ck-path {
+  background: rgba(13, 148, 136, 0.12);
+  border-color: rgba(45, 212, 191, 0.28);
+  color: var(--ck-teal-500);
+}
+
+.ck-path__sep { opacity: 0.55; }
+
+/* ---------------------------------------------------------------------------
+   Mintlify chrome refinements — all optional, all degrade cleanly.
+   ------------------------------------------------------------------------ */
+
+/* Slightly tighter, calmer sidebar: this is a wide IA (six product areas), so
+   density matters more than air. */
+#sidebar li > a,
+#sidebar li > div {
+  font-size: 0.8125rem;
+}
+
+/* Cards on the landing and section-index pages lift on hover so the whole tile
+   reads as the click target, not just the title link. */
+#content-area a[href] > div.group,
+#content-area .card {
+  transition: transform 150ms ease, box-shadow 150ms ease, border-color 150ms ease;
+}
+
+#content-area a[href]:hover > div.group,
+#content-area .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px -12px rgba(15, 23, 42, 0.25);
+  border-color: var(--ck-teal-500);
+}
+
+.dark #content-area a[href]:hover > div.group,
+.dark #content-area .card:hover {
+  box-shadow: 0 8px 24px -12px rgba(0, 0, 0, 0.6);
+}
+
+/* Tables carry a lot of the reference weight in this KB (settings matrices,
+   role matrices, plan matrices). Make headers unmistakable and let wide ones
+   scroll inside themselves rather than pushing the page sideways. */
+#content-area table {
+  display: block;
+  overflow-x: auto;
+  max-width: 100%;
+}
+
+#content-area thead th {
+  font-size: 0.75rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--ck-text-muted);
+}
+
+/* Steps: number badges in brand teal rather than the default grey, so a
+   procedure is visually distinct from a bulleted list at a glance. */
+#content-area .steps .step-number,
+#content-area [class*="step"] > div[class*="rounded-full"] {
+  background-color: var(--ck-teal-600);
+  color: #fff;
+}

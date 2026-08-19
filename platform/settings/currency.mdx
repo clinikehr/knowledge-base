@@ -1,0 +1,158 @@
+---
+title: "Set your currency, tax and free-clinic mode"
+description: "Choose the currency your workspace bills in, set a tax rate and a flat rate fee, or switch charging off entirely."
+icon: "coins"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owner" />
+
+One tab decides how every price in your workspace is written, what tax is added
+to an invoice, and whether you charge at all.
+
+<Path steps={['Sidebar', 'Settings', 'Billing']} />
+
+<TaskHeader
+  before="Owner access — the whole tab is read-only for everyone else"
+  time="2 minutes"
+  after="Prices, invoices and receipts in your own currency, with your tax rate applied"
+/>
+
+## What is on the tab
+
+The card is headed **Billing Settings** — "Manage your clinic's billing and
+payment settings" — and holds four controls.
+
+| Control | What it does |
+|---|---|
+| **Free Clinic Mode** | "Enable this if your clinic provides free services. All charges will be disabled." |
+| **Currency** | "Currency for all transactions. Search by name or code." |
+| **Tax Rate (%)** | "Applied to invoices and receipts." |
+| **Flat Rate Fee** → **Fee Amount** | A fixed fee applied to each service or visit — a consultation or registration fee. |
+
+Turning **Free Clinic Mode** on hides the other three. There is nothing to price
+when nothing is charged.
+
+## Set your currency
+
+<Steps>
+  <Step title="Open Settings and select Billing">
+    On a phone, **Billing** is in the dropdown at the top of the page.
+  </Step>
+
+  <Step title="Search the Currency picker">
+    Type the name or the three-letter code — "naira" and "NGN" both find the
+    same entry. The list is searchable because it is long.
+  </Step>
+
+  <Step title="Set your Tax Rate (%)">
+    A percentage, applied to invoices and receipts. Leave it at zero if you do
+    not charge tax.
+  </Step>
+
+  <Step title="Set a Fee Amount under Flat Rate Fee, if you use one">
+    A fixed amount added per service or visit. Leave it blank if you do not.
+  </Step>
+
+  <Step title="Save the tab">
+    Prices across the product re-render in the new currency straight away.
+  </Step>
+</Steps>
+
+## Currency does two jobs
+
+The first is obvious: it is how money is written on every screen, invoice,
+receipt and report.
+
+The second catches people out. **Your currency also decides which payment
+provider your workspace uses.** A workspace set to Nigerian Naira takes online
+payments through Paystack; every other currency goes through Stripe. So changing
+the currency changes which provider you connect on the **Online Payments** tab —
+see [Payments](/clinic/revenue/payments).
+
+New workspaces start on the currency that fits their edition: Naira for Pharmacy
+and Diagnostics, US Dollars for Clinic & Hospital. Change it to yours before you
+record anything.
+
+<Note>
+  **Changing the currency does not re-price anything already recorded.** An
+  invoice raised at 5,000 stays 5,000 — the number is untouched and only the
+  symbol beside it changes. There is no conversion, and no exchange rate is
+  applied anywhere in the product. If you have already been trading, changing
+  currency will make historical figures read wrongly, so do it before you start
+  or accept that older records need reading in the old currency.
+</Note>
+
+## Free Clinic Mode
+
+Free Clinic Mode is for a workspace that does not charge — a charitable clinic, a
+public health programme, an internal service.
+
+With it on:
+
+- A green **Free Clinic** badge appears on the Billing settings card.
+- Charging is disabled across the product.
+- Currency, tax rate and flat rate fee disappear from the tab, because none of
+  them apply.
+
+<Warning>
+  **Free Clinic Mode switches off all charging for the whole workspace.** Nothing
+  can be billed while it is on, on any screen, for any staff member. Turn it on
+  only if you genuinely provide free services — not as a way of hiding prices
+  from one part of the team, which is what
+  [permissions](/platform/team/permissions) are for.
+</Warning>
+
+## Check it worked
+
+- The currency symbol on the **Billing** page, on a receipt and on your public
+  pages is the one you chose.
+- A new invoice shows your tax rate applied, and your flat rate fee if you set
+  one.
+- With Free Clinic Mode on, the **Free Clinic** badge is visible on the Billing
+  settings card and no charge can be added to a record.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The currency picker will not open">
+    You are not an owner. The whole tab is read-only for managers and staff. See
+    [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="An old invoice still shows the old currency symbol">
+    Documents already issued keep what they were issued with. New documents use
+    the new setting.
+  </Accordion>
+
+  <Accordion title="A price is showing as a bare code, like 'GHS 12.00'">
+    That is not something the product does on the Billing tab — report it, with
+    the screen it appeared on, through
+    [contact support](/platform/help/contact-support). Prices are rendered with
+    the currency's own symbol everywhere in the product.
+  </Accordion>
+
+  <Accordion title="I cannot connect the payment provider I expected">
+    The provider follows the currency: Naira connects Paystack, everything else
+    connects Stripe. Set the currency first, then open the **Online Payments**
+    tab.
+  </Accordion>
+
+  <Accordion title="A record shows a dash instead of an amount">
+    That record has no amount recorded. A dash is deliberate — the product never
+    invents a figure to fill a gap.
+  </Accordion>
+
+  <Accordion title="Currency and tax have vanished from the tab">
+    Free Clinic Mode is on. Turn it off and they come back with their previous
+    values.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/dashboard/settings/billing-settings.tsx, lib/currencies.ts -->

@@ -1,0 +1,161 @@
+---
+title: "Generate a note with AI"
+description: "Turn a recorded consultation or an uploaded document into a structured clinical note, then review it and file it against a chart."
+icon: "microphone-lines"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="AI Note Taker add-on — included for Team and Enterprise clinic owners" roles="Any clinician with an AI Note Taker seat" />
+
+The **AI Note Taker** listens to a consultation, or reads a document you upload,
+and writes a structured note in the format you choose. You then read it, correct
+it and sign it. It drafts; you remain the author.
+
+<Tabs>
+  <Tab title="Solo and team">
+    <Path steps={['Sidebar', 'Notes', 'New Note', 'AI Note Taker']} />
+  </Tab>
+  <Tab title="Enterprise">
+    <Path steps={['Sidebar', 'Outpatient', 'Clinic Notes', 'New Note', 'AI Note Taker']} />
+  </Tab>
+</Tabs>
+
+<TaskHeader
+  before="A client or patient selected in the Quick Note card, and consent from everyone in the room before you record"
+  time="A few minutes to record, then about a minute to process"
+  after="A drafted note in your chosen template, ready for you to review and sign"
+/>
+
+<Note>
+  **Choose the person first.** Opening the AI Note Taker with nobody selected
+  stops you at "No client selected — Please select a client in the 'Quick Note'
+  section before using the AI Note Taker." Pick them in the **Quick Note** card
+  on the [Notes](/clinic/clinical/notes) dashboard, then open the sheet.
+</Note>
+
+## Generate the note
+
+<Steps>
+  <Step title="Open the AI Note Taker">
+    The sheet is headed **AI Note Taker** — "Generate structured clinical notes
+    from recordings or documents". It walks you through in order.
+  </Step>
+
+  <Step title="Select a template">
+    "Select a Template — Choose the note format for your documentation." This
+    decides the shape of what comes back, so pick the format you would have
+    written by hand.
+  </Step>
+
+  <Step title="Customise the output">
+    Under "Customize Output":
+
+    | Setting | Options |
+    |---|---|
+    | **Note Tone** | Professional, Empathetic, Concise, Detailed |
+    | **Speaker Mode** | Multi-Party for a conversation, Single Speaker for you dictating alone |
+    | Custom instructions | Free text, for example "Focus on medication changes and mental status" |
+  </Step>
+
+  <Step title="Record, or upload a file">
+    **Live Recording** — "Speak naturally — all participants will be captured".
+    You can pause, resume, stop and re-record.
+
+    **Upload File** — MP3, MP4, PDF, DOCX, TXT or MD, up to 100 MB. Use this for
+    a recording made elsewhere, or a referral letter you want summarised into
+    the note.
+  </Step>
+
+  <Step title="Wait for processing, then review">
+    The session processes, then shows you the drafted note. Read it against what
+    actually happened before you go any further.
+  </Step>
+
+  <Step title="Apply it to the note form">
+    Applying the draft drops the text into the note form, where you edit, add
+    what the recording missed, and sign as normal — see
+    [Write a clinical note](/clinic/clinical/notes).
+  </Step>
+</Steps>
+
+<Warning>
+  **Read every line before you sign.** A generated note is a draft written from
+  audio, and audio mishears drug names, doses and negations. A clinician must
+  review and approve it — your signature says the words are yours, not the
+  model's. Nothing is filed to a chart until you save it.
+</Warning>
+
+## Manage your AI sessions
+
+**AI Notes** in the left rail opens the manager sheet over the page. Filter by
+**Completed**, **Processing**, **Failed** or **Incomplete**, and act on each
+session:
+
+| Action | What it does |
+|---|---|
+| Regenerate | Runs the same recording against a different template. You will see "Note regenerated" |
+| **Stop** | Ends a session that is still running |
+| **Delete** | Removes the session |
+| **Open in Notes** | Takes you to the note it produced |
+
+A session that has stopped making progress shows an amber **Stalled** badge —
+stop it and record again rather than waiting.
+
+## In a video consultation
+
+Telehealth has its own note taker built into the call, which can start
+automatically when you begin recording. That one needs the Team or Enterprise
+plan. See [Run a video consultation](/clinic/clinical/telehealth).
+
+## Check it worked
+
+The session shows as **Completed** in the **AI Notes** manager, the drafted text
+is in your note form under the template you chose, and the note is attached to
+the right person. Nothing reaches the chart until you save or sign it.
+
+<AuditNote action="Saving a generated note to a chart" />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I am asked to manage add-ons">
+    The AI Note Taker is an add-on rather than a plan feature. Team and
+    Enterprise clinic owners get it bundled; every other seat needs its own.
+    Select **Manage Add-ons** in the prompt, or see
+    [Plans and add-ons](/platform/plans/overview).
+  </Accordion>
+
+  <Accordion title="No client selected">
+    Select the person in the **Quick Note** card before opening the sheet. The
+    note taker files its output against a chart, so it needs to know whose.
+  </Accordion>
+
+  <Accordion title="The session is stuck on Processing">
+    Look for the amber **Stalled** badge in the **AI Notes** manager. If it is
+    there, select **Stop** and run it again — a long recording on a weak
+    connection is the usual cause.
+  </Accordion>
+
+  <Accordion title="My upload was rejected">
+    Only MP3, MP4, PDF, DOCX, TXT and MD are accepted, up to 100 MB. A long
+    recording in a lossless format will be over the limit — export it as MP3.
+  </Accordion>
+
+  <Accordion title="The note came back in the wrong format">
+    Regenerate it from the **AI Notes** manager against a different template.
+    The recording is reused, so you do not have to see the patient again.
+  </Accordion>
+
+  <Accordion title="The recording missed a second speaker">
+    Set **Speaker Mode** to Multi-Party for a consultation. Single Speaker is
+    for dictating on your own after the patient has left.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+<!-- source of truth: components/clinic/notes/general/ (ai-notes-manager-sheet.tsx, ai-note-session-detail.tsx), components/clinic/notes/new-notes/ -->
