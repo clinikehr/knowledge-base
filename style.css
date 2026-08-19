@@ -267,3 +267,71 @@
   background-color: var(--ck-teal-600);
   color: #fff;
 }
+
+/* ---------------------------------------------------------------------------
+   Responsive refinements — phone and tablet.
+   Mintlify's own layout is responsive; these only tighten OUR components and
+   the dense reference tables so nothing forces a horizontal scroll or wastes
+   half a phone screen on padding. Everything degrades cleanly.
+   ------------------------------------------------------------------------ */
+
+@media (max-width: 768px) {
+  /* Reference tables carry most of this site's density — keep them readable
+     without sideways panning where possible. */
+  #content-area table {
+    font-size: 0.8125rem;
+  }
+
+  #content-area th,
+  #content-area td {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .ck-avail {
+    padding: 0.6rem 0.7rem;
+    gap: 0.4rem;
+    font-size: 0.78rem;
+  }
+
+  .ck-pill {
+    padding: 0.15rem 0.5rem;
+    font-size: 0.7rem;
+  }
+
+  /* One column, full width — three squeezed cells on a phone are unreadable. */
+  .ck-task {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
+
+  .ck-task__cell {
+    padding: 0.7rem 0.85rem;
+  }
+
+  .ck-path {
+    font-size: 0.78rem;
+    line-height: 1.9;
+  }
+
+  .ck-callout {
+    padding: 0.75rem 0.85rem;
+    margin: 1.1rem 0;
+  }
+}
+
+/* Touch targets: on coarse pointers, give card links and nav rows a little
+   more height so they meet the ~44px comfortable-tap threshold. */
+@media (pointer: coarse) {
+  #content-area .card,
+  #content-area a[href] > div.group {
+    min-height: 44px;
+  }
+
+  #sidebar li > a {
+    padding-top: 0.45rem;
+    padding-bottom: 0.45rem;
+  }
+}

@@ -87,7 +87,15 @@ One or two sentences: what this page lets you do, in the reader's words.
   "Sales recording"). No product name in it; the site already says ClinikEHR.
 - `description` — one full sentence, ≤160 characters. This is the search
   result and the social card. Never a fragment, never a repeat of the title.
-- `icon` — a Font Awesome free icon name. Optional but preferred on index pages.
+- `icon` — a path to a **HugeIcons** SVG in `/images/icons/`, e.g.
+  `icon: "/images/icons/stethoscope.svg"` — the same icon set the product's own
+  sidebar uses, so the docs and the app look like one family. Never a bare
+  library name (Mintlify would look it up in Font Awesome/Lucide and render
+  nothing, silently — the validator blocks this). If the icon you need is not
+  in `/images/icons/` yet, generate it from `@hugeicons/core-free-icons` in the
+  app repo: extract the icon's element array into a 24×24 `viewBox` SVG with
+  `stroke="var(--ck,#64748b)"` and the dark-mode `<style>` block the existing
+  files carry. Same rule for `<Card icon="…">` props in page bodies.
 - `sidebarTitle` — only when `title` is too long for the rail.
 
 ## 4. Voice

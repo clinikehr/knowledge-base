@@ -175,6 +175,21 @@ for (const [slug, file] of fileSlugs) {
     }
   }
 
+  // Icons are HugeIcons SVGs shipped in /images/icons — the same icon set the
+  // product uses. Mintlify's name-based libraries (fontawesome/lucide/tabler)
+  // are NOT in use; a bare name here would silently render no icon at all.
+  const iconRefs = [
+    ...[...raw.matchAll(/^icon:\s*"?([^"\s]+)"?\s*$/gm)].map((m) => m[1]),
+    ...[...body.matchAll(/\bicon="([^"]+)"/g)].map((m) => m[1]),
+  ];
+  for (const ref of iconRefs) {
+    if (!ref.startsWith('/images/icons/') || !ref.endsWith('.svg')) {
+      err(`${slug}.mdx uses icon "${ref}" — icons must be HugeIcons paths like /images/icons/<name>.svg (see images/icons/).`);
+    } else if (!existsSync(join(ROOT, ref))) {
+      err(`${slug}.mdx references icon "${ref}", which does not exist. Generate it from @hugeicons/core-free-icons.`);
+    }
+  }
+
   // Internal links must resolve to a navigable page.
   for (const m of body.matchAll(/\]\((\/[^)\s#]*)(#[^)\s]*)?\)/g)) {
     const href = m[1];
@@ -193,7 +208,8 @@ for (const [slug, file] of fileSlugs) {
   // to explain editions and plans ACROSS the product, so they discuss gating
   // without documenting any one gated feature. Warning on them every run would
   // make the six permanent warnings the reason nobody reads the warnings.
-  const isOrientation = slug === 'index' || slug.startsWith('start/');
+  const isOrientation =
+    slug === 'index' || slug.startsWith('start/') || slug.startsWith('changelog/');
   if (!isOrientation &&
       /plan|subscription|upgrade|entitle/i.test(body) &&
       !body.includes('<Availability')) {
