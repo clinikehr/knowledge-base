@@ -1,7 +1,7 @@
 ---
-title: "Print and reprint receipts"
+title: Print and reprint receipts
 description: "Print an 80mm receipt at the counter, reprint or download a past one, and fix a printer that comes out blank."
-icon: "/images/icons/receipt.svg"
+icon: /images/icons/receipt.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,62 +11,39 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Anyone who can open POS or Sales" />
 
-Receipts are 80mm thermal. On a counter machine running the desktop app they
-print silently on the receipt printer; in a browser you get the ordinary print
-dialog.
+Receipts are 80mm thermal. On a counter machine running the desktop app they print silently on the receipt printer; in a browser you get the ordinary print dialog.
 
 <Path steps={['Sidebar', 'Sales', 'Recent Sales']} />
 
-<TaskHeader
-  before="A completed sale, and a receipt printer for a paper copy"
-  time="Seconds"
-  after="A printed or downloaded receipt, scannable back into the sales list"
-/>
+<TaskHeader before="A completed sale, and a receipt printer for a paper copy" time="Seconds" after="A printed or downloaded receipt, scannable back into the sales list" />
 
 ## Print at the point of sale
 
-When a sale completes, the **Sale Complete!** panel offers **Print Receipt**.
-Select it and, in the desktop app, the receipt goes straight to the counter
-printer with no dialog — that silence is the design, not a failure.
+When a sale completes, the **Sale Complete!** panel offers **Print Receipt**. Select it and, in the desktop app, the receipt goes straight to the counter printer with no dialog — that silence is the design, not a failure.
 
-If direct printing is not available, the app falls back and tells you so:
-**Direct printing unavailable — using the print dialog**.
+If direct printing is not available, the app falls back and tells you so: **Direct printing unavailable — using the print dialog**.
 
 ## Reprint or download a past receipt
 
 <Steps>
   <Step title="Find the sale">
-    Open **Sales**, go to **Recent Sales**, and find the transaction — or scan
-    the barcode on the customer's copy into "Search or scan receipt...". See
-    [Scan barcodes at the till](/pharmacy/pos/barcode).
+    Open **Sales**, go to **Recent Sales**, and find the transaction — or scan the barcode on the customer's copy into "Search or scan receipt...". See [Scan barcodes at the till](/pharmacy/pos/barcode).
   </Step>
-
   <Step title="Open the row menu">
-    Select the row's **⋯** menu. Under **Actions** you get **Print Receipt** and
-    **Download PDF**.
+    Select the row's **⋯** menu. Under **Actions** you get **Print Receipt** and **Download PDF**.
   </Step>
-
   <Step title="Print or save">
-    Both open **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer
-    or download a PDF copy." Select **Print** for paper, or **Download PDF** for
-    a copy to email or file.
+    Both open **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer or download a PDF copy." Select **Print** for paper, or **Download PDF** for a copy to email or file.
 
-    On the desktop app a successful print confirms with **Receipt sent to
-    printer**. In a browser there is no toast, because the print dialog is
-    already in front of you.
+    On the desktop app a successful print confirms with **Receipt sent to printer**. In a browser there is no toast, because the print dialog is already in front of you.
   </Step>
 </Steps>
 
 ## What is on the receipt
 
-A completed receipt is headed **SALES RECEIPT**, carries your pharmacy's name
-and contact details, the lines with their prices, the totals, the tender and
-change, then **Thank you for your purchase!** and **Keep this receipt for your
-records.**
+A completed receipt is headed **SALES RECEIPT**, carries your pharmacy's name and contact details, the lines with their prices, the totals, the tender and change, then **Thank you for your purchase!** and **Keep this receipt for your records.**
 
-The receipt number looks like **POS-20260816-59E46A** and prints as a **barcode**
-at the bottom. That barcode is what lets a returning customer's slip be scanned
-straight back into the sales list.
+The receipt number looks like **POS-20260816-59E46A** and prints as a **barcode** at the bottom. That barcode is what lets a returning customer's slip be scanned straight back into the sales list.
 
 ### An offline receipt is deliberately different
 
@@ -76,97 +53,72 @@ A sale rung up during an outage prints:
 - **Provisional No:** instead of a receipt number,
 - and **no barcode at all**.
 
-There is no barcode because the provisional number does not exist on the server
-yet — printing one would produce a code that scans to nothing. Once the sale
-syncs it gets its real number, and a reprint from the Sales page carries the
-scannable barcode. Tell the customer their slip is their proof of purchase and
-that the confirmed number follows. See
-[Selling when the internet is down](/pharmacy/pos/offline).
+There is no barcode because the provisional number does not exist on the server yet — printing one would produce a code that scans to nothing. Once the sale syncs it gets its real number, and a reprint from the Sales page carries the scannable barcode. Tell the customer their slip is their proof of purchase and that the confirmed number follows. See [Selling when the internet is down](/pharmacy/pos/offline).
 
 <Note>
-  **Use each document's own print button.** The receipt path is for sales, and
-  anything sent through it is stamped **SALES RECEIPT**. Payments,
-  prescriptions and orders have their own printouts that say what they actually
-  are.
+  **Use each document's own print button.** The receipt path is for sales, and anything sent through it is stamped **SALES RECEIPT**. Payments, prescriptions and orders have their own printouts that say what they actually are.
 </Note>
 
 ## Fix a blank or cut-short receipt
 
-This is the most common printer complaint at a counter, and it is almost always
-the paper form the driver expects rather than the printer itself.
+This is the most common printer complaint at a counter, and it is almost always the paper form the driver expects rather than the printer itself.
 
 <Steps>
   <Step title="Open the printer settings">
     In the desktop app, select **Printer settings** at the till.
   </Step>
-
   <Step title="Read what it says">
-    Under **Receipt printer paper**: "If receipts come out blank or cut short on
-    this machine, pick the paper form its printer driver understands. Saved for
-    this computer only."
+    Under **Receipt printer paper**: "If receipts come out blank or cut short on this machine, pick the paper form its printer driver understands. Saved for this computer only."
   </Step>
-
   <Step title="Choose a paper handling option">
     **Paper handling** offers:
 
     | Option | When to use it |
-    |---|---|
+    | --- | --- |
     | **Auto (recommended)** | Leave it here unless you have a problem |
     | **80mm × A4 form** | The verified choice for Star TSP100-family drivers |
     | **3-inch × Letter form** | Some thermal drivers enumerate this instead |
     | **Custom roll (cut after content)** | Best on Epson-class drivers — the cut lands right after the receipt |
     | **Driver default form** | Whatever the printer is set to in the operating system |
   </Step>
-
   <Step title="Print a test receipt">
-    Reprint a past sale. The setting is saved for **this computer only**, so
-    each counter machine is set up once, on its own.
+    Reprint a past sale. The setting is saved for **this computer only**, so each counter machine is set up once, on its own.
   </Step>
 </Steps>
 
-See [Thermal printers](/pharmacy/hardware/thermal-printer) for the full hardware
-guide.
+See [Thermal printers](/pharmacy/hardware/thermal-printer) for the full hardware guide.
 
 ## Check it worked
 
 - Paper comes out of the receipt printer with the whole sale on it, cut cleanly.
-- A completed receipt carries a barcode; scanning it on the Sales page opens
-  that sale.
+- A completed receipt carries a barcode; scanning it on the Sales page opens that sale.
 - **Download PDF** saves a copy of the same receipt.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="'Direct printing unavailable — using the print dialog'">
-    The app could not reach the counter printer directly, so it handed you the
-    browser dialog instead. Nothing is lost — print from the dialog. In the
-    desktop app, check the printer is switched on and selected.
+    The app could not reach the counter printer directly, so it handed you the browser dialog instead. Nothing is lost — print from the dialog. In the desktop app, check the printer is switched on and selected.
   </Accordion>
 
   <Accordion title="The receipt is blank, or stops halfway">
-    Change **Paper handling** as above. A thermal driver given a page size it
-    does not enumerate will happily feed blank paper.
+    Change **Paper handling** as above. A thermal driver given a page size it does not enumerate will happily feed blank paper.
   </Accordion>
 
   <Accordion title="The customer's slip will not scan">
-    It is a provisional, offline slip, which carries no barcode. Find the sale
-    by date and customer instead, and reprint the confirmed receipt.
+    It is a provisional, offline slip, which carries no barcode. Find the sale by date and customer instead, and reprint the confirmed receipt.
   </Accordion>
 
   <Accordion title="'Could not generate the PDF.'">
-    Try again, then try **Print** instead. If both fail on one sale but work on
-    others, note the sale number for support.
+    Try again, then try **Print** instead. If both fail on one sale but work on others, note the sale number for support.
   </Accordion>
 
   <Accordion title="'Could not load this sale. Please try again.'">
-    The receipt could not be fetched — usually a dropped connection. Reprints
-    need a connection; the sale itself is safe either way.
+    The receipt could not be fetched — usually a dropped connection. Reprints need a connection; the sale itself is safe either way.
   </Accordion>
 
   <Accordion title="The logo prints as a black blob">
-    An 80mm head is one-bit: it has no greys and dithers them into blotches.
-    Use a simple, high-contrast logo — see
-    [Complete your pharmacy profile](/pharmacy/get-started/pharmacy-profile).
+    An 80mm head is one-bit: it has no greys and dithers them into blotches. Use a simple, high-contrast logo — see [Complete your pharmacy profile](/pharmacy/get-started/pharmacy-profile).
   </Accordion>
 </AccordionGroup>
 

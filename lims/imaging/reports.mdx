@@ -1,7 +1,7 @@
 ---
-title: "Report an imaging study"
+title: Report an imaging study
 description: "Open a study with its images, write the findings and impression, flag critical findings, and submit the signed report."
-icon: "/images/icons/file-heart.svg"
+icon: /images/icons/file-heart.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,176 +11,115 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="All plans" roles="Radiologists and imaging staff with reporting access. Everyone else sees the report read-only." />
 
-Reporting is the point at which images become a clinical document. You open the
-study, read it against the indication, write the findings and the impression, and
-submit — and from then on someone will treat a patient from what you wrote.
+Reporting is the point at which images become a clinical document. You open the study, read it against the indication, write the findings and the impression, and submit — and from then on someone will treat a patient from what you wrote.
 
 <Path steps={['Sidebar', 'Radiology Reports']} />
 
-<TaskHeader
-  before="A completed study on the queue, and its images available"
-  time="5–15 minutes per study"
-  after="A submitted report on the patient's record, with any critical finding flagged"
-/>
+<TaskHeader before="A completed study on the queue, and its images available" time="5–15 minutes per study" after="A submitted report on the patient's record, with any critical finding flagged" />
 
 ## The reporting workspace
 
 **Radiology Reports** has four tabs:
 
 | Tab | Contents |
-|---|---|
+| --- | --- |
 | **Overview** | Study Volume Trends, Status Distribution and Recent Studies |
 | **Reports** | The report list, and where you open or create one |
 | **Analytics** | Modality Distribution, Completion Rate and Performance Metrics |
 | **Documents** | Report Templates & Documents |
 
-Report templates live under **Documents**, and a house template is the cheapest
-way to make ten radiologists' reports read like one department's.
+Report templates live under **Documents**, and a house template is the cheapest way to make ten radiologists' reports read like one department's.
 
 ## Write the report
 
-The form is headed **Create Study Report**, **Edit Study Report** or **View Study
-Report** depending on what you opened and what you may do with it.
+The form is headed **Create Study Report**, **Edit Study Report** or **View Study Report** depending on what you opened and what you may do with it.
 
 <Steps>
   <Step title="Attach the study">
-    Use **Select Radiology Study** to pick the study you are reporting, or **Add
-    New Study** if you are reporting something not yet on an order.
+    Use **Select Radiology Study** to pick the study you are reporting, or **Add New Study** if you are reporting something not yet on an order.
   </Step>
-
   <Step title="Open the images">
-    The **Study Information** card tells you what is attached — **\{n\} images
-    attached**, or **Study attached** where the count is not known. **Open full
-    viewer** opens the study at full resolution, and **Study preview images**
-    gives you a quick look without leaving the form.
+    The **Study Information** card tells you what is attached — **\{n\} images attached**, or **Study attached** where the count is not known. **Open full viewer** opens the study at full resolution, and **Study preview images** gives you a quick look without leaving the form.
 
-    **Open full viewer** only works once your viewer has been configured — see
-    [Connect your imaging machines](/lims/imaging/modalities).
+    **Open full viewer** only works once your viewer has been configured — see [Connect your imaging machines](/lims/imaging/modalities).
   </Step>
-
   <Step title="Read the clinical context first">
-    **Clinical Information** carries the indication and history the requester
-    entered. Read it before the images; a chest film reported without knowing why
-    it was taken is a worse report.
+    **Clinical Information** carries the indication and history the requester entered. Read it before the images; a chest film reported without knowing why it was taken is a worse report.
   </Step>
-
   <Step title="Record the technique">
-    **Technical Details** takes **Technique Used** ("e.g., Standard protocol"),
-    **Image Quality** (**Excellent**, **Good**, **Acceptable**, **Poor**,
-    **Non-diagnostic**), **Radiation Dose** ("e.g., 5.2 mGy"), and where contrast
-    was used **Contrast Type** ("e.g., Iodinated contrast") and **Volume**
-    ("e.g., 100ml"). Marking a study **Non-diagnostic** is a finding in itself —
-    say so in the report rather than reporting around it.
+    **Technical Details** takes **Technique Used** ("e.g., Standard protocol"), **Image Quality** (**Excellent**, **Good**, **Acceptable**, **Poor**, **Non-diagnostic**), **Radiation Dose** ("e.g., 5.2 mGy"), and where contrast was used **Contrast Type** ("e.g., Iodinated contrast") and **Volume** ("e.g., 100ml"). Marking a study **Non-diagnostic** is a finding in itself — say so in the report rather than reporting around it.
   </Step>
-
   <Step title="Write the findings">
-    **Findings** — "Describe the radiological findings..." — is the observation.
-    Describe what is there, including the relevant negatives.
+    **Findings** — "Describe the radiological findings..." — is the observation. Describe what is there, including the relevant negatives.
   </Step>
-
   <Step title="Write the impression">
-    **Impression** — "Clinical impression and diagnosis..." — is the answer to
-    the question that was asked. It is the part the referring clinician will
-    read, and often the only part.
+    **Impression** — "Clinical impression and diagnosis..." — is the answer to the question that was asked. It is the part the referring clinician will read, and often the only part.
   </Step>
-
   <Step title="Add recommendations">
-    **Recommendations** ("Follow-up recommendations...") carries the next step —
-    an interval film, a different modality, a referral. **Technician Notes**
-    ("Technical notes...") holds anything about the acquisition itself.
+    **Recommendations** ("Follow-up recommendations...") carries the next step — an interval film, a different modality, a referral. **Technician Notes** ("Technical notes...") holds anything about the acquisition itself.
   </Step>
-
   <Step title="Flag a critical finding">
-    Tick **Critical Findings** where what you have seen needs acting on now.
-    Saving then gives **Report saved. Critical findings require immediate
-    communication to the ordering physician.** The flag also raises the study on
-    the **Critical Findings** counter at the
-    [radiology station](/lims/imaging/station).
+    Tick **Critical Findings** where what you have seen needs acting on now. Saving then gives **Report saved. Critical findings require immediate communication to the ordering physician.** The flag also raises the study on the **Critical Findings** counter at the [radiology station](/lims/imaging/station).
   </Step>
-
   <Step title="Save a draft, or submit">
-    **Save Draft** keeps your work without releasing it — the toast reads **Draft
-    saved successfully**. **Submit Report** releases it, with **Report submitted
-    successfully**; on an existing report the button reads **Update Report**.
+    **Save Draft** keeps your work without releasing it — the toast reads **Draft saved successfully**. **Submit Report** releases it, with **Report submitted successfully**; on an existing report the button reads **Update Report**.
   </Step>
 </Steps>
 
 <Warning>
-  A report that has not been submitted is **preliminary**, and a preliminary
-  report must never leave the building looking final. Do not download, print,
-  email or read out a draft as though it were a finished report. Submitting is
-  the act that puts your name to it — until then it is working notes, however
-  complete it looks on screen.
+  A report that has not been submitted is **preliminary**, and a preliminary report must never leave the building looking final. Do not download, print, email or read out a draft as though it were a finished report. Submitting is the act that puts your name to it — until then it is working notes, however complete it looks on screen.
 </Warning>
 
 ## Critical findings are a phone call
 
-The **Critical Findings** flag records that you found something urgent. It does
-not tell the referring clinician. Ring them, then flag it, and note in
-**Recommendations** who you spoke to and when. The toast asks for exactly this:
-"Critical findings require immediate communication to the ordering physician."
+The **Critical Findings** flag records that you found something urgent. It does not tell the referring clinician. Ring them, then flag it, and note in **Recommendations** who you spoke to and when. The toast asks for exactly this: "Critical findings require immediate communication to the ordering physician."
 
 ## Getting the study and its images
 
 Three actions sit on the **Study Information** card beside the report:
 
 | Action | Does |
-|---|---|
+| --- | --- |
 | **Open full viewer** | Opens the study at full resolution in the configured viewer |
 | **Archive to cloud** | Requests a cloud copy — **Archive requested — the study will upload to the cloud shortly.** If it failed before, the button reads **Retry archive** |
 | **Download study** | Downloads the study to this machine |
 
-**Radiology report downloaded** confirms a report download. If you try to
-download before the order exists you get **Save the order before downloading its
-report.** — save first, then download.
+**Radiology report downloaded** confirms a report download. If you try to download before the order exists you get **Save the order before downloading its report.** — save first, then download.
 
 <AuditNote action="Opening or downloading a patient's imaging study" />
 
 ## Check it worked
 
-- The report shows as submitted, and the study's status has moved to
-  **Reported** on [Imaging Requests](/lims/imaging/requests).
+- The report shows as submitted, and the study's status has moved to **Reported** on [Imaging Requests](/lims/imaging/requests).
 - **Reports Due** on the imaging queue has gone down by one.
-- A critical study is counted under **Critical Findings** — and you have already
-  phoned the referrer.
-- The report opens from the patient's record with your findings and impression
-  intact.
+- A critical study is counted under **Critical Findings** — and you have already phoned the referrer.
+- The report opens from the patient's record with your findings and impression intact.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The form opens read-only">
-    You have view-only access to imaging, or the report is already submitted and
-    you do not hold the grant to change it. Submitting returns **You don't have
-    permission to submit reports** — see [Roles](/platform/team/roles).
+    You have view-only access to imaging, or the report is already submitted and you do not hold the grant to change it. Submitting returns **You don't have permission to submit reports** — see [Roles](/platform/team/roles).
   </Accordion>
 
   <Accordion title="Open full viewer does nothing">
-    The full-resolution viewer has not been configured yet, or the study has no
-    images attached. Both are set up under
-    [Connect your imaging machines](/lims/imaging/modalities).
+    The full-resolution viewer has not been configured yet, or the study has no images attached. Both are set up under [Connect your imaging machines](/lims/imaging/modalities).
   </Accordion>
 
   <Accordion title="The Study Information card says no images">
-    The study arrived without a matching accession number and is waiting in the
-    review queue. Attach it there and the images appear on the order — see
-    [Connect your imaging machines](/lims/imaging/modalities).
+    The study arrived without a matching accession number and is waiting in the review queue. Attach it there and the images appear on the order — see [Connect your imaging machines](/lims/imaging/modalities).
   </Accordion>
 
   <Accordion title="I cannot download the report">
-    **Save the order before downloading its report.** — the order has to exist
-    before a report can be produced from it. Save, then download.
+    **Save the order before downloading its report.** — the order has to exist before a report can be produced from it. Save, then download.
   </Accordion>
 
   <Accordion title="Archive to cloud failed">
-    The button becomes **Retry archive**. If it fails repeatedly the bridge at
-    your site is not reaching the archive; check with whoever runs it, then
-    [contact support](/platform/help/contact-support).
+    The button becomes **Retry archive**. If it fails repeatedly the bridge at your site is not reaching the archive; check with whoever runs it, then [contact support](/platform/help/contact-support).
   </Accordion>
 
   <Accordion title="I submitted a report with a mistake in it">
-    Open it again and use **Update Report**. Both the original and the correction
-    stay in the record — see [Audit log](/platform/security/audit-log).
+    Open it again and use **Update Report**. Both the original and the correction stay in the record — see [Audit log](/platform/security/audit-log).
   </Accordion>
 </AccordionGroup>
 

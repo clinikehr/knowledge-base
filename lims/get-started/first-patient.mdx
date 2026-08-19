@@ -1,7 +1,7 @@
 ---
-title: "Register your first patient"
+title: Register your first patient
 description: "Create the patient record that samples, results and reports attach to, and the fields worth filling in before the first specimen arrives."
-icon: "/images/icons/user.svg"
+icon: /images/icons/user.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,120 +11,75 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Accessioning Clerk, Receptionist, Phlebotomist" />
 
-Step 3 of the [setup checklist](/lims/get-started) — "Add a patient so samples
-and results can be attached to a record." Everything downstream hangs off this
-record: the test request, the specimen, the result and the report all carry the
-patient's identity from here.
+Step 3 of the [setup checklist](/lims/get-started) — "Add a patient so samples and results can be attached to a record." Everything downstream hangs off this record: the test request, the specimen, the result and the report all carry the patient's identity from here.
 
 <Path steps={['Sidebar', 'Patients']} />
 
-<TaskHeader
-  before="Nothing"
-  time="1 minute"
-  after="A patient record you can raise a test request against"
-/>
+<TaskHeader before="Nothing" time="1 minute" after="A patient record you can raise a test request against" />
 
 ## Register a patient
 
 <Steps>
   <Step title="Open the patient list">
-    Go to **Patients**. The toolbar carries **Search patients...** and **New
-    Patient**.
+    Go to **Patients**. The toolbar carries **Search patients...** and **New Patient**.
   </Step>
-
   <Step title="Start a record">
-    Select **New Patient**. The form is grouped into **Personal Information**
-    ("Basic identity and demographic details."), **Contact Information**,
-    **Medical Profile**, plus **Profile Photo** and **Patient Type** cards.
+    Select **New Patient**. The form is grouped into **Personal Information** ("Basic identity and demographic details."), **Contact Information**, **Medical Profile**, plus **Profile Photo** and **Patient Type** cards.
   </Step>
-
   <Step title="Fill in who they are">
-    Under **Personal Information**: **Title**, **First Name**, **Middle Name**,
-    **Last Name**, **Gender**, **Date of Birth**, **Marital Status** and
-    **National ID** ("e.g. SSN or NIN"). Get the name and date of birth right —
-    they print on every report, and a report with the wrong identity on it is
-    the one mistake this workflow cannot absorb.
+    Under **Personal Information**: **Title**, **First Name**, **Middle Name**, **Last Name**, **Gender**, **Date of Birth**, **Marital Status** and **National ID** ("e.g. SSN or NIN"). Get the name and date of birth right — they print on every report, and a report with the wrong identity on it is the one mistake this workflow cannot absorb.
   </Step>
-
   <Step title="Add a way to reach them">
-    Under **Contact Information**: **Email Address**, **Primary Phone** (with a
-    country-code picker), **Secondary Phone**, **Residential Address** and a
-    next-of-kin **Full Name**, **Phone Number** and **Address**. A phone number
-    is what lets you call a critical result through instead of waiting for
-    someone to open a report.
+    Under **Contact Information**: **Email Address**, **Primary Phone** (with a country-code picker), **Secondary Phone**, **Residential Address** and a next-of-kin **Full Name**, **Phone Number** and **Address**. A phone number is what lets you call a critical result through instead of waiting for someone to open a report.
   </Step>
-
   <Step title="Record anything that changes interpretation">
-    Under **Medical Profile**: **Blood Type**, **Genotype**, **Allergies**
-    ("Known allergies (food, drug, etc)"), **Medical History** and **Current
-    Medications**. Medication matters more in a lab than people expect — it
-    explains half the unexpected results you will chase.
+    Under **Medical Profile**: **Blood Type**, **Genotype**, **Allergies** ("Known allergies (food, drug, etc)"), **Medical History** and **Current Medications**. Medication matters more in a lab than people expect — it explains half the unexpected results you will chase.
   </Step>
-
   <Step title="Link a dependent, if they are one">
-    On the **Patient Type** card, set **Is Dependent?** and choose a sponsor
-    under **Select Sponsor**. Use this where one payer covers several people —
-    a parent and children, or an employer account.
+    On the **Patient Type** card, set **Is Dependent?** and choose a sponsor under **Select Sponsor**. Use this where one payer covers several people — a parent and children, or an employer account.
   </Step>
-
   <Step title="Save">
-    Select **Create Patient** (the button reads **Creating...**). A **Patient
-    Created** toast confirms it and you land back on the patient list.
+    Select **Create Patient** (the button reads **Creating...**). A **Patient Created** toast confirms it and you land back on the patient list.
   </Step>
 </Steps>
 
 <Note>
-  The create form is deliberately forgiving — you can save with only what you
-  have at the counter and complete the record later. That is not permission to
-  leave the name or date of birth blank; it is there so a rushed registration
-  does not block a specimen that is already in the building.
+  The create form is deliberately forgiving — you can save with only what you have at the counter and complete the record later. That is not permission to leave the name or date of birth blank; it is there so a rushed registration does not block a specimen that is already in the building.
 </Note>
 
 ## Registering with no connection
 
-Patient search works offline but is reduced to name and patient number, and
-returns at most 25 matches. Search precisely, and if you cannot find someone you
-are sure exists, check again once you are back online rather than creating a
-second record for the same person. See [Working offline](/platform/apps/offline).
+Patient search works offline but is reduced to name and patient number, and returns at most 25 matches. Search precisely, and if you cannot find someone you are sure exists, check again once you are back online rather than creating a second record for the same person. See [Working offline](/platform/apps/offline).
 
 <AuditNote action="Opening a patient record" />
 
 ## Check it worked
 
 - The patient appears in **Patients** and is found by **Search patients...**.
-- They can be chosen under **Patient Details** on the ordering form — see
-  [Raise a test request](/lims/lab/test-requests).
+- They can be chosen under **Patient Details** on the ordering form — see [Raise a test request](/lims/lab/test-requests).
 - The floating **Setup** checklist ticks **Register your first patient**.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="I have created the same patient twice">
-    Keep the record the samples are attached to and stop using the other. Ask a
-    Lab Manager before deleting anything — a record with results on it is part
-    of the clinical history.
+    Keep the record the samples are attached to and stop using the other. Ask a Lab Manager before deleting anything — a record with results on it is part of the clinical history.
   </Accordion>
 
   <Accordion title="The patient is not in the ordering form's search">
-    Check you saved (a **Patient Created** toast) and that you are searching a
-    name that matches what you entered — a middle name in the first-name field
-    will not match.
+    Check you saved (a **Patient Created** toast) and that you are searching a name that matches what you entered — a middle name in the first-name field will not match.
   </Accordion>
 
   <Accordion title="New Patient is not on my toolbar">
-    Your role does not include patient registration. Radiologists and
-    bench-only scientists do not get it — see [Roles](/platform/team/roles).
+    Your role does not include patient registration. Radiologists and bench-only scientists do not get it — see [Roles](/platform/team/roles).
   </Accordion>
 
   <Accordion title="I registered against the wrong site">
-    Records belong to the site you were in when you created them. Switch sites
-    and check before re-creating — see
-    [Switching workspaces](/platform/account/switching-workspaces).
+    Records belong to the site you were in when you created them. Switch sites and check before re-creating — see [Switching workspaces](/platform/account/switching-workspaces).
   </Accordion>
 
   <Accordion title="This is a donor for a regulated drug test">
-    Regulated collections capture donor identity through their own chain-of-
-    custody forms. See [DOT collection](/lims/dot/collection).
+    Regulated collections capture donor identity through their own chain-of- custody forms. See [DOT collection](/lims/dot/collection).
   </Accordion>
 </AccordionGroup>
 

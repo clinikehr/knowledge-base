@@ -1,7 +1,7 @@
 ---
-title: "Install the desktop app"
+title: Install the desktop app
 description: "Run your pharmacy from an installed app that prints receipts silently, keeps a durable sale queue and talks to counter hardware."
-icon: "/images/icons/monitor.svg"
+icon: /images/icons/monitor.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -10,64 +10,41 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Any staff member" />
 
-The desktop app is the same pharmacy workspace you use in a browser, installed
-on the till. It adds the four things a browser cannot do: print a receipt
-without a dialog, keep queued sales somewhere durable, reach a serial count
-terminal, and boot straight into the till.
+The desktop app is the same pharmacy workspace you use in a browser, installed on the till. It adds the four things a browser cannot do: print a receipt without a dialog, keep queued sales somewhere durable, reach a serial count terminal, and boot straight into the till.
 
-It contains **no app code of its own** — it loads your hosted workspace, exactly
-as a browser does. That is deliberate: it can never fall behind the web version,
-and there is no second product to keep in step.
+It contains **no app code of its own** — it loads your hosted workspace, exactly as a browser does. That is deliberate: it can never fall behind the web version, and there is no second product to keep in step.
 
-<TaskHeader
-  before="A Windows, macOS or Linux machine, and your usual sign-in"
-  time="5 minutes, plus one online sign-in"
-  after="An installed till app with silent receipt printing and a durable offline queue"
-/>
+<TaskHeader before="A Windows, macOS or Linux machine, and your usual sign-in" time="5 minutes, plus one online sign-in" after="An installed till app with silent receipt printing and a durable offline queue" />
 
 ## Pick the right build
 
 | Build | Opens into | Idle lock | Install it on |
-|---|---|---|---|
+| --- | --- | --- | --- |
 | **Pharmacy POS** | Straight into the till, in kiosk mode | None | Counter terminals |
 | **ClinikEHR Desktop** | A normal window with the whole workspace | 15 minutes, and it really signs you out | Back-office and manager machines |
 | Diagnostics | The Diagnostics workspace | 15 minutes | Not a pharmacy install |
 
-**Pharmacy POS** has no idle lock on purpose — a till that logs itself out
-between customers is a till that loses a queue of people. **ClinikEHR
-Desktop** does lock, because a back-office machine is shared and left unattended.
+**Pharmacy POS** has no idle lock on purpose — a till that logs itself out between customers is a till that loses a queue of people. **ClinikEHR Desktop** does lock, because a back-office machine is shared and left unattended.
 
-Installers are published per operating system: an installer `.exe` on Windows, a
-`.dmg` or `.zip` on macOS, and an AppImage or `.deb` on Linux. Get the current
-links from [Desktop app downloads](/platform/apps/desktop).
+Installers are published per operating system: an installer `.exe` on Windows, a `.dmg` or `.zip` on macOS, and an AppImage or `.deb` on Linux. Get the current links from [Desktop app downloads](/platform/apps/desktop).
 
 ## Install and set up
 
 <Steps>
   <Step title="Download the installer for this machine">
-    Match the build to what the machine is for — **Pharmacy POS** on a counter
-    terminal, **ClinikEHR Desktop** on a back-office PC.
+    Match the build to what the machine is for — **Pharmacy POS** on a counter terminal, **ClinikEHR Desktop** on a back-office PC.
   </Step>
-
   <Step title="Run the installer">
     On Windows, see the SmartScreen note below before you start.
   </Step>
-
   <Step title="Open it while the machine is online">
-    This step is not optional. The app has to load your workspace once with a
-    working connection before anything offline will work — until it has, there
-    is nothing cached to fall back to.
+    This step is not optional. The app has to load your workspace once with a working connection before anything offline will work — until it has, there is nothing cached to fall back to.
   </Step>
-
   <Step title="Sign in exactly as you do in a browser">
-    Same email, same password, same two-factor. Nothing privileged ships inside
-    the app: it authenticates as your own user, so what you can see and do is
-    identical to the browser.
+    Same email, same password, same two-factor. Nothing privileged ships inside the app: it authenticates as your own user, so what you can see and do is identical to the browser.
   </Step>
-
   <Step title="Set the receipt paper form on this machine">
-    Do it now, once, rather than discovering it mid-sale. See
-    [Set up your receipt printer](/pharmacy/hardware/thermal-printer).
+    Do it now, once, rather than discovering it mid-sale. See [Set up your receipt printer](/pharmacy/hardware/thermal-printer).
   </Step>
 </Steps>
 
@@ -75,70 +52,50 @@ links from [Desktop app downloads](/platform/apps/desktop).
 
 <Columns cols={2}>
   <Card title="Silent receipt printing" icon="/images/icons/print.svg">
-    Receipts go straight to the counter printer with no print dialog, and a
-    toast confirms it. See
-    [the receipt printer setup](/pharmacy/hardware/thermal-printer).
+    Receipts go straight to the counter printer with no print dialog, and a toast confirms it. See [the receipt printer setup](/pharmacy/hardware/thermal-printer).
   </Card>
+
   <Card title="A durable sale queue" icon="/images/icons/database.svg">
-    Sales captured offline are stored outside the browser profile, so clearing
-    browser data does not lose queued sales. See
-    [Selling when the internet is down](/pharmacy/pos/offline).
+    Sales captured offline are stored outside the browser profile, so clearing browser data does not lose queued sales. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Card>
+
   <Card title="Serial hardware" icon="/images/icons/barcode.svg">
-    Reaches a barcode count terminal in its USB cradle for stock counts. See
-    [Count stock with a CipherLab terminal](/pharmacy/inventory/cipherlab).
+    Reaches a barcode count terminal in its USB cradle for stock counts. See [Count stock with a CipherLab terminal](/pharmacy/inventory/cipherlab).
   </Card>
+
   <Card title="Automatic updates" icon="/images/icons/rotate.svg">
-    The app shell updates itself. The workspace inside it is always the live
-    version regardless.
+    The app shell updates itself. The workspace inside it is always the live version regardless.
   </Card>
 </Columns>
 
 ## Check it worked
 
-- The app opens on your pharmacy workspace, signed in, with the same sidebar you
-  see in a browser.
+- The app opens on your pharmacy workspace, signed in, with the same sidebar you see in a browser.
 - On the **Pharmacy POS** build, it lands on the till.
-- The till header shows a settings control for the receipt printer — that
-  control appears **only** inside the desktop app, so seeing it confirms you are
-  running the app rather than a browser window.
-- A test sale prints without a print dialog and toasts **"Receipt sent to
-  printer"**.
+- The till header shows a settings control for the receipt printer — that control appears **only** inside the desktop app, so seeing it confirms you are running the app rather than a browser window.
+- A test sale prints without a print dialog and toasts **"Receipt sent to printer"**.
 
 ## Before you rely on it
 
 <AccordionGroup>
   <Accordion title="It must be opened once online before offline selling works">
-    A cold start with nothing cached cannot show your workspace at all — you get
-    an offline page with a **Retry** button. Open the app on the counter, sign
-    in, and let the till load fully **before** the first time you need it
-    offline. This is the single most common setup mistake.
+    A cold start with nothing cached cannot show your workspace at all — you get an offline page with a **Retry** button. Open the app on the counter, sign in, and let the till load fully **before** the first time you need it offline. This is the single most common setup mistake.
   </Accordion>
 
   <Accordion title="Windows shows a SmartScreen warning">
-    Current builds are unsigned, so Windows SmartScreen shows an
-    "unrecognised app" click-through on first run. Choose **More info** and then
-    **Run anyway**. Download installers only from the links your workspace gives
-    you.
+    Current builds are unsigned, so Windows SmartScreen shows an "unrecognised app" click-through on first run. Choose **More info** and then **Run anyway**. Download installers only from the links your workspace gives you.
   </Accordion>
 
   <Accordion title="External links open in your normal browser">
-    The app is locked to your workspace's own address and will not navigate
-    anywhere else, so anything external — a supplier site, a support article —
-    opens in your default browser instead. That lock is a safety feature, not a
-    fault.
+    The app is locked to your workspace's own address and will not navigate anywhere else, so anything external — a supplier site, a support article — opens in your default browser instead. That lock is a safety feature, not a fault.
   </Accordion>
 
   <Accordion title="Offline covers the till, and only the till">
-    Sale capture queues and replays. Payment, returns and workflow steps on
-    existing records do not happen offline in the app any more than they do in a
-    browser. See [Working offline](/platform/apps/offline).
+    Sale capture queues and replays. Payment, returns and workflow steps on existing records do not happen offline in the app any more than they do in a browser. See [Working offline](/platform/apps/offline).
   </Accordion>
 
   <Accordion title="Nothing to configure inside the app">
-    There are no settings to copy between machines except the receipt paper
-    form, which is per-computer by design. Everything else — your prices, stock,
-    staff and permissions — lives in the workspace and follows your sign-in.
+    There are no settings to copy between machines except the receipt paper form, which is per-computer by design. Everything else — your prices, stock, staff and permissions — lives in the workspace and follows your sign-in.
   </Accordion>
 </AccordionGroup>
 

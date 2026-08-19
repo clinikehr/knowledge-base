@@ -1,7 +1,7 @@
 ---
-title: "Give an agent tools and knowledge"
+title: Give an agent tools and knowledge
 description: "Add a knowledge base, connect an outside tool server, put a person in the loop, and shape data between the steps of an agent."
-icon: "/images/icons/toolbox.svg"
+icon: /images/icons/toolbox.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -9,27 +9,18 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability
-  editions={['clinic', 'pharmacy']}
-  plans="Drafting on every plan — deploying is capped by plan"
-/>
+<Availability editions={['clinic', 'pharmacy']} plans="Drafting on every plan — deploying is capped by plan" />
 
-An **Agent** node on its own can only reason about what you type into it. Tools
-are what let it answer from your own material, call an outside system, check
-itself before it speaks, and pause for a person.
+An **Agent** node on its own can only reason about what you type into it. Tools are what let it answer from your own material, call an outside system, check itself before it speaks, and pause for a person.
 
 <Path steps={['Sidebar', 'AI Agents']} />
 
-<TaskHeader
-  before="An agent on the canvas — see Build an AI agent"
-  time="5 minutes per tool"
-  after="An agent that answers from your own documents, or acts through a connected system"
-/>
+<TaskHeader before="An agent on the canvas — see Build an AI agent" time="5 minutes per tool" after="An agent that answers from your own documents, or acts through a connected system" />
 
 ## The tool and logic nodes
 
 | Node | Group | What it does |
-|---|---|---|
+| --- | --- | --- |
 | **File search** | Tools | Looks up your own material in a knowledge base and hands the matches to the next step. |
 | **Guardrails** | Tools | Checks a value before it goes any further and routes **pass** or **fail**. |
 | **MCP** | Tools | Calls one tool on a connected outside server. Deterministic — no model, no credit. |
@@ -39,49 +30,31 @@ itself before it speaks, and pause for a person.
 | **Transform** | Data | Reshapes values between steps. |
 | **Set state** | Data | Stores a value the later steps can read. |
 
-Only **Agent** and **Classify** spend [credits](/platform/ai/credits). Every
-node on this page is free to run.
+Only **Agent** and **Classify** spend [credits](/platform/ai/credits). Every node on this page is free to run.
 
 ## Answer from your own material
 
 <Steps>
   <Step title="Add a File search node">
-    Drag **File search** onto the canvas and connect it before the **Agent**
-    node that will use its results.
+    Drag **File search** onto the canvas and connect it before the **Agent** node that will use its results.
   </Step>
-
   <Step title="Create a knowledge base">
-    In the node's panel, give it a **Knowledge base name** and paste your
-    content — the box prompts you to "Paste FAQs, policies, protocols…". Opening
-    hours, preparation instructions, a returns policy and a referral protocol
-    are all good candidates.
+    In the node's panel, give it a **Knowledge base name** and paste your content — the box prompts you to "Paste FAQs, policies, protocols…". Opening hours, preparation instructions, a returns policy and a referral protocol are all good candidates.
   </Step>
-
   <Step title="Point the Agent node at the results">
-    The search writes its matches into the run. Reference them from the
-    **Agent** node's instructions so the model answers from your material rather
-    than from general knowledge.
+    The search writes its matches into the run. Reference them from the **Agent** node's instructions so the model answers from your material rather than from general knowledge.
   </Step>
 </Steps>
 
-Keep one knowledge base per subject rather than one enormous one — a narrow
-search returns better matches, and you can retire a policy without rewriting
-everything else.
+Keep one knowledge base per subject rather than one enormous one — a narrow search returns better matches, and you can retire a policy without rewriting everything else.
 
 ## Constrain what the agent may say
 
-**Guardrails** checks a value and sends the run down a **pass** or a **fail**
-path. Put one between the **Agent** node and anything that sends a message, and
-route **fail** to an **End** node or to a **User approval** step so a doubtful
-answer is seen by a person instead of a customer.
+**Guardrails** checks a value and sends the run down a **pass** or a **fail** path. Put one between the **Agent** node and anything that sends a message, and route **fail** to an **End** node or to a **User approval** step so a doubtful answer is seen by a person instead of a customer.
 
 ## Put a person in the loop
 
-**User approval** is the node to reach for whenever the agent is about to do
-something you would want to sign off yourself — sending a message on your
-workspace's behalf, changing a record, or committing money. The run halts at
-that node until someone approves it, so an agent that would otherwise act at
-3 a.m. simply waits.
+**User approval** is the node to reach for whenever the agent is about to do something you would want to sign off yourself — sending a message on your workspace's behalf, changing a record, or committing money. The run halts at that node until someone approves it, so an agent that would otherwise act at 3 a.m. simply waits.
 
 ## Connect an outside tool server
 
@@ -89,93 +62,57 @@ An **MCP** node lets an agent call a system you already use.
 
 <Steps>
   <Step title="Add the server">
-    From the **MCP** node's panel, or from
-    <Path steps={['Settings', 'AI Settings']} /> under **Connected tools (MCP)**,
-    select **Add MCP server**. Enter a **Name (e.g. Weather API)** and the
-    server's address — the field shows the shape it expects,
-    `https://server.example.com/mcp`.
+    From the **MCP** node's panel, or from <Path steps={['Settings', 'AI Settings']} /> under **Connected tools (MCP)**, select **Add MCP server**. Enter a **Name (e.g. Weather API)** and the server's address — the field shows the shape it expects, `https://server.example.com/mcp`.
   </Step>
-
   <Step title="Choose how it authenticates">
-    Pick **No auth**, **Bearer token**, or **OAuth**. OAuth asks for the
-    authorization endpoint, the token endpoint, a client ID, a client secret and
-    a scope, then opens the provider's own sign-in window.
+    Pick **No auth**, **Bearer token**, or **OAuth**. OAuth asks for the authorization endpoint, the token endpoint, a client ID, a client secret and a scope, then opens the provider's own sign-in window.
   </Step>
-
   <Step title="Check it responds">
-    Use the test action before saving. It reports how many tools the server
-    offers and names the first few, so you know you have the right address
-    before you build against it.
+    Use the test action before saving. It reports how many tools the server offers and names the first few, so you know you have the right address before you build against it.
   </Step>
-
   <Step title="Pick the tools the agent may call">
-    Select the server on the **MCP** node, then choose which of its tools this
-    agent is allowed to use. Give an agent the one tool it needs, not the whole
-    server.
+    Select the server on the **MCP** node, then choose which of its tools this agent is allowed to use. Give an agent the one tool it needs, not the whole server.
   </Step>
 </Steps>
 
 <Note>
-  Identifying details are stripped out of the arguments before anything is sent
-  to a third-party server, so a connected tool sees the question but not the
-  person it is about. That also means an outside tool cannot look someone up by
-  name — design around it rather than trying to defeat it. See
-  [AI safety and patient data](/platform/ai/safety).
+  Identifying details are stripped out of the arguments before anything is sent to a third-party server, so a connected tool sees the question but not the person it is about. That also means an outside tool cannot look someone up by name — design around it rather than trying to defeat it. See [AI safety and patient data](/platform/ai/safety).
 </Note>
 
 ## Reusable instructions and regression checks
 
 Two sheets in the canvas top bar are worth knowing about early:
 
-- **Playbooks** hold instructions you want more than one agent to follow, so a
-  wording change lands everywhere at once instead of in six separate nodes.
-- **Evals** record the answers you expect and re-check them after you edit.
-  Build a handful for anything you deploy — otherwise "I improved the prompt" is
-  a guess.
+- **Playbooks** hold instructions you want more than one agent to follow, so a wording change lands everywhere at once instead of in six separate nodes.
+- **Evals** record the answers you expect and re-check them after you edit. Build a handful for anything you deploy — otherwise "I improved the prompt" is a guess.
 
 ## Let other systems call your agents
 
-Your deployed agents can themselves be offered to another system as tools, from
-**Expose as MCP** ("let other agents call your agents") under
-<Path steps={['Settings', 'AI Settings']} />. Each endpoint is rate-limited,
-capped per month and revocable, and you choose which published agents it
-exposes. This is a Team feature.
+Your deployed agents can themselves be offered to another system as tools, from **Expose as MCP** ("let other agents call your agents") under <Path steps={['Settings', 'AI Settings']} />. Each endpoint is rate-limited, capped per month and revocable, and you choose which published agents it exposes. This is a Team feature.
 
 ## Check it worked
 
-- The **File search** node names your knowledge base, and a **Preview** run
-  quotes something only your own material could have said.
+- The **File search** node names your knowledge base, and a **Preview** run quotes something only your own material could have said.
 - The **MCP** node lists the connected server's tools in its picker.
-- A run that hits **User approval** appears on the **Runs** page waiting rather
-  than finished.
+- A run that hits **User approval** appears on the **Runs** page waiting rather than finished.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The agent ignores my knowledge base">
-    Check the **File search** node actually runs before the **Agent** node — a
-    node that is on the canvas but not connected never executes. Then check the
-    **Agent** node's instructions refer to the search results; the model does not
-    read them automatically.
+    Check the **File search** node actually runs before the **Agent** node — a node that is on the canvas but not connected never executes. Then check the **Agent** node's instructions refer to the search results; the model does not read them automatically.
   </Accordion>
 
   <Accordion title="The MCP server cannot be reached">
-    Test the address before saving. A trailing path matters — most servers
-    expect the address to end in `/mcp`. If it authenticates with a token,
-    confirm the token is current; if with OAuth, look for a **Reconnect** badge
-    on the server and reconnect it.
+    Test the address before saving. A trailing path matters — most servers expect the address to end in `/mcp`. If it authenticates with a token, confirm the token is current; if with OAuth, look for a **Reconnect** badge on the server and reconnect it.
   </Accordion>
 
   <Accordion title="The outside tool cannot find the person I asked about">
-    That is the de-identification working. Names and identifying details never
-    leave your workspace, so an outside tool cannot match on them. Do the lookup
-    inside ClinikEHR and send the outside tool only what it genuinely needs.
+    That is the de-identification working. Names and identifying details never leave your workspace, so an outside tool cannot match on them. Do the lookup inside ClinikEHR and send the outside tool only what it genuinely needs.
   </Accordion>
 
   <Accordion title="Approvals are piling up">
-    **User approval** blocks the run until someone acts. If nobody is watching,
-    move the approval to only the branch that needs it, or replace it with
-    **Guardrails** for the cases that can be decided automatically.
+    **User approval** blocks the run until someone acts. If nobody is watching, move the approval to only the branch that needs it, or replace it with **Guardrails** for the cases that can be decided automatically.
   </Accordion>
 </AccordionGroup>
 
@@ -185,6 +122,7 @@ exposes. This is a Team feature.
   <Card title="Build an AI agent" icon="/images/icons/robot.svg" href="/platform/ai/agents">
     The canvas, triggers, and why Deploy is the step that matters.
   </Card>
+
   <Card title="AI safety and patient data" icon="/images/icons/shield-heart.svg" href="/platform/ai/safety">
     What leaves your workspace, and what never does.
   </Card>

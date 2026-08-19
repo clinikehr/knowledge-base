@@ -1,7 +1,7 @@
 ---
-title: "Selling when the internet is down"
+title: Selling when the internet is down
 description: "Keep the till running through an outage: what still works, what has to wait, and how saved sales catch up when the connection returns."
-icon: "/images/icons/wifi-off.svg"
+icon: /images/icons/wifi-off.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,18 +11,11 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Dispense and sell at the till'" />
 
-The till is built to keep selling when the connection is not there. You ring
-sales up exactly as you always do; they are saved on the terminal and sync
-themselves the moment the network comes back. Nothing is queued behind a spinner
-and nobody is asked to write on paper.
+The till is built to keep selling when the connection is not there. You ring sales up exactly as you always do; they are saved on the terminal and sync themselves the moment the network comes back. Nothing is queued behind a spinner and nobody is asked to write on paper.
 
 <Path steps={['Sidebar', 'POS']} />
 
-<TaskHeader
-  before="The terminal must have loaded the till at least once while online"
-  time="No extra time — you work as normal"
-  after="Sales saved on the device with provisional numbers, syncing on their own when the connection returns"
-/>
+<TaskHeader before="The terminal must have loaded the till at least once while online" time="No extra time — you work as normal" after="Sales saved on the device with provisional numbers, syncing on their own when the connection returns" />
 
 ## What works, and what does not
 
@@ -30,218 +23,143 @@ Capture works offline. Completion does not — and that boundary is deliberate.
 
 <Columns cols={2}>
   <Card title="Works offline" icon="/images/icons/circle-check.svg">
-    - Ringing up and completing a sale on **any** payment method, including
-      part-payment and credit
-    - Barcode scanning and product search, against the cached catalogue — the
-      **whole** sellable list, not just the 100 tiles on screen
+    - Ringing up and completing a sale on **any** payment method, including part-payment and credit
+    - Barcode scanning and product search, against the cached catalogue — the **whole** sellable list, not just the 100 tiles on screen
     - Holding and resuming carts
-    - Interaction screening against the cached ruleset, including a pharmacist's
-      acknowledgement
+    - Interaction screening against the cached ruleset, including a pharmacist's acknowledgement
     - Printing the receipt
     - The calculator
   </Card>
 
   <Card title="Needs a connection" icon="/images/icons/circle-xmark.svg">
-    - **Account balance** as a tender — "Account balance needs a connection —
-      take cash or card, or wait for the network."
+    - **Account balance** as a tender — "Account balance needs a connection — take cash or card, or wait for the network."
     - Searching for a registered customer
     - Redeeming a loyalty reward (it stays available for next time)
-    - Everything outside the till: dispensing workflow, receiving stock,
-      billing and reports
+    - Everything outside the till: dispensing workflow, receiving stock, billing and reports
   </Card>
 </Columns>
 
-The reason is the same in every case: capturing what happened at your counter is
-safe to do alone, but anything that depends on a shared balance — someone else's
-wallet, a reward, stock another branch is also drawing on — cannot be decided by
-one terminal in the dark.
+The reason is the same in every case: capturing what happened at your counter is safe to do alone, but anything that depends on a shared balance — someone else's wallet, a reward, stock another branch is also drawing on — cannot be decided by one terminal in the dark.
 
 ## Sell through an outage
 
 <Steps>
   <Step title="Notice the bar">
-    An amber chip appears in the header: **Offline · stock as of 14:32**. When
-    everything is healthy the bar shows nothing at all, so if you can see it,
-    there is something to know.
+    An amber chip appears in the header: **Offline · stock as of 14:32**. When everything is healthy the bar shows nothing at all, so if you can see it, there is something to know.
   </Step>
-
   <Step title="Ring the sale up as normal">
-    Scan or search, build the cart, take **Cash**, **Card**, **Mobile Money**,
-    **Bank Transfer**, **Insurance** or **Other**, including part payment on
-    credit. Only **Account balance** is unavailable.
+    Scan or search, build the cart, take **Cash**, **Card**, **Mobile Money**, **Bank Transfer**, **Insurance** or **Other**, including part payment on credit. Only **Account balance** is unavailable.
   </Step>
-
   <Step title="Complete it">
-    The panel reads **Sale Saved Offline** — "Saved on this device — it will
-    sync automatically when you're back online." — with the chip **Provisional —
-    will confirm on sync** and a **Provisional No.** in place of a sale number.
-    The toast reads **Sale saved — will sync when back online**.
+    The panel reads **Sale Saved Offline** — "Saved on this device — it will sync automatically when you're back online." — with the chip **Provisional — will confirm on sync** and a **Provisional No.** in place of a sale number. The toast reads **Sale saved — will sync when back online**.
   </Step>
-
   <Step title="Give the customer their slip">
-    The receipt prints with **PROVISIONAL — WILL CONFIRM ON SYNC** and the
-    provisional number, and **no barcode** — that number does not exist on the
-    server yet. Quote the provisional number if the customer asks. See
-    [Print and reprint receipts](/pharmacy/pos/receipts).
+    The receipt prints with **PROVISIONAL — WILL CONFIRM ON SYNC** and the provisional number, and **no barcode** — that number does not exist on the server yet. Quote the provisional number if the customer asks. See [Print and reprint receipts](/pharmacy/pos/receipts).
   </Step>
-
   <Step title="Keep going">
-    The status button counts the sales waiting. There is no limit you need to
-    watch and no point at which you should stop and wait.
+    The status button counts the sales waiting. There is no limit you need to watch and no point at which you should stop and wait.
   </Step>
 </Steps>
 
 ## What happens when the connection returns
 
-Sales sync on their own, one at a time, in the order you took them. You do not
-have to press anything.
+Sales sync on their own, one at a time, in the order you took them. You do not have to press anything.
 
 Open the **Sync status** sheet from the bar to watch:
 
 | You see | It means |
-|---|---|
+| --- | --- |
 | "Connected. Queued sales sync automatically." | The link is back and the queue is draining |
 | "Offline. Sales are saved and will sync when you're back online." | Still no connection; everything is safely on the device |
 | **Waiting to sync** | Sales still to go up |
 | **Need review** | Sales the server refused — a person has to look at these |
 | **Synced** on the status button | The queue is empty |
 
-**Sync now** forces a drain if you would rather not wait. **Rejected sales**
-lists anything that needs review with its provisional number, when it was taken
-and what went wrong, and **Last error:** shows the most recent failure.
+**Sync now** forces a drain if you would rather not wait. **Rejected sales** lists anything that needs review with its provisional number, when it was taken and what went wrong, and **Last error:** shows the most recent failure.
 
 ## Three outcomes, and why you cannot be double-charged
 
-Every sale carries its own key from the moment you complete it, and that key
-travels with it through every retry.
+Every sale carries its own key from the moment you complete it, and that key travels with it through every retry.
 
 <AccordionGroup>
   <Accordion title="Online — it goes straight through">
-    The sale gets a real number immediately and the toast reads **Sale completed
-    successfully!**
+    The sale gets a real number immediately and the toast reads **Sale completed successfully!**
   </Accordion>
 
   <Accordion title="Offline — it is saved and queued">
-    The sale is stored on the terminal with a provisional number and syncs
-    later. It is a real sale from the moment you complete it; only its number is
-    provisional.
+    The sale is stored on the terminal with a provisional number and syncs later. It is a real sale from the moment you complete it; only its number is provisional.
   </Accordion>
 
   <Accordion title="The connection died mid-request — the risky one, handled">
-    This is the case that used to create duplicates: the sale reached the server,
-    the reply did not reach the till. Because the retry carries the same key, the
-    server recognises it and reports **This sale was already processed** instead
-    of recording a second one. The customer is charged once.
+    This is the case that used to create duplicates: the sale reached the server, the reply did not reach the till. Because the retry carries the same key, the server recognises it and reports **This sale was already processed** instead of recording a second one. The customer is charged once.
   </Accordion>
 </AccordionGroup>
 
 ## Retries, and what "Need review" means
 
-- **Anything that failed to reach the server** is retried automatically, with a
-  growing gap between attempts so a flapping connection is not hammered.
-- **A sale the server actively refuses** — a bad payload, a product it does not
-  recognise — is *not* retried silently. It goes to **Need review** and waits for
-  a person, because repeating a refused write forever is how quiet data loss
-  happens.
-- **Stock shortfalls are not rejections.** A sale that went beyond recorded
-  stock syncs perfectly well and shows up on **Inventory › Reconciliation** to
-  be squared off later.
+- **Anything that failed to reach the server** is retried automatically, with a growing gap between attempts so a flapping connection is not hammered.
+- **A sale the server actively refuses** — a bad payload, a product it does not recognise — is _not_ retried silently. It goes to **Need review** and waits for a person, because repeating a refused write forever is how quiet data loss happens.
+- **Stock shortfalls are not rejections.** A sale that went beyond recorded stock syncs perfectly well and shows up on **Inventory › Reconciliation** to be squared off later.
 
-If the session has expired, the queue parks rather than failing: a red **Sign in
-to sync** chip appears and the sheet says "Your session expired. Sign in again
-to sync \{n\} saved sale(s)." Sign in and the drain resumes. Nobody is ever asked
-to store a password to keep syncing.
+If the session has expired, the queue parks rather than failing: a red **Sign in to sync** chip appears and the sheet says "Your session expired. Sign in again to sync \{n\} saved sale(s)." Sign in and the drain resumes. Nobody is ever asked to store a password to keep syncing.
 
 <Warning>
-  Unsynced sales live on that terminal and nowhere else. Do not clear the
-  browser's site data, uninstall the desktop app, or wipe the machine while the
-  status button still shows a pending count — those sales are not recoverable
-  afterwards. Get to **Synced** first.
+  Unsynced sales live on that terminal and nowhere else. Do not clear the browser's site data, uninstall the desktop app, or wipe the machine while the status button still shows a pending count — those sales are not recoverable afterwards. Get to **Synced** first.
 </Warning>
 
 ## Stale figures are labelled, always
 
-While you are offline, the cached catalogue is treated as stale **regardless of
-its age**, and the header says **Stock as of HH:MM** so the number never
-pretends to be live. Low-stock badges are muted for the same reason. The cache
-also goes stale after about fifteen minutes online, and is replaced wholesale
-rather than patched.
+While you are offline, the cached catalogue is treated as stale **regardless of its age**, and the header says **Stock as of HH:MM** so the number never pretends to be live. Low-stock badges are muted for the same reason. The cache also goes stale after about fifteen minutes online, and is replaced wholesale rather than patched.
 
-Read the label and trust it: a figure presented as "as of 14:32" is exactly
-that, and another till may have sold the last box at 14:40.
+Read the label and trust it: a figure presented as "as of 14:32" is exactly that, and another till may have sold the last box at 14:40.
 
 ## Before the outage: prime the terminal
 
-A device can only work offline if it has loaded the till at least once while
-online — that is when it takes its copy of the catalogue and the screening
-rules. Open **POS** on every counter machine on the day you set it up.
+A device can only work offline if it has loaded the till at least once while online — that is when it takes its copy of the catalogue and the screening rules. Open **POS** on every counter machine on the day you set it up.
 
-On the desktop app, a terminal that has never been primed shows an offline page
-headed **Can't reach ClinikEHR**: "This terminal needs to connect once to finish
-setting up. Check the network and try again — after the first successful load,
-the POS keeps working even when the connection drops." Select **Retry** once the
-network is back. Any sales already saved on that machine are safe — the page
-says so.
+On the desktop app, a terminal that has never been primed shows an offline page headed **Can't reach ClinikEHR**: "This terminal needs to connect once to finish setting up. Check the network and try again — after the first successful load, the POS keeps working even when the connection drops." Select **Retry** once the network is back. Any sales already saved on that machine are safe — the page says so.
 
-See [The desktop app](/pharmacy/hardware/desktop-app) and
-[Working offline](/platform/apps/offline).
+See [The desktop app](/pharmacy/hardware/desktop-app) and [Working offline](/platform/apps/offline).
 
 ## Check it worked
 
-- During the outage: sales complete, receipts print, and the status button
-  counts what is waiting.
-- After it: the status button reads **Synced**, **Waiting to sync** is zero, and
-  every sale appears in **Sales History** with a real receipt number and an
-  **Offline** badge showing where it was captured.
-- Sales taken offline count towards the day's totals and reports exactly like
-  any other.
+- During the outage: sales complete, receipts print, and the status button counts what is waiting.
+- After it: the status button reads **Synced**, **Waiting to sync** is zero, and every sale appears in **Sales History** with a real receipt number and an **Offline** badge showing where it was captured.
+- Sales taken offline count towards the day's totals and reports exactly like any other.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The count is not going down">
-    Open **Sync status** and select **Sync now**. If it stays put, check
-    **Last error:** and whether the **Sign in to sync** chip is showing — an
-    expired session parks the whole queue.
+    Open **Sync status** and select **Sync now**. If it stays put, check **Last error:** and whether the **Sign in to sync** chip is showing — an expired session parks the whole queue.
   </Accordion>
 
   <Accordion title="Sales are sitting in 'Need review'">
-    Those were refused rather than lost. Open the list, note the provisional
-    number, capture time and error for each, and re-enter the sale if it is
-    still valid. They will not disappear on their own, and they will not retry
-    silently.
+    Those were refused rather than lost. Open the list, note the provisional number, capture time and error for each, and re-enter the sale if it is still valid. They will not disappear on their own, and they will not retry silently.
   </Accordion>
 
   <Accordion title="'Account balance needs a connection'">
-    Wallet tender needs the live balance, which is why it is disabled offline.
-    Take cash or card, or wait for the network. See
-    [Take payment](/pharmacy/pos/payments).
+    Wallet tender needs the live balance, which is why it is disabled offline. Take cash or card, or wait for the network. See [Take payment](/pharmacy/pos/payments).
   </Accordion>
 
   <Accordion title="I cannot find a customer to attach">
-    Customer search needs a connection. Complete the sale as **Walk-in** with
-    their name and phone number in the optional boxes, and reconcile it
-    afterwards.
+    Customer search needs a connection. Complete the sale as **Walk-in** with their name and phone number in the optional boxes, and reconcile it afterwards.
   </Accordion>
 
   <Accordion title="A loyalty reward will not apply">
-    Redemption needs a connection. The reward is not lost — it stays available
-    for the customer's next visit.
+    Redemption needs a connection. The reward is not lost — it stays available for the customer's next visit.
   </Accordion>
 
   <Accordion title="The provisional receipt will not scan">
-    Provisional slips carry no barcode by design. After the sale syncs, find it
-    on the Sales page and reprint the confirmed receipt.
+    Provisional slips carry no barcode by design. After the sale syncs, find it on the Sales page and reprint the confirmed receipt.
   </Accordion>
 
   <Accordion title="Another till does not show my offline sales">
-    Queued sales live on the terminal that took them until they sync. They
-    appear everywhere once the queue drains.
+    Queued sales live on the terminal that took them until they sync. They appear everywhere once the queue drains.
   </Accordion>
 
   <Accordion title="Old synced sales vanished from the queue">
-    Synced entries are tidied up after about a week. They are on the server, in
-    **Sales History** — the local queue is a waiting room, not a record.
+    Synced entries are tidied up after about a week. They are on the server, in **Sales History** — the local queue is a waiting room, not a record.
   </Accordion>
 </AccordionGroup>
 

@@ -1,7 +1,7 @@
 ---
-title: "Send a prescription electronically"
+title: Send a prescription electronically
 description: "Register your practice with the e-prescribing partner, sync a patient, and send a prescription straight to a pharmacy."
-icon: "/images/icons/pill.svg"
+icon: /images/icons/pill.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,159 +11,102 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="A paid plan plus the ePrescribe add-on" roles="Prescribing clinicians with an activated add-on seat" />
 
-Electronic prescribing sends a prescription from a patient's record to a real
-pharmacy, through MDToolbox. It is an add-on rather than part of a plan, and
-there is a registration step before anything can be sent — so read the setup
-section before you promise a patient a prescription is on its way.
+Electronic prescribing sends a prescription from a patient's record to a real pharmacy, through MDToolbox. It is an add-on rather than part of a plan, and there is a registration step before anything can be sent — so read the setup section before you promise a patient a prescription is on its way.
 
 <Path steps={['Sidebar', 'Clients', 'a client', 'Medications']} />
 
-<TaskHeader
-  before="A registered practice, an activated ePrescribe seat, and a patient with a phone number, date of birth and address on file"
-  time="A few minutes per prescription"
-  after="A prescription sent to the pharmacy, and the medication listed under Current Medications"
-/>
+<TaskHeader before="A registered practice, an activated ePrescribe seat, and a patient with a phone number, date of birth and address on file" time="A few minutes per prescription" after="A prescription sent to the pharmacy, and the medication listed under Current Medications" />
 
 ## Getting set up
 
-Three things have to be true before the prescribing screen appears, and the tab
-tells you which one is missing.
+Three things have to be true before the prescribing screen appears, and the tab tells you which one is missing.
 
 <Steps>
   <Step title="An active paid plan">
-    On the Free plan, or on a paid plan whose payment is past due, the tab shows
-    an upgrade prompt instead. A lapsed payment collapses paid features until it
-    is settled — see [Change your plan](/platform/plans/change-plan).
+    On the Free plan, or on a paid plan whose payment is past due, the tab shows an upgrade prompt instead. A lapsed payment collapses paid features until it is settled — see [Change your plan](/platform/plans/change-plan).
   </Step>
-
   <Step title="The ePrescribe add-on, with a seat activated for this clinician">
-    The add-on is bought per prescribing seat. Without one you are told you need
-    to activate the ePrescribe Add-on seat for this clinician, with a
-    **Manage Add-ons** button.
+    The add-on is bought per prescribing seat. Without one you are told you need to activate the ePrescribe Add-on seat for this clinician, with a **Manage Add-ons** button.
   </Step>
-
   <Step title="Your practice registered with the partner">
-    Until that is done you see **Practice Registration Required** — your account
-    has the add-on active, but the practice is not registered yet. Select
-    **Register for ePrescriber** to open the partner's signup. They verify the
-    practice, and ClinikEHR support then activates your prescribing credentials.
-    If you have already registered and still see this message, the final
-    integration step is still in progress.
+    Until that is done you see **Practice Registration Required** — your account has the add-on active, but the practice is not registered yet. Select **Register for ePrescriber** to open the partner's signup. They verify the practice, and ClinikEHR support then activates your prescribing credentials. If you have already registered and still see this message, the final integration step is still in progress.
   </Step>
 </Steps>
 
 <Note>
-  The credentials that connect your practice to the partner are stored
-  encrypted and are never shown anywhere in the product — not to you, not to an
-  owner, not on any settings screen. There is nothing for you to copy, paste or
-  keep safe.
+  The credentials that connect your practice to the partner are stored encrypted and are never shown anywhere in the product — not to you, not to an owner, not on any settings screen. There is nothing for you to copy, paste or keep safe.
 </Note>
 
 ## Send a prescription
 
 <Steps>
   <Step title="Check the patient's details are complete">
-    They need a valid phone number, a date of birth and an address. This is the
-    single most common reason the next step fails, so it is worth a glance first.
+    They need a valid phone number, a date of birth and an address. This is the single most common reason the next step fails, so it is worth a glance first.
   </Step>
-
   <Step title="Open the patient and select the Medications tab">
-    The screen is headed **Medications & ePrescribe** — "Manage active
-    prescriptions and send to pharmacies".
+    The screen is headed **Medications & ePrescribe** — "Manage active prescriptions and send to pharmacies".
   </Step>
-
   <Step title="Sync the patient">
-    If the patient has never been sent across, select **Sync Patient**. When they
-    are already known you see **Synced with MDToolbox** instead, and there is
-    nothing to do.
+    If the patient has never been sent across, select **Sync Patient**. When they are already known you see **Synced with MDToolbox** instead, and there is nothing to do.
   </Step>
-
   <Step title="Select New Prescription">
-    On an unsynced patient the same button reads **Sync & Prescribe** and does
-    both in one go. Either opens the partner's prescribing window.
+    On an unsynced patient the same button reads **Sync & Prescribe** and does both in one go. Either opens the partner's prescribing window.
   </Step>
-
   <Step title="Write and send the prescription in that window">
-    Drug selection, dose, pharmacy and transmission all happen there. Come back
-    to ClinikEHR when you are done.
+    Drug selection, dose, pharmacy and transmission all happen there. Come back to ClinikEHR when you are done.
   </Step>
 </Steps>
 
 <Warning>
-  **A live connection sends to a real pharmacy.** There is no rehearsal mode
-  between you and the counter — a prescription you send while "just trying it
-  out" is a prescription somebody will dispense. When you are testing the
-  integration, use a patient you created for that purpose with details that are
-  obviously not a real person's, and never a live patient's record.
+  **A live connection sends to a real pharmacy.** There is no rehearsal mode between you and the counter — a prescription you send while "just trying it out" is a prescription somebody will dispense. When you are testing the integration, use a patient you created for that purpose with details that are obviously not a real person's, and never a live patient's record.
 </Warning>
 
 ## Current Medications
 
-Everything active for that patient is listed under **Current Medications**, with
-its dose, its frequency, an **Active** badge and the time it was last synced.
+Everything active for that patient is listed under **Current Medications**, with its dose, its frequency, an **Active** badge and the time it was last synced.
 
-Each row offers a reminder: **Refill reminder** if none is set, or
-**View reminder** if one is. A reminder appears on the patient's activity
-timeline and prompts your team when a refill is due — see
-[Prescriptions](/clinic/clinical/prescriptions).
+Each row offers a reminder: **Refill reminder** if none is set, or **View reminder** if one is. A reminder appears on the patient's activity timeline and prompts your team when a refill is due — see [Prescriptions](/clinic/clinical/prescriptions).
 
-If the list is empty you get **No Active Prescriptions Found**, which means
-nothing has been synced across for this patient — not that they have no
-medication. Anything recorded by hand elsewhere in the chart is separate from
-this list.
+If the list is empty you get **No Active Prescriptions Found**, which means nothing has been synced across for this patient — not that they have no medication. Anything recorded by hand elsewhere in the chart is separate from this list.
 
 <AuditNote action="Opening a patient's medication record" />
 
 ## Check it worked
 
-- The header shows **Synced with MDToolbox** rather than a **Sync Patient**
-  button.
-- The new medication appears under **Current Medications** with an **Active**
-  badge.
+- The header shows **Synced with MDToolbox** rather than a **Sync Patient** button.
+- The new medication appears under **Current Medications** with an **Active** badge.
 - The row shows a recent "Synced" time.
-- The pharmacy has it. If the partner's window reported success, the transmission
-  is theirs to confirm — ClinikEHR shows you what synced back.
+- The pharmacy has it. If the partner's window reported success, the transmission is theirs to confirm — ClinikEHR shows you what synced back.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The prescribing window will not open">
-    The message names the cause: the client's profile needs a valid phone number,
-    date of birth and address. Fill in whichever is missing on their record and
-    try again.
+    The message names the cause: the client's profile needs a valid phone number, date of birth and address. Fill in whichever is missing on their record and try again.
   </Accordion>
 
   <Accordion title="Sync Patient fails">
-    Same cause, same fix — a valid US phone number, date of birth and address on
-    the patient's profile. A missing area code is enough to fail it.
+    Same cause, same fix — a valid US phone number, date of birth and address on the patient's profile. A missing area code is enough to fail it.
   </Accordion>
 
   <Accordion title="Practice Registration Required, but we registered weeks ago">
-    Verification and credential activation are two steps, and the second is done
-    by ClinikEHR support. If it has been more than a few working days,
-    [contact support](/platform/help/contact-support) with your workspace name.
+    Verification and credential activation are two steps, and the second is done by ClinikEHR support. If it has been more than a few working days, [contact support](/platform/help/contact-support) with your workspace name.
   </Accordion>
 
   <Accordion title="One clinician can prescribe and another cannot">
-    The add-on is per seat. Activate a seat for that clinician under add-ons on
-    your billing screen.
+    The add-on is per seat. Activate a seat for that clinician under add-ons on your billing screen.
   </Accordion>
 
   <Accordion title="Everything worked yesterday and today it is locked">
-    Check your subscription. A payment that has failed collapses paid features
-    until it is settled, and the tab says so with a **Fix Payment** button. See
-    [Payment methods](/platform/plans/payment-methods).
+    Check your subscription. A payment that has failed collapses paid features until it is settled, and the tab says so with a **Fix Payment** button. See [Payment methods](/platform/plans/payment-methods).
   </Accordion>
 
   <Accordion title="A medication we prescribed is not in the list">
-    **Current Medications** shows what has synced back from the partner. A
-    medication recorded by hand in the chart, or one prescribed outside this
-    integration, lives elsewhere in the record.
+    **Current Medications** shows what has synced back from the partner. A medication recorded by hand in the chart, or one prescribed outside this integration, lives elsewhere in the record.
   </Accordion>
 
   <Accordion title="A pop-up blocker swallowed the window">
-    The prescribing screen opens in a new window. Allow pop-ups for ClinikEHR on
-    that browser and select the button again.
+    The prescribing screen opens in a new window. Allow pop-ups for ClinikEHR on that browser and select the button again.
   </Accordion>
 </AccordionGroup>
 
@@ -173,6 +116,7 @@ this list.
   <Card title="Prescriptions" icon="/images/icons/pills.svg" href="/clinic/clinical/prescriptions">
     Prescribing inside ClinikEHR, and refill reminders.
   </Card>
+
   <Card title="The patient chart" icon="/images/icons/folder-open.svg" href="/clinic/clinical/patient-chart">
     Where the Medications tab sits in the record.
   </Card>

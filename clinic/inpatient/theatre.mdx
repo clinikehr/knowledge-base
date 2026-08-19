@@ -1,7 +1,7 @@
 ---
-title: "Run the theatre list"
+title: Run the theatre list
 description: "Book a case, work the surgical safety checklist, move it through theatre and recovery, and sign the operation note."
-icon: "/images/icons/scissors.svg"
+icon: /images/icons/scissors.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,29 +11,17 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Theatre staff; booking, advancing, cancelling, and writing or signing the note are granted separately" />
 
-**Theatre List** is the day's operating list: "Scheduled cases, their status,
-and what is running late." Each case carries its safety checklist, its status
-and its operation note in one sheet.
+**Theatre List** is the day's operating list: "Scheduled cases, their status, and what is running late." Each case carries its safety checklist, its status and its operation note in one sheet.
 
 <Path steps={['Sidebar', 'Theatre', 'Theatre List']} />
 
-<TaskHeader
-  before="The Surgical theatre care area switched on, and permission to book a case"
-  time="2 minutes to book; the rest follows the case"
-  after="A case on the list, a completed checklist, and a signed operation note"
-/>
+<TaskHeader before="The Surgical theatre care area switched on, and permission to book a case" time="2 minutes to book; the rest follows the case" after="A case on the list, a completed checklist, and a signed operation note" />
 
-Theatre needs the enterprise plan **and** the **Surgical theatre** care area in
-**Settings → Facility**, which is **off by default**. Theatres themselves are
-created under **Settings → Theatre**.
+Theatre needs the enterprise plan **and** the **Surgical theatre** care area in **Settings → Facility**, which is **off by default**. Theatres themselves are created under **Settings → Theatre**.
 
 ## The list
 
-A day picker chooses which list you are looking at, **Refresh** re-reads it, and
-**Book case** adds to it. Four tiles run above — **Cases**, **In theatre**,
-**In recovery** and **Delayed** — each showing an em dash while it loads rather
-than a zero, so a number on screen is always a real count. An empty day reads
-**No cases scheduled**.
+A day picker chooses which list you are looking at, **Refresh** re-reads it, and **Book case** adds to it. Four tiles run above — **Cases**, **In theatre**, **In recovery** and **Delayed** — each showing an em dash while it loads rather than a zero, so a number on screen is always a real count. An empty day reads **No cases scheduled**.
 
 ## Book a case
 
@@ -41,38 +29,25 @@ than a zero, so a number on screen is always a real count. An empty day reads
   <Step title="Select Book case">
     The **Book a theatre case** sheet opens.
   </Step>
-
   <Step title="Choose the patient and the procedure">
-    Find the patient with **Search patients…**, then enter the **Procedure** —
-    the field's own example is "e.g. Laparoscopic appendicectomy". Set **Side**
-    to **Left**, **Right**, **Bilateral** or **Not applicable**.
+    Find the patient with **Search patients…**, then enter the **Procedure** — the field's own example is "e.g. Laparoscopic appendicectomy". Set **Side** to **Left**, **Right**, **Bilateral** or **Not applicable**.
   </Step>
-
   <Step title="Set urgency and coding">
-    **Urgency** is **Elective**, **Urgent** or **Emergency**. Add the
-    **Procedure code** and the **ASA grade** if your unit records them.
+    **Urgency** is **Elective**, **Urgent** or **Emergency**. Add the **Procedure code** and the **ASA grade** if your unit records them.
   </Step>
-
   <Step title="Assign a theatre and a time">
-    Choose the **Theatre**, or leave it **Unassigned** and allocate later. Set
-    **Start** and **End** — the end must be after the start.
+    Choose the **Theatre**, or leave it **Unassigned** and allocate later. Set **Start** and **End** — the end must be after the start.
   </Step>
-
   <Step title="Name the care team">
-    **Primary surgeon**, **Anaesthetist** and **Scrub nurse**. Add anything the
-    team needs beforehand under **Pre-operative notes**.
+    **Primary surgeon**, **Anaesthetist** and **Scrub nurse**. Add anything the team needs beforehand under **Pre-operative notes**.
   </Step>
-
   <Step title="Select Book case">
-    You get **Case booked — It now appears on the theatre list.** The case
-    number is generated automatically; you never type one.
+    You get **Case booked — It now appears on the theatre list.** The case number is generated automatically; you never type one.
   </Step>
 </Steps>
 
 <Note>
-  If no theatres exist yet the sheet says so: "No theatres are set up yet. Add
-  them in Settings → Theatre; a case can still be booked without one, and
-  assigned later." Booking is never blocked on the estate being configured.
+  If no theatres exist yet the sheet says so: "No theatres are set up yet. Add them in Settings → Theatre; a case can still be booked without one, and assigned later." Booking is never blocked on the estate being configured.
 </Note>
 
 ## Work the case
@@ -84,58 +59,41 @@ Selecting a case opens its sheet, in three sections.
 Three phases, each with its own items and a checked-of-total badge:
 
 | Phase | When |
-|---|---|
+| --- | --- |
 | **Sign in** | Before induction of anaesthesia |
 | **Time out** | Before skin incision |
 | **Sign out** | Before the patient leaves theatre |
 
-Ticking is deliberately open to everyone in the room — the checklist is a team
-instrument, not a surgeon's form. What an incomplete phase *does* depends on a
-clinic setting: either "This clinic requires each phase to be complete before
-the case advances", or "Gaps are recorded but do not stop the case." Set it
-under **Settings → Theatre**.
+Ticking is deliberately open to everyone in the room — the checklist is a team instrument, not a surgeon's form. What an incomplete phase _does_ depends on a clinic setting: either "This clinic requires each phase to be complete before the case advances", or "Gaps are recorded but do not stop the case." Set it under **Settings → Theatre**.
 
 ### Status
 
-The **Status** section offers a **Move to** button for each valid next state —
-**Move to in theatre**, **Move to in recovery**, **Move to completed** — plus
-**Cancel case**, which opens a dialog requiring a **Reason**.
+The **Status** section offers a **Move to** button for each valid next state — **Move to in theatre**, **Move to in recovery**, **Move to completed** — plus **Cancel case**, which opens a dialog requiring a **Reason**.
 
 Terminal states are honest dead ends rather than hidden buttons:
 
-- **This case is completed. A correction is recorded as an amendment, not a
-  status change.**
+- **This case is completed. A correction is recorded as an amendment, not a status change.**
 - **This case was cancelled. Schedule a new case rather than reopening it.**
 
 ### Operation note
 
-Enter **Findings**, **Procedure** and **Post-operative instructions**. **Save
-draft** keeps it editable; **Sign note** closes it.
+Enter **Findings**, **Procedure** and **Post-operative instructions**. **Save draft** keeps it editable; **Sign note** closes it.
 
 <Warning>
-  Signing is final. Once signed, the note can no longer be edited and the safety
-  checklist becomes read-only: "This note is signed and can no longer be edited
-  here. Record a correction as an amendment so the original stays intact."
-  Writing the note and signing it are separate permissions, so a scrub nurse can
-  write an account without being able to sign it off.
+  Signing is final. Once signed, the note can no longer be edited and the safety checklist becomes read-only: "This note is signed and can no longer be edited here. Record a correction as an amendment so the original stays intact." Writing the note and signing it are separate permissions, so a scrub nurse can write an account without being able to sign it off.
 </Warning>
 
-**Download PDF** works at any point. A draft is stamped as unsigned, so an
-unfinished note can be read on paper without ever looking final.
+**Download PDF** works at any point. A draft is stamped as unsigned, so an unfinished note can be read on paper without ever looking final.
 
 ## Review past cases
 
-**Case History** searches by case number or procedure and splits cases into
-**In flight**, **Completed** and **Cancelled**.
+**Case History** searches by case number or procedure and splits cases into **In flight**, **Completed** and **Cancelled**.
 
 <Note>
-  **Two-factor verification is required to view theatre history.** A signed-in
-  session is not enough — you need one verified with your second factor. Set it
-  up under [Two-factor authentication](/platform/security/mfa).
+  **Two-factor verification is required to view theatre history.** A signed-in session is not enough — you need one verified with your second factor. Set it up under [Two-factor authentication](/platform/security/mfa).
 </Note>
 
-The search range is capped: "That range is too large to search. Choose a
-shorter period." Narrow the dates rather than retrying.
+The search range is capped: "That range is too large to search. Choose a shorter period." Narrow the dates rather than retrying.
 
 <AuditNote action="Opening a theatre case" />
 
@@ -163,14 +121,11 @@ See [Staff permissions](/platform/team/permissions).
 
 <AccordionGroup>
   <Accordion title="Theatre is missing from the sidebar">
-    The **Surgical theatre** care area is off by default. Turn it on in
-    **Settings → Facility**. See [Care areas](/platform/team/care-areas).
+    The **Surgical theatre** care area is off by default. Turn it on in **Settings → Facility**. See [Care areas](/platform/team/care-areas).
   </Accordion>
 
   <Accordion title="A Move to button is disabled">
-    Either an incomplete checklist phase is blocking it under your clinic's
-    enforcement setting — the message above the button says which — or you do
-    not have permission to advance a case.
+    Either an incomplete checklist phase is blocking it under your clinic's enforcement setting — the message above the button says which — or you do not have permission to advance a case.
   </Accordion>
 
   <Accordion title="A case cannot be completed">
@@ -178,18 +133,15 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="I signed the note too early">
-    A signed note is not editable. Record a correction as an amendment; the
-    original stays intact, which is what makes the record trustworthy.
+    A signed note is not editable. Record a correction as an amendment; the original stays intact, which is what makes the record trustworthy.
   </Accordion>
 
   <Accordion title="Case History will not open">
-    It requires a two-factor-verified session. Sign in again and complete your
-    second factor — see [Two-factor authentication](/platform/security/mfa).
+    It requires a two-factor-verified session. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
   </Accordion>
 
   <Accordion title="The Theatre field only offers Unassigned">
-    No theatres have been created. Add them under **Settings → Theatre**; the
-    case can be assigned afterwards.
+    No theatres have been created. Add them under **Settings → Theatre**; the case can be assigned afterwards.
   </Accordion>
 </AccordionGroup>
 

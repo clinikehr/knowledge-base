@@ -1,7 +1,7 @@
 ---
 title: "Admit, chart and discharge on the ward"
 description: "Find a bed, admit a patient, record observations and the drug round, then discharge and review the stay."
-icon: "/images/icons/bed-double.svg"
+icon: /images/icons/bed-double.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,21 +11,13 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Doctors and nurses; vitals, medication, discharge and order changes are granted separately" />
 
-The ward is where an admitted patient's whole stay is run: the bed they are in,
-their observations, their drug round, their orders, their notes, and the
-discharge that ends it.
+The ward is where an admitted patient's whole stay is run: the bed they are in, their observations, their drug round, their orders, their notes, and the discharge that ends it.
 
 <Path steps={['Sidebar', 'Inpatient', 'Ward Admissions']} />
 
-<TaskHeader
-  before="Wards and beds created in Settings, and the In-patient care area switched on"
-  time="A minute to admit; the rest runs across the stay"
-  after="A patient in a bed with a live chart, and a discharge summary when they leave"
-/>
+<TaskHeader before="Wards and beds created in Settings, and the In-patient care area switched on" time="A minute to admit; the rest runs across the stay" after="A patient in a bed with a live chart, and a discharge summary when they leave" />
 
-Wards need the enterprise plan **and** the **In-patient care** area in
-**Settings → Facility**. Beds and sub-wards are created under **Settings → Ward
-Management**.
+Wards need the enterprise plan **and** the **In-patient care** area in **Settings → Facility**. Beds and sub-wards are created under **Settings → Ward Management**.
 
 ## Finding a bed
 
@@ -36,11 +28,9 @@ Management**.
 3. Ward statistics appear.
 4. The bed grid appears.
 
-Each bed shows **Patient**, **Admitted**, **Diagnosis**, **Attending Doctor**,
-**Notes** and **Last Updated**, so an empty bay is obvious at a glance.
+Each bed shows **Patient**, **Admitted**, **Diagnosis**, **Attending Doctor**, **Notes** and **Last Updated**, so an empty bay is obvious at a glance.
 
-If the page says **No wards available — Please contact your administrator**,
-none have been created yet. That is a settings job, not a ward job.
+If the page says **No wards available — Please contact your administrator**, none have been created yet. That is a settings job, not a ward job.
 
 ## Admit a patient
 
@@ -48,17 +38,12 @@ none have been created yet. That is a settings job, not a ward job.
   <Step title="Start from the consultation">
     On the consultation, select **Admit Patient**.
   </Step>
-
   <Step title="Choose the bed">
-    "Select a bed to admit the patient" walks wards → sub-wards → beds, the same
-    order as the admissions page.
+    "Select a bed to admit the patient" walks wards → sub-wards → beds, the same order as the admissions page.
   </Step>
-
   <Step title="Fill in Admission Details">
-    **Admission Summary**, **Patient Diagnosis** and **Patient Status**. This is
-    what every colleague sees first on the bed grid, so write it for them.
+    **Admission Summary**, **Patient Diagnosis** and **Patient Status**. This is what every colleague sees first on the bed grid, so write it for them.
   </Step>
-
   <Step title="Select Admit Patient">
     You get **Patient admitted successfully** and the bed fills.
   </Step>
@@ -68,84 +53,57 @@ none have been created yet. That is a settings job, not a ward job.
 
 Opening an occupied bed opens the inpatient chart. Its tabs:
 
-**SnapShot · Flowsheets · MAR · Orders · Notes · Results · Care History ·
-Problem List · Care Plan · Medications · History · Media**
+**SnapShot · Flowsheets · MAR · Orders · Notes · Results · Care History · Problem List · Care Plan · Medications · History · Media**
 
 Two pairs of names look alike and are not:
 
 <Note>
-  **Care History** is the running record of this stay. **History** is the
-  structured history a provider entered — past conditions, surgeries, family
-  history. Likewise, the **Problem List** belongs to the *patient* and follows
-  them between admissions, while the **Care Plan** belongs to *this admission*
-  and ends with it.
+  **Care History** is the running record of this stay. **History** is the structured history a provider entered — past conditions, surgeries, family history. Likewise, the **Problem List** belongs to the _patient_ and follows them between admissions, while the **Care Plan** belongs to _this admission_ and ends with it.
 </Note>
 
-The header carries four actions, and their order is deliberate: **Discharge**
-sits leftmost and is never the primary button, then **Notes**, then **New
-order**, with **Record obs** in the primary slot on the right. The frequent,
-safe action is where your thumb lands; the irreversible one is not.
+The header carries four actions, and their order is deliberate: **Discharge** sits leftmost and is never the primary button, then **Notes**, then **New order**, with **Record obs** in the primary slot on the right. The frequent, safe action is where your thumb lands; the irreversible one is not.
 
 <AuditNote action="Opening an inpatient chart" />
 
 ## Record observations
 
-From the bed grid, **Record Patient Vitals** opens a dialog in four sections —
-**Vital Signs**, **Measurements**, **Blood Sugar** and **Status**, which carries
-a **Triage Status** select. **Save Vitals** files them against the admission.
+From the bed grid, **Record Patient Vitals** opens a dialog in four sections — **Vital Signs**, **Measurements**, **Blood Sugar** and **Status**, which carries a **Triage Status** select. **Save Vitals** files them against the admission.
 
-Only doctors and nurses may record observations. Anyone else is told **Only
-doctors and nurses can record vitals**.
+Only doctors and nurses may record observations. Anyone else is told **Only doctors and nurses can record vitals**.
 
 ## Run the drug round
 
-The **MAR** tab is the drug chart. For each due dose you can do one of three
-things:
+The **MAR** tab is the drug chart. For each due dose you can do one of three things:
 
 | Action | What happens |
-|---|---|
+| --- | --- |
 | Give it | A confirm dialog asks **Record this dose as given?** and states "…This is recorded against your name." Select **Record as given**. |
 | **Hold this dose** | Requires a reason |
 | **Record a refusal** | Requires a reason |
 
 <Warning>
-  A hold or a refusal without a reason is a patient-safety gap: "A blank hold is
-  indistinguishable from a missed dose." ClinikEHR will not accept either
-  without one, and the record carries your name.
+  A hold or a refusal without a reason is a patient-safety gap: "A blank hold is indistinguishable from a missed dose." ClinikEHR will not accept either without one, and the record carries your name.
 </Warning>
 
-**Edit schedule** opens the schedule sheet for a drug. A **Needs scheduling**
-band sits above the grid and catches active drugs that have no schedule at all —
-without it, an unscheduled drug is invisible on a grid and a blank grid reads as
-"nothing due".
+**Edit schedule** opens the schedule sheet for a drug. A **Needs scheduling** band sits above the grid and catches active drugs that have no schedule at all — without it, an unscheduled drug is invisible on a grid and a blank grid reads as "nothing due".
 
 Read the two empty messages carefully; they mean different things:
 
-- **No doses due in this window.** — the drug is active, nothing falls in this
-  window.
-- **No doses in this window — this drug is no longer generating any.** — the
-  drug has been stopped.
+- **No doses due in this window.** — the drug is active, nothing falls in this window.
+- **No doses in this window — this drug is no longer generating any.** — the drug has been stopped.
 
 ### Claiming the round
 
-A banner above the chart offers **Claim this round**, and every device sees it,
-so a second nurse knows the round is taken before walking to the bay.
+A banner above the chart offers **Claim this round**, and every device sees it, so a second nurse knows the round is taken before walking to the bay.
 
-- **Claiming** reserves this patient's outstanding doses for *your* device, so
-  you can keep recording if the signal drops mid-round, and stops a second nurse
-  giving the same dose from another device. It covers the next few hours and
-  expires on its own, so a flat trolley never blocks the ward.
+- **Claiming** reserves this patient's outstanding doses for _your_ device, so you can keep recording if the signal drops mid-round, and stops a second nurse giving the same dose from another device. It covers the next few hours and expires on its own, so a flat trolley never blocks the ward.
 - **Hand back** releases it when you finish.
-- A round held by someone else shows amber with no way to take it. That is the
-  point of the design. You can still read the chart; give from the device that
-  holds the round, or ask an owner or manager to release it.
-- As-needed (PRN) doses always need a connection, because their daily maximum is
-  counted as each one is recorded.
+- A round held by someone else shows amber with no way to take it. That is the point of the design. You can still read the chart; give from the device that holds the round, or ask an owner or manager to release it.
+- As-needed (PRN) doses always need a connection, because their daily maximum is counted as each one is recorded.
 
 ## Order for an inpatient
 
-**New order** opens a tabbed sheet. It disables itself with the reason stated
-rather than silently greying out:
+**New order** opens a tabbed sheet. It disables itself with the reason stated rather than silently greying out:
 
 - **This stay has ended — nothing further can be ordered against it**
 - **Ordering needs a connection**
@@ -156,31 +114,23 @@ rather than silently greying out:
   <Step title="Select Discharge">
     On the chart header. It opens the **Discharge Patient** sheet.
   </Step>
-
   <Step title="Write the Discharge Summary">
     Condition on discharge, treatment given, follow-up arranged.
   </Step>
-
   <Step title="Select Discharge Patient">
     You get **Patient discharged successfully** and the bed frees.
   </Step>
 </Steps>
 
-Completed stays are reviewed under **Ward Discharges**, with tabs for
-**Timeline**, **Consultations**, **Nursing Notes**, **Prescriptions**, **Lab
-Tests**, **Services**, **Radiology** and **Vitals**.
+Completed stays are reviewed under **Ward Discharges**, with tabs for **Timeline**, **Consultations**, **Nursing Notes**, **Prescriptions**, **Lab Tests**, **Services**, **Radiology** and **Vitals**.
 
 ## Working offline
 
-Observations and notes carry on offline. Discharge and ordering do not, and an
-amber banner says why: "You are offline. Discharge and ordering need a
-connection — a bed is a shared resource, and an order composed offline would be
-a draft nobody has confirmed." See [Working offline](/platform/apps/offline).
+Observations and notes carry on offline. Discharge and ordering do not, and an amber banner says why: "You are offline. Discharge and ordering need a connection — a bed is a shared resource, and an order composed offline would be a draft nobody has confirmed." See [Working offline](/platform/apps/offline).
 
 ## Who may do what
 
-These are granted per person, on top of the role, so a ward can let a nurse
-record and give without letting them discharge:
+These are granted per person, on top of the role, so a ward can let a nurse record and give without letting them discharge:
 
 - Recording vitals
 - Administering medication
@@ -192,19 +142,16 @@ See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The patient occupies the bed on the grid, with the diagnosis and attending
-  clinician you entered.
+- The patient occupies the bed on the grid, with the diagnosis and attending clinician you entered.
 - Saved observations appear on **Flowsheets** and the vitals summary.
 - A recorded dose shows as given on the **MAR** grid, against your name.
-- After discharge the bed is empty and the stay is listed under **Ward
-  Discharges**.
+- After discharge the bed is empty and the stay is listed under **Ward Discharges**.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="No beds appear">
-    You have not picked both a ward and a sub-ward. The grid only builds after
-    the second choice.
+    You have not picked both a ward and a sub-ward. The grid only builds after the second choice.
   </Accordion>
 
   <Accordion title="No wards available — Please contact your administrator">
@@ -212,24 +159,19 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Only doctors and nurses can record vitals">
-    Recording observations is restricted by role and can also be granted per
-    person. Ask an owner or manager.
+    Recording observations is restricted by role and can also be granted per person. Ask an owner or manager.
   </Accordion>
 
   <Accordion title="The MAR grid is empty but the patient is on drugs">
-    Look at the **Needs scheduling** band above the grid — an active drug with no
-    schedule produces no doses. Use **Edit schedule** to give it one.
+    Look at the **Needs scheduling** band above the grid — an active drug with no schedule produces no doses. Use **Edit schedule** to give it one.
   </Accordion>
 
   <Accordion title="The round is claimed by someone else">
-    Give from the device holding the round, or ask an owner or manager to
-    release it. There is deliberately no way to take a live claim.
+    Give from the device holding the round, or ask an owner or manager to release it. There is deliberately no way to take a live claim.
   </Accordion>
 
   <Accordion title="Discharge and New order are disabled">
-    Either you are offline — the amber banner says so — or the stay has already
-    ended. Neither is recoverable on the device; reconnect, or reopen the stay
-    under **Ward Discharges** to read it.
+    Either you are offline — the amber banner says so — or the stay has already ended. Neither is recoverable on the device; reconnect, or reopen the stay under **Ward Discharges** to read it.
   </Accordion>
 </AccordionGroup>
 

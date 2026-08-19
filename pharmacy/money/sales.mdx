@@ -1,7 +1,7 @@
 ---
-title: "The sales dashboard"
+title: The sales dashboard
 description: "Read your takings by period, find a past sale, see which products sold, and understand what the net position card is telling you."
-icon: "/images/icons/chart-line.svg"
+icon: /images/icons/chart-line.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -10,118 +10,85 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Cost, margin and net position need their own permissions" />
 
-**Sales** is the record of what your till has done. It is where you look up a
-receipt, check the day's takings, and see which products are actually moving.
+**Sales** is the record of what your till has done. It is where you look up a receipt, check the day's takings, and see which products are actually moving.
 
 <Path steps={['Sidebar', 'Sales']} />
 
 ## The screen
 
-The header reads **Sales Dashboard** — "Track and analyze your pharmacy sales
-performance" — with a period select (**Today**, **Last 7 Days**, **This Month**,
-**All Time**) and two buttons: **Debtors** and **New Sale**.
+The header reads **Sales Dashboard** — "Track and analyze your pharmacy sales performance" — with a period select (**Today**, **Last 7 Days**, **This Month**, **All Time**) and two buttons: **Debtors** and **New Sale**.
 
-Everything below the period select obeys it. Change the period and every tile,
-chart and table on the page re-reads.
+Everything below the period select obeys it. Change the period and every tile, chart and table on the page re-reads.
 
 Four tabs: **Overview**, **Recent Sales**, **Products** and **Analytics**.
 
 ## Overview
 
-Four tiles across the top — **Total Revenue**, **Total Sales**, **Avg Sale
-Value** and **Items Sold** — then the **Net position** card, then the charts.
+Four tiles across the top — **Total Revenue**, **Total Sales**, **Avg Sale Value** and **Items Sold** — then the **Net position** card, then the charts.
 
 ### The Net position card
 
 Four figures that make one number honest:
 
 | Line | What it is |
-|---|---|
+| --- | --- |
 | **Revenue** | What you took in over the period |
 | **Cost of goods** | What the stock you sold cost you |
 | **Expenses** | Running costs recorded over the same period |
 | **Loss (expired/damaged)** | Stock written off, valued at what it cost |
 
-Revenue on its own is not profit, and a pharmacy that reads only the top tile
-will believe a good week happened when it did not. Expenses are the line you
-control — the card is only as truthful as what you record on the
-[Expenses page](/pharmacy/money/expenses).
+Revenue on its own is not profit, and a pharmacy that reads only the top tile will believe a good week happened when it did not. Expenses are the line you control — the card is only as truthful as what you record on the [Expenses page](/pharmacy/money/expenses).
 
 ### The charts
 
-**Sales Trend** plots takings over the period. **Payment Methods** breaks the
-same money down by tender. **Recent Sales** is a quick list of the latest
-transactions.
+**Sales Trend** plots takings over the period. **Payment Methods** breaks the same money down by tender. **Recent Sales** is a quick list of the latest transactions.
 
 ## Recent Sales
 
-The **Sales History** table — **Sale #**, **Date & Time**, **Customer**,
-**Items**, **Payment**, **Amount** and **Status** — with **Search or scan
-receipt...** and a status filter (**All Status**, **Completed**, **Pending**,
-**Cancelled**, **Refunded**).
+The **Sales History** table — **Sale #**, **Date & Time**, **Customer**, **Items**, **Payment**, **Amount** and **Status** — with **Search or scan receipt...** and a status filter (**All Status**, **Completed**, **Pending**, **Cancelled**, **Refunded**).
 
-The search box takes a scan as well as typing: point a scanner at the barcode on
-a customer's receipt and the sale comes straight up. See
-[Set up a barcode scanner](/pharmacy/hardware/barcode-scanner).
+The search box takes a scan as well as typing: point a scanner at the barcode on a customer's receipt and the sale comes straight up. See [Set up a barcode scanner](/pharmacy/hardware/barcode-scanner).
 
 <Note>
-  A sale captured while the till was offline carries an **Offline** badge. It is
-  a real, completed sale that reached the server later — the badge tells you the
-  receipt the customer holds shows a provisional number rather than the one in
-  this table. See [Selling when the internet is down](/pharmacy/pos/offline).
+  A sale captured while the till was offline carries an **Offline** badge. It is a real, completed sale that reached the server later — the badge tells you the receipt the customer holds shows a provisional number rather than the one in this table. See [Selling when the internet is down](/pharmacy/pos/offline).
 </Note>
 
-Refunds, voids and amendments to a past sale are worked from here and are
-covered in [Returns, voids and amendments](/pharmacy/pos/returns).
+Refunds, voids and amendments to a past sale are worked from here and are covered in [Returns, voids and amendments](/pharmacy/pos/returns).
 
 ## Products
 
-The **Product sales** card, filterable by product type, showing **Products**,
-**Units sold**, **Line revenue** and **Margin**.
+The **Product sales** card, filterable by product type, showing **Products**, **Units sold**, **Line revenue** and **Margin**.
 
-**Line revenue** is the value of the lines themselves — it excludes sale-level
-tax, surcharges and whole-sale discounts, so it will not add up to **Total
-Revenue** and is not meant to.
+**Line revenue** is the value of the lines themselves — it excludes sale-level tax, surcharges and whole-sale discounts, so it will not add up to **Total Revenue** and is not meant to.
 
-**Margin** appears only where a cost was recorded when the stock was received.
-No lot cost, no margin — the column will not guess.
+**Margin** appears only where a cost was recorded when the stock was received. No lot cost, no margin — the column will not guess.
 
 ## What some people cannot see, and why
 
-Two figures on this page are permission-gated, and they behave differently on
-purpose:
+Two figures on this page are permission-gated, and they behave differently on purpose:
 
 <Columns cols={2}>
   <Card title="Cost and margin" icon="/images/icons/tag.svg">
-    Without **View cost prices and margin**, the cost and margin columns read
-    **Hidden — needs authorisation**. The rest of the Products tab still works.
+    Without **View cost prices and margin**, the cost and margin columns read **Hidden — needs authorisation**. The rest of the Products tab still works.
   </Card>
+
   <Card title="Net position" icon="/images/icons/scale-balanced.svg">
-    Without **View the net position**, the whole card is gone — not zeroed, not
-    blanked. A card showing 0 would be read as "we made nothing", which is a
-    lie. Absent says "not yours to see".
+    Without **View the net position**, the whole card is gone — not zeroed, not blanked. A card showing 0 would be read as "we made nothing", which is a lie. Absent says "not yours to see".
   </Card>
 </Columns>
 
-Both are set per person by an owner or manager — see
-[Staff permissions](/platform/team/permissions). A cashier reaches **POS** and
-**Sales** and nothing else, which is deliberate.
+Both are set per person by an owner or manager — see [Staff permissions](/platform/team/permissions). A cashier reaches **POS** and **Sales** and nothing else, which is deliberate.
 
 ## There is no Export button on this page
 
 People hunt for one. Exports live in two other places:
 
-- **[Reports and the executive dashboard](/pharmacy/money/analytics)** — the
-  **Reports** card on **Executive** exports top products, sales, customers and
-  payment methods.
-- **Analytics** — every report in the workbench offers **Export** with a CSV or
-  Excel copy of the view you are looking at.
+- [**Reports and the executive dashboard**](/pharmacy/money/analytics) — the **Reports** card on **Executive** exports top products, sales, customers and payment methods.
+- **Analytics** — every report in the workbench offers **Export** with a CSV or Excel copy of the view you are looking at.
 
 ## Debtors
 
-**Debtors** opens the list of customers with an unsettled balance from a
-part-paid sale. Clearing one against a prepaid balance is done from the
-customer's own profile — see [Money on account](/pharmacy/customers/wallet).
+**Debtors** opens the list of customers with an unsettled balance from a part-paid sale. Clearing one against a prepaid balance is done from the customer's own profile — see [Money on account](/pharmacy/customers/wallet).
 
 <StillStuck topic="the sales dashboard" />
 
@@ -131,12 +98,15 @@ customer's own profile — see [Money on account](/pharmacy/customers/wallet).
   <Card title="Ring up a sale" icon="/images/icons/cash-register.svg" href="/pharmacy/pos/index">
     The till itself, from search to completed sale.
   </Card>
+
   <Card title="Track expenses" icon="/images/icons/receipt.svg" href="/pharmacy/money/expenses">
     What feeds the Expenses line on the net position card.
   </Card>
+
   <Card title="Returns and voids" icon="/images/icons/rotate-left.svg" href="/pharmacy/pos/returns">
     Refunding, voiding and amending a past sale.
   </Card>
+
   <Card title="Reports and exports" icon="/images/icons/table.svg" href="/pharmacy/money/analytics">
     The report workbench and the owner's dashboard.
   </Card>

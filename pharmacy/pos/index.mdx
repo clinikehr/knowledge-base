@@ -1,7 +1,7 @@
 ---
-title: "Ring up a sale"
+title: Ring up a sale
 description: "Work the pharmacy till: find a product, build the cart, attach a customer, discount a line and complete the sale."
-icon: "/images/icons/calculator.svg"
+icon: /images/icons/calculator.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,173 +11,97 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans; interaction screening needs Professional and above" roles="Anyone with 'Dispense and sell at the till'" />
 
-The point of sale is the screen your counter lives on. This page covers the
-whole flow from finding a product to completing the sale; payment, receipts,
-barcodes, held carts and offline selling each have their own page.
+The point of sale is the screen your counter lives on. This page covers the whole flow from finding a product to completing the sale; payment, receipts, barcodes, held carts and offline selling each have their own page.
 
 <Path steps={['Sidebar', 'POS']} />
 
-<TaskHeader
-  before="At least one stock item, and the 'Dispense and sell at the till' permission"
-  time="Under a minute once you know the screen"
-  after="A completed sale, stock drawn down, and a receipt"
-/>
+<TaskHeader before="At least one stock item, and the 'Dispense and sell at the till' permission" time="Under a minute once you know the screen" after="A completed sale, stock drawn down, and a receipt" />
 
 ## What is on the screen
 
-The header reads **Sales POS** with today's date, followed by two tiles for the
-day so far — **\{n\} Sales** and **\{amount\} Today** — the offline and sync bar,
-and a **Calculator** button.
+The header reads **Sales POS** with today's date, followed by two tiles for the day so far — **\{n\} Sales** and **\{amount\} Today** — the offline and sync bar, and a **Calculator** button.
 
 <Columns cols={2}>
   <Card title="Left — finding products" icon="/images/icons/magnifying-glass.svg">
-    A search card ("Search or scan (name, generic, brand, barcode)…") with a
-    camera button, **Scan barcode with camera**, and the **Available Products**
-    grid with a count badge and, when the figures are not fresh, a
-    **Stock as of HH:MM** badge.
+    A search card ("Search or scan (name, generic, brand, barcode)…") with a camera button, **Scan barcode with camera**, and the **Available Products** grid with a count badge and, when the figures are not fresh, a **Stock as of HH:MM** badge.
   </Card>
 
   <Card title="Right — building the sale" icon="/images/icons/cart-shopping.svg">
-    Interaction alerts, the **Customer** card, the **Cart** card, then the
-    payment summary. Top to bottom, in the order you use them.
+    Interaction alerts, the **Customer** card, the **Cart** card, then the payment summary. Top to bottom, in the order you use them.
   </Card>
 </Columns>
 
 <Note>
-  **The grid shows 100 tiles, not your whole catalogue.** The count badge says
-  so out loud — **100 of 5,841** while you browse, **first 100 matches** while
-  you search — and everything else is reachable by searching or scanning.
-  Nothing is missing from your stock; a grid of several thousand tiles would be
-  unusable, so search is the way in.
+  **The grid shows 100 tiles, not your whole catalogue.** The count badge says so out loud — **100 of 5,841** while you browse, **first 100 matches** while you search — and everything else is reachable by searching or scanning. Nothing is missing from your stock; a grid of several thousand tiles would be unusable, so search is the way in.
 </Note>
 
 ## Ring up the sale
 
 <Steps>
   <Step title="Find the product">
-    Scan its barcode, or type any of the name, generic name, brand or barcode
-    into the search field. A keyboard-wedge scanner is picked up anywhere on the
-    page — you do not have to click into the box first. See
-    [Scan barcodes at the till](/pharmacy/pos/barcode).
+    Scan its barcode, or type any of the name, generic name, brand or barcode into the search field. A keyboard-wedge scanner is picked up anywhere on the page — you do not have to click into the box first. See [Scan barcodes at the till](/pharmacy/pos/barcode).
   </Step>
-
   <Step title="Add it to the cart">
-    Select the product tile. The line appears in the **Cart** card with the unit
-    price ("\{amount\} each"), and the card's badge counts the items.
+    Select the product tile. The line appears in the **Cart** card with the unit price ("\{amount\} each"), and the card's badge counts the items.
   </Step>
-
   <Step title="Set the quantity">
-    Use the − and + steppers on the cart row. Pressing − at a quantity of one
-    takes the line off the cart.
+    Use the − and \+ steppers on the cart row. Pressing − at a quantity of one takes the line off the cart.
   </Step>
-
   <Step title="Attach a customer, or stay on walk-in">
-    The **Customer** card has two tabs. **Walk-in** is the default and needs
-    nothing, though you can fill **Customer name (optional)** and **Phone number
-    (optional)** so the sale is traceable.
+    The **Customer** card has two tabs. **Walk-in** is the default and needs nothing, though you can fill **Customer name (optional)** and **Phone number (optional)** so the sale is traceable.
 
-    Select **Customer** and use **Search customers...** to attach a registered
-    customer; **Change** swaps them afterwards. Do that whenever the sale
-    involves money on account, loyalty or part payment. See
-    [Customers](/pharmacy/customers/index).
+    Select **Customer** and use **Search customers...** to attach a registered customer; **Change** swaps them afterwards. Do that whenever the sale involves money on account, loyalty or part payment. See [Customers](/pharmacy/customers/index).
   </Step>
-
   <Step title="Apply a discount, if you are allowed to">
     Two kinds:
 
-    - **One line** — select the dotted **Discount** link under the line, then
-      pick from **Discount this line**: 5%, 10, 15, 20 or 50, each showing what
-      it saves ("5% · save …"). The line then carries a badge such as **−10%**;
-      select it to remove the discount ("Remove this line's discount").
-    - **The whole cart** — use the **%** and currency-symbol toggle buttons
-      above **Subtotal**, then enter the value. The **%** button discounts by
-      percentage; the currency button takes a flat amount.
+    - **One line** — select the dotted **Discount** link under the line, then pick from **Discount this line**: 5%, 10, 15, 20 or 50, each showing what it saves ("5% · save …"). The line then carries a badge such as **−10%**; select it to remove the discount ("Remove this line's discount").
+    - **The whole cart** — use the **%** and currency-symbol toggle buttons above **Subtotal**, then enter the value. The **%** button discounts by percentage; the currency button takes a flat amount.
 
-    Any discount, of either kind, requires the **Discount beyond the set limit**
-    permission. Without it the controls are not yours to use.
+    Any discount, of either kind, requires the **Discount beyond the set limit** permission. Without it the controls are not yours to use.
   </Step>
-
   <Step title="Check the loyalty banner">
-    When a reward is due, the banner reads **"\{n\}% loyalty reward available"** —
-    select **Apply** and it becomes **"Loyalty reward applied to this sale"**.
-    Otherwise it shows how much further the customer has to go: "\{amount\} more
-    to the next reward". Loyalty needs a connection and a registered customer.
+    When a reward is due, the banner reads **"\{n\}% loyalty reward available"** — select **Apply** and it becomes **"Loyalty reward applied to this sale"**. Otherwise it shows how much further the customer has to go: "\{amount\} more to the next reward". Loyalty needs a connection and a registered customer.
   </Step>
-
   <Step title="Take payment">
-    Choose the tender in the payment summary — **Cash**, **Card**, **Mobile
-    Money**, **Bank Transfer**, **Insurance**, **Other**, or **Account balance**
-    for a registered customer with money on account. Cash asks for **Amount
-    Received** and shows **Change Due**; everything else asks for a reference.
-    Full detail in [Take payment](/pharmacy/pos/payments).
+    Choose the tender in the payment summary — **Cash**, **Card**, **Mobile Money**, **Bank Transfer**, **Insurance**, **Other**, or **Account balance** for a registered customer with money on account. Cash asks for **Amount Received** and shows **Change Due**; everything else asks for a reference. Full detail in [Take payment](/pharmacy/pos/payments).
   </Step>
-
   <Step title="Complete it">
-    Select **Complete Sale • \{total\}** — it reads **Processing...** while it
-    saves — or press **Enter** from anywhere on the till. Enter is deliberately
-    ignored while you are in the search field (that Enter is a scan), on a
-    button or link, in a text area, or while any menu or dialog is open, so it
-    never fires a sale you did not mean. It does work from an ordinary box such
-    as **Amount Received**.
+    Select **Complete Sale • \{total\}** — it reads **Processing...** while it saves — or press **Enter** from anywhere on the till. Enter is deliberately ignored while you are in the search field (that Enter is a scan), on a button or link, in a text area, or while any menu or dialog is open, so it never fires a sale you did not mean. It does work from an ordinary box such as **Amount Received**.
   </Step>
 </Steps>
 
 ## Check it worked
 
-- A **Sale Complete!** panel appears with the **Sale Number**, the **Total** and
-  the **Change Due**, offering **Print Receipt** and **New Sale**, and a toast
-  reads **Sale completed successfully!**
-- The cart empties, and the receipt prints silently on the counter printer in
-  the desktop app or through the print dialog in a browser. See
-  [Print and reprint receipts](/pharmacy/pos/receipts).
+- A **Sale Complete!** panel appears with the **Sale Number**, the **Total** and the **Change Due**, offering **Print Receipt** and **New Sale**, and a toast reads **Sale completed successfully!**
+- The cart empties, and the receipt prints silently on the counter printer in the desktop app or through the print dialog in a browser. See [Print and reprint receipts](/pharmacy/pos/receipts).
 - The day tiles in the header increase by the sale.
-- The sale appears in **Sales History** on the [Sales page](/pharmacy/money/sales)
-  with a receipt number.
+- The sale appears in **Sales History** on the [Sales page](/pharmacy/money/sales) with a receipt number.
 - Stock falls by what you sold, drawn from the batches that expire soonest.
 
 ## Things the till does that surprise people
 
 <AccordionGroup>
   <Accordion title="An out-of-stock product still sells">
-    If **Selling without stock** is on — it is on by default — an out-of-stock
-    tile stays sellable, and the sale toasts that the item "has no recorded
-    stock — the sale will be logged for reconciliation in Inventory." After the
-    sale you are told how many items went beyond recorded stock.
+    If **Selling without stock** is on — it is on by default — an out-of-stock tile stays sellable, and the sale toasts that the item "has no recorded stock — the sale will be logged for reconciliation in Inventory." After the sale you are told how many items went beyond recorded stock.
 
-    Stock can therefore read as negative, such as **-3 oversold**, because the
-    figure is what you have minus what you owe. Clear these on **Inventory ›
-    Reconciliation** — see
-    [Stock, batches and expiry](/pharmacy/inventory/batches-and-expiry).
+    Stock can therefore read as negative, such as **-3 oversold**, because the figure is what you have minus what you owe. Clear these on **Inventory › Reconciliation** — see [Stock, batches and expiry](/pharmacy/inventory/batches-and-expiry).
   </Accordion>
 
   <Accordion title="Some items refuse to be sold at the till">
-    A product that requires a witnessed dispense cannot go through POS: "…
-    requires a witnessed dispense — use the inventory Fill Rx flow instead of
-    POS." Controlled drugs need a second person's countersignature, and the till
-    has no place to capture one. See
-    [The dispensing station](/pharmacy/dispensing/station).
+    A product that requires a witnessed dispense cannot go through POS: "… requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." Controlled drugs need a second person's countersignature, and the till has no place to capture one. See [The dispensing station](/pharmacy/dispensing/station).
   </Accordion>
 
   <Accordion title="Stock figures are shown as of a time, not as of now">
-    The **Stock as of HH:MM** badge is the truth about how fresh the catalogue
-    is. When the figures are stale, low-stock badges are muted rather than shown
-    as confident warnings — a stale number is never dressed up as a live one.
-    See [Selling when the internet is down](/pharmacy/pos/offline).
+    The **Stock as of HH:MM** badge is the truth about how fresh the catalogue is. When the figures are stale, low-stock badges are muted rather than shown as confident warnings — a stale number is never dressed up as a live one. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Accordion>
 
   <Accordion title="The product is not in the catalogue at all">
-    From the empty grid, **Add New Medication** opens the inventory **Add item**
-    sheet without losing the till. See
-    [Inventory](/pharmacy/inventory/index).
+    From the empty grid, **Add New Medication** opens the inventory **Add item** sheet without losing the till. See [Inventory](/pharmacy/inventory/index).
   </Accordion>
 
   <Accordion title="A red interaction alert will not let me continue">
-    Screening blocks only on contraindicated and major interactions, and clearing
-    the block needs one acknowledgement with a reason from the pharmacist.
-    Moderate interactions show as an inline badge and minor ones are not shown
-    at all. It is available on **Professional** and above — below that, the panel
-    reads **Available on Professional and above**. See
-    [Interaction screening](/pharmacy/dispensing/interaction-screening).
+    Screening blocks only on contraindicated and major interactions, and clearing the block needs one acknowledgement with a reason from the pharmacist. Moderate interactions show as an inline badge and minor ones are not shown at all. It is available on **Professional** and above — below that, the panel reads **Available on Professional and above**. See [Interaction screening](/pharmacy/dispensing/interaction-screening).
   </Accordion>
 </AccordionGroup>
 
@@ -189,12 +113,15 @@ and a **Calculator** button.
   <Card title="Scan barcodes at the till" icon="/images/icons/barcode.svg" href="/pharmacy/pos/barcode">
     Wedge scanners, the camera scanner, and scanning a receipt back in.
   </Card>
+
   <Card title="Take payment" icon="/images/icons/money-bill.svg" href="/pharmacy/pos/payments">
     Every tender, references, change, part payment and credit.
   </Card>
+
   <Card title="Hold a cart and apply discounts" icon="/images/icons/pause.svg" href="/pharmacy/pos/held-carts">
     Park a customer mid-sale and pick them up again.
   </Card>
+
   <Card title="Selling when the internet is down" icon="/images/icons/wifi-slash.svg" href="/pharmacy/pos/offline">
     What works offline, what does not, and how sales catch up.
   </Card>

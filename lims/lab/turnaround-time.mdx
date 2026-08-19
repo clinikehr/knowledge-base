@@ -1,7 +1,7 @@
 ---
-title: "Turnaround time"
+title: Turnaround time
 description: "Read request-to-result medians and 90th percentiles across drug testing, laboratory and imaging, and find where the bench is slow."
-icon: "/images/icons/timer.svg"
+icon: /images/icons/timer.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -10,109 +10,74 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “view turnaround-time analytics”. QC Officer and Referrer Liaison have it by default." />
 
-The **Turnaround Time** dashboard answers one question: where is time going.
-Its own subtitle puts it plainly — "Request-to-result medians and 90th
-percentiles across drug testing, laboratory and imaging. Slow rows are where the
-next hour of bench time pays off."
+The **Turnaround Time** dashboard answers one question: where is time going. Its own subtitle puts it plainly — "Request-to-result medians and 90th percentiles across drug testing, laboratory and imaging. Slow rows are where the next hour of bench time pays off."
 
 <Path steps={['Sidebar', 'Turnaround Time']} />
 
 <Note>
-  This is not the **Turnaround Time** chart on the **Lab Station** **Analytics**
-  tab. That one is a simple view of performance against a 24-hour target. The
-  dashboard on this page is the real measure — medians, 90th percentiles,
-  per-stage breakdowns and rankings.
+  This is not the **Turnaround Time** chart on the **Lab Station** **Analytics** tab. That one is a simple view of performance against a 24-hour target. The dashboard on this page is the real measure — medians, 90th percentiles, per-stage breakdowns and rankings.
 </Note>
 
 ## What the page shows
 
-At the top are a range select — **Last 7 days**, **Last 30 days**, **Last 90
-days** — and **Refresh**. Everything below reflects the range you pick.
+At the top are a range select — **Last 7 days**, **Last 30 days**, **Last 90 days** — and **Refresh**. Everything below reflects the range you pick.
 
 ### The three pipeline tiles
 
-One tile each for **Drug Testing**, **Laboratory** and **Imaging**. Each leads
-with the median, then:
+One tile each for **Drug Testing**, **Laboratory** and **Imaging**. Each leads with the median, then:
 
 | Line | Means |
-|---|---|
+| --- | --- |
 | **p90 \{x\}** | Nine in ten finished within this. The number a referrer actually experiences on a bad day. |
 | **\{n\} completed** | How many results the median is drawn from. A median over three results is not a trend. |
 | **\{n\} pending · oldest \{n\}d** | What is still open, and the age of the oldest. The age turns amber past three days. |
 
-Read the p90 before the median. The median tells you what a normal day looks
-like; the p90 tells you what your slowest tenth is doing, and that is what
-generates the phone calls.
+Read the p90 before the median. The median tells you what a normal day looks like; the p90 tells you what your slowest tenth is doing, and that is what generates the phone calls.
 
 ### Drug-testing stage medians
 
-The **Drug-testing stage medians** card splits the pipeline into **Order →
-received**, **Received → screened** and **Screened → report**, so a slow total
-can be traced to a stage. A long "order → received" is a courier or collection
-problem, not a bench one — no amount of bench speed fixes it.
+The **Drug-testing stage medians** card splits the pipeline into **Order → received**, **Received → screened** and **Screened → report**, so a slow total can be traced to a stage. A long "order → received" is a courier or collection problem, not a bench one — no amount of bench speed fixes it.
 
 ### The three rankings
 
-**By test**, **By scientist** and **By site** are ranked tables with an inline
-magnitude bar, so the outliers are visible without reading numbers.
+**By test**, **By scientist** and **By site** are ranked tables with an inline magnitude bar, so the outliers are visible without reading numbers.
 
-Durations are written at the scale that suits them: minutes under an hour, hours
-under two days, then days.
+Durations are written at the scale that suits them: minutes under an hour, hours under two days, then days.
 
-Treat **By scientist** as a workload signal, not a scoreboard. A scientist
-holding the confirmations will always look slower than one running screens.
+Treat **By scientist** as a workload signal, not a scoreboard. A scientist holding the confirmations will always look slower than one running screens.
 
 ## The same numbers elsewhere
 
-Turnaround also appears as a **Turnaround Time** report in the Analytics report
-catalogue, with **Laboratory** and **Radiology** scopes. It is the same measure
-over the same records — if the two disagree, check that the date range and scope
-match before reporting a discrepancy. See
-[Lab analytics](/lims/business/analytics).
+Turnaround also appears as a **Turnaround Time** report in the Analytics report catalogue, with **Laboratory** and **Radiology** scopes. It is the same measure over the same records — if the two disagree, check that the date range and scope match before reporting a discrepancy. See [Lab analytics](/lims/business/analytics).
 
 ## If you cannot see it
 
 Two different gates, with two different fixes.
 
-- **Plan.** The dashboard is a Professional Lab feature and appears locked on
-  Starter Lab, alongside the other Professional capabilities — quality control,
-  analyzer integration and the owner dashboard. See
-  [Change your plan](/platform/plans/change-plan).
-- **Permission.** On a plan that includes it, someone without the analytics
-  grant sees **Turnaround analytics is hidden — Needs authorisation from your
-  clinic owner or manager.** An owner or manager grants "view turnaround-time
-  analytics" — see [Permissions](/platform/team/permissions).
+- **Plan.** The dashboard is a Professional Lab feature and appears locked on Starter Lab, alongside the other Professional capabilities — quality control, analyzer integration and the owner dashboard. See [Change your plan](/platform/plans/change-plan).
+- **Permission.** On a plan that includes it, someone without the analytics grant sees **Turnaround analytics is hidden — Needs authorisation from your clinic owner or manager.** An owner or manager grants "view turnaround-time analytics" — see [Permissions](/platform/team/permissions).
 
 ## If the numbers look wrong
 
 <AccordionGroup>
   <Accordion title="Everything reads faster than it feels">
-    Turnaround is measured from the request, and for drug testing from the
-    received time entered at accessioning. A specimen accessioned late in the
-    day but stamped with the time it actually arrived measures honestly — one
-    accessioned with the keyboard time does not. See
-    [Accession an incoming specimen](/lims/lab/accessioning).
+    Turnaround is measured from the request, and for drug testing from the received time entered at accessioning. A specimen accessioned late in the day but stamped with the time it actually arrived measures honestly — one accessioned with the keyboard time does not. See [Accession an incoming specimen](/lims/lab/accessioning).
   </Accordion>
 
   <Accordion title="A tile shows a median but no pending count">
-    Nothing is open in that pipeline for the range. A lab that runs no imaging
-    will see the **Imaging** tile stay empty — see
-    [Imaging requests](/lims/imaging/requests).
+    Nothing is open in that pipeline for the range. A lab that runs no imaging will see the **Imaging** tile stay empty — see [Imaging requests](/lims/imaging/requests).
   </Accordion>
 
   <Accordion title="A test ranks badly on a handful of results">
-    Small samples move medians a long way. Widen the range to **Last 90 days**
-    before acting on a ranking.
+    Small samples move medians a long way. Widen the range to **Last 90 days** before acting on a ranking.
   </Accordion>
 
   <Accordion title="Drug testing shows nothing at all">
-    You are not running regulated collections, so that pipeline has no records.
-    See [DOT testing](/lims/dot/index).
+    You are not running regulated collections, so that pipeline has no records. See [DOT testing](/lims/dot/index).
   </Accordion>
 
   <Accordion title="The oldest-pending age keeps climbing">
-    Something is stuck rather than slow. Filter the queue by status and find it
-    — see [Work the bench queue](/lims/lab/worklist).
+    Something is stuck rather than slow. Filter the queue by status and find it — see [Work the bench queue](/lims/lab/worklist).
   </Accordion>
 </AccordionGroup>
 

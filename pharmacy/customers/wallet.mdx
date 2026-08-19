@@ -1,7 +1,7 @@
 ---
-title: "Money on account"
+title: Money on account
 description: "Take a deposit, hand money back, correct a mistake, settle a debt from the balance, and spend it at the till."
-icon: "/images/icons/wallet.svg"
+icon: /images/icons/wallet.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,122 +11,77 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
 
-Money on account is a prepaid balance: cash a customer has already handed you,
-held against their name and spendable at the counter. This page covers putting
-money on, taking it off, fixing a keying error, and paying with it.
+Money on account is a prepaid balance: cash a customer has already handed you, held against their name and spendable at the counter. This page covers putting money on, taking it off, fixing a keying error, and paying with it.
 
 <Path steps={['Sidebar', 'Customers', 'a customer', 'Money on account']} />
 
-<TaskHeader
-  before="A registered customer, and access to the Customers screen"
-  time="Under a minute"
-  after="A balance the customer can spend at the till, and a ledger line saying why it changed"
-/>
+<TaskHeader before="A registered customer, and access to the Customers screen" time="Under a minute" after="A balance the customer can spend at the till, and a ledger line saying why it changed" />
 
 ## The one rule that shapes everything here
 
-**A wallet holds money the customer has already given you. Money they owe you is
-a debt on a sale.** The two are never the same figure and the product refuses to
-merge them, so the balance cannot be driven negative by ordinary use. Try to
-take out more than is there and you get:
+**A wallet holds money the customer has already given you. Money they owe you is a debt on a sale.** The two are never the same figure and the product refuses to merge them, so the balance cannot be driven negative by ordinary use. Try to take out more than is there and you get:
 
-> Not enough on account — short by \{amount\}. Money owed belongs on a sale, not a
-> negative balance.
+> Not enough on account — short by \{amount\}. Money owed belongs on a sale, not a negative balance.
 
-That is not a technicality. A negative wallet is an invisible loan with no sale
-behind it, no line items, no receipt and nothing to chase. Put the shortfall on
-the sale instead — part-pay at the till and the balance shows up under
-**Debts**, where it can be settled, reported and reminded on.
+That is not a technicality. A negative wallet is an invisible loan with no sale behind it, no line items, no receipt and nothing to chase. Put the shortfall on the sale instead — part-pay at the till and the balance shows up under **Debts**, where it can be settled, reported and reminded on.
 
 ## Move money on an account
 
 <Steps>
   <Step title="Open the customer">
-    Select **Customers** in the sidebar, find the person, and open their
-    profile. The header shows **On account**, **Owed** and **Lifetime**.
+    Select **Customers** in the sidebar, find the person, and open their profile. The header shows **On account**, **Owed** and **Lifetime**.
   </Step>
-
   <Step title="Select Money on account">
     The dialog has three tabs, and picking the right one is the whole decision:
 
     - **Deposit** — "Cash taken in and held on the account." Money coming in.
-    - **Cash out** — "Money handed back from the account." Money going back to
-      the customer.
-    - **Correction** — "Fix a mistake. May go negative — use sparingly and say
-      why."
+    - **Cash out** — "Money handed back from the account." Money going back to the customer.
+    - **Correction** — "Fix a mistake. May go negative — use sparingly and say why."
   </Step>
-
   <Step title="Enter the amount">
-    Fill **Amount**. The panel previews the movement and the **New balance**
-    before you commit, so you can check the arithmetic against the cash in your
-    hand.
+    Fill **Amount**. The panel previews the movement and the **New balance** before you commit, so you can check the arithmetic against the cash in your hand.
   </Step>
-
   <Step title="Say why">
-    **Reason** is optional on a deposit or cash-out — fill it anyway for
-    anything unusual, because the ledger shows it later. On a **Correction** the
-    label changes to **Reason (required for a correction)** and **Record** stays
-    disabled until you write one.
+    **Reason** is optional on a deposit or cash-out — fill it anyway for anything unusual, because the ledger shows it later. On a **Correction** the label changes to **Reason (required for a correction)** and **Record** stays disabled until you write one.
   </Step>
-
   <Step title="Record it">
     Select **Record**. The button reads **Saving…** while it commits.
   </Step>
 </Steps>
 
 <Note>
-  **Correction is the only entry allowed to take a balance below zero**, and it
-  demands a reason precisely because of that. Use it for a keying error — a
-  deposit entered twice, an amount with an extra digit — and never as a way
-  around a customer being short at the till.
+  **Correction is the only entry allowed to take a balance below zero**, and it demands a reason precisely because of that. Use it for a keying error — a deposit entered twice, an amount with an extra digit — and never as a way around a customer being short at the till.
 </Note>
 
 ## Settle a debt from the balance
 
-When a customer has prepaid money and an outstanding sale, you can clear one
-with the other.
+When a customer has prepaid money and an outstanding sale, you can clear one with the other.
 
 <Steps>
   <Step title="Open the Debts tab">
-    Each row shows the sale number, the date, "paid \{amount\} of \{amount\}", and
-    the balance due in red.
+    Each row shows the sale number, the date, "paid \{amount\} of \{amount\}", and the balance due in red.
   </Step>
   <Step title="Select Settle from account">
-    The button is disabled, with the tooltip **"Not enough on account"**, when
-    the balance will not cover the whole debt.
+    The button is disabled, with the tooltip **"Not enough on account"**, when the balance will not cover the whole debt.
   </Step>
   <Step title="Confirm the toast">
-    You get **"Settled \{amount\} from the account"**. The debt clears and the
-    balance drops by the same amount.
+    You get **"Settled \{amount\} from the account"**. The debt clears and the balance drops by the same amount.
   </Step>
 </Steps>
 
 ## Spending it at the till
 
-At the point of sale, a registered customer with money on account gets a
-full-width **Account balance** button in the payment summary. Three things about
-it catch people out:
+At the point of sale, a registered customer with money on account gets a full-width **Account balance** button in the payment summary. Three things about it catch people out:
 
-- **It needs a connection.** Offline it is unavailable —
-  "Account balance needs a connection — take cash or card, or wait for the
-  network." Take another tender instead. See
-  [Selling when the internet is down](/pharmacy/pos/offline).
-- **It is disabled when the balance is short**, showing **\{amount\} · short**.
-  Part-pay with the balance plus cash, or take a different tender entirely — see
-  [Take payment](/pharmacy/pos/payments).
-- **It resets to cash if the customer changes or the connection drops.** The
-  balance is held centrally, not on the till, so a figure the terminal
-  remembered from ten minutes ago could be refused after the goods had already
-  left the counter. Resetting is cheaper than a sale that cannot be paid for.
+- **It needs a connection.** Offline it is unavailable — "Account balance needs a connection — take cash or card, or wait for the network." Take another tender instead. See [Selling when the internet is down](/pharmacy/pos/offline).
+- **It is disabled when the balance is short**, showing **\{amount\} · short**. Part-pay with the balance plus cash, or take a different tender entirely — see [Take payment](/pharmacy/pos/payments).
+- **It resets to cash if the customer changes or the connection drops.** The balance is held centrally, not on the till, so a figure the terminal remembered from ten minutes ago could be refused after the goods had already left the counter. Resetting is cheaper than a sale that cannot be paid for.
 
 ## Check it worked
 
-- The **On account** figure in the profile header matches the **New balance**
-  the dialog previewed.
-- The **Account** tab has a new line with the entry type, the time, the amount
-  signed **+** or **−**, and your reason underneath it.
-- At the till, **Account balance** appears as a tender for that customer and
-  shows the new figure.
+- The **On account** figure in the profile header matches the **New balance** the dialog previewed.
+- The **Account** tab has a new line with the entry type, the time, the amount signed **\+** or **−**, and your reason underneath it.
+- At the till, **Account balance** appears as a tender for that customer and shows the new figure.
 
 <AuditNote action="Every movement on a customer's account" />
 
@@ -134,33 +89,23 @@ it catch people out:
 
 <AccordionGroup>
   <Accordion title="'Not enough on account — short by \{amount\}.'">
-    You are trying to take out more than the account holds. The wallet does not
-    go negative on a cash-out or a settlement. If this is money the customer
-    owes, put it on the sale as a part-payment instead, where it becomes a debt
-    you can chase.
+    You are trying to take out more than the account holds. The wallet does not go negative on a cash-out or a settlement. If this is money the customer owes, put it on the sale as a part-payment instead, where it becomes a debt you can chase.
   </Accordion>
 
   <Accordion title="Record stays disabled on a correction">
-    A correction requires a reason. Write what actually happened — "deposit
-    keyed twice on 14 Aug" — because that line is the only explanation anyone
-    will have later.
+    A correction requires a reason. Write what actually happened — "deposit keyed twice on 14 Aug" — because that line is the only explanation anyone will have later.
   </Accordion>
 
   <Accordion title="'That entry was already recorded'">
-    The same entry was submitted twice, usually a double-select. It was recorded
-    once. Check the **Account** tab before re-entering anything.
+    The same entry was submitted twice, usually a double-select. It was recorded once. Check the **Account** tab before re-entering anything.
   </Accordion>
 
   <Accordion title="Account balance is missing at the till">
-    Three possible reasons: the sale is on **Walk-in** rather than a registered
-    customer, the customer has no money on account, or the till is offline.
-    Attach the customer first — see [Ring up a sale](/pharmacy/pos/index).
+    Three possible reasons: the sale is on **Walk-in** rather than a registered customer, the customer has no money on account, or the till is offline. Attach the customer first — see [Ring up a sale](/pharmacy/pos/index).
   </Accordion>
 
   <Accordion title="'Customer created, but the opening deposit did not go through.'">
-    The record saved and the money did not. Add the deposit here from **Money on
-    account** — do not create a second customer record. See
-    [Add your first customer](/pharmacy/get-started/first-customer).
+    The record saved and the money did not. Add the deposit here from **Money on account** — do not create a second customer record. See [Add your first customer](/pharmacy/get-started/first-customer).
   </Accordion>
 </AccordionGroup>
 

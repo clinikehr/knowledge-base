@@ -1,7 +1,7 @@
 ---
-title: "Track expenses and your net position"
+title: Track expenses and your net position
 description: "Record fuel, rent, salaries and other running costs so the bottom line your pharmacy reports is the real one."
-icon: "/images/icons/receipt.svg"
+icon: /images/icons/receipt.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,76 +11,51 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Needs 'View the net position'" />
 
-Takings are not profit. **Expenses** is where you record what running the
-pharmacy actually costs, so the net position figure everyone quotes is worth
-quoting.
+Takings are not profit. **Expenses** is where you record what running the pharmacy actually costs, so the net position figure everyone quotes is worth quoting.
 
 <Path steps={['Sidebar', 'Expenses']} />
 
-<TaskHeader
-  before="The 'View the net position' permission"
-  time="20 seconds per expense"
-  after="A running cost on the books, and a net position that accounts for it"
-/>
+<TaskHeader before="The 'View the net position' permission" time="20 seconds per expense" after="A running cost on the books, and a net position that accounts for it" />
 
 ## The arithmetic, plainly
 
-The header reads **Expenses** — "Net position and running costs" — and the
-first card is **Net position · \{range\}**, with a range select of **Today**,
-**7 days**, **1 month**, **3 months**, **6 months** and **All time**.
+The header reads **Expenses** — "Net position and running costs" — and the first card is **Net position · \{range\}**, with a range select of **Today**, **7 days**, **1 month**, **3 months**, **6 months** and **All time**.
 
 Four lines make one number:
 
-```
+```text
 Revenue − Cost of goods − Expenses − Loss (expired/damaged) = Net position
 ```
 
 | Line | Where it comes from |
-|---|---|
+| --- | --- |
 | **Revenue** | Sales taken over the range |
 | **Cost of goods** | What the stock you sold cost, from what you paid at receiving |
 | **Expenses** | What you record on this page |
 | **Loss (expired/damaged)** | Stock written off, at cost — see [Batches and expiry](/pharmacy/inventory/batches-and-expiry) |
 
-Three of those four fill themselves in from work you are already doing.
-**Expenses is the only line that exists because someone typed it.** A pharmacy
-that records no expenses will see a net position that looks like a gross margin
-and read it as profit.
+Three of those four fill themselves in from work you are already doing. **Expenses is the only line that exists because someone typed it.** A pharmacy that records no expenses will see a net position that looks like a gross margin and read it as profit.
 
-Below the card sit **Expenses by category · this month** and **Recent
-expenses**.
+Below the card sit **Expenses by category · this month** and **Recent expenses**.
 
 ## Record an expense
 
 <Steps>
   <Step title="Select Add Expense">
-    The **Add expense** sheet opens — "A running cost — fuel, rent, salaries. It
-    reduces the net position for its date."
+    The **Add expense** sheet opens — "A running cost — fuel, rent, salaries. It reduces the net position for its date."
   </Step>
-
   <Step title="Pick a Category">
-    **Fuel**, **Transport**, **Rent**, **Salaries**, **Utilities**,
-    **Supplies**, **Capital** or **Other**. The categories are fixed, which is
-    what makes the **Expenses by category** breakdown comparable month to month
-    — so pick the nearest one rather than defaulting everything to **Other**.
+    **Fuel**, **Transport**, **Rent**, **Salaries**, **Utilities**, **Supplies**, **Capital** or **Other**. The categories are fixed, which is what makes the **Expenses by category** breakdown comparable month to month — so pick the nearest one rather than defaulting everything to **Other**.
   </Step>
-
   <Step title="Enter the Amount">
     It must be greater than zero: **"Enter an amount greater than zero."**
   </Step>
-
   <Step title="Set the Date">
-    Defaults to today. Change it to the date the cost actually falls on — an
-    expense reduces the net position **for its own date**, so back-dating a
-    delivery charge to last week moves it into last week's figures.
+    Defaults to today. Change it to the date the cost actually falls on — an expense reduces the net position **for its own date**, so back-dating a delivery charge to last week moves it into last week's figures.
   </Step>
-
   <Step title="Add a Description">
-    **Description (optional)** — "e.g. Generator diesel for the week". Optional,
-    and worth filling every time: in three months the amount alone will not tell
-    you what it was.
+    **Description (optional)** — "e.g. Generator diesel for the week". Optional, and worth filling every time: in three months the amount alone will not tell you what it was.
   </Step>
-
   <Step title="Save it">
     The toast reads **"Expense recorded"**.
   </Step>
@@ -88,68 +63,47 @@ expenses**.
 
 ## Check it worked
 
-- The expense heads the **Recent expenses** list with its category badge,
-  description and date.
-- The **Expenses** figure on the **Net position** card rises by the amount, and
-  the net falls by the same.
-- **Expenses by category · this month** picks it up if the date falls in this
-  month.
+- The expense heads the **Recent expenses** list with its category badge, description and date.
+- The **Expenses** figure on the **Net position** card rises by the amount, and the net falls by the same.
+- **Expenses by category · this month** picks it up if the date falls in this month.
 
 ## Delete an expense
 
-Use the delete action on the row. You get **"Expense deleted"** and the net
-position recovers by that amount.
+Use the delete action on the row. You get **"Expense deleted"** and the net position recovers by that amount.
 
 ## Where expenses show up elsewhere
 
-- **[The sales dashboard](/pharmacy/money/sales)** carries the same **Net
-  position** card, so takings and costs are read side by side.
-- **[The executive dashboard](/pharmacy/money/analytics)** shows **Today's net
-  (revenue − cost − expenses)** as its headline figure.
-- **Analytics** has an **Expenses** report — operating spend by day and by
-  category, with an export. That report exists only in the Pharmacy edition,
-  because this is the only edition with a screen that feeds it.
+- [**The sales dashboard**](/pharmacy/money/sales) carries the same **Net position** card, so takings and costs are read side by side.
+- [**The executive dashboard**](/pharmacy/money/analytics) shows **Today's net (revenue − cost − expenses)** as its headline figure.
+- **Analytics** has an **Expenses** report — operating spend by day and by category, with an export. That report exists only in the Pharmacy edition, because this is the only edition with a screen that feeds it.
 
 ## Who can see this
 
-The whole page needs the **View the net position** permission. Without it, the
-sidebar entry is not yours and the net position card does not appear anywhere
-else either — it is hidden rather than shown as zero, on purpose. A card reading
-"0" would be read as a bad month rather than as a permission boundary.
+The whole page needs the **View the net position** permission. Without it, the sidebar entry is not yours and the net position card does not appear anywhere else either — it is hidden rather than shown as zero, on purpose. A card reading "0" would be read as a bad month rather than as a permission boundary.
 
-Owners and managers have it. For anyone else it is granted per person — see
-[Staff permissions](/platform/team/permissions).
+Owners and managers have it. For anyone else it is granted per person — see [Staff permissions](/platform/team/permissions).
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="'Enter an amount greater than zero.'">
-    The amount is blank, zero or not a number. Expenses are always positive —
-    the subtraction is done for you.
+    The amount is blank, zero or not a number. Expenses are always positive — the subtraction is done for you.
   </Accordion>
 
   <Accordion title="'Net position is hidden — needs authorisation from your clinic owner.'">
-    You do not have **View the net position**. The rest of the screen still
-    works; the figures do not appear until an owner or manager grants it.
+    You do not have **View the net position**. The rest of the screen still works; the figures do not appear until an owner or manager grants it.
   </Accordion>
 
   <Accordion title="The net position looks far too healthy">
-    Almost always missing expenses. Check that rent, salaries, fuel and
-    utilities are recorded for the range you are looking at. Stock written off
-    also has to be recorded as waste in Inventory to appear in the **Loss** line
-    — see [Batches and expiry](/pharmacy/inventory/batches-and-expiry).
+    Almost always missing expenses. Check that rent, salaries, fuel and utilities are recorded for the range you are looking at. Stock written off also has to be recorded as waste in Inventory to appear in the **Loss** line — see [Batches and expiry](/pharmacy/inventory/batches-and-expiry).
   </Accordion>
 
   <Accordion title="Cost of goods looks lower than it should">
-    Cost of goods can only count stock whose cost you recorded when you received
-    it. Items received with no cost contribute nothing, so the figure
-    understates rather than guesses. Record costs at receiving — see
-    [Purchase orders](/pharmacy/inventory/purchase-orders).
+    Cost of goods can only count stock whose cost you recorded when you received it. Items received with no cost contribute nothing, so the figure understates rather than guesses. Record costs at receiving — see [Purchase orders](/pharmacy/inventory/purchase-orders).
   </Accordion>
 
   <Accordion title="An expense landed in the wrong month">
-    It uses the **Date** on the sheet, not the day you typed it. Delete it and
-    re-add it with the right date.
+    It uses the **Date** on the sheet, not the day you typed it. Delete it and re-add it with the right date.
   </Accordion>
 </AccordionGroup>
 

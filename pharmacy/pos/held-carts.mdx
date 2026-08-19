@@ -1,7 +1,7 @@
 ---
-title: "Hold a cart and apply discounts"
+title: Hold a cart and apply discounts
 description: "Park a customer's cart to serve the next person, pick it back up, and take money off a line or the whole sale."
-icon: "/images/icons/circle-pause.svg"
+icon: /images/icons/circle-pause.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,115 +11,75 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Selling: 'Dispense and sell at the till'. Discounting: 'Discount beyond the set limit'" />
 
-Two things that keep a queue moving: parking a customer who has gone back to the
-shelf, and taking money off without leaving the till.
+Two things that keep a queue moving: parking a customer who has gone back to the shelf, and taking money off without leaving the till.
 
 <Path steps={['Sidebar', 'POS']} />
 
-<TaskHeader
-  before="A cart with at least one line"
-  time="Seconds"
-  after="A parked cart you can resume later, and a total that reflects the discount you gave"
-/>
+<TaskHeader before="A cart with at least one line" time="Seconds" after="A parked cart you can resume later, and a total that reflects the discount you gave" />
 
 ## Hold a cart
 
 <Steps>
   <Step title="Build the cart as normal">
-    Add the products, and attach the customer if you have one — the hold is
-    labelled with their name, which is what makes it findable later.
+    Add the products, and attach the customer if you have one — the hold is labelled with their name, which is what makes it findable later.
   </Step>
-
   <Step title="Select Hold">
-    The **Cart** card's **Hold** button parks the sale and clears the till for
-    the next person. A toast confirms it: **"\{label\}" held — attend the next
-    customer**.
+    The **Cart** card's **Hold** button parks the sale and clears the till for the next person. A toast confirms it: **"\{label\}" held — attend the next customer**.
 
-    The label is the customer's name if one is attached; otherwise the first
-    product and a count, such as "Paracetamol +2"; otherwise **Walk-in**.
+    The label is the customer's name if one is attached; otherwise the first product and a count, such as "Paracetamol \+2"; otherwise **Walk-in**.
   </Step>
-
   <Step title="Serve the next customer">
-    The till is yours again. The **Held** button now carries a count of parked
-    carts.
+    The till is yours again. The **Held** button now carries a count of parked carts.
   </Step>
-
   <Step title="Pick the cart back up">
-    Select **Held** to open the **Held carts** sheet — "Parked sales waiting for
-    the customer to complete payment. Resume to continue, or discard."
+    Select **Held** to open the **Held carts** sheet — "Parked sales waiting for the customer to complete payment. Resume to continue, or discard."
 
-    Each card shows its label, **\{n\} items · \{amount\}** and how long ago it was
-    parked. Select **Resume** to load it back into the till, or **Discard** to
-    throw it away.
+    Each card shows its label, **\{n\} items · \{amount\}** and how long ago it was parked. Select **Resume** to load it back into the till, or **Discard** to throw it away.
   </Step>
-
   <Step title="Update the hold, or complete the sale">
-    Once a cart is resumed, the hold button reads **Update hold** — use it to
-    park the same cart again with your changes. Or take payment as usual and the
-    hold is done with.
+    Once a cart is resumed, the hold button reads **Update hold** — use it to park the same cart again with your changes. Or take payment as usual and the hold is done with.
   </Step>
 </Steps>
 
 <Warning>
-  **Clear All** does not just empty the cart — it also drops the link to the
-  cart you resumed. Press **Hold** afterwards and you park a *new* cart, leaving
-  the original one still sitting in the list. Use **Discard** in the **Held
-  carts** sheet to get rid of a parked cart, not **Clear All**.
+  **Clear All** does not just empty the cart — it also drops the link to the cart you resumed. Press **Hold** afterwards and you park a _new_ cart, leaving the original one still sitting in the list. Use **Discard** in the **Held carts** sheet to get rid of a parked cart, not **Clear All**.
 </Warning>
 
 <Note>
-  Held carts are stored on the device, so they survive a refresh and work during
-  an outage — a card may show **unsynced** while offline. They belong to the
-  terminal they were parked on: a cart held on the front till is not on the back
-  one.
+  Held carts are stored on the device, so they survive a refresh and work during an outage — a card may show **unsynced** while offline. They belong to the terminal they were parked on: a cart held on the front till is not on the back one.
 </Note>
 
 ## Discount one line
 
-Use this when the customer keeps everything but one item is damaged, short-dated
-or being matched to a competitor's price.
+Use this when the customer keeps everything but one item is damaged, short-dated or being matched to a competitor's price.
 
 <Steps>
   <Step title="Open the line's discount menu">
-    Select the dotted **Discount** link under the cart line. The menu is headed
-    **Discount this line**.
+    Select the dotted **Discount** link under the cart line. The menu is headed **Discount this line**.
   </Step>
-
   <Step title="Pick the percentage">
-    Five presets — 5, 10, 15, 20 and 50 — each showing what it takes off, such
-    as "5% · save \{amount\}". The line total is then struck through and the
-    reduced price shown beneath it.
+    Five presets — 5, 10, 15, 20 and 50 — each showing what it takes off, such as "5% · save \{amount\}". The line total is then struck through and the reduced price shown beneath it.
   </Step>
-
   <Step title="Remove it if you change your mind">
-    The line carries a badge such as **−10%**. Select it to take the discount
-    off — its tooltip reads "Remove this line's discount".
+    The line carries a badge such as **−10%**. Select it to take the discount off — its tooltip reads "Remove this line's discount".
   </Step>
 </Steps>
 
 ## Discount the whole sale
 
-Above **Subtotal** sit two small toggle buttons: **%** for a percentage off the
-whole cart, and your currency symbol for a flat amount off. Select one, enter
-the value, and the **Discount** row in the totals updates.
+Above **Subtotal** sit two small toggle buttons: **%** for a percentage off the whole cart, and your currency symbol for a flat amount off. Select one, enter the value, and the **Discount** row in the totals updates.
 
-A whole-cart discount stacks with line discounts, so check the **Total** rather
-than assuming — it is easy to give twice as much away as you meant to.
+A whole-cart discount stacks with line discounts, so check the **Total** rather than assuming — it is easy to give twice as much away as you meant to.
 
 <Note>
-  Both kinds of discount need the **Discount beyond the set limit** permission.
-  A cashier does not have it by default, which is deliberate: the person taking
-  the money is not usually the person who decides the price. See
-  [Staff permissions](/platform/team/permissions).
+  Both kinds of discount need the **Discount beyond the set limit** permission. A cashier does not have it by default, which is deliberate: the person taking the money is not usually the person who decides the price. See [Staff permissions](/platform/team/permissions).
 </Note>
 
 ## Check it worked
 
-- **Held** shows a count, and the parked cart is in the **Held carts** sheet
-  with its label, item count and value.
+- **Held** shows a count, and the parked cart is in the **Held carts** sheet with its label, item count and value.
 - Resuming restores the cart exactly as it was, customer included.
-- A discounted line shows a struck-through original and a **−\{n\}%** badge, and
-  **Discount** appears as a negative in the totals.
+- A discounted line shows a struck-through original and a **−\{n\}%** badge, and **Discount** appears as a negative in the totals.
 
 ## If something goes wrong
 
@@ -129,24 +89,19 @@ than assuming — it is easy to give twice as much away as you meant to.
   </Accordion>
 
   <Accordion title="The held cart is not on this terminal">
-    Held carts live on the device where they were parked. Go back to that till,
-    or rebuild the cart.
+    Held carts live on the device where they were parked. Go back to that till, or rebuild the cart.
   </Accordion>
 
   <Accordion title="I resumed a cart, pressed Clear All, then Hold — now there are two">
-    That is the behaviour in the warning above. Open **Held carts** and
-    **Discard** the one you no longer want.
+    That is the behaviour in the warning above. Open **Held carts** and **Discard** the one you no longer want.
   </Accordion>
 
   <Accordion title="The Discount link does nothing for me">
-    You do not have **Discount beyond the set limit**. Ask an owner or manager
-    to grant it, or have them apply the discount.
+    You do not have **Discount beyond the set limit**. Ask an owner or manager to grant it, or have them apply the discount.
   </Accordion>
 
   <Accordion title="The total is lower than I expected">
-    A line discount and a cart discount are both applied. Remove the line badge
-    or clear the cart-level value and check the **Total** again before
-    completing.
+    A line discount and a cart discount are both applied. Remove the line badge or clear the cart-level value and check the **Total** again before completing.
   </Accordion>
 </AccordionGroup>
 

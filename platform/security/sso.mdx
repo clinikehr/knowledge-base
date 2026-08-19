@@ -1,97 +1,63 @@
 ---
-title: "Single sign-on"
+title: Single sign-on
 description: "What ClinikEHR supports today for signing in with an existing identity, and what to use while broader enterprise sign-on is not self-service."
-icon: "/images/icons/log-in.svg"
+icon: /images/icons/log-in.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 
 <Availability editions={['all']} plans="All plans" />
 
-ClinikEHR offers three ways to sign in: a **password**, a **passkey**, and
-**Continue with Google**. Google is the only external identity provider
-supported today.
+ClinikEHR offers three ways to sign in: a **password**, a **passkey**, and **Continue with Google**. Google is the only external identity provider supported today.
 
-Broader enterprise single sign-on — connecting your own identity provider so it
-governs who may sign in — is **not something a workspace can configure for
-itself**. There is no settings screen for it, and adding one is not a workaround
-you can assemble from what is in the product. If your organisation needs it,
-[contact support](/platform/help/contact-support) and describe your provider and
-your requirement, and we will tell you what is available.
+Broader enterprise single sign-on — connecting your own identity provider so it governs who may sign in — is **not something a workspace can configure for itself**. There is no settings screen for it, and adding one is not a workaround you can assemble from what is in the product. If your organisation needs it, [contact support](/platform/help/contact-support) and describe your provider and your requirement, and we will tell you what is available.
 
 ## Signing in with Google
 
-**Continue with Google** appears on both the sign-up and the sign-in screens.
-Select it, choose your Google account, and you are returned signed in.
+**Continue with Google** appears on both the sign-up and the sign-in screens. Select it, choose your Google account, and you are returned signed in.
 
 Two behaviours are worth knowing before you roll it out to a team.
 
 ### Signing up with Google finishes on a separate form
 
-The normal sign-up path walks you through a wizard that collects your details
-and creates your workspace as you go. Google sign-up does not run that wizard.
-You are signed in first, and then asked to complete your profile on a separate
-form before you can get to work.
+The normal sign-up path walks you through a wizard that collects your details and creates your workspace as you go. Google sign-up does not run that wizard. You are signed in first, and then asked to complete your profile on a separate form before you can get to work.
 
-Nothing is lost — you fill in the same details, just afterwards rather than
-before. Expect it, so it does not look like the sign-up failed.
+Nothing is lost — you fill in the same details, just afterwards rather than before. Expect it, so it does not look like the sign-up failed.
 
 ### Google is refused on an email that already has a password
 
-If an account already exists for that email address with a password, using
-**Continue with Google** is refused rather than silently merged: "This email is
-already registered with a password. Please sign in using your email and password
-instead, or reset your password if you've forgotten it."
+If an account already exists for that email address with a password, using **Continue with Google** is refused rather than silently merged: "This email is already registered with a password. Please sign in using your email and password instead, or reset your password if you've forgotten it."
 
-That is deliberate. Silently joining an unverified external identity to an
-existing account is how one person ends up inside another person's records. Sign
-in with the password, and use the reset link on the sign-in screen if you have
-forgotten it.
+That is deliberate. Silently joining an unverified external identity to an existing account is how one person ends up inside another person's records. Sign in with the password, and use the reset link on the sign-in screen if you have forgotten it.
 
-There is no way to convert a password account to a Google account after the
-fact. Pick one method per person before you invite a team, not after.
+There is no way to convert a password account to a Google account after the fact. Pick one method per person before you invite a team, not after.
 
 ## What to use in the meantime
 
-Two things give you most of what people want from enterprise sign-on, and both
-are available to every workspace today.
+Two things give you most of what people want from enterprise sign-on, and both are available to every workspace today.
 
 <Columns cols={2}>
   <Card title="Passkeys — phishing-resistant sign-in" icon="/images/icons/fingerprint.svg" href="/platform/account/security">
-    A passkey replaces the password with the device's own biometric or PIN.
-    There is no shared secret to steal, and nothing to phish. Set one up per
-    device from your security settings.
+    A passkey replaces the password with the device's own biometric or PIN. There is no shared secret to steal, and nothing to phish. Set one up per device from your security settings.
   </Card>
 
   <Card title="Workspace-wide two-factor — enforcement" icon="/images/icons/key.svg" href="/platform/security/mfa">
-    An owner can require two-factor for everyone in the workspace. Enrolment
-    cannot be skipped, and patient data will not open from a session that has
-    not passed the second factor.
+    An owner can require two-factor for everyone in the workspace. Enrolment cannot be skipped, and patient data will not open from a session that has not passed the second factor.
   </Card>
 </Columns>
 
-Between them you get a strong credential and a rule everyone has to follow —
-which is usually the actual reason an organisation asks for single sign-on.
+Between them you get a strong credential and a rule everyone has to follow — which is usually the actual reason an organisation asks for single sign-on.
 
 <Note>
-  A passkey counts as **one** factor, not two. In a workspace that requires
-  two-factor, someone signing in with a passkey is still asked for their
-  authenticator code before any clinical screen opens. See
-  [Two-factor authentication](/platform/security/mfa).
+  A passkey counts as **one** factor, not two. In a workspace that requires two-factor, someone signing in with a passkey is still asked for their authenticator code before any clinical screen opens. See [Two-factor authentication](/platform/security/mfa).
 </Note>
 
 ## Practical advice for a team
 
-- **Decide the sign-in method before you invite anyone.** Mixing Google and
-  password accounts across one team is what produces the refusal above.
-- **Removing access is still done in ClinikEHR.** Even for a Google account,
-  taking someone out of your workspace is what stops them reading your records —
-  disabling their Google account elsewhere does not do it for you. See
-  [Roles](/platform/team/roles).
-- **Require two-factor** if you want a rule that applies to everyone regardless
-  of how they sign in.
-- **Every sign-in is recorded** as a **Signed In** entry in your
-  [audit log](/platform/security/audit-log), whichever method was used.
+- **Decide the sign-in method before you invite anyone.** Mixing Google and password accounts across one team is what produces the refusal above.
+- **Removing access is still done in ClinikEHR.** Even for a Google account, taking someone out of your workspace is what stops them reading your records — disabling their Google account elsewhere does not do it for you. See [Roles](/platform/team/roles).
+- **Require two-factor** if you want a rule that applies to everyone regardless of how they sign in.
+- **Every sign-in is recorded** as a **Signed In** entry in your [audit log](/platform/security/audit-log), whichever method was used.
 
 ## Related
 
@@ -99,12 +65,15 @@ which is usually the actual reason an organisation asks for single sign-on.
   <Card title="Secure your account" icon="/images/icons/shield-halved.svg" href="/platform/account/security">
     Passwords, passkeys, two-factor and sign-in alerts.
   </Card>
+
   <Card title="Two-factor authentication" icon="/images/icons/key.svg" href="/platform/security/mfa">
     Requiring a second factor across a workspace.
   </Card>
+
   <Card title="Invite staff" icon="/images/icons/user-plus.svg" href="/platform/team/invite-staff">
     Getting people into your workspace in the first place.
   </Card>
+
   <Card title="Contact support" icon="/images/icons/life-ring.svg" href="/platform/help/contact-support">
     Ask about enterprise sign-on for your organisation.
   </Card>

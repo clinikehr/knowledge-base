@@ -1,7 +1,7 @@
 ---
-title: "Serve a page on your own domain"
+title: Serve a page on your own domain
 description: "Publish your booking page, store, membership page, contact form or AI assistant on a web address you own, with a certificate issued for you."
-icon: "/images/icons/globe.svg"
+icon: /images/icons/globe.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,75 +11,49 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Team and above" roles="Owner, Manager" />
 
-Five of your public pages can be served on a domain you own, so a patient books
-at `book.yourclinic.com` rather than at a ClinikEHR address. You add two DNS
-records, and the security certificate is issued for you.
+Five of your public pages can be served on a domain you own, so a patient books at `book.yourclinic.com` rather than at a ClinikEHR address. You add two DNS records, and the security certificate is issued for you.
 
 ## What can have a domain
 
 | Surface | Example | Set it up on |
-|---|---|---|
+| --- | --- | --- |
 | Booking page | `book.yourclinic.com` | <Path steps={['Settings', 'Booking Page Designer', 'Design']} /> |
 | Store | `shop.yourclinic.com` | <Path steps={['Settings', 'Store Page']} /> |
 | Membership page | `membership.yourclinic.com` | <Path steps={['Settings', 'Membership Page']} /> |
 | Contact form | `inquire.yourclinic.com` | <Path steps={['Settings', 'Contact Form']} /> |
 | Published AI assistant | `assistant.yourclinic.com` | <Path steps={['Agents', 'Public UIs']} /> |
 
-One domain per surface, and each surface has its own **Custom domain** card.
-Four separate subdomains for four pages is normal and expected.
+One domain per surface, and each surface has its own **Custom domain** card. Four separate subdomains for four pages is normal and expected.
 
 <Note>
-  **The patient portal does not support custom domains.** It is always served on
-  the ClinikEHR portal address, and there is no setting to change that — so
-  there is nothing to hunt for on the **Client Portal** tab. Everything else
-  about the portal, including its branding, is yours to set: see
-  [Portal branding](/portal/setup/branding).
+  **The patient portal does not support custom domains.** It is always served on the ClinikEHR portal address, and there is no setting to change that — so there is nothing to hunt for on the **Client Portal** tab. Everything else about the portal, including its branding, is yours to set: see [Portal branding](/portal/setup/branding).
 </Note>
 
-<TaskHeader
-  before="A domain you control the DNS for, and the Team plan or above"
-  time="10 minutes of work, then up to a few hours of waiting"
-  after="Your page live on your own address, with a valid certificate"
-/>
+<TaskHeader before="A domain you control the DNS for, and the Team plan or above" time="10 minutes of work, then up to a few hours of waiting" after="Your page live on your own address, with a valid certificate" />
 
 ## Connect a domain
 
 <Steps>
   <Step title="Decide the subdomain">
-    Use a subdomain — `book.yourclinic.com`, not `yourclinic.com`. Most
-    registrars cannot point a bare domain at anything but their own hosting, and
-    the card says as much.
+    Use a subdomain — `book.yourclinic.com`, not `yourclinic.com`. Most registrars cannot point a bare domain at anything but their own hosting, and the card says as much.
   </Step>
-
   <Step title="Open the surface's settings tab and find Custom domain">
-    The card is headed **Custom domain** — "Serve this page on a domain you own".
-    Enter your hostname and select **Connect domain**.
+    The card is headed **Custom domain** — "Serve this page on a domain you own". Enter your hostname and select **Connect domain**.
   </Step>
-
   <Step title="Add the ownership record at your DNS provider">
-    The card now shows two records. Add the first, **1. Ownership (TXT)** — use
-    **Copy value** so nothing is mistyped. This proves the domain is yours.
+    The card now shows two records. Add the first, **1. Ownership (TXT)** — use **Copy value** so nothing is mistyped. This proves the domain is yours.
   </Step>
-
   <Step title="Select Verify now, and wait">
-    The badge moves from **Waiting for TXT record** to **Waiting for CNAME** once
-    the record is visible. Verification is also checked automatically, so
-    **Verify now** just saves you waiting.
+    The badge moves from **Waiting for TXT record** to **Waiting for CNAME** once the record is visible. Verification is also checked automatically, so **Verify now** just saves you waiting.
   </Step>
-
   <Step title="Add the routing record">
-    Add **2. Routing (CNAME)**, again with **Copy value**. This is what actually
-    points visitors at your page.
+    Add **2. Routing (CNAME)**, again with **Copy value**. This is what actually points visitors at your page.
   </Step>
-
   <Step title="Wait for the certificate">
-    The badge moves to **Issuing certificate**. Nothing is required from you —
-    the certificate is requested and installed automatically.
+    The badge moves to **Issuing certificate**. Nothing is required from you — the certificate is requested and installed automatically.
   </Step>
-
   <Step title="Confirm it reads Live">
-    When the badge says **Live**, an **Open** button appears beside the hostname.
-    Select it, and your page loads on your own address over HTTPS.
+    When the badge says **Live**, an **Open** button appears beside the hostname. Select it, and your page loads on your own address over HTTPS.
   </Step>
 </Steps>
 
@@ -88,7 +62,7 @@ Four separate subdomains for four pages is normal and expected.
 The badge on the card tells you exactly where you are.
 
 | Badge | Means | What to do |
-|---|---|---|
+| --- | --- | --- |
 | **Waiting for TXT record** | The ownership record is not visible yet | Add the TXT record, then **Verify now** |
 | **Waiting for CNAME** | Ownership is proved; routing is not in place | Add the CNAME record, then **Verify now** |
 | **Issuing certificate** | Both records are good; the certificate is being issued | Wait. Usually minutes |
@@ -96,15 +70,11 @@ The badge on the card tells you exactly where you are.
 | **Needs attention** | Setup failed. The reason is shown under the badge | Read the reason, fix the record, **Verify now** |
 | **Suspended** | The domain has been taken out of service | Read the reason, then [contact support](/platform/help/contact-support) |
 
-**Nothing is served on your domain until the badge reads Live.** Until then your
-ClinikEHR address is the working link, and it keeps working afterwards too.
+**Nothing is served on your domain until the badge reads Live.** Until then your ClinikEHR address is the working link, and it keeps working afterwards too.
 
 ## Disconnecting
 
-**Disconnect** on the card removes the domain. The confirmation is explicit
-about the consequences: the domain stops serving the page immediately, your
-ClinikEHR link keeps working, and for 30 days no other account can claim that
-hostname.
+**Disconnect** on the card removes the domain. The confirmation is explicit about the consequences: the domain stops serving the page immediately, your ClinikEHR link keeps working, and for 30 days no other account can claim that hostname.
 
 ## Check it worked
 
@@ -117,45 +87,31 @@ hostname.
 
 <AccordionGroup>
   <Accordion title="I added the records and it still says Waiting">
-    DNS changes take time to spread — usually minutes, occasionally a few hours,
-    and up to 48 in the worst case. Select **Verify now** occasionally rather
-    than deleting and re-adding the domain, which restarts the clock.
+    DNS changes take time to spread — usually minutes, occasionally a few hours, and up to 48 in the worst case. Select **Verify now** occasionally rather than deleting and re-adding the domain, which restarts the clock.
   </Accordion>
 
   <Accordion title="Verify now keeps failing after several hours">
-    Almost always a typo or a duplicated hostname. Check three things at your DNS
-    provider: the record **name** matches what the card shows exactly; the
-    **value** was pasted with **Copy value** and not retyped; and your provider
-    has not silently appended your domain to a name that already contained it —
-    `book.yourclinic.com.yourclinic.com` is the classic version of this.
+    Almost always a typo or a duplicated hostname. Check three things at your DNS provider: the record **name** matches what the card shows exactly; the **value** was pasted with **Copy value** and not retyped; and your provider has not silently appended your domain to a name that already contained it — `book.yourclinic.com.yourclinic.com` is the classic version of this.
   </Accordion>
 
   <Accordion title="There is no Custom domain card on the tab">
-    Custom domains are part of the **Team** plan and above. On a lower plan the
-    card shows an upgrade prompt instead of the form. See
-    [Change your plan](/platform/plans/change-plan).
+    Custom domains are part of the **Team** plan and above. On a lower plan the card shows an upgrade prompt instead of the form. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="I want to use my bare domain, without a subdomain">
-    Use a subdomain. Most registrars cannot point a bare domain at an external
-    service, and doing it usually breaks your main website's mail records as a
-    side effect.
+    Use a subdomain. Most registrars cannot point a bare domain at an external service, and doing it usually breaks your main website's mail records as a side effect.
   </Accordion>
 
   <Accordion title="The browser warns the connection is not private">
-    The certificate is not issued yet — the badge will still read **Issuing
-    certificate**. Wait for **Live** before sharing the address with anyone.
+    The certificate is not issued yet — the badge will still read **Issuing certificate**. Wait for **Live** before sharing the address with anyone.
   </Accordion>
 
   <Accordion title="It says Needs attention">
-    The reason is printed under the badge in red. Fix the record it names and
-    select **Verify now**. If the reason is not something you can act on,
-    [contact support](/platform/help/contact-support) with the hostname.
+    The reason is printed under the badge in red. Fix the record it names and select **Verify now**. If the reason is not something you can act on, [contact support](/platform/help/contact-support) with the hostname.
   </Accordion>
 
   <Accordion title="Can I point two surfaces at the same hostname?">
-    No — one domain per surface, and a hostname is claimed once. Give each page
-    its own subdomain.
+    No — one domain per surface, and a hostname is claimed once. Give each page its own subdomain.
   </Accordion>
 </AccordionGroup>
 
@@ -165,6 +121,7 @@ hostname.
   <Card title="Brand your public pages" icon="/images/icons/palette.svg" href="/platform/settings/branding">
     Logos, colours and copy on each public surface.
   </Card>
+
   <Card title="Embed on your website" icon="/images/icons/code.svg" href="/platform/integrations/embeds">
     Putting a page inside your own site instead of linking to it.
   </Card>

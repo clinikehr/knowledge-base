@@ -1,7 +1,7 @@
 ---
-title: "Work the bench queue"
+title: Work the bench queue
 description: "Filter the drug-testing bench queue, use the rack view, and screen a batch of oral-fluid specimens negative in one pass."
-icon: "/images/icons/list-check.svg"
+icon: /images/icons/list-check.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -12,142 +12,88 @@ import { StillStuck } from '/snippets/support.mdx';
 <Availability editions={['lims']} plans="All plans" roles="Anyone granted “enter results at the bench”. Whole-lab and all-sites access include it." />
 
 <Note>
-  **The Worklist is the drug-testing bench queue.** If your lab runs only
-  standard clinical work, it will be empty — and that is correct, not a fault.
-  Clinical requests are worked from
-  [Test requests](/lims/lab/test-requests) and the **Lab Station**.
+  **The Worklist is the drug-testing bench queue.** If your lab runs only standard clinical work, it will be empty — and that is correct, not a fault. Clinical requests are worked from [Test requests](/lims/lab/test-requests) and the **Lab Station**.
 </Note>
 
-The **Worklist** puts every regulated specimen in one oldest-first list so the
-bench can see what is ageing, and lets you clear a run of negative oral-fluid
-screens in a single action. Its subtitle says the job out loud: "The bench
-queue, oldest first. Filter, select a batch, and mark received oral-fluid
-screens negative in one pass — urine and non-negatives go through the
-per-specimen forms."
+The **Worklist** puts every regulated specimen in one oldest-first list so the bench can see what is ageing, and lets you clear a run of negative oral-fluid screens in a single action. Its subtitle says the job out loud: "The bench queue, oldest first. Filter, select a batch, and mark received oral-fluid screens negative in one pass — urine and non-negatives go through the per-specimen forms."
 
 <Path steps={['Sidebar', 'Worklist']} />
 
-<TaskHeader
-  before="Specimens accessioned and received, and a completed bench run to report from"
-  time="Seconds for a batch; a minute per specimen otherwise"
-  after="A queue filtered to what you are working, and negative screens recorded"
-/>
+<TaskHeader before="Specimens accessioned and received, and a completed bench run to report from" time="Seconds for a batch; a minute per specimen otherwise" after="A queue filtered to what you are working, and negative screens recorded" />
 
 ## Find what you are working on
 
-Along the top, the status chips double as filters and carry live counts:
-**All**, **Lab intake**, **Collected**, **In transit**, **Received**,
-**Screening**, **Confirmed**. Alongside them are a search box (**Specimen ID,
-LAN or donor…**) and a specimen-type select offering **All specimen types**,
-**Oral fluid** and **Urine**.
+Along the top, the status chips double as filters and carry live counts: **All**, **Lab intake**, **Collected**, **In transit**, **Received**, **Screening**, **Confirmed**. Alongside them are a search box (**Specimen ID, LAN or donor…**) and a specimen-type select offering **All specimen types**, **Oral fluid** and **Urine**.
 
-The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel**,
-**Status** and **Received**. When nothing matches you get **Nothing in the queue
-for these filters.** — widen the filters before you assume something is lost.
+The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel**, **Status** and **Received**. When nothing matches you get **Nothing in the queue for these filters.** — widen the filters before you assume something is lost.
 
 ## List or rack
 
-The **List | Rack** toggle switches the layout, and the rack density select
-offers 5, 6, 8, 10 or 12 per row.
+The **List | Rack** toggle switches the layout, and the rack density select offers 5, 6, 8, 10 or 12 per row.
 
-Rack view lays the current filter out FIFO and colours each well by status, so
-an ageing specimen is visible from across the bench. Its own caption is the
-thing to remember: "FIFO layout of the current filter — positions are a bench
-aid, not stored assignments. Click a well to select it for a batch action;
-double-click to open the specimen."
+Rack view lays the current filter out FIFO and colours each well by status, so an ageing specimen is visible from across the bench. Its own caption is the thing to remember: "FIFO layout of the current filter — positions are a bench aid, not stored assignments. Click a well to select it for a batch action; double-click to open the specimen."
 
-Nothing about a well is saved. Move the physical rack and the screen does not
-follow.
+Nothing about a well is saved. Move the physical rack and the screen does not follow.
 
 ## Screen a batch negative
 
 <Steps>
   <Step title="Filter to received oral fluid">
-    Select the **Received** chip and set the specimen-type select to **Oral
-    fluid**. Batch screening only ever applies to received oral-fluid specimens.
+    Select the **Received** chip and set the specimen-type select to **Oral fluid**. Batch screening only ever applies to received oral-fluid specimens.
   </Step>
-
   <Step title="Select the specimens">
-    Tick the rows, or click the wells in rack view. The action bar reports
-    **\{n\} selected · \{n\} eligible for batch screen (received oral-fluid only)**.
-    If those two numbers differ, something in your selection is not eligible.
+    Tick the rows, or click the wells in rack view. The action bar reports **\{n\} selected · \{n\} eligible for batch screen (received oral-fluid only)**. If those two numbers differ, something in your selection is not eligible.
   </Step>
-
   <Step title="Open the batch action">
-    Select **Mark batch negative (\{n\})**. The dialog reads **Mark \{n\} screens
-    negative?**
+    Select **Mark batch negative (\{n\})**. The dialog reads **Mark \{n\} screens negative?**
   </Step>
-
   <Step title="Name the technician">
-    Enter the **Screening technician** — "Name as it should appear on the chain
-    of custody". This is the name that will be read back in a challenge, so
-    enter the person who ran the specimens.
+    Enter the **Screening technician** — "Name as it should appear on the chain of custody". This is the name that will be read back in a challenge, so enter the person who ran the specimens.
   </Step>
-
   <Step title="Record the screens">
-    Select **Record \{n\} negative screens**. The toast reads **\{n\} specimens
-    screened negative** and the specimens move on.
+    Select **Record \{n\} negative screens**. The toast reads **\{n\} specimens screened negative** and the specimens move on.
   </Step>
 </Steps>
 
 <Warning>
-  Only do this after the bench run confirmed every one of these specimens
-  screened negative — any specimen with a non-negative must go through its own
-  screen form instead.
+  Only do this after the bench run confirmed every one of these specimens screened negative — any specimen with a non-negative must go through its own screen form instead.
 </Warning>
 
 ## Why urine is excluded
 
-Batch negative is limited to oral fluid on purpose. Urine needs per-specimen
-validity testing — temperature, creatinine, pH, adulterants — and there is no
-honest way to attest to that in bulk, so urine is left out of the batch action
-by design. Work urine through the per-specimen screen form. See
-[Screening and confirmation](/lims/dot/screening-and-confirmation).
+Batch negative is limited to oral fluid on purpose. Urine needs per-specimen validity testing — temperature, creatinine, pH, adulterants — and there is no honest way to attest to that in bulk, so urine is left out of the batch action by design. Work urine through the per-specimen screen form. See [Screening and confirmation](/lims/dot/screening-and-confirmation).
 
 ## Open a single specimen
 
-Selecting a row opens the order workflow sheet with **Workflow** and **Chain of
-Custody** tabs. The **Workflow** tab shows whichever form the current status
-calls for — accession, screen, confirmation — so you never have to know which
-step is next. See
-[Accession an incoming specimen](/lims/lab/accessioning).
+Selecting a row opens the order workflow sheet with **Workflow** and **Chain of Custody** tabs. The **Workflow** tab shows whichever form the current status calls for — accession, screen, confirmation — so you never have to know which step is next. See [Accession an incoming specimen](/lims/lab/accessioning).
 
 ## Check it worked
 
-- The specimens you batched have left the **Received** filter and the
-  **Screening** count has moved by the same number.
-- Each one's **Chain of Custody** tab shows an Initial Immunoassay Screen event
-  naming the technician you entered.
+- The specimens you batched have left the **Received** filter and the **Screening** count has moved by the same number.
+- Each one's **Chain of Custody** tab shows an Initial Immunoassay Screen event naming the technician you entered.
 - The counts on the status chips add up to the **All** count.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The Worklist is empty">
-    Expected, if you do not run drug testing. Regulated collections populate
-    this queue; clinical requests live in
-    [Test requests](/lims/lab/test-requests).
+    Expected, if you do not run drug testing. Regulated collections populate this queue; clinical requests live in [Test requests](/lims/lab/test-requests).
   </Accordion>
 
   <Accordion title="Mark batch negative is greyed out or counts zero eligible">
-    Your selection contains something other than a received oral-fluid
-    specimen. Filter to **Received** and **Oral fluid** first, then reselect.
+    Your selection contains something other than a received oral-fluid specimen. Filter to **Received** and **Oral fluid** first, then reselect.
   </Accordion>
 
   <Accordion title="A specimen screened non-negative">
-    Take it out of the batch and open it on its own. A non-negative goes to
-    confirmation, never through the batch action.
+    Take it out of the batch and open it on its own. A non-negative goes to confirmation, never through the batch action.
   </Accordion>
 
   <Accordion title="The rack positions do not match my bench">
-    They never will on their own — rack view is a FIFO drawing of the current
-    filter, not a stored map of your physical rack.
+    They never will on their own — rack view is a FIFO drawing of the current filter, not a stored map of your physical rack.
   </Accordion>
 
   <Accordion title="I entered the wrong screening technician">
-    Ask a Lab Manager. The name is written to the chain of custody, so it is
-    corrected deliberately and the correction is itself recorded — see
-    [Audit log](/platform/security/audit-log).
+    Ask a Lab Manager. The name is written to the chain of custody, so it is corrected deliberately and the correction is itself recorded — see [Audit log](/platform/security/audit-log).
   </Accordion>
 </AccordionGroup>
 

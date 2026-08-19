@@ -1,7 +1,7 @@
 ---
-title: "Take payment"
+title: Take payment
 description: "Every tender the pharmacy till accepts — cash and change, card and transfer references, account balance, and part payment on credit."
-icon: "/images/icons/banknote.svg"
+icon: /images/icons/banknote.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,23 +11,18 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Dispense and sell at the till'" />
 
-The payment summary is the bottom-right card on the till. It totals the cart,
-takes the tender and completes the sale.
+The payment summary is the bottom-right card on the till. It totals the cart, takes the tender and completes the sale.
 
 <Path steps={['Sidebar', 'POS']} />
 
-<TaskHeader
-  before="A cart with at least one line"
-  time="Seconds"
-  after="A completed sale recorded against the tender you chose, with change worked out for you"
-/>
+<TaskHeader before="A cart with at least one line" time="Seconds" after="A completed sale recorded against the tender you chose, with change worked out for you" />
 
 ## What the totals mean
 
 Above the tender buttons, the summary lists the lines that apply to this sale:
 
 | Row | What it is |
-|---|---|
+| --- | --- |
 | **Subtotal** | The cart before anything is taken off or added |
 | **Discount** | Line discounts plus any whole-cart discount, shown as a negative |
 | **Tax (\{rate\}%)** | Your configured tax, if you charge one |
@@ -37,129 +32,83 @@ Above the tender buttons, the summary lists the lines that apply to this sale:
 
 ## Choose the tender
 
-**Payment Method** offers six buttons in two rows — **Cash**, **Card**, **Mobile
-Money**, then **Bank Transfer**, **Insurance**, **Other** — plus a full-width
-**Account balance** button when a registered customer is attached.
+**Payment Method** offers six buttons in two rows — **Cash**, **Card**, **Mobile Money**, then **Bank Transfer**, **Insurance**, **Other** — plus a full-width **Account balance** button when a registered customer is attached.
 
 <Tabs>
   <Tab title="Cash">
-    Enter what the customer handed over in **Amount Received**, or use one of the
-    four **Quick Select** buttons — the exact total, then the total rounded up to
-    the next 100, 500 and 1,000.
+    Enter what the customer handed over in **Amount Received**, or use one of the four **Quick Select** buttons — the exact total, then the total rounded up to the next 100, 500 and 1,000.
 
-    The panel below shows **Change Due** when you have enough and **Amount
-    Needed** when you do not, so you never work change out on paper.
+    The panel below shows **Change Due** when you have enough and **Amount Needed** when you do not, so you never work change out on paper.
   </Tab>
-
   <Tab title="Card, transfer, mobile money">
-    Each non-cash tender asks for its own reference, in a box labelled for the
-    method — **Card Reference / Last 4 Digits**, **Transfer Reference** or
-    **Mobile Money Transaction ID** — with the placeholder "Enter reference
-    number...".
+    Each non-cash tender asks for its own reference, in a box labelled for the method — **Card Reference / Last 4 Digits**, **Transfer Reference** or **Mobile Money Transaction ID** — with the placeholder "Enter reference number...".
 
-    Enter the reference from the terminal or the transfer confirmation. It is
-    what lets you match the sale to your bank statement later.
+    Enter the reference from the terminal or the transfer confirmation. It is what lets you match the sale to your bank statement later.
   </Tab>
-
   <Tab title="Insurance and other">
-    **Insurance** asks for an **Insurance Claim Number** and reminds you that
-    "Note: Insurance payments may require additional verification". **Other**
-    asks for a generic **Payment Reference**.
+    **Insurance** asks for an **Insurance Claim Number** and reminds you that "Note: Insurance payments may require additional verification". **Other** asks for a generic **Payment Reference**.
   </Tab>
-
   <Tab title="Account balance">
-    Available only when a registered customer is attached and they have money on
-    account. The button shows their balance on the right.
+    Available only when a registered customer is attached and they have money on account. The button shows their balance on the right.
 
-    It is **disabled without a connection** — its tooltip reads "Account balance
-    needs a connection" — and disabled when the balance will not cover the sale,
-    where it shows **\{amount\} · short**. A dash means the balance is not known
-    yet. See [Customer wallets](/pharmacy/customers/wallet).
+    It is **disabled without a connection** — its tooltip reads "Account balance needs a connection" — and disabled when the balance will not cover the sale, where it shows **\{amount\} · short**. A dash means the balance is not known yet. See [Customer wallets](/pharmacy/customers/wallet).
   </Tab>
 </Tabs>
 
-Use **Notes (Optional)** for anything the sale itself does not record — who
-authorised a price, which prescriber was called.
+Use **Notes (Optional)** for anything the sale itself does not record — who authorised a price, which prescriber was called.
 
 ## Part payment and credit
 
-When the customer pays some now and the rest later, tick **Part-payment /
-credit** — "Customer pays part now, settles the balance later. Tracked as a
-debtor."
+When the customer pays some now and the rest later, tick **Part-payment / credit** — "Customer pays part now, settles the balance later. Tracked as a debtor."
 
 <Steps>
   <Step title="Attach the customer first">
-    A balance has to belong to somebody. Attach a registered customer on the
-    **Customer** card before you take part payment — see
-    [Add your first customer](/pharmacy/get-started/first-customer).
+    A balance has to belong to somebody. Attach a registered customer on the **Customer** card before you take part payment — see [Add your first customer](/pharmacy/get-started/first-customer).
   </Step>
-
   <Step title="Tick Part-payment / credit">
     The **Amount Received** box is replaced by **Amount paid now**.
   </Step>
-
   <Step title="Enter what they are paying today">
-    An amber row shows **Balance due (credit)** with the remainder. That figure
-    is what they will owe when they walk out.
+    An amber row shows **Balance due (credit)** with the remainder. That figure is what they will owe when they walk out.
   </Step>
-
   <Step title="Complete the sale">
-    Select **Complete Sale • \{total\}**. The receipt shows the amount paid and the
-    balance.
+    Select **Complete Sale • \{total\}**. The receipt shows the amount paid and the balance.
   </Step>
 </Steps>
 
-The outstanding amount then appears in the **Debtors** sheet on the
-[Sales page](/pharmacy/money/sales), where you record the settlement later —
-either as a payment, or with **Settle from account** if they have wallet funds.
+The outstanding amount then appears in the **Debtors** sheet on the [Sales page](/pharmacy/money/sales), where you record the settlement later — either as a payment, or with **Settle from account** if they have wallet funds.
 
 <Warning>
-  Credit is a real debt against a real person, and only a registered customer
-  can carry one. Selling on credit to **Walk-in** leaves you with a balance
-  nobody is attached to — attach the customer before you tick the box, not
-  after.
+  Credit is a real debt against a real person, and only a registered customer can carry one. Selling on credit to **Walk-in** leaves you with a balance nobody is attached to — attach the customer before you tick the box, not after.
 </Warning>
 
 ## Check it worked
 
-- A **Sale Complete!** panel shows the **Sale Number**, the **Total** and the
-  **Change Due**, and the toast reads **Sale completed successfully!**
-- The sale appears in **Sales History** with your chosen method in the
-  **Payment** column.
-- A part payment shows the sale as owing in the **Debtors** sheet, with **Paid
-  \{amount\} of \{total\}**.
+- A **Sale Complete!** panel shows the **Sale Number**, the **Total** and the **Change Due**, and the toast reads **Sale completed successfully!**
+- The sale appears in **Sales History** with your chosen method in the **Payment** column.
+- A part payment shows the sale as owing in the **Debtors** sheet, with **Paid \{amount\} of \{total\}**.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="Account balance is greyed out">
-    Three causes, in order of likelihood: no registered customer is attached;
-    the balance will not cover the total (**\{amount\} · short**); or you are
-    offline. Offline, it refuses with "Account balance needs a connection — take
-    cash or card, or wait for the network."
+    Three causes, in order of likelihood: no registered customer is attached; the balance will not cover the total (**\{amount\} · short**); or you are offline. Offline, it refuses with "Account balance needs a connection — take cash or card, or wait for the network."
   </Accordion>
 
   <Accordion title="The tender jumped back to Cash by itself">
-    **Account balance** reverts to cash when the attached customer changes, the
-    balance stops covering the total, or the connection drops. Re-select it once
-    the sale is settled again.
+    **Account balance** reverts to cash when the attached customer changes, the balance stops covering the total, or the connection drops. Re-select it once the sale is settled again.
   </Accordion>
 
   <Accordion title="Complete Sale will not enable">
-    The cart is empty, the cash tendered is below the total (**Amount Needed**
-    is showing), or a required reference has not been entered.
+    The cart is empty, the cash tendered is below the total (**Amount Needed** is showing), or a required reference has not been entered.
   </Accordion>
 
   <Accordion title="'This sale was already processed'">
-    The same sale reached the server twice — usually a retry after a slow
-    connection. Nothing has been double-charged; the original sale stands. See
-    [Selling when the internet is down](/pharmacy/pos/offline).
+    The same sale reached the server twice — usually a retry after a slow connection. Nothing has been double-charged; the original sale stands. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Accordion>
 
   <Accordion title="I cannot discount, only take payment">
-    Discounting is a separate permission from selling — **Discount beyond the
-    set limit** — and so are **Override the selling price** and **Refund or void
-    a sale**. See [Staff permissions](/platform/team/permissions).
+    Discounting is a separate permission from selling — **Discount beyond the set limit** — and so are **Override the selling price** and **Refund or void a sale**. See [Staff permissions](/platform/team/permissions).
   </Accordion>
 </AccordionGroup>
 

@@ -1,7 +1,7 @@
 ---
-title: "Your public booking page"
+title: Your public booking page
 description: "Design the page patients book on, decide whether it takes payment, and publish it on your own domain."
-icon: "/images/icons/globe.svg"
+icon: /images/icons/globe.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,25 +11,17 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="All plans; custom domain needs Team or Enterprise" roles="Owner, Manager" />
 
-Your booking page is a public web page where anyone can pick a service, choose a
-time and book it, without an account. You design it in the **Booking Page
-Designer**, and it goes live at `/book/` followed by your page address.
+Your booking page is a public web page where anyone can pick a service, choose a time and book it, without an account. You design it in the **Booking Page Designer**, and it goes live at `/book/` followed by your page address.
 
 <Path steps={['Sidebar', 'Appointments', 'Booking Page']} />
 
-<TaskHeader
-  before="At least one service, and a payment provider connected if you want to take money at booking"
-  time="15 minutes"
-  after="A live page patients can book from, on a link you can share"
-/>
+<TaskHeader before="At least one service, and a payment provider connected if you want to take money at booking" time="15 minutes" after="A live page patients can book from, on a link you can share" />
 
-This is a Clinic & Hospital feature. A Diagnostics workspace gets the
-appointment book but not the booking page designer.
+This is a Clinic & Hospital feature. A Diagnostics workspace gets the appointment book but not the booking page designer.
 
 ## Two things make bookings possible
 
-Everything else on the page is presentation. Online booking works only when both
-of these are true:
+Everything else on the page is presentation. Online booking works only when both of these are true:
 
 1. **Allow Online Booking** is switched on, on the **Settings** tab.
 2. At least one service is marked visible on the **Services** tab.
@@ -38,33 +30,21 @@ A page with neither loads for the visitor and offers them nothing to book.
 
 ## Design the page
 
-The designer has five tabs and a live preview beside them; switch the preview
-between desktop and mobile as you work, because most patients book on a phone.
+The designer has five tabs and a live preview beside them; switch the preview between desktop and mobile as you work, because most patients book on a phone.
 
 <Steps>
   <Step title="Design — colours, logo and layout">
-    Set the look of the page. This tab also carries the **Custom domain** card,
-    where a page can be served from an address like `book.yourclinic.com`
-    instead of the ClinikEHR one. That card needs the Team or Enterprise plan —
-    see [Custom domains](/platform/settings/custom-domain).
+    Set the look of the page. This tab also carries the **Custom domain** card, where a page can be served from an address like `book.yourclinic.com` instead of the ClinikEHR one. That card needs the Team or Enterprise plan — see [Custom domains](/platform/settings/custom-domain).
   </Step>
-
   <Step title="Content — the words">
-    Your clinic's name, introduction, address and any notice a patient should
-    read before booking.
+    Your clinic's name, introduction, address and any notice a patient should read before booking.
   </Step>
-
   <Step title="Services — what can be booked">
-    Choose which services appear and in what order. A service that is not
-    visible here cannot be booked online, whatever else is configured. Manage
-    the services themselves under **Settings → Appointment Services**.
+    Choose which services appear and in what order. A service that is not visible here cannot be booked online, whatever else is configured. Manage the services themselves under **Settings → Appointment Services**.
   </Step>
-
   <Step title="Forms — what you ask for">
-    The questions a patient answers while booking. Ask for what you need at the
-    desk and no more; every extra field loses bookings.
+    The questions a patient answers while booking. Ask for what you need at the desk and no more; every extra field loses bookings.
   </Step>
-
   <Step title="Settings — the rules">
     Covered below. This is where booking is switched on.
   </Step>
@@ -75,7 +55,7 @@ between desktop and mobile as you work, because most patients book on a phone.
 On the **Settings** tab, the **Booking Settings** card holds three controls:
 
 | Control | What it does |
-|---|---|
+| --- | --- |
 | **Allow Online Booking** | Enables direct booking from the page. Off means the page is read-only. |
 | **Advance Booking Days** | How far ahead a patient may book |
 | **Booking Confirmation Message** | The text shown after a successful booking |
@@ -85,7 +65,7 @@ On the **Settings** tab, the **Booking Settings** card holds three controls:
 The same tab has a payments section, opened by the **Accept Payments** switch.
 
 | Control | What it does |
-|---|---|
+| --- | --- |
 | **Payment Methods** | Which methods the page offers — card, bank transfer, cash, insurance and the wallets |
 | **Require Upfront Payment** | Whether the booking completes without payment |
 | **Payment Provider** | Which connected provider processes the charge |
@@ -93,57 +73,40 @@ The same tab has a payments section, opened by the **Accept Payments** switch.
 | **Payment Instructions** | Shown to the patient at checkout |
 | **Refund Policy** | Shown to the patient before they pay |
 
-Connect the provider first under **Settings → Online Payments**. Until you do,
-a page set to require payment can take a card from nobody. Amounts are shown in
-your clinic's own currency, set under
-[Currency](/platform/settings/currency).
+Connect the provider first under **Settings → Online Payments**. Until you do, a page set to require payment can take a card from nobody. Amounts are shown in your clinic's own currency, set under [Currency](/platform/settings/currency).
 
 ## Publish and share
 
-Save the designer, then open the page at `/book/` and your page address to see
-exactly what a patient sees. Share that link on your website, in your email
-signature and on your listings.
+Save the designer, then open the page at `/book/` and your page address to see exactly what a patient sees. Share that link on your website, in your email signature and on your listings.
 
 ## Check it worked
 
-- Opening the public link in a private browser window shows your branding, your
-  content and your visible services.
-- Picking a service offers real times that match your availability in
-  **Settings → Booking Settings**.
-- Completing a booking creates an appointment on the calendar and shows your
-  **Booking Confirmation Message**.
-- With payments on, the checkout offers the methods you enabled and shows your
-  **Refund Policy**.
+- Opening the public link in a private browser window shows your branding, your content and your visible services.
+- Picking a service offers real times that match your availability in **Settings → Booking Settings**.
+- Completing a booking creates an appointment on the calendar and shows your **Booking Confirmation Message**.
+- With payments on, the checkout offers the methods you enabled and shows your **Refund Policy**.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The page loads but nothing can be booked">
-    Either **Allow Online Booking** is off, or no service is marked visible on
-    the **Services** tab. Both are required.
+    Either **Allow Online Booking** is off, or no service is marked visible on the **Services** tab. Both are required.
   </Accordion>
 
   <Accordion title="Services are visible but every day is full">
-    The page shows real availability. Providers need schedules, special dates
-    must not be closing the day, and any resource the service requires must be
-    free. Fix it in **Settings → Booking Settings** — see
-    [Manage the appointment book](/clinic/front-desk/appointments).
+    The page shows real availability. Providers need schedules, special dates must not be closing the day, and any resource the service requires must be free. Fix it in **Settings → Booking Settings** — see [Manage the appointment book](/clinic/front-desk/appointments).
   </Accordion>
 
   <Accordion title="Checkout will not accept a card">
-    No payment provider is connected, or the one selected in **Payment
-    Provider** is not the connected one. Finish the connection under
-    **Settings → Online Payments**.
+    No payment provider is connected, or the one selected in **Payment Provider** is not the connected one. Finish the connection under **Settings → Online Payments**.
   </Accordion>
 
   <Accordion title="The Custom domain card is not there">
-    Custom domains are a Team and Enterprise feature. See
-    [Change your plan](/platform/plans/change-plan).
+    Custom domains are a Team and Enterprise feature. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="There is no Booking Page entry in my workspace">
-    You are on the Diagnostics edition, which has the appointment book but not
-    the booking page designer. See [The three editions](/start/editions).
+    You are on the Diagnostics edition, which has the appointment book but not the booking page designer. See [The three editions](/start/editions).
   </Accordion>
 </AccordionGroup>
 

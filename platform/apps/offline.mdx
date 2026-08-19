@@ -1,7 +1,7 @@
 ---
-title: "Working without internet"
+title: Working without internet
 description: "Exactly what ClinikEHR keeps doing during an outage, what has to wait, and how captured work catches up when you reconnect."
-icon: "/images/icons/wifi-off.svg"
+icon: /images/icons/wifi-off.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -9,24 +9,18 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['all']} plans="All plans" roles="Any staff member" />
 
-ClinikEHR keeps working through a power cut or a dropped line, but only for a
-deliberately narrow set of screens. Knowing which ones — before the connection
-goes — is the difference between a calm shift and a lost afternoon.
+ClinikEHR keeps working through a power cut or a dropped line, but only for a deliberately narrow set of screens. Knowing which ones — before the connection goes — is the difference between a calm shift and a lost afternoon.
 
 ## The one rule
 
 **Capture works offline. Completion does not.**
 
-You can record that something happened. You cannot advance, finish, price or
-sign it. That line is drawn on purpose: capture is a single new record from one
-device, while completion touches records other people are also touching, and
-merging those blind is how a lab reports the wrong result or a patient gets a
-second dose.
+You can record that something happened. You cannot advance, finish, price or sign it. That line is drawn on purpose: capture is a single new record from one device, while completion touches records other people are also touching, and merging those blind is how a lab reports the wrong result or a patient gets a second dose.
 
 ## What keeps working
 
 | Works offline | Where |
-|---|---|
+| --- | --- |
 | Ringing up a sale, and holding a cart to recall later | Pharmacy [POS](/pharmacy/pos/index) |
 | Capturing a DOT lab intake order | [Lab intake](/lims/dot/collection) |
 | Capturing a clinical lab order | [Test requests](/lims/lab/test-requests) |
@@ -37,7 +31,7 @@ second dose.
 ## What does not
 
 | Does not work offline | Why |
-|---|---|
+| --- | --- |
 | Workflow steps on an existing record — accessioning, screening, confirmation | Status changes are shared between people at different benches; a blind merge is a wrong result |
 | Result and report entry, and signing anything | A signed clinical document is not something to reconcile afterwards |
 | **Taking payment** | Money must settle against a live ledger |
@@ -46,37 +40,25 @@ second dose.
 | Anything on a screen this device has never opened | There is nothing cached to show |
 
 <Note>
-  Screens that cannot load their data offline say so — "This chart is not
-  available offline", "cannot be shown". They never render an empty list as
-  though nothing had been recorded. If you see zero results, that is a real zero.
+  Screens that cannot load their data offline say so — "This chart is not available offline", "cannot be shown". They never render an empty list as though nothing had been recorded. If you see zero results, that is a real zero.
 </Note>
 
 ## Prime the device first
 
-Offline capture only works on a device that has already loaded the screen while
-connected. A brand-new tablet, or a till nobody has signed in on, does nothing
-useful in an outage.
+Offline capture only works on a device that has already loaded the screen while connected. A brand-new tablet, or a till nobody has signed in on, does nothing useful in an outage.
 
 <Steps>
   <Step title="Sign in on the actual device">
-    The one that will be used during the outage — not a different machine at the
-    same counter.
+    The one that will be used during the outage — not a different machine at the same counter.
   </Step>
-
   <Step title="Open each screen you will need">
-    The till, the intake form, the ward chart. Loading it once is what caches the
-    screen and its reference data.
+    The till, the intake form, the ward chart. Loading it once is what caches the screen and its reference data.
   </Step>
-
   <Step title="Check the session is fresh at the start of each shift">
-    An expired session cannot send anything, and you cannot sign in without a
-    connection. Signing in at the start of the day is the single most useful
-    habit here.
+    An expired session cannot send anything, and you cannot sign in without a connection. Signing in at the start of the day is the single most useful habit here.
   </Step>
-
   <Step title="Rehearse it">
-    Turn the network off for two minutes and ring up a test sale. Two minutes
-    once beats discovering the gap mid-queue.
+    Turn the network off for two minutes and ring up a test sale. Two minutes once beats discovering the gap mid-queue.
   </Step>
 </Steps>
 
@@ -85,112 +67,70 @@ useful in an outage.
 An amber bar appears on the screens that support capture.
 
 - On the till: **Offline · stock as of 14:05**.
-- On lab, imaging and intake forms: **Offline · reference data as of 14:05 —
-  new intake orders queue and sync on reconnect**.
+- On lab, imaging and intake forms: **Offline · reference data as of 14:05 — new intake orders queue and sync on reconnect**.
 - On a ward chart: **Offline — showing a cached chart as of Tue 14:05.**
 
-Beside it is a counter of items waiting, or the word **Synced** with a tick when
-there is nothing outstanding.
+Beside it is a counter of items waiting, or the word **Synced** with a tick when there is nothing outstanding.
 
 <Warning>
-  **Every figure with an "as of" time is a snapshot, not a live number.** Stock
-  levels, totals and chart values are as they were when you last had a
-  connection. Somebody else may have sold the last box since. Treat the label as
-  the point of the number, not as decoration.
+  **Every figure with an "as of" time is a snapshot, not a live number.** Stock levels, totals and chart values are as they were when you last had a connection. Somebody else may have sold the last box since. Treat the label as the point of the number, not as decoration.
 </Warning>
 
 ## Provisional references
 
-Anything captured offline is given a temporary reference so staff have something
-to write down and quote — for example `LAB-OFF-A3F1-482913`. It identifies the
-capture on that device until the real reference is issued on sync.
+Anything captured offline is given a temporary reference so staff have something to write down and quote — for example `LAB-OFF-A3F1-482913`. It identifies the capture on that device until the real reference is issued on sync.
 
 <Warning>
-  A provisional number does not exist on our side yet. An offline receipt prints
-  a **PROVISIONAL — WILL CONFIRM ON SYNC** banner and carries no scannable
-  barcode, so it cannot be looked up or scanned back in until the sale has
-  synced.
+  A provisional number does not exist on our side yet. An offline receipt prints a **PROVISIONAL — WILL CONFIRM ON SYNC** banner and carries no scannable barcode, so it cannot be looked up or scanned back in until the sale has synced.
 </Warning>
 
 ## Payment is never captured offline
 
-This catches people out, so it is worth stating on its own. An order captured
-during an outage arrives **unpaid**. Nothing is charged, no card is taken, and
-no receipt for payment exists. Settle it at the desk once you are back online.
+This catches people out, so it is worth stating on its own. An order captured during an outage arrives **unpaid**. Nothing is charged, no card is taken, and no receipt for payment exists. Settle it at the desk once you are back online.
 
-The pharmacy till is the exception in one direction only: it records how a sale
-was paid for, so the sale is complete on the shop floor — but that record still
-has to reach us before it is money in a report.
+The pharmacy till is the exception in one direction only: it records how a sale was paid for, so the sale is complete on the shop floor — but that record still has to reach us before it is money in a report.
 
 ## Coming back online
 
-Sync is automatic. As soon as the connection returns, captured items are sent
-one at a time, in the order they were taken.
+Sync is automatic. As soon as the connection returns, captured items are sent one at a time, in the order they were taken.
 
-- **Sent successfully** — the item gets its real reference and the counter drops.
-  You do not have to do anything.
-- **Could not be sent** — it stays queued and is retried, backing off gradually
-  rather than hammering a bad line.
-- **Refused by the server** — it stops there and is held for a person to look
-  at. It is **never** retried silently, because a refusal usually means the fact
-  has changed since you captured it.
-- **Sent twice by accident** — it cannot be. A retry of something already
-  recorded is recognised, not duplicated.
+- **Sent successfully** — the item gets its real reference and the counter drops. You do not have to do anything.
+- **Could not be sent** — it stays queued and is retried, backing off gradually rather than hammering a bad line.
+- **Refused by the server** — it stops there and is held for a person to look at. It is **never** retried silently, because a refusal usually means the fact has changed since you captured it.
+- **Sent twice by accident** — it cannot be. A retry of something already recorded is recognised, not duplicated.
 
 Open the counter to see the panel for yourself:
 
-- On lab, imaging and intake screens it is titled **Offline captures**, tells
-  you how many items are waiting, and offers **Sync now** while you are online.
-- On the till it is titled **Sync status**, with **Waiting to sync** and
-  **Need review** counters and the same **Sync now** button.
+- On lab, imaging and intake screens it is titled **Offline captures**, tells you how many items are waiting, and offers **Sync now** while you are online.
+- On the till it is titled **Sync status**, with **Waiting to sync** and **Need review** counters and the same **Sync now** button.
 
-If your session expired while you were offline, you get **Sign in to sync**.
-Nothing is lost — sign in and the queue continues. Do not clear the browser's
-data or reinstall while anything is waiting.
+If your session expired while you were offline, you get **Sign in to sync**. Nothing is lost — sign in and the queue continues. Do not clear the browser's data or reinstall while anything is waiting.
 
 ## Items that need review
 
-A refused item is listed under **Needs review — the server refused these**, with
-its provisional reference, when it was captured, and the reason. The advice is
-the same for all of them: resolve the underlying problem, then re-enter the item
-manually. Rejected captures are never retried automatically.
+A refused item is listed under **Needs review — the server refused these**, with its provisional reference, when it was captured, and the reason. The advice is the same for all of them: resolve the underlying problem, then re-enter the item manually. Rejected captures are never retried automatically.
 
 <Warning>
-  **A refused medication administration is a patient-safety event, not an
-  admin task.** The ward bar reads "1 dose needs review" with a
-  **Check the patient** badge, and there is deliberately no retry button
-  anywhere in that flow — the usual reason for a refusal is that someone else
-  had already recorded the dose, which means it may have been given twice. Check
-  the drug chart and the patient, then tell the nurse in charge. The entry stays
-  in the list as the record that it happened.
+  **A refused medication administration is a patient-safety event, not an admin task.** The ward bar reads "1 dose needs review" with a **Check the patient** badge, and there is deliberately no retry button anywhere in that flow — the usual reason for a refusal is that someone else had already recorded the dose, which means it may have been given twice. Check the drug chart and the patient, then tell the nurse in charge. The entry stays in the list as the record that it happened.
 </Warning>
 
 ## After the outage — the ten-minute tidy-up
 
 <Steps>
   <Step title="Check every device, not just yours">
-    A queue lives on the device that captured it. A tablet left in a drawer
-    still holds its own items and cannot sync from anyone else's machine.
+    A queue lives on the device that captured it. A tablet left in a drawer still holds its own items and cannot sync from anyone else's machine.
   </Step>
-
   <Step title="Get every counter to Synced">
-    Open the panel on each device and confirm it reads **Synced** with nothing
-    needing review.
+    Open the panel on each device and confirm it reads **Synced** with nothing needing review.
   </Step>
-
   <Step title="Take the payments that were deferred">
     Everything captured offline arrived unpaid. Work through them at the desk.
   </Step>
-
   <Step title="Recheck the figures you acted on">
-    Stock levels and totals seen during the outage were snapshots. Anything you
-    decided on the strength of one is worth confirming now — and a stock count
-    is the honest way to close out a long outage.
+    Stock levels and totals seen during the outage were snapshots. Anything you decided on the strength of one is worth confirming now — and a stock count is the honest way to close out a long outage.
   </Step>
-
   <Step title="Clear the review list">
-    Resolve each refused item and re-enter it. An item left in that list is work
-    that has not been recorded anywhere.
+    Resolve each refused item and re-enter it. An item left in that list is work that has not been recorded anywhere.
   </Step>
 </Steps>
 
@@ -205,37 +145,27 @@ manually. Rejected captures are never retried automatically.
 
 <AccordionGroup>
   <Accordion title="The screen is blank offline and shows no offline bar">
-    That screen does not support offline capture, or it was never opened on this
-    device while online. Check the table at the top of this page.
+    That screen does not support offline capture, or it was never opened on this device while online. Check the table at the top of this page.
   </Accordion>
 
   <Accordion title="Sign in to sync">
-    Your session expired during the outage. Sign in again on that device and the
-    queue continues by itself. Nothing has been lost.
+    Your session expired during the outage. Sign in again on that device and the queue continues by itself. Nothing has been lost.
   </Accordion>
 
   <Accordion title="An item has been waiting to sync for a long time">
-    Confirm the device is genuinely online — a weak connection can look
-    connected — then select **Sync now**. If it stays queued,
-    [contact support](/platform/help/contact-support) with the provisional
-    reference.
+    Confirm the device is genuinely online — a weak connection can look connected — then select **Sync now**. If it stays queued, [contact support](/platform/help/contact-support) with the provisional reference.
   </Accordion>
 
   <Accordion title="The stock figure at the till was wrong">
-    It was a snapshot from the last time that device was online, and it says so
-    on the bar. Run a [stock count](/pharmacy/inventory/stock-counts) to
-    reconcile.
+    It was a snapshot from the last time that device was online, and it says so on the bar. Run a [stock count](/pharmacy/inventory/stock-counts) to reconcile.
   </Accordion>
 
   <Accordion title="A customer wants a copy of an offline receipt">
-    Reprint it once the sale has synced, so the receipt carries the real number
-    and a scannable barcode. Before then, all that exists is the provisional
-    slip.
+    Reprint it once the sale has synced, so the receipt carries the real number and a scannable barcode. Before then, all that exists is the provisional slip.
   </Accordion>
 
   <Accordion title="Can I make the whole product work offline?">
-    No, and it is not a setting. Result entry, signing and payment need a live
-    connection by design — see the rule at the top of this page.
+    No, and it is not a setting. Result entry, signing and payment need a live connection by design — see the rule at the top of this page.
   </Accordion>
 </AccordionGroup>
 
@@ -245,6 +175,7 @@ manually. Rejected captures are never retried automatically.
   <Card title="The desktop app" icon="/images/icons/display.svg" href="/platform/apps/desktop">
     A till queue that survives a browser wipe, and silent receipt printing.
   </Card>
+
   <Card title="Selling offline" icon="/images/icons/cash-register.svg" href="/pharmacy/pos/offline">
     The pharmacy till's offline behaviour, step by step.
   </Card>

@@ -1,7 +1,7 @@
 ---
-title: "Set up a barcode scanner"
+title: Set up a barcode scanner
 description: "Plug in a till scanner, scan with a webcam, put barcodes on your products, and know which device does what."
-icon: "/images/icons/barcode.svg"
+icon: /images/icons/barcode.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,55 +11,37 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Any staff member at the till" />
 
-Two very different devices get called "the barcode scanner", and mixing them up
-is the reason most of this goes wrong. Decide which one you have before you read
-any further:
+Two very different devices get called "the barcode scanner", and mixing them up is the reason most of this goes wrong. Decide which one you have before you read any further:
 
-| | **Keyboard-wedge scanner** | **Portable count terminal** |
-|---|---|---|
+|  | **Keyboard-wedge scanner** | **Portable count terminal** |
+| --- | --- | --- |
 | Looks like | A handheld gun on a cable or dongle, or a fixed counter scanner | A rugged handheld with a screen and keypad, sitting in a USB cradle |
 | Used for | Selling at the till | Counting stock on the shelves |
 | Setup in ClinikEHR | **None** — plug it in and scan | Connect, then upload, in a deliberate sequence |
 | Where it works | Anywhere in the product | Stock counts only |
 
-<TaskHeader
-  before="Products with a barcode saved on their catalogue entry"
-  time="Minutes for a till scanner"
-  after="Scanning that adds products to the cart and pulls up past sales"
-/>
+<TaskHeader before="Products with a barcode saved on their catalogue entry" time="Minutes for a till scanner" after="Scanning that adds products to the cart and pulls up past sales" />
 
 ## The till scanner: nothing to install
 
-A keyboard-wedge scanner **types what it reads**. To your computer it is a
-keyboard, so there is no driver to install, no pairing inside ClinikEHR and no
-setting to switch on.
+A keyboard-wedge scanner **types what it reads**. To your computer it is a keyboard, so there is no driver to install, no pairing inside ClinikEHR and no setting to switch on.
 
 <Steps>
   <Step title="Plug it in">
-    USB or its wireless dongle. If the operating system sees a new keyboard, you
-    are done.
+    USB or its wireless dongle. If the operating system sees a new keyboard, you are done.
   </Step>
-
   <Step title="Open the till">
     <Path steps={['Sidebar', 'POS']} />
   </Step>
-
   <Step title="Scan a product">
-    You do **not** have to click into the search box first. The till listens for
-    a scan anywhere on the page, so a cashier can scan while the cursor is
-    nowhere in particular.
+    You do **not** have to click into the search box first. The till listens for a scan anywhere on the page, so a cashier can scan while the cursor is nowhere in particular.
   </Step>
 </Steps>
 
-On a match you get **"Scanned: \{name\}"** and the product is in the cart. On a
-miss: **"No medication matches that barcode"** — which nearly always means the
-barcode is not saved against the product yet, not that the scanner failed.
+On a match you get **"Scanned: \{name\}"** and the product is in the cart. On a miss: **"No medication matches that barcode"** — which nearly always means the barcode is not saved against the product yet, not that the scanner failed.
 
 <Note>
-  Scanning is ignored while you are typing in another field — an amount, a
-  reference, a note. The characters are already landing where you put the
-  cursor, and adding to the cart as well would leave junk in the field. Click
-  out of the field, then scan.
+  Scanning is ignored while you are typing in another field — an amount, a reference, a note. The characters are already landing where you put the cursor, and adding to the cart as well would leave junk in the field. Click out of the field, then scan.
 </Note>
 
 ## Put barcodes on your products
@@ -68,104 +50,71 @@ A product cannot be scanned until its code is saved on its catalogue entry.
 
 <Steps>
   <Step title="Open the item">
-    <Path steps={['Sidebar', 'Inventory', 'Add item']} /> — or edit an existing
-    item.
+    <Path steps={['Sidebar', 'Inventory', 'Add item']} /> — or edit an existing item.
   </Step>
   <Step title="Fill Barcode / UPC (optional)">
-    The field's placeholder is **"Scan pack, or Generate…"**. Put the cursor in
-    it and scan the pack — that is the fastest way and it cannot mistype.
+    The field's placeholder is **"Scan pack, or Generate…"**. Put the cursor in it and scan the pack — that is the fastest way and it cannot mistype.
   </Step>
   <Step title="Or mint your own code">
-    For a product with no barcode on the pack — a repack, a loose line, a
-    service — select **Generate in-house code**. **Camera scan** reads a code
-    with a webcam if you have no scanner to hand.
+    For a product with no barcode on the pack — a repack, a loose line, a service — select **Generate in-house code**. **Camera scan** reads a code with a webcam if you have no scanner to hand.
   </Step>
 </Steps>
 
 ### Print shelf and pack labels
 
-From an inventory row, **Print barcode label** opens a sheet with a **Copies**
-field. Print a strip for a shelf edge or one per repacked pack, and everything
-you have coded becomes scannable at the counter.
+From an inventory row, **Print barcode label** opens a sheet with a **Copies** field. Print a strip for a shelf edge or one per repacked pack, and everything you have coded becomes scannable at the counter.
 
 ## Scan with a webcam
 
-No hardware scanner? There is a camera button at the till and on the sales list.
-It needs two things a laptop usually already has: a **secure connection**
-("Camera access requires HTTPS. Open this page over a secure connection to
-scan.") and **camera permission** ("Camera permission denied. Allow camera
-access in your browser settings to scan.").
+No hardware scanner? There is a camera button at the till and on the sales list. It needs two things a laptop usually already has: a **secure connection** ("Camera access requires HTTPS. Open this page over a secure connection to scan.") and **camera permission** ("Camera permission denied. Allow camera access in your browser settings to scan.").
 
-It is a genuine fallback rather than a counter tool — a phone camera on a
-crowded shelf is slower than a scanner, and it stops the till while it focuses.
+It is a genuine fallback rather than a counter tool — a phone camera on a crowded shelf is slower than a scanner, and it stops the till while it focuses.
 
 ## Scan a receipt to find a sale
 
-On the [sales list](/pharmacy/money/sales), the **Search or scan receipt...**
-box takes a scan of the barcode printed at the bottom of a customer's receipt
-and pulls the sale straight up — the fastest route into a return or a query.
+On the [sales list](/pharmacy/money/sales), the **Search or scan receipt...** box takes a scan of the barcode printed at the bottom of a customer's receipt and pulls the sale straight up — the fastest route into a return or a query.
 
-Scan something that is not one and you get **"That barcode is not a ClinikEHR
-receipt."** A receipt printed while the till was offline carries a provisional
-number and no barcode at all; find those by date and amount instead. See
-[Print and reprint receipts](/pharmacy/pos/receipts).
+Scan something that is not one and you get **"That barcode is not a ClinikEHR receipt."** A receipt printed while the till was offline carries a provisional number and no barcode at all; find those by date and amount instead. See [Print and reprint receipts](/pharmacy/pos/receipts).
 
 ## The count terminal is a different job
 
-A portable count terminal — the CipherLab in its USB cradle — is for **stock
-counts, not selling**. It collects codes and quantities on the shelves, then
-hands them over in one upload.
+A portable count terminal — the CipherLab in its USB cradle — is for **stock counts, not selling**. It collects codes and quantities on the shelves, then hands them over in one upload.
 
-It needs Chrome, Edge or the
-[desktop app](/pharmacy/hardware/desktop-app), and a deliberate connect-then-
-upload sequence rather than a plug-and-scan. The full procedure is in
-[Count stock with a CipherLab terminal](/pharmacy/inventory/cipherlab).
+It needs Chrome, Edge or the [desktop app](/pharmacy/hardware/desktop-app), and a deliberate connect-then- upload sequence rather than a plug-and-scan. The full procedure is in [Count stock with a CipherLab terminal](/pharmacy/inventory/cipherlab).
 
-Do not try to sell with it, and do not try to count with the till scanner — see
-[Stock counts](/pharmacy/inventory/stock-counts).
+Do not try to sell with it, and do not try to count with the till scanner — see [Stock counts](/pharmacy/inventory/stock-counts).
 
 ## Check it worked
 
 - Scanning at the till toasts **"Scanned: \{name\}"** and adds a cart line.
-- It works with the cursor resting nowhere in particular, not only in the search
-  box.
+- It works with the cursor resting nowhere in particular, not only in the search box.
 - Scanning a receipt on the sales list opens the sale.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="'No medication matches that barcode'">
-    The code is not saved against any product. Open the item in **Inventory**
-    and fill **Barcode / UPC (optional)** by scanning the pack into the field.
-    Every pack of the same product must carry the same code.
+    The code is not saved against any product. Open the item in **Inventory** and fill **Barcode / UPC (optional)** by scanning the pack into the field. Every pack of the same product must carry the same code.
   </Accordion>
 
   <Accordion title="The code appears as typed text instead of adding to the cart">
-    The cursor is in an editable field, so the characters are going there.
-    Select somewhere neutral on the page and scan again.
+    The cursor is in an editable field, so the characters are going there. Select somewhere neutral on the page and scan again.
   </Accordion>
 
   <Accordion title="Nothing happens at all when I scan">
-    Confirm the scanner types at all: open any text field, scan, and see whether
-    characters appear. If they do not, it is the device or its dongle, not
-    ClinikEHR. If they do but the till does not react, check whether a dialog is
-    open over the page.
+    Confirm the scanner types at all: open any text field, scan, and see whether characters appear. If they do not, it is the device or its dongle, not ClinikEHR. If they do but the till does not react, check whether a dialog is open over the page.
   </Accordion>
 
   <Accordion title="The camera scanner will not start">
-    It needs a secure connection and camera permission. Allow the camera in your
-    browser's site settings and reload. On a shared till, a hardware scanner is
-    the better answer.
+    It needs a secure connection and camera permission. Allow the camera in your browser's site settings and reload. On a shared till, a hardware scanner is the better answer.
   </Accordion>
 
   <Accordion title="'That barcode is not a ClinikEHR receipt.'">
-    You scanned a product barcode, another shop's receipt, or a receipt from an
-    offline sale that carries no barcode. Search by date and amount instead.
+    You scanned a product barcode, another shop's receipt, or a receipt from an offline sale that carries no barcode. Search by date and amount instead.
   </Accordion>
 
   <Accordion title="Two products scan to the same thing">
-    Both catalogue entries carry the same code. Fix the duplicate in
-    **Inventory**, or give the repacked line its own generated in-house code.
+    Both catalogue entries carry the same code. Fix the duplicate in **Inventory**, or give the repacked line its own generated in-house code.
   </Accordion>
 </AccordionGroup>
 

@@ -1,7 +1,7 @@
 ---
 title: "Batches, expiry and FEFO"
 description: "How ClinikEHR picks the oldest-expiring lot first, why an undated lot is invisible to it, and how expiry alerts, expiry risk and recalls work."
-icon: "/images/icons/hourglass.svg"
+icon: /images/icons/hourglass.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -10,38 +10,23 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans; expiry risk needs Professional, its recommendations need Business" roles="Any staff member with inventory access" />
 
-Stock is not held as a single number per product. It is held per **lot**, each
-with its own quantity, its own location and its own expiry date. Every sale,
-script and adjustment draws from a specific lot, and the choice of lot is made
-for you: **first expiring, first out**.
+Stock is not held as a single number per product. It is held per **lot**, each with its own quantity, its own location and its own expiry date. Every sale, script and adjustment draws from a specific lot, and the choice of lot is made for you: **first expiring, first out**.
 
 <Path steps={['Sidebar', 'Inventory', 'Stock']} />
 
 ## What FEFO does
 
-When something is sold or dispensed, ClinikEHR picks the lot with the earliest
-expiry date that has enough on hand at that location. The till and the
-dispensing sheet both show which lot was used, so the person at the counter can
-check it against the pack in their hand.
+When something is sold or dispensed, ClinikEHR picks the lot with the earliest expiry date that has enough on hand at that location. The till and the dispensing sheet both show which lot was used, so the person at the counter can check it against the pack in their hand.
 
 That is the whole mechanism, and it only works on lots that have a date.
 
 <Warning>
-  **A lot with no expiry date is invisible to oldest-first picking.** It is not
-  picked early and it is not flagged as expiring — it simply sits there while
-  dated stock is consumed around it, until somebody finds it out of date on the
-  shelf. Turn on **Require expiry date on new lots** under **Settings** ›
-  **Inventory** › **Receiving quality** so a delivery cannot be received
-  without one.
+  **A lot with no expiry date is invisible to oldest-first picking.** It is not picked early and it is not flagged as expiring — it simply sits there while dated stock is consumed around it, until somebody finds it out of date on the shelf. Turn on **Require expiry date on new lots** under **Settings** › **Inventory** › **Receiving quality** so a delivery cannot be received without one.
 </Warning>
 
-Leaving that setting off is a decision to accept undated lots. If you must
-receive one — a repack with no printed date, say — record the date you were
-given by the supplier rather than leaving the field empty.
+Leaving that setting off is a decision to accept undated lots. If you must receive one — a repack with no printed date, say — record the date you were given by the supplier rather than leaving the field empty.
 
-Scanning the pack avoids the problem entirely: **Scan package (GS1)** on the
-**Receive** sheet reads the lot number and expiry off the DataMatrix, so
-neither is typed and neither is skipped.
+Scanning the pack avoids the problem entirely: **Scan package (GS1)** on the **Receive** sheet reads the lot number and expiry off the DataMatrix, so neither is typed and neither is skipped.
 
 ## The Alerts tab
 
@@ -51,56 +36,31 @@ The tab header carries a count of open alerts. Above the table sit four panels.
 
 ### Expiry risk
 
-**Expiry risk** is a projection, not a calendar. It reads your last 90 days of
-sales per lot and works out which lots will not sell through before they expire
-— headed with the money at risk, "projected to expire unsold", and a badge for
-how many lots are involved. Each row is tagged **Dead stock** ("No sales in 90
-days") or **Won't sell through**, with a suggested action:
-**Return to supplier or transfer**, **Discount to clear**, or
-**Transfer or return**.
+**Expiry risk** is a projection, not a calendar. It reads your last 90 days of sales per lot and works out which lots will not sell through before they expire — headed with the money at risk, "projected to expire unsold", and a badge for how many lots are involved. Each row is tagged **Dead stock** ("No sales in 90 days") or **Won't sell through**, with a suggested action: **Return to supplier or transfer**, **Discount to clear**, or **Transfer or return**.
 
 Acknowledged alerts stay quiet for 30 days.
 
-The projection itself needs the **Professional** plan — without it the panel
-shows a dashed card reading "Available on Professional and above". The branch
-recommendations behind **Check branches**, which find the branch still selling
-the item, need **Business**. See
-[Change your plan](/platform/plans/change-plan).
+The projection itself needs the **Professional** plan — without it the panel shows a dashed card reading "Available on Professional and above". The branch recommendations behind **Check branches**, which find the branch still selling the item, need **Business**. See [Change your plan](/platform/plans/change-plan).
 
-When there is nothing to worry about the panel says so outright: "No stock at
-risk — every dated lot is on track to sell through before it expires."
+When there is nothing to worry about the panel says so outright: "No stock at risk — every dated lot is on track to sell through before it expires."
 
 ### Expiry alert horizons
 
-Up to four day-values — 90, 60 and 30 is the usual set — each of which raises
-an alert when a lot crosses it. Add a horizon, then **Save horizons**. The
-field takes a whole number of days between 1 and 365, and refuses a fifth
-horizon.
+Up to four day-values — 90, 60 and 30 is the usual set — each of which raises an alert when a lot crosses it. Add a horizon, then **Save horizons**. The field takes a whole number of days between 1 and 365, and refuses a fifth horizon.
 
 ### Dispense enforcement and ledger reconciliation
 
-**Dispense enforcement** controls how strictly the till and the dispensing form
-are held to the lot they were given. **Ledger reconciliation** compares
-recorded movements against on-hand quantities so a drift is found by the system
-rather than by a count.
+**Dispense enforcement** controls how strictly the till and the dispensing form are held to the lot they were given. **Ledger reconciliation** compares recorded movements against on-hand quantities so a drift is found by the system rather than by a count.
 
 ### The alert table
 
-Everything raised sits in one table: expiring within a horizon, low stock,
-temperature breach, count variance, controlled-drug count due and recalls. Each
-row takes **Acknowledge**, which is a record that a person saw it — not a fix.
+Everything raised sits in one table: expiring within a horizon, low stock, temperature breach, count variance, controlled-drug count due and recalls. Each row takes **Acknowledge**, which is a record that a person saw it — not a fix.
 
 ## The reorder strip, and what it deliberately leaves out
 
-Above the table, a strip counts the items **at/below threshold** and offers
-**Draft PO from these**. When some of those items are also flagged as at risk of
-expiring, the button says so — it skips them, and it tells you how many it
-skipped.
+Above the table, a strip counts the items **at/below threshold** and offers **Draft PO from these**. When some of those items are also flagged as at risk of expiring, the button says so — it skips them, and it tells you how many it skipped.
 
-That exclusion is the point. An item is at or below its threshold *and*
-projected to expire unsold when it is not selling, and ordering more of
-something that is not selling only enlarges the write-off. Order those by hand
-if you have a reason to; otherwise deal with the stock you already hold.
+That exclusion is the point. An item is at or below its threshold _and_ projected to expire unsold when it is not selling, and ordering more of something that is not selling only enlarges the write-off. Order those by hand if you have a reason to; otherwise deal with the stock you already hold.
 
 See [Purchase orders and suppliers](/pharmacy/inventory/purchase-orders).
 
@@ -108,35 +68,22 @@ See [Purchase orders and suppliers](/pharmacy/inventory/purchase-orders).
 
 <Path steps={['Sidebar', 'Inventory', 'Recalls']} />
 
-A recall quarantines the affected lots and surfaces everyone who received stock
-from them, so you can contact them.
+A recall quarantines the affected lots and surfaces everyone who received stock from them, so you can contact them.
 
-Opening one takes a **Recall # (FDA)**, a **Severity**, the **Item**, an
-optional **Vendor (optional)**, a **Description** ("Reason for recall") and the
-**Affected lots** you tick. You must select at least one lot — "Select at least
-one affected lot" — and the confirmation tells you how many people were
-affected.
+Opening one takes a **Recall # (FDA)**, a **Severity**, the **Item**, an optional **Vendor (optional)**, a **Description** ("Reason for recall") and the **Affected lots** you tick. You must select at least one lot — "Select at least one affected lot" — and the confirmation tells you how many people were affected.
 
-The recall stays **open** until you close it. Closing it releases the
-quarantine, so close it only when the stock has actually been dealt with.
+The recall stays **open** until you close it. Closing it releases the quarantine, so close it only when the stock has actually been dealt with.
 
 ## Reconciliation and the POS shortfall
 
 <Path steps={['Sidebar', 'Inventory', 'Reconciliation']} />
 
-If **Selling without stock** is enabled, the till will complete a sale for
-something the system does not think you hold. That is intentional — it keeps a
-queue moving — but it leaves a shortfall, and this tab is where shortfalls are
-cleared.
+If **Selling without stock** is enabled, the till will complete a sale for something the system does not think you hold. That is intentional — it keeps a queue moving — but it leaves a shortfall, and this tab is where shortfalls are cleared.
 
 The **POS shortfall** panel lists each one as **Open** or **Settled**.
 
-- **Settle** draws the shortfall against stock you have since received. It
-  reports how many units it settled, or tells you plainly when it could not:
-  "No stock available to settle against — receive stock first, or write the
-  shortfall off."
-- **Write off shortfall** records that the units will never be made whole. It
-  takes a note, and it is the honest ending when the stock was never there.
+- **Settle** draws the shortfall against stock you have since received. It reports how many units it settled, or tells you plainly when it could not: "No stock available to settle against — receive stock first, or write the shortfall off."
+- **Write off shortfall** records that the units will never be made whole. It takes a note, and it is the honest ending when the stock was never there.
 
 An empty tab reads "No oversells to reconcile".
 
@@ -144,24 +91,19 @@ An empty tab reads "No oversells to reconcile".
 
 <AccordionGroup>
   <Accordion title="The till used a lot that expires later than one on the shelf">
-    Check the earlier lot's expiry date. A lot with an empty date is skipped by
-    oldest-first picking, and a lot at a different location is not in scope for
-    that sale.
+    Check the earlier lot's expiry date. A lot with an empty date is skipped by oldest-first picking, and a lot at a different location is not in scope for that sale.
   </Accordion>
 
   <Accordion title="An expiring lot never raised an alert">
-    Either the lot has no expiry date, or no horizon covers it yet. Check
-    **Expiry alert horizons**, and check the lot on the **Stock** tab.
+    Either the lot has no expiry date, or no horizon covers it yet. Check **Expiry alert horizons**, and check the lot on the **Stock** tab.
   </Accordion>
 
   <Accordion title="The expiry risk panel shows an upgrade card">
-    The projection is a Professional feature. A plan that has lapsed out of
-    active or trialing loses it too.
+    The projection is a Professional feature. A plan that has lapsed out of active or trialing loses it too.
   </Accordion>
 
   <Accordion title="'Enter a whole number of days between 1 and 365.'">
-    A horizon has to be a plain whole number of days. Decimals, zero and blanks
-    are refused.
+    A horizon has to be a plain whole number of days. Decimals, zero and blanks are refused.
   </Accordion>
 
   <Accordion title="'Up to 4 horizons.'">
@@ -169,8 +111,7 @@ An empty tab reads "No oversells to reconcile".
   </Accordion>
 
   <Accordion title="A shortfall will not settle">
-    There is no stock on hand to settle it against. Receive the delivery first,
-    or write the shortfall off if the units are never coming.
+    There is no stock on hand to settle it against. Receive the delivery first, or write the shortfall off if the units are never coming.
   </Accordion>
 </AccordionGroup>
 

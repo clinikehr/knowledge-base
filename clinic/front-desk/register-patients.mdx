@@ -1,7 +1,7 @@
 ---
-title: "Register a patient"
+title: Register a patient
 description: "Create a patient record, import an existing list, and approve or decline self-registration requests."
-icon: "/images/icons/user-plus.svg"
+icon: /images/icons/user-plus.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,41 +11,26 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="All plans" roles="Any staff member with access to the patient list" />
 
-The patient list is the single place a person is created, found and edited. Every
-other module — appointments, consultation, billing, wards — reads from it.
+The patient list is the single place a person is created, found and edited. Every other module — appointments, consultation, billing, wards — reads from it.
 
 <Path steps={['Sidebar', 'Front Desk', 'Patients']} />
+
 <Path steps={['Sidebar', 'Clients']} />
 
-<TaskHeader
-  before="Nothing — this is usually the first record a new clinic creates"
-  time="Under a minute for one patient"
-  after="A patient record you can book, chart and bill against"
-/>
+<TaskHeader before="Nothing — this is usually the first record a new clinic creates" time="Under a minute for one patient" after="A patient record you can book, chart and bill against" />
 
-Your plan decides the word. On the enterprise plan the list is **Patients**; on
-solo and team plans it is **Clients**, and every label on the screen follows. On
-enterprise it is reachable from two places — **Front Desk → Patients** and
-**Records → Patient Records** — and both highlight together. That is one list
-under two doors, not a bug.
+Your plan decides the word. On the enterprise plan the list is **Patients**; on solo and team plans it is **Clients**, and every label on the screen follows. On enterprise it is reachable from two places — **Front Desk → Patients** and **Records → Patient Records** — and both highlight together. That is one list under two doors, not a bug.
 
 ## What the list gives you
 
 Stat cards run across the top, then two tabs:
 
-- **All Patients** (or **All Clients**) — the list itself, with sorting by first
-  name, last name or date added, and filters for status, billing type and
-  **Waitlist**.
-- **Analytics** — distribution charts for gender, age, country and chronic
-  conditions across your whole list.
+- **All Patients** (or **All Clients**) — the list itself, with sorting by first name, last name or date added, and filters for status, billing type and **Waitlist**.
+- **Analytics** — distribution charts for gender, age, country and chronic conditions across your whole list.
 
-The toolbar carries **Refresh**, **Import**, **Export**, **New Patient** and
-**Columns**, which chooses what the table shows.
+The toolbar carries **Refresh**, **Import**, **Export**, **New Patient** and **Columns**, which chooses what the table shows.
 
-A clinic with no records yet gets an empty state offering three ways forward:
-explore a sandbox of sample data, import a list, or add someone. The sandbox is
-sample data for you to click around in — nothing in it is a real person and
-nothing you do there reaches a real record.
+A clinic with no records yet gets an empty state offering three ways forward: explore a sandbox of sample data, import a list, or add someone. The sandbox is sample data for you to click around in — nothing in it is a real person and nothing you do there reaches a real record.
 
 ## Add one patient
 
@@ -53,20 +38,14 @@ nothing you do there reaches a real record.
   <Step title="Select New Patient">
     The registration sheet opens over the list.
   </Step>
-
   <Step title="Enter who they are">
-    Name, date of birth and contact details. Enter what you have — the record is
-    editable forever and a booking does not wait on a complete profile.
+    Name, date of birth and contact details. Enter what you have — the record is editable forever and a booking does not wait on a complete profile.
   </Step>
-
   <Step title="Set how they pay">
-    Choose the billing type — self pay, insurance or free. Insurance details can
-    be added to the record afterwards.
+    Choose the billing type — self pay, insurance or free. Insurance details can be added to the record afterwards.
   </Step>
-
   <Step title="Save">
-    The patient appears at the top of the list. From the front desk board,
-    registering someone this way flows straight into checking them in.
+    The patient appears at the top of the list. From the front desk board, registering someone this way flows straight into checking them in.
   </Step>
 </Steps>
 
@@ -79,9 +58,7 @@ Select the **⋯** menu at the end of a row:
 
 ## Work the self-registration waitlist
 
-If patients can register themselves, their requests arrive as a waitlist rather
-than as live records. Filter the list to **Waitlist** to see them, then use the
-row menu:
+If patients can register themselves, their requests arrive as a waitlist rather than as live records. Filter the list to **Waitlist** to see them, then use the row menu:
 
 - **Approve request** creates the patient record.
 - **Decline request** rejects it.
@@ -89,56 +66,43 @@ row menu:
 The approval dialog carries an **Enable client portal access** checkbox.
 
 <Note>
-  **Approving does not give anyone portal access unless you tick that box.** It
-  is off by default. Ticking it lets the patient sign in by magic link to see
-  their records, book appointments and message your team — see
-  [Turn on the patient portal](/portal/setup/enable).
+  **Approving does not give anyone portal access unless you tick that box.** It is off by default. Ticking it lets the patient sign in by magic link to see their records, book appointments and message your team — see [Turn on the patient portal](/portal/setup/enable).
 </Note>
 
 ## Import and export a list
 
-**Import** brings an existing list in from a file; **Export** takes yours out.
-Import in one pass rather than in fragments — a half-imported list is harder to
-reconcile than a missing one.
+**Import** brings an existing list in from a file; **Export** takes yours out. Import in one pass rather than in fragments — a half-imported list is harder to reconcile than a missing one.
 
 <AuditNote action="Opening a patient record" />
 
 ## Check it worked
 
-- The patient appears in **All Patients** and can be found by searching their
-  name.
+- The patient appears in **All Patients** and can be found by searching their name.
 - Opening **View details** shows the details you entered.
 - They can be selected when booking an appointment and when checking someone in.
-- An approved waitlist request is gone from the **Waitlist** filter and present
-  in the main list.
+- An approved waitlist request is gone from the **Waitlist** filter and present in the main list.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="A patient I just created is not in the list">
-    Select **Refresh**, and check whether a status or **Waitlist** filter is
-    still applied from earlier.
+    Select **Refresh**, and check whether a status or **Waitlist** filter is still applied from earlier.
   </Accordion>
 
   <Accordion title="An approved patient cannot sign in to the portal">
-    The **Enable client portal access** checkbox was not ticked at approval.
-    Open the record and grant access from there — see
-    [Turn on the patient portal](/portal/setup/enable).
+    The **Enable client portal access** checkbox was not ticked at approval. Open the record and grant access from there — see [Turn on the patient portal](/portal/setup/enable).
   </Accordion>
 
   <Accordion title="The screen says Clients, not Patients">
-    You are on a solo or team plan. The word follows the plan, and the screen is
-    otherwise the same. See [The three editions](/start/editions).
+    You are on a solo or team plan. The word follows the plan, and the screen is otherwise the same. See [The three editions](/start/editions).
   </Accordion>
 
   <Accordion title="Patients highlights in two places in the sidebar">
-    Correct on the enterprise plan. **Front Desk → Patients** and
-    **Records → Patient Records** are the same list.
+    Correct on the enterprise plan. **Front Desk → Patients** and **Records → Patient Records** are the same list.
   </Accordion>
 
   <Accordion title="Sample patients appeared that nobody created">
-    That is the sandbox. It is sample data for exploring the screen and is
-    separate from your real list.
+    That is the sandbox. It is sample data for exploring the screen and is separate from your real list.
   </Accordion>
 </AccordionGroup>
 

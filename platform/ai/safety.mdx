@@ -1,139 +1,89 @@
 ---
-title: "AI safety and patient data"
+title: AI safety and patient data
 description: "What ClinikEHR's AI features may touch, what is stripped before anything leaves, and what a clinician must review before signing."
-icon: "/images/icons/shield-check.svg"
+icon: /images/icons/shield-check.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 
 <Availability editions={['all']} />
 
-Every AI feature in ClinikEHR is built on one principle: **a model may draft, a
-person decides.** Nothing an AI produces enters a record, leaves your workspace,
-or reaches a patient or customer without a human act in between.
+Every AI feature in ClinikEHR is built on one principle: **a model may draft, a person decides.** Nothing an AI produces enters a record, leaves your workspace, or reaches a patient or customer without a human act in between.
 
-This page sets out exactly what the product enforces, so you can rely on it —
-and what it cannot enforce, which is where your responsibilities begin.
+This page sets out exactly what the product enforces, so you can rely on it — and what it cannot enforce, which is where your responsibilities begin.
 
 ## What the product enforces
 
 <AccordionGroup>
   <Accordion title="AI output is never filed on its own">
-    Anything a model drafts arrives in the form for you to read. It is not
-    saved, not signed, and not sent until you act. There is no setting that
-    turns this off.
+    Anything a model drafts arrives in the form for you to read. It is not saved, not signed, and not sent until you act. There is no setting that turns this off.
   </Accordion>
 
   <Accordion title="AI-generated content is always visibly marked">
-    Sections a model wrote carry a marker on screen, so anyone reading the
-    record afterwards can tell which words came from a model and which came from
-    a clinician.
+    Sections a model wrote carry a marker on screen, so anyone reading the record afterwards can tell which words came from a model and which came from a clinician.
   </Accordion>
 
   <Accordion title="Signing is blocked until AI sections are reviewed">
-    A consultation with unreviewed AI-drafted sections will not sign. You are
-    told exactly what is outstanding — "Review the 3 AI-generated sections
-    before signing." Reviewing is a deliberate act per section, not a single
-    blanket accept.
+    A consultation with unreviewed AI-drafted sections will not sign. You are told exactly what is outstanding — "Review the 3 AI-generated sections before signing." Reviewing is a deliberate act per section, not a single blanket accept.
   </Accordion>
 
   <Accordion title="Nothing is auto-submitted">
-    No AI feature submits a claim, sends a message, files a note or completes a
-    workflow by itself. Where an agent could act, you can require a person first
-    with a **User approval** step — see
-    [Agent tools and knowledge](/platform/ai/agent-tools).
+    No AI feature submits a claim, sends a message, files a note or completes a workflow by itself. Where an agent could act, you can require a person first with a **User approval** step — see [Agent tools and knowledge](/platform/ai/agent-tools).
   </Accordion>
 
   <Accordion title="There is always a manual alternative">
-    Every form in the product works with AI switched off. If a model is
-    unavailable, slow, or you simply do not want it, you write the note
-    yourself. No workflow depends on AI to complete.
+    Every form in the product works with AI switched off. If a model is unavailable, slow, or you simply do not want it, you write the note yourself. No workflow depends on AI to complete.
   </Accordion>
 
   <Accordion title="Identifying details are removed before anything leaves">
-    When an agent calls an outside tool server, the arguments are de-identified
-    first. The outside system sees the question, not the person it is about.
+    When an agent calls an outside tool server, the arguments are de-identified first. The outside system sees the question, not the person it is about.
   </Accordion>
 
   <Accordion title="Each agent carries its own patient-data setting">
-    An agent is either restricted to de-identified information or explicitly
-    allowed to handle patient data, and that choice is set on the agent itself.
-    Only de-identified agents can be exposed publicly — see
-    [Publish an agent](/platform/ai/publishing-agents).
+    An agent is either restricted to de-identified information or explicitly allowed to handle patient data, and that choice is set on the agent itself. Only de-identified agents can be exposed publicly — see [Publish an agent](/platform/ai/publishing-agents).
   </Accordion>
 
   <Accordion title="AI processing never happens in your browser">
-    All AI work runs on the server under your workspace's protections. Nothing is
-    processed on the device in front of you, and no clinical text is handed to a
-    script running in the page.
+    All AI work runs on the server under your workspace's protections. Nothing is processed on the device in front of you, and no clinical text is handed to a script running in the page.
   </Accordion>
 </AccordionGroup>
 
 ## What an agent can and cannot reach
 
-An agent works inside the same boundaries as a person. It sees your workspace
-and no other; it cannot read another workspace's records, and it cannot exceed
-the access your workspace grants. Its activity is recorded like anyone else's —
-see [The audit log](/platform/security/audit-log).
+An agent works inside the same boundaries as a person. It sees your workspace and no other; it cannot read another workspace's records, and it cannot exceed the access your workspace grants. Its activity is recorded like anyone else's — see [The audit log](/platform/security/audit-log).
 
 Two further limits are worth stating plainly:
 
-- An agent restricted to de-identified information cannot look someone up by
-  name through an outside tool, because the name never leaves. That is the
-  protection working, not a fault to route around.
-- Making an agent public narrows it further. A public assistant answers from
-  what you gave it — its knowledge base, its instructions — and is not a way for
-  a member of the public to query your records.
+- An agent restricted to de-identified information cannot look someone up by name through an outside tool, because the name never leaves. That is the protection working, not a fault to route around.
+- Making an agent public narrows it further. A public assistant answers from what you gave it — its knowledge base, its instructions — and is not a way for a member of the public to query your records.
 
 ## The honest limits of AI-drafted clinical text
 
-A model writes fluent, plausible prose. Fluency is not accuracy, and the two are
-indistinguishable on the page. In practice:
+A model writes fluent, plausible prose. Fluency is not accuracy, and the two are indistinguishable on the page. In practice:
 
-- **It can state something that was never said.** A drafted history can contain
-  a symptom, a duration or a negative finding that nobody mentioned, written in
-  exactly the register of the rest of the note.
-- **It reflects what it was given.** A poor recording, a noisy room, an accent
-  it handles badly, or a consultation conducted in more than one language all
-  degrade the draft in ways the draft itself does not signal.
-- **It cannot weigh clinical significance.** It does not know which of two
-  findings changes your management, and it will give them equal prominence.
-- **Codes and figures need checking individually.** A suggested diagnosis code,
-  a dose or a laterality is a suggestion, not a lookup result.
-- **It has no idea what it does not know.** There is no "I'm unsure" in a
-  fluent paragraph. Absence of hedging is not evidence of correctness.
+- **It can state something that was never said.** A drafted history can contain a symptom, a duration or a negative finding that nobody mentioned, written in exactly the register of the rest of the note.
+- **It reflects what it was given.** A poor recording, a noisy room, an accent it handles badly, or a consultation conducted in more than one language all degrade the draft in ways the draft itself does not signal.
+- **It cannot weigh clinical significance.** It does not know which of two findings changes your management, and it will give them equal prominence.
+- **Codes and figures need checking individually.** A suggested diagnosis code, a dose or a laterality is a suggestion, not a lookup result.
+- **It has no idea what it does not know.** There is no "I'm unsure" in a fluent paragraph. Absence of hedging is not evidence of correctness.
 
-Read a draft the way you would read a colleague's note before countersigning
-it — line by line, against what you remember of the encounter.
+Read a draft the way you would read a colleague's note before countersigning it — line by line, against what you remember of the encounter.
 
 <Warning>
-  **The clinician who signs a record owns every word in it**, regardless of what
-  drafted it. A signed note is your clinical and legal statement; "the AI wrote
-  that" is not a defence, and the audit trail will show that you signed it.
-  If a draft is wrong, correct it before signing — never after.
+  **The clinician who signs a record owns every word in it**, regardless of what drafted it. A signed note is your clinical and legal statement; "the AI wrote that" is not a defence, and the audit trail will show that you signed it. If a draft is wrong, correct it before signing — never after.
 </Warning>
 
 ## Your responsibilities
 
-- **Read every AI-drafted section before you approve it**, especially the parts
-  you expected to be routine.
-- **Correct rather than accept.** Editing the draft is the normal path, not a
-  sign something went wrong.
-- **Never let an AI draft be the only record of an encounter.** If it misses
-  something clinically important, add it yourself.
-- **Decide deliberately whether an agent may touch patient data**, and leave it
-  de-identified unless it genuinely needs more.
-- **Give an agent the narrowest tools that do the job** — one tool on a
-  connected server, not the whole server.
-- **Put a person in the loop before an agent acts** on anything you would want
-  to sign off yourself.
-- **Review what your agents actually did.** The **Runs** page and the audit log
-  are there for that.
-- **Tell patients and customers when they are talking to an assistant.** A
-  public chat UI has a footer note for exactly this.
-- **Never paste patient details into an outside tool yourself.** The
-  de-identification protects what the product sends; it cannot protect what you
-  copy into another window.
+- **Read every AI-drafted section before you approve it**, especially the parts you expected to be routine.
+- **Correct rather than accept.** Editing the draft is the normal path, not a sign something went wrong.
+- **Never let an AI draft be the only record of an encounter.** If it misses something clinically important, add it yourself.
+- **Decide deliberately whether an agent may touch patient data**, and leave it de-identified unless it genuinely needs more.
+- **Give an agent the narrowest tools that do the job** — one tool on a connected server, not the whole server.
+- **Put a person in the loop before an agent acts** on anything you would want to sign off yourself.
+- **Review what your agents actually did.** The **Runs** page and the audit log are there for that.
+- **Tell patients and customers when they are talking to an assistant.** A public chat UI has a footer note for exactly this.
+- **Never paste patient details into an outside tool yourself.** The de-identification protects what the product sends; it cannot protect what you copy into another window.
 
 ## Related
 
@@ -141,12 +91,15 @@ it — line by line, against what you remember of the encounter.
   <Card title="AI clinical notes" icon="/images/icons/notes-medical.svg" href="/clinic/clinical/ai-notes">
     Drafting a note with AI, and the review step before signing.
   </Card>
+
   <Card title="HIPAA and compliance" icon="/images/icons/shield-halved.svg" href="/platform/security/hipaa">
     How access, recording and retention work across the platform.
   </Card>
+
   <Card title="Agent tools and knowledge" icon="/images/icons/toolbox.svg" href="/platform/ai/agent-tools">
     Guardrails, approvals, and what leaves your workspace.
   </Card>
+
   <Card title="The audit log" icon="/images/icons/list-check.svg" href="/platform/security/audit-log">
     Who did what, including your agents.
   </Card>

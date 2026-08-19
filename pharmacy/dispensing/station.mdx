@@ -1,7 +1,7 @@
 ---
-title: "The pharmacy station"
+title: The pharmacy station
 description: "Write a prescription, dispense it against stock, and read your dispensing analytics from the one screen your dispensary works out of."
-icon: "/images/icons/pill-bottle.svg"
+icon: /images/icons/pill-bottle.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,47 +11,31 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Any staff member with access to the pharmacy station" />
 
-The **Pharmacy Station** is where a script is written, screened and drawn from
-stock. It is one screen with three tabs, and it is the only prescription
-surface in the Pharmacy edition — there is no separate prescription list or
-prescription history in the sidebar.
+The **Pharmacy Station** is where a script is written, screened and drawn from stock. It is one screen with three tabs, and it is the only prescription surface in the Pharmacy edition — there is no separate prescription list or prescription history in the sidebar.
 
 <Path steps={['Sidebar', 'Pharmacy Station']} />
 
-<TaskHeader
-  before="At least one stock item, and a customer record if you want the script linked to somebody"
-  time="2 minutes for a two-line script"
-  after="A prescription with a reference number, dispensed against a real lot"
-/>
+<TaskHeader before="At least one stock item, and a customer record if you want the script linked to somebody" time="2 minutes for a two-line script" after="A prescription with a reference number, dispensed against a real lot" />
 
 ## What is on the screen
 
-The header reads **Pharmacy Station** and carries a date-range picker plus
-**New Prescription**. Everything below it sits under three tabs.
+The header reads **Pharmacy Station** and carries a date-range picker plus **New Prescription**. Everything below it sits under three tabs.
 
 | Tab | What it is for |
-|---|---|
+| --- | --- |
 | **Analytics** | Volume, value and stock pressure over the chosen date range |
 | **Inventory** | The full stock screen — the same one the **Inventory** sidebar entry opens |
 | **Reports** | **Pharmacy AI Reports** — written summaries you generate on demand |
 
-**Analytics** opens on four tiles — **Total Medications**, **Active
-Prescriptions**, **Dispensed Prescriptions** and **Low Stock Alert** — followed
-by Prescription Trends, Top Medications, Inventory Status, Staff Performance and
-Predictive Analytics.
+**Analytics** opens on four tiles — **Total Medications**, **Active Prescriptions**, **Dispensed Prescriptions** and **Low Stock Alert** — followed by Prescription Trends, Top Medications, Inventory Status, Staff Performance and Predictive Analytics.
 
 <Note>
-  If the figures cannot be loaded you get **"Could not load pharmacy analytics —
-  refresh to try again."** rather than a screen of zeros. A zero on this screen
-  always means zero.
+  If the figures cannot be loaded you get **"Could not load pharmacy analytics — refresh to try again."** rather than a screen of zeros. A zero on this screen always means zero.
 </Note>
 
-The **Inventory** tab is not a summary. It is the stock screen itself — one
-place, two doors — so anything in [Stock control](/pharmacy/inventory/index)
-can be done without leaving the station.
+The **Inventory** tab is not a summary. It is the stock screen itself — one place, two doors — so anything in [Stock control](/pharmacy/inventory/index) can be done without leaving the station.
 
-On **Reports**, pick an entry from the **Report Types** list and select
-**Generate Report**. An existing report offers **Regenerate** and **Export**.
+On **Reports**, pick an entry from the **Report Types** list and select **Generate Report**. An existing report offers **Regenerate** and **Export**.
 
 ## Write a prescription
 
@@ -59,76 +43,46 @@ On **Reports**, pick an entry from the **Report Types** list and select
   <Step title="Open the form">
     Select **New Prescription** in the station header.
   </Step>
-
   <Step title="Pick who it is for">
-    The **Select Patient** card searches your customer records —
-    "Search by name, ID, phone, or email...". The card keeps the product's
-    wording; the records behind it are the ones you manage under
-    [Customers](/pharmacy/customers/index).
+    The **Select Patient** card searches your customer records — "Search by name, ID, phone, or email...". The card keeps the product's wording; the records behind it are the ones you manage under [Customers](/pharmacy/customers/index).
   </Step>
-
   <Step title="Set the date">
-    **Prescription Date** defaults to today. Change it only if you are
-    recording a script written earlier.
+    **Prescription Date** defaults to today. Change it only if you are recording a script written earlier.
   </Step>
-
   <Step title="Add each medication">
-    Use the medication search — "Search medications…" — to add a line. Every
-    line asks for **Mode ***, **Quantity ***, **Dosage ***, **Frequency *** and
-    **Duration ***. **Instructions (Optional)** is what the customer reads on
-    the label, so fill it for anything that is not obvious.
+    Use the medication search — "Search medications…" — to add a line. Every line asks for \*\*Mode \*\*\*, \*\*Quantity \*\*\*, \*\*Dosage \*\*\*, \*\*Frequency \*\*\* and \*\*Duration \*\*\*. **Instructions (Optional)** is what the customer reads on the label, so fill it for anything that is not obvious.
   </Step>
-
   <Step title="Review the summary">
-    **Additional Notes** covers anything that belongs to the script rather than
-    a line. The **Prescription Summary** and **Estimated Total** update as you
-    go, so the price is settled before the customer is told it.
+    **Additional Notes** covers anything that belongs to the script rather than a line. The **Prescription Summary** and **Estimated Total** update as you go, so the price is settled before the customer is told it.
   </Step>
-
   <Step title="Save it">
-    A toast confirms **"Prescription created successfully"** and the
-    **Prescription Created** dialog appears with a **Reference:** you can quote.
-    Printing from that dialog goes straight to the roll on the desktop app —
-    **"Prescription sent to printer"** — and to the browser print dialog
-    otherwise. See [Thermal printers](/pharmacy/hardware/thermal-printer).
+    A toast confirms **"Prescription created successfully"** and the **Prescription Created** dialog appears with a **Reference:** you can quote. Printing from that dialog goes straight to the roll on the desktop app — **"Prescription sent to printer"** — and to the browser print dialog otherwise. See [Thermal printers](/pharmacy/hardware/thermal-printer).
   </Step>
 </Steps>
 
 ## Dispense it against stock
 
-Writing a script does not move stock. Drawing it down is a separate, deliberate
-act on the **Fill Rx** tab.
+Writing a script does not move stock. Drawing it down is a separate, deliberate act on the **Fill Rx** tab.
 
 <Steps>
   <Step title="Open Fill Rx">
-    Go to the **Inventory** tab, then the **Fill Rx** tab, and open the row for
-    the script.
+    Go to the **Inventory** tab, then the **Fill Rx** tab, and open the row for the script.
   </Step>
-
   <Step title="Choose the lot and where it comes from">
-    The **Prescription dispense** sheet — "Draw from stock against this script —
-    FEFO, patient-linked, audited." — asks for **Stock item**, **Location** and
-    **Quantity**. The oldest-expiring lot is used first; see
-    [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+    The **Prescription dispense** sheet — "Draw from stock against this script — FEFO, patient-linked, audited." — asks for **Stock item**, **Location** and **Quantity**. The oldest-expiring lot is used first; see [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
   </Step>
-
   <Step title="Add a witness for a controlled item">
-    A **Witness** field appears when the item is flagged as controlled. Pick the
-    colleague who watched the count. The dispense will not go through without
-    one.
+    A **Witness** field appears when the item is flagged as controlled. Pick the colleague who watched the count. The dispense will not go through without one.
   </Step>
 </Steps>
 
-Interaction alerts appear against the script exactly as they do at the till —
-see [Drug interaction screening](/pharmacy/dispensing/interaction-screening).
+Interaction alerts appear against the script exactly as they do at the till — see [Drug interaction screening](/pharmacy/dispensing/interaction-screening).
 
 ## Check it worked
 
 - The **Prescription Created** dialog showed a **Reference:**.
-- After dispensing, the lot's on-hand quantity has dropped on the **Stock** tab
-  and a movement appears on the **Ledger** tab.
-- **Dispensed Prescriptions** on **Analytics** counts the script once the date
-  range covers it.
+- After dispensing, the lot's on-hand quantity has dropped on the **Stock** tab and a movement appears on the **Ledger** tab.
+- **Dispensed Prescriptions** on **Analytics** counts the script once the date range covers it.
 
 <AuditNote action="Opening a customer's record and dispensing against it" />
 
@@ -136,36 +90,28 @@ see [Drug interaction screening](/pharmacy/dispensing/interaction-screening).
 
 <AccordionGroup>
   <Accordion title="The Save button will not enable">
-    Every line needs **Mode**, **Quantity**, **Dosage**, **Frequency** and
-    **Duration** — they carry an asterisk. **Instructions** and **Additional
-    Notes** never block saving.
+    Every line needs **Mode**, **Quantity**, **Dosage**, **Frequency** and **Duration** — they carry an asterisk. **Instructions** and **Additional Notes** never block saving.
   </Accordion>
 
   <Accordion title="The medication search finds nothing">
-    The search reads your catalogue, not a drug reference. If the product is not
-    in **Inventory** yet, add it first — see
-    [Stock control](/pharmacy/inventory/index).
+    The search reads your catalogue, not a drug reference. If the product is not in **Inventory** yet, add it first — see [Stock control](/pharmacy/inventory/index).
   </Accordion>
 
   <Accordion title="I cannot pick a lot on the dispense sheet">
-    There is no stock on hand for that item at that location. Receive a delivery
-    first, or change **Location**.
+    There is no stock on hand for that item at that location. Receive a delivery first, or change **Location**.
   </Accordion>
 
   <Accordion title="The witness list is empty">
-    Only other staff accounts can witness. Invite the colleague first — see
-    [Invite your team](/pharmacy/get-started/invite-team).
+    Only other staff accounts can witness. Invite the colleague first — see [Invite your team](/pharmacy/get-started/invite-team).
   </Accordion>
 
   <Accordion title="I cannot see the Pharmacy Station in the sidebar">
-    Your role and permissions decide which entries you get. Ask an owner or
-    manager — see [Staff permissions](/platform/team/permissions).
+    Your role and permissions decide which entries you get. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a prescription" />
 
-Over-the-counter selling is a different surface entirely — see
-[the point of sale](/pharmacy/pos/index).
+Over-the-counter selling is a different surface entirely — see [the point of sale](/pharmacy/pos/index).
 
 {/* source of truth: components/clinic/pharmacy/new-prescription-form.tsx, components/clinic/dashboard/pharmacy-station/reports/pharmacy-reports-dashboard.tsx, components/inventory/prescription-dispense-sheet.tsx, components/inventory/inventory-content.tsx */}

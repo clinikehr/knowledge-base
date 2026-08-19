@@ -1,7 +1,7 @@
 ---
-title: "Prescribe and e-prescribe"
+title: Prescribe and e-prescribe
 description: "Add medications to an encounter, or send an electronic prescription to a pharmacy from the patient's Medications tab."
-icon: "/images/icons/pill.svg"
+icon: /images/icons/pill.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,91 +11,57 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Any active paid plan, plus the ePrescribe add-on for electronic prescribing" roles="Prescribing clinicians" />
 
-There are two ways to prescribe in ClinikEHR, and they answer different
-questions. Ordering medication **inside a consultation** records what you
-prescribed as part of the encounter. **E-prescribing from the chart** sends the
-prescription electronically to a pharmacy.
+There are two ways to prescribe in ClinikEHR, and they answer different questions. Ordering medication **inside a consultation** records what you prescribed as part of the encounter. **E-prescribing from the chart** sends the prescription electronically to a pharmacy.
 
-<TaskHeader
-  before="For e-prescribing: the ePrescribe add-on, a registered practice, and a patient with a phone number, date of birth and address on file"
-  time="2 minutes"
-  after="A medication recorded against the encounter, or a prescription transmitted to the patient's pharmacy"
-/>
+<TaskHeader before="For e-prescribing: the ePrescribe add-on, a registered practice, and a patient with a phone number, date of birth and address on file" time="2 minutes" after="A medication recorded against the encounter, or a prescription transmitted to the patient's pharmacy" />
 
 ## Prescribe inside a consultation
 
 <Path steps={['Consultation', 'A patient', 'Orders', 'Medications']} />
 
-On the **Orders** tab of the consultation chart, open **Medications** and add
-each item: choose the mode in "Select mode..." (Oral, Tabs, Susp, Syrup, Inhal,
-Drops and the rest), then the drug in "Select medication...", then anything the
-person dispensing needs to know in "Special instructions or notes...".
+On the **Orders** tab of the consultation chart, open **Medications** and add each item: choose the mode in "Select mode..." (Oral, Tabs, Susp, Syrup, Inhal, Drops and the rest), then the drug in "Select medication...", then anything the person dispensing needs to know in "Special instructions or notes...".
 
-The sub-tab count goes up as you add items, and the order travels to whoever
-fulfils it. On the enterprise plan that is your own pharmacy unit — see
-[Dispensing](/clinic/pharmacy/dispensing). Full context for the encounter is in
-[Run a consultation](/clinic/clinical/consultation).
+The sub-tab count goes up as you add items, and the order travels to whoever fulfils it. On the enterprise plan that is your own pharmacy unit — see [Dispensing](/clinic/pharmacy/dispensing). Full context for the encounter is in [Run a consultation](/clinic/clinical/consultation).
 
 ## E-prescribe from the chart
 
 <Path steps={['Sidebar', 'Clients', 'A client', 'Medications']} />
 
-The tab is headed **Medications & ePrescribe** — "Manage active prescriptions
-and send to pharmacies".
+The tab is headed **Medications & ePrescribe** — "Manage active prescriptions and send to pharmacies".
 
 <Steps>
   <Step title="Sync the patient">
-    Select **Sync Patient**. Once it succeeds a green **Synced with MDToolbox**
-    marker replaces the button.
+    Select **Sync Patient**. Once it succeeds a green **Synced with MDToolbox** marker replaces the button.
 
-    The sync needs a complete profile: a valid phone number, a date of birth and
-    an address. Without those it will not go through — fix the chart first.
+    The sync needs a complete profile: a valid phone number, a date of birth and an address. Without those it will not go through — fix the chart first.
   </Step>
-
   <Step title="Open the prescriber">
-    Select **New Prescription** — or **Sync & Prescribe**, which does both steps
-    at once if the patient has not been synced yet. The e-prescribing partner
-    opens, and you write the prescription there.
+    Select **New Prescription** — or **Sync & Prescribe**, which does both steps at once if the patient has not been synced yet. The e-prescribing partner opens, and you write the prescription there.
   </Step>
-
   <Step title="Come back to the chart">
-    Prescriptions come back into **Current Medications**, each showing its
-    dosage, frequency, an **Active** badge and when it was last synced.
+    Prescriptions come back into **Current Medications**, each showing its dosage, frequency, an **Active** badge and when it was last synced.
   </Step>
 </Steps>
 
 <Warning>
-  **An electronic prescription is transmitted to a real pharmacy.** There is no
-  draft step and no recall once it has gone. Check the patient, the drug, the
-  dose and the pharmacy before you send it.
+  **An electronic prescription is transmitted to a real pharmacy.** There is no draft step and no recall once it has gone. Check the patient, the drug, the dose and the pharmacy before you send it.
 </Warning>
 
 ## Refill reminders
 
-Each medication row carries a **Refill reminder** button. Set one and the button
-changes to **View reminder** so you can see or adjust it later. Reminders are
-how a long-term prescription gets picked up before the patient runs out rather
-than after.
+Each medication row carries a **Refill reminder** button. Set one and the button changes to **View reminder** so you can see or adjust it later. Reminders are how a long-term prescription gets picked up before the patient runs out rather than after.
 
 ## Review medications with AI
 
-When there is at least one medication on file, an **AI Analysis** button appears
-at the top of the tab. It reviews the current list and points out what is worth
-a second look.
+When there is at least one medication on file, an **AI Analysis** button appears at the top of the tab. It reviews the current list and points out what is worth a second look.
 
 <Note>
-  The analysis is a prompt to check something, never a decision. Nothing it
-  suggests changes a prescription — you do that yourself, and you remain
-  responsible for the result.
+  The analysis is a prompt to check something, never a decision. Nothing it suggests changes a prescription — you do that yourself, and you remain responsible for the result.
 </Note>
 
 ## Check it worked
 
-**Current Medications** lists what you prescribed, each with an **Active** badge
-and a "Synced" timestamp. The header shows **Synced with MDToolbox**. If you set
-a reminder, the row now reads **View reminder**. A medication ordered inside a
-consultation instead shows on the **Orders** tab count and at the dispensing
-station.
+**Current Medications** lists what you prescribed, each with an **Active** badge and a "Synced" timestamp. The header shows **Synced with MDToolbox**. If you set a reminder, the row now reads **View reminder**. A medication ordered inside a consultation instead shows on the **Orders** tab count and at the dispensing station.
 
 <AuditNote action="Opening a patient's medication list" />
 
@@ -103,41 +69,27 @@ station.
 
 <AccordionGroup>
   <Accordion title="Practice Registration Required">
-    Your add-on is active but your practice is not registered with the
-    e-prescribing partner yet. Select **Register for ePrescriber** and complete
-    the registration; your prescribing credentials are activated once the
-    practice is verified. If your practice is already registered and you still
-    see this, the integration is still being finalised —
-    [contact support](/platform/help/contact-support).
+    Your add-on is active but your practice is not registered with the e-prescribing partner yet. Select **Register for ePrescriber** and complete the registration; your prescribing credentials are activated once the practice is verified. If your practice is already registered and you still see this, the integration is still being finalised — [contact support](/platform/help/contact-support).
   </Accordion>
 
   <Accordion title="The tab shows an upgrade prompt">
-    Electronic prescribing needs an active paid plan **and** the ePrescribe
-    add-on for that clinician's seat. Select **Manage Add-ons** (or **Upgrade
-    Plan & Add-ons** on the Free plan). See
-    [Change your plan](/platform/plans/change-plan).
+    Electronic prescribing needs an active paid plan **and** the ePrescribe add-on for that clinician's seat. Select **Manage Add-ons** (or **Upgrade Plan & Add-ons** on the Free plan). See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="My subscription is past due">
-    A lapsed payment collapses paid features back to Free, and e-prescribing
-    goes with them. Update your card under
-    [Payment methods](/platform/plans/payment-methods) and access returns.
+    A lapsed payment collapses paid features back to Free, and e-prescribing goes with them. Update your card under [Payment methods](/platform/plans/payment-methods) and access returns.
   </Accordion>
 
   <Accordion title="Sync Patient fails">
-    The profile is incomplete. The patient needs a valid phone number, a date of
-    birth and an address. Add them on the chart, then sync again.
+    The profile is incomplete. The patient needs a valid phone number, a date of birth and an address. Add them on the chart, then sync again.
   </Accordion>
 
   <Accordion title="No Active Prescriptions Found">
-    Nothing has been synced back for this patient yet. Select **New
-    Prescription** to write one. Medications ordered inside a consultation live
-    on that encounter, not here.
+    Nothing has been synced back for this patient yet. Select **New Prescription** to write one. Medications ordered inside a consultation live on that encounter, not here.
   </Accordion>
 </AccordionGroup>
 
-More about connecting the service in
-[E-prescribing](/platform/integrations/eprescribe).
+More about connecting the service in [E-prescribing](/platform/integrations/eprescribe).
 
 <StillStuck />
 

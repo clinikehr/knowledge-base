@@ -1,7 +1,7 @@
 ---
-title: "Log your first sample"
+title: Log your first sample
 description: "Raise your first test request so a specimen can be accessioned, run and reported, and see what happens at each stage after."
-icon: "/images/icons/test-tube.svg"
+icon: /images/icons/test-tube.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,115 +11,78 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="All plans — test requests are unlimited on every plan" roles="Owner, Manager, Lab Scientist, Accessioning Clerk, Phlebotomist, Receptionist" />
 
-Step 4 of the [setup checklist](/lims/get-started) — "Raise a test request to
-start the accessioning and results workflow." One request takes your lab through
-its whole pipeline for the first time, which is the fastest way to find out
-whether your catalogue is set up the way you think it is.
+Step 4 of the [setup checklist](/lims/get-started) — "Raise a test request to start the accessioning and results workflow." One request takes your lab through its whole pipeline for the first time, which is the fastest way to find out whether your catalogue is set up the way you think it is.
 
 <Path steps={['Sidebar', 'Test Requests']} />
 
-<TaskHeader
-  before="A priced test in your catalogue and a registered patient"
-  time="~2 minutes"
-  after="A Pending request on the bench queue, ready to accession and run"
-/>
+<TaskHeader before="A priced test in your catalogue and a registered patient" time="~2 minutes" after="A Pending request on the bench queue, ready to accession and run" />
 
 ## Raise the request
 
 <Steps>
   <Step title="Open Test Requests">
-    Go to **Test Requests**. The toolbar carries **Search for patient**, **New
-    Test Report**, **Refresh** and **View Columns**.
+    Go to **Test Requests**. The toolbar carries **Search for patient**, **New Test Report**, **Refresh** and **View Columns**.
   </Step>
-
   <Step title="Start a request">
-    Select **New Test Report** for a quick request, or go to **Lab Station** and
-    select **New Lab Test** for the full ordering form with pricing in an
-    **Order Summary** rail. Either produces the same request.
+    Select **New Test Report** for a quick request, or go to **Lab Station** and select **New Lab Test** for the full ordering form with pricing in an **Order Summary** rail. Either produces the same request.
   </Step>
-
   <Step title="Choose the patient and the test">
-    Pick the patient, then find the test with **Search lab tests...**. If the
-    test is not offered, it is not in your catalogue yet — see
-    [Add your tests and panels](/lims/get-started/tests-and-panels).
+    Pick the patient, then find the test with **Search lab tests...**. If the test is not offered, it is not in your catalogue yet — see [Add your tests and panels](/lims/get-started/tests-and-panels).
   </Step>
-
   <Step title="Submit">
-    Submit the order. The toast reads **Lab test orders created successfully**
-    and the request appears in the table as **Pending**, with a payment badge of
-    **Paid**, **Partial** or **Pending**.
+    Submit the order. The toast reads **Lab test orders created successfully** and the request appears in the table as **Pending**, with a payment badge of **Paid**, **Partial** or **Pending**.
   </Step>
 </Steps>
 
 ## What happens to it next
 
-The request you just raised is the start of a chain. Nothing here happens
-automatically — each stage is a person doing a thing, which is the point.
+The request you just raised is the start of a chain. Nothing here happens automatically — each stage is a person doing a thing, which is the point.
 
 | Stage | Who does it | Where |
-|---|---|---|
+| --- | --- | --- |
 | Specimen arrives and is logged in | Accessioning Clerk | [Accessioning](/lims/lab/accessioning) |
 | Work is picked up and started | Bench scientist | **Start Test** — status moves to **In Progress** |
 | Readings entered against each analyte | Bench scientist | [Results](/lims/lab/results) |
 | Result verified and signed out | A qualified verifier | **Completed** |
 | Report produced and released | Anyone with report access | [Reports](/lims/lab/reports) |
 
-Regulated drug-testing collections take a parallel route with its own chain of
-custody — see [DOT testing](/lims/dot/index) and
-[Lab intake mode](/lims/dot/lab-intake-mode).
+Regulated drug-testing collections take a parallel route with its own chain of custody — see [DOT testing](/lims/dot/index) and [Lab intake mode](/lims/dot/lab-intake-mode).
 
 ## If your site is a collection centre
 
-A collection centre registers and dispatches specimens; accessioning, screening
-and reporting are done at the full lab and are disabled there. The bench screens
-say so in a banner. Raising the request still works — it is the completion steps
-that live elsewhere.
+A collection centre registers and dispatches specimens; accessioning, screening and reporting are done at the full lab and are disabled there. The bench screens say so in a banner. Raising the request still works — it is the completion steps that live elsewhere.
 
 ## Doing this with no connection
 
-Raising a request works offline. It queues on the device and syncs when the
-connection returns, and the offline bar shows the queue with a **Sync now**
-button. Two limits apply: patient search drops to name and patient number with
-at most 25 results, and payment is never taken offline, so a replayed request
-arrives unpaid and settles at the desk. See
-[Working offline](/platform/apps/offline).
+Raising a request works offline. It queues on the device and syncs when the connection returns, and the offline bar shows the queue with a **Sync now** button. Two limits apply: patient search drops to name and patient number with at most 25 results, and payment is never taken offline, so a replayed request arrives unpaid and settles at the desk. See [Working offline](/platform/apps/offline).
 
 ## Check it worked
 
 - The request is listed under **Test Requests** as **Pending**.
-- **Lab Station › Analytics** counts it under **Total Lab Tests** and **Pending
-  Tests** ("Awaiting processing").
+- **Lab Station › Analytics** counts it under **Total Lab Tests** and **Pending Tests** ("Awaiting processing").
 - The floating **Setup** checklist ticks **Log your first sample**.
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The test is not in the search">
-    Only catalogue tests can be ordered. Add it — see
-    [Add your tests and panels](/lims/get-started/tests-and-panels).
+    Only catalogue tests can be ordered. Add it — see [Add your tests and panels](/lims/get-started/tests-and-panels).
   </Accordion>
 
   <Accordion title="The request has no price">
-    Price comes from the catalogue at the moment the request is raised. Set the
-    price, then raise a new request; the existing one keeps what it was raised
-    with.
+    Price comes from the catalogue at the moment the request is raised. Set the price, then raise a new request; the existing one keeps what it was raised with.
   </Accordion>
 
   <Accordion title="I cannot start or result the test">
-    Only lab scientists may conduct or update a test from the request sheet —
-    everyone else gets read-only mode and **Only lab scientists can conduct or
-    update lab tests**. See [Permissions](/platform/team/permissions).
+    Only lab scientists may conduct or update a test from the request sheet — everyone else gets read-only mode and **Only lab scientists can conduct or update lab tests**. See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The Worklist is empty after I raised this">
-    Expected. The **Worklist** is the drug-testing bench queue; clinical
-    requests live in **Test Requests**. See
-    [Work the bench queue](/lims/lab/worklist).
+    Expected. The **Worklist** is the drug-testing bench queue; clinical requests live in **Test Requests**. See [Work the bench queue](/lims/lab/worklist).
   </Accordion>
 
   <Accordion title="I raised it against the wrong patient">
-    Cancel it and raise a new one rather than editing the identity. A result
-    must never carry a patient it was not collected from.
+    Cancel it and raise a new one rather than editing the identity. A result must never carry a patient it was not collected from.
   </Accordion>
 </AccordionGroup>
 

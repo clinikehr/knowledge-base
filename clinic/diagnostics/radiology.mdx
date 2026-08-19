@@ -1,7 +1,7 @@
 ---
-title: "Order and report imaging"
+title: Order and report imaging
 description: "Raise an imaging request, read the study, write findings and an impression, then sign and issue the radiology report."
-icon: "/images/icons/scan.svg"
+icon: /images/icons/scan.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,50 +11,35 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Clinical and imaging staff" note="The Radiology group only appears when the diagnostics care area is switched on." />
 
-Imaging works like the lab: a clinician requests the study, the modality
-performs it, a radiologist reports it, and the signed report goes back to the
-requester. This page walks that loop inside a hospital workspace.
+Imaging works like the lab: a clinician requests the study, the modality performs it, a radiologist reports it, and the signed report goes back to the requester. This page walks that loop inside a hospital workspace.
 
 <Path steps={['Sidebar', 'Radiology', 'Radiology Station']} />
 
-<TaskHeader
-  before="The diagnostics care area switched on, and a patient with an imaging request"
-  time="Minutes to request; reporting depends on the radiologist"
-  after="A signed radiology report attached to the patient's record"
-/>
+<TaskHeader before="The diagnostics care area switched on, and a patient with an imaging request" time="Minutes to request; reporting depends on the radiologist" after="A signed radiology report attached to the patient's record" />
 
 ## Where everything lives
 
 | Screen | What it is for |
-|---|---|
+| --- | --- |
 | **Radiology List** | Requests waiting, in progress and done |
 | **Radiology History** | Everything already ordered |
 | **Radiology Station** | The reading view |
 | **Radiology Reports** | Finished reports, ready to print or download |
 | **Modalities** | Your connected imaging equipment |
 
-**Modalities** appears only when the imaging bridge is switched on for your
-workspace. Without it the other four screens still work — you simply attach
-images by hand rather than receiving them from the equipment.
+**Modalities** appears only when the imaging bridge is switched on for your workspace. Without it the other four screens still work — you simply attach images by hand rather than receiving them from the equipment.
 
 ## Request a study
 
 <Steps>
   <Step title="Order from the consultation">
-    Open the [consultation](/clinic/clinical/consultation), go to the **Orders**
-    tab and select the **Imaging** sub-tab. Ordering here keeps the request tied
-    to the encounter and the clinical question behind it.
+    Open the [consultation](/clinic/clinical/consultation), go to the **Orders** tab and select the **Imaging** sub-tab. Ordering here keeps the request tied to the encounter and the clinical question behind it.
   </Step>
-
   <Step title="Or order from the station">
-    Open **Radiology Station** and raise the request there. Use this for walk-in
-    and referred work that never had a consultation in your system.
+    Open **Radiology Station** and raise the request there. Use this for walk-in and referred work that never had a consultation in your system.
   </Step>
-
   <Step title="Say why">
-    Write the clinical indication into the request. The radiologist reads that
-    before they read the images, and a request with no question attached comes
-    back as a description rather than an answer.
+    Write the clinical indication into the request. The radiologist reads that before they read the images, and a request with no question attached comes back as a description rather than an answer.
   </Step>
 </Steps>
 
@@ -62,44 +47,28 @@ images by hand rather than receiving them from the equipment.
 
 <Steps>
   <Step title="Open the study">
-    From the imaging list, select **Create Report** on the row. If images are
-    attached the report screen says "{'\{n\}'} images attached" and offers
-    **Open full viewer**, **Download study** and **Archive to cloud**.
+    From the imaging list, select **Create Report** on the row. If images are attached the report screen says "{'\{n\}'} images attached" and offers **Open full viewer**, **Download study** and **Archive to cloud**.
   </Step>
-
   <Step title="Read the images">
-    **Open full viewer** launches the full diagnostic viewer in a new tab.
-    **Download study** takes a copy for offline reading. **Archive to cloud**
-    moves the study into long-term storage — do that once reporting is finished,
-    not before.
+    **Open full viewer** launches the full diagnostic viewer in a new tab. **Download study** takes a copy for offline reading. **Archive to cloud** moves the study into long-term storage — do that once reporting is finished, not before.
   </Step>
-
   <Step title="Write findings and impression">
-    Enter the **Findings** — what you can see — and then the **Impression**,
-    which is the answer to the clinical question. Referring clinicians read the
-    impression first and often only that, so put the conclusion there rather
-    than leaving it implied by the findings.
+    Enter the **Findings** — what you can see — and then the **Impression**, which is the answer to the clinical question. Referring clinicians read the impression first and often only that, so put the conclusion there rather than leaving it implied by the findings.
   </Step>
-
   <Step title="Sign the report">
-    Sign it. Signing is what makes the report a clinical document rather than a
-    working draft, and it is what releases the report to the requester.
+    Sign it. Signing is what makes the report a clinical document rather than a working draft, and it is what releases the report to the requester.
   </Step>
 </Steps>
 
 <Warning>
-  An unsigned report is stamped as preliminary and must never leave the building
-  looking final. If a ward needs an urgent read before you can sign, speak to
-  them — do not print the draft.
+  An unsigned report is stamped as preliminary and must never leave the building looking final. If a ward needs an urgent read before you can sign, speak to them — do not print the draft.
 </Warning>
 
 ## Check it worked
 
 - The study shows as reported in **Radiology History**, with your name on it.
-- The report appears under **Radiology Reports** and prints without a
-  preliminary stamp.
-- The requesting clinician sees the report on the patient's
-  [chart](/clinic/clinical/patient-chart).
+- The report appears under **Radiology Reports** and prints without a preliminary stamp.
+- The requesting clinician sees the report on the patient's [chart](/clinic/clinical/patient-chart).
 
 <AuditNote action="Opening a study, and printing or downloading a report" />
 
@@ -107,50 +76,43 @@ images by hand rather than receiving them from the equipment.
 
 <AccordionGroup>
   <Accordion title="There is no Radiology group in my sidebar">
-    Either the diagnostics [care area](/platform/team/care-areas) is off, or your
-    workspace is not on the Enterprise plan. See
-    [Change your plan](/platform/plans/change-plan).
+    Either the diagnostics [care area](/platform/team/care-areas) is off, or your workspace is not on the Enterprise plan. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="Modalities is missing">
-    **Modalities** only appears when the imaging bridge is enabled for your
-    workspace. Everything else on this page works without it — you attach and
-    read images manually instead.
+    **Modalities** only appears when the imaging bridge is enabled for your workspace. Everything else on this page works without it — you attach and read images manually instead.
   </Accordion>
 
   <Accordion title="The study says no images are attached">
-    The equipment has not delivered them yet, or the study was performed on a
-    modality that is not connected. Check the study on the equipment before you
-    report from memory, and ask the radiographer to re-send it.
+    The equipment has not delivered them yet, or the study was performed on a modality that is not connected. Check the study on the equipment before you report from memory, and ask the radiographer to re-send it.
   </Accordion>
 
   <Accordion title="Open full viewer does nothing">
-    The viewer opens in a new tab. If nothing appears, your browser blocked the
-    pop-up — allow pop-ups for ClinikEHR and select it again.
+    The viewer opens in a new tab. If nothing appears, your browser blocked the pop-up — allow pop-ups for ClinikEHR and select it again.
   </Accordion>
 
   <Accordion title="I signed a report with an error in it">
-    Speak to an owner or manager. Correcting a signed report is a deliberate,
-    recorded act rather than a quiet edit, because the first version has already
-    been read and acted on.
+    Speak to an owner or manager. Correcting a signed report is a deliberate, recorded act rather than a quiet edit, because the first version has already been read and acted on.
   </Accordion>
 </AccordionGroup>
 
 ## Going deeper
 
-The imaging workflow is documented in full in the Diagnostics edition pages —
-the same screens your hospital's imaging unit uses.
+The imaging workflow is documented in full in the Diagnostics edition pages — the same screens your hospital's imaging unit uses.
 
 <Columns cols={2}>
   <Card title="Imaging requests" icon="/images/icons/clipboard-list.svg" href="/lims/imaging/requests">
     How a request reaches the modality.
   </Card>
+
   <Card title="Imaging station" icon="/images/icons/display.svg" href="/lims/imaging/station">
     Reading, reporting and turnaround.
   </Card>
+
   <Card title="Modalities" icon="/images/icons/plug.svg" href="/lims/imaging/modalities">
     Connecting equipment and archiving studies.
   </Card>
+
   <Card title="Lab tests" icon="/images/icons/flask.svg" href="/clinic/diagnostics/lab">
     The laboratory equivalent of this page.
   </Card>

@@ -1,7 +1,7 @@
 ---
-title: "Scan barcodes at the till"
+title: Scan barcodes at the till
 description: "Use a wedge scanner, the search box or your webcam to add products by barcode, and scan a receipt to pull a sale back up."
-icon: "/images/icons/barcode.svg"
+icon: /images/icons/barcode.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -11,133 +11,81 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Dispense and sell at the till'" />
 
-Scanning is the fastest way to build a cart, and it is the only practical way to
-work a catalogue bigger than the 100 tiles the grid shows. This page covers the
-three ways to scan a product, and the separate trick of scanning a customer's
-receipt.
+Scanning is the fastest way to build a cart, and it is the only practical way to work a catalogue bigger than the 100 tiles the grid shows. This page covers the three ways to scan a product, and the separate trick of scanning a customer's receipt.
 
 <Path steps={['Sidebar', 'POS']} />
 
-<TaskHeader
-  before="Products with a barcode saved on their catalogue entry"
-  time="Instant per scan"
-  after="The product added to the cart, confirmed by a toast naming it"
-/>
+<TaskHeader before="Products with a barcode saved on their catalogue entry" time="Instant per scan" after="The product added to the cart, confirmed by a toast naming it" />
 
 ## Three ways to scan
 
 <Steps>
   <Step title="A handheld or countertop scanner">
-    A keyboard-wedge scanner — the ordinary kind that behaves like a very fast
-    typist — is picked up **anywhere on the till page**. You do not have to
-    click into the search box first, and you should not: just point and pull the
-    trigger.
+    A keyboard-wedge scanner — the ordinary kind that behaves like a very fast typist — is picked up **anywhere on the till page**. You do not have to click into the search box first, and you should not: just point and pull the trigger.
 
-    The till recognises a scan by the speed of the burst, so a code typed by
-    hand is never mistaken for one. See
-    [Barcode scanners](/pharmacy/hardware/barcode-scanner) for setup.
+    The till recognises a scan by the speed of the burst, so a code typed by hand is never mistaken for one. See [Barcode scanners](/pharmacy/hardware/barcode-scanner) for setup.
   </Step>
-
   <Step title="The search box">
-    Scan or type into "Search or scan (name, generic, brand, barcode)…" and
-    press **Enter**. A value that looks like a code is treated as a scan; a
-    value that looks like a name is treated as a search.
+    Scan or type into "Search or scan (name, generic, brand, barcode)…" and press **Enter**. A value that looks like a code is treated as a scan; a value that looks like a name is treated as a search.
   </Step>
-
   <Step title="The camera">
-    Select the camera button — **Scan barcode with camera** — beside the search
-    box. The **Scan medication barcode** dialog opens: "Point the camera at the
-    product barcode to add it to the cart."
+    Select the camera button — **Scan barcode with camera** — beside the search box. The **Scan medication barcode** dialog opens: "Point the camera at the product barcode to add it to the cart."
 
-    Use **Choose camera** to pick a lens on a device with more than one, and the
-    torch button to light a dark shelf.
+    Use **Choose camera** to pick a lens on a device with more than one, and the torch button to light a dark shelf.
   </Step>
 </Steps>
 
 ## Check it worked
 
-- A toast reads **Scanned: \{product name\}**, and the line is in the cart. The
-  toast appears only when the product was actually added, so a refusal never
-  looks like a success.
-- Scanning the same code again increases the quantity rather than adding a
-  second line.
+- A toast reads **Scanned: \{product name\}**, and the line is in the cart. The toast appears only when the product was actually added, so a refusal never looks like a success.
+- Scanning the same code again increases the quantity rather than adding a second line.
 - After a scan, focus returns to the search box ready for the next one.
 
-If nothing matches, the toast reads **No medication matches that barcode** and
-the code is dropped into the search box so you can look for the product by name
-without re-typing it.
+If nothing matches, the toast reads **No medication matches that barcode** and the code is dropped into the search box so you can look for the product by name without re-typing it.
 
 ## Make a product scannable
 
-A product is only scannable once its barcode is saved on its catalogue entry.
-The inventory **Add item** sheet has a **Barcode / UPC (optional)** field with
-two helpers: **Scan pack**, which reads the code straight off the box, and
-**Generate…**, which mints an internal code for anything unbarcoded — a
-repackaged item, a local product, a bulk line you split yourself.
+A product is only scannable once its barcode is saved on its catalogue entry. The inventory **Add item** sheet has a **Barcode / UPC (optional)** field with two helpers: **Scan pack**, which reads the code straight off the box, and **Generate…**, which mints an internal code for anything unbarcoded — a repackaged item, a local product, a bulk line you split yourself.
 
-Print shelf and pack labels from the inventory row action **Print barcode
-label**, which takes a **Copies** count. See
-[Inventory](/pharmacy/inventory/index).
+Print shelf and pack labels from the inventory row action **Print barcode label**, which takes a **Copies** count. See [Inventory](/pharmacy/inventory/index).
 
 ## Scan a receipt to find a sale
 
-On the [Sales page](/pharmacy/money/sales), the same scanner pulls up a
-transaction. Scan the barcode at the bottom of a customer's receipt into
-"Search or scan receipt...", or use the camera button — **Scan a receipt barcode
-with the camera** — which opens **Scan receipt barcode**: "Point the camera at
-the barcode at the bottom of the receipt."
+On the [Sales page](/pharmacy/money/sales), the same scanner pulls up a transaction. Scan the barcode at the bottom of a customer's receipt into "Search or scan receipt...", or use the camera button — **Scan a receipt barcode with the camera** — which opens **Scan receipt barcode**: "Point the camera at the barcode at the bottom of the receipt."
 
-- A completed sale opens straight into its amendment sheet, ready for a return
-  or a discount — see [Returns, voids and amendments](/pharmacy/pos/returns).
-- A sale in any other state opens its receipt instead, with a toast naming the
-  state: **Sale \{number\} is \{status\} — opening its receipt.**
-- Anything that is not one of our receipts is refused with **That barcode is not
-  a ClinikEHR receipt.**
+- A completed sale opens straight into its amendment sheet, ready for a return or a discount — see [Returns, voids and amendments](/pharmacy/pos/returns).
+- A sale in any other state opens its receipt instead, with a toast naming the state: **Sale \{number\} is \{status\} — opening its receipt.**
+- Anything that is not one of our receipts is refused with **That barcode is not a ClinikEHR receipt.**
 
 <Note>
-  An offline sale's provisional slip carries **no barcode**, because its number
-  does not exist on the server yet. Scan the reprinted receipt after the sale
-  has synced. See
-  [Print and reprint receipts](/pharmacy/pos/receipts).
+  An offline sale's provisional slip carries **no barcode**, because its number does not exist on the server yet. Scan the reprinted receipt after the sale has synced. See [Print and reprint receipts](/pharmacy/pos/receipts).
 </Note>
 
 ## If something goes wrong
 
 <AccordionGroup>
   <Accordion title="The scanner types into the box but nothing is added">
-    The code is not on any catalogue entry — you will have seen **No medication
-    matches that barcode**. Find the product by name, open it in Inventory, and
-    save the barcode on it with **Scan pack**.
+    The code is not on any catalogue entry — you will have seen **No medication matches that barcode**. Find the product by name, open it in Inventory, and save the barcode on it with **Scan pack**.
   </Accordion>
 
   <Accordion title="Scanning does nothing while a dialog is open">
-    That is deliberate. Wedge capture stands down while any dialog, menu or
-    picker is open, and while you are typing in a field other than the search
-    box, so a scan can never fire behind a screen you are reading. Close the
-    dialog and scan again.
+    That is deliberate. Wedge capture stands down while any dialog, menu or picker is open, and while you are typing in a field other than the search box, so a scan can never fire behind a screen you are reading. Close the dialog and scan again.
   </Accordion>
 
   <Accordion title="'Camera access requires HTTPS. Open this page over a secure connection to scan.'">
-    The webcam scanner only runs on a secure connection. Use your normal
-    ClinikEHR address rather than a plain-HTTP or IP-address shortcut.
+    The webcam scanner only runs on a secure connection. Use your normal ClinikEHR address rather than a plain-HTTP or IP-address shortcut.
   </Accordion>
 
   <Accordion title="'Camera permission denied. Allow camera access in your browser settings to scan.'">
-    The browser is blocking the camera for this site. Allow it in the site
-    permissions, then select **Retry**. On a shared counter machine, check the
-    permission is not blocked at the operating-system level too.
+    The browser is blocking the camera for this site. Allow it in the site permissions, then select **Retry**. On a shared counter machine, check the permission is not blocked at the operating-system level too.
   </Accordion>
 
   <Accordion title="'No camera device was found on this machine.'">
-    There is no webcam attached, or another application has it open. Close the
-    other application, or use a handheld scanner instead — it is faster at a
-    counter anyway.
+    There is no webcam attached, or another application has it open. Close the other application, or use a handheld scanner instead — it is faster at a counter anyway.
   </Accordion>
 
   <Accordion title="Every scan lands in the wrong field">
-    Something else on the page has focus and is swallowing the keystrokes.
-    Select an empty part of the till once, then scan; the till is listening at
-    the page level and does not need a field to be focused.
+    Something else on the page has focus and is swallowing the keystrokes. Select an empty part of the till once, then scan; the till is listening at the page level and does not need a field to be focused.
   </Accordion>
 </AccordionGroup>
 
