@@ -107,6 +107,49 @@
   background: var(--ck-surface);
 }
 
+.ck-avail__note {
+  flex-basis: 100%;
+  color: var(--ck-text-muted);
+}
+
+/* ---------------------------------------------------------------------------
+   Callouts owned by our snippets (StillStuck, AuditNote).
+   These deliberately do NOT use Mintlify's <Note>/<Info>: those are injected
+   into a PAGE's scope, not into the module scope of a snippet another file
+   imports, so referencing one from an exported function builds locally and
+   fails in the cloud. Plain elements + our own classes have no such coupling.
+   ------------------------------------------------------------------------ */
+
+.ck-callout {
+  margin: 1.5rem 0;
+  padding: 0.9rem 1rem;
+  border-radius: 0.75rem;
+  border: 1px solid var(--ck-border);
+  border-left-width: 3px;
+  background: var(--ck-surface-muted);
+}
+
+.ck-callout--note { border-left-color: var(--ck-teal-600); }
+.ck-callout--info { border-left-color: #6366f1; }
+
+.dark .ck-callout--note { border-left-color: var(--ck-teal-500); }
+.dark .ck-callout--info { border-left-color: #818cf8; }
+
+.ck-callout__body {
+  margin: 0;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  color: var(--ck-text);
+}
+
+.ck-callout__body a {
+  color: var(--ck-teal-700);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.dark .ck-callout__body a { color: var(--ck-teal-500); }
+
 /* ---------------------------------------------------------------------------
    Task recipe — the "you'll need / you'll get" header on a how-to page
    Rendered by /snippets/task-header.mdx.

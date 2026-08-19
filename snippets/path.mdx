@@ -1,26 +1,14 @@
-/**
- * Where-to-find-it breadcrumb — the literal click path through the product.
- *
- * Readers of a help centre skim for one thing first: where is it. Give them
- * that as a distinct visual object rather than burying it in a sentence.
- *
- * Usage:
- *   import { Path } from '/snippets/path.mdx';
- *
- *   <Path steps={['Sidebar', 'Billing', 'Invoices']} />
- *
- * Write each step exactly as the product labels it — including capitalisation.
- * If the label differs by edition, use two <Path> lines, not a slash.
- */
 export const Path = ({ steps = [] }) => (
   <span className="ck-path">
-    {steps.flatMap((s, i) =>
-      i === 0
-        ? [<span key={`s${i}`}>{s}</span>]
-        : [
-            <span key={`d${i}`} className="ck-path__sep" aria-hidden="true">›</span>,
-            <span key={`s${i}`}>{s}</span>,
-          ]
-    )}
+    {steps.map((s, i) => (
+      <span key={i} className="ck-path__step">
+        {i > 0 ? (
+          <span className="ck-path__sep" aria-hidden="true">
+            ›
+          </span>
+        ) : null}
+        {s}
+      </span>
+    ))}
   </span>
 );
