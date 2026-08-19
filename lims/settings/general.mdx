@@ -1,0 +1,114 @@
+---
+title: General settings
+description: "Set your lab's name, logo, contact details and timezone, and see which reports, invoices and turnaround figures change once you save."
+icon: /images/icons/building.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" note="Only an owner can save changes here" />
+
+This is your lab's identity. The name, logo and contact details you enter here head every report you release and every invoice you send — and the timezone is what your turnaround-time figures are measured against.
+
+<Path steps={['Sidebar', 'Settings', 'Laboratory', 'General Settings']} />
+
+<TaskHeader
+  before="Your lab's postal address, phone number and public email address"
+  time="5 minutes"
+  after="Your letterhead correct on every report, and turnaround measured against your own clock"
+/>
+
+<Note>
+  This screen is shared across every edition, so its fields are still labelled **Clinic Name**, **Clinic Logo**, **Clinic Branding** and **Clinic Description** even on a Diagnostics workspace. Nothing is wrong — read "Clinic" as your lab.
+</Note>
+
+## What this tab controls
+
+The card is headed **General Information** — "Your clinic's basic information and regional preferences."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Clinic Logo**, under **Clinic Branding** | A square image. The hint reads "Used on prescriptions, invoices, and general clinic branding." | Empty |
+| **Clinic Name** | Your lab's registered or trading name. At least two characters. | The name given at signup |
+| **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | **UTC** |
+| **Address** | Free text, several lines. | Empty |
+| **Phone Number** | Free text, so a country code and extension are fine. | Empty |
+| **Email Address** | Must be a valid email address — the one a referring clinic will reply to. | Empty |
+| **Website** | Must be a full URL including `https://`. | Empty |
+| **Clinic Description** | A short paragraph about the lab. | Empty |
+
+Every field here is **owner-only**. A manager or an accountant sees the values filled in, the fields greyed out, and no **Save Changes** button.
+
+## Set it up
+
+<Steps>
+  <Step title="Open General Settings">
+    From the sidebar footer select **Settings**, then **Profile** → **General Settings**. It is the tab you land on by default.
+  </Step>
+  <Step title="Upload your logo">
+    Under **Clinic Branding**, select the **Clinic Logo** uploader and choose a square image. This is the mark that heads a released report, so use a clean, high-resolution version.
+  </Step>
+  <Step title="Enter the lab's name">
+    Type over **Clinic Name** if it is wrong. Use the name you want a referring clinician and a patient to see on a report.
+  </Step>
+  <Step title="Choose the timezone">
+    Open **Timezone** and start typing your city. Choose the zone the bench actually works in, not a head office elsewhere.
+  </Step>
+  <Step title="Fill in address, phone and email">
+    **Address**, **Phone Number** and **Email Address** are what print on documents and what a referrer uses to reach you about a result.
+  </Step>
+  <Step title="Save Changes">
+    Select **Save Changes**. You get "Clinic settings updated successfully". If nothing happens, look for red text under **Email Address** ("Please enter a valid email address.") or **Website** ("Please enter a valid URL.").
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Clinic Name** or **Clinic Logo** | Both appear in the letterhead of lab and radiology report PDFs, on invoice PDFs and invoice emails, and in the patient portal. |
+| **Address**, **Phone Number**, **Email Address** | Start printing on reports and invoices, so a referrer can query a result without hunting for your number. |
+| **Website** and **Clinic Description** | Show on the public pages your lab has. |
+| **Timezone** | Sets the clock every turnaround-time figure is measured against, and decides which day an accession, a verification and a release are counted in. See [Turnaround time](/lims/lab/turnaround-time). |
+
+Three things that do not happen:
+
+- **Nothing already released is re-stamped.** A report PDF a referrer already holds keeps the old name, logo and address. Only documents generated after the save carry the new details.
+- **Recorded times do not move.** Changing the timezone changes how times are displayed and grouped from now on; it does not rewrite when a sample was accessioned.
+- **Reference-lab report branding is separate.** If you run in **Reference Lab — Intake to Report Only** mode, that mode's own **Lab Report Branding** card sits on [Lab workflow](/lims/settings/lab-workflow), not here.
+
+Colleagues see the new details on their next page load.
+
+## Check it worked
+
+Reload the tab — your values should still be there. Then download any report PDF and check the letterhead carries the new name, logo, address and phone. Finally open your turnaround figures and confirm today's work is grouped under today, not yesterday.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Every field is greyed out and there is no Save button">
+    You are a manager or an accountant. This tab is owner-only to edit. Ask the lab owner, or see [Roles](/platform/team/roles).
+  </Accordion>
+  <Accordion title="Save does nothing and the form stays open">
+    A field failed validation. **Clinic Name** needs at least two characters, **Email Address** must be a real address, and **Website** must be a full URL starting `https://`. The message sits under the offending field.
+  </Accordion>
+  <Accordion title="Turnaround times look an hour or more out">
+    The **Timezone** is wrong, or was left on **UTC**. Set it to the zone the bench works in and reload. Recorded times are not moved — they are displayed and grouped correctly from now on.
+  </Accordion>
+  <Accordion title="The logo uploaded but is not on my reports">
+    Only reports generated after the upload carry it. Re-download the report rather than reopening a copy you saved earlier.
+  </Accordion>
+  <Accordion title="My reference-lab reports carry different branding">
+    They use the **Lab Report Branding** card, which appears on the **Lab Workflow** tab in reference-lab mode. Set both.
+  </Accordion>
+  <Accordion title="Someone else changed a field while I had the tab open">
+    This tab refreshes itself when the settings change. If your typing is replaced mid-edit, a colleague saved at the same time — re-enter your change and save.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, lib/settings-tabs.ts */}

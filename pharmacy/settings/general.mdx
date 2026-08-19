@@ -1,0 +1,114 @@
+---
+title: General settings
+description: "Set your pharmacy's name, logo, contact details and timezone, and see which receipts, invoices and takings figures change once you save."
+icon: /images/icons/building.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can save changes here" />
+
+This is your pharmacy's identity. The name and logo you enter here are what a customer sees on a printed receipt and on an invoice, and the timezone decides which trading day a sale is counted in.
+
+<Path steps={['Sidebar', 'Settings', 'Pharmacy', 'General Settings']} />
+
+<TaskHeader
+  before="Your pharmacy's address, phone number and public email address"
+  time="5 minutes"
+  after="Your name and logo printing on every receipt and invoice, and takings landing on the right day"
+/>
+
+<Note>
+  This screen is shared across every edition, so its fields are still labelled **Clinic Name**, **Clinic Logo**, **Clinic Branding** and **Clinic Description** even though everything around them says pharmacy. Nothing is wrong — look for the word "Clinic" and read it as your pharmacy.
+</Note>
+
+## What this tab controls
+
+The card is headed **General Information** — "Your clinic's basic information and regional preferences."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Clinic Logo**, under **Clinic Branding** | A square image. The hint reads "Used on prescriptions, invoices, and general clinic branding." | Empty |
+| **Clinic Name** | Your pharmacy's trading name. At least two characters. | The name given at signup |
+| **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | **UTC** |
+| **Address** | Free text, several lines. | Empty |
+| **Phone Number** | Free text, so a country code or extension is fine. | Empty |
+| **Email Address** | Must be a valid email address. | Empty |
+| **Website** | Must be a full URL including `https://`. | Empty |
+| **Clinic Description** | A short paragraph about the business. | Empty |
+
+Every field here is **owner-only**. A manager or an accountant opens the same tab, sees the values filled in, finds the fields greyed out, and gets no **Save Changes** button at all.
+
+## Set it up
+
+<Steps>
+  <Step title="Open General Settings">
+    From the sidebar footer select **Settings**, then **Profile** → **General Settings**. It is the tab you land on by default.
+  </Step>
+  <Step title="Upload your logo">
+    Under **Clinic Branding**, select the **Clinic Logo** uploader and choose a square image. Keep it simple and high-contrast — a thermal printer prints in black dots only, so a pale or detailed logo comes out as a grey smudge on an 80mm receipt.
+  </Step>
+  <Step title="Enter the trading name">
+    Type over **Clinic Name** if it is wrong. This is the name a customer reads at the top of their receipt, so use the name on your shopfront.
+  </Step>
+  <Step title="Choose the timezone">
+    Open **Timezone** and start typing your city — the list is searchable. Choose the zone the counter actually works in, not a head office elsewhere.
+  </Step>
+  <Step title="Fill in address, phone and email">
+    **Address**, **Phone Number** and **Email Address** are the three that print on documents you send out. Use an email address you are happy for a customer or a supplier to reply to.
+  </Step>
+  <Step title="Save Changes">
+    Select **Save Changes**. You get "Clinic settings updated successfully". If nothing happens, look for red text under **Email Address** ("Please enter a valid email address.") or **Website** ("Please enter a valid URL.").
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Clinic Name** or **Clinic Logo** | Both start appearing at the top of printed and re-printed till receipts, on invoice PDFs and on invoice emails. |
+| **Address**, **Phone Number**, **Email Address** | Start printing on invoices and other documents you send, so a customer can find you and call you. |
+| **Website** and **Clinic Description** | Appear on the public pages your pharmacy has, where it has them. |
+| **Timezone** | Decides the boundary of the trading day — which day a sale, a payment and a cash-up are counted in on [Sales and takings](/pharmacy/money/sales). |
+
+Three things people expect to happen and which do not:
+
+- **Nothing already issued is re-stamped.** A receipt that has printed and an invoice PDF that has gone out keep the old name, logo and address. Only documents produced after the save carry the new details.
+- **Recorded sale times do not move.** Changing the timezone changes how times are displayed and which day they group into from now on; it does not rewrite what has already been banked.
+- **Your currency is not here.** That lives on [Billing and plans](/pharmacy/settings/billing), and it is a separate decision.
+
+Colleagues see the new details on their next page load. A till running the desktop shell picks the new name and logo up on its next receipt.
+
+## Check it worked
+
+Reload the tab — your values should still be there. Then ring up a small test sale and print the receipt: the header should carry the new name and logo. Finally open **Sales** and confirm today's takings are bucketed under today's date and not yesterday's.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Every field is greyed out and there is no Save button">
+    You are a manager or an accountant. This tab is owner-only to edit. Ask the pharmacy owner, or see [Roles](/platform/team/roles).
+  </Accordion>
+  <Accordion title="Save does nothing and the form stays open">
+    A field failed validation. **Clinic Name** needs at least two characters, **Email Address** must be a real address, and **Website** must be a full URL starting `https://`. The message sits directly under the offending field.
+  </Accordion>
+  <Accordion title="Yesterday's late sales are showing on today's takings">
+    The **Timezone** is wrong, or was left on **UTC**. Set it to the zone the counter works in, then reload. Past figures regroup as soon as the correct zone is applied.
+  </Accordion>
+  <Accordion title="The logo uploaded but receipts still print the old one">
+    Only receipts printed after the upload carry it. Re-print the receipt rather than re-opening a saved copy, and on a desktop till reload the page once.
+  </Accordion>
+  <Accordion title="The logo prints as a grey block on the thermal printer">
+    Thermal heads print black dots, not shades. Replace it with a bold, high-contrast version. See [Thermal receipt printers](/pharmacy/hardware/thermal-printer).
+  </Accordion>
+  <Accordion title="Someone else changed a field while I had the tab open">
+    This tab refreshes itself when the settings change. If your typing is replaced mid-edit, a colleague saved at the same time — re-enter your change and save again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, lib/settings-tabs.ts */}

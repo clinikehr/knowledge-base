@@ -1,0 +1,106 @@
+---
+title: Billing and plans
+description: "Set the currency your pharmacy bills in, your tax rate and any flat fee, and see what does and does not change on records you already have."
+icon: /images/icons/credit-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Every control on this tab is owner-only" />
+
+Four settings on this tab decide how money is written down in your pharmacy: which currency, how much tax, whether you charge at all, and whether a fixed fee is added to each service.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Billing & Plans']} />
+
+<TaskHeader
+  before="Your tax rate, and the currency you actually take money in"
+  time="3 minutes"
+  after="Every price, receipt and invoice in the right currency, with tax applied"
+/>
+
+## What this tab controls
+
+The card is headed **Billing Settings** — "Manage your clinic's billing and payment settings." Its footer reads "These settings affect how invoices and receipts are generated."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Free Clinic Mode** | "Enable this if your clinic provides free services. All charges will be disabled." Turning it on **hides** every other control on this card and puts a **Free Clinic** badge in the header. | Off |
+| **Currency** | "Currency for all transactions. Search by name or code." A searchable list of over a hundred currencies, grouped **Popular**, **Africa**, **Middle East**, **Asia & Pacific**, **Europe**, **Americas**. | **NGN** on a pharmacy workspace |
+| **Tax Rate (%)** | "Applied to invoices and receipts." Between 0 and 100. | 0 |
+| **Flat Rate Fee** → **Fee Amount** | "A fixed fee applied to each service or visit (e.g., consultation fee, registration fee)." | 0 |
+| **Additional Charge** | "Enable a percentage-based additional charge (e.g., service charge, processing fee)." Reveals **Charge Name** ("Display name on invoices.") and **Charge Rate (%)**. | Off |
+
+A manager or an accountant sees the whole form with the current values, every field greyed out, and **no save button and no explanation**. If a field will not take an edit, that is why.
+
+## Set it up
+
+<Steps>
+  <Step title="Choose your currency">
+    Open **Currency** and type the name or the three-letter code. Pick the currency you actually take money in at the counter. This one choice matters more than the rest of the tab — see below.
+  </Step>
+  <Step title="Enter your tax rate">
+    Type the percentage into **Tax Rate (%)**. Leave it at 0 if you do not add tax at the till.
+  </Step>
+  <Step title="Add a flat fee, if you charge one">
+    Enter an amount under **Flat Rate Fee** → **Fee Amount**. Most retail pharmacies leave this at zero — it exists for services and visits, not for products.
+  </Step>
+  <Step title="Add a percentage charge, if you levy one">
+    Switch on **Additional Charge**, give it a **Charge Name** that a customer will understand on their invoice, and set the **Charge Rate (%)**.
+  </Step>
+  <Step title="Save Changes">
+    Select **Save Changes**. You get "Billing settings updated successfully".
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| Setting | What you'll notice |
+| --- | --- |
+| **Currency** | Every amount in the product re-renders with the new symbol — the till, price fields, receipts, invoices, takings and analytics. |
+| **Currency**, again | It also decides which card processor you are offered on [Online payments](/pharmacy/settings/online-payments): choose Naira and you are offered Paystack, choose anything else and you are offered Stripe. |
+| **Tax Rate (%)** | Applied to invoices and receipts generated from now on. |
+| **Flat Rate Fee** and **Additional Charge** | Added to services and visits billed from now on, with your **Charge Name** printed as the line's label. |
+| **Free Clinic Mode** on | Charges are disabled and the currency, tax and fee controls vanish from this card entirely. |
+
+Two things people expect and which do not happen:
+
+- **Changing currency does not re-price anything.** A sale recorded as 5,000 becomes 5,000 of the new currency — the number is untouched and no conversion happens. Change currency before you start trading, not after.
+- **Nothing already issued is re-generated.** An invoice PDF that has gone out keeps the tax and the currency it was made with.
+
+<Note>
+  The money on this tab is your customers' money. What you pay ClinikEHR for the pharmacy itself is a separate subject — see [Change your plan](/platform/plans/change-plan) and [Invoices and receipts](/platform/plans/invoices-and-receipts).
+</Note>
+
+## Check it worked
+
+Reload the tab and confirm the values held. Then open the till: prices should carry the new symbol. Raise a small test invoice and check the tax line and any flat fee are calculated the way you expect before you send a real one.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Everything is greyed out and there is no Save button">
+    You are a manager or an accountant. The whole tab is owner-only to edit, and it gives no message saying so. Ask the pharmacy owner, or see [Roles](/platform/team/roles).
+  </Accordion>
+  <Accordion title="Currency, tax and fees have disappeared from the card">
+    **Free Clinic Mode** is on — it hides them rather than disabling them, and puts a **Free Clinic** badge in the header. Switch it off to get them back.
+  </Accordion>
+  <Accordion title="Save is refused with a message about the rate">
+    A percentage is out of range. Tax and the additional charge must both be between 0 and 100 — the messages read "Tax rate cannot exceed 100%." and "Additional charge rate cannot exceed 100%."
+  </Accordion>
+  <Accordion title="Historic sales now show the wrong currency">
+    They are showing the amount they were recorded with, under the new symbol. Nothing was converted. If you changed currency after trading, decide whether to correct the affected records before running a report.
+  </Accordion>
+  <Accordion title="The wrong card processor is offered on Online payments">
+    That follows this tab. Naira gives Paystack; every other currency gives Stripe. Set the currency here first, then go back.
+  </Accordion>
+  <Accordion title="Tax is not on an invoice I sent yesterday">
+    It was generated before you saved. Only documents produced afterwards carry the new rate.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/billing-settings.tsx, lib/currencies.ts, lib/edition.ts */}

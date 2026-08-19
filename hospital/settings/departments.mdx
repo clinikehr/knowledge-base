@@ -1,0 +1,116 @@
+---
+title: Departments
+description: "Build the department and sub-unit structure clinicians choose from before a consultation, and hang your consultation rates off it."
+icon: /images/icons/sitemap.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner to add, edit or delete" />
+
+The **Departments** tab holds the structure your clinicians pass through on their way into a consultation: departments, the sub-units inside them, and the consultation rates. The card calls it "Department Management".
+
+<Path steps={['Sidebar', 'Settings', 'Departments settings', 'Departments']} />
+
+<TaskHeader
+  before="Owner access, and a list of the departments your hospital actually runs"
+  time="15 minutes for a first pass"
+  after="Clinicians can open a consultation list, and each consultation has a price"
+/>
+
+## What this tab controls
+
+Three stacked cards. The second appears once you select a department row, the third once you select a sub-unit row.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add Department** | Opens **Add New Department**. Owner-only | — |
+| **Department Name** | The name clinicians see on the department screen. At least 2 characters | — |
+| **Department Code (Optional)** | "A short code for quick reference", shown as a badge | Empty |
+| **Description (Optional)** | Free text | Empty |
+| **Status** | **Active** or **Inactive** | Active |
+| **Add Sub-Unit** | Opens **Add New Sub-Unit** inside the selected department. Owner-only | — |
+| **Sub-Unit Name** · **Code** · **Description** · **Status** | The same four fields, one level down | Status: Active |
+| **Add Rate** | Opens **Add Consultation Rate** on the selected sub-unit. Owner-only | — |
+| **Consultation Name** | What the charge is called, e.g. "Standard Consultation" | — |
+| **Consultation Type** | **Initial Consultation**, **Follow-up**, **Extended Consultation**, **Emergency** or **Telemedicine** | Initial Consultation |
+| **Price** | In your hospital's currency, taken from Billing settings | 0 |
+| **Duration (minutes)** | How long the appointment runs. Minimum 5 | 30 |
+| **Validity Duration** + **Validity Unit** | How long the consultation stays valid — **Hour(s)**, **Day(s)**, **Week(s)** or **Month(s)** | 1 Day |
+| **Active** | "Enable this rate for bookings" | On |
+
+**Consultation rates hang off the sub-unit, not the department.** That is the single most important thing on this page: a department with no sub-unit has nowhere to put a price. Every chargeable department needs at least one.
+
+## Set it up
+
+<Steps>
+  <Step title="Add a department">
+    Select **Add Department**, fill in **Department Name**, and add a code and description if you want them. Leave **Status** on **Active** and select **Add Department** in the dialog.
+  </Step>
+  <Step title="Select the department row">
+    Select the row itself — not the menu. It highlights, and a **Sub-Units** card appears below it.
+  </Step>
+  <Step title="Add at least one sub-unit">
+    Select **Add Sub-Unit** and name it, e.g. "Gastroenterology". Even a department with one clinic needs one, because that is where the rates live.
+  </Step>
+  <Step title="Select the sub-unit and add rates">
+    Select the sub-unit row; a **Consultation Rates** card appears. Select **Add Rate**, name it, choose the **Consultation Type**, and set **Price**, **Duration (minutes)** and the validity. An initial and a follow-up is the common minimum.
+  </Step>
+  <Step title="Repeat for every department you run">
+    The **Sub-Units** and **Rates** columns on the two tables let you check at a glance that nothing is left at 0.
+  </Step>
+</Steps>
+
+<Warning>
+  Deleting cascades and cannot be undone. Deleting a department "will permanently delete the department and all its sub-units and consultation rates"; deleting a sub-unit takes its rates with it. If a department has simply closed, set its **Status** to **Inactive** instead — that keeps the record and its prices.
+</Warning>
+
+## What changes once you save
+
+Departments are not decoration. They populate the mandatory **Select a Department** screen that a clinician meets *before* any consultation list appears — the screen invites them to "Choose the department you'd like to access for consultations."
+
+| What you changed | What you'll notice |
+| --- | --- |
+| Added a department | It appears as a card on the **Select a Department** screen, and [triage](/hospital/outpatient/triage) can route a patient into that department's queue. |
+| Added a second sub-unit | The clinician now picks the sub-unit too, on a second step. With exactly one sub-unit that step is skipped and they go straight through. |
+| Either choice | The department and sub-unit they chose become part of the address of the [consultation](/hospital/outpatient/consultation) list, so a bookmarked link reopens the same queue. |
+| Added a rate | It becomes selectable when a consultation is charged, at the price, duration and validity you set. Switching a rate to inactive takes it off the list without deleting its history. |
+| No departments at all | Clinicians cannot open a consultation list. They get **No Departments Found** — "Your clinic doesn't have any departments set up yet" — and a **Set Up Departments** button that lands here. |
+
+Existing consultations are not re-priced or re-filed when you change a rate or rename a department.
+
+## Check it worked
+
+Open [Consultation](/hospital/outpatient/consultation) from the sidebar. You should land on **Select a Department**, with a card for each active department and its sub-units listed underneath as badges. Select one: with several sub-units you are asked to pick, and the queue that opens carries your choice in the address. Then start a consultation and confirm your rate is offered at the right price.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Add Department button">
+    Adding, editing and deleting are owner-only. A manager or accountant reads the tables; the button and row menus are not drawn for them.
+  </Accordion>
+  <Accordion title="Clinicians say they cannot start a consultation">
+    Almost always no departments exist yet, so they are looking at **No Departments Found**. Add one department and one sub-unit and the screen changes.
+  </Accordion>
+  <Accordion title="I added a department but there is nowhere to put a price">
+    Rates belong to sub-units. Add a sub-unit, then select the sub-unit row — the **Consultation Rates** card only exists at that level.
+  </Accordion>
+  <Accordion title="The Sub-Units card never appears">
+    Select the department **row**, not its actions menu. The row highlights when selected.
+  </Accordion>
+  <Accordion title="A rate is set up but nobody can choose it">
+    Check the **Active** switch on the rate, and that the sub-unit and department are both **Active**. An inactive parent hides everything under it.
+  </Accordion>
+  <Accordion title="Prices show in the wrong currency">
+    The symbol comes from your hospital's currency in Billing settings, not from this tab. Change it there and these prices re-render; the numbers are not converted.
+  </Accordion>
+</AccordionGroup>
+
+Setting up a hospital for the first time? [Create your departments](/hospital/get-started/departments) walks the same ground in build order.
+
+<StillStuck topic="departments" />
+
+{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/consultation/department-selector.tsx */}

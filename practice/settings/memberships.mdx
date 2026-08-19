@@ -1,0 +1,120 @@
+---
+title: "Membership page"
+description: "Brand and publish the public page where clients sign up for a membership, and embed it on your own website."
+icon: /images/icons/id-badge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and Team" roles="Owner or manager" note="Embedding needs Team" />
+
+This tab builds the public page where someone signs up for one of your membership plans and starts paying you every month. It covers the address, the wording, the branding and the embed code — not the plans themselves, which live in the Memberships module.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Memberships']} />
+
+<TaskHeader
+  before="A connected payout account and at least one public, active membership plan"
+  time="15 minutes"
+  after="A live signup page at your own address, ready to share or embed"
+/>
+
+**You cannot sell memberships without a connected payout account** — Paystack if you bill in Naira, Stripe otherwise. Publishing or activating a plan without one is refused with "Connect a payout account first". Do [Online payments](/practice/settings/online-payments) before anything on this tab.
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Live** / **Off** | The publish switch. **Off** means the address returns nothing to visitors | Off |
+| **Page address** | Your slug, after `/membership/`. "Lowercase letters, numbers, and hyphens (3–40 chars)". An indicator underneath checks it as you type | Your practice name |
+| **Copy link** / **Open** | Copies the public address, or opens it in a new tab | — |
+| Custom domain | Serve the page on your own domain instead. **Team** only | Off |
+| **Headline**, **Subheadline** | The top of the page. Left blank, sensible defaults are used | Defaults |
+| **Intro (optional)**, **Footer note (optional)** | A sentence or two about your memberships, and the small print at the bottom | Blank |
+| **Success title**, **Success message** | What someone reads immediately after paying | Defaults |
+| **Cancelled message** | What someone reads if they back out of checkout | Default |
+| **Accent color** | A swatch row plus a **Custom** colour picker | Brand blue |
+| **Theme** | **Light**, **Dark** or **Match visitor's device** | Light |
+| **Page logo** | "Optional. Defaults to your clinic logo from General Settings" | Practice logo |
+| **Layout** | **Grid (two columns)** or **List (single column)** | Grid |
+| **Featured plan** | Highlights one plan. **None** is allowed | None |
+| **Show add-ons** | "Display one-time add-on purchases alongside plans" | On |
+| **Group by collection** | "Group plans + add-ons into their collections" | Off |
+| **Plan order** | Drag your plans into the order visitors see them | Plan sort order |
+| **Live preview** | Renders your unsaved edits, switchable between **desktop** and **mobile** | Desktop |
+| **Add to your website** | Embed snippet — **Floating button** or **Inline on the page**, with **Position**, **Button text** and **Theme**, plus a raw `<iframe>` under **Advanced**. **Team** only | — |
+| **Save changes** | Enabled once something has changed and the address is valid | — |
+
+Below **Essential**, the whole tab sits behind an upgrade panel — "Customize your membership page".
+
+## Set it up
+
+<Steps>
+  <Step title="Connect a payout account">
+    Finish [Online payments](/practice/settings/online-payments) first. Everything else here is decoration until money can actually be taken.
+  </Step>
+  <Step title="Publish your plans">
+    Create your membership plans in the Memberships module and make them public and active. This tab only shows plans that already qualify — "No public, active plans yet. Plans you publish will appear here."
+  </Step>
+  <Step title="Set your address">
+    Type your **Page address**. The indicator under the box tells you whether it is free — it is checked for format, for reserved words, and against every other workspace, so a common name may already be taken. **Save changes** stays disabled while the address is not usable.
+  </Step>
+  <Step title="Write the page">
+    Fill in **Headline**, **Subheadline** and, if you want one, an **Intro**. Then the **After checkout** block — **Success title** and **Success message** are what a new member reads the second they have paid, so make them say what happens next.
+  </Step>
+  <Step title="Brand it and order the plans">
+    Pick an **Accent color** and a **Theme**, and upload a **Page logo** if you want something different from your practice logo. Then under **Plan display**, drag the plans into the order you want and choose a **Featured plan** if one should stand out. The **Live preview** follows every edit.
+  </Step>
+  <Step title="Save, then go Live">
+    Select **Save changes**, check the preview once more, then flip the switch to **Live** and save again.
+  </Step>
+</Steps>
+
+<Warning>
+  Turning the switch to **Live** publishes a page that takes money. Anyone with the link can join a plan and be charged on a **recurring** basis from that moment. Open the address yourself and read every price before you share it.
+</Warning>
+
+## What changes once you save
+
+**Going Live publishes the page at your address.** It is public — no sign-in, no invitation. Anyone with the link can pick a plan, pay, and become a recurring member. Payments settle to your connected payout account.
+
+**Saving without going Live changes nothing publicly.** You can edit and preview all day; the address stays dark until the switch is flipped. The tab nudges you when your live page is behind your edits: "Save your changes so the live page reflects them."
+
+**Changing the slug changes the link.** Any link you have already shared — in an email, on a flyer, in a social post — points at the old address and stops working. The new address is checked for format, for reserved words, and for uniqueness across every workspace on the platform, which is why an obvious name may be refused as taken.
+
+**The embed follows the same page.** On **Team**, the snippet you paste into your own site renders this same page as a floating button or inline block; edits here flow through to it once saved. Below Team you still get the hosted link — "Your hosted link above works on every plan."
+
+What does not change: existing members. Editing wording, branding or plan order has no effect on anyone already subscribed, and turning the page **Off** does not cancel anybody — it only stops new signups.
+
+## Check it worked
+
+Select **Open** and view the page as a visitor would. Your headline, colours and logo should be there, your plans in the order you dragged them, and the featured plan marked. Then run a real signup on a low-value plan with your own card, confirm the **Success message** you wrote appears, and check the member shows up in the [Memberships](/clinic/revenue/memberships) module.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The tab is blurred behind an upgrade panel">
+    Membership pages start at **Essential**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="I only get a line saying I do not have permission">
+    "Only clinic owners and managers can configure the membership page." An accountant can reach Settings but not this tab's controls.
+  </Accordion>
+  <Accordion title="Save changes will not enable">
+    Either nothing has changed, or your **Page address** is not usable — check the indicator under the box. It blocks saving on a bad format, a reserved word, or an address another workspace already holds.
+  </Accordion>
+  <Accordion title="My page is live but shows no plans">
+    Only **public** and **active** plans appear. A plan left as a draft, kept private, or never activated is invisible here — and a plan cannot be activated at all without a connected payout account.
+  </Accordion>
+  <Accordion title="The embed section says Embed on the Team plan">
+    Embedding is a Team feature. Your hosted link works on every plan, so you can link to it from your website in the meantime.
+  </Accordion>
+  <Accordion title="I edited the page but the public version is unchanged">
+    Your edits are unsaved. The amber line — "Save your changes so the live page reflects them" — is the tab telling you the live page and the editor have diverged.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/membership-page-settings.tsx, db/actions/memberships.ts, lib/memberships/membership-page.ts */}

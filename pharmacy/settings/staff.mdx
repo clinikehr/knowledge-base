@@ -1,0 +1,131 @@
+---
+title: Staff and teams
+description: "Invite people to your pharmacy, choose their role and access tier, and decide exactly what each of them may do at the till and in stock."
+icon: /images/icons/users-gear.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can invite or remove staff" />
+
+This tab is where everyone who works in your pharmacy gets an account, a role, and a decision about what they are trusted to do — refund a sale, change a price, see what stock cost you.
+
+<Path steps={['Sidebar', 'Settings', 'Pharmacy', 'Staff & Teams']} />
+
+<TaskHeader
+  before="The person's first name, last name and a working email address"
+  time="3 minutes per person"
+  after="A colleague who can sign in, with only the permissions you granted"
+/>
+
+## What this tab controls
+
+| Control | What it does | Who |
+| --- | --- | --- |
+| **Staff Members** card | The list of everyone in the pharmacy, with **Name**, **Email**, **Specialty** and **Last active**. | Everyone with settings access |
+| **Invite Staff** button | Opens the five-step **Add team member** wizard. | Owner only |
+| Seat counter | Reads "\{n\} of \{n\} seats used", or "\{n\} staff · unlimited seats". | Owner only |
+| **Actions** menu on a row | **Change Specialty**, **Permissions**, **Require MFA on sign-in**, **Reset two-factor**, **Grant emergency access**, **Remove Staff**. | Owner only |
+| **Pending Invitations** card | Invitations sent but not yet accepted, with **Sent** and **Expires**, and a cancel button. | Everyone with settings access |
+
+## Seats are included, up to your plan's cap
+
+**Nothing here is ever billed per seat.** Every plan includes a number of staff accounts, and inside that number an extra colleague costs nothing — the invite wizard's review step says **Included in your plan** rather than a price.
+
+What the cap does instead is stop you. Once you are at the limit the tab shows "You've used all \{n\} seats on your plan." with a **View plans** button, and the next invite is refused until you move up a plan. Every account counts towards the cap; there is no free role.
+
+<Note>
+  The clinical edition works the other way round — there, extra clinicians are charged per seat and a few administrative roles are free. If a colleague running a clinic tells you an invite will cost you money, that is their edition talking, not yours.
+</Note>
+
+## Invite someone
+
+<Steps>
+  <Step title="Select Invite Staff">
+    The **Add team member** sheet opens on **1 Profile**.
+  </Step>
+  <Step title="Enter their details">
+    **First name**, **Last name** and **Email**. The email is how they sign in — "They'll use this email to sign in to ClinikEHR".
+  </Step>
+  <Step title="Choose a role on 2 Specialty">
+    Under **Administrative roles** pick one of the four pharmacy roles, then pick an **access tier**:
+
+    | Role | What it is for |
+    | --- | --- |
+    | **Pharmacy Manager** | Runs the branch — customer records, pricing, reports, staff accounts |
+    | **Cashier / Till Operator** | Serves at the till: rings up sales, takes payment, issues receipts |
+    | **Inventory & Purchasing** | Owns stock: deliveries, counts, suppliers and purchase orders |
+    | **Dispensing Supervisor** | Checks a technician's work, authorises refunds and voided sales |
+
+    The tiers are **Own till** (sees only the sales they rang up), **Whole branch** (every sale, customer and stock movement here) and **All branches** (the whole business, including pricing and takings).
+  </Step>
+  <Step title="Answer the supervisor question on 3 Supervisor">
+    "Does \{name\} work under a Pharmacist-in-Charge?" A dispensing technician or cashier serves at the counter, but a registered pharmacist has to authorise the acts they are not licensed to complete alone — witnessing a controlled drug off the shelf, overriding a price, reversing a sale. Name that pharmacist here. You can also record a licence under **Set Professional Credential**.
+  </Step>
+  <Step title="Review the permissions on 4 Permissions">
+    The switches arrive pre-set from the role you chose. A default **Cashier / Till Operator** gets exactly two: **Dispense and sell at the till** and **Open the cash drawer**. Refunds, price overrides and extra discount are deliberately left off — those are the supervisor's authorisation.
+  </Step>
+  <Step title="Send it from 5 Review">
+    Check the summary, then select **Send invitation**. They get an email with a temporary password and must reset it on first sign-in. You get "\{name\} has been added to your clinic".
+  </Step>
+</Steps>
+
+## The permissions you can grant
+
+Open **Actions → Permissions** on any row to change these later.
+
+| Group | Acts |
+| --- | --- |
+| **Till** | Dispense and sell at the till · Override the selling price · Discount beyond the set limit · Refund or void a sale · Open the cash drawer · Cash up and close the day |
+| **Stock** | Receive deliveries into stock · Adjust stock counts · Transfer stock between branches · Manage suppliers and purchase orders |
+| **Controlled drugs** | Witness a controlled-drug dispense |
+| **Money** | View cost prices and margin · View the net position |
+| **Oversight** | View per-cashier takings |
+
+## What changes once you save
+
+**Saving the permissions sheet is what starts enforcing it.** Until someone has been saved there they are *unrestricted* — no permission check applies to them at all. The sheet says so: **Saving starts enforcing**, "…from then on \{name\} can only do what is switched on here." That is deliberate, so enforcement is something you opt into person by person rather than a wall that appears overnight.
+
+After that, on their next sign-in:
+
+- **The till changes shape.** An act they do not hold — refunding a sale, overriding a price, opening the drawer outside a sale — is not offered, and is refused if attempted anyway.
+- **Money figures disappear rather than error.** Without **View cost prices and margin** or **View the net position**, those figures simply are not shown — a dash, not a zero and not an error.
+- **Stock actions narrow.** Receiving, adjusting and transferring each need their own permission.
+- **The access tier decides what they can see at all** — a cashier on **Own till** sees their own sales and nobody else's.
+- **A refused act is recorded**, so you can see who tried what and when.
+
+Removing someone takes their access away immediately. It does not delete the sales they rang up.
+
+## Check it worked
+
+The new person appears in **Staff Members** with their specialty, and their invitation disappears from **Pending Invitations** once they accept. Ask them to sign in and try one thing you deliberately withheld — it should not be offered.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Invite Staff is missing or the invite is refused">
+    Only the owner can invite. If you are the owner and it still refuses, you are at your seat cap — the banner reads "You've used all \{n\} seats on your plan." Select **View plans**, or see [Seats](/platform/plans/seats).
+  </Accordion>
+  <Accordion title="A cashier can still refund a sale">
+    They have never been saved on the permissions sheet, so nothing is being enforced for them. Open **Actions → Permissions**, set the switches, and select **Save and start enforcing**.
+  </Accordion>
+  <Accordion title="I cannot name a Pharmacist-in-Charge — the picker is empty">
+    "Nobody on the team is registered as a pharmacist yet. Invite one first, then come back and name them here." Invite the pharmacist, then edit this person.
+  </Accordion>
+  <Accordion title="They never got the invitation email">
+    Check **Pending Invitations** for the address and its **Expires** date. Cancel it and send again if the address was wrong; ask them to check spam if it was right.
+  </Accordion>
+  <Accordion title="Someone has locked themselves out of two-factor">
+    Use **Actions → Reset two-factor**, or **Grant emergency access** for a time-boxed window. Both need your own two-factor on, and both are recorded. See [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+  <Accordion title="I want to stop enforcing permissions for one person">
+    Open their permissions sheet and select **Unrestrict…**. They go back to unrestricted, exactly as before they were first saved.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, staff-permissions-sheet.tsx, lib/edition-staff-roles.ts */}

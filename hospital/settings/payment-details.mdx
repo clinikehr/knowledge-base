@@ -1,0 +1,104 @@
+---
+title: "Payment details"
+description: "List the bank accounts and payment channels the hospital accepts, and control which of them print on invoice PDFs and invoice emails."
+icon: "/images/icons/banknote.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Only the owner can add or change an entry" />
+
+Most hospital money never touches a card processor — it arrives by bank transfer, mobile money or a transfer app. This tab is where you write those channels down once so they print on the invoices you send, instead of being retyped into an email every time a patient asks "where do I pay?".
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Payment Details']} />
+
+<TaskHeader
+  before="The account details exactly as your bank issues them"
+  time="3 minutes per channel"
+  after="Payment instructions printed on every invoice with a balance due"
+/>
+
+## What this tab controls
+
+The card is headed **Payment Details**: "How patients can pay you — bank transfer, Cash App, Venmo, PayPal and more. Each entry has its own toggle for showing on invoice PDFs and invoice emails while a balance is due."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add payment details** | Opens the entry sheet. Owner only | — |
+| **Type** | **Bank Transfer**, **Cash App**, **Venmo**, **PayPal**, **Zelle**, **Square**, **Mobile Money** or **Other**. Choosing a type pre-seeds sensible field labels | Bank Transfer |
+| **Display name (optional)** | A label so staff can tell two accounts apart — for example "GTBank Business Account" | Blank |
+| **Fields** | Repeatable **Label** / **Value** rows. Nothing is enforced, because what a bank needs differs by country. One-tap suggestions for a bank entry: **Routing number**, **SWIFT / BIC**, **IBAN**, **Sort code**, **Branch**, **Reference** | Type-dependent |
+| **Add field** | Adds another Label/Value row | — |
+| **Show on invoices** | Per-entry switch: "Printed on the invoice PDF and invoice emails while a balance is due" | On |
+| Edit / delete icons | On each saved entry. Owner only | — |
+
+Non-owners see the list read-only, with "Only the clinic owner can change payment details."
+
+## Set it up
+
+<Steps>
+  <Step title="Select Add payment details">
+    The sheet opens with a reminder that matters: "These appear exactly as entered, so double-check account numbers."
+  </Step>
+  <Step title="Pick the Type">
+    Start with the channel most patients use. The fields underneath change to suit it — a bank entry starts with **Bank name**, **Account name** and **Account number**; a Cash App entry starts with **$Cashtag**.
+  </Step>
+  <Step title="Name it">
+    Enter a **Display name** if you will hold more than one of the same type, so a colleague can tell the outpatient account from the pharmacy one at a glance.
+  </Step>
+  <Step title="Fill the fields">
+    Type the **Value** for each row, and rename a **Label** where your country uses a different word. Add rows for anything else the transfer needs — a sort code, a branch, a reference. Every row you leave blank is dropped on save.
+  </Step>
+  <Step title="Decide whether it prints">
+    Leave **Show on invoices** on for a channel patients should use, and off for one you keep on file but do not advertise.
+  </Step>
+  <Step title="Save">
+    Select **Add payment details**. A "Payment details added" toast confirms it, and the entry appears in the list with its type badge and first few fields.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+The effect is entirely on the documents patients receive.
+
+- **Invoice PDFs** gain a payment-instructions block listing every entry with **Show on invoices** on, exactly as typed.
+- **Invoice emails** carry the same block.
+- **The block only prints while a balance is due.** A paid invoice, reprinted later, does not repeat the bank details — which is the behaviour you want when an old PDF is forwarded on.
+- **Order is the list order** on this tab, so put the account you actually want used first.
+
+Nothing else in the product changes. These channels are **not** a payment processor: no money is tracked, reconciled or matched to the invoice automatically. When a transfer lands, someone still records the payment against the invoice by hand. Card and online payment collection is separate — see [Online payments](/hospital/settings/online-payments).
+
+Editing an entry changes what prints on the **next** document. An invoice PDF a patient already downloaded keeps the details it was generated with, so a changed account number needs the invoice re-sending, not just editing here.
+
+Removing an entry is immediate and applies to every invoice: "Remove … ? It will no longer appear on any invoice you send or download."
+
+## Check it worked
+
+Open any invoice with an outstanding balance and download the PDF. Your entries should appear under payment instructions, in the order shown on this tab, with the exact values you typed. Then open a fully paid invoice — the block should be absent.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can see the entries but not the Add or edit buttons">
+    "Only the clinic owner can change payment details." Managers and accountants can read the list.
+  </Accordion>
+  <Accordion title="Saving is refused">
+    "Add at least one field with a value — that's what the patient will see." An entry with a type and a name but no filled row has nothing to print.
+  </Accordion>
+  <Accordion title="The details are not on the invoice">
+    Check three things: the entry's **Show on invoices** switch is on, the invoice still has a balance due, and the invoice was generated after you saved. Regenerate the PDF if it predates the change.
+  </Accordion>
+  <Accordion title="The Add payment details button is disabled">
+    You have reached the maximum number of entries. Remove one you no longer use, or turn it off rather than keeping a duplicate.
+  </Accordion>
+  <Accordion title="An account number printed wrong">
+    Values print exactly as entered — there is no formatting or validation, deliberately, because account formats differ by country. Edit the entry and re-send the invoice; the old PDF is unchanged.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/payment-details-settings.tsx, lib/billing/payment-details.ts */}

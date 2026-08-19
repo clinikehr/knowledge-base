@@ -1,0 +1,119 @@
+---
+title: Staff and teams
+description: "Invite people to your hospital, track invitations and seat payments, and set what each person may do once they are in."
+icon: /images/icons/users-gear.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner to invite, change roles or remove" />
+
+**Staff & Teams** is where people are added to the hospital and where what each of them may do is decided. The permissions that matter most for a hospital are set *after* the invitation, not during it.
+
+<Path steps={['Sidebar', 'Settings', 'Team', 'Staff & Teams']} />
+
+<TaskHeader
+  before="Owner access and the person's work email address"
+  time="5 minutes per person"
+  after="An invited colleague with a role, a supervisor if they need one, and permissions you chose"
+/>
+
+## What this tab controls
+
+| Card | What it holds |
+| --- | --- |
+| **Staff Members** | Everyone currently in the hospital, with their role, plus **Permissions** and an actions menu on each row. The **Invite Staff** button sits here, with your seat count under it |
+| **Pending Invitations** | Email, specialty, when it was sent and when it expires |
+| **Pending Seat Payments** | "Staff invites awaiting seat payment via Stripe Checkout. Use Retry to generate a new payment link or Cancel to discard." Only appears when there is one |
+
+Selecting **Invite Staff** opens a sheet titled **Add team member** — a five-step wizard: **1 Profile → 2 Specialty → 3 Supervisor → 4 Permissions → 5 Review**.
+
+<Warning>
+  Seats are billed on this plan. Enterprise is uncapped, but every seat is still charged — the line under the button reads, for example, "12 staff · unlimited seats · $X/mo per seat". Inviting someone adds a recurring charge. Supervisor, biller and scheduler assignments are free; it is the staff account itself that costs.
+</Warning>
+
+## Set it up
+
+<Steps>
+  <Step title="Check the seat line before you start">
+    Under **Invite Staff** you get either "N of M seats used" or "N staff · unlimited seats", with the per-seat price where one applies. At a cap you are told before you open the sheet.
+  </Step>
+  <Step title="Open Add team member">
+    Select **Invite Staff**. Step **1 Profile** takes their name and work email. Anything you do not know can be added later.
+  </Step>
+  <Step title="Choose their role and specialty">
+    Step **2 Specialty** sets what kind of clinician or administrator they are, which decides the pages their role opens — see [Role navigation](/hospital/settings/role-navigation).
+  </Step>
+  <Step title="Set a supervisor where one is needed">
+    Step **3 Supervisor** names who countersigns the acts this person is not licensed to complete alone. You can change it later.
+  </Step>
+  <Step title="Set the broad permissions, then send">
+    Step **4 Permissions** covers the general access tiers, and step **5 Review** sends the invitation. The row moves to **Pending Invitations** until they accept.
+  </Step>
+  <Step title="Set the hospital permissions from the staff row">
+    These are **not** in the wizard. Once the person exists, select **Permissions** on their row in **Staff Members**. The sheet is titled "Permissions for \{their name\}" and describes itself as "What they may do on the pages their role already opens."
+  </Step>
+</Steps>
+
+## The hospital permissions, and where they live
+
+The **Permissions** sheet groups them by section. On a hospital you can grant:
+
+| Section | What can be granted |
+| --- | --- |
+| **Consultation** | Sign and lock a consultation · Countersign a colleague's note · Admit a patient to a ward |
+| **Ward** (needs In-patient care) | Record observations · Give a medication · Change or stop a medication · Discharge a patient · Amend the problem list |
+| **Theatre** (needs Surgical theatre) | Book and reschedule cases · Advance a case · Cancel a case · Record the operation note · Sign the operation note · Manage theatres and the safety checklist |
+
+Each carries a line explaining exactly what it allows — "Record a dose as given, held or refused on the drug chart", "End the stay and free the bed — this cannot be undone".
+
+## What changes once you save
+
+**Enforcement is opt-in, one person at a time.** The alert at the top of the sheet says so before you ever save it: "Saving starts enforcing" — "they are currently **unrestricted** — no permission checks apply to them. Saving this sheet turns enforcement on: from then on they can only do what is switched on here." The switches start from their role's defaults, so saving is not starting from nothing.
+
+| What you changed | What you'll notice |
+| --- | --- |
+| Sent an invitation | They appear under **Pending Invitations** with a sent and an expiry date, and get an email. They are not counted as staff until they accept. |
+| Saved the **Permissions** sheet for the first time | That person becomes governed. Anything not switched on is refused from that moment. |
+| Never saved it for someone | They stay unrestricted. That is the default, not an oversight. |
+| A new capability shipped | It appears marked **New** — "added after they were last saved and are off until you save again" — and stays denied until you save. |
+| Someone hit a permission they lack | The denial is recorded in your audit log. Allowed actions are not logged this way — only refusals. |
+| Stopped enforcing | The sheet can return someone to unrestricted, "exactly as before they were first saved here". You can start again at any time by saving it. |
+
+Owners and managers are never narrowed by any of this.
+
+## Check it worked
+
+The person appears under **Pending Invitations** immediately and moves to **Staff Members** once they accept. Reopen their **Permissions** sheet and confirm the switches held. Then ask them to try one thing you deliberately switched off — it should be refused, and that refusal should appear in your audit log.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Invite Staff button">
+    Inviting is owner-only. A manager or accountant can open the tab and read the lists.
+  </Accordion>
+  <Accordion title="I am told I have used all the seats on my plan">
+    The warning appears above the table before you open the sheet, and the next invitation is refused. Change your plan, or remove someone who has left.
+  </Accordion>
+  <Accordion title="Someone is stuck under Pending Seat Payments">
+    Their seat payment was never completed. Use **Retry** on the row for a new payment link, or **Cancel** to discard. Expired ones drop off the list on their own.
+  </Accordion>
+  <Accordion title="I set permissions in the wizard but they can still do everything">
+    The hospital permissions are not in the wizard. Open the **Permissions** sheet from their row and save it — that save is what starts enforcing.
+  </Accordion>
+  <Accordion title="A permission I need is not in their sheet">
+    Ward permissions need the **In-patient care** area and theatre permissions need **Surgical theatre**. Turn the area on in [Facility](/hospital/settings/facility) and the section appears.
+  </Accordion>
+  <Accordion title="Someone lost an ability they had yesterday">
+    Look for a **New** badge in their sheet. A newly shipped capability stays off for anyone already governed until you save again.
+  </Accordion>
+</AccordionGroup>
+
+For what each role is and can reach, see [Roles](/platform/team/roles) and [Permissions](/platform/team/permissions).
+
+<StillStuck topic="staff settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, staff-permissions-sheet.tsx, lib/edition-staff-roles.ts */}

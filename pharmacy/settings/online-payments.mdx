@@ -1,0 +1,119 @@
+---
+title: Online payments
+description: "Connect Stripe or Paystack so your customers can pay you by card, and see how the connection changes what the till and your invoices can do."
+icon: /images/icons/money-bill-transfer.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can connect an account" />
+
+This tab connects the account that money from your customers lands in. It is entirely separate from how you pay ClinikEHR for the software.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Online Payments']} />
+
+<TaskHeader
+  before="A bank account in the pharmacy's name, and your currency already set on Billing & Plans"
+  time="10 minutes, plus verification"
+  after="Customers able to pay you by card, settled into your own account"
+/>
+
+## What this tab controls
+
+**You do not choose the provider — your currency does.** Set **Currency** to Naira on [Billing and plans](/pharmacy/settings/billing) and this tab shows **Paystack Connect**. Set it to anything else and it shows **Stripe Connect**. Only one card is ever on screen, and there is no picker.
+
+| Provider | The card says | What you enter |
+| --- | --- | --- |
+| **Stripe Connect** (non-Naira) | "Connect your Stripe account to save patient cards and charge them after visits. ClinikEHR collects a **1.9%** platform fee on each transaction." | Nothing here — you are handed to Stripe to complete their onboarding |
+| **Paystack Connect** (Naira) | "Connect your bank account to receive appointment payments directly. ClinikEHR collects a **1.9%** platform fee on each transaction." | **Business Name (optional)**, **Bank** and **Account Number** |
+
+Only the owner can connect. Everyone else sees the card with the button replaced by "Only clinic owners can connect a bank account." (or "…a Stripe account.").
+
+## Connect Paystack (Naira)
+
+<Steps>
+  <Step title="Select Connect Bank Account">
+    The onboarding form opens in place of the empty state, which reads "No bank account connected".
+  </Step>
+  <Step title="Enter a business name, if you want one">
+    **Business Name (optional)** — "Used to identify your account on Paystack. Defaults to your account name."
+  </Step>
+  <Step title="Choose your bank">
+    Open **Bank** and search. It reads "Loading banks..." for a moment while the list arrives.
+  </Step>
+  <Step title="Enter the account number">
+    **Account Number** — the placeholder is "Enter 10-digit NUBAN". Ten digits, numbers only.
+  </Step>
+  <Step title="Wait for the name to resolve">
+    As soon as the tenth digit lands, verification runs by itself — there is no verify button. You see "Verifying account...", then the account holder's name in green with "Account verified" beneath it. Read that name. If it is not your pharmacy, you have the wrong account.
+  </Step>
+  <Step title="Connect">
+    Select **Connect Bank Account** again to confirm. It is disabled until a name has resolved. You get "Bank account connected successfully!" and a **● Connected** badge.
+  </Step>
+</Steps>
+
+## Connect Stripe (every other currency)
+
+<Steps>
+  <Step title="Select Connect Stripe Account">
+    The button changes to "Redirecting to Stripe..." and hands you to Stripe.
+  </Step>
+  <Step title="Complete Stripe's onboarding">
+    Stripe asks for your business details, an identity document and a bank account. This is Stripe's own process, not ClinikEHR's, and it can take a few days to verify.
+  </Step>
+  <Step title="Come back and read the banner">
+    You return to a banner: "Stripe account connected!", or "Onboarding incomplete", or "Session expired" if you took too long. An expired session is not a failure — start again.
+  </Step>
+  <Step title="Finish anything outstanding">
+    While the badge reads **◌ Pending verification** you cannot take money: "Onboarding incomplete — your clinic cannot charge patients yet." Select **Continue setup** to go back to Stripe.
+  </Step>
+</Steps>
+
+## What changes once you connect
+
+| What you'll notice | Where |
+| --- | --- |
+| Card payment becomes available to customers | On the invoices and payment links you send |
+| The connection's health is on this tab | Stripe shows **Onboarding** (Complete / Incomplete) and **Charges** (Enabled / Disabled); Paystack shows **Bank**, **Account**, **Account Name** and **Subaccount Code** |
+| Money settles into your own account | Paystack: "Payments are settled directly to your bank account. The clinic bears Paystack transaction fees." Stripe: card data is held by Stripe and never reaches ClinikEHR |
+| ClinikEHR takes 1.9% of each transaction | Stated on both cards |
+
+What does **not** change: **cash and card taken in person at the till are unaffected.** The POS keeps working exactly as before whether or not this is connected — see [Taking payment](/pharmacy/pos/payments). Nothing already recorded is altered, and the badge going green does not retroactively collect an old balance.
+
+<Note>
+  Read the wording on this tab carefully: **Connect Bank Account** means "the account my customers' money arrives in", not "the card I pay my ClinikEHR subscription with". For the latter, see [Payment methods](/platform/plans/payment-methods).
+</Note>
+
+## Check it worked
+
+The header badge should read **● Connected** (Paystack) or **● Active** (Stripe). On Stripe, both **Onboarding: Complete** and **Charges: Enabled** must be showing — one without the other means you cannot take money yet. Then send yourself a small invoice and pay it, and confirm it settles.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I see Stripe but I want Paystack, or the other way round">
+    The currency decides it. Change **Currency** on [Billing and plans](/pharmacy/settings/billing) — Naira gives Paystack, anything else gives Stripe — then come back.
+  </Accordion>
+  <Accordion title="The Connect button is missing">
+    Only the owner can connect. Non-owners see "Only clinic owners can connect a bank account." instead of the button.
+  </Accordion>
+  <Accordion title="Connect Bank Account stays greyed out">
+    It needs a bank selected and a verified account name. If the name never resolves, the digits or the bank are wrong. The errors are "Could not verify account" and "Failed to verify account".
+  </Accordion>
+  <Accordion title="The bank list will not load">
+    You get "Failed to load bank list". Reload the page and try again; if it persists, contact support.
+  </Accordion>
+  <Accordion title="The badge says Pending verification and nobody can pay">
+    Stripe has not finished checking you. Select **Continue setup** and complete what they are asking for. Until **Charges** reads **Enabled**, no card payment will succeed.
+  </Accordion>
+  <Accordion title="I was sent back with Session expired">
+    "Your Stripe onboarding session expired. Please start again." Nothing was lost — select **Connect Stripe Account** again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/online-payments-settings.tsx */}

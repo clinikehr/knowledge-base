@@ -1,0 +1,100 @@
+---
+title: "Communications"
+description: "Turn on the text, voice, fax and email channels your practice reaches clients over, and set the address messages are sent from."
+icon: "/images/icons/comments.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" />
+
+A channel is simply a way of reaching someone — a text message, a phone call, a fax, an email. This tab lists the ones your practice has arranged with a provider and switches them on, so reminders and automated messages have somewhere to go.
+
+<Path steps={['Sidebar', 'Settings', 'Automation & AI', 'Communications']} />
+
+<TaskHeader
+  before="Numbers and connection details from your messaging provider, and a verified sending address"
+  time="10 minutes"
+  after="Reminders and notifications going out over the channels you chose"
+/>
+
+## What this tab controls
+
+| Card | Control | What it does |
+| --- | --- | --- |
+| **Enabled channels** | **SMS**, **WhatsApp**, **Fax**, **Voice**, **Email** | One switch each. "Turn on only the channels you've provisioned" |
+| **Messaging & voice (Telnyx)** | **SMS from (E.164)** | The number texts are sent from, in full international form — `+15551234567` |
+| | **SMS messaging profile ID** | The identifier your provider gave you for text messaging |
+| | **WhatsApp from** | The number WhatsApp messages come from |
+| | **Fax from (E.164)** and **Fax connection ID** | The fax number and its connection |
+| | **Voice number (E.164)** and **Voice connection ID** | The number calls are placed from and its connection |
+| **Email** | **Send from (verified address)** | The address email is sent from, e.g. `clinic@yourdomain.com` |
+| | **Reply-to (optional)** | Where replies land if that is a different address, e.g. `frontdesk@yourdomain.com` |
+| | **Send from your own mailbox** → **Google** / **Outlook** | Marked **Rolling out**. The **Connect** buttons are not active yet |
+| Header | **Save changes** | Saves the whole tab. Confirms with "Communication settings saved" |
+
+The E.164 form asked for in several fields just means the number written with its country code and a leading plus, no spaces or brackets.
+
+## Set it up
+
+<Steps>
+  <Step title="Gather your provider details">
+    Open your messaging provider's dashboard and note the numbers and connection identifiers for each service you pay for. You cannot invent these — a channel with no working number behind it will not send.
+  </Step>
+  <Step title="Fill in the numbers you have">
+    In **Messaging & voice**, complete only the rows you actually use. Leave the rest empty rather than guessing.
+  </Step>
+  <Step title="Set your sending address">
+    In **Email**, enter your **Send from (verified address)** — an address on your own domain that your provider has verified. Add a **Reply-to** if replies should reach a different inbox, such as your front desk.
+  </Step>
+  <Step title="Switch on the channels you are ready to use">
+    In **Enabled channels**, turn on only what you filled in above.
+  </Step>
+  <Step title="Select Save changes">
+    You should see "Communication settings saved".
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Enabling a channel opens a route. Reminders, confirmations and automated messages that were written to use text or email start actually going out over it, from the number and address you set here. Until you enable one, anything that depends on it **stays silent rather than failing** — no error appears, the message simply never leaves. That is worth knowing, because a practice can run for weeks assuming reminders are going out.
+
+Setting **Send from (verified address)** means your messages arrive from your own address rather than a generic one, which is the difference between an email that looks like your practice and one that looks like a system. **Reply-to** decides where a client's reply lands — set it to a mailbox somebody actually reads.
+
+Switching a channel off stops future sends immediately. It does not recall anything already sent, and it does not change any client's own contact preferences — a client who has opted out of reminders stays opted out whatever you enable here.
+
+Two limits to expect. Outbound messages are disabled outside the live product, so a test workspace will not send. And **Send from your own mailbox** is still rolling out: the **Google** and **Outlook** buttons are visible but not yet selectable, and "Until mailbox sending is enabled, agents send from the verified address above."
+
+## Check it worked
+
+Save, leave the tab, and come back — the switches and fields you set should have persisted. Then trigger something real that uses the channel: book a test appointment for yourself and confirm the confirmation arrives at the right address or number, sent from the address you configured.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="An upgrade panel covers the whole tab">
+    Communications starts on the Starter plan: "Connect SMS, WhatsApp, fax, voice and email so your AI agents can reach patients. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="A message says only clinic owners and managers can configure communications">
+    An accountant can reach settings but not this tab's controls. Ask an owner or manager to make the change.
+  </Accordion>
+  <Accordion title="I turned on SMS and nothing sends">
+    Check the number in **SMS from (E.164)** — it must be a real number you have with your provider, written with its country code and a leading plus. A switch on its own does not create a number.
+  </Accordion>
+  <Accordion title="The Connect buttons under my own mailbox do nothing">
+    They are marked **Rolling out** and are not active yet. Email is sent from your **Send from (verified address)** in the meantime.
+  </Accordion>
+  <Accordion title="Emails arrive but replies go nowhere useful">
+    Set **Reply-to (optional)** to a monitored inbox. Without it, replies go back to the verified sending address.
+  </Accordion>
+  <Accordion title="Some clients get reminders and others do not">
+    This tab opens the channel; each client's own notification preferences decide whether they are contacted on it. Check the client's record, and the appointment's own notification setting.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx, db/actions/agents.ts */}

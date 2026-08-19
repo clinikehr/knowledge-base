@@ -1,6 +1,6 @@
 ---
-title: Loyalty programme and customer alerts
-description: "Reward repeat customers with a rebate that applies itself at the till, and choose which emails reach them between visits."
+title: Loyalty program
+description: "Run spend-based rewards that apply themselves at the till, and set the four alerts that reach a customer between visits."
 icon: /images/icons/tag.svg
 ---
 
@@ -11,110 +11,108 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="Professional and above" roles="Owner, manager or accountant" />
 
-**Loyalty Program** — "Reward repeat customers with automatic rebates" — is the one settings tab that exists **only** for the Pharmacy edition. Set a spend threshold, and a customer who reaches it earns a reward that the till offers on their next sale without anyone having to remember it.
+A customer who spends a set amount within a set window earns a discount, and the till offers it on their next sale without anyone having to remember. Beneath it on the same tab are the four alerts that reach a customer — or you — between visits.
 
-<Path steps={['Sidebar', 'Settings', 'Customer loyalty', 'Loyalty Program']} />
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Loyalty Program']} />
 
 <TaskHeader
-  before="A decision on what a reward is worth to you"
-  time="Five minutes"
-  after="Rewards accruing on every recorded sale, and a banner at the till when one is due"
+  before="A decision on the spend that earns a reward, and what the reward is worth"
+  time="5 minutes"
+  after="Rewards accruing automatically and offering themselves at the till"
 />
 
-## Set up the programme
+## What this tab controls
+
+Two cards. The first is **Customer loyalty** — "Customers who spend the threshold within the window earn a reward, applied automatically as a discount on their next sale."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Program active** | "Turn the loyalty program on or off." | On |
+| **Program name** | What the programme is called internally. | Loyalty rewards |
+| **Spend threshold** | The amount a customer must spend to earn one reward. Shown in your own currency symbol. | Empty — you must set it |
+| **Reward type** | **Percent off** or **Fixed amount off**. | Percent off |
+| **Reward value** | The percentage, or the amount. | Empty — you must set it |
+| **Accrual window** | How far back spending is counted. | A rolling 90 days |
+| **Max rewards per customer** (optional) | A cap. Leave empty for **Unlimited**. | Unlimited |
+
+The second card is **Customer alerts & reminders** — "A daily sweep. Everything here is off until you turn it on, and customers can opt out of their own reminders from their profile."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Remind customers after (days)** | Emails a customer once their oldest unpaid balance is older than this. 1–365, or empty for none. | **Off** |
+| **Alert me above (\{symbol\})** | Emails **you**, not the customer, when one person owes more than this. | **Off** |
+| **Tell customers when a reward is ready** | The loyalty email itself. "Sent at most once a month per customer, and only while a loyalty programme is running." | **Off** |
+| **Remind me about overdue prospect follow-ups** | Emails you a list of potential customers whose follow-up date has passed. | **Off** |
+
+The two live together because they are the same job — reaching a customer who is not standing in front of you — and one of the switches is the loyalty programme's own email. A programme with the email switched off still works; the customer just finds out at the till instead of in their inbox.
+
+## Set it up
 
 <Steps>
-  <Step title="Turn the programme on">
-    **Program active** — "Turn the loyalty program on or off." Nothing accrues until this is on.
+  <Step title="Name the programme">
+    **Program name** is what you will recognise it by. Leave **Program active** on.
   </Step>
-
-  <Step title="Name it">
-    **Program name** is what your staff see. "Loyalty rewards" is fine.
+  <Step title="Set the threshold">
+    **Spend threshold** is the total spend that earns one reward. Pick a number a regular customer reaches in a month or two, not one nobody reaches.
   </Step>
-
-  <Step title="Set the Spend threshold">
-    The amount a customer must spend to earn one reward. It is in your own currency — see [Currency](/platform/settings/currency).
+  <Step title="Choose the reward">
+    **Percent off** or **Fixed amount off**, then a **Reward value**. Both must be greater than zero — the errors read "Enter a spend threshold greater than zero." and "Enter a reward value greater than zero."
   </Step>
-
-  <Step title="Choose the Reward type and value">
-    **Reward type** is either **Percent off** or **Fixed amount off**. **Reward value** is the number that goes with it — 5 for five percent, or a cash amount for a fixed rebate.
+  <Step title="Choose the accrual window">
+    This decides how far back spending counts. A shorter window rewards frequency; a longer one rewards total loyalty.
   </Step>
-
-  <Step title="Choose the Accrual window">
-    How far back spend counts towards the threshold. A rolling window rewards steady custom; a lifetime window rewards a customer once and keeps rewarding them.
+  <Step title="Cap it, if you want to">
+    **Max rewards per customer** stops one person earning indefinitely. Leave it empty for unlimited.
   </Step>
-
-  <Step title="Cap it if you want to">
-    **Max rewards per customer** is optional. Leave it empty for unlimited.
-  </Step>
-
   <Step title="Save the programme">
-    It applies to sales recorded from now on.
+    Select **Save program**. You get "Loyalty program saved".
+  </Step>
+  <Step title="Turn on the alerts you want">
+    On the card below, switch on anything you want sent and select **Save alert settings**. Everything there starts off, on purpose — nothing reaches a customer until you decide it should.
   </Step>
 </Steps>
 
-## What a cashier sees
+## What changes once you save
 
-The programme surfaces at the till, so nobody has to look anything up.
+**At the till**, a customer whose record shows enough spend gets a banner reading "\{n\}% loyalty reward available" with an **Apply** button. Applying it changes the banner to "Loyalty reward applied to this sale" and the discount comes off the total. A customer who is part way there sees "\{amount\} more to the next reward" instead — worth reading aloud, since it is the whole point of the programme.
 
-- When a reward is due, a banner reads **"\{n\}% loyalty reward available"** with an **Apply** button.
-- Once applied, it becomes **"Loyalty reward applied to this sale"**.
-- When the customer is part-way there, it shows **"\{amount\} more to the next reward"** — which is the line that turns a browsing customer into a slightly larger basket.
+**Rewards accrue against a customer record.** A walk-in rung up with no customer attached earns nothing and can be offered nothing, because there is nothing to attach the spend to. If a programme looks like it is not working, this is almost always why — see [Customers](/pharmacy/customers/index).
 
-A walk-in with no customer record cannot accrue anything, because there is nobody to credit. If you want loyalty to work, the cashier has to attach the customer before taking payment — see [Ring up a sale](/pharmacy/pos/index).
+**On a customer's profile**, their progress appears. With no programme running, that panel instead reads "No loyalty programme running — Set one up in Settings → Loyalty to reward repeat customers."
 
-With no programme running, a customer's profile reads "No loyalty programme running — Set one up in Settings → Loyalty to reward repeat customers." See [Customers](/pharmacy/customers/index).
+**Switching Program active off** stops new accrual and stops the till offering rewards. It does not erase what customers have already earned.
 
-## Customer alerts live on the same tab
+**Changing the threshold or the window re-scores everyone** against the new rule from that moment. Raising the threshold can take an available reward away from someone who had one; lower it and several customers may qualify at once.
 
-Beneath the programme sits **Customer alerts & reminders** — "A daily sweep. Everything here is off until you turn it on, and customers can opt out of their own reminders from their profile."
-
-These two cards share a tab deliberately: both are about reaching a customer **between visits**, and one of the four is the loyalty email itself. Setting up a reward scheme and then never telling anyone they have earned something is the commonest way to waste it.
-
-| Control | Who it emails |
-| --- | --- |
-| **Remind customers after (days)** | The customer, once their oldest unpaid balance is older than this |
-| **Alert me above (amount)** | **You**, when one person owes more than this |
-| **Tell customers when a reward is ready** | The customer, at most once a month, and only while a programme is running |
-| **Remind me about overdue prospect follow-ups** | You, with a list of prospects whose follow-up date has passed |
-
-Both numeric fields are off when left empty, and both switches start off. Save with **Save alert settings**.
+**The four alerts run as a daily sweep**, not instantly, and a customer can opt out of their own reminders from their profile regardless of what you set here.
 
 ## Check it worked
 
-- Reopen the tab. **Program active** is on and your threshold, type and value are as you set them.
-- Record a sale against a real customer for at least the threshold amount, then start a second sale for the same customer. The reward banner appears.
-- Select **Apply**. The banner changes to "Loyalty reward applied to this sale" and the total drops by the reward.
-- Open that customer's profile. The programme is named there instead of the "No loyalty programme running" line.
+Open a customer who has spent past the threshold within the window and start a sale for them: the reward banner should appear with **Apply**. Then open a customer who has not, and confirm they see "\{amount\} more to the next reward". Finally, check their profile shows the programme rather than the "No loyalty programme running" line.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="The Loyalty Program tab is not in my sidebar">
-    It needs the Professional plan or above. On a lower plan the card explains "Available on Professional and above" — see [Change your plan](/platform/plans/change-plan).
+  <Accordion title="The tab shows an upgrade prompt instead of the settings">
+    "Available on Professional and above" — the programme needs a Professional plan or higher. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
-
-  <Accordion title="No reward appears even though the customer has spent enough">
-    Check three things: the sales were attached to that customer rather than rung as walk-ins, the spend falls inside your **Accrual window**, and the customer has not hit **Max rewards per customer**.
+  <Accordion title="No reward appears at the till for a regular customer">
+    Check three things: the sale has a customer attached; their spend inside the **Accrual window** actually reaches the **Spend threshold**; and they have not hit **Max rewards per customer**.
   </Accordion>
-
-  <Accordion title="The reward is far bigger than I meant">
-    **Reward value** is read against **Reward type**. A value of 20 means twenty percent under **Percent off**, and twenty in cash under **Fixed amount off**. Correct the type, save, and check the till banner again.
+  <Accordion title="Save is refused">
+    Both **Spend threshold** and **Reward value** must be greater than zero. The toast names which one.
   </Accordion>
-
-  <Accordion title="Customers are not being told about their rewards">
-    Turn on **Tell customers when a reward is ready**. It only sends while a programme is active, and at most once a month per customer.
+  <Accordion title="Customers are not being emailed about their rewards">
+    **Tell customers when a reward is ready** is off — everything on the alerts card starts off. It also sends at most once a month per customer, and only while a programme is running.
   </Accordion>
-
-  <Accordion title="A customer asked to stop receiving reminders">
-    They can opt out from their own profile, and their choice overrides these switches. You do not need to turn the whole programme off for one person.
+  <Accordion title="A customer says the discount vanished">
+    You changed the threshold or the window, and they no longer qualify under the new rule. Rewards are re-scored against the current settings, not the ones in force when they shopped.
   </Accordion>
-
-  <Accordion title="Changing the threshold reset someone's progress">
-    Accrual is measured against the threshold currently saved and the window currently chosen. Raising the threshold mid-window moves the finish line for everyone — change it between promotions rather than during one.
+  <Accordion title="Walk-ins never earn anything">
+    Correct — accrual needs a customer record. Register them at the till first; it takes a moment. See [Customers](/pharmacy/customers/index).
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/loyalty-settings.tsx, components/clinic/dashboard/settings/customer-alert-settings.tsx, types/loyalty.ts, lib/settings-tabs.ts */}
+{/* source of truth: components/clinic/dashboard/settings/loyalty-settings.tsx, customer-alert-settings.tsx, types/loyalty.ts */}

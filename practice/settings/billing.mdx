@@ -1,0 +1,108 @@
+---
+title: "Billing and plans"
+description: "Set the currency, tax rate and standing fees your practice bills in, and see exactly what changes on invoices once you save."
+icon: /images/icons/credit-card.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" note="Only the owner can save changes on this tab" />
+
+This tab decides the shape of every amount your practice charges — which currency it is in, what tax goes on top, and any standing fee or percentage that should be added to each visit. Get it right once and every invoice, receipt and price label follows.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Billing & Plans']} />
+
+<TaskHeader
+  before="Nothing — but know your local tax rate before you start"
+  time="2 minutes"
+  after="Every new invoice and receipt priced in your currency, with your tax and fees applied"
+/>
+
+The sidebar names this tab **Billing & Plans** and describes it as "Subscription and payments", but everything you save here is about how *your* money is presented to *your* clients. Changing which ClinikEHR plan you pay for is a separate job — see [Change your plan](/platform/plans/change-plan).
+
+## What this tab controls
+
+The card is headed **Billing Settings** — "Manage your clinic's billing and payment settings." Every control on it is **owner-only**: a manager or accountant sees the whole card, filled in, but nothing will move and there is no **Save Changes** button.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Free Clinic Mode** | Switch. "Enable this if your clinic provides free services. All charges will be disabled." Turning it on hides every other control below and adds a green **Free Clinic** badge to the card | Off |
+| **Currency** | Searchable picker — "Currency for all transactions. Search by name or code." Type "naira", "NGN" or "euro" and it matches; currencies are grouped by region | USD |
+| **Tax Rate (%)** | "Applied to invoices and receipts." Accepts 0 to 100, to two decimal places | 0 |
+| **Fee Amount**, under **Flat Rate Fee** | "A fixed fee applied to each service or visit (e.g., consultation fee, registration fee)" | 0 |
+| **Additional Charge** | Switch. "Enable a percentage-based additional charge (e.g., service charge, processing fee)." Turning it on reveals the two fields below | Off |
+| **Charge Name** | "Display name on invoices" — what your client actually reads on the line | Service Charge |
+| **Charge Rate (%)** | "Percentage applied to subtotal" | 0 |
+| **Save Changes** | Writes all of the above. Only the owner sees this button | — |
+
+## Set it up
+
+<Steps>
+  <Step title="Open the tab">
+    Go to **Settings › Billing & Plans**. If a colleague sent you here and you landed on **General Settings** instead, that link's tab does not exist for your practice.
+  </Step>
+  <Step title="Decide on Free Clinic Mode first">
+    If your practice does not charge at all, turn **Free Clinic Mode** on and stop — the rest of the card disappears because none of it applies.
+  </Step>
+  <Step title="Choose your currency">
+    Select the **Currency** box and search by name or code. Pick the currency you actually bank in, not the one your clients ask about.
+  </Step>
+  <Step title="Enter your tax rate">
+    Put your local sales tax or VAT percentage in **Tax Rate (%)**. Leave it at 0 if you do not add tax to invoices.
+  </Step>
+  <Step title="Add a standing fee, if you charge one">
+    **Fee Amount** is a flat sum added per service or visit — a registration or consultation fee. Leave it at 0 if you do not charge one.
+  </Step>
+  <Step title="Add a percentage charge, if you charge one">
+    Turn on **Additional Charge**, name it in **Charge Name** so it reads sensibly on an invoice, and set **Charge Rate (%)**.
+  </Step>
+  <Step title="Save">
+    Select **Save Changes**. A "Billing settings updated successfully" toast confirms it.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Currency is the one with reach. It does two separate jobs.
+
+- **Every amount in the product re-renders in the new symbol** — service prices, invoices, receipts, the till, dashboards and reports. The card's own footer says it plainly: "These settings affect how invoices and receipts are generated."
+- **It decides which payment provider your practice uses.** Naira routes you to **Paystack Connect**; every other currency routes you to **Stripe Connect**. Switch currency and the [Online payments](/practice/settings/online-payments) tab swaps to the other provider's card — a connection you already made with the previous provider is not carried across.
+
+The rest is narrower:
+
+- **Tax rate** starts applying to invoices and receipts created **from now on**.
+- **Flat Rate Fee** and **Additional Charge** are added to new invoices — the additional charge as a percentage of the subtotal, under the name you gave it.
+- **Free Clinic Mode** disables charging everywhere and badges the workspace as a **Free Clinic**.
+
+What does **not** change, and this is the one people assume wrongly: **changing currency does not re-price anything already recorded.** An invoice raised for 15,000 stays 15,000 — the number is not converted, only the symbol in front of new amounts changes. The same is true of tax and fees: an invoice already issued keeps the tax it was issued with. If you are moving currency for real, treat outstanding invoices as historical records and raise new ones for anything still to be collected. Background on how currency is rendered across the product: [Currency and money display](/platform/settings/currency).
+
+## Check it worked
+
+Create a draft invoice for any client. The amounts should carry your new symbol, the tax line should show your new rate, and any flat fee or named percentage charge should appear as its own line. Then open the **Online Payments** tab — the provider card there should match your currency.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Everything on this tab is greyed out and there is no Save button">
+    You are a manager or an accountant. Currency, tax and the free-clinic switch are owner-only even for managers — the controls render so you can read the current setup, but only the owner can change them.
+  </Accordion>
+  <Accordion title="I changed currency and my old invoices look wrong">
+    They are not wrong — they are unconverted. Only the symbol on newly created amounts changes; nothing already recorded is re-priced. Reissue anything still outstanding.
+  </Accordion>
+  <Accordion title="The currency and tax fields have disappeared">
+    **Free Clinic Mode** is on. It hides everything below it because charging is disabled. Turn it off and the fields come back with their saved values.
+  </Accordion>
+  <Accordion title="My Stripe connection vanished after I changed currency">
+    You changed to or from Naira, which swaps the provider between Stripe and Paystack. Reconnect with the provider your new currency uses — see [Online payments](/practice/settings/online-payments).
+  </Accordion>
+  <Accordion title="The tax rate did not apply to an invoice I already sent">
+    Tax is stamped on an invoice when it is created. Changing the rate here affects new invoices only. Void and reissue if the old one needs correcting.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/billing-settings.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, lib/settings-tabs.ts */}

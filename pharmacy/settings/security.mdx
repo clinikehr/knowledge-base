@@ -1,0 +1,94 @@
+---
+title: Security
+description: "Require two-factor authentication across your pharmacy, and read the alerts raised whenever someone bypasses it."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can change the requirement" />
+
+One switch on this tab decides whether everyone in your pharmacy has to prove who they are with a second factor before they can open a record. Beneath it sits the log of every time that requirement was bypassed.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Security']} />
+
+<TaskHeader
+  before="An authenticator app on your own phone, set up first"
+  time="2 minutes to switch on; a few minutes per person to enrol"
+  after="Every colleague signing in with a second factor"
+/>
+
+## What this tab controls
+
+The card is headed **Security Settings** — "Manage your clinic's security settings."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Require Two-Factor Authentication** | "Require all staff members to set up two-factor authentication for their accounts. When enabled, every staff member is prompted to set up an authenticator app on their next sign-in before they can access any clinic data." | Off |
+| **Security alerts** card | Appears below when there is something to show. Lists two-factor bypass events — emergency access, recovery-code use, and resets — with an **Acknowledge** button on each. | — |
+
+The switch is **owner-only**. A manager or an accountant sees it in its current position, greyed out, with no **Save Changes** button.
+
+<Note>
+  Passkeys and your own authenticator are set up on your personal account, not here — see [Your account security](/platform/account/security). This tab decides the rule for everyone; that page is where each person satisfies it.
+</Note>
+
+## Turn it on
+
+<Steps>
+  <Step title="Set up your own second factor first">
+    Do this before you switch the requirement on, so you are not locked out of your own pharmacy. See [Two-factor authentication](/platform/security/mfa).
+  </Step>
+  <Step title="Tell your team it is coming">
+    Everyone will be stopped at their next sign-in and asked to enrol. A cashier discovering this at 8am with a queue is avoidable — give them a day's notice and let them enrol early.
+  </Step>
+  <Step title="Switch Require Two-Factor Authentication on">
+    Then select **Save Changes**. You get "Security settings updated successfully".
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**It applies from each person's next sign-in, not immediately.** Anyone already signed in keeps working until their session ends.
+
+At that next sign-in, a colleague who has no second factor is stopped and walked through setting up an authenticator app before they can reach anything. After that, records only open from a session that has passed the second factor — a session that has not is refused, even though the password was right.
+
+**A passkey counts as one factor and does not satisfy this.** Signing in with a passkey is still a single-factor sign-in, so someone using one will still be asked to enrol an authenticator. This surprises people; say it out loud when you announce the change.
+
+**Two doors stay open, and both are recorded.** From [Staff and teams](/pharmacy/settings/staff) an owner can **Reset two-factor** for someone who has lost their device, or **Grant emergency access** for a time-boxed window. Every use of either — plus any use of a recovery code — appears on the **Security alerts** card here, with a severity, and stays in the audit log permanently. Acknowledging an alert marks that you have seen it; it does not undo anything.
+
+**Switching the requirement back off** stops new people being asked to enrol. It does not remove the second factor from anyone who already has one, and they will keep being asked for it.
+
+## Check it worked
+
+Sign out and back in yourself: you should be asked for your second factor. Then ask a colleague who has not enrolled to sign in — they should be stopped and taken through setup before they can reach a customer record. Anyone bypassing it later should appear on the **Security alerts** card within moments.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The switch is greyed out and there is no Save button">
+    You are a manager or an accountant. This is owner-only. Ask the pharmacy owner, or see [Roles](/platform/team/roles).
+  </Accordion>
+  <Accordion title="Someone has lost their phone and cannot sign in">
+    An owner can **Reset two-factor** from [Staff and teams](/pharmacy/settings/staff) — it signs their sessions out and invalidates their recovery codes, and they enrol again on their next sign-in. The owner needs their own two-factor on to do it.
+  </Accordion>
+  <Accordion title="Someone needs access right now, mid-shift">
+    Use **Grant emergency access** on their staff row. It is time-boxed, needs a reason, expires by itself and is recorded on this tab.
+  </Accordion>
+  <Accordion title="I signed in with a passkey and was still asked to enrol">
+    That is correct. A passkey is one factor. It does not satisfy a two-factor requirement.
+  </Accordion>
+  <Accordion title="The Security alerts card is not there">
+    It only renders when there is something to show, and only to people allowed to see it. No card means no bypass events.
+  </Accordion>
+  <Accordion title="I need the full history, not just recent alerts">
+    Everything is in the audit log, kept for seven years. See [Audit log](/platform/security/audit-log).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, security-alerts-card.tsx */}

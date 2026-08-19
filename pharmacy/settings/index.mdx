@@ -1,6 +1,6 @@
 ---
 title: Settings
-description: "A map of every settings tab a pharmacy actually has, who can open them, and where the tabs you were told about have gone."
+description: "A map of every settings tab a pharmacy has, who is allowed to open them, which controls are owner-only, and where the other editions' tabs live."
 icon: /images/icons/settings.svg
 ---
 
@@ -9,90 +9,108 @@ import { Path } from '/snippets/path.mdx';
 
 <Availability editions={['pharmacy']} roles="Owner, manager or accountant" />
 
-Everything you configure once and then stop thinking about lives here: your pharmacy's details, your team, how money moves, your loyalty programme, and the stock rules the till obeys. This page is the map — one row per section, and a link to the guide that covers it.
+Everything you configure once and then stop thinking about lives here: your pharmacy's details, your team, how money is written down, your loyalty programme, and the stock rules the till obeys. This page is the map — one card per tab.
 
 <Path steps={['Sidebar', 'Settings']} />
 
 ## Getting in, and who can
 
-**Settings** sits at the bottom of the sidebar, in the footer. Opening it needs one of three roles: **owner**, **manager**, or **accountant**. Anyone else gets a single line instead of the screen — "You don't have permission to access the settings module. Please contact your clinic administrator." A cashier cannot open Settings at all, which is deliberate: nobody working a till should be able to change your tax rate mid-shift.
+**Settings** sits at the bottom of the sidebar, in the footer. Opening it needs one of three roles: **owner**, **manager** or **accountant**. Anyone else gets a single line instead of the screen — "You don't have permission to access the settings module. Please contact your clinic administrator." A cashier cannot open Settings at all, which is deliberate: nobody working a till should be able to change your tax rate mid-shift.
 
-Getting in is not the same as being able to change everything. A few controls are **owner-only** even for a manager — **Currency**, **Tax Rate (%)** and the free-clinic switch. The control still renders; it is simply disabled. If a field will not accept a change and no error appears, that is why.
+On a desktop you get a left rail headed **Pharmacy Settings**, with the strapline "Configure your professional workspace". On a phone that rail collapses into a single dropdown at the top. The tabs are identical either way.
 
-On a desktop you get a left sidebar headed **Pharmacy Settings**, with the strapline "Configure your professional workspace". On a phone that sidebar collapses into a single dropdown at the top of the screen. The tabs are identical either way.
+## Getting in is not the same as being able to change everything
+
+Several controls are **owner-only**, and they are the ones that touch money and identity:
+
+| Owner-only | On |
+| --- | --- |
+| **Currency**, **Tax Rate (%)**, **Free Clinic Mode**, **Flat Rate Fee** | [Billing and plans](/pharmacy/settings/billing) |
+| Every field, including the name, logo and timezone | [General settings](/pharmacy/settings/general) |
+| **Invite Staff** and every row action | [Staff and teams](/pharmacy/settings/staff) |
+| **Require Two-Factor Authentication** | [Security](/pharmacy/settings/security) |
+| Adding, editing and toggling payment channels | [Payment details](/pharmacy/settings/payment-details) |
+| Connecting Stripe or Paystack | [Online payments](/pharmacy/settings/online-payments) |
+| The inventory **Danger Zone** — hidden entirely, not greyed out | [Inventory settings](/pharmacy/settings/inventory) |
+
+A manager or accountant sees these with their current values and no save button. Most of them give no message explaining why, so if a field refuses an edit in silence, this table is the reason.
 
 ## A tab you were sent to is not there
 
-Settings links carry a `?tab=` on the end, and a tab this edition does not include **silently falls back to General** rather than showing an error. A link that lands you on **General Settings** when you expected something else is almost never broken — it is telling you that tab does not exist for a pharmacy.
+Settings links carry a `?tab=` on the end, and a tab this edition does not include **silently falls back to General Settings** rather than showing an error. A link that lands you on **General Settings** when you expected something else is almost never broken — it is telling you that tab does not exist for a pharmacy.
 
 ## The three sections
 
 A pharmacy has far fewer settings than a clinic does, and that is the point: three sections, ten tabs, nothing about appointments or wards.
 
-| Section | Tabs | Covered in |
-| --- | --- | --- |
-| **PHARMACY** | General Settings, Staff & Teams, Inventory, Notifications | [Your pharmacy profile and notifications](/pharmacy/settings/pharmacy-profile), [Staff and permissions](/pharmacy/settings/team) and [Inventory rules and alerts](/pharmacy/settings/inventory) |
-| **BILLING** | Billing & Plans, Online Payments, Payment Details, Loyalty Program | [Billing, plans and taking payment](/pharmacy/settings/money) and [Loyalty programme and customer alerts](/pharmacy/settings/loyalty) |
-| **SYSTEM** | Security, Data Export | [Security and data export](/pharmacy/settings/system) |
+| Section | Tabs |
+| --- | --- |
+| **PHARMACY** | General Settings · Staff & Teams · Inventory · Notifications |
+| **BILLING** | Billing & Plans · Online Payments · Payment Details · Loyalty Program |
+| **SYSTEM** | Security · Data Export |
 
-Two notes on that table. **Inventory** ("Alerts, dispensing rules & reset") only appears when the Inventory care area is switched on — for a retail pharmacy it always is. And there is **no AUTOMATION & AI section** for a pharmacy at all: both of the tabs that would fill it belong to the clinical editions, so the sidebar drops the heading rather than showing an empty band.
+Two notes on that table. **Inventory** ("Alerts, dispensing rules & reset") appears when the Inventory area is switched on — for a retail pharmacy it always is. And there is **no AUTOMATION & AI section and no CUSTOMER EXPERIENCE section** for a pharmacy: every tab that would fill them belongs to the clinical editions, so the sidebar drops the heading rather than showing an empty band.
 
-## Open a section
+## Open a tab
 
 <Columns cols={2}>
-  <Card title="Your pharmacy profile and notifications" icon="/images/icons/shop.svg" href="/pharmacy/settings/pharmacy-profile">
-    Name, address, phone, email, logo and timezone, plus which emails your pharmacy receives.
+  <Card title="General settings" icon="/images/icons/building.svg" href="/pharmacy/settings/general">
+    Name, logo, address, contact details and the timezone that decides your trading day.
   </Card>
 
-  <Card title="Staff and permissions" icon="/images/icons/users.svg" href="/pharmacy/settings/team">
-    The staff list, the five-step invite wizard, the four pharmacy role bundles, and why seats cost nothing.
+  <Card title="Staff and teams" icon="/images/icons/users-gear.svg" href="/pharmacy/settings/staff">
+    The staff list, the five-step invite wizard, the four pharmacy roles, and why seats cost nothing.
   </Card>
 
-  <Card title="Billing, plans and taking payment" icon="/images/icons/credit-card.svg" href="/pharmacy/settings/money">
-    Currency, tax, your subscription, card payments, and the bank details printed on invoices.
+  <Card title="Inventory settings" icon="/images/icons/boxes-stacked.svg" href="/pharmacy/settings/inventory">
+    Expiry horizons, selling without stock, expiry dates on delivery, and the danger zone.
   </Card>
 
-  <Card title="Loyalty programme and customer alerts" icon="/images/icons/tag.svg" href="/pharmacy/settings/loyalty">
-    Spend-based rewards that apply themselves at the till, and the four emails that reach customers between visits.
+  <Card title="Notifications" icon="/images/icons/bell.svg" href="/pharmacy/settings/notifications">
+    The master email switch and the categories your pharmacy receives.
   </Card>
 
-  <Card title="Inventory rules and alerts" icon="/images/icons/boxes-stacked.svg" href="/pharmacy/settings/inventory">
-    New-item defaults, selling without stock, expiry horizons, and the inventory danger zone.
+  <Card title="Billing and plans" icon="/images/icons/credit-card.svg" href="/pharmacy/settings/billing">
+    Currency, tax rate, flat fees and free-clinic mode — all owner-only.
   </Card>
 
-  <Card title="Security and data export" icon="/images/icons/shield-check.svg" href="/pharmacy/settings/system">
-    Two-factor rules, passkeys, security alerts, and taking a copy of your own data.
+  <Card title="Online payments" icon="/images/icons/money-bill-transfer.svg" href="/pharmacy/settings/online-payments">
+    Connect Stripe or Paystack so customers can pay you by card.
+  </Card>
+
+  <Card title="Payment details" icon="/images/icons/banknote.svg" href="/pharmacy/settings/payment-details">
+    Bank accounts and other channels, printed on invoices while a balance is due.
+  </Card>
+
+  <Card title="Loyalty program" icon="/images/icons/tag.svg" href="/pharmacy/settings/loyalty">
+    Spend-based rewards that apply themselves at the till, plus four customer alerts.
+  </Card>
+
+  <Card title="Security" icon="/images/icons/shield-check.svg" href="/pharmacy/settings/security">
+    Require two-factor across the pharmacy, and read the bypass alerts.
+  </Card>
+
+  <Card title="Data export" icon="/images/icons/file-export.svg" href="/pharmacy/settings/data-export">
+    Take a copy of your own data as CSV or ZIP, before you need it.
   </Card>
 </Columns>
 
-## Looking for something that isn't here?
+## Looking for a tab that isn't here?
 
-People go hunting for these because a colleague on a different edition described them. They are not hidden and they are not broken — they do not exist for a pharmacy. Check this list before you spend ten minutes scrolling the sidebar.
+People go hunting for these because a colleague on a different edition described them. They are not hidden and they are not broken — they do not exist for a pharmacy.
 
 | Tab | Where it lives | Documented in |
 | --- | --- | --- |
-| **Auto Pay** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Memberships** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Store Page** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Appointment Services** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Booking Settings** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Booking Page Designer** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Contact Form** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Communications** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **AI Settings** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Calendar Integrations** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Insurance Settings** | Clinic & Hospital | [Clinic settings](/practice/settings/index) |
-| **Client Portal** | Clinic & Hospital, and Diagnostics | [Diagnostics settings](/lims/settings/index) |
-| **Sharable Documents** | Clinic & Hospital, and Diagnostics | [Diagnostics settings](/lims/settings/index) |
-| **Lab Workflow** | Diagnostics | [Diagnostics settings](/lims/settings/index) |
-| **Facility** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
-| **Theatre** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
-| **Ward Management** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
-| **Departments** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
-| **Role Navigation** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
+| **Auto Pay**, **Memberships**, **Store Page** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Appointment Services**, **Booking Settings**, **Booking Page Designer**, **Contact Form** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Communications**, **AI Settings**, **Calendar Integrations** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Insurance Settings** | Clinic & Hospital, solo and team plans | [Insurance settings](/practice/settings/insurance) |
+| **Client Portal**, **Sharable Documents** | Clinic & Hospital, and Diagnostics | [Client portal](/lims/settings/portal) |
+| **Lab Workflow** | Diagnostics only | [Lab workflow](/lims/settings/lab-workflow) |
+| **Facility**, **Theatre**, **Ward Management**, **Departments**, **Role Navigation** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
 
-One tab runs the other way. **Loyalty Program** exists **only** for the Pharmacy edition — a colleague running a clinic genuinely cannot see the tab you are describing to them, no matter which plan they are on. See [Loyalty programme and customer alerts](/pharmacy/settings/loyalty).
+One tab runs the other way. **Loyalty Program** exists **only** for the Pharmacy edition — a colleague running a clinic genuinely cannot see the tab you are describing to them, whatever their plan.
 
-To move between plans, see [Change your plan](/platform/plans/change-plan).
+To compare what each edition and plan includes, see [Plans and editions](/platform/plans/overview).
 
-{/* source of truth: lib/settings-tabs.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, components/clinic/dashboard/settings/settings-content.tsx */}
+{/* source of truth: lib/settings-tabs.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, settings-content.tsx */}

@@ -1,0 +1,104 @@
+---
+title: "Sharable documents"
+description: "Choose the consent forms and questionnaires that go out automatically when an appointment is booked, and scope them per service."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner only" note="Clinical Outcomes & Measures: Essential and above" />
+
+"Select which documents are automatically sent to clients during appointments." This is where a consent form or an intake questionnaire stops depending on somebody remembering it, and starts going out on its own.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Sharable Documents']} />
+
+<TaskHeader
+  before="At least one active document template — otherwise there is nothing to select"
+  time="5 minutes"
+  after="Chosen documents attached to appointments without anyone doing it"
+/>
+
+## What this tab controls
+
+Everything you could send is grouped into four sections. Each row is a document; selecting it makes it a default, and a selected row grows two more controls.
+
+| Section | What it holds | Gate |
+| --- | --- | --- |
+| **Consent Documents** | "Clinic-created consent & policy forms" — templates you built yourself | — |
+| **Questionnaires & Intakes** | "Pre-built patient intake forms" that ship with the product | — |
+| **Clinical Outcomes & Measures** | "Validated scored measurement tools" | Essential and above |
+| **Clinical Templates** | "Custom note templates repurposed as forms" | — |
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| Row checkbox | Makes this document a default. The row's status badge changes from **Inactive** to **Enabled** | Off |
+| **Applies to** | Scopes the document to particular services — "Only send this document when one of these services is booked" | **All services** |
+| **Auto-send on booking** | Sends it automatically when the appointment is created, rather than only offering it | Off |
+| **Refresh** | Re-reads your templates, for when you have just created one | — |
+| **Save Defaults** | Saves the whole selection. Owner only | — |
+
+A running summary sits above the list and again in a bar at the bottom of the screen: "\{n\} defaults · \{n\} auto-send".
+
+## Set it up
+
+<Steps>
+  <Step title="Find the document you want to send">
+    Scroll to its section. If a template you just built is missing, select **Refresh**.
+  </Step>
+  <Step title="Select its checkbox">
+    The row lights up and gains **Applies to** and **Auto-send on booking**. The badge on the right changes to **Enabled**.
+  </Step>
+  <Step title="Scope it to the right services">
+    Select **Applies to**. Leave **All services** ticked if it goes to everyone — a privacy policy, say. For anything service-specific, untick **All services** and tick only the services that need it.
+  </Step>
+  <Step title="Turn on Auto-send on booking">
+    This is the switch that does the work. Without it the document is a chosen default; with it, the document goes out on its own.
+  </Step>
+  <Step title="Select Save Defaults">
+    You will see "\{n\} default documents saved successfully."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+From the next appointment onwards, every template you marked **Auto-send on booking** is attached as that appointment is created — so the client receives it without anyone remembering. Scoped documents only go out when one of their services is on the appointment; unscoped ones go out every time.
+
+A document selected but **not** set to auto-send changes nothing automatically. It is simply pre-chosen, so it sits at the top of the list when someone sends documents by hand.
+
+Appointments already in the diary are unaffected — this applies to appointments created after you save. Turning a document off stops future sends and does nothing to anything already sent, signed or filed; signed documents stay on the client's record permanently.
+
+Unticking a document also clears its service scope and its auto-send setting, so re-selecting it later starts from **All services**, auto-send off.
+
+## Check it worked
+
+Book a test appointment for a service you scoped a document to. The document should appear on that appointment without you attaching it, and the client should receive it. Open [Documents](/clinic/clinical/documents) to confirm it is listed against them.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is nothing to select">
+    Defaults are chosen from templates that already exist. Create or activate a document template first — see [Documents](/clinic/clinical/documents) — then come back and select **Refresh**.
+  </Accordion>
+  <Accordion title="An amber bar says only clinic owners can modify default document settings">
+    Managers and accountants can open this tab and read it, but only the owner can save. The rows are visible and inert.
+  </Accordion>
+  <Accordion title="Clinical Outcomes & Measures is faded out with an upgrade panel">
+    "Upgrade to the Essential plan or higher to include validated scored measures as default documents." The other three sections work on every plan.
+  </Accordion>
+  <Accordion title="I selected documents but clients are not getting them">
+    Selecting is not sending. Open each row and check **Auto-send on booking** is on — that switch is what makes delivery automatic.
+  </Accordion>
+  <Accordion title="A document goes to everybody and it should not">
+    Its **Applies to** still reads **All services**. Open it, untick **All services**, and tick only the services it belongs to.
+  </Accordion>
+  <Accordion title="Applies to says no active services found">
+    The scoping list is built from your active services. Add or reactivate the service first, then set the scope.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/sharable-documents-settings.tsx, db/actions/clinic-default-documents.ts */}

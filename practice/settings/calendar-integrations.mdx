@@ -1,0 +1,106 @@
+---
+title: "Calendar integrations"
+description: "Connect a staff calendar for two-way sync, or subscribe to an outside calendar so its busy time blocks online booking."
+icon: "/images/icons/arrows-repeat.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner or manager" />
+
+This tab does two separate jobs, and mixing them up is the usual confusion. **Connected Accounts** syncs a personal Google or Outlook calendar both ways, set up by each staff member for themselves. **Calendar Subscriptions (read-only)** pulls events in from any outside calendar by its `.ics` address — one-way, set up once for the whole practice.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Calendar Integrations']} />
+
+<TaskHeader
+  before="The private .ics address of the calendar you want to pull in"
+  time="5 minutes per calendar"
+  after="Outside commitments show on your calendar and can block online booking"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Connected Accounts** → **Google** / **Outlook** | Two-way sync. "Each staff member links their own account" — any staff member can, though only owners and managers see the rest of this tab | Not connected |
+| **External calendar privacy** | What a pushed appointment is called outside: **Generic — no patient info**, **Initials**, **First name**, **Full name**. Anything but generic asks you to confirm an agreement is in place | Generic |
+| **Add calendar** → **Calendar URL** | The private `.ics` address from Google, Outlook, Apple, or a network such as Headway, Alma, Rula or Grow Therapy | Empty |
+| **Test connection** | Reads the calendar without saving and reports what it found | — |
+| **Display name** | What the feed is called in the list | From the calendar |
+| **Assign to staff** | Whose diary these events belong to | No one |
+| **Default venue** | **In person** or **Online** | In person |
+| **Sync frequency** | **Every 15 minutes** through to **Daily** | Hourly |
+| Auto-sync switch | Pauses or resumes a feed. Repeated failures pause it for you | On |
+| **Blocks booking** / **Info only** | Whether this feed's events make that time unbookable | Info only |
+| **Sync now** · **Edit** · **Remove** | Refresh, change settings, disconnect | — |
+| **Reveal URL** / **Copy URL** | Shows the stored address. Owner only | Hidden |
+
+## Set it up
+
+<Steps>
+  <Step title="Copy the private link from the other calendar">
+    The tab's **How to connect a calendar** panel gives the exact path for Google, Outlook, Apple and the therapy networks. Always take the secret or private link, and treat it like a password.
+  </Step>
+  <Step title="Select Add calendar, and paste it into Calendar URL">
+    The **Connect a calendar** panel opens.
+  </Step>
+  <Step title="Select Test connection">
+    A green line confirms the calendar was read and how many upcoming events it holds. If it fails, the address is wrong or not public enough — nothing has been saved yet.
+  </Step>
+  <Step title="Name it, assign it, and choose how often it refreshes">
+    Set **Display name**, pick the person in **Assign to staff**, and choose a **Sync frequency**. Assigning matters: a blocking feed only blocks the person it belongs to.
+  </Step>
+  <Step title="Select Connect & import">
+    The feed is saved and an initial import runs immediately.
+  </Step>
+  <Step title="Decide whether it blocks booking">
+    Each feed row carries a button reading **Info only**. Select it to switch to **Blocks booking**.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+A feed set to **Blocks booking** makes its event times unavailable in two places at once: the public booking page stops offering those slots, and the appointment book shows the time as busy, so nobody can book over it. **Info only** shows the same events and changes nothing about availability.
+
+A synced event is **not** a ClinikEHR appointment. It has no client, no service and no invoice — open it on the calendar and link it yourself if it was a real encounter.
+
+Refreshes are periodic, not instant. On the default hourly setting, something added outside can take up to an hour to appear; use **Sync now** when you need it now.
+
+Removing a feed stops syncing and deletes the events it imported. Any event you had linked to a client is kept as an ordinary local appointment.
+
+Connected Accounts run the other way, and that is where the care is needed.
+
+<Warning>
+  Connecting an account copies your ClinikEHR appointments into that outside calendar — **including telehealth visits and their secure join links**. Anyone with access to that calendar, or to the phone it is signed in on, can read them. Set **External calendar privacy** to **Generic — no patient info** unless you have an agreement in place with the calendar provider.
+</Warning>
+
+## Check it worked
+
+The feed row shows a green **Active** badge and "Synced just now", and the events appear in your appointment book. If you set it to **Blocks booking**, open your public booking page and confirm those times are no longer offered.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't find Calendar Integrations in the settings list">
+    This tab is visible to owners and managers only. An accountant with settings access will not see it. Any staff member can still connect their own calendar from their own account.
+  </Accordion>
+  <Accordion title="The events show up but people can still book over them">
+    The feed is on **Info only**. Select that button on the feed row to switch it to **Blocks booking**. Also check **Assign to staff** — an unassigned feed has no diary to block.
+  </Accordion>
+  <Accordion title="A banner says a feed was auto-paused">
+    "\{n\} feeds auto-paused after repeated sync errors." The address stopped working — usually because it was regenerated or the calendar was made private again. Select **Edit**, paste a fresh link, then switch auto-sync back on.
+  </Accordion>
+  <Accordion title="Test connection fails on an Apple iCloud link">
+    Make the calendar public, copy the shared link, then change the leading `webcal://` to `https://` before pasting it.
+  </Accordion>
+  <Accordion title="Reveal URL does nothing for me">
+    Revealing and copying a stored calendar address is owner-only. A manager can still add, edit, sync and remove feeds.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/calendar-integrations-settings.tsx, connected-calendars-section.tsx, external-calendar-privacy-card.tsx */}

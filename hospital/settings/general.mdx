@@ -1,0 +1,104 @@
+---
+title: General settings
+description: "Set your hospital's name, contact details, logo and timezone — the details that appear on documents and decide how times are shown."
+icon: /images/icons/building.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner-only to change anything" />
+
+**General Settings** is the hospital's identity: "Your clinic's basic information and regional preferences." It is a short tab with a long reach — the name and logo here appear on documents patients keep, and the timezone decides what time everything in the product happens.
+
+<Path steps={['Sidebar', 'Settings', 'Profile', 'General Settings']} />
+
+<TaskHeader
+  before="Owner access, and a square logo file if you want branding on documents"
+  time="5 minutes"
+  after="Branded documents and times that match the clock on the wall"
+/>
+
+## What this tab controls
+
+One card, **General Information**, with a single **Save Changes** button at the bottom. Every field on it is owner-only — a manager or accountant sees them filled in and disabled.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Clinic Logo** | A square image. The hint says "Used on prescriptions, invoices, and general clinic branding." Uploads and deletes take effect on their own, without **Save Changes** | None |
+| **Clinic Name** | The hospital's name. At least 2 characters | Your name at signup |
+| **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | UTC |
+| **Address** | Free text, multi-line | Empty |
+| **Phone Number** | Free text | Empty |
+| **Email Address** | Must be a valid address if filled in | Empty |
+| **Website** | Must be a full URL including `https://` if filled in | Empty |
+| **Clinic Description** | "This description may be shown on your public booking page." | Empty |
+
+The tab keeps itself current: if a colleague changes something while you have it open, the fields update in front of you.
+
+## Set it up
+
+<Steps>
+  <Step title="Upload the logo">
+    Under **Clinic Branding**, add a square image. It saves on upload — you do not need **Save Changes** for it.
+  </Step>
+  <Step title="Set the name and timezone">
+    Enter the hospital's **Clinic Name** as you want it printed. Then set the **Timezone** — start typing a city and pick from the list. Get this right before anything else: it is the field with consequences.
+  </Step>
+  <Step title="Fill in the contact details">
+    **Address**, **Phone Number**, **Email Address** and **Website**. Leave a field empty rather than guessing; a wrong number on an invoice is worse than none.
+  </Step>
+  <Step title="Write the description">
+    A short paragraph about the hospital. It may appear on your public booking page, so write it for a patient rather than for staff.
+  </Step>
+  <Step title="Save">
+    Select **Save Changes**. It confirms with "Clinic settings updated successfully."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Clinic Name** or **Clinic Logo** | Both start appearing on invoices, clinical documents and prescriptions, on your public booking page and in the patient portal. Anything generated from now on carries the new name and mark. |
+| **Timezone** | Three things at once: the times shown against appointments, which business day a payment is counted in, and how ward medication doses are scheduled. |
+| **Address**, **Phone Number**, **Email Address** | These are the contact details a patient reads on a document or a booking page. |
+| **Website** | Shown where the hospital is presented publicly. It must be a full URL — the form refuses "Please enter a valid URL." otherwise. |
+| **Clinic Description** | May be shown on your public booking page. |
+
+**Existing records are not re-stamped.** A PDF that was already generated keeps the old name and logo; a payment already recorded stays in the business day it was recorded in. Changing the timezone changes how times are *shown* and how future work is scheduled — it does not move anything that has already happened.
+
+That makes timezone the one field worth getting right on day one. Changing it later on a running hospital shifts appointment times on screen and moves the boundary of the business day under your reporting, and it is the setting behind ward dose schedules.
+
+## Check it worked
+
+Reload the tab; the fields should hold what you entered. Then generate one invoice or clinical document and confirm the name and logo on it. Finally open the appointments calendar and check a known appointment shows at the time your team would say it is at — if everything looks an hour or several hours out, the timezone is the field to revisit.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Everything is filled in but I cannot type in any of it">
+    This tab is owner-only. Managers and accountants can read it; the fields render disabled and the **Save Changes** button is not shown at all.
+  </Accordion>
+  <Accordion title='"Please enter a valid URL."'>
+    **Website** needs the full address including the scheme — `https://www.example.com`, not `www.example.com`. Leave it empty if you would rather not have one.
+  </Accordion>
+  <Accordion title="The logo will not upload">
+    Use a square image. If it uploaded but does not appear, reload the tab — the logo saves separately from the rest of the form.
+  </Accordion>
+  <Accordion title="Appointment times are all wrong by a few hours">
+    The **Timezone** is set to somewhere else, or was never changed from UTC. Fix it here; times re-render immediately, and nothing already recorded is moved.
+  </Accordion>
+  <Accordion title="Documents still show the old name">
+    Anything already generated keeps the details it was made with. Documents created after the save carry the new ones.
+  </Accordion>
+  <Accordion title='"Failed to update clinic settings. Please try again."'>
+    Nothing was saved. Check your connection and select **Save Changes** again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="general settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, lib/timezones.ts */}

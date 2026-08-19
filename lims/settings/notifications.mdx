@@ -1,0 +1,105 @@
+---
+title: Notifications
+description: "Choose which emails and in-app alerts your lab receives, and pause the non-essential ones without losing receipts or security warnings."
+icon: /images/icons/bell.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" />
+
+One master switch and a short list of categories decide how much your lab hears from ClinikEHR. Nothing here can silence a receipt, a password reset or a security warning.
+
+<Path steps={['Sidebar', 'Settings', 'Laboratory', 'Notifications']} />
+
+<TaskHeader
+  before="Nothing"
+  time="2 minutes"
+  after="A quieter inbox, with the alerts that matter still arriving"
+/>
+
+## What this tab controls
+
+The card is headed **Notification Preferences** — "Choose which in-app and email notifications your clinic receives. Essential emails (receipts, security, and billing alerts) always send."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Email notifications** | The master switch. "Master switch for all clinic emails. Turn off to pause non-essential email." | On |
+| **Appointments** | "New bookings, cancellations, and reminders" — collection and imaging slots. | On |
+| **Patients** | "New patient registrations and updates" | On |
+| **Staff** | "Staff invitations accepted and role changes" | On |
+| **Billing** | "Payment received, invoices, and overdue alerts" | On |
+| **Subscription** | "Plan changes, trial expiry, and payment status" | On |
+| **Documents** | "Document signed, viewed, or expired" | On |
+| **System** | "System updates and maintenance notices" | On, and **cannot be turned off** |
+| **Achievement emails** | "Milestone badges, tier-ups, and your clinic's trophy case" | On |
+| **Daily operational digests** | "Morning owner summaries for inventory, pharmacy, and lab" | On |
+
+Each switch saves the moment you flip it — there is no save button. You get "Notifications enabled" or "Notifications muted" with the category named.
+
+<Note>
+  This card is where the settings screen speaks your edition's vocabulary correctly: the group in the sidebar is **Laboratory notifications** and the category here is **Patients**. **Insurance** is not offered at all — a lab has no insurance module, and a switch for mail that can never be sent would be a false promise.
+</Note>
+
+## Set it up
+
+<Steps>
+  <Step title="Decide on the master switch first">
+    Leave **Email notifications** on unless you want to pause everything non-essential at once. Turning it off gives you "All non-essential clinic emails are paused. Receipts, security, and billing alerts still send."
+  </Step>
+  <Step title="Turn off the categories you do not want">
+    Work down the list and switch off anything nobody reads. Each saves immediately.
+  </Step>
+  <Step title="Decide on the two email-only preferences">
+    **Achievement emails** are milestone and badge mail. **Daily operational digests** are the owner's morning roll-up, and that is where expiring reagents and low stock surface — think before switching it off.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| Setting | What you'll notice |
+| --- | --- |
+| **Email notifications** off | Non-essential lab email stops. In-app notifications carry on — this switch is about email only. |
+| A category switched off | Both the email and the in-app notification for that category stop. Turning it back on resumes future notices; it does not deliver the missed ones. |
+| **Daily operational digests** off | The morning inventory summary stops arriving. Expiring reagents still appear on the inventory **Alerts** tab — you just have to go and look. |
+| **System** | Never changes. The tab states it plainly: "System notifications cannot be disabled as they contain important updates about your clinic." |
+
+**Transactional email is never affected by anything on this tab.** Receipts, password resets, invitation emails, security alerts and billing warnings send regardless of every switch here. If you have turned everything off and still receive mail, that is why — and it is correct.
+
+**Nor is a released report.** Sending a report to a patient or a referring clinic is an action someone takes, not a notification preference; it is unaffected by these switches. See [Releasing reports](/lims/lab/reports).
+
+These preferences belong to the lab, not to you personally. Turning off **Billing** here turns it off for every colleague. Your own account-level email preferences are on [your account's notification settings](/platform/account/notifications).
+
+## Check it worked
+
+Reload the tab; every switch should have kept its position. Then cause a notice you left on — accept a pending staff invitation, for example — and confirm it arrives, while a category you switched off stays quiet.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I turned everything off and still get email">
+    You are receiving transactional mail — receipts, security alerts, billing and password resets. Those are deliberately outside these switches.
+  </Accordion>
+  <Accordion title="The System switch will not move">
+    It is fixed on by design. See the line at the foot of the card.
+  </Accordion>
+  <Accordion title="There is no Insurance switch">
+    A lab has no insurance module, so the category is not shown. A colleague on the clinical edition sees it; you will not.
+  </Accordion>
+  <Accordion title="A referring clinic stopped receiving reports">
+    That is not this tab. Report release is an action, not a notification — check the referrer's own record and [Referring clinics](/lims/business/referrers).
+  </Accordion>
+  <Accordion title="A switch flips back after a moment">
+    The save failed and the switch rolled back, with an error toast. Check your connection and try again.
+  </Accordion>
+  <Accordion title="I stopped seeing expiring-reagent warnings">
+    **Daily operational digests** is off. Turn it back on, or read them on the inventory **Alerts** tab — see [Inventory settings](/lims/settings/inventory).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/notification-preferences.tsx, types/notifications.ts */}

@@ -1,0 +1,102 @@
+---
+title: Data export
+description: "Take a copy of your lab's own data as a CSV or a ZIP, watch a large export run in the background, and download it before the link expires."
+icon: /images/icons/file-export.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" note="Only owners and managers can export audit logs" />
+
+Your data is yours. This tab hands it back as spreadsheet files you can open, keep, or give to an auditor — one module or twenty, all of it or a date range.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Data Export']} />
+
+<TaskHeader
+  before="Somewhere secure to keep the file once it downloads"
+  time="Under a minute for a small export; longer for a large one, which runs in the background"
+  after="A CSV or ZIP of the modules you chose, on your own machine"
+/>
+
+## What this tab controls
+
+The card is headed **Data Export** — "Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Modules** | A searchable multi-select, grouped by area. Pick as many as you need; each appears as a removable chip. | None selected |
+| **Select all** / **Clear all** | Adds or removes everything at once. | — |
+| **Date range (optional)** | Narrows the export. The placeholder reads **All time**. | All time |
+| **Export** button | Reads **Export \{n\} modules** once you have chosen. A **ZIP** badge appears when you pick more than one. | Disabled until something is selected |
+
+**There is no format picker.** One module gives you a CSV; more than one gives you a ZIP of CSVs. That is the whole rule.
+
+The groups a lab will reach for most are **Clinical Records** — which holds **Lab Tests** and **Radiology** — and **Patient Profile**. **Audit Logs**, under **Compliance & Audit**, is offered to owners and managers only; everyone else simply does not see it in the list.
+
+## Run an export
+
+<Steps>
+  <Step title="Choose your modules">
+    Open **Modules** and search, or use **Select all**. Each choice becomes a chip you can remove with its ✕.
+  </Step>
+  <Step title="Narrow the dates, if you want to">
+    Set a **Date range (optional)**. Leaving it as **All time** exports everything, which on a busy lab is a large file.
+  </Step>
+  <Step title="Select Export">
+    The button reads **Export \{n\} modules**, changes to "Queuing…", and the export is handed to a background job.
+  </Step>
+  <Step title="Let it run">
+    A panel appears above the card showing the progress label and a percentage. You can leave this page, carry on at the bench, and come back — the export continues without you.
+  </Step>
+  <Step title="Download it">
+    When the panel turns green and reads **Export ready** it shows the file name and its size, with a **Download** button. Save it somewhere secure.
+  </Step>
+</Steps>
+
+## What changes once you export
+
+Nothing in your lab changes. Exporting is a read — no record is altered, moved or deleted, and the bench carries on as normal while a large export runs.
+
+What does change is your responsibility for the file. Three things to know:
+
+- **The link expires after 24 hours.** The notice on the tab is explicit: "Files contain PHI. Handle securely per HIPAA. Links expire in 24 hours." After that the **Re-download** button disappears from **Recent Exports** and the row is marked "· expired". Run it again if you need it.
+- **You are told on this page, not by email.** There is no email or push when it finishes — the panel updates live and the last few jobs are listed under **Recent Exports**. Come back and look.
+- **The file is unprotected once it leaves.** It is a plain spreadsheet of patient results on your own machine. Keep it somewhere encrypted, do not email it around, and delete it when you are done.
+
+<AuditNote action="Exporting your lab's data" />
+
+**Export before you close an account.** Once a lab workspace is deleted the data goes with it, and an export afterwards is not possible. See [Delete your account](/platform/account/delete-account) and [Export your data](/platform/security/data-export).
+
+## Check it worked
+
+The panel should turn green with **Export ready** and a file size that is not zero. Open the downloaded file: a single module opens directly as a CSV, several arrive as a ZIP with one CSV per module. Check the row count looks like the period you asked for.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Export button will not activate">
+    Nothing is selected, or a job is already running. Pick at least one module, or wait for the current export to finish.
+  </Accordion>
+  <Accordion title="Audit Logs is not in the list">
+    It is offered to owners and managers only, and hidden from everyone else rather than disabled.
+  </Accordion>
+  <Accordion title="The export failed">
+    The panel turns red with **Export failed** and the reason. Narrow the date range or export fewer modules at a time, then try again.
+  </Accordion>
+  <Accordion title="My download link does not work any more">
+    "Could not generate download link. The file may have expired." Links last 24 hours. Run the export again.
+  </Accordion>
+  <Accordion title="I closed the tab while it was running">
+    The job carried on. Come back and look under **Recent Exports** — the last few completed jobs are listed with a **Re-download** button while still in date.
+  </Accordion>
+  <Accordion title="I got a ZIP and expected a spreadsheet">
+    More than one module always produces a ZIP. Unzip it and you have one CSV per module inside.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/data-export-settings.tsx */}

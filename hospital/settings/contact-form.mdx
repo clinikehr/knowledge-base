@@ -1,0 +1,109 @@
+---
+title: "Contact form"
+description: "Build the hospital's public enquiry form, choose its fields, and share or embed it so submissions land on the CRM board."
+icon: "/images/icons/inbox.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" note="Embedding: Essential and above · custom fields and raw iframe: Team" />
+
+A public enquiry form for people who are not ready to book — a referral question, a corporate scheme, a second opinion. This tab builds it, brands it, and gives you a link to share or a snippet to drop on the hospital's website.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Contact Form']} />
+
+<TaskHeader
+  before="A decision about who on the team picks up new enquiries"
+  time="10 minutes"
+  after="A live enquiry form feeding straight into your CRM board"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Live / Off** switch | Publishes the form or takes it down | Off |
+| **Page address** | The slug for the hosted form, checked live for shape, reserved words and use by any other workspace | Your hospital name |
+| **Copy link** | Copies the hosted address | — |
+| **Headline** · **Description** | The words above the fields | "Get in touch" |
+| **Button label** · **Redirect after submit (optional)** | The submit button, and where to send the visitor afterwards | "Send inquiry" |
+| **Success title** · **Success message** | What replaces the form once it is sent | "Message sent" |
+| **Accent color** · **Theme** | Branding. Theme is **Light**, **Dark** or **Match visitor's device** | Brand accent, Light |
+| **Form fields** | "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." | Six built-ins |
+| **Add an existing custom field** · new field builder | Reuse a field you already defined, or create one with a label and options | — |
+| **Consent text** | e.g. "I agree to be contacted about my inquiry." | Blank |
+| **Assign new leads to** | The team member new enquiries are routed to | Unassigned |
+| **Add to your website** | Embed snippet — "Copy this snippet into your site's HTML, just before `</body>`." | Essential and above |
+| **Save changes** | Enabled once something has changed and the address check passes | — |
+
+A **Live preview** panel renders your unsaved edits as a visitor will see them.
+
+## Set it up
+
+<Steps>
+  <Step title="Claim your address">
+    Set the **Page address** under **Your link**. The indicator underneath reports at once if the shape is wrong or the address is taken.
+  </Step>
+  <Step title="Write the invitation">
+    Fill **Headline** and **Description**. Say what the form is for and roughly when someone will reply — that one sentence prevents most chasing emails.
+  </Step>
+  <Step title="Trim the fields">
+    Under **Form fields**, hide anything you do not need and rename the built-ins to your own wording. Drag them into the order a person would naturally fill them.
+  </Step>
+  <Step title="Add what the hospital actually needs">
+    Add a custom field for anything specific — a referring practice, a department, an employer scheme. Keep the list short; every extra field costs you submissions.
+  </Step>
+  <Step title="Add consent and routing">
+    Write the **Consent text** your own policy requires, and set **Assign new leads to** so enquiries land with a named person rather than an unwatched queue.
+  </Step>
+  <Step title="Save, then go Live">
+    Select **Save changes**, then switch **Off** to **Live** and save again.
+  </Step>
+  <Step title="Put it on your website">
+    Under **Add to your website**, choose **Floating button** or **Inline on the page**, then copy the snippet into your site's HTML, just before `</body>`.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **The hosted form goes online** at your address and starts accepting submissions.
+- **A submission becomes a contact on your CRM board**, in the first stage, assigned to whoever you nominated. It does **not** arrive as an email — nobody gets a message to reply to, so if the board is not being worked, enquiries sit there unanswered. That is the single biggest reason a contact form appears to "not work".
+- **A submission never creates a patient record.** Somebody converts the contact deliberately once it is a real enquiry.
+- **The live form shows only what you saved.** An unsaved edit appears in the preview, and in nothing your visitors see: "Save your changes so the embedded form reflects them."
+- **Switching to Off takes the form down at once**, including any embed on your website. Contacts already captured stay on the board.
+
+Changing the **Page address** breaks links and QR codes already shared. An embed snippet also carries the address, so it needs re-copying onto your website after an address change.
+
+## Check it worked
+
+Open the form in a private browser window and submit a test enquiry. You should see your success title and message. Then open the CRM board — the contact should be in the first stage, assigned to the person you named, with the answers to your custom fields on it.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Customize your contact form covers the editor">
+    The builder starts on Starter: "Branding, fields, and your inquiry form are part of the Starter plan and above." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Nobody got an email about a submission">
+    Nobody will. Submissions arrive as contacts on the CRM board, not as email. Assign them to a named person and work the board.
+  </Accordion>
+  <Accordion title="Embed your form on Essential">
+    "The Essential plan lets you drop your contact form right onto your own website. Upgrade to get the embed snippet." The hosted link works on every paid plan.
+  </Accordion>
+  <Accordion title="I cannot add a custom field or reorder the list">
+    Custom fields and drag-reordering are a Team feature. On Starter and Essential you can rename and hide the six built-in fields.
+  </Accordion>
+  <Accordion title="Save changes will not respond">
+    Either nothing has changed, or the address check is failing — read the indicator under **Page address**.
+  </Accordion>
+  <Accordion title="The form on our website is out of date">
+    Either you edited without saving, or you changed the address after copying the snippet. Save, then re-copy the snippet into your site.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/crm-intake-form-settings.tsx, lib/crm/plan-limits.ts */}

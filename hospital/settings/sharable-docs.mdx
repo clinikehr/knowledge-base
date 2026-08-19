@@ -1,0 +1,107 @@
+---
+title: "Sharable documents"
+description: "Choose which consent forms, intakes and questionnaires go out automatically when an appointment is created."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Only the owner can save · scored measures need Essential and above" />
+
+Paperwork that has to be signed before a visit should not depend on someone remembering to send it. This tab picks the templates the hospital sends every time, so they go out with the appointment rather than being chased at the door.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Sharable Documents']} />
+
+<TaskHeader
+  before="At least one active document template"
+  time="5 minutes"
+  after="Consent and intake forms attached automatically to new appointments"
+/>
+
+## What this tab controls
+
+The card is headed **Sharable Documents**: "Select which documents are automatically sent to clients during appointments. Toggle **Auto-send** on individual documents to automate delivery at appointment time."
+
+Templates are grouped into four categories, each showing how many are available and how many you have selected.
+
+| Category | What it holds | Gate |
+| --- | --- | --- |
+| **Consent Documents** | "Clinic-created consent & policy forms" | All plans |
+| **Questionnaires & Intakes** | "Pre-built patient intake forms" | All plans |
+| **Clinical Outcomes & Measures** | "Validated scored measurement tools" | Essential and above |
+| **Clinical Templates** | "Custom note templates repurposed as forms" | All plans |
+
+Each row carries three things: a **selection** checkbox, an **Auto-send** control under **Appointment Automations**, and a **Status**. A row can also be scoped to particular services, so a surgical consent only goes out with surgical bookings.
+
+| Control | What it does |
+| --- | --- |
+| **Refresh** | Re-reads your template list after you have added one |
+| **Save Defaults** | Writes the selection. Owner only |
+| Sticky footer bar | Shows "\{n\} defaults · \{n\} auto-send" and repeats **Save Defaults** |
+
+## Set it up
+
+<Steps>
+  <Step title="Create the templates first">
+    This tab selects from what already exists. An **active** template has to exist before it can be a default — if a category is empty, build the document first and select **Refresh**.
+  </Step>
+  <Step title="Select the documents you always send">
+    Tick each template that belongs on a routine appointment. The header count updates as you go, and the summary bar reads "\{n\} documents selected as defaults".
+  </Step>
+  <Step title="Turn on Auto-send where it should be automatic">
+    Selecting a document makes it a default; **Auto-send** is what actually delivers it at appointment time. A default without auto-send is available to attach, but nobody is sent it.
+  </Step>
+  <Step title="Scope anything that is not universal">
+    Where a form only applies to certain visits, limit it to those services rather than sending it to everyone. Patients ignore a bundle; they read one relevant form.
+  </Step>
+  <Step title="Save">
+    Select **Save Defaults**. It confirms with "\{n\} default documents saved successfully."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **Every new appointment picks up the selected templates.** Anything with **Auto-send** on is attached and delivered as the appointment is created — no one has to remember.
+- **A service-scoped document only goes out with those services**, so the patient receives what applies to them and nothing else.
+- **Appointments already in the diary are unaffected.** The selection applies from now on; anything already booked keeps whatever it was created with.
+- **The patient gets a link to sign.** If the [patient portal](/hospital/settings/portal) is live and they have access, the document is also readable and signable inside the portal.
+- **A signed document lands in the patient's record** and is visible to clinical staff without anyone filing it.
+- **Order matters.** The order you tick them in is the order they are sent, so put the form you most need signed first.
+
+Removing a document from the list stops it going out on future appointments. It does not withdraw anything already sent, and it does not remove anything already signed.
+
+Turning an underlying template inactive removes it from this list too — which is the tidier way to retire a form than unpicking it here.
+
+## Check it worked
+
+Create a test appointment for a patient you can safely email. The selected documents with **Auto-send** on should be attached to it, and the patient should receive the request. Open the appointment and confirm the documents are listed against it; then sign one from the patient's side and check it appears on their record.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A category is empty">
+    There are no active templates of that kind yet. Create one, then select **Refresh** — this tab only ever lists what already exists.
+  </Accordion>
+  <Accordion title="Save Defaults is greyed out">
+    Only the owner can save the selection. Managers and accountants see the list and the current selection, read-only.
+  </Accordion>
+  <Accordion title="Clinical Outcomes & Measures is dimmed behind an upgrade panel">
+    "Upgrade to the Essential plan or higher to include validated scored measures as default documents." The other three categories work without it.
+  </Accordion>
+  <Accordion title="I selected a document but nothing was sent">
+    Selecting makes it a default; **Auto-send** delivers it. Turn on **Auto-send** for that row and save again.
+  </Accordion>
+  <Accordion title="Patients are getting a form that does not apply to them">
+    It is selected with no service scope, so it goes on every appointment. Scope it to the services it belongs to.
+  </Accordion>
+  <Accordion title="An existing appointment did not get the new documents">
+    The selection applies to appointments created after you saved. Attach the document to that appointment by hand.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/sharable-documents-settings.tsx */}

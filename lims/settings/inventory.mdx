@@ -1,0 +1,109 @@
+---
+title: Inventory settings
+description: "Set expiry alert horizons for reagents and consumables, choose your receiving and dispensing rules, and understand the inventory reset."
+icon: /images/icons/vials.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" note="The Danger Zone is visible to the owner only" />
+
+A lab runs on dated stock. These settings decide when an expiring reagent starts warning you, whether a delivery can be booked in with no expiry date at all, and how strict the system is when something is consumed.
+
+<Path steps={['Sidebar', 'Settings', 'Laboratory', 'Inventory']} />
+
+<TaskHeader
+  before="At least one stock item, so you can see the effect"
+  time="5 minutes"
+  after="Expiry warnings on your own schedule and a receiving desk that refuses undated lots"
+/>
+
+## What this tab controls
+
+The card is headed **Inventory** — "Expiry alerts, dispensing enforcement and inventory data controls."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Expiry alert horizons** | Up to four warning points, each 1–365 days. "Get alerted as stock approaches expiry." | **60/30 days** |
+| **Enforce inventory on dispense** | Requires every consumed item to be linked to stock with enough on hand. | **Off** — "Best-effort — never blocks (default)" |
+| **New-item defaults** — **Low-stock threshold**, **Reorder quantity** | Applied to items created without their own values, including catalog imports. | Empty (no default) |
+| **Require expiry date on new lots**, under **Receiving quality** | Refuses to receive stock into a new lot with no expiry date. | **Off** |
+| **Allow selling items with no recorded stock**, under **Selling without stock** | Lets a till sell an item whose recorded stock is zero. | **On** |
+| **Danger Zone** → **Reset inventory…** | Erases the whole inventory module for a clean re-import. | Owner only |
+
+The three switches save the moment you flip them. **Expiry alert horizons** and **New-item defaults** have their own save buttons.
+
+## Set it up
+
+<Steps>
+  <Step title="Set your expiry horizons">
+    Type a number of days and select **Add**. Each becomes a chip like **60 days**; remove one with its ✕. Up to four. Select **Save horizons** — you get "Expiry alert horizons saved". A lab typically wants a long horizon for reagents on order lead times and a short one for the bench.
+  </Step>
+  <Step title="Require expiry dates on delivery">
+    Turn **Require expiry date on new lots** on. For a lab this is the single most useful switch on the tab — an undated reagent lot is invisible to every expiry alert.
+  </Step>
+  <Step title="Decide on dispense enforcement">
+    Switched on, an unlinked item or insufficient stock aborts the whole consumption. Switched off, it never blocks and the drift is logged for review.
+  </Step>
+  <Step title="Set the new-item defaults">
+    Enter a **Low-stock threshold** and a **Reorder quantity** in whole units, then **Save defaults**. Leave either empty for no default.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| Setting | What you'll notice |
+| --- | --- |
+| **Expiry alert horizons** | An item crossing a horizon appears on the inventory **Alerts** tab and in the daily digest email. Removing a horizon stops those alerts; adding one can surface a batch of items at once. |
+| **Require expiry date on new lots** | From that moment, **Receive** refuses a new lot with no expiry — on direct receiving and on purchase-order receipts alike. Topping up an existing dated lot is unaffected. |
+| **New-item defaults** | Applied only to items created from now on. Existing items keep what they have. |
+| **Enforce inventory on dispense** | On, consumption stops when stock is not linked or not sufficient. Off, it proceeds and the discrepancy is logged. |
+| **Allow selling…** | Decides whether a till refuses an out-of-stock item or sells it and logs the oversell for reconciliation. |
+
+**Requiring expiry dates does not fix the past.** Lots already booked in without one stay undated, and an undated lot is invisible to earliest-expiry picking and to every expiry alert — it will never warn you. Find them and correct them through a stock count.
+
+**Reagent lots flagged for lot-to-lot validation are a separate rule and are not set here.** That flag lives on the item itself, and new lots of a flagged reagent arrive **quarantined** until someone validates them — they are not available to the bench in the meantime, however healthy their expiry date looks. See [Reagents and consumables](/lims/inventory/reagents).
+
+## The Danger Zone
+
+<Warning>
+  **Reset inventory…** permanently erases the entire inventory module — catalog, lots, stock levels, ledger, purchase orders, vendors, locations and device history. It cannot be undone. Your patient records and results are kept. It exists for one purpose: a clean re-import after a bad first load.
+</Warning>
+
+The card is **hidden entirely** from anyone who is not the lab owner — a manager or an accountant sees nothing at all, not a greyed-out button, and gets no explanation. That is intended.
+
+The owner gets a preview first. The dialog is headed "Reset the whole inventory?", lists how many records would go from each area, and only then asks you to type `RESET` to confirm. If the inventory is already empty it says so and offers no confirm button.
+
+## Check it worked
+
+Reload the tab — every switch and chip should be where you left it. Then try to receive a lot with the expiry left blank: it should be refused. Check the **Alerts** tab lists the items your shortest horizon should now be catching.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I get no expiry alerts at all">
+    Either every lot is dated beyond your longest horizon, or the lots have no expiry date. Undated lots never trigger an alert — which is what **Require expiry date on new lots** prevents happening again.
+  </Accordion>
+  <Accordion title="Add is missing next to the horizons">
+    You already have four, the maximum. Remove one and the field returns. A fifth gives "Up to 4 horizons."
+  </Accordion>
+  <Accordion title="A reagent lot I just received is not available to the bench">
+    That reagent is flagged for lot-to-lot validation, so new lots arrive quarantined until validated. See [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+  <Accordion title="I can't find the Danger Zone">
+    It is owner-only, and hidden rather than disabled. Ask the lab owner.
+  </Accordion>
+  <Accordion title="The reset is blocked">
+    The banner reads "This inventory cannot be reset" — clinical administration records reference these lots and a reset would destroy that traceability. Adjust quantities through a stock count instead.
+  </Accordion>
+  <Accordion title="New items still have no low-stock threshold">
+    Defaults apply only to items created after you saved them, and only where the item supplies no value of its own.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/inventory-settings.tsx, components/inventory/expiry-alert-settings.tsx, components/inventory/dispense-enforcement-settings.tsx */}

@@ -1,0 +1,104 @@
+---
+title: "AI settings"
+description: "Check your agent credits, connect outside tools your agents can use, and switch on the webhook that lets other systems start an agent."
+icon: "/images/icons/bot.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner or manager" note="Webhook trigger: Team · Agent-to-agent access: Starter and above" />
+
+An agent is an assistant you build that follows steps you define. This tab holds the account-level settings behind them: how many credits you have, which outside tools they may use, and how an outside system can start one. Building the agents themselves happens in [Agent Studio](/platform/ai/agents).
+
+<Path steps={['Sidebar', 'Settings', 'Automation & AI', 'AI Settings']} />
+
+<TaskHeader
+  before="Nothing to start. Connecting a tool needs that tool's server address"
+  time="5 minutes"
+  after="Tools your agents can call, and a webhook outside systems can fire"
+/>
+
+## What this tab controls
+
+| Card | Control | What it does |
+| --- | --- | --- |
+| **Agent credits** | Balance and **Top up** | "Granted monthly with your plan. Each agent run debits per model." Refill packs "never expire and are used after your monthly plan credits" |
+| **Connected tools (MCP)** | **Add MCP server** | Connects an outside tool — a name and its address. "External Model Context Protocol servers your agents can call as tools" |
+| | **No auth** · **Bearer token** · **OAuth** | How the tool checks it is you. **OAuth** opens a sign-in window and keeps itself refreshed |
+| | **Test** | Reaches the server and lists the tools it offers, before you save anything |
+| | Reconnect · Remove | Re-authorise a connection marked **Reconnect**, or delete one |
+| **Webhook / API trigger** | Enabled / Disabled switch | Whether the endpoint accepts anything at all. Team plan |
+| | **Endpoint URL** + **Copy** | The address an outside system posts to |
+| | **Signing secret** — **Reveal**, **Copy**, **Rotate** | The shared password that proves a request really came from your system |
+| | **How to sign a request** + **Copy snippet** | Ready-made instructions for whoever builds the integration |
+| **Agent-to-agent access (MCP)** | Connector URL and access tokens | Lets partners call your published agents. Starter and above |
+
+A **webhook** is just a web address an outside system can send a message to. When something happens over there — a form is filled in, a record changes — it posts to your address, and that starts an agent here.
+
+## Set it up
+
+<Steps>
+  <Step title="Check your credit balance">
+    The **Agent credits** card shows what you have. Select **Top up** if you need a refill pack before a busy run.
+  </Step>
+  <Step title="Connect an outside tool">
+    Select **Add MCP server**, give it a name and its address, then choose how it authenticates. Select **Test** first — you should see a tick and the tools it offers. Then select **Add**, or **Add & Connect** for OAuth, which opens a sign-in window.
+  </Step>
+  <Step title="Open the webhook panel">
+    Select **Webhook / API trigger · let any external system fire your agents**.
+  </Step>
+  <Step title="Turn the endpoint on">
+    Switch it from **Disabled** to **Enabled**. You will see "Webhook endpoint enabled".
+  </Step>
+  <Step title="Hand over the details">
+    Copy the **Endpoint URL**, reveal and copy the **Signing secret**, and select **Copy snippet** for the signing instructions. Send all three to whoever is building the integration, over a private channel — the secret is a credential.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**An agent that uses the webhook trigger will not run at all until the endpoint is enabled here.** That is the usual reason a webhook agent looks broken: the agent is published, the outside system is posting, and nothing happens because the switch is off. Once enabled, a correctly signed post fires every published agent whose start trigger is set to a webhook or API call, and the message body becomes that run's input.
+
+A connected tool becomes selectable inside the agent canvas as soon as it saves — an agent step can then call it. Removing one takes it out of the picker; any agent still referencing it will fail at that step.
+
+Identifying details are stripped from tool arguments before anything reaches an outside server, so a connected tool never receives client identities.
+
+**Rotating the signing secret takes effect immediately** — the old secret stops working the moment you confirm, and any system still using it starts being refused until it is updated. Turning the endpoint off does the same thing more bluntly.
+
+<Warning>
+  Every agent step consumes credits from the balance on this card, and each model costs a different amount per run. An agent left on a webhook trigger runs as often as the outside system posts to it, so a misconfigured integration can drain a month's credits in an afternoon. Watch the balance for the first day after you enable a trigger.
+</Warning>
+
+## Check it worked
+
+For a connected tool, select **Test** — a tick and a list of tool names means the connection works. For the webhook, ask whoever built the integration to send one signed test post; a published agent with a webhook trigger should show a new run in [Agent Studio](/platform/ai/agents), and the credit balance on this tab should drop.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="An upgrade panel sits where the webhook should be">
+    The webhook trigger is a Team feature: "Let any external system (Zapier, a form backend, another app) fire your agents by POSTing a signed request to your clinic's webhook endpoint." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="The webhook panel says only clinic owners and managers can configure webhook triggers">
+    Ask an owner or manager. Credits and connected tools are visible more widely.
+  </Accordion>
+  <Accordion title="My integration started getting rejected">
+    Someone rotated the signing secret, or the endpoint was switched off. Reveal the current secret, update it in the sending system, and confirm the switch reads **Enabled**. Requests older than five minutes are also refused, so a badly out-of-sync clock on the sending machine will fail every time.
+  </Accordion>
+  <Accordion title="A connected tool shows a Reconnect badge">
+    Its authorisation expired. Select the refresh button on that row to sign in again.
+  </Accordion>
+  <Accordion title="Test fails with could not reach server">
+    The address is wrong or the server is not publicly reachable. Nothing is saved when a test fails, so correct the address and test again.
+  </Accordion>
+  <Accordion title="Agent runs stop part-way through">
+    You have most likely run out of credits. Check the **Agent credits** balance and select **Top up**.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/ai-settings.tsx, components/clinic/agents/webhook-trigger-settings.tsx, agent-credits-card.tsx, mcp-expose-settings.tsx */}

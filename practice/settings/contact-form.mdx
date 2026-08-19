@@ -1,0 +1,105 @@
+---
+title: "Contact form"
+description: "Build the public enquiry form, share its link or embed it on your website, and route every submission into your contacts board."
+icon: "/images/icons/inbox.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner or manager" note="Building the form: Starter+ · Embedding: Essential+ · Custom fields and full styling: Team" />
+
+A public enquiry form for people who are not ready to book yet. "Share the link or embed it — new submissions land in your CRM as leads." You get a hosted page you can link from anywhere, and a snippet that drops the same form onto your own website.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Contact Form']} />
+
+<TaskHeader
+  before="Nothing — a form exists from the moment you open this tab"
+  time="10 minutes"
+  after="Enquiries arriving as contacts instead of loose emails"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Live** / **Off** switch | Whether the form accepts submissions at all | Off |
+| **Your link** → **Page address** | The slug in your public address. "Lowercase letters, numbers, and hyphens (3–40 chars)", checked live against every other workspace | Your practice name |
+| **Copy link** · **Open** | Copy the hosted address, or open it in a new tab | — |
+| **Custom domain** | Serve the form from your own web address. Team and Enterprise only | Off |
+| **Content** | **Headline**, **Description**, **Button label**, **Redirect after submit (optional)**, and a **Confirmation screen** with **Success title** and **Success message** | Placeholder wording |
+| **Branding** | **Accent color**, **Theme** (Light, Dark, **Match visitor's device**), and **Form logo** — "Defaults to your clinic logo from General Settings" | Your practice logo |
+| **Form fields** | "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." Each row has **Show** and **Req** | Six built-in fields, all shown |
+| **Create a custom field** | Adds a field of your own. "New fields are saved to your CRM custom fields, so captured values show on the contact." Team only, along with drag-to-reorder | — |
+| **Show a service picker** | "Let people pick which service they're interested in" | Off |
+| **Require marketing consent** + **Consent text** | Makes people tick a box before submitting | Off |
+| **Assign new leads to** | A named teammate, or **Unassigned (team queue)** | Unassigned |
+| **Add to your website** | The embed snippet. Essential and above | Locked on Starter |
+| Widget **Style**, **Position**, **Button text**, **Theme** | **Floating button** or **Inline on the page**, and where it sits. Team only | Floating button, bottom right |
+| **Advanced — raw `<iframe>`** | The bare frame for full styling control. Team only | — |
+
+## Set it up
+
+<Steps>
+  <Step title="Set your page address">
+    Under **Your link**, edit the slug. A green tick means it is available; a warning blocks saving until you change it.
+  </Step>
+  <Step title="Write the form">
+    In **Content**, set the **Headline**, **Description** and **Button label**. Fill in the **Confirmation screen** so people know you received it — or set **Redirect after submit** to send them to your own thank-you page instead.
+  </Step>
+  <Step title="Choose your fields">
+    In **Form fields**, hide anything you do not need with **Show**, and mark what you must have with **Req**. On the Team plan you can also drag rows to reorder and select **Create a custom field** for anything else you ask.
+  </Step>
+  <Step title="Decide who picks it up">
+    Under **Consent & routing**, set **Assign new leads to**. Leaving it as **Unassigned (team queue)** means the whole team sees it, which is safer than naming one person who might be away.
+  </Step>
+  <Step title="Turn it on and save">
+    Flip the switch by the save button from **Off** to **Live**, then select **Save changes**.
+  </Step>
+  <Step title="Put it on your website">
+    In **Add to your website**, select the copy icon on the snippet. "Copy this snippet into your site's HTML, just before `</body>`." Send it to whoever maintains your site if that is not you.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+A submission becomes a **contact on your CRM board**, not an email in someone's inbox — with the answers attached, the assignment you chose, and a place in your pipeline. Nothing is lost to a spam folder, and anyone on the team can pick it up.
+
+The embed runs in its own isolated frame that resizes itself to fit your page. It carries no client information out of your website and needs no styling work from you; the accent colour and theme you set here follow it across.
+
+Two things to know about timing. The **Live** / **Off** switch takes effect on save — off means the hosted page and every embed stop accepting submissions. And an embed already on your site serves your saved settings, so after any edit the tab warns "Save your changes so the embedded form reflects them."
+
+Turning on **Require marketing consent** applies to new submissions only; it does not retrospectively change consent on contacts you already hold.
+
+## Check it worked
+
+Select **Open** to load the hosted page as a visitor, and submit a test enquiry. It should appear within seconds on your [contacts board](/practice/daily/contacts), assigned the way you set it. If you embedded the form, do the same on your own website.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't see this tab">
+    Configuring the contact form is owner and manager only — "Only clinic owners and managers can configure the contact form."
+  </Accordion>
+  <Accordion title="Everything in the editor is behind an upgrade panel">
+    Branding, fields and the form builder start on the Starter plan. On the Free plan you can still copy and share the hosted link — that card stays usable above the upgrade panel.
+  </Accordion>
+  <Accordion title="There is no snippet in Add to your website">
+    Embedding needs Essential: "The Essential plan lets you drop your contact form right onto your own website. Upgrade to get the embed snippet."
+  </Accordion>
+  <Accordion title="I want the form inline rather than as a floating button">
+    Inline mode and the raw frame are Team features: "Upgrade to Team for inline mode, button position, theme, accent, and the raw iframe for full styling control."
+  </Accordion>
+  <Accordion title="Save changes is greyed out">
+    Either you have no unsaved edits, or the page address has failed its check. Look under the address field for the reason — taken, reserved, or the wrong shape.
+  </Accordion>
+  <Accordion title="Submissions are not reaching anyone">
+    Check the switch reads **Live**, not **Off**, and check **Assign new leads to**. A form assigned to someone who has left still creates the contact — it just sits under their name on the board.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/crm-intake-form-settings.tsx, lib/crm/intake-form.ts */}

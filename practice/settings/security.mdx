@@ -1,0 +1,96 @@
+---
+title: "Security"
+description: "Require two-factor authentication for everyone in your practice, and understand what that changes about opening a client record."
+icon: "/images/icons/shield-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner to change · manager and accountant read-only" />
+
+One switch, with a long reach. **Security Settings** — "Manage your clinic's security settings" — decides whether everyone in your practice must use a second factor to sign in, and by extension whether they can open a client record at all.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Security']} />
+
+<TaskHeader
+  before="Tell your team first — the next sign-in will ask them for something new"
+  time="1 minute to set, a few minutes per person to enrol"
+  after="Every staff member signing in with a code as well as a password"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Require Two-Factor Authentication** | "Require all staff members to set up two-factor authentication for their accounts. When enabled, every staff member is prompted to set up an authenticator app on their next sign-in before they can access any clinic data." Owner only — everyone else sees it disabled | Off |
+| **Save Changes** | Applies it. Only shown to the owner. Confirms with "Security settings updated successfully" | — |
+
+That is the whole tab. Two things people expect to find here are elsewhere:
+
+- **Passkeys** — the fingerprint or face sign-in on your own device — are set up per person, on their own account, not for the practice. See [Account security](/platform/account/security).
+- **Security alerts** — the live list of emergency access grants, recovery-code use and two-factor resets — appear on the **Staff & Teams** tab, beside the people they concern. They show only when there is something to show, and only to owners and managers.
+
+## Set it up
+
+<Steps>
+  <Step title="Warn your team">
+    Do this first. Everyone will be asked to set up an authenticator app the next time they sign in, and someone standing at a desk with a client waiting will not thank you for a surprise.
+  </Step>
+  <Step title="Turn on Require Two-Factor Authentication">
+    The switch responds only for the owner. If it will not move for you, that is why — there is no error message.
+  </Step>
+  <Step title="Select Save Changes">
+    You will see "Security settings updated successfully".
+  </Step>
+  <Step title="Set up your own second factor">
+    Do it before anyone else hits the prompt, so you can talk a colleague through it. See [Two-factor authentication](/platform/security/mfa).
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Enrolment becomes unskippable. Every staff member is prompted to set up an authenticator app on their **next** sign-in, before they can reach any clinic data — there is no "remind me later".
+
+It applies from that next sign-in, not immediately. Nobody is thrown out of a session they are already in, so the change lands gently. In practice that means the effect is spread over a day or two as people sign in again.
+
+Afterwards, client records can only be opened from a session that has actually passed the second factor. This is the part that surprises people: someone who is already signed in may still be asked for a code when they open a client's chart, because the record needs the stronger session and their current one is not. It is one extra prompt, not a new sign-in.
+
+Nothing about the practice's data, appointments or billing changes. This governs access only.
+
+Turning the requirement back off does not un-enrol anyone. People who set up an authenticator keep it and keep being asked for a code — which is the right outcome, but worth knowing if you turned it on to test.
+
+**Signing in with a passkey counts as one factor and does not satisfy this requirement.** A passkey replaces the password, not the code. Someone who uses a passkey will still be prompted for their authenticator app, and if they never enrolled one they will be stopped at the client record. Anyone relying on a passkey alone should enrol an authenticator before you turn this on.
+
+## Check it worked
+
+Sign out and back in yourself. You should be asked to set up an authenticator app if you have not already, and for a code if you have. Then open a client record — it should open without a second prompt once your session has passed the check. Ask one colleague to confirm the same thing happened for them.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The switch will not move and there is no error">
+    This setting is owner-only. Managers and accountants can open the tab and read the switch, but it is disabled for them and the **Save Changes** button is not shown at all.
+  </Accordion>
+  <Accordion title="A colleague is asked for a code even though they just signed in">
+    That is the client-record check doing its job — the session needs to have passed the second factor before a record opens. They enter the code from their authenticator app once and carry on.
+  </Accordion>
+  <Accordion title="Someone signs in with a passkey and is still blocked">
+    A passkey is one factor. It does not satisfy the two-factor requirement. They need to enrol an authenticator app as well — see [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+  <Accordion title="A staff member has lost their phone and cannot sign in">
+    They use a recovery code if they saved one. Failing that, an owner can reset their second factor; the reset is recorded and appears in the security alerts on **Staff & Teams**.
+  </Accordion>
+  <Accordion title="I turned it off but people are still asked for a code">
+    Turning the requirement off stops it being compulsory for anyone new. It does not remove a second factor somebody already set up — they remove that from their own account.
+  </Accordion>
+  <Accordion title="I cannot find passkeys on this tab">
+    They are not a practice-wide setting. Each person adds their own under [Account security](/platform/account/security).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, security-alerts-card.tsx (rendered on Staff & Teams) */}

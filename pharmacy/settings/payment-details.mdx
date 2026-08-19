@@ -1,0 +1,111 @@
+---
+title: Payment details
+description: "Add the bank accounts and payment channels your customers pay into, and control which of them print on your invoice PDFs and emails."
+icon: /images/icons/banknote.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can add or change payment details" />
+
+If a customer or an institutional buyer needs to transfer money to you rather than tap a card, this is where you write down how. Whatever you enter here can be printed on the invoice itself, so nobody has to phone and ask for your account number.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Payment Details']} />
+
+<TaskHeader
+  before="Your bank account details, or the handle for any other channel you accept"
+  time="3 minutes per channel"
+  after="Account details printed on every invoice with a balance outstanding"
+/>
+
+## What this tab controls
+
+The card is headed **Payment Details** — "How patients can pay you — bank transfer, Cash App, Venmo, PayPal and more. Each entry has its own toggle for showing on invoice PDFs and invoice emails while a balance is due."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add payment details** | Opens a sheet to record one channel. | — |
+| **Type** | What kind of channel this is — a bank account, a mobile wallet, and so on. Choosing a type suggests sensible fields. | Bank |
+| **Display name** (optional) | A label a customer will recognise, such as "GTBank Business Account". | Empty |
+| **Fields** | Repeating pairs of **Label** and **Value**. Add as many as the channel needs; use **Add field** for another. On a bank type, one-tap suggestions appear as chips. | The suggested fields for the type |
+| **Show on invoices** | Per entry. "Printed on the invoice PDF and invoice emails while a balance is due." | On |
+
+Only the owner can add, edit, delete or toggle. Everyone else sees the entries and the line "Only the clinic owner can change payment details."
+
+## Add a channel
+
+<Steps>
+  <Step title="Select Add payment details">
+    The sheet opens with the warning that matters: "These appear exactly as entered, so double-check account numbers."
+  </Step>
+  <Step title="Choose the Type">
+    Pick the kind of channel. The **Fields** below reseed with suggestions for it — as long as you have not typed anything yet.
+  </Step>
+  <Step title="Give it a display name">
+    Optional, but worth it. "GTBank Business Account" tells a customer which of your accounts they are looking at.
+  </Step>
+  <Step title="Fill in the fields">
+    Each row is a **Label** (for example "Account number") and a **Value**. Select **Add field** for another row, or use the suggestion chips on a bank type. Empty values are dropped when you save — at least one field must have a value.
+  </Step>
+  <Step title="Decide whether it prints">
+    Leave **Show on invoices** on to have it appear on documents, or switch it off to keep it recorded but private.
+  </Step>
+  <Step title="Save">
+    Select **Add payment details**. You get "Payment details added".
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| Setting | What you'll notice |
+| --- | --- |
+| An entry with **Show on invoices** on | Its label and every field print on the **invoice PDF** and in the **invoice email** — but only while that invoice still has a balance outstanding. |
+| An entry with the toggle off | It stays on this tab for your reference and prints nowhere. |
+| Several entries on | All of them print, in the order they appear here. Give each a clear display name so a customer can tell them apart. |
+| Editing an entry | Applies to invoices generated from now on. |
+
+**A paid invoice stops showing them.** That is deliberate — once there is nothing to pay, printing your account number only invites a second payment.
+
+**Nothing already sent changes.** An invoice PDF a customer already has keeps the details it was made with. Re-download the invoice rather than reopening a saved copy.
+
+**These details are typed, not verified.** Nobody checks the account number against a bank, and it prints exactly as entered — a transposed digit sends a customer's money somewhere else. Read it back before saving.
+
+For a retail pharmacy this earns its keep in two places: **account customers** who settle monthly rather than at the counter, and **institutional buyers** — a clinic, a school, an employer — whose finance office pays by transfer against an invoice. Neither of them is standing at your till when they need your account number.
+
+<Note>
+  This is not the same as [Online payments](/pharmacy/settings/online-payments). That connects a card processor which takes money automatically; this simply prints instructions on a document. Many pharmacies use both.
+</Note>
+
+## Check it worked
+
+Raise a test invoice for a customer with a balance outstanding, download the PDF, and check the details appear correctly and in full. Then record a payment against it, re-download, and confirm they have dropped off.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Add button is missing and the switches will not move">
+    You are not the owner. The tab shows "Only the clinic owner can change payment details."
+  </Accordion>
+  <Accordion title="Save is refused">
+    "Add at least one field with a value — that's what the patient will see." A label with no value beside it is dropped, so an entry made only of labels saves nothing.
+  </Accordion>
+  <Accordion title="The details are not on my invoice">
+    Three things to check: **Show on invoices** is on for that entry; the invoice still has a balance outstanding; and the PDF was generated after you saved. Re-download it.
+  </Accordion>
+  <Accordion title="My bank fields reset when I changed the Type">
+    Changing the type reseeds the suggested fields, but only while every value is still empty. Once you have typed something, your entries are kept.
+  </Accordion>
+  <Accordion title="I cannot add another field">
+    There is a cap on fields per entry and on the number of entries. Remove one you do not need, or record the extra channel as its own entry.
+  </Accordion>
+  <Accordion title="I removed the wrong entry">
+    Deleting is confirmed first — "It will no longer appear on any invoice you send or download." There is no undo; add it again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/payment-details-settings.tsx, lib/billing/payment-details.ts */}

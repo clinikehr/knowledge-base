@@ -1,0 +1,105 @@
+---
+title: "Auto Pay"
+description: "Charge a patient's saved card automatically when their appointment is confirmed or completed, and know exactly who gets charged and who does not."
+icon: "/images/icons/arrows-repeat.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above" roles="Owner only to change · manager or accountant can read" note="Also needs a connected Stripe account" />
+
+Auto Pay takes the invoicing step out of routine outpatient visits: when an appointment reaches the status you nominate, the card the patient already saved is charged for the unpaid invoice. Nobody chases, nobody re-keys a card number.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Auto Pay']} />
+
+<TaskHeader
+  before="A connected Stripe account with charging enabled, on the Essential plan or above"
+  time="2 minutes"
+  after="Confirmed or completed visits paid automatically for patients with a card on file"
+/>
+
+## What this tab controls
+
+The card describes itself: "Automatically charge a patient's saved card on file when their appointment is confirmed or completed — no manual invoicing."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Enable Auto Pay** | Master switch. "Charge the card on file for unpaid appointment invoices automatically." Everything below appears only while it is on | Off |
+| **Confirmed** | "Charge as soon as the visit is confirmed." | Off |
+| **Completed** | "Charge once the visit is marked completed." | On |
+| **Email a receipt to the patient** | "Send a payment confirmation each time a card is charged." | On |
+| **Save changes** | Enabled only once something has actually changed | — |
+
+A badge on the card header reads **● On** or **◌ Off** so you can see the state without scrolling. Non-owners see "Only the clinic owner can change Auto Pay."
+
+<Warning>
+  Auto Pay charges real money without anyone pressing a button, and **a 1.9% platform fee applies per charge** on top of your provider's own fees. Turn it on only when your billing team agrees which trigger to use, and tell reception before you do — a patient who expected to pay at the desk will instead see a card charge land.
+</Warning>
+
+## Set it up
+
+<Steps>
+  <Step title="Connect Stripe first">
+    Without it the card shows "Connect Stripe to use Auto Pay" and nothing can be switched on. Finish the setup in [Online payments](/hospital/settings/online-payments).
+  </Step>
+  <Step title="Turn on Enable Auto Pay">
+    The trigger and receipt rows appear underneath.
+  </Step>
+  <Step title="Choose when the card is charged">
+    Under "Charge when the appointment is…", switch on **Confirmed**, **Completed**, or both. At least one is required — saving with neither is refused with "Choose at least one trigger — confirmed or completed."
+  </Step>
+  <Step title="Decide on the receipt">
+    Leave **Email a receipt to the patient** on unless your finance team sends its own.
+  </Step>
+  <Step title="Save">
+    Select **Save changes**. It confirms with "Auto Pay is on".
+  </Step>
+</Steps>
+
+Most hospitals pick **Completed** alone: the visit has happened, so the amount is final. **Confirmed** collects earlier but can charge for a visit that is later changed, which then needs a refund.
+
+## What changes once you save
+
+From the moment it is on, appointments that reach your chosen status start being charged in the background rather than waiting for someone to raise and send an invoice.
+
+- **Who is charged:** "Only patients with a saved card are charged." Anyone without a card on file is skipped and left for manual collection — Auto Pay never blocks a visit or forces a card to be added.
+- **What is charged:** the unpaid invoice for that appointment. "Each invoice is only ever charged once", so switching both triggers on does not double-charge — the confirmed trigger fires first and the completed one finds nothing owing.
+- **A declined card is never forced.** "A card that's declined or needs extra verification (3-D Secure) is never force-charged — you'll be notified to collect it manually." That invoice stays open for your desk to settle.
+- **The patient gets a receipt email** for each successful charge, unless you turned that off.
+- **Existing appointments are unaffected** until they next change status. Turning Auto Pay on does not sweep up a backlog of unpaid invoices.
+
+Switching Auto Pay off stops future charges immediately and refunds nothing already taken. Card details continue to be held by the provider, never by ClinikEHR: "Card data is stored securely by Stripe and never touches ClinikEHR servers."
+
+## Check it worked
+
+The header badge reads **● On**. Take one appointment for a patient who has a card on file, move it to your chosen status, and check the invoice — it should show as paid without anyone touching it, and the patient should have a receipt. Then repeat with a patient who has no card: that invoice should stay open, which is the correct outcome.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Auto Pay is part of the Essential plan and above">
+    The whole tab is replaced by that line and an **Upgrade** button. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Connect Stripe to use Auto Pay">
+    "Auto Pay charges saved cards through your connected Stripe account. Finish the Stripe setup in **Online Payments** to turn it on." Both onboarding and charging must be complete there, not just started.
+  </Accordion>
+  <Accordion title="Save changes will not respond">
+    Either nothing has changed since it loaded, or you have Auto Pay on with both triggers off — the red line reads "Select at least one — confirmed or completed."
+  </Accordion>
+  <Accordion title="A patient was not charged">
+    They have no card on file. Auto Pay skips them silently and by design; collect at the desk or send the invoice.
+  </Accordion>
+  <Accordion title="I can see the settings but cannot move them">
+    "Only the clinic owner can change Auto Pay." Managers and accountants get a read-only view.
+  </Accordion>
+  <Accordion title="A charge failed and nothing happened">
+    Declines and cards needing extra verification are reported rather than retried. Settle that invoice manually.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/auto-pay-settings.tsx, lib/settings-tabs.ts */}

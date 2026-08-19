@@ -1,0 +1,112 @@
+---
+title: "Client portal settings"
+description: "Name, brand and publish the secure area where your clients sign in — and learn why the green Live button is not a save button."
+icon: "/images/icons/globe.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Owner only" note="Messaging and Notifications tabs: Essential and above" />
+
+The client portal is a secure web area where the people you look after sign in to see appointments, documents and telehealth links, and message you. This tab names it, brands it, decides which parts of it exist, and puts it online.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Patient Portal']} />
+
+<Note>
+  The settings sidebar heads this section **PATIENT EXPERIENCE** and calls this tab **Patient Portal**, while the rest of your workspace — and this page — says clients. Same people, same portal. Help pages bold what is on your screen, which is why those two read "Patient" here.
+</Note>
+
+<TaskHeader
+  before="A name for the portal and an unused web address"
+  time="10 minutes, plus the tabs you choose to configure"
+  after="A published portal your clients can sign in to"
+/>
+
+## What this tab controls
+
+At the top sits a hero card: the master **Client Portal** switch, your live address on `client.clinikehr.com` with copy and open buttons, and the publish button.
+
+| Tab | What it controls | Gate |
+| --- | --- | --- |
+| **Branding** | **Portal Name**, **URL Slug**, logo, colours. Both required fields live here | Starter |
+| **Appointments** | Whether clients can see, request, reschedule or cancel appointments | Starter |
+| **Messaging** | Secure two-way messaging with your team | Essential |
+| **Telehealth** | Whether clients can join video visits from the portal | Starter |
+| **Documents** | Which documents clients can read, download and sign | Starter |
+| **Notifications** | What the portal emails clients about | Essential |
+| **Privacy** | Self-registration, identity checks and what a client may see of their own record | Starter |
+
+The tab-by-tab detail is covered in [Enable the portal](/portal/setup/enable) and [Portal features](/portal/setup/features) rather than repeated here.
+
+## Set it up
+
+<Steps>
+  <Step title="Name the portal">
+    On **Branding**, enter a **Portal Name** — what clients see at the top of the page, usually your practice name.
+  </Step>
+  <Step title="Claim your address">
+    Still on **Branding**, enter a **URL Slug**. It is checked as you type, for shape, for reserved and unsuitable words, and against every other workspace. Your address becomes `client.clinikehr.com/` plus that slug.
+  </Step>
+  <Step title="Turn the master switch on">
+    In the hero card, switch **Client Portal** on. Its caption changes from "Currently disabled" to "Active & accessible".
+  </Step>
+  <Step title="Work through the seven tabs">
+    Decide what the portal offers before anyone can reach it. Start with **Privacy** — it governs who may register — then **Appointments** and **Documents**.
+  </Step>
+  <Step title="Select Save Changes">
+    The button publishes and saves in one action. It then turns green and reads **Live** with a pulsing dot.
+  </Step>
+</Steps>
+
+<Warning>
+  Once the portal is live, that green **Live** button is **not** a save button. Selecting it **unpublishes the portal** — the tooltip reads "Unpublish Client Portal" and you get "Portal unpublished successfully". Every client is signed out of a portal that no longer exists. To change a setting on a live portal, edit it and select **Live** only if you actually intend to take the portal down; otherwise leave the button alone and re-publish afterwards.
+</Warning>
+
+## What changes once you save
+
+Publishing puts your address online. Nobody is signed in yet, because **two conditions must both hold before any one client can get in**:
+
+1. The clinic-wide switch on this tab, and
+2. **that individual client's own portal access**, set on their record.
+
+A client who cannot sign in almost always has the second one switched off, not the first. That is deliberate — publishing the portal must not hand every person on your list an account.
+
+Enabling the portal also quietly enables **individual self-registration**, because those permissions default to on. If you want to invite people one at a time instead, open the **Privacy** tab and turn self-registration off before you publish.
+
+Elsewhere in the product, a client record gains portal status, and documents you send become readable in the portal rather than only by email link. Turning a feature tab off later removes it from the portal at once; it does not delete anything a client already saw.
+
+Only the owner can change any of this. Managers and accountants who can reach settings see the whole tab read-only.
+
+## Check it worked
+
+Copy the address from the hero card and open it in a private browser window. You should reach a branded sign-in page carrying your **Portal Name**, not a not-found error. Then enable portal access for one real client, and ask them to confirm they can sign in and see their next appointment.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The save button will not respond">
+    Save is blocked until both **Portal Name** and **URL Slug** are filled in. Until the slug exists, the hero card says "Set a URL slug in Branding to publish your portal". It is also blocked while the slug check is still failing.
+  </Accordion>
+  <Accordion title="An Unlock the Client Portal panel covers everything">
+    The portal starts on the Starter plan: "The Client Portal is a premium feature available on our Starter, Essential and Team plans." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Messaging and Notifications have a small shield on them">
+    Those two tabs need Essential or above. The rest of the portal works without them.
+  </Accordion>
+  <Accordion title="I can see the tab but nothing will change">
+    Only the owner can edit portal settings. Everyone else with settings access sees it read-only.
+  </Accordion>
+  <Accordion title="My slug is rejected">
+    Slugs must be lowercase letters, numbers and hyphens, must not be a reserved word, and must be unused across every workspace — not only yours. The indicator under the field says which rule failed.
+  </Accordion>
+  <Accordion title="A client says they cannot sign in">
+    Check the second condition: open their record and confirm portal access is on for them. A published portal alone does not create accounts.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/client-portal-settings.tsx, types/client-portal.ts */}

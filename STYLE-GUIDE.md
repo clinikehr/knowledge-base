@@ -36,6 +36,34 @@ Only three. Pick one per page and do not blend them.
 Most pages are **Task** pages. A section index (`.../index.mdx`) is a Concept
 page whose job is to route: a short orientation, then `<Cards>`.
 
+### Settings pages are a fourth shape, and they have a stricter contract
+
+**One page per settings tab. Never two.** An earlier version compressed eight
+tabs into "Billing, payments and insurance", and a reader who came to switch on
+Auto Pay had to scroll past currency, tax, Stripe onboarding and invoice
+channels to reach three paragraphs. Settings pages are looked up, not read:
+someone arrives with that exact tab open on another screen.
+
+Required sections, in this order:
+
+1. **What this tab controls** — a table with a row for *every* control on the
+   tab. Note owner-only and plan-gated ones in their row. Quote the product's
+   own helper text where it has some.
+2. **Set it up** — `<Steps>`, one action each. On a reference-only tab, replace
+   with "How to read this tab".
+3. **What changes once you save** — *the section that justifies the page.* Name
+   the screens that change, the documents that change, who is affected and when
+   ("staff see it on their next sign-in", "applies within five minutes"), and —
+   critically — **what is NOT affected** where people assume it is. A setting is
+   only interesting because of what it does elsewhere; trace it.
+4. **Check it worked** — something observable.
+5. **Common issues** — `<AccordionGroup>`, three to six entries, each with the
+   symptom as the reader would phrase it. Always include "I can't see this tab"
+   where a gate applies, and "it's greyed out" where a control is owner-only.
+
+Length is 500–900 words. Comprehensive is not the same as padded: a tab with
+four switches gets a short page, and that is correct.
+
 ## 3. Required page skeleton
 
 ````mdx

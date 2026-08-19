@@ -1,0 +1,102 @@
+---
+title: Role navigation
+description: "Decide which parts of the hospital each role sees in the sidebar, and where each role lands after signing in."
+icon: /images/icons/user-lock.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner or manager to change anything" />
+
+**Role Navigation** narrows the sidebar so a nurse is not scrolling past claims and a records officer is not scrolling past theatre. It governs **pages, not actions**: what someone may *do* on a page they can open stays with their staff permissions.
+
+<Path steps={['Sidebar', 'Settings', 'Team', 'Role Navigation']} />
+
+<TaskHeader
+  before="Owner or manager access, and a view on what each role actually works in"
+  time="10 minutes"
+  after="Each role sees its own part of the hospital and lands there at sign-in"
+/>
+
+## What this tab controls
+
+Two cards, and they are separate on purpose.
+
+| Control | Card | What it does | Default |
+| --- | --- | --- | --- |
+| **Scope navigation by role** | **Role-based navigation** | The master switch. "When on, a governed role sees only its own menus, is returned to its own area if it opens a direct link elsewhere, and lands there after signing in." | Off |
+| Role list | **Role navigation** | Every governable role, each labelled **Custom** or **default** so you can see where this hospital has diverged | All default |
+| Module checkboxes | **Role navigation** | One box per navigable unit, grouped the way the sidebar is | The role's shipped defaults |
+| **Save** | **Role navigation** | Saves the selected role. Disabled until you change something, and with nothing ticked | — |
+| **Reset to default** | **Role navigation** | Puts that role back on the shipped rules. Only shown for a role marked **Custom** | — |
+
+While the master switch is off, the editor tells you so rather than letting you tune rules that do nothing: "Role-scoped navigation is switched off, so these rules are not being applied yet. Configure them here, then turn the switch above on when ready."
+
+## Set it up
+
+<Steps>
+  <Step title="Configure first, switch on last">
+    Leave **Scope navigation by role** off while you work. Rules you save are stored but inert until the switch is on, so there is no window where half a configuration is live.
+  </Step>
+  <Step title="Pick a role">
+    Select a role in the left list. Its checkboxes load from wherever it lives now — a saved override, otherwise the shipped default.
+  </Step>
+  <Step title="Tick what that role works in">
+    Work down the grouped checkboxes. The line above them names the landing page as you go — "Lands on Nursing Station after sign-in", and so on.
+  </Step>
+  <Step title="Save that role, then do the next">
+    Select **Save**. It confirms with the role's name — "Nurse navigation saved". Each role saves on its own; moving to another role never carries your ticks across.
+  </Step>
+  <Step title="Turn the master switch on">
+    Go back to **Role-based navigation** and switch **Scope navigation by role** on. You get "Role-based navigation on" and "Signed-in staff see the change within 5 minutes."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| Master switch **on** | Governed roles see only their own menus, are returned to their own area if they open a direct link elsewhere, and land there after signing in. It reaches people already signed in **within 5 minutes** — not instantly, so do not judge it by asking someone to refresh straight away. |
+| Master switch **off** | Everything you configured stays saved and stops applying. Nothing is lost. |
+| Ticked or unticked a module | The sidebar changes for everyone in that role. The **first ticked module in navigation order becomes that role's landing page** — reordering what is ticked moves where they land. |
+| Unticked something with sub-pages | The rule works at its own level. Turning **Insurance** off necessarily covers the dashboard, pre-authorisation and claims together — they are one rule, not three. |
+| Saved a role | It is marked **Custom** in the list. **Reset to default** returns it to the shipped rules; there is no state where a role has nothing. |
+| Nothing, for owners and managers | They are absent from the role list entirely and bypass all of this. So is Settings and the audit log: "Settings and the audit log stay reachable for every role, whatever is chosen here." |
+
+**Hiding a module is a convenience, not a security control.** The card says it outright: "This changes navigation only — it is not a security control. What each person may read and write is still decided by their permissions." Someone who should not be able to do a thing must be stopped by their permissions, not by an absent menu item — the server checks on every action regardless of what the sidebar shows.
+
+## Check it worked
+
+Turn the master switch on, wait five minutes, then have someone in a narrowed role sign out and back in. Their sidebar should carry only the modules you ticked, and they should land on the first one. Ask them to paste a link to something you unticked: they should be returned to their own area rather than seeing an error. Back in the editor, the roles you changed should read **Custom**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I saved the rules and nothing changed">
+    Two likely reasons. The master switch **Scope navigation by role** is still off — the amber note in the editor says so. Or it is on and you are inside the five-minute window; changes reach signed-in staff within 5 minutes.
+  </Accordion>
+  <Accordion title="Owners and managers are not in the role list">
+    Deliberate, not a bug. They are never narrowed by these rules, so they are absent rather than shown greyed out.
+  </Accordion>
+  <Accordion title="I unticked one insurance page and all three disappeared">
+    Rules match at their own level, so the insurance dashboard, pre-authorisation and claims move together. One checkbox is honest about that; three would not be.
+  </Accordion>
+  <Accordion title="A role lands on the wrong page">
+    The landing page is the first ticked module in navigation order, and the editor names it above the checkboxes. Untick things above the one you want, or accept the order the sidebar uses.
+  </Accordion>
+  <Accordion title="The Save button will not enable">
+    It stays disabled until you change something, and with every box unticked — a role with nothing is not a valid state. Tick at least one module.
+  </Accordion>
+  <Accordion title="I hid a module and someone still did the thing">
+    Expected. Hiding is navigation only. Stop the action itself with their [permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+For the roles themselves and what each one is for, see [Roles](/platform/team/roles).
+
+<StillStuck topic="role navigation" />
+
+{/* source of truth: components/clinic/dashboard/settings/role-navigation-settings.tsx, role-scoped-nav-setting.tsx, lib/role-nav-catalogue.ts */}

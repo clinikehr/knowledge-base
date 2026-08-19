@@ -1,6 +1,6 @@
 ---
 title: Settings
-description: "Where every hospital-wide setting lives, who can open it, and the five extra tabs an Enterprise workspace has that a single practice does not."
+description: "The map of every settings tab in a hospital workspace — how to get in, who can, and the five tabs Enterprise adds that no other plan has."
 icon: /images/icons/settings.svg
 ---
 
@@ -9,99 +9,93 @@ import { Path } from '/snippets/path.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" />
 
-Settings is where the hospital's shape is decided — which units exist, who may open what, how money is taken and what patients see. This page is the map: the five sections, who can open them, and the tabs that exist only on Enterprise.
+Settings is where the shape of the hospital is decided — which units exist, who may open what, how money is taken, and what patients see. Each tab has its own page in this section. This one is the map.
 
 <Path steps={['Sidebar', 'Settings']} />
 
-## If a tab you were sent is not there
-
-Settings deep-links carry the tab in the address, like `?tab=facility`. If your workspace does not have that tab, the page opens on **General Settings** instead of showing an error. So a link that "does nothing" has almost always landed on General, and the tab genuinely does not exist for this hospital — check the plan, the edition and the care area before you go looking for a bug.
-
 ## Getting in, and who can
 
-**Settings** sits in the footer of the main sidebar, below the modules. Selecting it opens the settings area with its own left rail titled **Clinic Settings**. On a phone or a narrow window that rail collapses into a dropdown at the top of the page; the tabs and their order are identical.
+**Settings** sits in the footer of the main sidebar, below the modules. Selecting it opens the settings area with its own left rail titled **Clinic Settings**. On a phone or a narrow window that rail collapses into a dropdown at the top; the tabs and their order are identical.
 
 You need to be an **owner**, a **manager** or an **accountant**. Anyone else gets: "You don't have permission to access the settings module. Please contact your clinic administrator."
 
-Getting in is not the whole story. Some controls are **owner-only** even for a manager — **Currency**, **Tax Rate** and **Free Clinic Mode** among them. **Facility**, **Theatre** and **Role Navigation** need owner or manager to change anything; an accountant can open them but not edit. Where a card is read-only for you it says so at the bottom: "Only the clinic owner or a manager can change these."
+Getting in is not the whole story. Some controls stay **owner-only** even for a manager — **Currency**, **Tax Rate** and **Free Clinic Mode** among them, plus everything on **General Settings** and the inventory **Danger Zone**. Where a card is read-only for you it says so at the bottom: "Only the clinic owner or a manager can change these."
+
+## If a tab you were sent is not there
+
+Settings deep links carry the tab in the address, like `?tab=facility`. If your workspace does not have that tab, the page opens on **General Settings** instead of showing an error. So a link that "does nothing" has almost always landed on General, and the tab genuinely does not exist for this hospital — check the plan, the edition and the care area before you go looking for a bug.
 
 ## The five sections
 
 The rail is banded into five sections, and the band headings are the same words on every screen.
 
-| Section | Covers | Page |
-| --- | --- | --- |
-| **PRACTICE** | The hospital profile, its care areas, units, wards, theatres, staff, inventory rules and notifications | [Facility](/hospital/settings/facility) · [Departments, wards and theatres](/hospital/settings/departments-wards-theatre) · [Staff and roles](/hospital/settings/team-and-roles) |
-| **BILLING** | Subscription and plan, currency and tax, payment processing, memberships, services and the store | [Billing and payments](/hospital/settings/billing-and-payments) |
-| **PATIENT EXPERIENCE** | Scheduling, the booking page, the contact form, the patient portal and sharable documents | [Booking, portal and documents](/hospital/settings/patient-experience) |
-| **AUTOMATION & AI** | Messaging channels, AI agents and credits | [Communications and AI](/hospital/settings/automation-and-ai) |
-| **SYSTEM** | Security rules and data export | [Security, data export and inventory](/hospital/settings/system) |
+| Section | Covers |
+| --- | --- |
+| **PRACTICE** | The hospital profile, its care areas, departments, wards, theatres, staff, inventory rules and notifications |
+| **BILLING** | Subscription and plan, currency and tax, payment processing, memberships, services and the store |
+| **PATIENT EXPERIENCE** | Scheduling, the booking page, the contact form, the patient portal and sharable documents |
+| **AUTOMATION & AI** | Messaging channels, AI agents and credits |
+| **SYSTEM** | Security rules and data export |
 
-The first band is headed **PRACTICE** even for a hospital — the heading follows the edition rather than the plan, so a 300-bed site and a two-room practice both read the same word there. Nothing behind it is scaled down.
+One quirk worth knowing once: the first band reads **PRACTICE** and the rail is titled **Clinic Settings** even for a 300-bed hospital. Those words follow the edition, not the plan. Nothing behind them is scaled down.
 
 ## What Enterprise has that Solo and Team do not
 
-This is the part worth reading before you go hunting. An Enterprise hospital gets **five tabs that no other plan has**, four of them in a rail group the sidebar calls **Departments settings**.
+This is the part worth reading before you go hunting. An Enterprise hospital gets **five tabs no other plan has**, four of them in a rail group called **Departments settings**.
 
-| Tab | Sidebar wording | What it is for |
+| Tab | What the rail says under it | What it is for |
 | --- | --- | --- |
 | **Facility** | "Care areas, shifts, nursing & records bands" | Which units this hospital runs, plus the observation, shift, waiting and chase thresholds |
-| **Theatre** | "Theatres, safety checklist & enforcement" | Your theatres and the surgical safety checklist rule |
-| **Ward Management** | "Inpatient and ward setup" | Wards, sub-wards and bed spaces |
 | **Departments** | "Clinic service departments" | Departments, sub-units and consultation rates |
+| **Ward Management** | "Inpatient and ward setup" | Wards, sub-wards and bed spaces |
+| **Theatre** | "Theatres, safety checklist & enforcement" | Your theatres and the surgical safety checklist rule |
 | **Role Navigation** | "What each role sees in the sidebar" | Which modules each role may open, and where they land |
 
-**Theatre needs one more thing.** It only appears once the **Surgical theatre** care area is on, and that area ships **off**. If four of the five are showing and Theatre is not, that is why — turn the area on in [Facility](/hospital/settings/facility) first.
+**Theatre needs one more thing.** It appears only once the **Surgical theatre** care area is on, and that area ships **off**. If four of the five are showing and Theatre is not, that is why — turn the area on in [Facility](/hospital/settings/facility) first. **Ward Management** likewise needs **In-patient care**, and **Inventory** needs the **Inventory** area.
 
 ### And one tab Enterprise loses
 
-**Insurance Settings** exists on **Solo and Team only**. The two plans run different insurance systems, and a hospital's payers, coverage, pre-authorisations and claims live in their own module rather than in a settings tab — see [Insurance](/hospital/insurance/overview). Nothing is missing; it moved.
+**Insurance Settings** is **Solo and Team only**. The two plans run different insurance systems: a hospital's payers, coverage, pre-authorisations and claims live in their own module rather than behind a settings tab. Nothing is missing — it moved. See [Insurance](/hospital/insurance/overview).
 
 Two other tabs never appear here either, and neither is a fault: **Loyalty** belongs to the Pharmacy edition, and **Lab Workflow** to the Diagnostics edition.
 
-## The rail, top to bottom
-
-**PRACTICE** — *Profile*: **General Settings**. *Departments settings*: **Facility**, **Theatre**, **Ward Management**, **Departments**. *Team*: **Staff & Teams**, **Role Navigation**. *Inventory*: **Inventory**. *Practice notifications*: **Notifications**.
-
-**BILLING** — *Practice Billing*: **Billing & Plans**. *Payment processing*: **Online Payments**, **Payment Details**, **Auto Pay**, **Memberships**. *Services and products*: **Appointment Services**, **Store Page**.
-
-**PATIENT EXPERIENCE** — *Scheduling*: **Calendar Integrations**, **Booking Settings**, **Booking Page Designer**, **Contact Form**. *Patient portal*: **Patient Portal**. *Documents*: **Sharable Documents**.
-
-**AUTOMATION & AI** — **Communications**, **AI Settings**.
-
-**SYSTEM** — **Security**, **Data Export**.
-
-Two entries here are conditional. **Inventory** shows only while the **Inventory** care area is on, and **Calendar Integrations** shows only for owners and managers.
-
-## Go to a section
+## PRACTICE, tab by tab
 
 <Columns cols={2}>
+  <Card title="General settings" icon="/images/icons/building.svg" href="/hospital/settings/general">
+    Hospital name, address, contact details, logo and timezone.
+  </Card>
+
   <Card title="Facility" icon="/images/icons/hospital.svg" href="/hospital/settings/facility">
-    Care areas, the nursing observation cadence, shift pattern, front-desk wait threshold and records chase bands.
+    Care areas, the nursing observation cadence and shift pattern, the front-desk wait threshold and the records chase bands.
   </Card>
 
-  <Card title="Departments, wards and theatres" icon="/images/icons/sitemap.svg" href="/hospital/settings/departments-wards-theatre">
-    The structure clinicians pick from — units, sub-units, wards, sub-wards, beds and theatres.
+  <Card title="Departments" icon="/images/icons/sitemap.svg" href="/hospital/settings/departments">
+    Departments, sub-units and the consultation rates clinicians pick from.
   </Card>
 
-  <Card title="Staff, roles and role navigation" icon="/images/icons/users-gear.svg" href="/hospital/settings/team-and-roles">
-    Invite people, set what each role sees in the sidebar, and understand what a seat costs.
+  <Card title="Ward management" icon="/images/icons/bed-double.svg" href="/hospital/settings/wards">
+    Wards, sub-wards and the bed spaces staff admit into.
   </Card>
 
-  <Card title="Billing and payments" icon="/images/icons/credit-card.svg" href="/hospital/settings/billing-and-payments">
-    Currency, tax, the subscription, card processing, invoice payment channels and memberships.
+  <Card title="Theatre" icon="/images/icons/scissors.svg" href="/hospital/settings/theatre">
+    Your theatres, the surgical safety checklist and whether an incomplete phase blocks a case.
   </Card>
 
-  <Card title="Booking, portal and documents" icon="/images/icons/globe.svg" href="/hospital/settings/patient-experience">
-    Everything a patient meets — booking, the contact form, the portal and sharable documents.
+  <Card title="Staff and teams" icon="/images/icons/users-gear.svg" href="/hospital/settings/staff">
+    Invite people, change roles, set per-person permissions, and see what a seat costs.
   </Card>
 
-  <Card title="Communications and AI" icon="/images/icons/bot.svg" href="/hospital/settings/automation-and-ai">
-    Messaging channels, AI agents and credits, and the notification switches behind them.
+  <Card title="Role navigation" icon="/images/icons/user-lock.svg" href="/hospital/settings/role-navigation">
+    Which modules each role sees in the sidebar, and where they land after signing in.
   </Card>
 
-  <Card title="Security, data export and inventory" icon="/images/icons/shield-check.svg" href="/hospital/settings/system">
-    Two-factor, passkeys, security alerts, exports, and the inventory rules including the reset.
+  <Card title="Inventory settings" icon="/images/icons/boxes-stacked.svg" href="/hospital/settings/inventory">
+    New-item defaults, receiving rules, expiry horizons, dispense enforcement and the reset.
+  </Card>
+
+  <Card title="Notifications" icon="/images/icons/bell.svg" href="/hospital/settings/notifications">
+    The master email switch and the per-category alerts your hospital receives.
   </Card>
 
   <Card title="Set up your hospital" icon="/images/icons/rocket.svg" href="/hospital/get-started/index">
@@ -109,4 +103,24 @@ Two entries here are conditional. **Inventory** shows only while the **Inventory
   </Card>
 </Columns>
 
-{/* source of truth: lib/settings-tabs.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, components/clinic/dashboard/settings/settings-content.tsx */}
+## The other four sections
+
+<Columns cols={2}>
+  <Card title="Billing and plans" icon="/images/icons/credit-card.svg" href="/hospital/settings/billing">
+    Your subscription, currency and tax — plus [Online Payments](/hospital/settings/online-payments), [Payment Details](/hospital/settings/payment-details), [Auto Pay](/hospital/settings/auto-pay), [Memberships](/hospital/settings/memberships), [Appointment Services](/hospital/settings/appointment-services) and [Store Page](/hospital/settings/store-page).
+  </Card>
+
+  <Card title="Patient experience" icon="/images/icons/globe.svg" href="/hospital/settings/portal">
+    The patient portal, plus [Booking Settings](/hospital/settings/booking-settings), the [Booking Page Designer](/hospital/settings/booking-page-designer), the [Contact Form](/hospital/settings/contact-form), [Calendar Integrations](/hospital/settings/calendar-integrations) and [Sharable Documents](/hospital/settings/sharable-docs).
+  </Card>
+
+  <Card title="Communications and AI" icon="/images/icons/bot.svg" href="/hospital/settings/communications">
+    Messaging channels, and [AI Settings](/hospital/settings/ai-settings) for agents and credits.
+  </Card>
+
+  <Card title="Security and data" icon="/images/icons/shield-check.svg" href="/hospital/settings/security">
+    Two-factor rules, passkeys and security alerts, plus [Data Export](/hospital/settings/data-export).
+  </Card>
+</Columns>
+
+{/* source of truth: lib/settings-tabs.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

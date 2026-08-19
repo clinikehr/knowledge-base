@@ -1,0 +1,107 @@
+---
+title: "Membership page"
+description: "Build, brand and publish the public page where patients sign up for a hospital membership plan, then share or embed it."
+icon: "/images/icons/id-badge.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above" roles="Owner or manager" note="Embedding on your own website: Team and above" />
+
+Memberships are recurring plans patients buy from the hospital — a maternity package, a corporate scheme, an annual screening plan. This tab builds the **public page** where they sign up, brands it, and gives you the link to share or embed.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Memberships']} />
+
+<TaskHeader
+  before="A connected payout account that can accept charges, and at least one public, active plan"
+  time="15 minutes"
+  after="A live signup page at your own address that patients can pay through"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Live / Off** switch | Puts the page online or takes it down | Off |
+| **Page address** | The slug after `/membership/`. "Lowercase letters, numbers, and hyphens (3–40 chars)", checked as you type against shape, reserved words and every other workspace | Your hospital name |
+| **Copy link** · **Open** | Copy the hosted address, or open it in a new tab | — |
+| **Custom domain** | Serve the page on a domain you own | Team and above |
+| **Headline** · **Subheadline** · **Intro (optional)** · **Footer note (optional)** | The words above the plans | Supplied defaults |
+| **Success title** · **Success message** · **Cancelled message** | What a patient sees after checkout, under "After checkout" | Supplied defaults |
+| **Accent color** · **Theme** · **Page logo** | Branding. Theme is **Light**, **Dark** or **Match visitor's device**; the logo defaults to your clinic logo from General Settings | Brand accent, Light |
+| **Layout** | **Grid (two columns)** or **List (single column)** | Grid |
+| **Featured plan** | Pins one plan as the highlighted option | None |
+| **Show add-ons** | "Display one-time add-on purchases alongside plans." | On |
+| **Group by collection** | "Group plans + add-ons into their collections." | Off |
+| **Plan order** | Drag to reorder the plans as patients will see them | Saved order |
+| **Add to your website** | Embed snippet — **Floating button** or **Inline on the page**, with position, button text and theme, plus an advanced raw iframe | Team and above |
+| **Save changes** | Enabled once something has changed and the slug check passes | — |
+
+A **Live preview** panel on the right renders your unsaved edits at **desktop** or **mobile** width.
+
+## Set it up
+
+<Steps>
+  <Step title="Check the prerequisite">
+    A membership cannot be sold without somewhere for the money to land. Connect and finish onboarding in [Online payments](/hospital/settings/online-payments) first — a page that is live but cannot take a payment is worse than one that is off.
+  </Step>
+  <Step title="Claim your address">
+    Under **Your link**, set the **Page address**. The indicator underneath tells you at once if the shape is wrong or the address is taken.
+  </Step>
+  <Step title="Write the content">
+    Fill **Headline** and **Subheadline** at minimum. Use **Intro** for who the memberships are for, and **Footer note** for renewal and cancellation terms.
+  </Step>
+  <Step title="Brand it">
+    Pick an **Accent color** and a **Theme**, and upload a **Page logo** if the hospital's main logo is not the right one for a public page.
+  </Step>
+  <Step title="Decide what shows and in what order">
+    Choose a **Layout**, pick a **Featured plan** if one is the recommended option, and drag the plan list into the order you want. Only plans that are public and active appear here.
+  </Step>
+  <Step title="Save, then go Live">
+    Select **Save changes**, then switch **Off** to **Live** and save again. Until you save, the note reads "Save your changes so the live page reflects them."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **The hosted page goes online** at your address and starts accepting signups. Patients pay through the payout account connected on **Online Payments** — the hospital's own subscription is unrelated.
+- **A signup creates a membership record** against that patient, so renewals and benefits are tracked from the moment they pay.
+- **The published page shows exactly what you saved** — an unsaved edit shows in the preview and nowhere else, including in an embed already on your website.
+- **Only public, active plans appear.** Retiring a plan removes it from the page at once; a patient already on it is not affected.
+- **Switching to Off takes the page down immediately.** The address returns nothing; existing memberships continue to bill.
+
+The one that catches people out: **changing the Page address changes links you have already shared.** Posters, emails and QR codes pointing at the old address stop working with no redirect. Pick the address before you print anything, and if you must change it, re-issue every link that carried the old one.
+
+## Check it worked
+
+Select **Open** and view the page in a private browser window. You should see your headline, your branding and your plans in the order you set — with the featured plan highlighted. Run one signup end to end on a cheap plan: checkout should complete, the success message should be yours, and the membership should appear against that patient in the hospital.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Customize your membership page covers everything">
+    The builder starts on Essential: "Brand your public signup page, choose which plans to feature, and embed it on your own website. Available on the Essential plan and above." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Only clinic owners and managers can configure the membership page">
+    Accountants can reach settings but not this tab's controls.
+  </Accordion>
+  <Accordion title="Save changes will not respond">
+    Either nothing has changed, or the slug check is failing. Read the indicator under **Page address** — it names the rule that failed.
+  </Accordion>
+  <Accordion title="No public, active plans yet">
+    The plan-order list says so when there is nothing to show. Publish a plan in the Memberships module and it appears here.
+  </Accordion>
+  <Accordion title="Patients reach the page but cannot pay">
+    The payout account is not finished. Check **Onboarding: Complete** and **Charges: Enabled** in [Online payments](/hospital/settings/online-payments).
+  </Accordion>
+  <Accordion title="The embed section is locked">
+    "Upgrade to Team to drop your membership signup right onto your own website (floating button, inline, or raw iframe). Your hosted link above works on every plan."
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/membership-page-settings.tsx, lib/memberships/membership-page.ts */}

@@ -1,0 +1,105 @@
+---
+title: "Communications"
+description: "Turn on the text, voice, fax and email channels the hospital's AI agents use, and send email from your own mailbox."
+icon: "/images/icons/comments.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" />
+
+Agents can only reach a patient through a channel the hospital has actually provisioned. This tab is where you declare those channels and the numbers and addresses behind them.
+
+<Path steps={['Sidebar', 'Settings', 'Automation & AI', 'Communications']} />
+
+<TaskHeader
+  before="Provisioned numbers or a verified sending address for whichever channels you want"
+  time="10 minutes"
+  after="Agents able to reach patients by the channels you enabled"
+/>
+
+## What this tab controls
+
+The page is headed **Communications** — "Channels your AI agents use to reach patients — text, voice, fax, and email."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Enabled channels** | Five switches: **SMS**, **WhatsApp**, **Fax**, **Voice**, **Email**. "Turn on only the channels you've provisioned. Outbound is disabled outside production." | All off |
+| **SMS from (E.164)** · **SMS messaging profile ID** | The number texts are sent from, in `+15551234567` form, and its profile | Blank |
+| **WhatsApp from** | The WhatsApp number | Blank |
+| **Fax from (E.164)** · **Fax connection ID** | The fax number and its connection | Blank |
+| **Voice number (E.164)** · **Voice connection ID** | The number calls are placed from, and its connection | Blank |
+| **Send from (verified address)** | The address agents send email from, e.g. `clinic@yourdomain.com` | Blank |
+| **Reply-to (optional)** | Where replies should go instead, e.g. `frontdesk@yourdomain.com` | Blank |
+| **Send from your own mailbox** | Connect **Google** or **Outlook** so replies land in your inbox and messages send from your own address. Marked **Rolling out** | Not connected |
+| **Save changes** | Writes everything on the page | — |
+
+The messaging and voice fields sit under **Messaging & voice (Telnyx)**: "The clinic's Telnyx numbers and connections for SMS, WhatsApp, fax, and voice."
+
+## Set it up
+
+<Steps>
+  <Step title="Provision the numbers first">
+    A switch here does not buy you a number. Get the numbers and connections in place with your telephony provider before you turn anything on — a channel enabled without its details simply fails to send.
+  </Step>
+  <Step title="Fill in the numbers">
+    Enter each number in full international form, starting with `+` and the country code. The connection and profile identifiers come from the same provider account as the number.
+  </Step>
+  <Step title="Set the email addresses">
+    Put a verified hospital address in **Send from**. Use **Reply-to** when replies should reach a monitored inbox rather than the sending address — a front-desk mailbox rather than a no-reply.
+  </Step>
+  <Step title="Turn on only what you have">
+    Switch on each channel you have actually provisioned, and leave the rest off. An enabled channel with no number is a silent failure waiting to happen.
+  </Step>
+  <Step title="Save">
+    Select **Save changes**. It confirms with "Communication settings saved".
+  </Step>
+  <Step title="Connect a mailbox, when it reaches you">
+    Under **Send from your own mailbox**, connect **Google** or **Outlook** so agent email sends from your own address and replies land in your inbox. The **Connect** buttons are inactive until the feature reaches your workspace — the card is badged **Rolling out**.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **Agents can use the channels you enabled**, and only those. A published agent whose step sends a text simply cannot when SMS is off.
+- **Messages carry the numbers and addresses on this page.** Patients see the number you entered — so put the hospital's public number here, not a personal mobile.
+- **Replies follow Reply-to** when you set one; otherwise they go to the sending address.
+- **Until mailbox sending is enabled, agents send from the verified address above**, whatever mailbox you connect later.
+
+Two things worth knowing. This tab governs **agent** communication, not the hospital's ordinary notification emails — appointment reminders, invoice notices and staff alerts follow their own preference switches, not these switches. And patient contact preferences still apply on top: a channel being enabled here never overrides a patient who has opted out.
+
+Turning a channel off stops future sends immediately; nothing already delivered is recalled.
+
+## Check it worked
+
+Save, then reload the tab — your numbers and addresses should still be there and the channel switches should be as you left them. Run one agent that sends on a channel you enabled, to a colleague rather than a patient, and confirm it arrives from the number or address you entered.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="An upgrade panel covers the whole tab">
+    "Connect SMS, WhatsApp, fax, voice and email so your AI agents can reach patients. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Only clinic owners and managers can configure communications">
+    Accountants can open settings but not this tab's controls.
+  </Accordion>
+  <Accordion title="A channel is on but nothing sends">
+    The number or connection for that channel is missing or wrong. Check the value is in full international form, starting `+`, and that the connection identifier matches the same provider account.
+  </Accordion>
+  <Accordion title="Replies are going to a mailbox nobody reads">
+    Set **Reply-to** to a monitored address. It overrides the sending address for replies only.
+  </Accordion>
+  <Accordion title="The Connect buttons for Google and Outlook do nothing">
+    That card is badged **Rolling out** and is not active for every workspace yet. Until then agents send from the verified address above.
+  </Accordion>
+  <Accordion title="Reminders still go out after I turned Email off">
+    Ordinary hospital notifications are governed by the notification preferences, not by these agent channels. Change them there.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx */}

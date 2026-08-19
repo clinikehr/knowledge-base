@@ -1,0 +1,106 @@
+---
+title: "Booking settings"
+description: "Set the hospital's opening hours, holidays, rooms and per-provider booking rules — the source of every slot a patient is offered."
+icon: "/images/icons/calendar-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" />
+
+This is where availability comes from. Every time a slot is offered — at the front desk or on the public booking page — it was produced here, then reduced by what is already booked. If patients are seeing no times, this tab is almost always the answer.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Booking Settings']} />
+
+<TaskHeader
+  before="Your real opening hours, and how long a slot should be"
+  time="15 minutes for a first schedule"
+  after="Bookable time appearing on the calendar and the booking page"
+/>
+
+## What this tab controls
+
+**Appointment Settings** — "Configure availability, special dates, and communication preferences" — across five tabs.
+
+| Tab | What it holds |
+| --- | --- |
+| **Availability** (Hours) | **Clinic Availability** — "Set your clinic's operating hours and available time slots." A table of schedules by **Day · Hours · Slot Duration · Max Bookings · Venue · Staff · Status**, with **Add Schedule** |
+| **Booking Rules** (Rules) | Per-provider booking policy — how far ahead and how close to the appointment a patient may book, and how much notice a change needs |
+| **Resources** (Rooms) | The rooms and equipment a service can require, so two appointments never claim the same one |
+| **Special Dates** (Dates) | "Manage holidays, off-days, and special operating hours", with **Add Special Date** |
+| **Communication** (Comms) | Confirmation settings, reminder settings and message templates |
+
+A schedule is the unit of work here: a day, a time range, a slot length, a maximum number of bookings, a venue and optionally a named staff member. A hospital normally has several — one per clinic session, per provider or per venue.
+
+## Set it up
+
+<Steps>
+  <Step title="Add your first schedule">
+    On **Availability**, select **Add Schedule**. Set the day, the start and end time, the **Slot Duration** and the **Max Bookings** for that block, then the venue.
+  </Step>
+  <Step title="Decide whose time it is">
+    Leave the staff field empty for a schedule the whole hospital shares, or name a provider for a session only they run. A named schedule is what makes per-provider availability work.
+  </Step>
+  <Step title="Repeat for every session you actually run">
+    Cover each day and each venue you offer. A day with no schedule has no bookable time at all — there is no implicit "we are open".
+  </Step>
+  <Step title="Set the booking rules">
+    On **Booking Rules**, set each provider's notice periods. These narrow what a patient can pick without changing your hours.
+  </Step>
+  <Step title="Add rooms and equipment">
+    On **Resources**, add anything a service occupies. Services then require them in [Appointment services](/hospital/settings/appointment-services), and the engine keeps them from being double-booked.
+  </Step>
+  <Step title="Block the holidays">
+    On **Special Dates**, add public holidays, training days and any date the hospital runs different hours. Do this for the year ahead in one sitting.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+A saved schedule is live immediately, and it flows one way:
+
+**Schedules — minus existing bookings — minus blocking calendar events — minus special dates — filtered by booking rules = the slots a patient is offered.**
+
+- **The front-desk appointment sheet** starts offering the new times at once.
+- **The public booking page** offers the same times, provided the page is published and the service is visible on it. This tab does not publish anything — see [Booking page designer](/hospital/settings/booking-page-designer).
+- **A blocking subscription on [Calendar integrations](/hospital/settings/calendar-integrations)** removes that provider's time from the result, without creating an appointment.
+- **A required resource** is reserved for the appointment's length, so a second booking needing the same room is not offered that slot.
+- **Special dates** override the normal schedule for those dates only.
+
+What does **not** change: appointments already booked. Shortening a schedule does not cancel or move anything already in the diary — it only stops new bookings landing there. Check the calendar for anything now outside hours and move it deliberately.
+
+Changing a **Slot Duration** re-cuts future slots; it does not resize existing appointments.
+
+## Check it worked
+
+Open the appointment sheet, pick a service and a provider, and step through the next fortnight. You should see times on days you scheduled, nothing on days you did not, and nothing on a special date you blocked. Then open the public booking page in a private window and confirm the same days offer times.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Visitors see no available times">
+    Work down the chain in order. **1.** Is there a schedule covering that day at all — "No availability schedules configured yet" means no. **2.** Is the schedule's venue the one being booked? **3.** Is the schedule named to a provider the patient did not choose? **4.** Is the date a **Special Date**? **5.** Is a blocking calendar subscription covering it? **6.** Do the **Booking Rules** require more notice than the days on offer? **7.** Is the service visible on the booking page, and the page published?
+  </Accordion>
+  <Accordion title="Times appear at the front desk but not on the booking page">
+    That is the split by design: this tab produces the time, the booking page decides who may see it. Check **Allow Online Booking** and that at least one service is visible in the [Booking page designer](/hospital/settings/booking-page-designer).
+  </Accordion>
+  <Accordion title="One provider has no availability and the rest do">
+    Their schedules are missing, or every schedule is named to someone else. A schedule with no staff member is shared; a named one belongs only to that person.
+  </Accordion>
+  <Accordion title="A room got double-booked">
+    The service does not require that resource. Add it under **Resources** here, then add a **Required Resources** line to the service.
+  </Accordion>
+  <Accordion title="I shortened our hours and appointments are still there">
+    Changing a schedule never moves an existing appointment. Find them on the calendar and reschedule them yourself.
+  </Accordion>
+  <Accordion title="A holiday was still bookable">
+    A **Special Date** has to exist for that specific date. Add it, and re-check the booking page — patients who already booked keep their slot.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, lib/settings-tabs.ts */}

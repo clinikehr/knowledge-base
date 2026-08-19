@@ -1,6 +1,6 @@
 ---
 title: Settings
-description: "Where every lab-wide setting lives, who is allowed to open it, and which settings tabs a Diagnostics workspace does and does not have."
+description: "A map of every settings tab a lab has, who is allowed to open them, which controls are owner-only, and where the other editions' tabs live."
 icon: /images/icons/settings.svg
 ---
 
@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 
 <Availability editions={['lims']} roles="Owner, manager or accountant" />
 
-Settings is where you set the things that apply to the whole lab: the name and address printed on your reports, who works here and what they may do, which laboratory workflow your bench runs, how patients pay you, and how long your data is kept and exported. Everything on this page is lab-wide — nothing here changes a single order.
+Settings holds everything that applies to the whole lab: the name and address printed on your reports, who works here and what they may do, which laboratory workflow your bench runs, how you are paid, and how your data is kept and exported. Nothing here changes a single order.
 
 <Path steps={['Sidebar', 'Settings']} />
 
@@ -17,67 +17,109 @@ Settings is where you set the things that apply to the whole lab: the name and a
 
 **Settings** sits at the foot of the sidebar, under the modules. Opening it needs an **owner**, a **manager** or an **accountant**. Anyone else — including a bench scientist with full result-entry rights — sees "You don't have permission to access the settings module. Please contact your clinic administrator." instead of the screen.
 
-On a desktop the screen opens with a left rail titled **Lab Settings**, strapline "Configure your professional workspace", holding collapsible groups of tabs. On a phone that rail collapses into a single dropdown. Tabs deep-link with `?tab=`, so a link someone sends you opens the right one — and a link to a tab this edition does not have quietly opens **General** rather than showing an error.
-
-A manager can open every tab a lab has, but four money controls are **owner-only**: **Currency**, **Tax Rate (%)** and the free-clinic switch render for a manager but will not take an edit. See [Billing, plans and taking payment](/lims/settings/money).
+On a desktop the screen opens with a left rail titled **Lab Settings**, strapline "Configure your professional workspace", holding collapsible groups of tabs. On a phone that rail collapses into a single dropdown. The tabs are identical either way.
 
 <Note>
   The settings screen says **Client** where the rest of your lab says patient. Its third section is headed **CLIENT EXPERIENCE** and the portal tab is labelled **Client Portal**, while the sidebar title reads **Lab Settings** and its first section reads **LABORATORY**. Same people, two words. We use "patients" throughout these pages and quote the screen's own wording whenever we name a control, so you can match what is in front of you.
 </Note>
 
-## The four sections a lab has
+## Getting in is not the same as being able to change everything
 
-| Section | Groups | Tabs |
-| --- | --- | --- |
-| **LABORATORY** | Profile · Team · Inventory · Lab workflow · Laboratory notifications | **General Settings**, **Staff & Teams**, **Inventory**, **Lab Workflow**, **Notifications** |
-| **BILLING** | Laboratory Billing · Payment processing | **Billing & Plans**, **Online Payments**, **Payment Details** |
-| **CLIENT EXPERIENCE** | Client portal · Documents | **Client Portal**, **Sharable Documents** |
-| **SYSTEM** | Data & Security | **Security**, **Data Export** |
+Several controls are **owner-only**, and they are the ones that touch money and identity:
 
-**Inventory** appears when the Inventory care area is switched on for your workspace. **Lab Workflow** exists only on Diagnostics — no other edition has it.
+| Owner-only | On |
+| --- | --- |
+| **Currency**, **Tax Rate (%)**, **Free Clinic Mode**, **Flat Rate Fee** | [Billing and plans](/lims/settings/billing) |
+| Every field, including the name, logo and timezone | [General settings](/lims/settings/general) |
+| **Invite Staff** and every row action | [Staff and teams](/lims/settings/staff) |
+| **Require Two-Factor Authentication** | [Security](/lims/settings/security) |
+| Adding, editing and toggling payment channels | [Payment details](/lims/settings/payment-details) |
+| Connecting Stripe or Paystack | [Online payments](/lims/settings/online-payments) |
+| Publishing the portal and saving document defaults | [Client Portal](/lims/settings/portal), [Sharable documents](/lims/settings/sharable-docs) |
+| The inventory **Danger Zone** — hidden entirely, not greyed out | [Inventory settings](/lims/settings/inventory) |
 
-A lab has no **AUTOMATION & AI** section, because both of the tabs that section holds belong to the clinical edition.
+A manager or accountant sees these with their current values and no save button. Most give no message explaining why, so if a field refuses an edit in silence, this table is the reason.
 
-## Open a settings area
+## A tab you were sent to is not there
+
+Settings links carry a `?tab=` on the end, and a tab this edition does not include **silently falls back to General Settings** rather than showing an error. A link that lands you on **General Settings** when you expected something else is almost never broken — it is telling you that tab does not exist for a lab.
+
+## The four sections
+
+| Section | Tabs |
+| --- | --- |
+| **LABORATORY** | General Settings · Staff & Teams · Inventory · Lab Workflow · Notifications |
+| **BILLING** | Billing & Plans · Online Payments · Payment Details |
+| **CLIENT EXPERIENCE** | Client Portal · Sharable Documents |
+| **SYSTEM** | Security · Data Export |
+
+**Inventory** appears when the Inventory area is switched on for your workspace. **Lab Workflow** exists only on Diagnostics — no other edition has it. A lab has no **AUTOMATION & AI** section, because both of the tabs that would fill it belong to the clinical edition. The notification group inside **LABORATORY** is headed **Laboratory notifications**.
+
+## Open a tab
 
 <Columns cols={2}>
-  <Card title="Your lab profile and notifications" icon="/images/icons/hospital.svg" href="/lims/settings/lab-profile">
-    Name, address, phone, email, logo and timezone — what prints on every report — plus which alerts your team receives.
+  <Card title="General settings" icon="/images/icons/building.svg" href="/lims/settings/general">
+    Name, logo, address, contact details and the timezone your turnaround times are measured against.
   </Card>
 
-  <Card title="Staff and permissions" icon="/images/icons/users-gear.svg" href="/lims/settings/team">
-    Invite colleagues, choose roles and access tiers, decide who verifies results, and grant individual acts.
+  <Card title="Staff and teams" icon="/images/icons/users-gear.svg" href="/lims/settings/staff">
+    The staff list, the five-step invite wizard, the four lab roles, and who may authorise a result.
   </Card>
 
-  <Card title="Choose your lab workflow mode" icon="/images/icons/test-tube.svg" href="/lims/settings/lab-workflow">
-    Standard clinical, full DOT/SAMHSA, reference-lab intake only, or both — and what changes on screen when you switch.
+  <Card title="Inventory settings" icon="/images/icons/vials.svg" href="/lims/settings/inventory">
+    Expiry horizons, expiry dates on delivery, dispense enforcement and the danger zone.
   </Card>
 
-  <Card title="Billing, plans and taking payment" icon="/images/icons/credit-card.svg" href="/lims/settings/money">
-    Currency, tax rate, your ClinikEHR plan, card payments, and the bank details printed on your invoices.
+  <Card title="Lab workflow" icon="/images/icons/test-tube.svg" href="/lims/settings/lab-workflow">
+    Standard clinical, full DOT/SAMHSA, reference-lab intake only, or both — and what changes on screen.
   </Card>
 
-  <Card title="Client portal and sharable documents" icon="/images/icons/globe.svg" href="/lims/settings/client-experience">
-    Let patients see their own results online, and choose which documents go out with an appointment.
+  <Card title="Notifications" icon="/images/icons/bell.svg" href="/lims/settings/notifications">
+    The master email switch and the categories your lab receives.
   </Card>
 
-  <Card title="Security, data export and reagent inventory" icon="/images/icons/shield-check.svg" href="/lims/settings/system">
-    Two-factor requirements, passkeys, exports of your own data, and the rules governing reagent stock.
+  <Card title="Billing and plans" icon="/images/icons/credit-card.svg" href="/lims/settings/billing">
+    Currency, tax rate, flat fees and free-clinic mode — all owner-only.
+  </Card>
+
+  <Card title="Online payments" icon="/images/icons/money-bill-transfer.svg" href="/lims/settings/online-payments">
+    Connect Stripe or Paystack so patients and referrers can pay you by card.
+  </Card>
+
+  <Card title="Payment details" icon="/images/icons/banknote.svg" href="/lims/settings/payment-details">
+    Bank accounts and other channels, printed on invoices while a balance is due.
+  </Card>
+
+  <Card title="Client Portal" icon="/images/icons/globe.svg" href="/lims/settings/portal">
+    Publish the portal where patients read their own results — and the button that takes it offline.
+  </Card>
+
+  <Card title="Sharable documents" icon="/images/icons/file-signature.svg" href="/lims/settings/sharable-docs">
+    Consent forms and intakes that go out automatically when a patient books.
+  </Card>
+
+  <Card title="Security" icon="/images/icons/shield-check.svg" href="/lims/settings/security">
+    Require two-factor across the lab, and read the bypass alerts.
+  </Card>
+
+  <Card title="Data export" icon="/images/icons/file-export.svg" href="/lims/settings/data-export">
+    Take a copy of your own data as CSV or ZIP, before you need it.
   </Card>
 </Columns>
 
-## Looking for something that isn't here?
+## Looking for a tab that isn't here?
 
-Settings changes by edition, so several tabs people ask for genuinely do not exist on a Diagnostics workspace:
+Settings changes by edition, so several tabs people ask for genuinely do not exist on a Diagnostics workspace.
 
-| Tab | Where it lives |
-| --- | --- |
-| **Auto Pay**, **Memberships**, **Store Page** | Clinic & Hospital edition only |
-| **Appointment Services**, **Booking Settings**, **Booking Page Designer**, **Contact Form** | Clinic & Hospital edition only |
-| **Communications**, **AI Settings**, **Calendar Integrations**, **Insurance Settings** | Clinic & Hospital edition only |
-| **Loyalty Program** | Pharmacy edition only |
-| **Facility**, **Theatre**, **Ward Management**, **Departments**, **Role Navigation** | Enterprise plan of the Clinic & Hospital edition |
+| Tab | Where it lives | Documented in |
+| --- | --- | --- |
+| **Auto Pay**, **Memberships**, **Store Page** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Appointment Services**, **Booking Settings**, **Booking Page Designer**, **Contact Form** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Communications**, **AI Settings**, **Calendar Integrations** | Clinic & Hospital only | [Clinic settings](/practice/settings/index) |
+| **Insurance Settings** | Clinic & Hospital, solo and team plans | [Insurance settings](/practice/settings/insurance) |
+| **Loyalty Program** | Pharmacy only | [Loyalty program](/pharmacy/settings/loyalty) |
+| **Facility**, **Theatre**, **Ward Management**, **Departments**, **Role Navigation** | Enterprise plan, clinical edition | [Hospital settings](/hospital/settings/index) |
 
-If you followed a link or a bookmark to one of those, you will land on **General Settings** rather than an error page — that is the fallback working, not a fault. To compare what each edition and plan includes, see [Plans and editions](/platform/plans/overview).
+If you followed a link or a bookmark to one of those you will land on **General Settings** rather than an error page — that is the fallback working, not a fault. To compare what each edition and plan includes, see [Plans and editions](/platform/plans/overview).
 
-{/* source of truth: components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, lib/settings-tabs.ts, lib/edition.ts */}
+{/* source of truth: lib/settings-tabs.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx, settings-content.tsx, lib/edition.ts */}

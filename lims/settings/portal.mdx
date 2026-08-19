@@ -1,0 +1,109 @@
+---
+title: Client Portal
+description: "Publish the online portal where your patients see their own results, and learn the button that takes it offline again."
+icon: /images/icons/globe.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Starter and above" roles="Owner, manager or accountant" note="Only an owner can save or publish" />
+
+The portal is the web address where a patient signs in to see their own results, documents and appointments without telephoning your front desk. This tab is where you configure it and publish it.
+
+<Path steps={['Sidebar', 'Settings', 'Client Experience', 'Client Portal']} />
+
+<TaskHeader
+  before="A short web address for your lab, and a decision about which record types patients may see"
+  time="20 minutes for a first pass"
+  after="A published portal at your own address, ready for patients you grant access to"
+/>
+
+<Note>
+  The sidebar calls this section **CLIENT EXPERIENCE** and the tab **Client Portal**, and the portal's own settings say "clients" throughout. Those are the people this section calls patients. We use "patients" here and quote the screen's wording whenever we name a control.
+</Note>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Client Portal** switch, in the hero card | The master on/off. Its status line reads **Active & accessible**, **Currently disabled**, or **Requires upgrade**. | Off |
+| The URL chip | Shows your live address as `client.clinikehr.com/` plus your slug, with buttons to copy it and to open it. | Empty until you set a slug |
+| The publish button | Reads **Save Changes** before you are live, and turns into a green **Live** afterwards. | — |
+| Seven tabs | **Branding** · **Appointments** · **Messaging** · **Telehealth** · **Documents** · **Notifications** · **Privacy** | — |
+
+The seven tabs in one line each: **Branding** sets the portal name, the URL slug, the welcome message, logo, banner, favicon, colours and font. **Appointments** decides whether patients may book, cancel or reschedule, and how much notice they must give. **Messaging** turns secure messaging on and sets auto-replies. **Telehealth** enables video or phone consultations. **Documents** controls uploads, forms and — the section to read twice — which health records patients may see, badged **Sensitive**. **Notifications** chooses which events alert your team and which reminders reach patients. **Privacy** covers the privacy notice, consent on signup, data export and auto-logout.
+
+For the detail of each, see [Portal features](/portal/setup/features) and [Portal branding](/portal/setup/branding).
+
+## Set it up
+
+<Steps>
+  <Step title="Set the name and the address first">
+    On **Branding**, enter a **Portal Name** and a **URL Slug** — "Lowercase letters, numbers and hyphens only". Nothing can be published without both; until the slug exists the chip is replaced by "Set a URL slug in Branding to publish your portal".
+  </Step>
+  <Step title="Decide what patients may see">
+    On **Documents**, work through **Client health record access**. **Lab results** is the one that matters for a lab: switching it on means a patient reads their own verified result the moment it is released, without calling you.
+  </Step>
+  <Step title="Set your privacy posture">
+    On **Privacy**, turn on **Show HIPAA / privacy notice** and **Require consent on first signup**, and set the auto-logout period.
+  </Step>
+  <Step title="Choose the rest">
+    Work through **Appointments**, **Messaging**, **Telehealth** and **Notifications**. Each section has its own switch and shows **Status: enabled** or **Status: disabled**.
+  </Step>
+  <Step title="Publish">
+    Turn the **Client Portal** switch on and select **Save Changes**. You get "Client portal settings saved successfully" and the button becomes a green, pulsing **Live**.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**Your portal goes live at `client.clinikehr.com/` plus your slug.** The address is real from that moment, and the chip's copy and open buttons work.
+
+**But no patient can sign in yet.** Two conditions must both hold, and only one of them is on this tab:
+
+1. The lab-wide **Client Portal** switch, here, is on and published.
+2. That individual patient has portal access enabled on **their own record**.
+
+A patient with no access on their record meets a portal that will not let them in, however green the button here is. Grant it per patient — see [Inviting patients](/portal/setup/invite-patients).
+
+**What a patient can see follows the Documents tab**, not what your bench has finished. Switching **Lab results** off keeps results out of the portal even after they are verified and released.
+
+**Everything else takes effect for the next visitor.** Someone already signed in keeps the session they have until it times out.
+
+<Warning>
+  Once the portal is live, the button no longer saves — it unpublishes. It renders as a green pulsing **Live** with the tooltip **Unpublish Client Portal**, and selecting it takes the portal offline immediately, with no confirmation dialog. You will see "Portal unpublished successfully" and every patient loses access at once. To save an ordinary edit while live, use **Save Changes** in the bar at the foot of the page instead.
+</Warning>
+
+## Check it worked
+
+Copy the URL from the chip and open it in a private browser window: you should reach your own branded sign-in page, not an error. Then ask a patient who has portal access on their record to sign in and confirm they can see what you intended — and only that.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The whole tab is behind an upgrade panel">
+    "The Client Portal is a premium feature available on our Starter, Essential and Team plans." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="I cannot publish — the button is disabled">
+    **Portal Name** or **URL Slug** is blank, the slug is already taken, or you are not the owner. Fill both on **Branding** and wait for the slug to show as available.
+  </Accordion>
+  <Accordion title="I clicked the green Live button and the portal went down">
+    That is what it does while live — it unpublishes, immediately and without asking. Turn the **Client Portal** switch back on and save to republish.
+  </Accordion>
+  <Accordion title="A patient cannot sign in although the portal is live">
+    They do not have portal access on their own record. Both conditions must hold. See [Inviting patients](/portal/setup/invite-patients).
+  </Accordion>
+  <Accordion title="Messaging or Notifications shows a shield and will not open">
+    Those two need an Essential or Team plan — "Messaging is available on Essential & Team Plans".
+  </Accordion>
+  <Accordion title="A patient cannot see a result you released">
+    **Lab results** is off under **Client health record access** on the **Documents** tab. Releasing a report and publishing it to the portal are two different decisions.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/client-portal-settings.tsx, lib/settings-tabs.ts */}

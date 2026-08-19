@@ -1,0 +1,112 @@
+---
+title: General settings
+description: "Set your practice name, logo, contact details and timezone, and see exactly which documents and public pages change once you save."
+icon: /images/icons/building.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" note="Only an owner can save changes here" />
+
+This is your practice's identity. The name, logo and contact details you enter here are what a client sees on an invoice, a receipt, your booking page and the client portal — and the timezone decides what time an appointment says it is.
+
+<Path steps={['Sidebar', 'Settings', 'Profile', 'General Settings']} />
+
+<TaskHeader
+  before="Your practice's postal address, phone number and public email address"
+  time="5 minutes"
+  after="Your name, logo and contact details printing on everything a client receives"
+/>
+
+## What this tab controls
+
+The card is headed **General Information** — "Your clinic's basic information and regional preferences."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Clinic Logo**, under **Clinic Branding** | A square image. The hint reads "Used on prescriptions, invoices, and general clinic branding." | Empty |
+| **Clinic Name** | The name of your practice. At least two characters. | The name given at signup |
+| **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | **UTC** |
+| **Address** | Free text, several lines. | Empty |
+| **Phone Number** | Free text, so a country code and extension are fine. | Empty |
+| **Email Address** | Must be a valid email address. This is the address clients reply to. | Empty |
+| **Website** | Must be a full URL including `https://`. | Empty |
+| **Clinic Description** | A short paragraph. "This description may be shown on your public booking page." | Empty |
+
+Every field is editable by the **owner** only. A manager or accountant sees the same tab with the values filled in, the fields greyed out, and no **Save Changes** button.
+
+Name, address, phone and email are the four that matter most. Filling in all four is what ticks the setup step the app calls **Complete your clinic profile** — that step says "clinic" even though this section calls it a practice.
+
+## Set it up
+
+<Steps>
+  <Step title="Open General Settings">
+    From the sidebar footer select **Settings**, then **Profile** → **General Settings**. It is the tab you land on by default.
+  </Step>
+  <Step title="Try the shortcut first">
+    On your **Get Started** page, the **Complete your clinic profile** step carries an **Auto-fill from account** button that copies what you gave at signup. You get "Profile auto-filled" and a list of what it added, or "Profile already has data". Then come back here to finish the rest.
+  </Step>
+  <Step title="Upload your logo">
+    Under **Clinic Branding**, select the **Clinic Logo** uploader and choose a square image.
+  </Step>
+  <Step title="Enter the name and choose the timezone">
+    Type over **Clinic Name** if it is wrong. Then open **Timezone** and start typing your city — the list is searchable. Choose the zone your front desk works in, not your head office's.
+  </Step>
+  <Step title="Fill in the four that print">
+    **Address**, **Phone Number**, **Email Address** — and the **Website** if you have one. Use an email address you are happy for clients to reply to.
+  </Step>
+  <Step title="Write the description">
+    A sentence or two about what you do. Optional, and it shows on your public booking page.
+  </Step>
+  <Step title="Save Changes">
+    Select **Save Changes**. You get "Clinic settings updated successfully". If nothing happens, look for red text under **Email Address** ("Please enter a valid email address.") or **Website** ("Please enter a valid URL.").
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Clinic Name** or **Clinic Logo** | Both appear on invoice PDFs and invoice emails, on your public booking page, in the client portal, and on printed receipts. Prescriptions carry the logo too. |
+| **Address** and **Phone Number** | Start printing on invoices and on the documents you send out, so a client can find you and call you. |
+| **Email Address** | Becomes the practice address shown to clients on documents and public pages. |
+| **Website** and **Clinic Description** | Show on your public booking page. |
+| **Timezone** | Appointment times are displayed in it everywhere, reminders are timed by it, and it decides which business day a payment lands in. |
+
+Two things to know before you change any of it:
+
+- **Nothing already issued is re-stamped.** An invoice PDF that has gone out keeps the old name, logo and address. Only documents generated after the save carry the new details.
+- **A wrong timezone puts work on the wrong day.** Left on UTC while you work in New York, a late-afternoon payment can be filed against tomorrow and an appointment can display hours from when it was booked. Fix the timezone before you go hunting a missing takings figure.
+
+Everyone else sees the new details on their next page load — there is nothing to roll out.
+
+## Check it worked
+
+Reload the tab; your values should still be there. Then open your public booking page and look for the new name, logo and description, and download any invoice PDF to check the header carries the name, address and phone.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Every field is greyed out and there is no Save button">
+    You are a manager or an accountant. This tab is owner-only to edit — you can read it but not change it. Ask the practice owner, or see [Roles](/platform/team/roles).
+  </Accordion>
+  <Accordion title='Save does nothing and the form stays open'>
+    A field failed validation. **Clinic Name** needs at least two characters, **Email Address** must be a real address, and **Website** must be a full URL starting `https://`. Scroll up — the message sits directly under the offending field.
+  </Accordion>
+  <Accordion title="Appointment times are all shifted by an hour or more">
+    The **Timezone** is wrong, or was left on **UTC**. Set it to the zone your practice works in and reload. Times already recorded are not moved — they are simply displayed in the correct zone from now on.
+  </Accordion>
+  <Accordion title='The "Complete your clinic profile" step still shows as outstanding'>
+    That step needs the address, phone number and email address all present. One empty field keeps it open. Fill the gap and save, and the step ticks on your next visit to **Get Started**.
+  </Accordion>
+  <Accordion title="The logo uploaded but is not on my invoices">
+    Only documents generated after the upload carry it. Re-download the invoice rather than reopening the copy you saved earlier.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, lib/onboarding-steps.ts */}

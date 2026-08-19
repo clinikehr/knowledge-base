@@ -1,0 +1,133 @@
+---
+title: Staff and teams
+description: "Invite colleagues to your lab, choose their role and access tier, and decide who may enter results and who must authorise them."
+icon: /images/icons/users-gear.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" note="Only an owner can invite or remove staff" />
+
+This tab is where everyone who works in your lab gets an account, a role and an answer to the question that matters most on a bench: may this person authorise a result, or does someone else have to?
+
+<Path steps={['Sidebar', 'Settings', 'Laboratory', 'Staff & Teams']} />
+
+<TaskHeader
+  before="The person's first name, last name and a working email address"
+  time="3 minutes per person"
+  after="A colleague who can sign in, with only the permissions you granted"
+/>
+
+## What this tab controls
+
+| Control | What it does | Who |
+| --- | --- | --- |
+| **Staff Members** card | Everyone in the lab, with **Name**, **Email**, **Specialty** and **Last active**. | Everyone with settings access |
+| **Invite Staff** button | Opens the five-step **Add team member** wizard. | Owner only |
+| Seat counter | Reads "\{n\} of \{n\} seats used", or "\{n\} staff · unlimited seats". | Owner only |
+| **Actions** menu on a row | **Change Specialty**, **Permissions**, **Require MFA on sign-in**, **Reset two-factor**, **Grant emergency access**, **Remove Staff**. | Owner only |
+| **Pending Invitations** card | Invitations sent but not accepted, with **Sent** and **Expires**, and a cancel button. | Everyone with settings access |
+
+## Seats are included, up to your plan's cap
+
+**Nothing here is ever billed per seat.** Your plan includes a number of staff accounts, and inside that number an extra colleague costs nothing — the invite wizard's review step says **Included in your plan** rather than a price.
+
+What the cap does is stop you. At the limit the tab reads "You've used all \{n\} seats on your plan." with a **View plans** button, and the next invite is refused until you move up. Every account counts; there is no free role.
+
+<Note>
+  The clinical edition works the opposite way — there, clinicians are charged per seat and some administrative roles are free. If a colleague running a clinic warns you that inviting a technician will cost money, that is their edition, not yours.
+</Note>
+
+## Invite someone
+
+<Steps>
+  <Step title="Select Invite Staff">
+    The **Add team member** sheet opens on **1 Profile**.
+  </Step>
+  <Step title="Enter their details">
+    **First name**, **Last name** and **Email** — "They'll use this email to sign in to ClinikEHR".
+  </Step>
+  <Step title="Choose a role on 2 Specialty">
+    Under **Administrative roles**, pick one of the four laboratory roles, then an **access tier**:
+
+    | Role | What it is for |
+    | --- | --- |
+    | **Lab Manager** | Runs the lab — patient records, report release, test pricing, staff accounts |
+    | **Accessioning Clerk** | Front of house: registers patients, books collection slots, accessions samples, raises the invoice |
+    | **Referrer Liaison** | Looks after referring clinics — releases reports to them, handles accounts and statements |
+    | **QC Officer** | Quality oversight: QC runs, verified results, turnaround times. Read-only on patient records |
+
+    The tiers are **Own bench** (only the samples on the bench they work), **Whole lab** (every sample, result and patient at this site) and **All sites** (every collection site and bench, plus pricing, referrer accounts and lab-wide reports).
+  </Step>
+  <Step title="Answer the supervision question on 3 Supervisor">
+    "Do \{name\}'s results need verifying before release?" A technician may run the sample and enter the reading, but a qualified verifier has to authorise the result before it can be reported — and is the only one who may amend it afterwards. Name that verifier here. You can also record a licence under **Set Professional Credential**.
+  </Step>
+  <Step title="Review the permissions on 4 Permissions">
+    The switches arrive pre-set from the role. An **Accessioning Clerk**, for instance, gets accession and reject and nothing else — no result entry and no verification.
+  </Step>
+  <Step title="Send it from 5 Review">
+    Check the summary, then **Send invitation**. They get an email with a temporary password and must reset it on first sign-in.
+  </Step>
+</Steps>
+
+## The permissions you can grant
+
+Open **Actions → Permissions** on any row to change these later.
+
+| Group | Acts |
+| --- | --- |
+| **Specimens** | Accession an incoming specimen · Reject an unsuitable specimen |
+| **Results** | Enter results at the bench · Verify and authorise results · Amend a verified result |
+| **Quality** | Review QC runs · Configure analysers and interfaces · View turnaround-time analytics |
+| **Referrers** | Access the referrer portal · Release a report to a referrer |
+
+The three under **Results** are the ones to think hardest about. **Enter results at the bench** records a reading; **Verify and authorise results** is the clinical authority step that makes it reportable; **Amend a verified result** issues a corrected report after the fact. Keeping entry and verification in different pairs of hands is the point of the supervision question in step 3.
+
+## What changes once you save
+
+**Saving the permissions sheet is what starts enforcing it.** Until someone has been saved there they are *unrestricted* — no permission check applies to them at all. The sheet says so: **Saving starts enforcing**, "…from then on \{name\} can only do what is switched on here." Enforcement is opt-in, person by person.
+
+After that, on their next sign-in:
+
+- **The bench changes shape.** Without **Verify and authorise results**, a technician can enter a reading but the authorise action is not offered — the result waits for someone who holds it.
+- **A verified result can only be corrected by a holder of Amend a verified result.** Everyone else sees it as final.
+- **Accession and reject are separate grants**, so a clerk can book a sample in without being able to reject one.
+- **Analyser configuration and the referrer portal each need their own permission**, and a report reaches a referring clinic only through **Release a report to a referrer**.
+- **The access tier decides what they can see at all** — someone on **Own bench** sees their own bench's work and nothing else.
+- **A refused act is recorded**, so you can see who tried what.
+
+Removing someone takes their access away immediately. It does not unpick results they verified.
+
+## Check it worked
+
+The new person appears in **Staff Members**, and their invitation clears from **Pending Invitations** once accepted. Ask a technician to open a result they entered: they should be able to save the reading and should not be offered the authorise action.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Invite Staff is missing or the invite is refused">
+    Only the owner can invite. If you are the owner and it still refuses, you are at your seat cap — select **View plans**, or see [Seats](/platform/plans/seats).
+  </Accordion>
+  <Accordion title="A technician can authorise their own results">
+    They have never been saved on the permissions sheet, so nothing is enforced for them. Open **Actions → Permissions** and select **Save and start enforcing**.
+  </Accordion>
+  <Accordion title="The verifier picker is empty">
+    "Nobody on the team is qualified to verify results yet. Invite a lab scientist or pathologist first, then come back and name them here."
+  </Accordion>
+  <Accordion title="They never got the invitation email">
+    Check **Pending Invitations** for the address and its **Expires** date. Cancel and resend if the address was wrong; ask them to check spam if it was right.
+  </Accordion>
+  <Accordion title="Someone is locked out of two-factor">
+    Use **Actions → Reset two-factor**, or **Grant emergency access** for a time-boxed window. Both need your own two-factor on, and both are recorded. See [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+  <Accordion title="I want to stop enforcing permissions for one person">
+    Open their permissions sheet and select **Unrestrict…**. They return to unrestricted, exactly as before they were first saved.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, staff-permissions-sheet.tsx, lib/edition-staff-roles.ts */}

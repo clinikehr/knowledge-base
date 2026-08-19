@@ -1,0 +1,107 @@
+---
+title: Sharable documents
+description: "Choose which consent forms, intakes and questionnaires go out automatically when a patient books, and scope each one to a service."
+icon: /images/icons/file-signature.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, manager or accountant" note="Only an owner can save defaults" />
+
+If every patient booking a particular test needs to sign the same consent form, this tab sends it for you. Pick the documents, switch on auto-send, and they go out at appointment time instead of being handed over at the desk.
+
+<Path steps={['Sidebar', 'Settings', 'Client Experience', 'Sharable Documents']} />
+
+<TaskHeader
+  before="The consent forms or questionnaires already built in your document library"
+  time="10 minutes"
+  after="The right forms going out automatically when a patient books"
+/>
+
+## What this tab controls
+
+The card is headed **Sharable Documents** — "Select which documents are automatically sent to clients during appointments. Toggle **Auto-send** on individual documents to automate delivery at appointment time."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| The checkbox on a row | Marks that document as a clinic default. | Unticked |
+| **Auto-send on booking** | The switch that actually automates delivery at appointment time. Only appears once the row is selected. | Off |
+| **Applies to** | A popover scoping the document to particular services. Reads **All services** or "\{n\} services". | All services |
+| **Refresh** | Reloads the document list. | — |
+| **Save Defaults** | Saves your selections. In the header and in the sticky footer. | — |
+
+Documents are grouped into four categories: **Consent Documents** ("Clinic-created consent & policy forms"), **Questionnaires & Intakes** ("Pre-built patient intake forms"), **Clinical Outcomes & Measures** ("Validated scored measurement tools") and **Clinical Templates** ("Custom note templates repurposed as forms"). A category with nothing in it is not shown at all.
+
+Each row carries a source badge — **saved template**, **system intake** or **custom note template** — and a status of **Enabled** or **Inactive**. Non-owners see the list plus "Only clinic owners can modify default document settings."
+
+## Set it up
+
+<Steps>
+  <Step title="Tick the documents you want as defaults">
+    Work down the categories and tick each form that should be part of your standard pack. The header chip counts them: "\{n\} documents selected as defaults".
+  </Step>
+  <Step title="Switch on Auto-send where you want it automated">
+    Selecting a row reveals **Auto-send on booking**. Ticking a document without this makes it a default you can send by hand; the switch is what makes it automatic.
+  </Step>
+  <Step title="Scope each one to its services">
+    Select **Applies to** on the row. Leave it on **All services** for something universal, or choose specific services — "Only send this document when one of these services is booked." A drug-screening consent has no business reaching someone booked for a blood count.
+  </Step>
+  <Step title="Save Defaults">
+    Select **Save Defaults**. You get "\{n\} default documents saved successfully."
+  </Step>
+</Steps>
+
+## What changes once you save
+
+| Setting | What you'll notice |
+| --- | --- |
+| A document ticked | It becomes part of your default pack — offered when you send documents to a patient, without hunting for it. |
+| **Auto-send on booking** on | The document goes out by itself at appointment time, to the patient the appointment is for. |
+| **Applies to** narrowed | It goes out only when one of the chosen services is booked. On **All services**, every booking gets it. |
+| The footer count | Reads "\{n\} defaults · \{m\} auto-send", so you can see at a glance how much is automated. |
+
+Three things to know:
+
+- **Nothing is sent retrospectively.** Existing appointments are not touched. The rule applies to bookings made from now on.
+- **Un-ticking a row clears its automation too.** Deselecting a document also switches off its auto-send and drops its service scoping — re-ticking it starts from defaults again.
+- **A document nobody signs is not chased by this tab.** Auto-send delivers it; whether it comes back signed is a separate matter you track on the patient's record.
+
+Which patients can receive documents at all is governed by the portal — see [Client Portal](/lims/settings/portal). A patient with no portal access is not reachable this way.
+
+<Note>
+  **Clinical Outcomes & Measures** needs an Essential plan or higher: "Upgrade to the Essential plan or higher to include validated scored measures as default documents." The other three categories are available on every plan.
+</Note>
+
+## Check it worked
+
+Book a test appointment against a service you scoped a document to, and check the document reaches that patient. Then book one against a service you deliberately excluded and confirm it does not. The header chip should agree with what you ticked.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Everything is read-only and Save Defaults does nothing">
+    You are not the owner — "Only clinic owners can modify default document settings."
+  </Accordion>
+  <Accordion title="A ticked document is not being sent automatically">
+    Ticking makes it a default; **Auto-send on booking** is what automates it. Switch it on and save again.
+  </Accordion>
+  <Accordion title="A document went to the wrong patients">
+    Its **Applies to** is set to **All services**. Open the popover and choose only the services it belongs to.
+  </Accordion>
+  <Accordion title="The service I need is not in the Applies to list">
+    Only active services are listed, and the empty state reads "No active services found for this clinic." Create or reactivate the service first.
+  </Accordion>
+  <Accordion title="A whole category is missing">
+    A category with no documents in it is not rendered. Build the document first, then come back and refresh.
+  </Accordion>
+  <Accordion title="Clinical Outcomes & Measures is blurred behind a panel">
+    That category needs an Essential plan or above. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/sharable-documents-settings.tsx, lib/settings-tabs.ts */}

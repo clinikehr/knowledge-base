@@ -1,0 +1,102 @@
+---
+title: Inventory settings
+description: "Set the defaults new stock items inherit, the rules for receiving and dispensing, the expiry alert horizons, and the one irreversible reset."
+icon: /images/icons/boxes-stacked.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Needs the Inventory care area · the reset is owner-only" />
+
+The **Inventory** tab holds the rules the stock module runs by: "Expiry alerts, dispensing enforcement and inventory data controls." Five small cards, each saving on its own, plus a **Danger Zone** only the owner can see.
+
+<Path steps={['Sidebar', 'Settings', 'Inventory', 'Inventory']} />
+
+<TaskHeader
+  before="The Inventory care area switched on in Facility"
+  time="10 minutes"
+  after="Alerts that fire when you want them and receiving that refuses undated stock"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Expiry alert horizons** | Up to four day counts, 1–365, at which stock approaching expiry is flagged | 60 and 30 days |
+| **Enforce inventory on dispense** | Strict, or best-effort. "When off, dispensing never blocks and off-ledger lines are recorded in the Reconciliation tab for review." | Off — "Best-effort — never blocks (default)" |
+| **Low-stock threshold** | The default a new item inherits when it is created without its own. Leave empty for no default | Empty |
+| **Reorder quantity** | The same, for how much to reorder | Empty |
+| **Require expiry date on new lots** | Refuses to receive stock into a new lot without an expiry date | Off |
+| **Allow selling items with no recorded stock** | Lets the till sell an item whose recorded stock is zero, recording each oversell for reconciliation | On |
+| **Reset inventory…** | Erases the whole inventory module. Owner-only, and hidden entirely from managers and accountants | — |
+
+The defaults card notes where it bites: new-item values apply "in the item form and catalog imports (a POS-report import arrives with no thresholds at all)."
+
+## Set it up
+
+<Steps>
+  <Step title="Set the expiry horizons">
+    Type a number of days and select **Add**, up to four times. Remove one with the × on its chip. Select **Save horizons**. Clearing them all reverts to the default pair.
+  </Step>
+  <Step title="Choose how strict dispensing is">
+    Leave **Enforce inventory on dispense** off unless you want an unlinked medication or insufficient stock to abort the whole dispense. On, it behaves like the till; off, drift is logged rather than blocked.
+  </Step>
+  <Step title="Set the new-item defaults">
+    Enter a **Low-stock threshold** and a **Reorder quantity** in whole units, then **Save defaults**. Leave either empty for no default. Bad input is refused with "Enter whole numbers of units, or leave a field empty for no default."
+  </Step>
+  <Step title="Decide about expiry dates on receiving">
+    Turn **Require expiry date on new lots** on if you want the gap closed at the door. It confirms with "Receiving now requires an expiry date on every new lot."
+  </Step>
+  <Step title="Decide about selling without stock">
+    Leave **Allow selling items with no recorded stock** on if goods reach the shelf before they are booked in. Turning it off "restores the hard stock check at the till".
+  </Step>
+</Steps>
+
+<Warning>
+  **Reset inventory…** permanently deletes the whole inventory module — catalog, lots, stock levels, ledger, purchase orders, vendors, locations and device history — and cannot be undone. It exists for a clean re-import, not for correcting counts; adjust quantities through a stock count instead. Opening it shows exactly what would go, counted by type, and you must type `RESET` to confirm. The hospital refuses the reset outright if clinical administration records reference these lots: "Clinical administration records reference this inventory's lots, and a reset would destroy that traceability."
+</Warning>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Expiry alert horizons** | They decide when an item appears on the **Alerts** tab and in the daily inventory digest email. Widening a horizon can make a batch of items appear at once — they were always expiring, you are just seeing them earlier. |
+| **Require expiry date on new lots** | The **Receive** form stops accepting a new lot with no expiry, **from that moment**. It does **not** retro-fix lots already received undated — those stay undated, and stay invisible to earliest-expiry picking and to expiry alerts. Find and correct them by hand if you need them covered. |
+| **Enforce inventory on dispense** on | An unlinked medication or insufficient stock aborts the whole dispense. Off, dispensing proceeds and off-ledger lines go to the Reconciliation tab. |
+| **Low-stock threshold** / **Reorder quantity** | Only items created *after* the save inherit them. Existing items keep whatever they already have. |
+| **Allow selling items with no recorded stock** off | The till refuses to sell more than the recorded stock. On, each oversold quantity is recorded, reconciled automatically when stock is received, and anything unreconciled appears in the inventory digest email. |
+| **Reset inventory…** | Everything listed in the dialog is deleted. Your medication list, store history and all clinical records are kept. |
+
+## Check it worked
+
+Add a new item without touching its thresholds and confirm it arrives with the defaults you set. Open the **Alerts** tab and check the items listed line up with your horizons. If you required expiry dates, try receiving a new lot without one — it should be refused. If you enabled strict dispensing, try dispensing an unlinked medication; it should abort rather than warn.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Inventory tab">
+    It appears only while the **Inventory** care area is on. Turn it on in [Facility](/hospital/settings/facility).
+  </Accordion>
+  <Accordion title="I cannot see the Danger Zone">
+    The reset is owner-only and is hidden — not disabled — for managers and accountants. If you can see the rest of the tab but not the red card, that is why.
+  </Accordion>
+  <Accordion title='"This inventory cannot be reset"'>
+    Vaccine administrations, ward medication administrations, adverse-event reports or patient-linked ledger entries reference these lots, and the reset is refused to protect that traceability. Correct quantities with a stock count instead.
+  </Accordion>
+  <Accordion title="I required expiry dates but old undated lots are still there">
+    The rule applies to new lots from the moment you save it. It does not go back and fix existing undated lots, and those stay invisible to earliest-expiry picking. Correct them by hand.
+  </Accordion>
+  <Accordion title="New items are not picking up my defaults">
+    Defaults apply only to items created without their own values, and only after the save. Anything already in the catalog keeps what it has.
+  </Accordion>
+  <Accordion title="Nothing is showing on the Alerts tab">
+    Check the horizons. With none set you are on the default pair, and an item only appears once it is inside one of them.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="inventory settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/inventory-settings.tsx, components/inventory/expiry-alert-settings.tsx, components/inventory/dispense-enforcement-settings.tsx */}

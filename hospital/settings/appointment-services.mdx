@@ -1,0 +1,117 @@
+---
+title: "Appointment services"
+description: "Build the catalogue of bookable services the hospital offers — name, price, duration, venue and who can deliver each one."
+icon: "/images/icons/concierge-bell.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" />
+
+Everything a patient can be booked for starts here. A service carries its own price, its length, where it can be delivered and who may deliver it — and that one record then feeds the appointment sheet, the invoice picker and the public booking page.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Appointment Services']} />
+
+<TaskHeader
+  before="Your price list, and how long each service actually takes"
+  time="3 minutes per service"
+  after="A bookable catalogue clinicians and the front desk can choose from"
+/>
+
+## What this tab controls
+
+The list is headed **Appointment Services** — "Manage services available for appointment booking" — with a search box, a **Add Service** button and a table of **Service · Category · Duration · Price · Venue · Status**. Each row's menu offers **View**, **Edit** and **Delete**.
+
+Selecting **Add Service** opens the full form, with a live **Service Preview** beside it.
+
+| Field | What it does | Required |
+| --- | --- | --- |
+| **Service Name** | What everyone sees — on the booking page, the appointment and the invoice | Yes |
+| **Category** | Searchable clinical grouping (General Consultation, Diagnostic, Surgical Procedure, Physical Therapy…) | Yes |
+| **Sub-category (Optional)** | A free-text refinement, e.g. "Routine" or "Emergency" | No |
+| **Procedure Code (Optional)** | "Tag this service with a CPT or HCPCS code for billing & reporting." | No |
+| **Description (Optional)** | What the service includes | No |
+| **Price** | Shown with the hospital's own currency code in the label | Yes |
+| **Duration (minutes)** | 1 to 480, with 15/30/45/60/90/120 shortcut buttons | Yes |
+| **Available Venues** | **In-Person**, **Telemedicine**, **Home Visit**, **Mobile Clinic**. At least one | Yes |
+| **Active Service** | "Enable/disable this service for booking" | Defaults on |
+| **Requires Preparation** | Reveals **Preparation Instructions** for the patient | Defaults off |
+| **Providers** | Which clinicians may deliver it. "Leave all unchecked to offer it with any available provider." | No |
+| **Required Resources** | Rooms or equipment the service occupies. "Each is reserved automatically and can never be double-booked." | No |
+| **Product Used** | Inventory consumed per appointment, reserved at booking and deducted on completion | No |
+
+There is no colour, no deposit and no buffer field on this form — deposits are set per booking page, and gaps come from the schedule.
+
+## Set it up
+
+<Steps>
+  <Step title="Select Add Service">
+    The form opens with a live preview showing how the service will read.
+  </Step>
+  <Step title="Name and classify it">
+    Enter the **Service Name** patients will recognise, choose a **Category**, and add a **Procedure Code** if your billing or reporting needs one.
+  </Step>
+  <Step title="Set the price and the length">
+    **Price** is in the hospital's currency, set on [Billing and plans](/hospital/settings/billing). **Duration (minutes)** is what the calendar reserves, so use the real clinic-room time, not the ideal.
+  </Step>
+  <Step title="Tick the venues">
+    Choose every venue the service can genuinely run at. A service with no venue cannot be saved.
+  </Step>
+  <Step title="Restrict the providers, if it matters">
+    Leave the **Providers** list untouched to allow any available clinician; tick specific people when only they are credentialed for it.
+  </Step>
+  <Step title="Reserve rooms, equipment and stock">
+    Add a **Required Resources** line for a theatre, a scanner or a chair the service occupies. Add a **Product Used** line for anything drawn from inventory each time.
+  </Step>
+  <Step title="Save">
+    Select **Create Service**. It confirms with "Service created successfully" and returns you to the list.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+An **active** service becomes usable straight away, in three places at once:
+
+- **The appointment sheet** offers it, and picks up its duration and price automatically when it is chosen.
+- **The invoice service picker** offers it, so a bill can be raised for it without retyping the amount.
+- **The public booking page becomes able to offer it** — but does not yet. A new service still has to be marked visible in the **Services** tab of the [Booking page designer](/hospital/settings/booking-page-designer). This is the single most common "why can't patients book it?".
+
+Beyond that: a **Required Resources** line means the room or machine is reserved for the length of the appointment and cannot be double-booked; a **Product Used** line reserves stock at booking and draws it down at completion, earliest-expiring lot first; **Preparation Instructions** travel to the patient with the appointment.
+
+Turning **Active Service** off removes it from all three surfaces immediately. Appointments already booked against it are untouched, and its history stays intact — which is why **retiring beats deleting**. Deletion is blocked outright once a service has been used: "If this service is being used by any appointments, you will not be able to delete it. Consider deactivating it instead."
+
+Editing a price changes new bookings and new invoice lines only. An invoice already raised keeps the amount it was raised with.
+
+## Check it worked
+
+The new service appears in the list with an **Active** badge, its price in your currency and its duration. Open the appointment sheet and confirm it is selectable and pulls through the right length. If patients should book it themselves, open the [Booking page designer](/hospital/settings/booking-page-designer) and check it is on the page.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The form will not save">
+    Something required is empty. A service needs a name, a category, a price, a duration and **at least one venue type**. The message appears under the offending field.
+  </Accordion>
+  <Accordion title="The service is active but patients cannot book it">
+    Being active makes it bookable internally. It also has to be added to the booking page in the **Services** tab of the [Booking page designer](/hospital/settings/booking-page-designer).
+  </Accordion>
+  <Accordion title="Delete is refused">
+    The service is attached to appointments. Turn **Active Service** off instead — it disappears from every picker and keeps its history.
+  </Accordion>
+  <Accordion title="No rooms or equipment defined yet">
+    The **Required Resources** card says so when there is nothing to require. Add them under **Resources** in [Booking settings](/hospital/settings/booking-settings) first.
+  </Accordion>
+  <Accordion title="The price shows the wrong symbol">
+    The label carries the hospital's currency from [Billing and plans](/hospital/settings/billing). Change it there, not per service.
+  </Accordion>
+  <Accordion title="A clinician cannot be booked for it">
+    The **Providers** list has specific people ticked, and they are not one of them. Untick everyone to allow any available provider.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/services/appointment-services.tsx, components/clinic/appointment/services/appointment-service-form.tsx */}

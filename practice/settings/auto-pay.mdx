@@ -1,0 +1,111 @@
+---
+title: "Auto Pay"
+description: "Charge a client's saved card automatically when their appointment is confirmed or completed, with no manual invoicing."
+icon: /images/icons/arrows-repeat.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above" roles="Owner only" note="Also requires a connected Stripe account" />
+
+Auto Pay takes the invoicing step out of a routine visit: when an appointment reaches the status you choose, the card the client has on file is charged, and they get a receipt. Nobody has to remember to bill them.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Auto Pay']} />
+
+<TaskHeader
+  before="A connected Stripe account that can accept charges, and at least one client with a saved card"
+  time="2 minutes"
+  after="Appointments that pay for themselves as they are confirmed or completed"
+/>
+
+The card describes itself as: "Automatically charge a patient's saved card on file when their appointment is confirmed or completed — no manual invoicing." The settings screen says **patient** where the rest of your workspace says **client** — same people.
+
+## What this tab controls
+
+Nothing on this tab is editable until two conditions hold: your plan is **Essential** or above, and Stripe is connected and able to take charges. Below **Essential** you get "Auto Pay is part of the Essential plan and above" and an **Upgrade** button. Without Stripe you get "Connect Stripe to use Auto Pay" — "Finish the Stripe setup in **Online Payments** to turn it on."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Enable Auto Pay** | The master switch. "Charge the card on file for unpaid appointment invoices automatically." The badge at the top of the card follows it: **● On** or **◌ Off** | Off |
+| **Confirmed** | Trigger. "Charge as soon as the visit is confirmed" | Off |
+| **Completed** | Trigger. "Charge once the visit is marked completed" | On |
+| **Email a receipt to the patient** | "Send a payment confirmation each time a card is charged" | On |
+| **Save changes** | Only enabled once something has actually changed and at least one trigger is selected | — |
+
+The triggers sit under the heading "Charge when the appointment is…" and note that "Each invoice is only ever charged once", so turning both on does not double-charge — whichever comes first wins.
+
+<Warning>
+  Every Auto Pay charge carries a **1.9% platform fee**, on top of Stripe's own fees. This moves real money without anyone approving it at the time. Turn it on deliberately, and make a test booking on a card you control before you leave it running on live appointments.
+</Warning>
+
+## Set it up
+
+<Steps>
+  <Step title="Finish the Stripe connection first">
+    On [Online payments](/practice/settings/online-payments), check that both **Onboarding** and **Charges** are green. Auto Pay stays locked otherwise, and a half-connected account looks connected.
+  </Step>
+  <Step title="Turn on the master switch">
+    Select **Enable Auto Pay**. The trigger and receipt options appear beneath it.
+  </Step>
+  <Step title="Choose when the card is charged">
+    Turn on **Confirmed**, **Completed**, or both. If you turn both off, the page tells you in red — "Select at least one — confirmed or completed" — and refuses to save.
+  </Step>
+  <Step title="Decide about receipts">
+    Leave **Email a receipt to the patient** on unless you have a reason not to. A charge nobody was told about is what generates the phone call.
+  </Step>
+  <Step title="Save">
+    Select **Save changes**. The toast reads "Auto Pay is on".
+  </Step>
+  <Step title="Test it before you rely on it">
+    Book a low-value appointment for a test client with your own card saved, move it to the trigger status, and watch the charge and receipt arrive.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+The moment an appointment reaches the status you chose, its unpaid invoice is charged against the card on file — no invoice sent, no one asked, no confirmation step. That is the point of the feature, and it is also the thing to be clear-eyed about: money starts moving without a human in the loop.
+
+Who is actually affected is narrower than it first sounds.
+
+- **Only clients with a saved card are charged.** "Anyone without a card on file is skipped and left for manual collection." Everyone else still needs an invoice exactly as before, so this does not replace your billing process — it removes the easy cases from it.
+- **A card that is declined, or that needs extra verification (3-D Secure), is never force-charged.** You are notified to collect it manually instead. A failed Auto Pay leaves the invoice unpaid, not stuck.
+- **Each invoice is only ever charged once**, even with both triggers on.
+- **A receipt is emailed** on every successful charge if you left that switch on.
+
+Appointments that were already confirmed or completed before you turned Auto Pay on are not swept up retrospectively — this applies from now forwards.
+
+Card details are never held by ClinikEHR: "Card data is stored securely by Stripe and never touches ClinikEHR servers."
+
+## Check it worked
+
+The badge at the top right of the card should read **● On**. Then run the real check: book a test appointment for a client with a card on file, move it to your trigger status, and confirm the invoice comes back paid and the receipt lands in the inbox. Your Stripe dashboard should show the charge with the platform fee deducted.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The whole card says I need to upgrade">
+    Auto Pay starts at **Essential**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="It says 'Connect Stripe to use Auto Pay'">
+    Auto Pay charges saved cards through Stripe specifically, and your account either is not connected or cannot take charges yet. Finish setup on [Online payments](/practice/settings/online-payments) — this card updates on its own once Stripe is ready.
+  </Accordion>
+  <Accordion title="The switches will not move">
+    "Only the clinic owner can change Auto Pay." A manager can read the settings but not change them.
+  </Accordion>
+  <Accordion title="Save changes is greyed out">
+    Either nothing has changed since you opened the tab, or you have Auto Pay on with both triggers off. Select **Confirmed** or **Completed** and the button becomes available.
+  </Accordion>
+  <Accordion title="Some appointments are charged and others are not">
+    Only clients with a card on file are eligible. Everyone else is skipped by design and left for manual collection — check whether the client has ever saved a card.
+  </Accordion>
+  <Accordion title="A charge failed and the client was not billed">
+    Declines and cards needing 3-D Secure are never retried automatically. Collect that one manually; the invoice is still there, unpaid.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/auto-pay-settings.tsx, lib/settings-tabs.ts */}

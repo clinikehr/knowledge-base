@@ -1,0 +1,105 @@
+---
+title: "Online payments"
+description: "Connect Stripe or Paystack so patients can pay the hospital online, and see which features stay locked until the connection completes."
+icon: "/images/icons/wallet.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Only the owner can connect an account" />
+
+This is where the hospital connects the account that **receives money from patients** — card payments on invoices, deposits taken at booking, memberships and Auto Pay. It is not how the hospital pays ClinikEHR; that is the subscription, under [Change your plan](/platform/plans/change-plan).
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Online Payments']} />
+
+<TaskHeader
+  before="A bank account in the hospital's name, and the details of the legal entity behind it"
+  time="10 minutes, plus verification by the provider"
+  after="Patients can pay invoices, deposits and memberships online"
+/>
+
+## What this tab controls
+
+**Which provider you see is decided by your currency**, set on [Billing and plans](/hospital/settings/billing). Naira shows **Paystack Connect**; every other currency shows **Stripe Connect**. You never choose between them here.
+
+| Control | What it does | Notes |
+| --- | --- | --- |
+| **Connect Stripe Account** | Sends you to Stripe to create or link the account that receives payments | Owner only. "Only clinic owners can connect a Stripe account." |
+| **Account ID** · **Onboarding** · **Charges** | Three status tiles once connected — the account reference, whether Stripe's checks are **Complete**, and whether charging is **Enabled** | Read-only |
+| **Continue setup** | Returns you to Stripe when onboarding is unfinished | Appears with "Onboarding incomplete — your clinic cannot charge patients yet." |
+| **Open Stripe Dashboard** | Opens the connected account at Stripe | Owner only |
+| **Connect Bank Account** (Paystack) | Opens the Nigerian onboarding form | Owner only |
+| **Business Name (optional)** | "Used to identify your account on Paystack. Defaults to your account name." | Optional |
+| **Bank** | Searchable picker of Nigerian banks | Required |
+| **Account Number** | "Enter 10-digit NUBAN". The account holder's name is looked up and shown back as **Account verified** | Required |
+
+Both cards state the platform fee in their description: ClinikEHR collects a **1.9%** platform fee on each transaction. The Paystack card adds that "Payments are settled directly to your bank account. The clinic bears Paystack transaction fees."
+
+## Set it up
+
+<Steps>
+  <Step title="Confirm your currency first">
+    Open [Billing and plans](/hospital/settings/billing) and check **Currency**. It picks the provider, and switching it later does not carry a connection across.
+  </Step>
+  <Step title="Start the connection">
+    Select **Connect Stripe Account** — or, on Naira, **Connect Bank Account**. Stripe takes you off to its own onboarding; Paystack shows a short form here.
+  </Step>
+  <Step title="Give the provider what it asks for">
+    Business details, an identity document and the bank account that should receive payouts. This is the provider's process, not ClinikEHR's, and it is where most of the time goes.
+  </Step>
+  <Step title="Nigeria: confirm the account holder">
+    Choose your **Bank**, enter the 10-digit account number, and wait for "Verifying account…" to resolve. You must see the account name come back with **Account verified** before **Connect Bank Account** will submit.
+  </Step>
+  <Step title="Check the status tiles">
+    Come back to this tab. You want **Onboarding: Complete** and **Charges: Enabled**, with an **● Active** badge on the card. Anything else means the connection is not finished.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Nothing about a connection is partial in effect — it is the pair **onboarding complete + charges enabled** that unlocks the rest of the product. Until both are true:
+
+- **Payment links on invoices** cannot be issued, so patients have no online way to settle a bill.
+- **Booking-time payment** stays unavailable — **Require Upfront Payment** in the [Booking page designer](/hospital/settings/booking-page-designer) shows "Stripe not connected" (or "Paystack not connected") with a link back here instead of a provider picker.
+- **[Auto Pay](/hospital/settings/auto-pay)** shows "Connect Stripe to use Auto Pay" and cannot be turned on.
+- **[Membership](/hospital/settings/memberships)** sales cannot be taken, because there is nowhere for the money to land.
+
+Once both are true, all four become available without any further switch. The **● Active** badge appears on the card, the Auto Pay tab renders its controls, and a payment link can be attached to an invoice.
+
+The two providers are not interchangeable per transaction. A Stripe payment link is refused on a workspace collecting through Paystack, with: "This clinic collects payments via Paystack — Stripe payment links are not available." Use the payment channels on [Payment details](/hospital/settings/payment-details) for anything the provider cannot take.
+
+Card details are held by the provider, never by ClinikEHR — the Stripe card says so: "Card data is stored securely by Stripe and never touches ClinikEHR servers."
+
+## Check it worked
+
+The card shows **● Active** (Stripe) or **● Connected** (Paystack), with **Onboarding: Complete** and **Charges: Enabled**. Then raise a small test invoice and issue a payment link — it should generate rather than refuse. Finally open **Auto Pay**: its controls should now render instead of the "Connect Stripe" notice.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="An Unlock Stripe Connect panel covers the card">
+    Card processing starts on the paid plans: "Processing card-on-file payments is a premium feature available on our Starter, Essential and Team plans." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="I see the card but the Connect button is missing">
+    "Only clinic owners can connect a Stripe account." Managers and accountants can read the status but not start the connection.
+  </Accordion>
+  <Accordion title="Onboarding says Incomplete and we cannot charge">
+    The provider still wants something — usually an identity document or a bank detail. Select **Continue setup** to return to Stripe and finish it. Charges stay disabled until it clears.
+  </Accordion>
+  <Accordion title="Session expired while connecting">
+    "Your Stripe onboarding session expired. Please start again." Onboarding links are short-lived — select **Connect Stripe Account** again.
+  </Accordion>
+  <Accordion title="The Nigerian account will not verify">
+    The number must be a 10-digit NUBAN and must match the bank you selected. If the lookup returns "Could not verify account", re-check the bank in the picker before the digits.
+  </Accordion>
+  <Accordion title="We are on Paystack but a colleague asked for a Stripe link">
+    Not possible on one workspace: "This clinic collects payments via Paystack — Stripe payment links are not available." Send the Paystack link, or a bank transfer from [Payment details](/hospital/settings/payment-details).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/online-payments-settings.tsx, lib/settings-tabs.ts */}

@@ -1,0 +1,123 @@
+---
+title: "Calendar integrations"
+description: "Connect a clinician's Google or Outlook calendar two ways, or subscribe to an outside calendar one way, and decide whether its events block booking."
+icon: "/images/icons/calendar-days.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner or manager" note="Any staff member can connect their own account; only owners and managers manage subscriptions" />
+
+Consultants rarely work in one system. This tab keeps the hospital calendar honest about the rest of a clinician's week — either by connecting their own account both ways, or by subscribing to an outside calendar one way.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Calendar Integrations']} />
+
+<TaskHeader
+  before="For a subscription, the secret .ics address from the other calendar"
+  time="5 minutes per calendar"
+  after="Outside commitments visible here, and optionally blocking new bookings"
+/>
+
+## What this tab controls
+
+The tab has two halves, and they do different jobs.
+
+### Connected Accounts — two-way
+
+"Connect your Google or Outlook calendar with two-way sync. Each staff member links their own account." Select **Google** or **Outlook**, sign in, and choose which calendars to sync. Appointments here are copied out to that calendar, and its events come back.
+
+Each connected account has **Sync now**, **Choose calendars**, **Reconnect** and **Disconnect**.
+
+### Calendar Subscriptions (read-only) — one-way
+
+"Subscribe to an external calendar (Google, Outlook, Apple, or any .ics URL) … Events appear on your clinic calendar and stay in sync — read-only, one-way."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add calendar** | Opens **Connect a calendar** | — |
+| **Calendar URL** | The secret `.ics` or `webcal://` address, with a **Test connection** button that reports how many events it can read | Required |
+| **Display name** | What the feed is called in the list | Required |
+| **Assign to staff (optional)** | Whose calendar this is | No one |
+| **Default venue** | **In person** or **Online** | In person |
+| **Sync frequency** | Every 15 or 30 minutes, hourly, every 2, 6 or 12 hours, or daily | Hourly |
+| **Blocks booking** / **Info only** | Per-feed switch on the row | Set per feed |
+| **Sync now** · **Reveal URL** · **Copy URL** · **Edit** · **Remove** | Row actions. Revealing the URL is owner-only | — |
+
+A privacy card above the list sets how much patient identity appears on a synced calendar, clinic-wide.
+
+## Set it up
+
+<Steps>
+  <Step title="Decide which half you need">
+    Use **Connected Accounts** when a clinician wants their hospital diary and their own calendar to agree in both directions. Use **Calendar Subscriptions** when you only need to see an outside commitment — a rota, a teaching block, a platform like Headway or Alma.
+  </Step>
+  <Step title="Connect an account">
+    Select **Google** or **Outlook**, sign in as that clinician, then use **Choose calendars** to pick which of their calendars sync.
+  </Step>
+  <Step title="Or copy a secret .ics address">
+    In the other calendar, find its private iCal address. The **How to connect a calendar** panel spells out where it lives in Google, Outlook, Apple iCloud and the therapy platforms. Always take the **secret / private** link and treat it like a password.
+  </Step>
+  <Step title="Add and test it">
+    Select **Add calendar**, paste the address, then **Test connection**. You should see the calendar name and a count of upcoming events before you save.
+  </Step>
+  <Step title="Assign it and set the frequency">
+    Pick the staff member it belongs to, and a **Sync frequency** that matches how often that calendar really changes.
+  </Step>
+  <Step title="Save">
+    Select **Connect & import**. The first sync runs immediately and reports what it created.
+  </Step>
+  <Step title="Choose blocking or info only">
+    On the feed's row, use the **Blocks booking** / **Info only** switch. It confirms with "Now blocks booking" or "Now info-only".
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**Imported events appear on the hospital calendar** at the venue you nominated, and stay in step on your chosen frequency.
+
+**A blocking feed makes that time unbookable — but does not create a ClinikEHR appointment.** This is the distinction that decides how you use the switch:
+
+- **Blocks booking** — the provider's slots at that time disappear from availability, so nobody double-books them. There is no appointment, no patient, no invoice and no clinical record.
+- **Info only** — the event is visible to staff and changes nothing about what can be booked.
+
+**Sync is periodic, not instant.** An event added to the outside calendar a minute ago is not here yet; it arrives on the next run, or immediately if you select **Sync now**. Plan around that when a clinician cancels at short notice — use **Sync now**, or block the time here directly.
+
+**Imported events are not linked to a patient.** "Open one on the calendar to link it if it represents a clinical encounter."
+
+Connecting an account also sends the other way, and that is your responsibility to manage: "your ClinikEHR appointments are copied to your external calendar — including telehealth visits and their secure join links. Anyone with access to that calendar can see them." Set the clinic-wide privacy card before you connect anything.
+
+Removing a feed stops syncing at once and removes its imported events; anything you linked to a patient is kept as a normal local appointment.
+
+## Check it worked
+
+Open the hospital calendar for the assigned clinician and find one event you know exists in the other calendar. Then, on a feed set to **Blocks booking**, try to book that provider over the top of it — those times should not be offered. On a feed set to **Info only**, they should still be.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Calendar Integrations tab">
+    It appears for owners and managers only. Everyone else with settings access does not see it at all.
+  </Accordion>
+  <Accordion title="I can connect my own account but see no subscription list">
+    Subscriptions are clinic-wide governance and load for owners and managers only. Connecting your own account works for any staff member.
+  </Accordion>
+  <Accordion title="Test connection fails">
+    You almost certainly have the public sharing link, not the secret iCal one. It must start `https://` or `webcal://` and end at an `.ics` feed.
+  </Accordion>
+  <Accordion title="A feed says it was auto-paused">
+    "…auto-paused after repeated sync errors. Check the URL, then re-enable to resume." A regenerated secret address is the usual cause — edit the feed and paste the new one.
+  </Accordion>
+  <Accordion title="An event is on the calendar but people can still book over it">
+    That feed is **Info only**. Switch it to **Blocks booking** on the row.
+  </Accordion>
+  <Accordion title="A blocking event did not create an appointment">
+    Correct — it never does. It reserves the time and nothing more. Book a real appointment if the visit belongs in the record.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/calendar-integrations-settings.tsx, components/clinic/dashboard/settings/connected-calendars-section.tsx */}

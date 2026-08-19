@@ -1,0 +1,113 @@
+---
+title: Ward management
+description: "Create the wards, sub-wards and bed spaces your staff admit patients into, and understand what the ward screen shows once they exist."
+icon: /images/icons/bed-double.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner to add, edit or delete · needs the In-patient care area" />
+
+**Ward Management** is where the inpatient side of the hospital is drawn: "Manage your clinic wards, sub-wards, and bed spaces." Nothing on the ward screen works until this tab has been filled in, because a bed has to exist before anyone can be admitted to it.
+
+<Path steps={['Sidebar', 'Settings', 'Departments settings', 'Ward Management']} />
+
+<TaskHeader
+  before="Owner access, the In-patient care area switched on in Facility, and a list of your real wards and beds"
+  time="20 minutes for a first ward"
+  after="Staff can admit a patient to a named bed"
+/>
+
+## What this tab controls
+
+Three levels, three stacked cards. A ward holds sub-wards; a sub-ward holds beds. The second and third cards appear only once you select a row above them.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add Ward** | Opens **Add New Ward**. Owner-only | — |
+| **Ward Name** | At least 2 characters | — |
+| **Description** · **Location** | Free text, both optional | Empty |
+| **Status** | **Open** or **Closed** | Open |
+| **Add Sub-ward** | Opens **Add New Sub-ward** inside the selected ward | — |
+| **Sub-ward Name** · **Description** | Name at least 2 characters | — |
+| **Type** | **Single**, **General**, **Double**, **Room**, **VIP**, **Suite** or **Penthouse** | General |
+| **Capacity** | "Maximum number of beds in this sub-ward". Minimum 1 | 1 |
+| **Add Bed Space** | Opens **Add New Bed Space** inside the selected sub-ward | — |
+| **Bed Space Number** | The number staff will quote. Required | — |
+| **Bed Space Name** | At least 2 characters | — |
+| **Type** | **Cot**, **Bed** or **Bunk** | Bed |
+| **Status** | **Available**, **Occupied**, **Reserved** or **Under Maintenance** | Available |
+
+The sub-ward table also shows **Occupancy** — a bar and a count of occupied against capacity — which is read from the beds themselves, not typed in.
+
+## Set it up
+
+<Steps>
+  <Step title="Confirm In-patient care is on">
+    The tab needs the **In-patient care** area, which is on by default. If **Ward Management** is missing from the rail, turn the area on in [Facility](/hospital/settings/facility).
+  </Step>
+  <Step title="Add a ward">
+    Select **Add Ward**, enter the **Ward Name**, and add a location if it helps staff find it. Leave **Status** on **Open**. You get "Ward added successfully".
+  </Step>
+  <Step title="Select the ward and add sub-wards">
+    Select the ward's actions menu and choose **Add Sub-ward**, or open the ward and use the **Add Sub-ward** button on the card that appears. Set the **Type** and the **Capacity** — the capacity is what the occupancy bar measures against, so make it the real bed count.
+  </Step>
+  <Step title="Add the bed spaces">
+    Select the sub-ward, then **Add Bed Space**. Give each bed its **Bed Space Number** and **Bed Space Name**, choose **Cot**, **Bed** or **Bunk**, and leave **Status** on **Available**. Add one row per physical bed — this is the list the ward screen draws.
+  </Step>
+  <Step title="Check the occupancy line">
+    Back on the sub-ward table, the occupancy bar should read 0 out of your capacity. If the count of beds you added does not match the capacity you set, one of the two is wrong.
+  </Step>
+</Steps>
+
+<Warning>
+  Deleting a ward or sub-ward is permanent and takes what is underneath it. Delete a sub-ward and its bed spaces go with it, along with the numbering staff quote to each other on handover. A ward that is temporarily out of use should be set to **Closed** instead, and a bed under repair to **Under Maintenance**.
+</Warning>
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| Added a ward | It becomes selectable on the [wards](/hospital/inpatient/wards) screen. Staff must pick a ward **and** then a sub-ward before any beds are shown — until they do, the screen says "Please select a ward first." |
+| Added bed spaces | They appear on the ward's bed grid, ready for admission. The grid is a grid of **cards**, not a table with columns: each card is one bed, and **Patient**, **Admitted**, **Diagnosis**, **Attending Doctor**, **Notes** and **Last Updated** all live inside the **Bed \{number\} Details** dialog you open from the card. |
+| Nothing configured | Staff see "No wards available" and "Please contact your administrator". That message means this tab is empty, not that they lack permission. |
+| Changed a bed's **Status** | The grid reflects it straight away. A bed set to **Under Maintenance** or **Reserved** is not offered for a new admission. |
+| Changed **Capacity** | Only the occupancy bar moves. It does not create or remove beds — those are the rows you add by hand. |
+
+Admissions already in progress are unaffected by renaming a ward or sub-ward; the patient stays in the same bed record.
+
+## Check it worked
+
+Open **Wards** from the sidebar and choose your new ward, then a sub-ward. The bed cards should appear, one per bed space you created, all showing as available. Open one and confirm the **Bed \{number\} Details** dialog names the bed you expect. Then go back to Settings and check the occupancy bar on the sub-ward reads the number of beds you added.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title='Staff see "No wards available — Please contact your administrator"'>
+    No wards exist yet, or none are **Open**. Add a ward here, or reopen the closed one; the message is about configuration, not their access.
+  </Accordion>
+  <Accordion title='The ward screen says "Please select a ward first."'>
+    Beds only load once both a ward and a sub-ward are chosen. Pick the ward, then the sub-ward inside it.
+  </Accordion>
+  <Accordion title="I added beds but the grid is empty">
+    Check the beds went into the sub-ward that is selected on the ward screen. Beds belong to a sub-ward, so beds added under a different one will not appear.
+  </Accordion>
+  <Accordion title="There is no Add Ward button">
+    Adding, editing and deleting are owner-only. A manager or accountant sees the tables and nothing else.
+  </Accordion>
+  <Accordion title='"Database permission issue detected"'>
+    The ward could not be created and the dialog closes with your entries kept. Contact your administrator, or ask an owner to create the ward for you, then try again.
+  </Accordion>
+  <Accordion title="The occupancy bar disagrees with the beds I can see">
+    The bar compares occupied beds with the **Capacity** you typed on the sub-ward, which is independent of how many bed rows exist. Set the capacity to the real number of beds.
+  </Accordion>
+</AccordionGroup>
+
+Building a hospital from scratch? [Set up wards and beds](/hospital/get-started/wards-and-beds) covers the same ground in order.
+
+<StillStuck topic="ward setup" />
+
+{/* source of truth: components/clinic/dashboard/settings/ward-settings.tsx, components/clinic/ward-admissions/bed-grid.tsx, components/clinic/ward-admissions/ward-select.tsx */}

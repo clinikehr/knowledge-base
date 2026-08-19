@@ -1,0 +1,98 @@
+---
+title: "Data export"
+description: "Take a copy of your practice data as CSV or ZIP, choose what goes in it, and handle the file safely once it downloads."
+icon: "/images/icons/file-export.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant · Audit Logs: owner or manager" />
+
+"Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back." Use it for an accountant, a migration, a regulator, or your own peace of mind before a big change.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Data Export']} />
+
+<TaskHeader
+  before="Somewhere secure to put the file when it arrives"
+  time="Under a minute to start; the export itself runs on its own"
+  after="A CSV or ZIP of the data you chose"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Modules** | A search-and-add picker of everything you can export, grouped as **Clinical Records**, **Patient Profile**, **Documents & Files**, **Telehealth**, **Administrative**, **Insurance**, **Ward & Inpatient** and **Compliance & Audit** | Nothing selected |
+| **Select all** · **Clear all** | Add or remove every module at once | — |
+| **Date range (optional)** | Narrows the export to a period. **All time** if left alone | All time |
+| **Export** button | Queues the job. Reads "Export \{n\} modules", and picks up a **ZIP** badge once you choose more than one | Disabled until you pick a module |
+| Progress panel | Shows the running job with a percentage and a label, then **Export ready** and a **Download** button | — |
+| **Recent Exports** | Your last few finished jobs, each with a **Re-download** button until it expires | — |
+
+**Audit Logs** only appears in the picker for owners and managers. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+
+## Run an export
+
+<Steps>
+  <Step title="Choose what to export">
+    Search the **Modules** box and add each one you need, or select **Select all**. Chosen modules appear as chips underneath; the small cross on a chip removes it.
+  </Step>
+  <Step title="Narrow it by date if you want to">
+    Set a **Date range** for a period — a tax year, a quarter. Leave it as **All time** for everything.
+  </Step>
+  <Step title="Select Export">
+    The button queues the job and a progress panel appears at the top reading "Queued…". You can leave the page; the export keeps running.
+  </Step>
+  <Step title="Come back and download">
+    When the panel says **Export ready** with the file name and size, select **Download**. The file lands in your browser's downloads folder.
+  </Step>
+  <Step title="Put the file somewhere safe">
+    "Files contain **PHI**. Handle securely per HIPAA." Move it off your downloads folder and onto encrypted storage, and delete any copy you no longer need.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Nothing in the product changes. No client sees anything, no setting moves, no record is altered — you get a file, and that is all.
+
+Two things do happen behind it. First, the export runs in the background and you are told when it is ready, rather than the page hanging while a large job finishes. Second, the export is recorded.
+
+<AuditNote action="Exporting data" />
+
+**Download links expire after 24 hours.** After that the row in **Recent Exports** shows as expired and **Re-download** disappears — run the export again if you still need it. That expiry is why an export is a copy to look after, not a backup you can leave sitting in the list.
+
+If you are closing your account, **export first**. Deleting an account cancels billing immediately and removes your data after a 30-day recovery window; once that window closes there is nothing left to export. See [Delete your account](/platform/account/delete-account).
+
+## Check it worked
+
+The progress panel turns green and reads **Export ready** with a file name and a size. Open the downloaded file: a single-module export is one CSV, a multi-module export is a ZIP containing one CSV per module. Spot-check that the rows cover the date range you asked for.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Export button will not respond">
+    No module is selected — the button stays disabled until you add at least one. It is also disabled while another export is still running; wait for that one to finish.
+  </Accordion>
+  <Accordion title="Audit Logs is not in the list">
+    Exporting the audit log is limited to owners and managers. An accountant sees every other module.
+  </Accordion>
+  <Accordion title="The panel says Export failed">
+    The reason is shown under the message. Try a narrower **Date range** or fewer modules — a very large single job is the usual cause — then run it again.
+  </Accordion>
+  <Accordion title="Download failed, or the file may have expired">
+    "Could not generate download link. The file may have expired." Links last 24 hours. Start the export again; it is quick to re-run.
+  </Accordion>
+  <Accordion title="I closed the tab while it was running">
+    The job keeps going. Come back to this tab and it picks the running job up again, or shows it finished under **Recent Exports**.
+  </Accordion>
+  <Accordion title="I need this for a client's own copy of their record">
+    A full module export is the wrong tool — it contains everyone. See [Export your data](/platform/security/data-export) for the right route.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/data-export-settings.tsx, app/api/export-jobs */}

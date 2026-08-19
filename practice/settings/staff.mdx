@@ -1,0 +1,108 @@
+---
+title: Staff and teams
+description: "Invite colleagues through the five-step wizard, set what each of them may do, and understand what a seat costs before you send the invitation."
+icon: /images/icons/users.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" note="Inviting, editing and removing staff is owner-only" />
+
+This is where your team lives: who is in the practice, who has been invited and not yet joined, and what each of them is allowed to do. It is also where a seat starts being charged, so read the pricing line before you send an invitation.
+
+<Path steps={['Sidebar', 'Settings', 'Team', 'Staff & Teams']} />
+
+<TaskHeader
+  before="The colleague's name and the email address they will sign in with"
+  time="5 minutes per person"
+  after="A colleague who can sign in and do their job, and nothing beyond it"
+/>
+
+## What this tab controls
+
+| Control | What it does | Who sees it |
+| --- | --- | --- |
+| **Staff Members** | Everyone currently in the practice: **Name** (the practice owner carries an **Owner** badge), **Email**, **Specialty** and **Last active**. | Everyone who can open Settings |
+| **Invite Staff** | Opens the five-step invite wizard. | Owner only |
+| Seat counter, under the button | Reads "3 of 5 seats used" plus the per-seat price, or "3 staff · unlimited seats" on an uncapped plan. | Owner only |
+| Row **Actions** menu | **Change Specialty** · **Permissions** (where your practice has permission-governed modules) · **Require MFA on sign-in** · **Remove MFA requirement** · **Reset two-factor** · **Grant emergency access** · **Remove Staff**. The owner's own row has no menu. | Owner only |
+| **Pending Invitations** | Invitations sent and not yet accepted, with **Sent** and **Expires** dates and a cancel button. | Everyone; cancel is owner only |
+| **Pending Seat Payments** | "Staff invites awaiting seat payment via Stripe Checkout. Use Retry to generate a new payment link or Cancel to discard." Appears only when there is one. | Owner only |
+
+A security alerts card sits above the lists and flags anything unusual about sign-ins.
+
+<Warning>
+  **Seats are billed on this edition.** Your plan sets a *maximum* number of seats, not an allowance included in the price — every billable seat is charged monthly from the first one, at the rate shown next to the seat counter. **Starter** allows at most 2 seats and **Essential** at most 5; **Team** and **Enterprise** are uncapped but still charged per seat. Three roles are free and count towards nothing: **supervisor**, **biller** and **scheduler**. The wizard's final step shows the exact monthly change before you send.
+</Warning>
+
+## Invite someone
+
+<Steps>
+  <Step title="Select Invite Staff">
+    The wizard opens on **1 Profile** and walks through **2 Specialty**, **3 Supervisor**, **4 Permissions**, **5 Review**. The numbered strip along the top shows where you are.
+  </Step>
+  <Step title="Profile">
+    **First name**, **Last name** and **Email** — "They'll use this email to sign in to ClinikEHR." Use their real working address; this is what the invitation goes to.
+  </Step>
+  <Step title="Specialty">
+    Choose the clinical specialty, the administrative role, or both. This decides which pages they land on and pre-ticks a sensible set of permissions at step 4.
+  </Step>
+  <Step title="Supervisor">
+    For a clinician, name who supervises them and record their licence — number, type, issuing state and expiry. Skip it for an administrative-only role.
+  </Step>
+  <Step title="Permissions">
+    Switches grouped **Client care**, **Billing** and **Operations** — "Create client profiles", "Edit clients' billing info", "Refund payments", "View financial dashboard", "Add team members" and so on, plus a **Security** row for **Require MFA on login**. Turn off anything the role's defaults gave them that you do not want.
+  </Step>
+  <Step title="Review, then send">
+    The final step is headed **Changes to your plan** and prices the seat: a monthly figure, or a green **Free** badge for a supervisor, biller or scheduler. Send from here.
+  </Step>
+</Steps>
+
+## Change what an existing colleague may do
+
+Open their row's **Actions** menu. **Change Specialty** swaps their role; **Permissions**, where your practice has permission-governed modules, opens a per-person sheet.
+
+Enforcement in that sheet is **opt-in per person**: it warns **Saving starts enforcing** — someone never saved there is unrestricted, and no permission checks apply to them at all. Capabilities added later arrive switched **off** and badged **New**, and stay denied until you save that person again. Full detail: [Permissions](/platform/team/permissions).
+
+## What changes once you save
+
+- **The invitee gets an email** and sets their own password the first time they sign in. Until they do, they sit in **Pending Invitations** with an expiry date.
+- **A seat charge appears on your next invoice** for any role that is not a supervisor, biller or scheduler. Where the seat must be paid up front, the invite waits in **Pending Seat Payments** until Checkout completes — **Retry** issues a fresh payment link.
+- **Their sidebar and available actions narrow** to what you granted, from their next sign-in.
+- **Denied actions are recorded** in the audit log; allowed ones are not.
+- **Hiding a module from someone is a convenience, not a security boundary.** Every action is checked when it is performed, so a hidden page they open directly still refuses the action.
+- **Removing someone strips supervision.** If clinicians name them as supervisor, the removal dialog says how many before you confirm.
+
+## Check it worked
+
+The new person appears under **Pending Invitations** immediately, and moves to **Staff Members** once they accept — the lists refresh themselves, so you do not need to reload. **Last active** fills in after their first sign-in. Ask them to open one page you granted and one you did not: the second should refuse.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Invite Staff button and the rows have no Actions menu">
+    You are a manager or accountant. The staff list is read-only for both roles; only the practice owner can invite, edit or remove.
+  </Accordion>
+  <Accordion title='"You have used all the seats on your plan"'>
+    You are at your plan's maximum. The banner names the next tier and offers **View plans**. See [Seats](/platform/plans/seats) and [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title='"A user with this email already exists. They may already be a member of this clinic."'>
+    That address is already in use. Check **Staff Members** and **Pending Invitations** for it before inviting again.
+  </Accordion>
+  <Accordion title="The invitation was never received">
+    Check the spelling in **Pending Invitations**, then ask them to look in spam. Cancel and re-send if the address is wrong — an invitation also expires on the date shown. See [Invite staff](/platform/team/invite-staff).
+  </Accordion>
+  <Accordion title="Someone can do more than I expected">
+    They were probably never saved in the permissions sheet, so no checks apply to them. Open their sheet, set the switches, and save — that first save is what starts enforcing.
+  </Accordion>
+  <Accordion title="An invite is stuck in Pending Seat Payments">
+    Checkout was abandoned. Select **Retry** for a new payment link, or **Cancel** to discard the invite and free the seat.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/staff-settings.tsx, invite-staff-sheet.tsx, staff-permissions-sheet.tsx, lib/edition.ts */}

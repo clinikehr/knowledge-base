@@ -1,0 +1,113 @@
+---
+title: Notifications
+description: "Choose which in-app alerts and emails your hospital receives, and work out which store governs the message you are actually trying to stop."
+icon: /images/icons/bell.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" />
+
+One master switch and a row of category switches decide what your hospital hears about. The card puts it plainly: "Choose which in-app and email notifications your clinic receives. Essential emails (receipts, security, and billing alerts) always send."
+
+<Path steps={['Sidebar', 'Settings', 'Practice notifications', 'Notifications']} />
+
+<TaskHeader
+  before="Nothing — the switches save the moment you flip them"
+  time="2 minutes"
+  after="A hospital inbox that carries only what your team acts on"
+/>
+
+## What this tab controls
+
+Every switch saves on its own, straight away. There is no **Save** button.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Email notifications** | "Master switch for all clinic emails. Turn off to pause non-essential email." | On |
+| **Appointment** | "New bookings, cancellations, and reminders" | On |
+| **Patient** | "New patient registrations and updates" | On |
+| **Staff** | "Staff invitations accepted and role changes" | On |
+| **Billing** | "Payment received, invoices, and overdue alerts" | On |
+| **Subscription** | "Plan changes, trial expiry, and payment status" | On |
+| **Document** | "Document signed, viewed, or expired" | On |
+| **Insurance** | "Claim status changes and approvals" | On |
+| **System** | "System updates and maintenance notices" | On, **and cannot be switched off** |
+| **Achievement emails** | "Milestone badges, tier-ups, and your clinic's trophy case" | On |
+| **Daily operational digests** | "Morning owner summaries for inventory, pharmacy, and lab" | On |
+
+Two notes on that list. The **System** switch is drawn but fixed, and the line under the card explains why: "System notifications cannot be disabled as they contain important updates about your clinic." And the category list adapts to your edition, so you are only offered categories your hospital can actually produce.
+
+## Set it up
+
+<Steps>
+  <Step title="Open Notifications">
+    From the sidebar footer select **Settings**, then **Practice notifications** → **Notifications**. The rail says "Practice" even for a hospital; the switches are the same.
+  </Step>
+  <Step title="Decide on email as a whole">
+    Leave **Email notifications** on unless you want to pause hospital email entirely. Turning it off confirms with "All non-essential clinic emails are paused. Receipts, security, and billing alerts still send."
+  </Step>
+  <Step title="Mute the categories nobody acts on">
+    Flip a category switch off. You get "Notifications muted" and the name of what you turned off — for example "Appointment notifications turned off."
+  </Step>
+  <Step title="Deal with the two extras">
+    **Achievement emails** and **Daily operational digests** sit below the categories, separated by a line. The digests are a morning summary for the owner covering inventory, pharmacy and lab; turn them off if nobody reads them.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+There is no save — each switch takes effect as you flip it, and the toast tells you it landed.
+
+| What you changed | What you'll notice |
+| --- | --- |
+| **Email notifications** off | Non-essential hospital email stops. **Transactional email keeps sending** — receipts, security alerts, password resets and billing alerts are never suppressed by this switch. In-app notifications are unaffected. |
+| A category off | Both the in-app notice **and** the email for that category stop. The bell stops showing them, and nothing about that category reaches the hospital inbox. |
+| A category back on | Notifications resume from that moment. Nothing suppressed while it was off is delivered late. |
+| **Achievement emails** off | Badge and tier-up emails stop. Your trophy case is still there to look at. |
+| **Daily operational digests** off | The morning inventory, pharmacy and lab summary stops arriving. |
+
+**This store governs email directed at the hospital.** It is not your own account settings, and it is not what a patient has asked for. If you are trying to stop a specific message, work out which store owns it first:
+
+| Store | Where you set it | What it governs |
+| --- | --- | --- |
+| **Email notifications** master switch | This tab | Hospital-directed email, on or off, as a whole |
+| The category switches | This tab | Hospital email **and** in-app notices, per category |
+| A person's own account settings | [Account notifications](/platform/account/notifications) | Email addressed to someone as a person — account, security and marketing |
+| The individual patient's record | The patient's intake sheet | That patient's own appointment reminders and confirmations |
+
+So: a patient complaining about reminders is fixed on their record, not here. An owner tired of milestone emails turns off **Achievement emails** here. Someone who does not want marketing email changes it on their own account.
+
+## Check it worked
+
+Flip a switch and watch for the toast — "Notifications muted" or "Notifications enabled", naming the category. Reload the tab; the switch should hold its new position. Then trigger something in that category — book a test appointment, say — and confirm nothing arrives in the hospital inbox and nothing appears under the bell.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The System switch will not move">
+    It is deliberately fixed on. System notices carry service and maintenance information every hospital needs, so there is no way to mute them.
+  </Accordion>
+  <Accordion title="I turned everything off and email still arrives">
+    Essential email is out of scope for these switches. Receipts, security alerts, password resets and billing alerts always send. If what you are getting is a reminder to a *patient*, that is set on the patient's record, not here.
+  </Accordion>
+  <Accordion title="A category I was told about is not in my list">
+    The list adapts to your edition and only offers categories your hospital can produce. A missing switch means that category never fires for you.
+  </Accordion>
+  <Accordion title='"Failed to update preferences"'>
+    The switch snaps back to where it was and nothing was saved. Check your connection and flip it again.
+  </Accordion>
+  <Accordion title="A colleague still gets emails I muted">
+    Muting here stops hospital-directed email. Email addressed to them as a person — account and security notices, marketing — is governed by their own [account notifications](/platform/account/notifications).
+  </Accordion>
+  <Accordion title="I can see the switches but they will not move">
+    Opening Settings needs owner, manager or accountant. If you have that and a switch still will not move, it is mid-save — each one disables for a moment while it lands.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="notification settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/notification-preferences.tsx, types/notifications.ts */}

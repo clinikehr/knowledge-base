@@ -1,0 +1,121 @@
+---
+title: Theatre
+description: "Add your operating theatres, adapt the surgical safety checklist, and decide whether an incomplete phase stops a case advancing."
+icon: /images/icons/scissors.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Needs the Surgical theatre care area, which ships OFF" />
+
+The **Theatre** tab holds two cards: the rooms cases are booked into, and the surgical safety checklist your theatre confirms — including the one switch that decides whether an unticked box can stop an operation.
+
+<Path steps={['Sidebar', 'Settings', 'Departments settings', 'Theatre']} />
+
+<TaskHeader
+  before="The Surgical theatre care area switched on in Facility — it is off by default"
+  time="10 minutes, longer if you adapt the checklist"
+  after="Named theatres to book into, and a checklist your team recognises"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| New theatre name field + **Add** | Adds a theatre. An inline field on the card, not a dialog | — |
+| Theatre status | **Active**, **Maintenance** or **Closed**, per theatre | Active |
+| **Require the checklist before a case advances** | The enforcement switch. "Off (the default): a gap is shown and recorded, but the case can proceed. On: the status change is refused until the phase is complete." | **Off** |
+| **Customise the checklist** | Copies the standard form in so you can edit it. Appears only while you are on the default | Not customised |
+| Item text (once customised) | Edit an item's wording in place; it saves when you leave the field | — |
+| **Retire** | Takes an item out of use without deleting it | — |
+| Add-an-item field per phase | Adds your own item to **Sign in**, **Time out** or **Sign out** | — |
+
+The **Theatres** card also states the booking rule up front: "Two cases cannot occupy the same theatre at overlapping times."
+
+### The three phases
+
+Until you customise it, the checklist is the standard **WHO Surgical Safety Checklist (2009)**, in three phases:
+
+| Phase | When it is done |
+| --- | --- |
+| **Sign in** | Before induction of anaesthesia |
+| **Time out** | Before skin incision |
+| **Sign out** | Before the patient leaves theatre |
+
+## Set it up
+
+<Steps>
+  <Step title="Turn the care area on">
+    **Theatre** appears in the rail only once **Surgical theatre** is switched on in [Facility](/hospital/settings/facility). It ships off, so a new hospital turns it on before this tab exists at all.
+  </Step>
+  <Step title="Add your theatres">
+    Type the name into the field at the bottom of the **Theatres** card — "New theatre name, e.g. Theatre 1" — and select **Add**. Repeat for each room.
+  </Step>
+  <Step title="Mark any room that is out of use">
+    Use the dropdown on the row to set **Maintenance** or **Closed**. It saves immediately.
+  </Step>
+  <Step title="Decide about enforcement">
+    Read the two outcomes below before you touch **Require the checklist before a case advances**.
+  </Step>
+  <Step title="Adapt the checklist only if your form differs">
+    If your site uses its own wording, select **Customise the checklist**. Your current items are copied in as a starting point and each becomes editable. Edit wording in place, select **Retire** for items you do not use, and add your own to any phase.
+  </Step>
+</Steps>
+
+## Enforcement: both outcomes, honestly
+
+This is one switch with two defensible answers, and the product does not pretend otherwise.
+
+| **Off** — the default | **On** |
+| --- | --- |
+| An incomplete phase shows a gap at the moment of transition and records it. The case proceeds. | The status change is refused until every item in the phase is confirmed. |
+| Compliance is measured afterwards rather than enforced at the door. | Compliance is guaranteed at the door. |
+| A gap can be missed if nobody reads the report. | A software gate sits between a deteriorating patient and their operation. |
+
+The card argues for leaving it off, and says why: "Most theatres leave this off deliberately — a system that refuses to let an operation proceed because a box is unticked tends to get worked around, after which the record is wrong *and* the checklist is theatre. Turn it on only if your governance requires it."
+
+Which risk your hospital accepts is a governance decision. Make it with the people who will be standing in the room.
+
+## What changes once you save
+
+| What you changed | What you'll notice |
+| --- | --- |
+| Added a theatre | It becomes assignable when booking a case in [Theatre](/hospital/theatre). A case can be booked with **no theatre at all** and assigned one later — "A case can still be booked without one and assigned later." |
+| Set a theatre to **Maintenance** or **Closed** | It stops being offered for new bookings. Cases already in it are untouched. |
+| Enforcement **on** | An incomplete phase now blocks the case advancing, with "This clinic requires the checklist to be completed before continuing." |
+| Enforcement **off** | The same gap is shown and recorded, and the case continues: "You can continue, and the gap will be recorded." |
+| Edited an item's wording | Every screen shows the new wording, including on cases signed off long ago — the record stores which item was confirmed, and the label is resolved when it is read. |
+| Retired an item | It disappears from new cases. Historical sign-offs that carry it stay visible, because retiring is not deleting. |
+
+## Check it worked
+
+Book a test case in [Theatre](/hospital/theatre) and confirm your theatres are offered by name. Open its checklist: the phases should read **Sign in**, **Time out** and **Sign out**, with your wording if you customised it. Then try advancing with a phase incomplete — off, you get a warning naming how many items are unconfirmed and can continue; on, the transition is refused.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Theatre tab">
+    The **Surgical theatre** care area is off — it ships off. Turn it on in Facility and the tab appears alongside the other three.
+  </Accordion>
+  <Accordion title="I can see the tab but cannot add a theatre">
+    Changing theatre setup needs owner or manager, and for a staff member whose permissions are enforced it needs "Manage theatres and the safety checklist". Without it the field and the dropdowns are read-only.
+  </Accordion>
+  <Accordion title="I cannot edit the checklist items">
+    Until you select **Customise the checklist** the items are the standard form, shown read-only. Customising copies them in and makes each editable.
+  </Accordion>
+  <Accordion title="A case advanced with the checklist incomplete">
+    That is the default: the gap was shown and recorded rather than blocked. Turn enforcement on if your governance needs it refused.
+  </Accordion>
+  <Accordion title="I retired an item and it still shows on an old case">
+    Deliberately. A sign-off recorded years ago has to stay readable, so retiring takes an item out of new cases without erasing what was confirmed on old ones.
+  </Accordion>
+</AccordionGroup>
+
+Setting theatre up for the first time? [Set up theatre](/hospital/get-started/theatre-setup) runs through it in order.
+
+<StillStuck topic="theatre settings" />
+
+{/* source of truth: components/clinic/dashboard/settings/theatre-settings.tsx, lib/theatre/who-checklist.ts */}

@@ -1,0 +1,121 @@
+---
+title: "Booking page designer"
+description: "Design, fill and publish the hospital's public booking page, including which services show and whether payment is taken at booking."
+icon: "/images/icons/palette.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Custom domain: Team and above" />
+
+The booking page is the hospital's public front door for appointments. This tab designs it, chooses what it offers, decides whether money is taken at booking, and publishes it — with a live preview beside every change.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Booking Page Designer']} />
+
+<TaskHeader
+  before="Schedules in Booking settings, and at least one active service"
+  time="20 minutes"
+  after="A published page patients can book on themselves"
+/>
+
+## What this tab controls
+
+Above the tabs sit **Preview**, **Save Changes** and **Publish** / **Unpublish**, a **Booking Page URL** card with **Copy** and **Open**, and a **Live** or **Draft** badge.
+
+| Tab | What it holds |
+| --- | --- |
+| **Design** | Template, **Primary**, **Secondary**, **Accent** and **Background Color**, quick presets, **Font Family**, **Page Slug**, and a **Custom domain** card (Team and above) |
+| **Content** | The words on the page — headings, description, what the hospital wants a visitor to read before choosing |
+| **Services** | **Services Management** — "Select services from your clinic to display on the booking page", with search, a category filter, a featured flag, and a **Services on Your Booking Page** list |
+| **Forms** | The questions a patient answers while booking |
+| **Settings** | Booking rules and payment, below |
+
+### The Settings tab
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Allow Online Booking** | "Enable direct booking from the page" | Off |
+| **Clinic Timezone** | "All appointment times will be calculated based on this timezone." | UTC |
+| **Advance Booking Days** | "How many days in advance patients can book appointments" | 30 |
+| **Booking Confirmation Message** | "Message shown to patients after they submit a booking request" | Blank |
+| **Accept Payments** | "Allow patients to pay through the booking page". Reveals everything below | Off |
+| **Payment Methods** | Card, Cash, Bank Transfer, Insurance, PayPal, Apple Pay, Google Pay | None |
+| **Require Upfront Payment** | "Require payment before appointment" | Off |
+| **Payment Provider** | Stripe or Paystack, whichever your currency uses | Auto-detected |
+| **Deposit Percentage** | "0 = full amount, 1-99 = partial deposit" | 0 |
+| **Payment Instructions** · **Refund Policy** | Text shown to the patient | Blank |
+
+## Set it up
+
+<Steps>
+  <Step title="Design the page">
+    On **Design**, pick a template and set the four colours — or take a **Quick Preset** — then a **Font Family**. Set the **Page Slug**, which becomes the page's public address.
+  </Step>
+  <Step title="Write the content">
+    On **Content**, say who the page is for and what happens after a booking. Keep it short; a booking page is read standing up.
+  </Step>
+  <Step title="Choose the services">
+    On **Services**, search your catalogue and add the ones patients may book themselves. The badge shows how many are on the page, and **Services on Your Booking Page** lists them — "These services will be displayed on your public booking page." Flag one as **Featured** if it should lead.
+  </Step>
+  <Step title="Set the questions">
+    On **Forms**, decide what a patient must answer while booking. Ask for what the clinic genuinely needs at the desk and no more.
+  </Step>
+  <Step title="Turn booking on and set the window">
+    On **Settings**, switch **Allow Online Booking** on, confirm the **Clinic Timezone**, and set **Advance Booking Days** to how far ahead you want the diary opened.
+  </Step>
+  <Step title="Decide about money">
+    Turn on **Accept Payments** only if you want to collect at booking. Then choose **Payment Methods**, and use **Require Upfront Payment** with a **Deposit Percentage** if you want a deposit rather than the full fee.
+  </Step>
+  <Step title="Save, then Publish">
+    Select **Save Changes** — "Your booking page has been successfully updated" — then **Publish**. The badge flips from **Draft** to **Live**.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Saving and publishing are two different actions, and both are needed.
+
+- **Save Changes** stores the design and settings. Until you save, the amber banner reads "You have unsaved changes. Don't forget to save your work!" and the public page still shows the old version.
+- **Publish** puts the page online: "Your booking page is now live and accessible to patients." **Unpublish** takes it offline again — "Your booking page has been taken offline."
+
+**Two conditions must both hold before anyone can book online:** **Allow Online Booking** is on, *and* at least one service is visible on the **Services** tab. A published page with neither renders and offers nothing, which reads to a visitor as a broken site.
+
+**Opening hours are not on this tab.** Times come from schedules in [Booking settings](/hospital/settings/booking-settings), minus existing bookings and any blocking calendar events. That is precisely why a page can be published, correct and still show a patient no available times — the page is fine and the schedule is missing.
+
+Once payment is on, **Require Upfront Payment** changes the booking flow: the patient pays before the appointment is created, at the deposit percentage you set. Money lands in the account connected in [Online payments](/hospital/settings/online-payments) — if it is not connected, this tab shows "Stripe not connected" (or "Paystack not connected") with a link back there rather than a provider picker.
+
+A booking made here creates a real appointment in the hospital diary, so the front desk sees it alongside everything booked by phone.
+
+## Check it worked
+
+Select **Open** on the URL card and view the page in a private browser window. You should see your branding, your services, and — critically — **real times to choose from**. Book one test appointment through to the end: it should appear on the hospital calendar with the answers the patient gave, and your **Booking Confirmation Message** should be what they saw.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The page is published but shows no available times">
+    The page is not the problem. Availability comes from [Booking settings](/hospital/settings/booking-settings) — check there is a schedule covering those days and that the provider or venue matches.
+  </Accordion>
+  <Accordion title="The page is published but nothing can be booked">
+    Check both conditions: **Allow Online Booking** on the **Settings** tab, and at least one service showing under **Services on Your Booking Page**.
+  </Accordion>
+  <Accordion title="My changes are not on the live page">
+    You published without saving, or saved after publishing and stopped. Select **Save Changes** whenever the amber unsaved-changes banner is showing.
+  </Accordion>
+  <Accordion title="Stripe not connected under Payment Provider">
+    "You need to connect a Stripe account to collect upfront payments for your current currency." Finish it in [Online payments](/hospital/settings/online-payments), then come back and pick the provider.
+  </Accordion>
+  <Accordion title="A new service is not on the page">
+    Being active in the catalogue only makes it bookable internally. Add it here on the **Services** tab as well.
+  </Accordion>
+  <Accordion title="Times are an hour out">
+    **Clinic Timezone** on the **Settings** tab is wrong. Every offered time is calculated from it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/page-designer/booking-page-designer.tsx, components/clinic/appointment/page-designer/settings-tab.tsx */}

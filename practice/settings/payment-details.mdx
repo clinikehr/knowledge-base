@@ -1,0 +1,105 @@
+---
+title: "Payment details"
+description: "List your bank account, Cash App, Venmo and other payment channels so they print on the invoices you send while a balance is due."
+icon: /images/icons/banknote.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Only the owner can add or change entries" />
+
+This is where you tell clients how to send you money by hand — a bank transfer, a Cash App tag, a Venmo handle. Each entry you add can print on the invoices you send, so a client with an unpaid bill has the details in front of them.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Payment Details']} />
+
+<TaskHeader
+  before="The account details you want clients to use"
+  time="2 minutes per channel"
+  after="Your payment channels printed on invoice PDFs and invoice emails"
+/>
+
+The card's own description says it: "How patients can pay you — bank transfer, Cash App, Venmo, PayPal and more. Each entry has its own toggle for showing on invoice PDFs and invoice emails while a balance is due."
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Add payment details** | Opens the entry sheet. You can hold up to **10** entries; the button disables at the limit. Owner-only | — |
+| **Type** | **Bank Transfer**, **Cash App**, **Venmo**, **PayPal**, **Zelle**, **Square**, **Mobile Money** or **Other**. Choosing a type pre-fills its usual field labels — Cash App suggests **$Cashtag**, Mobile Money suggests **Provider**, **Phone number** and **Account name** | Bank Transfer |
+| **Display name (optional)** | A label so you can tell two accounts apart — 'e.g. "GTBank Business Account"'. Up to 60 characters. Left blank, the type name stands in | Blank |
+| **Fields** | Repeatable **Label** and **Value** pairs — the label names the thing ("Routing number"), the value is what the client copies. Up to **12** per entry. At least one must have a value | Suggested labels for the chosen type |
+| **Add field** | Adds another empty Label/Value row | — |
+| Bank suggestion chips | On **Bank Transfer** only: one-tap adds for **Routing number**, **SWIFT / BIC**, **IBAN**, **Sort code**, **Branch** and **Reference**. None are pre-filled — which of them a bank uses depends on the country | — |
+| **Show on invoices** | Per entry. "Printed on the invoice PDF and invoice emails while a balance is due" | On |
+| Edit / Delete | The pencil and bin on each entry. Deleting asks to confirm and warns "It will no longer appear on any invoice you send or download" | — |
+
+## Set it up
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Add payment details**. The sheet reminds you: "These appear exactly as entered, so double-check account numbers."
+  </Step>
+  <Step title="Pick the type">
+    Choose the **Type** first. It seeds the field labels that channel usually needs, which saves typing and keeps entries consistent.
+  </Step>
+  <Step title="Name it, if you have more than one">
+    Fill in **Display name** if you hold several accounts — "GTBank Business Account" is clearer on an invoice than a bare "Bank Transfer".
+  </Step>
+  <Step title="Enter the fields">
+    Type the value next to each label. Delete any suggested row you do not use, and add your own with **Add field**. For a bank account, the chips add the extra labels your country needs.
+  </Step>
+  <Step title="Decide whether it prints">
+    Leave **Show on invoices** on if you want clients to see it. Turn it off to keep the entry saved but private — useful for an account you only quote on request.
+  </Step>
+  <Step title="Save">
+    Select **Add payment details** at the bottom of the sheet. A "Payment details added" toast confirms it and the entry appears in the list.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Every entry with **Show on invoices** turned on starts appearing in two places, immediately and without any further action:
+
+- **On the invoice PDF** — the copy a client downloads or you print.
+- **In invoice emails** — the message that goes out when you send an invoice.
+
+Both are conditional on one thing: **there is still a balance due**. A paid invoice does not print your bank details, because at that point they are noise. Reopen a balance and they come back.
+
+Entries print **exactly as you typed them**, including spacing and capitalisation — nothing is reformatted or validated. A transposed digit in an account number becomes a client's money going somewhere else, which is why the sheet asks you to check.
+
+This is the manual counterpart to [Online payments](/practice/settings/online-payments): that one *takes* the money on a card, this one *tells someone where to send it*. They are independent, and most practices run both — a card link for people who want to pay now, bank details for people who pay by transfer.
+
+Turning an entry off, or deleting it, stops it printing on invoices from that moment. It does not alter a PDF a client already downloaded.
+
+## Check it worked
+
+Open an unpaid invoice and download the PDF, or send it to yourself. Your enabled entries should be listed with the labels and values exactly as you entered them. Then check a paid invoice — they should be absent there.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can see my entries but cannot change anything">
+    Only the practice owner can add, edit or remove payment details. The list reads "Only the clinic owner can change payment details" for everyone else.
+  </Accordion>
+  <Accordion title="My bank details are not printing on an invoice">
+    Two likely causes. Either the entry's **Show on invoices** switch is off, or the invoice has no balance outstanding — details only print while money is still owed.
+  </Accordion>
+  <Accordion title="The Add payment details button is disabled">
+    You have reached the limit of 10 entries. Delete one you no longer use, or turn it off instead of deleting if you may want it back.
+  </Accordion>
+  <Accordion title="It refuses to save my entry">
+    "Add at least one field with a value — that's what the patient will see." An entry with labels but no values would print an empty block, so at least one field needs something in it.
+  </Accordion>
+  <Accordion title="I need a field my type does not suggest">
+    Use **Add field** and type your own label. Nothing about the structure is fixed — the suggestions exist to save typing, not to constrain you.
+  </Accordion>
+</AccordionGroup>
+
+For sending and chasing the invoices themselves, see [Invoices](/clinic/revenue/invoices).
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/payment-details-settings.tsx, lib/billing/payment-details.ts */}

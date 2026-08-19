@@ -1,0 +1,100 @@
+---
+title: "Security"
+description: "Require two-factor authentication for every member of hospital staff, and know what that means for people already signed in."
+icon: "/images/icons/shield-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Only the owner can save changes on this tab" />
+
+One switch, with more reach than anything else in Settings. It makes two-factor authentication compulsory for everyone who works in this hospital, and it puts a second wall in front of patient records.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Security']} />
+
+<TaskHeader
+  before="Tell your staff first — everyone will be asked to enrol at their next sign-in"
+  time="1 minute to switch on; longer for the hospital to enrol"
+  after="Every staff member signing in with a second factor before they can open a record"
+/>
+
+## What this tab controls
+
+The card is headed **Security Settings** — "Manage your clinic's security settings." It holds exactly one control.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Require Two-Factor Authentication** | "Require all staff members to set up two-factor authentication for their accounts. When enabled, every staff member is prompted to set up an authenticator app on their next sign-in before they can access any clinic data." | Off |
+| **Save Changes** | Writes the setting. Only the owner sees this button | — |
+
+The footer states the point of the tab: "Security settings help protect your clinic's data and patient information."
+
+Two things people expect here and will not find:
+
+- **Passkeys are not managed on this tab.** A passkey belongs to a person, not to the hospital, so each individual adds and removes their own under their account security page — see [Two-factor authentication](/platform/security/mfa).
+- **Security alerts are on the Staff tab.** The **Security alerts** card — "Two-factor bypass events — emergency access, recovery-code use, and resets" — sits with **Staff & Teams**, alongside the people it concerns. See [Staff and roles](/hospital/settings/staff).
+
+## Set it up
+
+<Steps>
+  <Step title="Tell the hospital first">
+    Enrolment is not skippable once this is on. Give staff notice, and make sure people who work from shared workstations know to bring a phone with an authenticator app.
+  </Step>
+  <Step title="Switch Require Two-Factor Authentication on">
+    Only the owner can move it. A manager or accountant sees the switch filled in but fixed, and no **Save Changes** button.
+  </Step>
+  <Step title="Save">
+    Select **Save Changes**. It confirms with "Security settings updated successfully".
+  </Step>
+  <Step title="Help the first few people through it">
+    Expect a run of questions on the first morning. Enrolling takes a minute — scan a code, enter the number — but the first time is always the slowest.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**Enrolment becomes unskippable.** At their next sign-in, every staff member is prompted to set up an authenticator app before they can reach any hospital data. There is no "remind me later".
+
+**Patient records only open from a session that passed the second factor.** This is the part that surprises people: it is not only sign-in that is protected. Somebody already signed in on an older session can be asked for a code partway through their day, when they open something clinical. That is the wall working, not a fault.
+
+**It applies from the next sign-in.** Turning the switch on does not force everyone out of the product on the spot. Sessions already open continue until they are asked for the factor.
+
+**A passkey does not satisfy this requirement.** A passkey counts as one factor — a stronger way of proving who you are, not a second step on top. Somebody who signs in with a passkey alone is still short of what this switch demands, and will be asked for their authenticator code as well. If your staff have adopted passkeys, tell them that before you switch this on, because "but I have a passkey" is the first thing you will hear.
+
+**Nothing changes for patients.** The portal, the booking page and public forms are unaffected.
+
+Switching it back off stops new prompts and leaves everybody's existing enrolment in place — people who already set up an authenticator keep using it.
+
+## Check it worked
+
+Sign out and back in as a staff member who has not yet enrolled. You should be sent to the enrolment step and prevented from reaching any patient data until it is done. Then, on a session that has not passed the factor, open a patient record — you should be asked for a code rather than shown the record.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can see the switch but it will not move">
+    Only the owner can change it. Managers and accountants see the tab filled in, with no **Save Changes** button.
+  </Accordion>
+  <Accordion title="Staff are being asked for a code while already signed in">
+    Expected. Records only open from a session that passed the second factor, so an older session is challenged when it reaches clinical data.
+  </Accordion>
+  <Accordion title="A clinician uses a passkey and is still asked to enrol">
+    A passkey is one factor and does not satisfy the requirement. They also need an authenticator app.
+  </Accordion>
+  <Accordion title="Someone has lost their phone and cannot sign in">
+    They use a recovery code, or an owner resets their enrolment. Either event is recorded — see the **Security alerts** card on [Staff and roles](/hospital/settings/staff).
+  </Accordion>
+  <Accordion title="I cannot find passkeys on this tab">
+    They are not here. Passkeys belong to an individual and are managed on that person's own account security page — see [Two-factor authentication](/platform/security/mfa).
+  </Accordion>
+  <Accordion title="Nothing happened when I switched it on">
+    It applies from the next sign-in, not immediately. Sign out and back in to see the enrolment step.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, components/clinic/dashboard/settings/security-alerts-card.tsx */}

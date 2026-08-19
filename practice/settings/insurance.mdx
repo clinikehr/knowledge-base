@@ -1,0 +1,109 @@
+---
+title: "Insurance settings"
+description: "Add the insurance payers you bill, enrol your providers with them, and understand why claims fail until enrolment completes."
+icon: /images/icons/shield-halved.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" />
+
+Before you can check a client's coverage or send a claim, the insurance company has to exist in your practice and your providers have to be enrolled with it. That is what this tab is for.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Insurance Settings']} />
+
+<TaskHeader
+  before="Your practice's billing details and each provider's NPI"
+  time="5 minutes to add a payer; days to weeks for enrolment to complete"
+  after="Payers you can select on a client's coverage, and providers cleared to file electronically"
+/>
+
+This tab exists **only on Solo and Team**. It is absent on Enterprise, which runs a different insurance system entirely — so an enterprise colleague genuinely cannot see the screen you are describing to them.
+
+## What this tab controls
+
+Three sub-tabs run along the top.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Insurance Profile Settings** | Your practice's own filing identity, and the billing profiles claims are submitted under. Add, edit or delete a profile here | Empty |
+| **Payers** | The insurance companies you bill — "Manage insurance payer filing and enrollment details" | Empty |
+| **Add Payer › Payer search** | Opens the search sheet: "Search by payer name, ID, or alias (e.g. Aetna, Blue Cross, 62308)…". Selecting a result adds it to your practice | — |
+| **Search payers you've added** | Filters the list you already have, by name, payer ID or alias | Empty |
+| **Status** filter | **All payers** / **Active only** / **Inactive only** | All payers |
+| **Sort** | **Sort: Name** or **Sort: Recent** | Name |
+| Payer row menu | **Deactivate** / **Activate**, **View Stedi Details** (coverage, transaction support, enrolment rules) and **Remove payer** | — |
+| Counters | **Total Payers**, **Active**, **Total Claims**, **Eligibility Checks** across all payers | 0 |
+| **Provider Enrollment** | Create an enrolment, submit the draft, sync its status, upload documents and complete outstanding tasks | Empty |
+
+Enrolments cover the transaction types a payer supports — **claim status**, **professional claims**, **eligibility** and **remittance** — and each one moves through **Draft**, **Stedi Processing**, **Action Required**, **Provisioning**, then **Live**, **Rejected** or **Canceled**.
+
+## Set it up
+
+<Steps>
+  <Step title="Fill in your insurance profile">
+    Open **Insurance Profile Settings** and complete your practice's filing details and at least one billing profile. Claims are submitted under this identity, so a wrong value here fails every claim, not one.
+  </Step>
+  <Step title="Add your first payer">
+    Go to **Payers**, select **Add Payer › Payer search**, and search by name, payer ID or alias. Select the payer and it is added to your practice — a "\{Payer\} added to your clinic" toast confirms it.
+  </Step>
+  <Step title="Check what that payer supports">
+    Open the row menu and select **View Stedi Details**. This tells you which transactions the payer supports and whether enrolment is required for each — a payer marked "No enrollment required" for claim filing needs no further work.
+  </Step>
+  <Step title="Enrol your providers">
+    Move to **Provider Enrollment** and create an enrolment for the provider and payer, choosing the transaction types you need. It starts as a **Draft**.
+  </Step>
+  <Step title="Submit it">
+    Submit the draft. It moves to **Stedi Processing** and leaves your hands.
+  </Step>
+  <Step title="Clear anything asked of you">
+    A status of **Action Required** means the payer needs something from you — usually a signed form. Upload it against the task ("Upload PDF"), then use the sync action to refresh the status. Enrolments do not update themselves on a schedule.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**Adding a payer** makes it selectable in two places: when you record a client's insurance coverage on their chart, and when you create a claim. An **inactive** payer stays in the list, greyed, and drops out of both pickers — that is how you retire a payer you no longer bill without losing its claim history.
+
+**Enrolment is the part that actually permits submission.** Adding a payer alone does not let you file with it. Until the enrolment for that provider, payer and transaction type reaches **Live**, claims to that payer will fail — and they fail at submission, not at the point you build them, so the first sign is usually a rejected claim rather than a blocked button. Plan for it: enrolment is a real-world approval process measured in days or weeks, not a save.
+
+**Removing a payer behaves differently depending on its history.** If it has claims against it, the confirmation says so — "This payer has existing claims and will be deactivated (not deleted)" — and it is deactivated so the claim record stays intact. A payer with no claims is removed permanently.
+
+Nothing on this tab changes an existing claim. Claims already submitted keep the payer and profile they were filed with.
+
+<Warning>
+  Eligibility checks and claim submissions are **charged per use**. What each one costs depends on your plan — see [Plans overview](/platform/plans/overview). Adding payers and creating enrolments costs nothing; running checks and filing claims does.
+</Warning>
+
+## Check it worked
+
+Open any client's chart and start recording insurance coverage. The payer you added should appear in the picker. Then return to **Provider Enrollment** — the enrolment you submitted should show a status other than **Draft**, and the **Payers** tab's **Total Payers** and **Active** counters should have moved.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I cannot find this tab at all">
+    **Insurance Settings** only exists on Solo and Team plans. If your practice is on Enterprise, insurance is handled elsewhere and this tab is deliberately hidden.
+  </Accordion>
+  <Accordion title="I added the payer but it does not appear when I record coverage">
+    It is inactive. Open the row menu on the **Payers** list and select **Activate** — only active payers appear in the coverage and claim pickers.
+  </Accordion>
+  <Accordion title="My claims to a payer keep failing">
+    Check the enrolment for that provider and payer under **Provider Enrollment**. Anything short of **Live** — especially **Action Required** — means you are not yet cleared to file with them. Clear the outstanding task, upload the document it asks for, then sync the status.
+  </Accordion>
+  <Accordion title="An enrolment has been stuck on the same status for days">
+    Statuses do not refresh on their own. Use the sync action on the enrolment to pull the current state. If it genuinely has not moved, **Action Required** is the status worth re-reading — it usually names a document only you can supply.
+  </Accordion>
+  <Accordion title="Removing a payer only deactivated it">
+    That is deliberate. A payer with claims against it is deactivated rather than deleted so the claim history stays readable and auditable. Only a payer with no claims is removed outright.
+  </Accordion>
+</AccordionGroup>
+
+For building, submitting and chasing the claims themselves, see [Insurance claims](/practice/money/insurance-claims).
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/insurance-settings.tsx, provider-enrollment-settings.tsx, payer-search-sheet.tsx, lib/settings-tabs.ts */}

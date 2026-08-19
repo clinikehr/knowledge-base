@@ -1,0 +1,96 @@
+---
+title: "Booking settings"
+description: "Set your working hours, per-provider booking rules, rooms and holidays — this is where every bookable time slot comes from."
+icon: "/images/icons/calendar-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" />
+
+Every time slot your practice offers — online and internally — is calculated here. If a client says there is nothing available, or a provider is being booked at 7am, this is the tab that decides it. The screen is headed **Appointment Settings**: "Configure availability, special dates, and communication preferences".
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Booking Settings']} />
+
+<TaskHeader
+  before="At least one staff member on the team"
+  time="15 minutes for a first week of hours"
+  after="Bookable time slots that match how you actually work"
+/>
+
+## What this tab controls
+
+Five sub-tabs. On a phone they shorten to **Hours**, **Rules**, **Rooms**, **Dates** and **Comms**.
+
+| Sub-tab | What it controls | Default |
+| --- | --- | --- |
+| **Availability** — "Set your clinic's operating hours and available time slots" | One row per working block: **Day**, **Hours**, **Slot Duration**, **Max Bookings** per slot, **Venue**, **Staff**, **Status** | Nothing configured |
+| **Booking Rules** — "Per-provider buffers, notice and limits" | Per provider: **Buffers**, **Min notice**, **Horizon**, **Max / day** | Clinic defaults for everyone |
+| **Resources** — **Rooms & Equipment** | Bookable rooms and devices. A service that requires one reserves it automatically and it can never be double-booked | Empty |
+| **Special Dates** — "Manage holidays, off-days, and special operating hours" | One row per date: **Type** (holiday, off day, special hours), **Hours**, **Available**, and whether it applies to the **Whole clinic** or one person | Empty |
+| **Communication** | A read-only summary of confirmation and reminder behaviour, plus the wording of the two automated messages | Confirmations and reminders on |
+
+**Staff** left blank on a schedule means **All Staff** — the block applies to everyone.
+
+## Set it up
+
+<Steps>
+  <Step title="Add your first working block">
+    On **Availability**, select **Add Schedule**. Choose the day, the start and end time, how long one appointment slot is, how many bookings that slot may take, and whether it is in person or online.
+  </Step>
+  <Step title="Assign it to a person, or leave it for everyone">
+    Pick a provider to give them their own hours, or leave it unassigned so it covers **All Staff**. Repeat until every working day is covered — one row per day, per pattern.
+  </Step>
+  <Step title="Narrow what a provider can be booked for">
+    On **Booking Rules**, select **Add rules** and pick the provider. Set the gap either side of an appointment, the minimum notice a client must give, how far ahead they may book, and a daily cap. "Providers without custom rules use the clinic defaults."
+  </Step>
+  <Step title="Add rooms and equipment you can run out of">
+    On **Resources**, select **Add resource** for each treatment room, chair or device. Attach the requirement to a service on the service form so it reserves automatically.
+  </Step>
+  <Step title="Block out the days you are closed">
+    On **Special Dates**, select **Add Special Date** for each holiday or short day. Choose whether it applies to the whole practice or one person, and whether you are **Available** at all that day.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Slots are computed, not stored. Every time the public booking page or the internal booking sheet asks "what is free?", the answer is built from your schedules here, minus appointments already booked, minus any blocking calendar feed, then narrowed by that provider's booking rules. So:
+
+- **A new schedule** puts slots on offer immediately — no publishing step, no cache to clear.
+- **A special date overrides the regular schedule for that day only.** Marking it unavailable removes every slot; setting different hours replaces them. The regular pattern returns the next day.
+- **Booking rules only narrow, never widen.** A minimum notice of 24 hours hides tomorrow morning; a daily cap of six stops the seventh booking. Buffers apply everywhere, but notice, horizon and the daily cap apply to **client online booking only** — your team can still book manually outside them.
+- **A resource requirement makes the room the constraint.** If both rooms are taken at 10am, 10am is not offered even though the provider is free.
+- **Existing appointments are never moved.** Shortening your hours does not cancel anything already in the diary; it only stops new bookings landing there.
+
+Nothing here publishes a page. Whether visitors can reach your booking page at all is set in the [booking page designer](/practice/settings/booking-page-designer).
+
+## Check it worked
+
+Open [Appointments](/practice/daily/appointments) and start a new booking. The times offered should match the block you just added, in the slot length you chose, and should skip anything already booked. Then open your public booking page and confirm a client sees the same times.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Visitors see no available times on my booking page">
+    Work through it in this order. **One** — is there an active schedule on **Availability** covering that weekday? An empty list means no slots exist for anyone. **Two** — is the schedule **Active**, and does its **Venue** match the kind of appointment being booked? **Three** — on **Booking Rules**, is the minimum notice or horizon hiding the dates being looked at? **Four** — is a [calendar feed](/practice/settings/calendar-integrations) set to **Blocks booking** covering that time? **Five** — is there a **Special Date** marked unavailable? If all five are clear, the problem is the page itself, not availability: check **Allow Online Booking** and that at least one service has been added to the page.
+  </Accordion>
+  <Accordion title="One provider has no times but everyone else does">
+    Schedules assigned to a named person only produce slots for that person. Either add a schedule for them, or leave a schedule unassigned so it covers **All Staff**. Also check their row on **Booking Rules** for a daily cap or a long minimum notice.
+  </Accordion>
+  <Accordion title="Slots are offered at the wrong time of day">
+    Times are interpreted in the practice timezone. That setting lives on the booking page designer's **Settings** tab, as **Clinic Timezone** — "All appointment times will be calculated based on this timezone."
+  </Accordion>
+  <Accordion title="I deleted a schedule and want it back">
+    Deleting is permanent — "This will permanently delete this availability schedule. Future appointments may be affected." Appointments already booked stay in the diary; add the schedule again to restore the slots.
+  </Accordion>
+  <Accordion title="The Communication tab has nothing I can change">
+    That sub-tab is a summary of current confirmation and reminder behaviour, not a set of controls. The channels those messages travel on are configured in [Communications](/practice/settings/communications).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, provider-booking-policy.tsx, resource-manager.tsx */}

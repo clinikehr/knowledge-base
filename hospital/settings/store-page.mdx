@@ -1,0 +1,121 @@
+---
+title: "Store page"
+description: "Brand and publish the hospital's public storefront, choose what it features, and understand the product limits on each plan."
+icon: "/images/icons/store.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" note="Embedding and digital products: Team and above" />
+
+The store is where the hospital sells physical goods to the public — supports, dressings, home-monitoring kits, retail lines from the pharmacy. This tab is the shopfront: its address, its branding, what it features and how checkout behaves.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Store Page']} />
+
+<TaskHeader
+  before="Published products in the Store module, and a connected payout account"
+  time="15 minutes"
+  after="A live storefront at your own address that customers can buy from"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Live / Off** switch | Puts the storefront online or takes it down | Off |
+| **Store address** | The slug after `/store/`. "Lowercase letters, numbers, and hyphens (3–40 chars)", checked live for shape, reserved words and use by any other workspace | Your hospital name |
+| **Copy link** · **Open** | Copy or open the hosted address | — |
+| **Custom domain** | Serve the store on a domain you own | Team and above |
+| **Announcement bar (optional)** | A single line across the top, e.g. "Free shipping over $75" | Blank |
+| **Headline** · **Subheadline** · **Hero image** · **Intro** · **Footer note** | The words and picture above the products | Supplied defaults |
+| **Success title** · **Success message** | What a customer sees after checkout | Supplied defaults |
+| **Accent color** · **Theme** · **Store logo** | Branding. Theme is **Light**, **Dark** or **Match visitor's device** | Brand accent, Light |
+| **Layout** · **Products per row** | **Grid** or **List**, at 2, 3 or 4 across | Grid |
+| **Featured collection** · **Featured products** | Pinned to the top, in the order you pick them | None |
+| **Show collections filter** | Lets shoppers filter by collection | On |
+| **Let shoppers add an order note** | "Adds an optional note field at checkout (e.g. delivery instructions)." | Off |
+| **Offer shipping** · **Offer in-store pickup** | Fulfilment options at checkout | Off |
+| **Abandoned-cart recovery** | Emails shoppers who start checkout but do not pay | Team and above |
+| **Charge tax by default** · **Rate (%)** · **Label** · **Prices include tax** | "Applied to new products by default — you can still override tax on each product." | Off |
+| **Shipping policy** · **Returns policy** | Optional text shown to shoppers | Blank |
+| **Save changes** | Enabled once something has changed and the address check passes | — |
+
+## Plan limits
+
+| Plan | Active products | Digital products | Embedding |
+| --- | --- | --- | --- |
+| Free | No storefront | No | No |
+| Starter | 100 | No | No |
+| Essential | 1,000 | No | No |
+| Team and Enterprise | Unlimited | Yes | Yes, plus a raw iframe |
+
+## Set it up
+
+<Steps>
+  <Step title="Publish products first">
+    An empty store is not worth an address. Add and publish products in the Store module — the preview here says "Publish products in the Store module to see them here" until you do.
+  </Step>
+  <Step title="Claim your address">
+    Set the **Store address** under **Your link**. The indicator underneath reports at once if the shape is wrong or the address is taken.
+  </Step>
+  <Step title="Write the hero">
+    Fill **Headline** and **Subheadline**, add a **Hero image** if you have one, and use the **Announcement bar** only for something genuinely time-limited.
+  </Step>
+  <Step title="Brand and lay it out">
+    Pick an **Accent color** and **Theme**, then a **Layout** and **Products per row**. The live preview follows every change at desktop or mobile width.
+  </Step>
+  <Step title="Feature what matters">
+    Choose a **Featured collection**, then select **Featured products** in the order you want them pinned — the chips number themselves as you go.
+  </Step>
+  <Step title="Set fulfilment and tax">
+    Turn on **Offer shipping** and **Offer in-store pickup** to match how you actually hand goods over, and set the default tax rate and label.
+  </Step>
+  <Step title="Save, then go Live">
+    Select **Save changes**, then switch **Off** to **Live** and save again.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **The storefront goes online** at your address and starts taking orders, paid through the payout account connected in [Online payments](/hospital/settings/online-payments).
+- **Orders draw on the same stock the hospital uses.** A store product is linked to an inventory item, so a sale online reduces the same figure the dispensary sees. Stock levels and cost are read from that item — they cannot be edited on the store page, deliberately, so the two can never disagree.
+- **New products inherit the tax default**, and each can still override it.
+- **Fulfilment switches change checkout** — shipping and pickup appear as options only when you have turned them on.
+- **The live store shows only what you saved.** An unsaved change appears in the preview and nowhere else: "Save your changes so the live store reflects them."
+- **Switching to Off takes the store down at once.** Orders already placed are unaffected.
+
+**Changing the Store address breaks links you have already shared** — printed cards, social posts and QR codes pointing at the old address stop working with no redirect. Settle the address before you publicise it.
+
+## Check it worked
+
+Select **Open** and view the store in a private window. Your announcement bar, headline, branding and featured products should be there in the order you set. Place one small order end to end: checkout should complete, the success message should be yours, and the linked inventory item's stock should fall by what you bought.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Customize your store covers everything">
+    The storefront starts on Starter: "Brand your online store, feature products, and embed it on your website. Available on the Starter plan and above." See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Only clinic owners and managers can configure the store">
+    Accountants can open settings but not edit this tab.
+  </Accordion>
+  <Accordion title="A product will not publish">
+    You are at your plan's active-product limit — 100 on Starter, 1,000 on Essential. Retire something, or upgrade.
+  </Accordion>
+  <Accordion title="I cannot edit stock or cost here">
+    Correct, and deliberate. Both come from the linked inventory item so the store and the dispensary can never show different numbers. Change them in Inventory.
+  </Accordion>
+  <Accordion title="Abandoned-cart recovery is greyed out with a Team badge">
+    "Upgrade to Team to automatically email shoppers who don't finish checkout."
+  </Accordion>
+  <Accordion title="Shoppers reach the store but cannot pay">
+    The payout account is unfinished. Check **Onboarding: Complete** and **Charges: Enabled** in [Online payments](/hospital/settings/online-payments).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/store-page-settings.tsx, lib/store/plan-limits.ts */}

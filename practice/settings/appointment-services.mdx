@@ -1,0 +1,107 @@
+---
+title: "Appointment services"
+description: "Manage the catalogue of bookable services your practice offers, and see where an active service turns up once you save it."
+icon: /images/icons/concierge-bell.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" />
+
+A service is a bookable thing you do — an appointment, a procedure, a session — with a price and a duration. This tab is the catalogue: everything you can book, bill and publish comes from here.
+
+<Path steps={['Sidebar', 'Settings', 'Billing', 'Appointment Services']} />
+
+<TaskHeader
+  before="Your currency set on Billing & Plans, so prices are labelled correctly"
+  time="3 minutes per service"
+  after="A catalogue you can book from, price from and publish"
+/>
+
+## What this tab controls
+
+The card is headed **Appointment Services** — "Manage services available for appointment booking."
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Search services…** | Filters by service name, category or description | Empty |
+| **Add Service** | Opens the **Add New Service** form | — |
+| The table | Columns are **Service**, **Category**, **Duration**, **Price**, **Venue** and **Status**. Each row shows the service code and procedure code underneath the name, and a **Prep Required** badge where preparation is needed | — |
+| Row menu | **View**, **Edit** and **Delete** | — |
+| Pagination | Page size and page controls under the table | — |
+
+The form itself is grouped into cards. **Basic Information** holds **Service Name** and **Category** (both required), plus **Sub-category (Optional)**, **Procedure Code (Optional)** — "Tag this service with a CPT or HCPCS code for billing & reporting" — and **Description (Optional)**. **Pricing & Duration** holds **Price**, labelled with your own currency, and **Duration (minutes)**. **Venue & Settings** holds **Available Venues**, the **Active Service** switch ("Enable/disable this service for booking") and **Requires Preparation**, which reveals a **Preparation Instructions** box. **Providers**, **Required Resources** and **Product Used** decide who can deliver it, which room or equipment it occupies, and what stock it consumes.
+
+There is deliberately **no colour, deposit or buffer field** on this form. Deposits belong to the booking page's own payment settings, not to the service.
+
+For a field-by-field walkthrough of the form, including the specialty starter sets, see [Add the services you offer](/practice/get-started/services).
+
+## Set it up
+
+<Steps>
+  <Step title="Set your currency first">
+    Open **Billing & Plans** and confirm the **Currency**. The service form labels its price field with it — **Price (USD)**, **Price (NGN)** — so getting it right first avoids re-reading a whole catalogue later.
+  </Step>
+  <Step title="Add the service">
+    Select **Add Service**, then fill in **Service Name** and **Category**. Both are required.
+  </Step>
+  <Step title="Price it and time it">
+    Enter the **Price** and the **Duration (minutes)**. Duration is what reserves the slot in the diary, so use the real length of the appointment, not the billed time.
+  </Step>
+  <Step title="Choose where it can happen">
+    Tick at least one entry under **Available Venues**. This is what decides whether the service can be booked as a video visit at all.
+  </Step>
+  <Step title="Leave it Active">
+    **Active Service** is what makes it bookable. Turn it off only when you want the service retired.
+  </Step>
+  <Step title="Save">
+    Save the form. The service appears in the table with an **Active** badge.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+An **active** service becomes available in three places at once:
+
+- **The appointment booking sheet.** Staff can select it when booking, and it brings its duration and price with it.
+- **The invoice service picker.** Billing a visit pulls the price from here, so a price change applies to invoices raised afterwards — not to invoices already issued.
+- **The public booking page — but only if you also publish it there.** Being active makes a service *eligible* for your public page; it still has to be marked visible in the booking page designer. Two things must both be true for online booking to work at all: **Allow Online Booking** must be on, and at least one service must be visible.
+
+**Deactivating a service removes it from new bookings and leaves existing ones alone.** Appointments already in the diary keep the service, its price and its duration; invoices already raised are untouched. This is why retiring is the right move and deleting rarely is.
+
+Changing a service's price, duration or venues affects **future** bookings only. An appointment already booked keeps what it was booked with.
+
+<Warning>
+  **Delete** permanently removes a service. The product blocks it where the service is in use — "If this service is being used by any appointments, you will not be able to delete it. Consider deactivating it instead" — but an unused service is gone for good, along with its configuration. Turn **Active Service** off instead unless you are certain.
+</Warning>
+
+## Check it worked
+
+Start booking an appointment. The service should appear in the picker with the right duration and price. Then open your [booking page](/practice/daily/booking-page) as a visitor — if you marked it visible there, clients should be able to select it and see the same price.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The service does not appear when I book an appointment">
+    Check its **Status** in the table. An **Inactive** service is hidden from new bookings by design; open it and turn **Active Service** back on.
+  </Accordion>
+  <Accordion title="It is active but clients cannot book it online">
+    Being active is not the same as being published. The service must also be marked visible in the booking page designer, and **Allow Online Booking** has to be on. Either one missing gives the same silent result.
+  </Accordion>
+  <Accordion title="The price shows the wrong currency symbol">
+    Prices are labelled from **Billing & Plans › Currency**, not from the service. Change it there and every price re-renders; the numbers themselves are not converted.
+  </Accordion>
+  <Accordion title="Booking the service says no provider is configured">
+    Under **Providers**, you have restricted the service to specific staff and none of them is available. Leaving every provider unticked offers it with any available provider, which is what most services want.
+  </Accordion>
+  <Accordion title="I cannot delete a service">
+    It is attached to at least one appointment. That is a guard, not a fault — deleting it would leave those appointments pointing at nothing. Deactivate it instead.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/services/appointment-services.tsx, appointment-service-form.tsx, lib/settings-tabs.ts */}

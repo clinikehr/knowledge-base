@@ -1,0 +1,121 @@
+---
+title: "Booking page designer"
+description: "Design, price and publish the public page where clients book with you, and learn why a published page can still show no times."
+icon: "/images/icons/palette.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Solo and Team" roles="Owner, manager or accountant" note="Custom domain: Team and Enterprise" />
+
+Your booking page is the public web page a client lands on to book with you. This tab builds it — how it looks, what it says, which services it sells, what it asks for, and whether it takes payment — with a live preview beside the editor that you can flip between desktop and mobile.
+
+<Path steps={['Sidebar', 'Settings', 'Patient Experience', 'Booking Page Designer']} />
+
+<TaskHeader
+  before="At least one service, and working hours set in Booking settings"
+  time="20 minutes"
+  after="A live page clients can book from"
+/>
+
+## What this tab controls
+
+| Tab | What it controls |
+| --- | --- |
+| **Design** | Template, colours, fonts, and the **Page Settings** card holding **Page Slug** — "This will be part of your booking page URL", checked live for format and for clashes with other workspaces. Also a **Custom domain** card so the page can be served from an address like `book.yourclinic.com` — Team and Enterprise only |
+| **Content** | The headline, description, images and sections a visitor reads |
+| **Services** | **Services Management** — "Select services from your clinic to display on the booking page". Each card carries **Add to Page**, which becomes **Added to Page**, and **Make Featured**. A badge counts "\{n\} services on page" |
+| **Forms** | Which intake questions a client answers while booking |
+| **Settings** | The two cards below |
+
+The **Settings** tab's **Booking Settings** card — "Configure how appointments can be booked through your page":
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Allow Online Booking** | "Enable direct booking from the page" | On |
+| **Clinic Timezone** | "All appointment times will be calculated based on this timezone" | UTC |
+| **Advance Booking Days** | "How many days in advance patients can book appointments" | 30 |
+| **Booking Confirmation Message** | "Message shown to patients after they submit a booking request" | Empty |
+
+And the **Payment Settings** card — "Configure payment options and policies for your booking page":
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Accept Payments** | "Allow patients to pay through the booking page". The rest of the card is hidden until this is on | Off |
+| **Payment Methods** | Card, cash, bank transfer, insurance, PayPal, Apple Pay, Google Pay | Card |
+| **Require Upfront Payment** | "Require payment before appointment" | Off |
+| **Payment Provider** | Which connected provider takes the money. Only offers one that matches your currency | Detected for you |
+| **Deposit Percentage** | "0 = full amount, 1-99 = partial deposit" | 0 |
+| **Payment Instructions** | Free text shown to clients about payment | Empty |
+| **Refund Policy** | Your cancellation and refund wording | Empty |
+
+## Set it up
+
+<Steps>
+  <Step title="Set your page address">
+    On **Design**, scroll to **Page Settings** and enter a **Page Slug**. A green tick means it is yours; a warning means it is taken, reserved, or badly formatted — you cannot publish until it clears.
+  </Step>
+  <Step title="Add the services you sell">
+    On **Services**, select **Add to Page** on each service you want bookable. The button changes to **Added to Page**. Use **Make Featured** on the one or two you want at the top.
+  </Step>
+  <Step title="Write the page">
+    On **Content**, set the headline and description a visitor reads first. Watch the preview beside you; switch it to mobile, because most clients arrive on a phone.
+  </Step>
+  <Step title="Turn booking on and set your window">
+    On **Settings**, confirm **Allow Online Booking** is on, set **Clinic Timezone** to where you actually work, and set **Advance Booking Days**. Write a **Booking Confirmation Message** so people know what happens next.
+  </Step>
+  <Step title="Decide about payment">
+    Leave **Accept Payments** off if you take money at the desk. To charge at booking, turn it on, turn on **Require Upfront Payment**, choose the **Payment Provider**, and set a **Deposit Percentage** — 0 charges the full amount.
+  </Step>
+  <Step title="Save, then publish">
+    **Save** stores your work without changing what the public sees. **Publish** makes the page live; the button then reads **Unpublish**.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+**Publish** is what puts the page on the internet. Until you select it, your page address returns a not-found error to anyone who visits — saving alone changes nothing publicly. Selecting **Unpublish** takes it straight back down; existing appointments are untouched.
+
+Two things must both be true before any booking is possible: **Allow Online Booking** must be on, **and** at least one service must have been added on the **Services** tab. A published page with no services shows a client nothing they can pick.
+
+**Opening hours are not on this tab.** A published page with services can still show no times, because times come from [Booking settings](/practice/settings/booking-settings). That split is the single most common surprise here.
+
+Turning on **Require Upfront Payment** changes the booking flow itself: the client is sent to a payment step before the appointment is created, and an unpaid attempt does not reach your diary. This needs a payment provider connected first — if none is, the card shows "Stripe not connected" (or "Paystack not connected" on a Nigerian-currency practice) with a link to Online Payments, and no provider can be selected.
+
+**Advance Booking Days** trims the far end of the calendar; **Deposit Percentage** changes the amount charged, not the price of the service. Neither re-prices anything already booked.
+
+## Check it worked
+
+Open your page address in a private browser window — as a visitor, not as yourself. You should see your branding, your featured services, and a calendar offering real times. Book a test appointment and confirm it lands in [Appointments](/practice/daily/appointments) and that your **Booking Confirmation Message** is what the client sees.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="My page shows a not-found error">
+    It has been saved but never published. Select **Publish**. If publishing is blocked, the **Page Slug** on the **Design** tab has not cleared its check.
+  </Accordion>
+  <Accordion title="The page loads but there are no times to pick">
+    The page is fine; availability is missing. See [Booking settings](/practice/settings/booking-settings) — you need an active schedule covering those weekdays, and no special date or blocking calendar feed over them.
+  </Accordion>
+  <Accordion title="The page loads but there is nothing to book">
+    No services have been added to the page. On **Services**, select **Add to Page** on at least one, then save.
+  </Accordion>
+  <Accordion title="I can't choose a payment provider">
+    Nothing is connected for your currency yet. Connect one under Online Payments first — the card links straight there. Until then, leave **Require Upfront Payment** off and take payment at the desk.
+  </Accordion>
+  <Accordion title="The Custom domain card says I need to upgrade">
+    Serving the page from your own web address is a Team and Enterprise feature. On Solo plans the page stays on its ClinikEHR address, which works exactly the same. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="I changed the page but visitors see the old version">
+    Changes reach the public page on save, but an unsaved edit only exists in the preview. Look for the **Save Changes** label on the save button — that wording means you have unsaved work.
+  </Accordion>
+</AccordionGroup>
+
+Day-to-day use of the page — sharing the link, reading bookings, handling deposits — is covered in [the booking page guide](/practice/daily/booking-page).
+
+<StillStuck />
+
+{/* source of truth: components/clinic/appointment/page-designer/booking-page-designer.tsx, settings-tab.tsx, design-tab.tsx, services-tab.tsx */}

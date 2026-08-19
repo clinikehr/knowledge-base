@@ -1,0 +1,101 @@
+---
+title: "Data export"
+description: "Take a copy of the hospital's data as CSV or ZIP, choose what goes in it, and handle the file safely once it downloads."
+icon: "/images/icons/file-export.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Audit Logs module: owner or manager only" />
+
+"Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back." Use it for finance, a migration, a regulator, or your own peace of mind before a big change.
+
+<Path steps={['Sidebar', 'Settings', 'System', 'Data Export']} />
+
+<TaskHeader
+  before="Somewhere secure to put the file when it arrives"
+  time="Under a minute to start; the export itself runs on its own"
+  after="A CSV or ZIP of the data you chose"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Modules** | A search-and-add picker of everything you can export, grouped as **Clinical Records**, **Patient Profile**, **Documents & Files**, **Telehealth**, **Administrative**, **Insurance**, **Ward & Inpatient** and **Compliance & Audit** | Nothing selected |
+| **Select all** · **Clear all** | Add or remove every module at once | — |
+| **Date range (optional)** | Narrows the export to a period. **All time** if left alone | All time |
+| **Export** button | Queues the job. Reads "Export \{n\} modules", and picks up a **ZIP** badge once you choose more than one | Disabled until you pick a module |
+| Progress panel | The running job with a percentage and a label, then **Export ready** and a **Download** button | — |
+| **Recent Exports** | Your last few finished jobs, each with **Re-download** until it expires | — |
+
+A hospital's picker is the widest in the product: as well as consultations, prescriptions and appointments, it carries **Ward Consultations**, **Ward Nursing Notes**, **Ward Vitals**, **Insurance Claims**, **Pre-Authorizations**, **Patient Coverage** and **Pharmacy POS Sales**.
+
+**Audit Logs** only appears for owners and managers. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+
+## Run an export
+
+<Steps>
+  <Step title="Choose what to export">
+    Search the **Modules** box and add each one you need, or select **Select all**. Chosen modules appear as chips underneath, each removable.
+  </Step>
+  <Step title="Narrow the period">
+    Set a **Date range** if you only need a quarter or a year. Leave it as **All time** for a full copy.
+  </Step>
+  <Step title="Start it">
+    Select **Export**. Small exports finish quickly; large ones queue and run in the background — you can leave the page and come back.
+  </Step>
+  <Step title="Watch or walk away">
+    The progress panel shows a percentage and a label. It ends at **Export ready** with the file name and size, or **Export failed** with a reason.
+  </Step>
+  <Step title="Download it">
+    Select **Download** and put the file somewhere secure immediately.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+Nothing in the hospital changes — an export reads, it never writes. What changes is that a file now exists outside the product.
+
+- **The file contains PHI.** The tab says so: "Files contain **PHI**. Handle securely per HIPAA." A ward vitals CSV on a shared drive is the same disclosure risk as a paper chart left in a corridor.
+- **Download links expire.** "Links expire in 24 hours." After that a job in **Recent Exports** shows as expired and **Re-download** disappears — run the export again rather than hunting for the old link.
+- **Large exports queue and notify.** You do not have to sit and watch; the job carries on if you navigate away, and you can find it again in **Recent Exports**.
+- **The picker respects your role.** An accountant can export billing and administrative modules but never sees **Audit Logs**.
+
+<AuditNote action="Exporting hospital data" />
+
+**Export before you close an account.** Deleting a workspace cancels billing immediately and removes the data after a 30-day recovery window — after which nothing can be produced for a regulator, a patient or a court. Take the export first, verify it opens, and store it under your own retention policy. See [Delete your account](/platform/account/delete-account).
+
+## Check it worked
+
+The progress panel reaches **Export ready** and names a file with a plausible size — a few kilobytes for a module you know holds thousands of rows means you exported the wrong thing. Open the file: one module gives you a CSV with a header row and your data; several give you a ZIP with one CSV per module. Spot-check a record you recognise, and confirm the date range did what you expected.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Export button is greyed out">
+    No module is selected yet, or an export is already running. Only one job runs at a time.
+  </Accordion>
+  <Accordion title="Audit Logs is not in the picker">
+    It is available to owners and managers only. Ask one of them to run that export.
+  </Accordion>
+  <Accordion title="Export failed">
+    The panel gives the reason. Most failures are a very large all-time export — narrow the **Date range**, or split the modules across two jobs, and try again.
+  </Accordion>
+  <Accordion title="Download failed, or the job shows as expired">
+    "Could not generate download link. The file may have expired." Links last 24 hours. Run the export again.
+  </Accordion>
+  <Accordion title="I got a ZIP and expected a spreadsheet">
+    More than one module always arrives as a ZIP of CSVs, one per module. Pick a single module for a single file.
+  </Accordion>
+  <Accordion title="A module I need is not listed">
+    The picker covers the record types this workspace holds. If something genuinely clinical is missing, [contact support](/platform/help/contact-support) rather than working around it with screenshots.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/data-export-settings.tsx */}
