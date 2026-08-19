@@ -9,13 +9,15 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic', 'pharmacy']} plans="Drafting on every plan including Free — deploying is capped by plan" />
+<Availability editions={['clinic', 'pharmacy']} plans="Starter and above — the builder is not available on Free" />
 
-An agent is a small workflow you draw on a canvas: something starts it, one or more steps do the work, and it ends. Building one is free and unlimited on every plan. **Nothing an agent does takes effect until you deploy it.**
+An agent is a small workflow you draw on a canvas: something starts it, one or more steps do the work, and it ends.
+
+The builder needs a **paid plan**. A Free workspace opening **AI Agents** gets an **Agent Studio** upgrade panel — "Build AI agent virtual assistants on any paid plan." — with no canvas behind it. From Starter upward you can draft as many agents as you like; the cap applies to how many you may have **deployed** at once. **Nothing an agent does takes effect until you deploy it.**
 
 <Path steps={['Sidebar', 'AI Agents']} />
 
-<TaskHeader before="Nothing. Drafts cost nothing and are unlimited — the limit applies at deploy time" time="About 10 minutes for your first agent" after="A deployed agent that runs on its own when its trigger fires" />
+<TaskHeader before="A paid plan. Drafts are then unlimited — the cap applies at deploy time" time="About 10 minutes for your first agent" after="A deployed agent that runs on its own when its trigger fires" />
 
 ## Create the agent
 
@@ -85,7 +87,7 @@ This is the step everyone misses. A saved draft with a schedule trigger does abs
   </Step>
 </Steps>
 
-If your agent uses the **Webhook / API call** trigger, one more thing has to be switched on before anything can reach it. Open <Path steps={['Settings', 'AI Settings']} />, expand **Webhook / API trigger** ("let any external system fire your agents") and turn it on — you get **Webhook endpoint enabled**. Copy the endpoint and its signing secret from there. You can rotate the secret or disable the endpoint at any time.
+If your agent uses the **Webhook / API call** trigger, one more thing has to be switched on before anything can reach it — and it needs the **Team** plan. On any lower plan the setting is replaced by an upgrade panel ("Let any external system (Zapier, a form backend, another app) fire your agents by POSTing a signed request to your clinic's webhook endpoint. Available on the Team plan."), which means a webhook-triggered agent built on Starter or Essential can never fire, however correctly it is deployed. Open <Path steps={['Settings', 'AI Settings']} />, expand **Webhook / API trigger** ("let any external system fire your agents") and turn it on — you get **Webhook endpoint enabled**. Copy the endpoint and its signing secret from there. You can rotate the secret or disable the endpoint at any time.
 
 ## Check it worked
 
@@ -101,7 +103,7 @@ If your agent uses the **Webhook / API call** trigger, one more thing has to be 
   </Accordion>
 
   <Accordion title="Nothing arrives at my webhook trigger">
-    The endpoint is off by default. Turn on **Webhook / API trigger** under <Path steps={['Settings', 'AI Settings']} />, then confirm you are sending a signed `POST` to the endpoint shown there. If you rotated the signing secret, update whatever is calling you.
+    The endpoint needs the **Team** plan, and is off by default even there. Turn on **Webhook / API trigger** under <Path steps={['Settings', 'AI Settings']} />, then confirm you are sending a signed `POST` to the endpoint shown there. If you rotated the signing secret, update whatever is calling you.
   </Accordion>
 
   <Accordion title="Deploy failed and mentions a limit">

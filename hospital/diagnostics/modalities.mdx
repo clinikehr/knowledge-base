@@ -23,9 +23,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 ## Before you start
 
-This page needs two things on top of the **Diagnostics** care area. Without the imaging bridge, the page shows a locked card instead: **Modality integration is a Professional feature**, with "Connect your CT/MRI/US/X-ray machines: orders reach the modality worklist and finished studies attach themselves to the order for reporting." A **View plans** button sits underneath — see [Change your plan](/platform/plans/change-plan).
-
-You also need whoever looks after the machine's bridge PC, because half of this task happens there rather than in ClinikEHR.
+Without the imaging bridge this page shows a locked card: **Modality integration is a Professional feature**, with "Connect your CT/MRI/US/X-ray machines: orders reach the modality worklist and finished studies attach themselves to the order for reporting." A **View plans** button sits underneath — see [Change your plan](/platform/plans/change-plan). You also need whoever looks after the machine's bridge PC, because half of this task happens there.
 
 <Note>
   Image pixels never leave your building. ClinikEHR stores addresses only, and the viewer reads full-resolution studies from your own on-site archive: "Images never leave the clinic — only these URLs are stored."
@@ -62,13 +60,10 @@ Before you register anything it reads **No modalities registered yet.** Each row
     The dialog explains what it is about to do: **A private key is generated for this machine's bridge PC — it authenticates every study it forwards.**
   </Step>
   <Step title="Name it">
-    **Name** is the only required field — the example is "CT Room 1". Add the **AE title (optional)** and **Type (optional)** if you know them; both help you tell machines apart later.
-  </Step>
-  <Step title="Select Register">
-    The bridge key dialog opens immediately, headed **Bridge key for \{name\}**.
+    **Name** is the only required field — the example is "CT Room 1". Add the **AE title (optional)** and **Type (optional)** if you know them; both help you tell machines apart later. Select **Register**.
   </Step>
   <Step title="Copy the key and configure the bridge PC">
-    Set the key on the machine's bridge PC as the `X-Modality-Key` header. Copy it before you close the dialog.
+    The **Bridge key for \{name\}** dialog opens. Set the key on the machine's bridge PC as the `X-Modality-Key` header, and copy it before you close the dialog.
   </Step>
   <Step title="Confirm it is talking">
     Once the machine forwards its first study, **Last seen** changes from **never** to a timestamp.
@@ -146,15 +141,11 @@ Where per-person permissions apply, enforcement is **opt-in**: someone never sav
   </Accordion>
 
   <Accordion title="Everything lands in Studies awaiting review">
-    The accession the machine sends does not match the one on the order. Fix that at the machine or in your worklist configuration — attaching by hand every time is a symptom, not a workflow.
-  </Accordion>
-
-  <Accordion title="No matching orders awaiting a study.">
-    The order is not in a state that accepts a study. Check on [Radiology list](/hospital/diagnostics/radiology) that the request exists and has not already had a study attached.
+    The accession the machine sends does not match the one on the order. Fix that at the machine — attaching by hand every time is a symptom, not a workflow.
   </Accordion>
 
   <Accordion title="I discarded the wrong study">
-    Discard has no confirmation and no undo. The machine can re-send it; if it cannot, the images are still in your own archive, so attach the next copy rather than reporting from memory.
+    Discard has no confirmation and no undo. The machine can re-send it; the images are still in your own archive, so attach the next copy rather than reporting from memory.
   </Accordion>
 
   <Accordion title="Open full viewer is missing on reports">

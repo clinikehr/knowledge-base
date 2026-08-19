@@ -16,13 +16,15 @@ The chart is the one screen that holds everything recorded about a single person
 
 <AuditNote action="Opening a chart" />
 
-## What is on it
+## What you're looking at
 
-The header carries the name, client type and status badges, date of birth and age, email and phone, with **Edit profile** beside it. Under that sits a row of actions — **Intakes**, **Upload**, **Message**, and a **⋯** menu whose **Change status** option moves the person between **Active**, **Inactive**, **Prospective** and **Archived**.
+The header carries the name, a client-type badge and a status badge, date of birth and age, email and phone, with **Edit profile** beside it. Under that sits a row of actions — **Intakes**, **Upload**, **Message**, and a **⋯** menu whose **Change status** submenu moves the person between **Active**, **Inactive**, **Prospective** and **Archived**.
+
+Seven tabs run across the chart, opening on **Overview**:
 
 | Tab | What is on it |
 | --- | --- |
-| **Overview** | **Balance**, **Invoices**, **Consults** and **Next Appt**; the current check-in state; **Current Medications** and **Recent Diagnoses** |
+| **Overview** | **Balance**, **Invoices**, **Consults** and **Next Appt**; the check-in card; **Current Medications** and **Recent Diagnoses** |
 | **Billing** | Invoices and payments for this person |
 | **Measures** | Recorded measurements over time |
 | **History** | The visit and activity trail |
@@ -30,13 +32,17 @@ The header carries the name, client type and status badges, date of birth and ag
 | **Labs** | Test results filed against this person |
 | **Files** | The health-records vault and shared forms |
 
-A right-hand sidebar stays with you across tabs: **Billing** (Balance, Total Paid, Billing Type), **Upcoming** appointments, **Client Info** and **Contacts**.
+A right-hand sidebar stays with you across every tab, in four blocks: **Billing** (**Balance**, **Total Paid**, **Billing Type**, and an **Add Payment** button), **Upcoming** appointments, **Client Info** (**Gender**, **Blood Type**, **Genotype**, **Marital Status**, **Occupation**) and **Contacts**.
+
+On a chart with nothing on it yet, the figures read **0**, **Next Appt** reads **None**, the sidebar shows **No upcoming appointments** and **No contacts on file**, and any field nobody has filled shows an em dash — never a made-up value.
 
 ## Sticky notes and status notes
 
-A floating dock sits on the edge of the chart: two draggable vertical tabs, **Sticky Notes** in amber and **Status Notes** in blue, each with a count badge. Pinned sticky notes also render as dismissible cards on the chart itself.
+A floating dock sits on the right edge of the chart: two draggable tabs, **Sticky Notes** in amber and **Status Notes** in blue, each with a count badge. Pinned sticky notes also render as dismissible cards on the chart itself.
 
-To add one, open **Sticky Notes** and fill in **Title**, **Note**, a **Colour** and a **Priority**, then decide whether to pin it — the toggle reads "Keep this note above the others" — and select **Add note**.
+To add one, open **Sticky Notes** and fill in **Title**, **Note**, a **Colour** and a **Priority**, decide whether to **Pin to top** — "Keep this note above the others" — and select **Add note**. **Tag staff (email notified)** puts it in front of a named colleague.
+
+**Status Notes** is the clinical team's version. It carries a **Visible to all staff** toggle — "Let non-clinical staff (front desk, billing) see this note" — and moves through **Open**, **In progress**, **Resolved** and **Archived**.
 
 <Note>
   **A sticky note belongs to the person, not the visit.** It follows them into every future visit, so it is the right place for "always needs a chaperone" or "prefers afternoon appointments" — and the wrong place for something that only matters today. Anything clinical belongs in a [clinical note](/practice/clinical/notes).
@@ -44,11 +50,31 @@ To add one, open **Sticky Notes** and fill in **Title**, **Note**, a **Colour** 
 
 ## Check someone in from the chart
 
-**Overview** carries a check-in card. When nobody is checked in it reads **Not checked in** with a **Check in** button; once they are, it shows the arrival time, who they are with and where, and offers **View** and **Check out**.
+**Overview** carries a check-in card. When nobody is checked in it reads **Not checked in** — "Check the client in for their visit" — with a **Check in** button; once they are, it shows a live dot, the arrival time, who they are with and where, and offers **View** and **Check out**.
 
-Selecting **Check in** opens the **Check In Patient** sheet: pick the check-in time, choose an appointment (or leave it on **No appointment**), add **Visit items** — a service, a lab test or a custom label — set **Assign to**, and enter a **Reason for visit**.
+Selecting **Check in** opens the **Check In Patient** sheet. It refuses to save an empty visit: "Add a reason, appointment, or at least one item". The full workflow, including checking out and issuing the visit record, is in [Check a client in and out](/practice/work/check-in).
 
-The sheet refuses to save an empty visit: "Add a reason, appointment, or at least one item". The full workflow, including checking out and issuing the visit record, is in [Check a client in and out](/practice/work/check-in).
+## Who can do this
+
+Role decides whether the chart opens at all. Which charts you can open is decided by the access tier you were given when you were invited.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open a chart and read it | Any staff member with access to that client | The access tier chosen when they were invited |
+| Open a chart for somebody who is not their client | Owner, manager, and anyone on **Full client list** or **Entire practice** | The same access tier |
+| Edit the profile or change the status | Any staff member who can open the chart | Role |
+| Add a **sticky note** | Any staff member who can open the chart | Role |
+| Add a **status note** | Owner, manager, clinical roles | Role — the option is absent for anyone else |
+| Sign or countersign clinical work on the chart | The clinician, and their named supervisor | Permission — **Sign and lock a consultation**, **Countersign a colleague's note** |
+
+The four access tiers are **Basic** ("Can schedule and add documentation for their clients"), **Billing**, **Full client list** ("Can see profiles and appointments for all clients") and **Entire practice**. On Solo and Team there is no per-role navigation editor, so apart from the clinical-authority acts above, nothing on this screen is behind a per-action permission — the tier is the lever.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Where the chart gets its content
 
@@ -62,6 +88,54 @@ The sheet refuses to save an empty visit: "Add a reason, appointment, or at leas
 | Invoice them | [Invoices](/practice/money/invoices) |
 | See who opened a record | [Audit log](/platform/security/audit-log) |
 
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can open some clients but not others">
+    Your access tier is **Basic** or **Billing**, which covers your own clients only. **Full client list** and **Entire practice** see everybody. The owner changes this on your team record.
+  </Accordion>
+
+  <Accordion title="Balance shows a figure the client disputes">
+    **Balance** is invoices raised minus payments recorded. If money has arrived but nobody recorded it, the chart is right and the record is incomplete — settle it on the **Billing** tab. See [Invoices](/practice/money/invoices).
+  </Accordion>
+
+  <Accordion title="A tab is empty when I know there is something there">
+    Each tab reads only records filed against this client. A lab result attached to the wrong person, or a note saved without a client, will not appear here — check the module the record was created in.
+  </Accordion>
+
+  <Accordion title="The notes dock is covering something I need">
+    Both tabs are draggable. Move one up or down the edge of the screen and it stays where you put it next time you open a chart.
+  </Accordion>
+
+  <Accordion title="Check in is greyed out">
+    The chart is still loading the client record — a check-in recorded before the chart knows whose it is would be attached to nobody. If it never enables, reopen the chart from **Clients**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What is the difference between a sticky note and a status note?">
+    A **sticky note** is standing information about the person — an allergy to flag, a front-desk preference. A **status note** is the clinical team's running commentary on something in progress, and it has a status you close off. Neither is a clinical note.
+  </Accordion>
+
+  <Accordion title="Can a client see their own chart?">
+    Only what you publish to them. If they have portal access they see appointments, shared documents and messages — not your notes, and not the dock. See [Turn on the patient portal](/portal/setup/enable).
+  </Accordion>
+
+  <Accordion title="Does changing someone to Archived remove their chart?">
+    No. Archiving takes them out of your working list; the chart, its history and its invoices are untouched and reappear the moment you set them back to **Active**.
+  </Accordion>
+
+  <Accordion title="Who can see that I opened this chart?">
+    The owner and any manager, in the audit log — with your name, the record and the time. Reading a chart is recorded exactly like changing one.
+  </Accordion>
+
+  <Accordion title="Can I print the whole chart?">
+    Not as one document. Each record prints or downloads from its own screen — a note, an invoice, a lab report, a visit record — because each is signed by a different person on a different date.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck />
 
-{/* source of truth: components/clinic/clients-management/client-management-form.tsx, components/clinic/clients-management/client-profile-sidebar.tsx, components/clinic/clients-management/patient-notes-dock.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/clients-management/client-management-form.tsx, client-profile-sidebar.tsx, patient-notes-dock.tsx, sticky-note-sheet.tsx, update-note-sheet.tsx, lib/clinic-nav-registry.ts */}
