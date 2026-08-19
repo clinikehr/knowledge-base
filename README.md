@@ -44,11 +44,17 @@ npm run validate     # the checks CI runs
 npm run links        # external/internal broken-link scan
 ```
 
-`npm run validate` is the important one. Mintlify will publish a site whose
-navigation points at missing pages and which contains pages nobody can reach —
-both are invisible in review and obvious to a reader. The validator blocks
-both, plus missing frontmatter, dead internal links and unresolved snippet
-imports.
+`npm run validate` is the important one — it runs two checks.
+
+The first blocks what Mintlify would publish silently: navigation pointing at
+missing pages, pages nobody can reach, missing frontmatter, dead internal
+links, unresolved snippet imports, non-HugeIcons icons, and HTML comments.
+
+The second compiles every page with the **real MDX compiler**. This matters
+more than it sounds: `mint dev` accepts syntax the hosted build rejects, so a
+page can render perfectly on your laptop and 404 in production. Two outages
+came from exactly that gap — HTML comments, and prose placeholders like `{n}`
+that MDX parses as JavaScript. Escape literal braces as `\{n\}`.
 
 ## How it ships
 

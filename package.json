@@ -2,15 +2,19 @@
   "name": "@clinikehr/knowledge-base",
   "version": "1.0.0",
   "private": true,
-  "description": "Source for help.clinikehr.com — the ClinikEHR Help Center",
+  "description": "Source for help.clinikehr.com \u2014 the ClinikEHR Help Center",
   "scripts": {
     "dev": "mint dev",
-    "validate": "node scripts/validate-docs.mjs",
+    "validate": "node scripts/validate-docs.mjs && node scripts/compile-check.mjs",
     "links": "mint broken-links",
-    "upgrade": "mint update"
+    "upgrade": "mint update",
+    "compile": "node scripts/compile-check.mjs"
   },
   "devDependencies": {
-    "mint": "^4.2.16"
+    "mint": "^4.2.16",
+    "@mdx-js/mdx": "^3.1.0",
+    "remark-gfm": "^4.0.0",
+    "remark-frontmatter": "^5.0.0"
   },
   "engines": {
     "node": ">=20"

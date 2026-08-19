@@ -114,6 +114,10 @@ One or two sentences: what this page lets you do, in the reader's words.
 - Bold every literal UI string exactly as the product renders it: **Add item**,
   **Save & close**. Do not correct the product's capitalisation in the docs —
   fix it in the product instead.
+- **Escape curly braces in prose.** MDX reads `{…}` as a JavaScript expression,
+  so a placeholder like `{n} documents` or `Welcome to {your clinic}` fails to
+  compile and takes the whole page down with a 404 — invisible in local preview.
+  Write `\{n\} documents`. This is checked by `npm run validate`.
 - The verb for interacting with a control is **select** (works for click, tap
   and keyboard). Use "enter" for typing into a field, "choose" for a picker.
 - Name the surface: "the **New sale** sheet", "the **Billing** page".
