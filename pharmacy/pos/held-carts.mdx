@@ -17,6 +17,22 @@ Two things that keep a queue moving: parking a customer who has gone back to the
 
 <TaskHeader before="A cart with at least one line" time="Seconds" after="A parked cart you can resume later, and a total that reflects the discount you gave" />
 
+## What you're looking at
+
+Both jobs live on the **Cart** card in the right-hand column of the till.
+
+| Control | Where it is | What it does |
+| --- | --- | --- |
+| **Hold** | The **Cart** card header | Parks the current sale and clears the till |
+| **Held** | Beside it, with a count when carts are parked | Opens the **Held carts** sheet |
+| **Clear All** | The **Cart** card header | Empties the cart — see the warning below |
+| **Discount** | A dotted link under each cart line | Opens **Discount this line** |
+| **%** and your currency symbol | Small toggles above **Subtotal** | Discount the whole cart by percentage or flat amount |
+
+The **Held carts** sheet is headed "Parked sales waiting for the customer to complete payment. Resume to continue, or discard." Each card shows its label, **\{n\} items · \{amount\}**, how long ago it was parked, and **Resume** and **Discard**.
+
+**With nothing parked**, the **Held** button carries no count and the sheet is empty — there is no error, just an empty list. A discounted line, by contrast, is always visible: the original price is struck through and a **−\{n\}%** badge sits on the row.
+
 ## Hold a cart
 
 <Steps>
@@ -75,13 +91,34 @@ A whole-cart discount stacks with line discounts, so check the **Total** rather 
   Both kinds of discount need the **Discount beyond the set limit** permission. A cashier does not have it by default, which is deliberate: the person taking the money is not usually the person who decides the price. See [Staff permissions](/platform/team/permissions).
 </Note>
 
+## Who can do this
+
+The two jobs on this page sit on opposite sides of a deliberate line. **Holding** a cart is part of serving a queue and every till operator does it. **Discounting** is a pricing decision and is not a cashier's to make.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Hold a cart, resume it, discard it | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Discount one line | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Discount beyond the set limit** |
+| Discount the whole cart | Pharmacy Manager, Dispensing Supervisor | **Discount beyond the set limit** |
+| Change an item's price outright | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
+| Reverse a sale you should have discounted | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+
+**Role** governs the sidebar: a Cashier reaches **POS** and **Sales** only, so both controls are on their screen — the discount one simply refuses.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted and *can* discount, regardless of their role bundle. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A discount refused at the till leaves a line in the audit log; one you were entitled to give does not.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - **Held** shows a count, and the parked cart is in the **Held carts** sheet with its label, item count and value.
 - Resuming restores the cart exactly as it was, customer included.
 - A discounted line shows a struck-through original and a **−\{n\}%** badge, and **Discount** appears as a negative in the totals.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'Add items before holding the cart'">
@@ -102,6 +139,34 @@ A whole-cart discount stacks with line discounts, so check the **Total** rather 
 
   <Accordion title="The total is lower than I expected">
     A line discount and a cart discount are both applied. Remove the line badge or clear the cart-level value and check the **Total** again before completing.
+  </Accordion>
+
+  <Accordion title="A held card is marked 'unsynced'">
+    You are offline, or were when it was parked. The cart is safe on the device and resumes normally; the badge is telling you its state has not left this terminal yet.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens to a held cart overnight?">
+    It is still there in the morning, on the same terminal, because it is stored on the device rather than in the browser session. It survives a refresh, a browser restart and an outage. Discard the ones nobody came back for — a stale hold is the easiest thing in the shop to resume by accident.
+  </Accordion>
+
+  <Accordion title="Does holding a cart reserve the stock?">
+    No. The stock is not touched until the sale completes, so another till can sell the last box of something sitting in your held cart. Resuming a cart whose stock has gone behaves like any other short line.
+  </Accordion>
+
+  <Accordion title="How many carts can I hold at once?">
+    There is no number you need to watch. The **Held** button counts them, and each is labelled with the customer's name, or the first product and a count such as "Paracetamol \+2", or **Walk-in** — attach the customer if you want it findable.
+  </Accordion>
+
+  <Accordion title="Can a colleague resume a cart I parked?">
+    Only at the same terminal. Held carts belong to the device they were parked on — a cart held on the front till is not on the back one.
+  </Accordion>
+
+  <Accordion title="Is a whole-cart discount the same as an override?">
+    No. A discount takes an amount or a percentage off the total and is governed by **Discount beyond the set limit**. Changing what a single item sells for is **Override the selling price**, a separate permission.
   </Accordion>
 </AccordionGroup>
 

@@ -17,7 +17,7 @@ The **Pharmacy Station** is where a script is written, screened and drawn from s
 
 <TaskHeader before="At least one stock item, and a customer record if you want the script linked to somebody" time="2 minutes for a two-line script" after="A prescription with a reference number, dispensed against a real lot" />
 
-## What is on the screen
+## What you're looking at
 
 The header reads **Pharmacy Station** and carries a date-range picker plus **New Prescription**. Everything below it sits under three tabs.
 
@@ -33,9 +33,11 @@ The header reads **Pharmacy Station** and carries a date-range picker plus **New
   If the figures cannot be loaded you get **"Could not load pharmacy analytics — refresh to try again."** rather than a screen of zeros. A zero on this screen always means zero.
 </Note>
 
-The **Inventory** tab is not a summary. It is the stock screen itself — one place, two doors — so anything in [Stock control](/pharmacy/inventory/index) can be done without leaving the station.
+The **Inventory** tab is not a summary. It is the stock screen itself — one place, two doors — so anything in [Stock control](/pharmacy/inventory/index) can be done without leaving the station. Its own tab strip runs **Catalog**, **Stock**, **Ledger**, **Counts**, **Fill Rx**, **Purchasing**, **Vouchers**, **Recalls**, **Locations**, **Alerts** and **Reconciliation**; **Fill Rx** is the one this page cares about, and **Alerts** carries a count badge when anything is open.
 
 On **Reports**, pick an entry from the **Report Types** list and select **Generate Report**. An existing report offers **Regenerate** and **Export**.
+
+**A brand-new pharmacy** sees all four **Analytics** tiles at zero, empty charts, and a **Fill Rx** tab with nothing to fill. That is the correct starting state — nothing is broken. Add a stock item first, then write your first script.
 
 ## Write a prescription
 
@@ -50,7 +52,7 @@ On **Reports**, pick an entry from the **Report Types** list and select **Genera
     **Prescription Date** defaults to today. Change it only if you are recording a script written earlier.
   </Step>
   <Step title="Add each medication">
-    Use the medication search — "Search medications…" — to add a line. Every line asks for \*\*Mode \*\*\*, \*\*Quantity \*\*\*, \*\*Dosage \*\*\*, \*\*Frequency \*\*\* and \*\*Duration \*\*\*. **Instructions (Optional)** is what the customer reads on the label, so fill it for anything that is not obvious.
+    Use the medication search — "Search medications…" — to add a line. Every line asks for **Mode**, **Quantity**, **Dosage**, **Frequency** and **Duration**, each marked required with an asterisk. **Instructions (Optional)** is what the customer reads on the label, so fill it for anything that is not obvious.
   </Step>
   <Step title="Review the summary">
     **Additional Notes** covers anything that belongs to the script rather than a line. The **Prescription Summary** and **Estimated Total** update as you go, so the price is settled before the customer is told it.
@@ -78,6 +80,30 @@ Writing a script does not move stock. Drawing it down is a separate, deliberate 
 
 Interaction alerts appear against the script exactly as they do at the till — see [Drug interaction screening](/pharmacy/dispensing/interaction-screening).
 
+## Who can do this
+
+Two separate gates. **Role** decides whether **Pharmacy Station** opens at all: a **Cashier** reaches only **POS** and **Sales**, so the station is not in their sidebar. A **Pharmacy Technician** gets the station, **Inventory** and **Customers**, but not the money screens. Owners, managers and pharmacists are unrestricted by role.
+
+**Permission** decides what you may do once it is open.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the station and read **Analytics** | Any role except **Cashier** | Role |
+| Write a prescription | Any role that reaches the station | Role |
+| Dispense against stock on **Fill Rx** | Pharmacy Manager, Dispensing Supervisor, Inventory & Purchasing | **Adjust stock counts** |
+| Witness a controlled-drug dispense | Dispensing Supervisor, and anyone named as Pharmacist-in-Charge | **Witness a controlled-drug dispense** |
+| See cost and margin on the stock screens | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+| Receive a delivery into stock | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+
+A **Pharmacy Manager** deliberately does **not** get the controlled-drug witness by default — that countersignature is a pharmacist's act, not a manager's, and the role bundle leaves it off on purpose.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted — no checks apply to them at all. The sheet warns **"Saving starts enforcing"** before you touch a switch.
+- **A denied action is recorded; an allowed one is not.** A missing sidebar entry is a convenience, not a security boundary — the real check runs when the action is submitted.
+
+Where a figure is gated it never shows a zero. Cost and margin read **Hidden — needs authorisation**, or the column disappears entirely. See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The **Prescription Created** dialog showed a **Reference:**.
@@ -86,7 +112,7 @@ Interaction alerts appear against the script exactly as they do at the till — 
 
 <AuditNote action="Opening a customer's record and dispensing against it" />
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The Save button will not enable">
@@ -106,7 +132,39 @@ Interaction alerts appear against the script exactly as they do at the till — 
   </Accordion>
 
   <Accordion title="I cannot see the Pharmacy Station in the sidebar">
-    Your role and permissions decide which entries you get. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
+    You are on the **Cashier** role, which reaches **POS** and **Sales** and nothing else. Ask an owner or manager to change your role — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="'Could not load pharmacy analytics — refresh to try again.'">
+    The figures could not be fetched — usually a dropped connection. Refresh. Nothing on the screen is wrong; it is simply absent rather than guessed at.
+  </Accordion>
+
+  <Accordion title="Cost or margin reads 'Hidden — needs authorisation'">
+    You do not hold **View cost prices and margin**. The rest of the stock screen still works. An owner or manager grants it in your permissions sheet.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does writing a prescription move stock?">
+    No. The script is paperwork; **Fill Rx** is what draws the stock down. That separation is deliberate — a script can be written today and collected on Friday, and the shelf should only change when the box actually leaves it.
+  </Accordion>
+
+  <Accordion title="Can I sell a prescription item through the till instead?">
+    For most items, yes. A product flagged as needing a witnessed dispense is refused at POS — "… requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." — because the till has nowhere to capture a countersignature.
+  </Accordion>
+
+  <Accordion title="Which lot does a dispense come out of?">
+    The one that expires soonest, automatically. You choose the **Stock item** and the **Location**; the lot is picked for you so short-dated stock moves first. See [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+  </Accordion>
+
+  <Accordion title="Can I reprint a prescription later?">
+    Yes — reopen the script and print it again. The **Prescription Created** dialog is a convenience at the moment of saving, not the only chance to print.
+  </Accordion>
+
+  <Accordion title="Why is the customer picker labelled 'Select Patient'?">
+    That card is shared with the other ClinikEHR editions and keeps their wording. The records behind it are the ones you manage under [Customers](/pharmacy/customers/index).
   </Accordion>
 </AccordionGroup>
 

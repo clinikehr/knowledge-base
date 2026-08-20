@@ -17,39 +17,51 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <TaskHeader before="Nothing to start; a website you can paste a snippet into if you want to embed the form" time="10 minutes to set the form up" after="A pipeline of enquiries, and a public form that files into it" />
 
-## The tabs
+## What you're looking at
+
+Five tabs, of which the last two appear only for people who may manage the CRM:
 
 | Tab | What it holds |
 | --- | --- |
 | **Board** | Contacts as cards in stage columns — drag between stages |
-| **Contacts** | The same people as a searchable table, with the count |
+| **Contacts (\{n\})** | The same people as a searchable table. The count is what your filters currently match, and disappears when nothing does |
 | **Follow-ups** | What is due and who owes it |
 | **Campaigns** | Marketing sends against a saved segment |
 | **Insights** | Lead scoring and pipeline analysis |
 
-**Campaigns** and **Insights** only appear for staff who may manage the CRM, and only on the plans that include them. On a plan without them they are simply not in the tab strip — nothing is shown greyed out with a padlock.
+The header carries **Custom fields**, **Import**, **Export**, **Share contact page** (or **Set up contact page** if you have not published one), a chip showing contacts used against your plan limit, and **New contact**. Everything on that row except the chip and **New contact** is manager-only.
+
+Under it: **Search by name, email, phone, or company…**, a pipeline picker when you have more than one, a **Segments** menu, a sort control offering **Recent activity** and **Lead score**, and **Clear** when filters are on. The **Board** tab adds **Manage stages** and a **Board** / **List** toggle.
+
+The **Contacts** table has seven columns — **Name**, **Contact**, **Stage**, **Score**, **Source**, **Owner** and **Last activity**. **Stage** shows one of **Lead**, **Inquiry**, **Prospect**, **Waitlist**, **Customer** or **Lost**; **Score** shows a number, or an em dash at zero; **Source** names where they came from (**Booking page**, **Website**, **Contact form**, **Referral**, **Manual**, **Import**, **Walk-in**, **Phone**, **Social**). A contact whose priority is not normal carries a **High** or **Low** badge beside their name.
+
+A brand-new practice sees **No pipeline stages yet.** before a pipeline exists, **Drop contacts here** in each empty column once one does, and **No contacts match your filters.** on the table. **Follow-ups** reads "You're all caught up — no open follow-ups."
 
 ## Work the board
 
-Drag a contact's card from one column to the next to move it a stage. Search across the list with **Search by name, email, phone, or company…**, save the current filters with **Save segment** for reuse in a campaign, and bring an existing list in with **Import** or take yours out with **Export**.
+Drag a contact's card from one column to the next to move it a stage. Save the current filters from the **Segments** menu with **Save current as segment…** for reuse in a campaign, and bring an existing list in with **Import** or take yours out with **Export**.
 
 **Manage stages** opens the stage manager, where you can rename, recolour, reorder, add and remove stages, and mark which one counts as won and which as lost. A pipeline must keep at least one stage.
 
 <Note>
-  Customising the board — adding, renaming, reordering or deleting stages, or running more than one pipeline — needs the Essential plan or above. Below that you get the default pipeline and its default stages, which is a complete working board. See [Change your plan](/platform/plans/change-plan).
+  Customising the board needs the Essential plan or above — the notice reads "Custom pipelines & stages are an Essential feature". Below that you get the default pipeline and its default stages, which is a complete working board. See [Change your plan](/platform/plans/change-plan).
 </Note>
+
+## Work the follow-ups
+
+**Follow-ups** lists what is open, newest problem first, with a **My follow-ups** / **All** toggle. Each row is badged **Overdue**, **Today**, **Upcoming** or **No due date**, with the date appended, and shows the task over the contact it belongs to. **Mark done** clears it.
 
 ## Publish the public enquiry form
 
 <Steps>
   <Step title="Open the form settings">
-    Go to **Settings → Contact Form** — described as "Where people fill out the form." Everything about the public form is configured here.
+    Go to **Settings → Contact Form** — "Where people fill out the form." Everything about the public form is configured here.
   </Step>
   <Step title="Choose the fields">
-    The field editor explains itself: "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." Custom fields need the Team plan or above.
+    The field editor explains itself: "Drag to reorder. The first six are built-in fields you can rename or hide; add your own custom fields below." Custom fields are a Team feature.
   </Step>
   <Step title="Take the hosted link">
-    **Copy link** gives you the address of the hosted form. This works on every plan — put it on your website, in an email or on a printed card.
+    **Share contact page** copies the address of the hosted form. This works on every plan — put it on your website, in an email or on a printed card.
   </Step>
   <Step title="Embed it, if your plan allows">
     "Copy this snippet into your site's HTML, just before `</body>`." There are two levels: a widget snippet that drops a floating button onto your site, and a raw iframe for full control over placement. The iframe is a Team feature.
@@ -71,37 +83,82 @@ Submissions arrive on the board in your first stage, ready to work.
 
 When you reach a limit the product says so plainly and names the next plan — "Your Free plan includes up to 100 contacts. Upgrade to Starter for more." A subscription that has lapsed falls back to the Free limits until it is active again.
 
+## Who can do this
+
+Role decides whether **Contacts** opens, and whether you may manage it. There is no third layer here: managing the CRM is a single yes-or-no that owners and managers hold.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open **Contacts**, search it, add and move contacts | Any staff member | Role |
+| Complete a follow-up | Any staff member | Role |
+| Open **Campaigns** and **Insights** | Owner, manager | Role — the tabs are absent for everyone else, never greyed out |
+| **Import**, **Export**, **Custom fields**, **Manage stages**, save a segment | Owner, manager | Role — "Only clinic owners and managers can do this" |
+| Run more than one pipeline, or customise stages | Owner, manager, on Essential or above | Plan |
+
+Two things worth separating. **Plan never hides a tab** — it caps how many contacts, segments, campaigns and pipelines you may have, and those caps report themselves when you hit them. **Permission does hide tabs**: **Campaigns** and **Insights** are simply not in the strip if you may not manage the CRM, so an absent tab is the answer rather than a fault.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
-- A contact dragged to a new stage stays there after **Refresh**.
+- A contact dragged to a new stage stays there after a refresh.
 - Opening your hosted form link in a private browser window shows the fields you configured.
 - A test submission appears on the **Board** within moments.
 - The embedded widget shows on your own site after you paste the snippet before the closing `</body>` tag.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="There is no Campaigns or Insights tab">
-    Either your plan does not include them, or your account cannot manage the CRM. They are hidden rather than disabled, so an absent tab is the answer, not a fault.
+    You may not manage the CRM — that is owners and managers. They are hidden rather than disabled, so an absent tab is the answer, not a fault. Your plan does not affect this.
   </Accordion>
 
   <Accordion title="Manage stages will not let me add a stage">
-    Custom pipelines and stages start at Essential. Below that the default pipeline is fixed.
+    "Custom pipelines & stages are an Essential feature." Below Essential the default pipeline is fixed. The button also stops at your plan's pipeline count: "You've reached your plan's limit of \{n\} pipelines."
   </Accordion>
 
   <Accordion title="New contacts are refused">
-    You are at your plan's contact limit. The message names your plan, the limit and the next plan up.
+    You are at your plan's contact limit. The message names your plan, the limit and the next plan up, with an **Upgrade** action on the toast.
+  </Accordion>
+
+  <Accordion title="The Contacts tab shows no count">
+    The count is what your filters currently match, not your total. Nothing matching means no number — use **Clear** to drop the filters.
   </Accordion>
 
   <Accordion title="The embed snippet does nothing on my site">
-    It must go inside the page's HTML just before `</body>`, not inside a text block or a page builder's plain-text field. If your plan only includes the hosted link, use **Copy link** instead.
+    It must go inside the page's HTML just before `</body>`, not inside a text block or a page builder's plain-text field. If your plan only includes the hosted link, use **Share contact page** instead.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="An enquiry has become a real client — what now?">
+    Register them under **Clients** — see [Manage your client list](/practice/work/clients) — and move their card to the stage you have marked as won. The contact and the client record are separate things, and both are worth keeping.
   </Accordion>
 
-  <Accordion title="An enquiry has become a real client">
-    Register them under **Clients** — see [Manage your client list](/practice/work/clients) — and move their card to the stage you have marked as won. The contact and the client record are separate things, and both are worth keeping.
+  <Accordion title="Does a contact count against my client limit?">
+    No. Contacts and clients are counted separately, on separate limits. Someone only starts using a client record once you register them.
+  </Accordion>
+
+  <Accordion title="Will a campaign email somebody who has opted out?">
+    No. "Consent + unsubscribe are always enforced" — a campaign reaches opted-in, non-unsubscribed contacts only, whatever the segment says.
+  </Accordion>
+
+  <Accordion title="What is the Score column?">
+    A lead score the product calculates from a contact's activity and source. It is a sorting aid, not a judgement — a score of zero shows as an em dash rather than a nought.
+  </Accordion>
+
+  <Accordion title="What happens to contacts if I drop to a lower plan?">
+    Nothing is deleted. You fall back to that plan's limits, so you keep what you have but cannot add beyond the new cap until you upgrade again.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/crm/crm-content.tsx, components/clinic/crm/crm-stage-manager.tsx, lib/crm/plan-limits.ts, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}
+{/* source of truth: components/clinic/crm/crm-content.tsx, crm-table.tsx, crm-board.tsx, crm-inbox.tsx, crm-stage-manager.tsx, lib/crm/plan-limits.ts, lib/crm/authz.ts */}

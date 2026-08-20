@@ -17,22 +17,28 @@ Reporting is the point at which images become a clinical document. You open the 
 
 <TaskHeader before="A completed study on the queue, and its images available" time="5–15 minutes per study" after="A submitted report on the patient's record, with any critical finding flagged" />
 
-## The reporting workspace
+## What you're looking at
 
 **Radiology Reports** has four tabs:
 
 | Tab | Contents |
 | --- | --- |
-| **Overview** | Study Volume Trends, Status Distribution and Recent Studies |
+| **Overview** | **Study Volume Trends**, **Status Distribution** and **Recent Studies** |
 | **Reports** | The report list, and where you open or create one |
-| **Analytics** | Modality Distribution, Completion Rate and Performance Metrics |
-| **Documents** | Report Templates & Documents |
+| **Analytics** | **Modality Distribution**, **Completion Rate** and **Performance Metrics** |
+| **Documents** | **Report Templates & Documents** |
 
 Report templates live under **Documents**, and a house template is the cheapest way to make ten radiologists' reports read like one department's.
 
-## Write the report
+The report form itself is headed **Create Study Report**, **Edit Study Report** or **View Study Report** depending on what you opened and what you may do with it — the heading is how you tell at a glance whether you have write access to this one.
 
-The form is headed **Create Study Report**, **Edit Study Report** or **View Study Report** depending on what you opened and what you may do with it.
+**The empty state.** A centre with no reported studies yet sees empty charts on **Overview** and an empty **Reports** list. That is not the same as a study you cannot find: a study that has been acquired but never reported sits on [Imaging Requests](/lims/imaging/requests) as **Completed**, counted under **Reports Due**, and is what you open from here.
+
+<Note>
+  This is the working reporting screen. The **Reports** tab on the [radiology station](/lims/imaging/station) is a placeholder marked **under development** — do not go looking for your worklist there.
+</Note>
+
+## Write the report
 
 <Steps>
   <Step title="Attach the study">
@@ -74,6 +80,8 @@ The form is headed **Create Study Report**, **Edit Study Report** or **View Stud
 
 The **Critical Findings** flag records that you found something urgent. It does not tell the referring clinician. Ring them, then flag it, and note in **Recommendations** who you spoke to and when. The toast asks for exactly this: "Critical findings require immediate communication to the ordering physician."
 
+A referrer's portal only ever carries **released** results, and it is a place they visit rather than something that reaches them. Neither the flag nor the portal is a substitute for the call.
+
 ## Getting the study and its images
 
 Three actions sit on the **Study Information** card beside the report:
@@ -88,6 +96,29 @@ Three actions sit on the **Study Information** card beside the report:
 
 <AuditNote action="Opening or downloading a patient's imaging study" />
 
+## Who can do this
+
+Role decides whether **Radiology Reports** opens. Permission decides whether you may sign a report out or release it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open a report read-only | Owner, Manager, **Radiologist**, **Radiology Technician** | Role → route |
+| Write findings and save a draft | Imaging staff with reporting access | Role → route |
+| Submit or update a report | The reporting radiologist | Role → route |
+| Release the report to the referring doctor | **Referrer Liaison**, **Lab Manager**, Owner, Manager | Permission — **Release a report to a referrer** |
+| Open a referrer's account to check what they hold | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
+| Read the reporting-time figures on **Analytics** | **Lab Manager**, **Referrer Liaison**, **QC Officer** | Permission — **View turnaround-time analytics** |
+| Download or archive the study | Anyone who can open the report | Role → route |
+
+Attempting to submit without reporting access returns **You don't have permission to submit reports**. A **Lab Scientist** does not reach the imaging screens at all; a **QC Officer** is review-only by design and never signs a report out. Access tiers widen what a person sees rather than what they may do: **Own bench**, **Whole lab** and **All sites**, the last of which is the only tier that carries the referrer grants.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Figures on **Overview** and **Analytics** that are not yours to see render hidden or as a dash, never as a zero.
+
+See [Roles](/platform/team/roles) and [Permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The report shows as submitted, and the study's status has moved to **Reported** on [Imaging Requests](/lims/imaging/requests).
@@ -95,7 +126,7 @@ Three actions sit on the **Study Information** card beside the report:
 - A critical study is counted under **Critical Findings** — and you have already phoned the referrer.
 - The report opens from the patient's record with your findings and impression intact.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The form opens read-only">
@@ -107,11 +138,11 @@ Three actions sit on the **Study Information** card beside the report:
   </Accordion>
 
   <Accordion title="The Study Information card says no images">
-    The study arrived without a matching accession number and is waiting in the review queue. Attach it there and the images appear on the order — see [Connect your imaging machines](/lims/imaging/modalities).
+    The study arrived without a matching accession number and is waiting under **Studies awaiting review** on the modalities page. Attach it there and the images appear on the order — see [Connect your imaging machines](/lims/imaging/modalities).
   </Accordion>
 
-  <Accordion title="I cannot download the report">
-    **Save the order before downloading its report.** — the order has to exist before a report can be produced from it. Save, then download.
+  <Accordion title="Save the order before downloading its report.">
+    The order has to exist before a report can be produced from it. Save it, then download.
   </Accordion>
 
   <Accordion title="Archive to cloud failed">
@@ -119,10 +150,34 @@ Three actions sit on the **Study Information** card beside the report:
   </Accordion>
 
   <Accordion title="I submitted a report with a mistake in it">
-    Open it again and use **Update Report**. Both the original and the correction stay in the record — see [Audit log](/platform/security/audit-log).
+    Open it again and use **Update Report**. Both the original and the correction stay in the record, so correct it here rather than working around it — see [Audit log](/platform/security/audit-log).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does submitting a report send it to the referring doctor?">
+    No. Submitting finishes the document; **releasing** is what puts it in the referrer's portal, and that is a separate grant. A referrer sees only released results — see [Referring doctors and their portal](/lims/business/referrers).
+  </Accordion>
+
+  <Accordion title="Where do the images actually live?">
+    In your own on-site archive. Image pixels never leave your building: the viewer runs in the radiologist's browser and reads directly from your archive. The only exception is the optional cloud archive you switch on yourself — see [Connect your imaging machines](/lims/imaging/modalities).
+  </Accordion>
+
+  <Accordion title="Can I report from a template?">
+    Yes — house templates live on the **Documents** tab as **Report Templates & Documents**. Ten radiologists working from one template is what makes a department's reports read consistently.
+  </Accordion>
+
+  <Accordion title="Can I write a report offline?">
+    No. Order capture works offline; reporting, result entry and payment do not. A signed clinical document is never merged from two devices — see [Working offline](/platform/apps/offline).
+  </Accordion>
+
+  <Accordion title="Does the patient see this report?">
+    Only if you share it with them. Reports reach referring doctors through the referrer portal and patients through whatever you send them — the report does not publish itself.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="an imaging report" />
 
-{/* source of truth: components/clinic/dashboard/radiology-station/radiology-report/radiology-report-form.tsx, components/clinic/dashboard/radiology-station/reports/radiology-reports-dashboard.tsx */}
+{/* source of truth: components/clinic/dashboard/radiology-station/radiology-report/radiology-report-form.tsx, components/clinic/dashboard/radiology-station/reports/radiology-reports-dashboard.tsx, lib/edition-staff-roles.ts (LIMS_PERMISSIONS) */}

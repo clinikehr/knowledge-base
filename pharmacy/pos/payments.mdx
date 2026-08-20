@@ -17,7 +17,11 @@ The payment summary is the bottom-right card on the till. It totals the cart, ta
 
 <TaskHeader before="A cart with at least one line" time="Seconds" after="A completed sale recorded against the tender you chose, with change worked out for you" />
 
-## What the totals mean
+## What you're looking at
+
+The payment summary is the last card in the right-hand column, under the **Cart**. Top to bottom: the totals, then **Payment Method** as six buttons in two rows, then whatever that tender needs — a cash box, or a reference box — then **Notes (Optional)**, the **Part-payment / credit** tick, and **Complete Sale • \{total\}** across the bottom.
+
+A row only appears when it applies to the sale, so a plain cash sale of one item shows just **Subtotal** and **Total**. **An empty cart** shows the summary with everything at zero and **Complete Sale** disabled — the card is present from the moment the till loads, so a zero there means an empty cart, not a failure.
 
 Above the tender buttons, the summary lists the lines that apply to this sale:
 
@@ -82,13 +86,36 @@ The outstanding amount then appears in the **Debtors** sheet on the [Sales page]
   Credit is a real debt against a real person, and only a registered customer can carry one. Selling on credit to **Walk-in** leaves you with a balance nobody is attached to — attach the customer before you tick the box, not after.
 </Warning>
 
+## Who can do this
+
+**Role** decides whether **POS** opens at all — a **Cashier** gets **POS** and **Sales** and nothing else. **Permission** decides which parts of this card are yours.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Take any tender and complete the sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Take part payment on credit | Anyone who can complete a sale | **Dispense and sell at the till** |
+| Discount the sale before taking payment | Pharmacy Manager, Dispensing Supervisor | **Discount beyond the set limit** |
+| Change an item's price on this sale | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
+| Open the drawer outside a sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Open the cash drawer** |
+| Reverse a payment after the fact | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+| Count the drawer and close the day | Pharmacy Manager, Dispensing Supervisor | **Cash up and close the day** |
+
+Taking money and *deciding how much* are deliberately different permissions. A default **Cashier** can take every tender in the list but cannot discount, override a price or reverse anything.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**, and the first save applies immediately, mid-shift.
+- **A denied action is recorded; an allowed one is not.** A greyed-out control is a courtesy — the refusal that counts happens when the action is submitted.
+
+Money you may not see is never rendered as a zero: it reads **Hidden — needs authorisation** or the row is absent. See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - A **Sale Complete!** panel shows the **Sale Number**, the **Total** and the **Change Due**, and the toast reads **Sale completed successfully!**
 - The sale appears in **Sales History** with your chosen method in the **Payment** column.
 - A part payment shows the sale as owing in the **Debtors** sheet, with **Paid \{amount\} of \{total\}**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Account balance is greyed out">
@@ -107,8 +134,36 @@ The outstanding amount then appears in the **Debtors** sheet on the [Sales page]
     The same sale reached the server twice — usually a retry after a slow connection. Nothing has been double-charged; the original sale stands. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Accordion>
 
+  <Accordion title="Part-payment / credit is ticked but there is nobody to owe it">
+    A balance has to belong to a registered customer. Attach them on the **Customer** card first; the tick alone does not create a debtor.
+  </Accordion>
+
   <Accordion title="I cannot discount, only take payment">
     Discounting is a separate permission from selling — **Discount beyond the set limit** — and so are **Override the selling price** and **Refund or void a sale**. See [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can a customer pay with two tenders at once?">
+    Not on one sale — pick a single **Payment Method**. What you can do is take part of it now with **Part-payment / credit** and settle the rest later, from the **Debtors** sheet, on whatever method they use then.
+  </Accordion>
+
+  <Accordion title="What is the reference actually for?">
+    Matching the sale to your bank or terminal statement later. Enter the card's last four digits, the transfer reference or the mobile-money transaction ID exactly as it appears on the confirmation, and reconciliation becomes a lookup rather than a search.
+  </Accordion>
+
+  <Accordion title="Which tenders work offline?">
+    All of them except **Account balance**, including part payment on credit. Wallet tender needs the live balance, which one terminal in the dark cannot know. See [Selling when the internet is down](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Does taking payment here settle an invoice?">
+    No. The till and **Billing** are separate ledgers. An account or institutional buyer settles against their invoice on the [Payments screen](/pharmacy/money/billing); the till is for money changing hands at the counter.
+  </Accordion>
+
+  <Accordion title="Can I overpay a debt to leave change on account?">
+    No — paying more than is owed is refused rather than absorbed. Put the extra on the customer's account instead, so it stays theirs. See [Customer wallets](/pharmacy/customers/wallet).
   </Accordion>
 </AccordionGroup>
 

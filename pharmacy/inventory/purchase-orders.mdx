@@ -17,6 +17,14 @@ A purchase order is what you send a supplier and what you receive against when t
 
 <TaskHeader before="At least one vendor and the products you are ordering already in your catalogue" time="3 minutes to raise, a minute per line to receive" after="A submitted PO with the vendor emailed, ready to receive against" />
 
+## What you're looking at
+
+**Purchasing** is a tab on the **Inventory** screen, not a screen of its own. It carries three buttons — **New PO**, **Draft PO from these** and **Vendors** — over a list of orders, each row showing its vendor, expected date, estimated total and status: **draft**, **submitted**, **partially received** or **received**.
+
+Two of those three buttons are permission-locked. Without **Manage suppliers and purchase orders**, **New PO** and **Draft PO from these** are visible but disabled, with the reason attached: "Needs authorisation — buying on the clinic's account is purchasing authority. Ask your clinic owner to allow “Manage suppliers and purchase orders” for you." **Vendors** stays open to everyone and simply opens read-only — it is also the picker you use when receiving stock.
+
+A pharmacy that has never ordered anything sees an empty list and, on the Starter plan, a **Free plan** strip counting purchase orders against the cap.
+
 ## Raise a purchase order
 
 <Steps>
@@ -56,10 +64,6 @@ Receiving through a PO and receiving through the toolbar's **Receive** button en
 
 **Vendors** on the **Purchasing** tab opens the supplier manager — the addresses, contacts and account details you order against.
 
-Without the "manage suppliers and purchase orders" permission the manager opens **read-only**. The same permission also hides negotiated unit costs and supplier account numbers, so a person who can see your stock does not automatically see what you pay for it. See [Staff permissions](/platform/team/permissions).
-
-**New PO** and **Draft PO from these** are both locked without it.
-
 ## Ordering from the reorder suggestions
 
 The **Catalog** and **Alerts** tabs carry a strip counting the items **at/below threshold**, with **Draft PO from these**. It builds a draft order from exactly those items — and deliberately skips any that are also projected to expire unsold, telling you how many it skipped. See [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
@@ -76,6 +80,31 @@ A voucher takes a **Vendor**, a **Receiving location**, a **Vendor invoice #**, 
 
 Each row can be downloaded or printed as a PDF for the supplier file.
 
+## Who can do this
+
+**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**, so purchasing is not theirs. **Permission** decides whether you may commit your pharmacy to a supplier's invoice.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Read the **Purchasing** tab and open a PO | Everyone who can open **Inventory** | Role |
+| Open **Vendors** and read a supplier | Everyone who can open **Inventory** | Role — the sheet degrades to read-only |
+| **New PO**, **Draft PO from these**, editing a supplier | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
+| Receive a delivery against a PO line | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| See negotiated unit costs and supplier account numbers | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
+| See margin on a voucher line | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+
+Two gates are worth stating plainly, because they change what is on the screen rather than what happens when you select something:
+
+- **Manage suppliers and purchase orders redacts money, not just buttons.** Negotiated unit cost and supplier account numbers read **"Hidden — needs authorisation"** for anyone without it, so somebody who can count your stock does not automatically learn what you pay for it or where you pay it.
+- **View cost prices and margin** withholds the valuation and margin figures the same way — as text, never as a zero.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** The disabled **New PO** button is courtesy — the refusal is made server-side whether or not the button was showing.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The order shows as submitted on the **Purchasing** tab, not as a draft.
@@ -83,19 +112,19 @@ Each row can be downloaded or printed as a PDF for the supplier file.
 - After receiving, the **Stock** tab shows the new lots at the location you chose, and the **Ledger** tab shows the movements.
 - The voucher for the delivery appears on the **Vouchers** tab and the **Stock received** figure has moved.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="New PO is greyed out">
-    You do not have the "manage suppliers and purchase orders" permission, or you are at your plan's purchase-order limit on Starter. The **Free plan** strip shows which.
+    Either you do not hold **Manage suppliers and purchase orders** — hover it and the tooltip says so — or you are at your plan's purchase-order limit on Starter. The **Free plan** strip shows which.
   </Accordion>
 
   <Accordion title="I can see vendors but cannot change them">
-    The supplier manager opens read-only without the permission. That is the same permission that hides negotiated costs.
+    The supplier manager opens read-only without **Manage suppliers and purchase orders**. That is deliberate: everyone needs the vendor list to receive stock against, and only a buyer needs to edit it.
   </Accordion>
 
-  <Accordion title="Unit costs show as hidden">
-    Viewing cost and margin is granted separately from viewing stock. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
+  <Accordion title="'Hidden — needs authorisation'">
+    Costs and account numbers are withheld from anyone without the relevant switch, rather than shown as zero. Ask an owner or manager — see [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The vendor says they never got the order">
@@ -104,6 +133,34 @@ Each row can be downloaded or printed as a PDF for the supplier file.
 
   <Accordion title="Only part of the delivery arrived">
     Receive the quantities that arrived and leave the rest of the line outstanding. Do not receive the full quantity and adjust it afterwards — that hides the shortfall from the supplier record.
+  </Accordion>
+
+  <Accordion title="The order still says draft after I saved it">
+    Saving and submitting are different. Until you submit, nobody has seen it and no email has gone out. A submitted order confirms with **"PO submitted"**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What is the difference between a purchase order and a voucher?">
+    A purchase order is what you send: an intention to buy. A voucher is what you got: the goods-received record behind an actual delivery, with the invoice number, costs, lots and expiries. **Add from a purchase order** on the voucher pulls the lines straight off the order so you are not typing them twice.
+  </Accordion>
+
+  <Accordion title="Do I have to raise a PO to receive stock?">
+    No. The toolbar's **Receive** books a delivery straight in, and that is the right route for a cash purchase or a walk-in rep. Both routes end in the same place — stock on hand and a movement on the **Ledger** tab.
+  </Accordion>
+
+  <Accordion title="Can I change a submitted order?">
+    Treat a submitted order as sent, because it has been. If the quantity changes, receive what actually arrives against the line rather than editing the order to match — the difference between ordered and received is the record you will want when you query the invoice.
+  </Accordion>
+
+  <Accordion title="Does raising a PO reserve or reduce stock?">
+    No. Nothing moves until you receive against it. A PO is a document, not a stock movement, so an order that never arrives leaves your figures untouched.
+  </Accordion>
+
+  <Accordion title="Why does the reorder strip skip some low items?">
+    It leaves out anything also projected to expire unsold, and says how many it skipped. See [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
   </Accordion>
 </AccordionGroup>
 

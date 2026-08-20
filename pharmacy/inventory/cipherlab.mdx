@@ -17,6 +17,19 @@ A CipherLab 8000-series terminal counts a whole pharmacy far faster than a works
 
 <TaskHeader before="A CipherLab terminal holding a completed count, its USB cradle plugged into this computer, and Chrome, Edge or the ClinikEHR desktop app" time="5 minutes for the transfer, longer for reconciling unmatched barcodes" after="A physical count reconciled against expected stock, ready to apply" />
 
+## What you're looking at
+
+Choosing **Portable scanner (CipherLab terminal)** on the **New count** sheet swaps the worksheet for a collection panel. It holds three numbered instructions, a **Connect scanner** button, a running tally, and a status badge that is the only thing you actually need to watch:
+
+| Badge | What is happening |
+| --- | --- |
+| **Opening port…** | Your browser is claiming the cradle's serial port |
+| **Connected — start the upload on the terminal** | The app is listening. Now go to the device |
+| **Receiving…** | Records are arriving and the tally is filling |
+| **Upload complete** | Green. Everything the terminal held is here |
+
+Alongside sit **Disconnect**, **Try at 9600 baud**, **Finish now** and **Collect again**. Before you connect, the panel shows no tally at all — the tally only exists once a transfer starts.
+
 ## Before you dock the terminal
 
 Three things have to be true, and each one fails in a way that looks like a dead port:
@@ -85,6 +98,29 @@ Opening the count moves you to the **Physical count** sheet, headed with the sco
   Applying posts every difference to stock and closes the count. It cannot be reopened or reversed, and an unassigned barcode is applied as though the stock was never counted. Clear the unmatched list first.
 </Warning>
 
+## Who can do this
+
+**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**. **Permission** decides whether you may apply what the terminal collected.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Connect the cradle and collect a transfer | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Assign an unmatched barcode to a product | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| **Apply changes to inventory** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Countersign a controlled-scope count | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
+| See the variance totals valued in money | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+
+The countersignature sits with the **Dispensing Supervisor** bundle and not with **Pharmacy Manager** — a controlled count cannot be applied unless somebody holding it is available. Check that before you walk the shelves.
+
+Without **View cost prices and margin**, **More than expected**, **Less than expected** and **Net difference** read **"Hidden — needs authorisation from your clinic owner."** rather than showing a zero.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Nothing about the terminal itself is gated — it is a piece of hardware, and the check happens when the count is applied.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The count is closed and the sheet reads "This count is closed — the lines are the record of what was counted."
@@ -92,7 +128,7 @@ Opening the count moves you to the **Physical count** sheet, headed with the sco
 - The **Ledger** tab carries a movement for each variance.
 - If the shelf already agreed with the system, the confirmation reads **"Applied — stock already matched the count"**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'This browser cannot talk to a serial scanner…'">
@@ -121,6 +157,30 @@ Opening the count moves you to the **Physical count** sheet, headed with the sco
 
   <Accordion title="The transfer stalls halfway">
     Select **Finish now** to keep what arrived, check the tally against roughly what you expect, and if it is short, **Collect again** from the start rather than applying a partial count.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need the desktop app to use the count terminal?">
+    Not necessarily. Chrome and Edge can both talk to a serial cradle, and so can the [desktop app](/pharmacy/hardware/desktop-app). Safari and Firefox cannot at all. What does matter is that the cradle is plugged into the machine you are sitting at — a serial port is not reachable across a network.
+  </Accordion>
+
+  <Accordion title="Does the terminal read anything off the shelf during the upload?">
+    No. Everything is scanned and keyed on the shelves beforehand and stored on the device. The upload is a transfer of what the terminal already holds, which is why a terminal you forgot to finish uploads a short count without complaining.
+  </Accordion>
+
+  <Accordion title="Why does the app keep asking rather than just receiving?">
+    The transfer is a conversation — the app requests each block and acknowledges it, rather than listening for a dump of text. That is why order barely matters, and why "the terminal says it uploaded but nothing arrived" is always a connection that was never established.
+  </Accordion>
+
+  <Accordion title="Can two people count different aisles at once?">
+    Not into the same count. One terminal collects into one count. Run separate scoped cycle counts per location instead — they are quicker to finish and easier to reconcile than one contested full physical.
+  </Accordion>
+
+  <Accordion title="What happens to a barcode I never assign?">
+    It is applied as though that stock was never counted, which almost always reads as missing stock. Clear the unmatched list before you apply, then add the barcode to the product so the next count matches on its own — see [Set up a barcode scanner](/pharmacy/hardware/barcode-scanner).
   </Accordion>
 </AccordionGroup>
 

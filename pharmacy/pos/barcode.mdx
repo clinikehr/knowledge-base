@@ -17,6 +17,16 @@ Scanning is the fastest way to build a cart, and it is the only practical way to
 
 <TaskHeader before="Products with a barcode saved on their catalogue entry" time="Instant per scan" after="The product added to the cart, confirmed by a toast naming it" />
 
+## What you're looking at
+
+Scanning has no screen of its own — it is the till and the sales list, listening.
+
+On **POS**, the search card reads "Search or scan (name, generic, brand, barcode)…" with a camera button beside it whose tooltip is **Scan barcode with camera**. The camera opens the **Scan medication barcode** dialog — "Point the camera at the product barcode to add it to the cart." — with **Choose camera** and a torch button. Nothing on the page indicates a handheld scanner is connected, because nothing needs to: a wedge scanner is picked up at page level whether or not a field has focus.
+
+On **Sales** the equivalent box reads "Search or scan receipt..." and its camera button is **Scan a receipt barcode with the camera**, opening **Scan receipt barcode**.
+
+**A brand-new pharmacy** can scan, but nothing will match: a barcode only resolves once it is saved on a catalogue entry, so a fresh workspace answers every scan with **No medication matches that barcode**.
+
 ## Three ways to scan
 
 <Steps>
@@ -34,14 +44,6 @@ Scanning is the fastest way to build a cart, and it is the only practical way to
     Use **Choose camera** to pick a lens on a device with more than one, and the torch button to light a dark shelf.
   </Step>
 </Steps>
-
-## Check it worked
-
-- A toast reads **Scanned: \{product name\}**, and the line is in the cart. The toast appears only when the product was actually added, so a refusal never looks like a success.
-- Scanning the same code again increases the quantity rather than adding a second line.
-- After a scan, focus returns to the search box ready for the next one.
-
-If nothing matches, the toast reads **No medication matches that barcode** and the code is dropped into the search box so you can look for the product by name without re-typing it.
 
 ## Make a product scannable
 
@@ -61,7 +63,34 @@ On the [Sales page](/pharmacy/money/sales), the same scanner pulls up a transact
   An offline sale's provisional slip carries **no barcode**, because its number does not exist on the server yet. Scan the reprinted receipt after the sale has synced. See [Print and reprint receipts](/pharmacy/pos/receipts).
 </Note>
 
-## If something goes wrong
+## Who can do this
+
+**Role** decides where you can scan. A **Cashier** reaches **POS** and **Sales**, so both scan boxes are available to them; saving a barcode onto a product is not, because **Inventory** is not in their sidebar.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Scan a product into the cart | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Scan a receipt on the Sales page | Anyone who can open **Sales** | Role |
+| Open the amended sale a receipt scan lands on | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+| Save a barcode onto a product, or **Generate…** one | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Print barcode labels from an inventory row | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Scanning a receipt is never refused; what the scan *opens* can be. Without **Refund or void a sale** the amendment sheet reads "Needs authorisation — amending a completed sale is reserved for your Pharmacist-in-Charge."
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A toast reads **Scanned: \{product name\}**, and the line is in the cart. The toast appears only when the product was actually added, so a refusal never looks like a success.
+- Scanning the same code again increases the quantity rather than adding a second line.
+- After a scan, focus returns to the search box ready for the next one.
+
+If nothing matches, the toast reads **No medication matches that barcode** and the code is dropped into the search box so you can look for the product by name without re-typing it.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The scanner types into the box but nothing is added">
@@ -86,6 +115,30 @@ On the [Sales page](/pharmacy/money/sales), the same scanner pulls up a transact
 
   <Accordion title="Every scan lands in the wrong field">
     Something else on the page has focus and is swallowing the keystrokes. Select an empty part of the till once, then scan; the till is listening at the page level and does not need a field to be focused.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need a special scanner?">
+    No. Any keyboard-wedge scanner — the ordinary kind that behaves like a very fast typist — works, handheld or countertop, corded or wireless. There is nothing to install. See [Barcode scanners](/pharmacy/hardware/barcode-scanner).
+  </Accordion>
+
+  <Accordion title="How does the till tell a scan from typing?">
+    By the speed of the burst. A scanner delivers a whole code in a fraction of the time a person takes, so a code you type by hand is treated as a search, not a scan.
+  </Accordion>
+
+  <Accordion title="What about products with no barcode on the box?">
+    Use **Generate…** on the product's **Barcode / UPC (optional)** field to mint an internal code, then print labels with the inventory row action **Print barcode label**. Repackaged items, local products and bulk lines you split yourself all want this.
+  </Accordion>
+
+  <Accordion title="Can I scan while offline?">
+    Yes. Scanning and product search run against the cached catalogue — the whole sellable list, not just the 100 tiles on screen. See [Selling when the internet is down](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Will scanning work on a tablet with no scanner?">
+    Yes, through the camera button. It is slower than a handheld at a busy counter, but it needs no hardware and works anywhere the page is served over a secure connection.
   </Accordion>
 </AccordionGroup>
 

@@ -1,120 +1,189 @@
 ---
 title: Import and export your catalogue
-description: Bulk-load products from a spreadsheet and export your catalogue to Excel or CSV — and understand why neither one moves stock.
+description: "Bulk-load products from a spreadsheet, export your catalogue to Excel or CSV, and understand why neither one moves stock."
 icon: /images/icons/file-spreadsheet.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans, subject to your item quota" roles="Staff with inventory access" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone who can open Inventory" />
 
-Import loads products into your catalogue from a spreadsheet. Export takes your catalogue back out as Excel or CSV. Both are on the **Inventory** toolbar.
+Import loads products into your catalogue from a spreadsheet. Export takes your catalogue back out as Excel or CSV. Both sit on the **Inventory** toolbar, and neither one touches the quantity on your shelves.
 
 <Path steps={['Sidebar', 'Inventory', 'Import']} />
-
-<Path steps={['Sidebar', 'Inventory', 'Export']} />
 
 <TaskHeader before="A spreadsheet of products, ideally started from the sample file" time="5 minutes for a few hundred rows" after="Your products in the catalogue, ready to receive stock into" />
 
 ## The two things people get wrong
 
-Read these before you build a file. Almost every support question about import and export is one of them.
+Read these before you build a file. Almost every question about import and export is one of them.
 
 <Note>
-  **Import creates catalogue rows only.** A row becomes a product, not a quantity on a shelf. Stock arrives afterwards, through **Receive** or **Opening stock** — see [Stock control](/pharmacy/inventory/index).
+  **Import creates catalogue rows only.** A row becomes a product, not a quantity on a shelf. The sheet says so itself: "Each row creates one catalog item — stock is added afterwards through Receive". Quantities arrive through **Receive**, or in bulk through the separate **Opening stock** button — see [Stock control](/pharmacy/inventory/index).
 
-  **Export deliberately leaves on-hand quantities out.** A trip through a spreadsheet therefore cannot overwrite your live stock, no matter what somebody types in the file before re-importing it.
+  **Export deliberately leaves on-hand quantities out** — "Stock on hand is not included — quantities are managed through Receive and Dispense, so re-importing this file never overwrites your live stock."
 </Note>
 
-Together those two rules mean one thing worth saying plainly: your stock levels live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue and a way to read one, never a way to set what you hold.
+Together those mean one thing worth saying plainly: your stock levels live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue and a way to read one, never a way to set what you hold.
+
+## What you're looking at
+
+Neither is a page — each opens a sheet over the screen you are on.
+
+**Import** opens **Bulk-import items**, badged **Catalog Import**. Under **Start from the template** sits **Download sample CSV** — "Download the sample CSV to see the required headers, expected formats, and two example rows." Below that, **Upload your file** is a **Click to upload or drag and drop** target, constrained to "**.csv, .xlsx or .xls — max 5MB, up to 1000 rows**". While it reads, the sheet says **Reading spreadsheet…**; afterwards **Replace file** swaps the upload.
+
+The **Preview** that follows is the part worth slowing down for. Three badges count what it found — **\{n\} new**, **\{n\} to update** and **\{n\} need fixing** — and each row is labelled either **new** or "updates existing · matched on upc" (or `sku`). A row that changes nothing says so: "No changes — this row matches what is already stored." A **Field reference** below lists every column with its hint, and required ones carry a star.
+
+**Export** opens **Export inventory catalog**, badged **Catalog Export**. It shows "\{n\} item(s) ready to export", a **File format** choice — **Excel (.xlsx)**, "Formatted workbook — opens natively in Excel.", the default, or **CSV (.csv)**, "Plain text — universal, opens anywhere." — and the full **Columns included** list. The footnote reads "The export is logged against the audit trail."
+
+**An empty catalogue** can still open both. Export simply refuses, with the button reading **No items to export** rather than handing you a header row and nothing under it.
+
+## Import is an update as well as an insert
+
+This is the fact the word "import" hides. Every row is matched against your catalogue on its **barcode first, then its SKU**:
+
+- **A match** updates that product. Columns your sheet leaves out are left untouched.
+- **No match** creates a new product.
+
+So a corrected price list is a legitimate re-import, not a duplicate-maker — provided your barcodes and SKUs are right. Where they are missing or wrong, the same product arrives twice under two names.
 
 ## Import your catalogue
 
 <Steps>
   <Step title="Open the importer">
-    Select **Import** in the toolbar. The **Bulk-import items** sheet explains the contract up front: "Upload a CSV or Excel file… Each row creates one catalog item — stock is added afterwards through Receive".
+    Select **Import** on the **Inventory** toolbar.
   </Step>
   <Step title="Start from the template">
-    Under **Start from the template**, select **Download sample CSV** — a toast confirms **"Sample template downloaded"**. Fill your products into that file rather than inventing your own column names; the headers are what the importer matches on.
+    Select **Download sample CSV**; a toast confirms **"Sample template downloaded"**. Fill your products into that file rather than inventing column names — the headers are what the importer matches on.
   </Step>
   <Step title="Upload the file">
-    Select **Click to upload or drag and drop**. `.csv`, `.xlsx` and `.xls` are accepted, up to 5 MB. The sheet reads **Reading spreadsheet…** while it parses, and **Replace file** if you need to swap it.
+    Select **Click to upload or drag and drop**. Only `.csv`, `.xlsx` and `.xls` are accepted, up to 5 MB.
   </Step>
-  <Step title="Review what it found">
-    The sheet shows how the rows were read before anything is created. Fix problems in the spreadsheet and re-upload — that is faster than correcting products one at a time afterwards.
+  <Step title="Read the preview before you commit">
+    Check the **\{n\} new** and **\{n\} to update** counts against what you expected. A file you meant as new products showing mostly "to update" means it is matching things you did not intend to change — stop and check your barcode column.
   </Step>
   <Step title="Import">
-    Confirm the import. Every accepted row becomes a catalog entry.
+    The button names the outcome — **Add \{n\}, update \{n\}** — then reports **Submitted**, **Created**, **Updated** and **Failed**. Anything that failed comes back through **Download failed rows with error column**: fix that file and re-upload only it.
   </Step>
 </Steps>
 
 <Tip>
-  Import in batches by supplier or category rather than in one 3,000-row file. A batch that goes wrong is quick to identify and quick to redo.
+  If you upload a sales report exported from an old till system, the importer recognises it — "POS report recognised and converted" — strips duplicate and subtotal rows, and numbers repeated price variants "#2" for you to rename. It still imports no quantities.
 </Tip>
 
 ## Export your catalogue
 
 <Steps>
   <Step title="Open the exporter">
-    Select **Export** in the toolbar to open **Export inventory catalog**.
+    Select **Export** on the toolbar.
   </Step>
   <Step title="Choose the file format">
-    **File format** offers **Excel (.xlsx)** — "Formatted workbook — opens natively in Excel." — and **CSV (.csv)** — "Plain text — universal, opens anywhere." Choose CSV if the file is going into another system, Excel if a person is going to read it.
+    **Excel (.xlsx)** if a person will read it; **CSV (.csv)** if it is going into another system.
   </Step>
   <Step title="Check the columns">
-    **Columns included** lists exactly what the file will contain. On-hand quantities are not among them, by design.
+    **Columns included** names all 27, from **Item name** and **Item type** through **Barcode (UPC/EAN)**, **Reorder level**, **Unit cost**, **Sell price**, **Controlled schedule** and **Track lot & expiry**. No quantity column exists.
   </Step>
-  <Step title="Generate it">
-    Start the export and save the file when it downloads.
+  <Step title="Download it">
+    The button reads **Download \{n\} item(s) as Excel**, and the toast confirms **"Exported \{n\} item(s) as Excel."**
   </Step>
 </Steps>
 
-An export of stock movements and valuations, rather than the catalogue, comes from **Reports** on the same toolbar. Sales figures live under [Sales analytics](/pharmacy/money/analytics).
+Stock movements and valuations come from **Reports** on the same toolbar instead. Sales figures live in [the reports workbench](/pharmacy/money/analytics).
+
+## Who can do this
+
+**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**, so neither button is theirs. Inside **Inventory**, importing and exporting the catalogue are not separately gated.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Import** and load a catalogue | Everyone who can open **Inventory** | Role — not a grantable permission |
+| Open **Export** and download the file | Everyone who can open **Inventory** | Role — not a grantable permission |
+| See **Unit cost** and margin on the **Catalog** screen | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+| Receive the stock these products will hold | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Enter quantities in bulk with **Opening stock** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+
+<Warning>
+  **The export file carries Unit cost and Sell price for every product**, whether or not the person downloading it can see the margin column on screen. On screen, that figure reads **"Hidden — needs authorisation from your clinic owner."**; in the file it is a plain number. Treat an exported catalogue as commercially sensitive and send it accordingly.
+</Warning>
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Inventory** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Exporting your catalogue" />
 
 ## Check it worked
 
 - **After an import:** the new products appear on the **Catalog** tab and are searchable at the till. Their on-hand quantity is zero until you receive stock — that is correct, not a failed import.
+- The **Created** and **Updated** tiles match what the preview promised.
 - **After an export:** the file opens, the row count matches your catalogue, and the columns match the **Columns included** list.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'File exceeds the 5MB limit'">
-    Split the file. A catalogue large enough to exceed 5 MB is nearly always several suppliers' lists in one workbook.
+    Split the file. A catalogue large enough to exceed 5 MB is nearly always several suppliers' lists in one workbook. Import by supplier or category instead — a batch that goes wrong is quick to spot and quick to redo.
+  </Accordion>
+
+  <Accordion title="'…is not a supported type — use .csv, .xlsx or .xls'">
+    The file is something else, or was renamed rather than converted. Open it in Excel or Sheets and save it again as `.csv` or `.xlsx`.
   </Accordion>
 
   <Accordion title="'Could not read that file. Re-save it as .csv or .xlsx and try again.'">
-    The file is not in a format the importer can parse — often a spreadsheet exported from another tool with an unusual encoding, or a file renamed to `.csv` without being converted. Open it in Excel or Sheets and save it again as `.csv` or `.xlsx`.
+    The file parsed as none of the three formats — usually an unusual encoding from another tool. Re-saving it from a spreadsheet program fixes it in almost every case.
   </Accordion>
 
   <Accordion title="'The file has no data rows below the header.'">
-    The importer found a header row and nothing under it. Check you have not uploaded an empty template, and that the products start on the row directly below the headers with no blank separator row.
+    A header row and nothing under it. Check you have not uploaded the empty template, and that products start on the row directly below the headers with no blank separator row.
   </Accordion>
 
   <Accordion title="'No valid rows to import'">
-    Every row failed validation. Compare your headers against the sample CSV — a renamed or missing required column invalidates every row at once.
+    Every row failed validation. Compare your headers against the sample CSV — a renamed or missing required column invalidates every row at once. **Item name** and **Item type** are the two that must be there.
   </Accordion>
 
   <Accordion title="'Re-select the file and try again'">
     The file was released before the import ran, usually after a long pause. Choose it again and import straight away.
   </Accordion>
 
-  <Accordion title="The import stopped at my plan's item limit">
-    Starter caps the number of catalogue items. The **Free plan** strip on the **Inventory** screen shows your usage; **Upgrade for unlimited** removes the cap. See [Change your plan](/platform/plans/change-plan).
+  <Accordion title="The preview says 'to update' for products I meant to add">
+    Those rows matched an existing barcode or SKU. Either the products are already in your catalogue under different names, or two suppliers share a code. Fix the codes in the spreadsheet before importing, not afterwards.
   </Accordion>
 
   <Accordion title="'No items to export'">
-    Your catalogue is empty, or your filters have excluded everything. Clear the filters on the **Catalog** tab and try again.
+    Your catalogue is empty. The exporter reads your whole catalogue, so this genuinely means there is nothing there yet.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I import stock levels as well as products?">
+    Not through **Import** — there is no quantity column in the file at all, by design. For quantities in bulk, use the **Opening stock** button on the same toolbar, which opens **Opening stock from file**. For everyday arrivals, use **Receive**. That separation is what stops a stale spreadsheet from silently overwriting the shelf.
   </Accordion>
 
-  <Accordion title="I imported the same file twice">
-    You will have duplicate catalogue entries, not doubled stock — import never touches quantities. Delete the duplicates on the **Catalog** tab.
+  <Accordion title="What happens if I import the same file twice?">
+    Nothing bad, as long as your barcodes or SKUs are filled in: the second run matches every row and updates it, leaving the products as they are. Rows with no code to match on are the ones that duplicate.
+  </Accordion>
+
+  <Accordion title="Will re-importing an export wipe my stock?">
+    No. The export has no quantity column to bring back, so a round trip through a spreadsheet cannot change what you hold. It is the safe way to edit prices in bulk.
+  </Accordion>
+
+  <Accordion title="Excel or CSV — which should I export?">
+    Excel for anything a person will read, and if your spreadsheet mangles accents or currency symbols on import. CSV if the file is going into another system. Both carry identical columns.
+  </Accordion>
+
+  <Accordion title="Is there a limit on how many rows I can import at once?">
+    The sheet asks for up to 1,000 rows and 5 MB per file. Larger catalogues go in several batches, which is the better habit anyway — one supplier or one category per file.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="an import or export" />
 
-{/* source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, lib/inventory-csv.ts */}
+{/* source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, stock-prefill-sheet.tsx, lib/inventory-csv.ts (INVENTORY_CSV_FIELDS), lib/edition-staff-roles.ts */}

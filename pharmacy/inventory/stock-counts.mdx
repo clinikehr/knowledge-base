@@ -17,6 +17,14 @@ A count compares what the system holds against what is actually on the shelf, an
 
 <TaskHeader before="Stock on hand, and a colleague free to witness if you are counting controlled items" time="5 minutes to open and approve; the counting itself is the long part" after="Stock that matches the shelf, with every variance recorded in the ledger" />
 
+## What you're looking at
+
+**Counts** is a tab on the **Inventory** screen. It lists every count you have run, with its type, scope, date and whether it is open or closed, and carries one button: **New count**. A pharmacy that has never counted sees **"No counts yet. Start a cycle count to reconcile physical stock against the system."**
+
+Opening a count moves you to the worksheet, headed with the scope — for example **Physical count — Whole clinic**. Each row is one lot, with **Location**, the **System** quantity taken at the snapshot, and an empty **Counted** box for you. Along the bottom sit the reconciliation totals: **More than expected**, **Less than expected** and **Net difference**, each valued in your currency and each recalculating as you type.
+
+A closed count keeps its worksheet but takes the buttons away, reading "This count is closed. Variances were posted to the ledger."
+
 ## Open the count
 
 <Steps>
@@ -77,6 +85,29 @@ The reconciliation totals name the direction rather than making you work out a s
 
 Treat a large "less than expected" as an event, not a correction. It is the signal for shrinkage, an unrecorded dispense, or a sale that ran ahead of stock — which shows up separately on the **Reconciliation** tab, covered in [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
 
+## Who can do this
+
+**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**, so counting is not theirs. **Permission** decides whether you may change what the system believes you hold.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Read the **Counts** tab and an existing worksheet | Everyone who can open **Inventory** | Role |
+| Open a count and key quantities | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Approve a count and post the variances | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Countersign a **DEA CII count** or **Biennial DEA inventory** | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
+| See the variances valued in money | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+
+The countersignature is the one to plan around: it sits with the **Dispensing Supervisor** bundle and **not** with **Pharmacy Manager**, because countersigning a controlled count is a pharmacist's act rather than a manager's. If nobody on shift holds it, a controlled count cannot be approved — check before you start counting, not after.
+
+Without **View cost prices and margin** the variance totals read **"Hidden — needs authorisation from your clinic owner."** The counted quantities are still yours; only their value is withheld, and it is withheld as text rather than as a zero.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** An approval you were refused leaves a trail; the hundred you were allowed do not.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The count shows as closed, and the sheet reads "This count is closed. Variances were posted to the ledger."
@@ -84,15 +115,15 @@ Treat a large "less than expected" as an event, not a correction. It is the sign
 - The **Ledger** tab shows a movement for each variance, against your name and your witness's.
 - The **Counts** tab lists the count with its type, scope and date. An empty tab reads "No counts yet. Start a cycle count to reconcile physical stock against the system."
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="I cannot approve — the button does nothing useful">
-    A controlled scope needs a witness selected. Nothing else blocks approval.
+    A controlled scope needs a witness selected in **Select a witnessing staff member**. Nothing else blocks approval.
   </Accordion>
 
   <Accordion title="The witness list does not include the person standing next to me">
-    Only staff accounts in this pharmacy can witness. Invite them first — see [Invite your team](/pharmacy/get-started/invite-team).
+    Only staff accounts in this pharmacy can witness, and only somebody holding **Witness a controlled-drug dispense** counts. Invite them first — see [Invite your team](/pharmacy/get-started/invite-team) — or have an owner grant the switch.
   </Accordion>
 
   <Accordion title="Stock moved while I was counting">
@@ -105,6 +136,34 @@ Treat a large "less than expected" as an event, not a correction. It is the sign
 
   <Accordion title="I approved a count with a wrong number in it">
     An approved count cannot be reopened. Correct the stock with an adjustment from the toolbar's **Dispense**, giving the reason, so the ledger carries both the error and the correction.
+  </Accordion>
+
+  <Accordion title="The variance totals say they are hidden">
+    You do not hold **View cost prices and margin**. The quantities are unaffected — only the money is withheld, and it is withheld rather than shown as zero.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I undo an approved stock count?">
+    No. Approving posts every variance to stock and closes the count for good — there is no reopen and no reverse. If a number was wrong, put the correction through as an adjustment from the toolbar's **Dispense** with a reason, so the ledger carries both the error and the fix. **Cancel count** is the escape hatch, and it only works while the count is still open.
+  </Accordion>
+
+  <Accordion title="Is a blank row the same as zero?">
+    No, and the difference matters. Blank means "not counted yet" and is left alone on approval. `0` means "none on the shelf" and produces a real variance. Key the zero when you mean it.
+  </Accordion>
+
+  <Accordion title="Can I sell while a count is open?">
+    Yes. The snapshot is frozen when the count opens, so the till keeps working and the **System** column does not move underneath you. That is the whole reason the snapshot exists.
+  </Accordion>
+
+  <Accordion title="Which count type should I use?">
+    **Cycle count** for a routine spot check of one location — short, finishable, and worth far more than an abandoned full count. **Full physical** for everything in scope. The two DEA types are for controlled items and carry the dual sign-off requirement.
+  </Accordion>
+
+  <Accordion title="Why does the scope say 'Whole clinic' on a pharmacy?">
+    It is a shared label that has not been relabelled for the Pharmacy edition. It means your whole pharmacy.
   </Accordion>
 </AccordionGroup>
 

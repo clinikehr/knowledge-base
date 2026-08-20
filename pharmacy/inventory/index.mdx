@@ -19,7 +19,7 @@ The same screen opens from **Pharmacy Station** › **Inventory**. One place, tw
 
 <TaskHeader before="Nothing for the catalogue. Receiving needs at least one item and one location" time="2 minutes for a first item, under a minute per delivery" after="A product you can sell, with stock on hand in a dated lot" />
 
-## The toolbar and the tabs
+## What you're looking at
 
 The toolbar carries **Receive**, **Dispense**, **Transfer**, **Reports**, **Import**, **Opening stock**, **Export** and **Add item**.
 
@@ -30,12 +30,17 @@ The toolbar carries **Receive**, **Dispense**, **Transfer**, **Reports**, **Impo
 | **Ledger** | Every movement in and out, with who and when |
 | **Counts** | Cycle counts and physical counts — [Run a stock count](/pharmacy/inventory/stock-counts) |
 | **Fill Rx** | Scripts waiting to be drawn from stock — [The pharmacy station](/pharmacy/dispensing/station) |
+| **Validation (\{n\})** | Reagent lots awaiting validation — **shown only where you hold reagent stock** |
 | **Purchasing** | Purchase orders and vendors — [Purchase orders and suppliers](/pharmacy/inventory/purchase-orders) |
 | **Vouchers** | Goods-received vouchers behind each delivery |
 | **Recalls** | Quarantining affected lots |
 | **Locations** | Your rooms, shelves and fridges |
-| **Alerts** | Expiry, low stock, temperature and count alerts — [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry) |
+| **Alerts (\{n\})** | Expiry, low stock, temperature and count alerts, counted in the tab itself — [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry) |
 | **Reconciliation** | Clearing sales made beyond recorded stock |
+
+**Validation** is conditional, and so is a **Vaccines** tab where you hold vaccine stock. Most pharmacies see neither, and their absence is not a fault. **Alerts** carries its count only when something is actually open — a bare **Alerts** means nothing is. When alerts are open, a line above the tabs says so: "\{n\} open inventory alerts — see the Alerts tab."
+
+A brand-new pharmacy lands on **Catalog** with a single line — **"No items yet. Add your first product (e.g. Botox 100U vial)."** — and everything else empty behind it. **Stock** reads "No stock on hand. Receive a lot to get started." until your first delivery, which is the honest order of work: catalogue first, stock second.
 
 <Note>
   Two labels on this screen still say "clinic" where they mean your pharmacy — the count scope **Whole clinic** is the one you meet most. They are bolded in these pages exactly as the product renders them.
@@ -112,11 +117,37 @@ Each empty state tells you exactly what is still missing:
 
 After adding an item it appears on **Catalog**; after receiving, it appears on **Stock** with its lot and expiry, and the movement appears on **Ledger**.
 
-## What your plan and your permissions change
+## Who can do this
+
+**Role** decides whether **Inventory** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales** and never sees this screen. **Permission** decides what you may do once it is open, and the switches live in groups named **Till**, **Stock**, **Controlled drugs**, **Money** and **Oversight** on each person's permissions sheet.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Inventory** and read the catalogue | Everyone except a cashier | Role |
+| Receive a delivery | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Adjust or waste stock with **Dispense** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Move stock to another branch | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
+| Raise a PO or edit a supplier | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
+| Countersign a controlled dispense | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
+| See the valuation and margin columns | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+| Reset the inventory from the **Danger Zone** | The owner of record, nobody else | Ownership — not a grantable permission |
+
+On top of the role bundle, each person carries an access tier — **Own till**, **Whole branch** or **All branches** — which is what decides how much of the business their figures cover.
+
+Three gates change what the screen *shows*, not just what it does:
+
+- **View cost prices and margin** turns the valuation column into **"Hidden — needs authorisation from your clinic owner."** It is never rendered as a zero, because a zero reads as an empty shelf rather than as a permission boundary.
+- **Manage suppliers and purchase orders** also redacts negotiated unit costs and supplier account numbers, so somebody who can count your stock does not automatically learn what you pay for it.
+- The **Danger Zone** under **Settings** › **Inventory** is hidden from the page entirely for managers and accountants. It is not greyed out; there is nothing there to select.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes.
+- **A denied action is recorded; an allowed one is not.** Hiding **Inventory** from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
 
 On the Starter plan a **Free plan** strip shows your usage against the limit for each countable kind — items, locations and purchase orders — with **Upgrade for unlimited**. At the limit, creation is refused rather than silently dropped. See [Change your plan](/platform/plans/change-plan).
-
-These are all granted separately, so two people on the same screen can see different things: receiving, adjusting, transferring between branches, managing suppliers and purchase orders, witnessing a controlled dispense, and viewing cost and margin. Without cost visibility the valuation column reads **"Hidden — needs authorisation from your clinic owner."** rather than a zero. See [Staff permissions](/platform/team/permissions).
 
 ## Inventory settings
 
@@ -154,7 +185,7 @@ These are all granted separately, so two people on the same screen can see diffe
   </Card>
 </Columns>
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The item saved but the till cannot find it">
@@ -165,16 +196,52 @@ These are all granted separately, so two people on the same screen can see diffe
     **Require expiry date on new lots** is on under **Settings** › **Inventory** › **Receiving quality**. That is deliberate — see [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
   </Accordion>
 
-  <Accordion title="Add item is refused">
-    You are at your plan's item limit. The **Free plan** strip shows the count; **Upgrade for unlimited** removes it.
+  <Accordion title="'Your Free plan includes up to {n} items. Upgrade to a paid plan for unlimited inventory.'">
+    You are at your plan's item limit, so **Add item** was refused rather than silently dropped. The **Free plan** strip shows your usage per kind — items, locations, vendors and purchase orders — and **Upgrade for unlimited** removes the caps.
   </Accordion>
 
-  <Accordion title="The valuation column says it is hidden">
-    Viewing cost and margin is a separate permission from viewing stock. An owner or manager grants it.
+  <Accordion title="'Hidden — needs authorisation from your clinic owner.'">
+    You do not hold **View cost prices and margin**, so the valuation is withheld rather than shown as zero. An owner or manager grants it on your permissions sheet.
+  </Accordion>
+
+  <Accordion title="'Needs authorisation — buying on the clinic's account is purchasing authority.'">
+    **New PO** and **Draft PO from these** are disabled without **Manage suppliers and purchase orders**. The tooltip names the switch to ask for. **Vendors** stays open to everyone and simply opens read-only.
   </Accordion>
 
   <Accordion title="I moved stock and it went to the wrong place">
     Check whether you used the toolbar's **Transfer** (room to room, this branch) or the **Transfers** screen (branch to branch). They are different moves with the same name.
+  </Accordion>
+
+  <Accordion title="'This inventory cannot be reset'">
+    Clinical administration records reference these lots, so the reset is blocked to protect that traceability. Adjust quantities with a [stock count](/pharmacy/inventory/stock-counts) instead — resetting is only for an inventory with no history behind it.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What is the difference between a catalogue item and stock?">
+    A catalogue item is the product — "Botox 100U vial". Stock is how many you physically hold, tracked per lot with its own expiry and location. Adding an item creates no stock at all; the quantity arrives through **Receive** or **Opening stock**.
+  </Accordion>
+
+  <Accordion title="Why do some labels say 'clinic' on a pharmacy screen?">
+    A handful of strings are shared with the other editions and have not been relabelled — the count scope **Whole clinic** is the one you meet most. It means your whole pharmacy. We quote them exactly as the product renders them so you can find them on your screen.
+  </Accordion>
+
+  <Accordion title="Why can't I see the Validation or Vaccines tab?">
+    Both are conditional. **Validation** appears only where you hold reagent stock and **Vaccines** only where you hold vaccine stock. A pharmacy that stocks neither is not missing anything.
+  </Accordion>
+
+  <Accordion title="Can I delete a product I no longer stock?">
+    Yes, from the **Catalog** tab — but a product with movements behind it is better left in place and simply not reordered, because deleting it takes the name off every historic line that referred to it. Freeing a slot against a plan limit is the one good reason to delete.
+  </Accordion>
+
+  <Accordion title="Why is my margin column blank?">
+    Two different reasons look identical. Either you do not hold **View cost prices and margin** — in which case the column reads **"Hidden — needs authorisation from your clinic owner."** — or the stock was received with no **Unit cost**, in which case there is genuinely no margin to compute. Record costs at receiving so the second reason stops happening.
+  </Accordion>
+
+  <Accordion title="Does resetting the inventory delete my sales history?">
+    No. The **Danger Zone** removes the catalogue, lots, stock levels, ledger, purchase orders, vendors and locations. Your medication list, store history and clinical records are kept.
   </Accordion>
 </AccordionGroup>
 

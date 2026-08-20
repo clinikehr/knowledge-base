@@ -13,13 +13,29 @@ import { StillStuck } from '/snippets/support.mdx';
 
 Record the day's control values against each material and ClinikEHR evaluates every run for you. The page says so in its own subtitle: "Record daily controls per material; every run is evaluated against Westgard rules (1-3s, 2-2s, R-4s, 4-1s, 10x — 1-2s warns) the moment it's saved." You enter a number; you get back a verdict and a charted point.
 
+**The verdict is computed when you save.** Nobody on the screen decides whether a run passed — you cannot mark a rejected run as acceptable, and you do not apply the rules yourself.
+
 <Path steps={['Sidebar', 'Quality Control']} />
 
 <TaskHeader before="A control material, with the target mean and SD from its package insert or your lot validation" time="Under a minute per run" after="A charted run carrying an in-control, warning or rejection verdict" />
 
+## What you're looking at
+
+The page is one screen in three stacked parts.
+
+| Part | What it holds |
+| --- | --- |
+| The material picker | **Select control material**, listing each control as `\{code\} — \{name\} (lot \{lot\})` with its target and SD beside it, plus **Add control material** |
+| The **Levey-Jennings** chart | The last 30 runs for the chosen material, plotted in sequence over reference bands at the mean and ±1, ±2 and ±3 SD |
+| The run form and history | **Measured value**, **Technician** and **Record run**, above a table of **When**, **Value**, **z**, **Verdict**, **Rules** and **Technician** |
+
+Every historical run carries a badge — **In control**, **Warning (1-2s)** or **Rejection** — and the chart colours each point to match, with its value and any violated rules on hover.
+
+**The empty state.** A brand-new lab has no materials, so the page reads **No control materials yet. Add your first control (analyte, target mean and SD from the package insert or your lot validation) to start charting.** A material that exists but has never been run reads **No runs recorded yet for this control — record the first run below.** Below Professional Lab you see none of it — just a locked card.
+
 ## Set up a control material
 
-Do this once per analyte and level. Until you do, the page shows **No control materials yet. Add your first control (analyte, target mean and SD from the package insert or your lot validation) to start charting.**
+Do this once per analyte and level.
 
 <Steps>
   <Step title="Open the dialog">
@@ -29,10 +45,10 @@ Do this once per analyte and level. Until you do, the page shows **No control ma
     Enter an **Analyte code** (for example `GLU`), a **Material name** (for example `Glucose Control`), and pick the **Level** — **Level 1 (normal)**, **Level 2 (abnormal)** or **Level 3 (high)**. Add the **Lot number** so the picker can tell two lots of the same control apart.
   </Step>
   <Step title="Enter the targets">
-    Fill **Target mean**, **Target SD** and **Unit** (for example `mg/dL`). The SD must be greater than zero — it is what every z-score is measured in.
+    Fill **Target mean**, **Target SD** and **Unit** (for example `mg/dL`). Take all three from the package insert or from your own lot validation, never from memory. The SD must be greater than zero — it is what every z-score is measured in.
   </Step>
   <Step title="Save">
-    Select **Add material**. The toast reads **Control material added** and the control joins the picker as `{code} — {name} (lot {lot})`, with its target and SD shown beside it.
+    Select **Add material**. The toast reads **Control material added** and the control joins the picker.
   </Step>
 </Steps>
 
@@ -40,7 +56,7 @@ Do this once per analyte and level. Until you do, the page shows **No control ma
 
 <Steps>
   <Step title="Choose the control">
-    Pick it from **Select control material**. The **Levey-Jennings** chart redraws for that material, with reference bands at the mean and ±1, ±2 and ±3 SD, and the last 30 runs plotted in sequence.
+    Pick it from **Select control material**. The **Levey-Jennings** chart redraws for that material.
   </Step>
   <Step title="Enter the measured value">
     Type the reading into **Measured value**. The field's placeholder is the target mean, so a value far from it is visible before you save.
@@ -49,7 +65,7 @@ Do this once per analyte and level. Until you do, the page shows **No control ma
     Enter the person in **Technician**. It is the column a reviewer reads first when a run fails.
   </Step>
   <Step title="Record it">
-    Select **Record run**. ClinikEHR evaluates the run against every Westgard rule as it saves and returns one of three verdicts — you do not apply the rules yourself.
+    Select **Record run**. The run is evaluated against every Westgard rule as it saves, and comes back with one of three verdicts.
   </Step>
 </Steps>
 
@@ -61,15 +77,11 @@ Do this once per analyte and level. Until you do, the page shows **No control ma
 | **1-2s warning (z \{z\}) — inspect before accepting the run.** | A warning, not a rejection. Look before you accept. |
 | **Run REJECTED — \{violations\} (z \{z\}). Stop and troubleshoot before reporting patients.** | One or more rejection rules tripped. |
 
-The run then appears in the table below the chart under **When**, **Value**, **z**, **Verdict**, **Rules** and **Technician**, badged **In control**, **Warning (1-2s)** or **Rejection**.
-
 <Warning>
   A rejected run means **stop**. Do not report patient results on that analyte until you have found and fixed the cause and a fresh control passes. The verdict names the rules it broke so you know what you are looking for.
 </Warning>
 
 ## What each rule is telling you
-
-ClinikEHR decides which of these applies. This is what it has spotted.
 
 | Rule | One control run in plain terms | Usually |
 | --- | --- | --- |
@@ -80,13 +92,36 @@ ClinikEHR decides which of these applies. This is what it has spotted.
 | **4-1s** | Four runs in a row fell beyond the same 1 SD limit. | A shift — something changed and stayed changed |
 | **10x** | Ten runs in a row sat on the same side of the mean. | Drift or bias — often a new reagent or calibrator lot |
 
+## Who can do this
+
+Role decides whether **Quality Control** appears in your sidebar. Permission decides what you may do on it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Quality Control** | **QC Officer**, **Lab Manager**, Owner, Manager | Permission — **Review QC runs** |
+| Add a control material | The same people | Permission — **Review QC runs** |
+| Record a run and read the verdict | The same people | Permission — **Review QC runs** |
+| Act on a rejection at the bench — recalibrate, re-run patients | Anyone on the **Own bench** tier and above | Permission — **Enter results at the bench** |
+| Release patient results once controls pass | Anyone on the **Whole lab** or **All sites** tier | Permission — **Verify and authorise results** |
+
+**QC Officer is review-only by design.** The role inspects work rather than altering it, so it holds **Review QC runs** and **View turnaround-time analytics** and nothing else. Someone who can open this page may still be unable to touch a patient result — and that is the point.
+
+The three access tiers decide the last two rows. **Own bench** grants result entry only; **Whole lab** adds accessioning, rejection, verification and QC review at that site; **All sites** grants everything, across every site. Managing the lab is not the same as authorising a result — a **Lab Manager** does not get entry, verification or amendment by virtue of managing.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Where a QC figure is not yours to see, it renders hidden or as a dash — never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The toast names the verdict and the z-score.
-- A new point appears on the **Levey-Jennings** chart, coloured for its verdict, with its value and any violated rules on hover.
+- A new point appears on the **Levey-Jennings** chart, coloured for its verdict.
 - The run heads the table below the chart with its **Verdict** badge and the technician's name.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The page shows a locked card instead of the chart">
@@ -94,23 +129,47 @@ ClinikEHR decides which of these applies. This is what it has spotted.
   </Accordion>
 
   <Accordion title="The material would not save">
-    The toast reads **Analyte, name, target mean and a positive SD are required**. An SD of zero or blank is the usual cause — take it from the package insert or from your own lot validation, never leave it at nothing.
+    The toast reads **Analyte, name, target mean and a positive SD are required**. An SD of zero or blank is the usual cause.
   </Accordion>
 
   <Accordion title="Every run comes back rejected on a new lot">
-    The targets belong to the old lot. Add the new lot as its own control material with its own mean and SD rather than charting it against the previous one. New reagent lots are also quarantined until validated — see [Reagents and consumables](/lims/inventory/reagents).
+    The targets belong to the old lot. Add the new lot as its own control material with its own mean and SD. New reagent lots are also quarantined until validated — see [Reagents and consumables](/lims/inventory/reagents).
   </Accordion>
 
   <Accordion title="The chart says there are no runs">
-    It reads **No runs recorded yet for this control — record the first run below.** The material exists but has no history; record a run and the first point appears.
+    It reads **No runs recorded yet for this control — record the first run below.** The material exists but has no history.
   </Accordion>
 
   <Accordion title="I can open QC but cannot fix anything on the bench">
-    That is deliberate. The QC role is oversight — it reviews control runs, verified results and turnaround, and stays read-only on patient records. Entering and authorising results are separate grants — see [Enter and verify results](/lims/lab/results) and [Permissions](/platform/team/permissions).
+    That is deliberate — see **Who can do this** above. Entering and authorising results are separate grants, see [Enter and verify results](/lims/lab/results).
   </Accordion>
 
   <Accordion title="Quality Control is not in the sidebar at all">
     Quality control management is still rolling out and reaches labs progressively on the Professional Lab plan. If your plan includes it and the entry is absent, [contact support](/platform/help/contact-support).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I override a rejected run and report the patients anyway?">
+    Not on this screen. The verdict is computed when the run is saved and there is no accept-anyway control. Fix the cause, run a fresh control, and report once that one passes.
+  </Accordion>
+
+  <Accordion title="How many levels should I run?">
+    Whatever your method and your accreditation body require — usually two, a normal and an abnormal. Each level is its own control material with its own mean and SD, so **Level 1 (normal)** and **Level 2 (abnormal)** chart separately.
+  </Accordion>
+
+  <Accordion title="Where do the target mean and SD come from?">
+    The control's package insert, or your own lot validation once you have enough runs to establish in-house values. They are not calculated for you, and they are what every z-score and every rule is measured against.
+  </Accordion>
+
+  <Accordion title="Does QC stop results being released automatically?">
+    No. QC is the evidence, not a lock — releasing a report is a separate, deliberate act by someone holding **Verify and authorise results**. Reading QC before signing out is a habit your procedures have to enforce.
+  </Accordion>
+
+  <Accordion title="Why can a QC Officer see turnaround time as well?">
+    Both are oversight of how the lab performs rather than changes to a patient record, so they travel together — see [Turnaround time](/lims/lab/turnaround-time).
   </Accordion>
 </AccordionGroup>
 

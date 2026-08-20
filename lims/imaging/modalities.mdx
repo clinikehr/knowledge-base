@@ -9,13 +9,13 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Professional and above" roles="Anyone granted “Configure analysers and interfaces”. Radiologists and lab scientists do not have it by default." />
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “Configure analysers and interfaces”. Radiologists and lab scientists do not hold it by default." />
 
 Once your machines are registered, a finished study finds its own order. The **Modalities** page explains itself in a line: "Register each imaging machine (or its bridge PC) with a private key. Finished studies with a matching accession attach automatically; anything ambiguous waits below for review."
 
 <Path steps={['Sidebar', 'Modalities']} />
 
-<TaskHeader before="Professional plan, the “Configure analysers and interfaces” grant, and whoever looks after your imaging machines available" time="10 minutes per machine" after="A registered modality whose finished studies attach to orders by themselves" />
+<TaskHeader before="Professional Lab plan, the “Configure analysers and interfaces” grant, and whoever looks after your imaging machines available" time="10 minutes per machine" after="A registered modality whose finished studies attach to orders by themselves" />
 
 ## Your images stay in your building
 
@@ -23,14 +23,26 @@ This is the first question every lab asks, so here is the plain answer: **the im
 
 The one exception is the optional **Auto-archive to cloud** setting further down this page, which you switch on deliberately and can leave off.
 
+## What you're looking at
+
+The page is four stacked sections, and each does a separate job.
+
+| Section | What it holds |
+| --- | --- |
+| The registry | Every machine you have registered — **Modality**, **AE title**, **Type**, **Status**, **Last seen**, **Actions**, with **Register modality** and **Refresh** above it |
+| **Studies awaiting review (\{n\})** | Studies that arrived without a matching accession and need a person |
+| **Prior-image sources (PACS)** | Remote archives the bridge may pull prior studies from |
+| **Auto-archive to cloud** and the viewer settings | The two optional policies |
+
+**Status** is **Active** or **Paused**, and **Last seen** is the honest answer to "is this thing actually talking to us".
+
+**The empty state.** Before you register anything the registry is empty and **Studies awaiting review** shows nothing, because nothing can arrive until a bridge holds a key. Below the Professional Lab plan you do not see any of this — the page reads **Modality integration is a Professional feature** with a **View plans** button.
+
 ## Register a machine
 
 <Steps>
-  <Step title="Open the registry">
-    The registry table lists **Modality**, **AE title**, **Type**, **Status**, **Last seen** and **Actions**. **Status** is **Active** or **Paused**, and **Last seen** is the honest answer to "is this thing actually talking to us". **Refresh** re-reads it.
-  </Step>
   <Step title="Add the modality">
-    Select **Register modality** and fill in **Name** ("CT Room 1"), **AE title (optional)** ("CT\_SCANNER") and **Type (optional)** ("CT"). The AE title is what the machine calls itself; getting it right is what lets studies match without a human.
+    Select **Register modality** and fill in **Name** ("CT Room 1"), **AE title (optional)** ("CT\_SCANNER") and **Type (optional)** ("CT"). The AE title is what the machine calls itself; getting it right is what lets studies match without a human. **Type** is free text — nothing validates it, so agree one spelling across your machines or the **Modality Distribution** chart splits into near-duplicates.
   </Step>
   <Step title="Copy the key — now">
     Registering opens **Bridge key for \{name\}** with a copy button; **Copy key** gives you **Key copied**. Paste it straight into whatever configuration your bridge PC uses, then select **Done**.
@@ -41,10 +53,10 @@ The one exception is the optional **Auto-archive to cloud** setting further down
 </Steps>
 
 <Warning>
-  The bridge key is shown **once**. Close the dialog without copying it and it cannot be retrieved — you have to issue a new one with **New key**, which invalidates the old key and stops that machine's bridge until it is reconfigured. Copy it before you close.
+  The bridge key is shown **once**, at registration or rotation, and cannot be retrieved afterwards. Close the dialog without copying it and the only way forward is **New key**, which invalidates the old key immediately and stops that machine's bridge until it is reconfigured. Copy it before you close.
 </Warning>
 
-Use **Pause** to stop accepting studies from a machine — during maintenance, or when a bridge PC is being replaced — and **Resume** to bring it back. **New key** issues a replacement key when one has been lost or should be rotated.
+Use **Pause** to stop accepting studies from a machine — during maintenance, or when a bridge PC is being replaced — and **Resume** to bring it back. **New key** issues a replacement when one has been lost or should be rotated.
 
 ## Studies that arrive without a match
 
@@ -52,16 +64,18 @@ Automatic attachment depends on a matching accession number. Anything else waits
 
 The table shows **Received**, **Modality**, **Patient / accession** and **Study**, with two actions:
 
-- **Attach to order** opens a picker — "Search by accession, patient or test…" — and on success gives **Study attached — images are now on the order**.
-- **Discard** removes it, confirmed with **Study discarded**.
+- **Attach to order** opens **Attach study to an order** — "Search by accession, patient or test…" — and on success gives **Study attached — images are now on the order**.
+- **Discard** removes the study, and the toast reads **Study discarded**.
+
+<Note>
+  **Discard acts immediately — there is no confirmation dialog.** It is a plain button beside **Attach to order**, so treat that row with care: a discarded study has to be re-sent from the machine.
+</Note>
 
 Work this queue daily. A study sitting here is a study a radiologist cannot report, and the usual cause is a typo in the accession number at the machine rather than anything wrong with the bridge.
 
-## Prior-image sources (PACS)
+## Prior-image sources, archiving and the viewer
 
 **Prior-image sources (PACS)** lists the remote archives the bridge may pull prior studies from, so a radiologist can compare today's film against last year's. Add one with **Add a PACS source**, giving its **Name** ("Regional PACS"), **AE Title** ("REMOTEPACS"), **Host** and **Port**. Each source can be removed again from its row.
-
-## Auto-archive to cloud
 
 **Auto-archive to cloud** is a switch, and it is off until you turn it on.
 
@@ -70,22 +84,30 @@ Work this queue daily. A study sitting here is a study a radiologist cannot repo
 | **Modalities to auto-archive** | Choose which machines archive. "None selected = all modalities." |
 | **Minimum images** | "Skip trivial studies below this image count." |
 
-Select **Save auto-archive policy** to apply it — the toast reads **Auto-archive policy saved**. Set **Minimum images** deliberately: without it, every stray single-frame acquisition is archived alongside the studies you actually want kept.
+Select **Save auto-archive policy** — the toast reads **Auto-archive policy saved**. Set **Minimum images** deliberately: without it, every stray single-frame acquisition is archived alongside the studies you actually want kept.
 
-## The full-resolution viewer
+Two addresses turn on **Open full viewer** in the reporting form: **OHIF viewer URL** (where the viewer is served from) and **Orthanc DICOMweb URL (tunnelled)** (where the viewer reads your images from). Select **Save viewer settings** — **Viewer settings saved**. See [Report an imaging study](/lims/imaging/reports).
 
-Two addresses turn on **Open full viewer** in the reporting form:
+## Who can do this
 
-| Field | Holds |
-| --- | --- |
-| **OHIF viewer URL** | Where the viewer itself is served from |
-| **Orthanc DICOMweb URL (tunnelled)** | Where the viewer reads your images from |
+Role decides whether **Modalities** appears at all. Permission decides whether you may change anything on it.
 
-Select **Save viewer settings** — the toast reads **Viewer settings saved**. Once both are set, **Open full viewer** becomes available on any study that has images. See [Report an imaging study](/lims/imaging/reports).
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Modalities** | **Lab Manager**, anyone on the **All sites** tier, Owner, Manager | Permission — **Configure analysers and interfaces** |
+| Register, pause or re-key a machine | The same people | Permission — **Configure analysers and interfaces** |
+| Attach or discard a waiting study | The same people | Permission — **Configure analysers and interfaces** |
+| Save the PACS, archive and viewer settings | The same people | Permission — **Configure analysers and interfaces** |
+| Report the study once its images land | **Radiologist**, **Radiology Technician** | Role → route |
 
-## Roles and permissions
+Configuring this page is a separate grant from anything else in imaging, because it changes how machines talk to the system rather than what a report says. A **Radiologist** reaches only the imaging screens and does not hold it; a **Lab Scientist** does not reach imaging at all; a **QC Officer** is review-only by design.
 
-Configuring this page is a separate grant — **Configure analysers and interfaces** — from anything else in imaging, because it changes how machines talk to the system rather than what a report says. A radiologist reaches only the imaging screens and does not hold it by default; a lab scientist does not reach imaging at all. See [Permissions](/platform/team/permissions).
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — "from then on they can only do what is switched on here".
+- **A denied action is recorded; an allowed one is not.** Where a figure is not yours to see it renders hidden or as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
 
 <Note>
   The hardware half of this integration is rolling out site by site, and what your machines and bridge PC need varies with the make and age of the equipment. Talk to [support](/platform/help/contact-support) about your specific room before you plan a cutover date.
@@ -98,15 +120,15 @@ Configuring this page is a separate grant — **Configure analysers and interfac
 - The report's **Study Information** card reads **\{n\} images attached**.
 - **Open full viewer** opens the study for a radiologist.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="The page says Modality integration is a Professional feature">
-    The imaging bridge is gated on **Professional** and above, and **View plans** on that screen takes you to the ladder. See [Change your plan](/platform/plans/change-plan).
+  <Accordion title="Modality integration is a Professional feature">
+    The imaging bridge is gated on **Professional Lab** and above, and **View plans** on that screen takes you to the ladder. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="I closed the key dialog without copying the key">
-    Issue a replacement with **New key** on that modality's row, and reconfigure the bridge with it. The old key stops working, so expect a gap until the bridge is updated.
+    Issue a replacement with **New key** on that modality's row, and reconfigure the bridge with it. The old key stops working at once, so expect a gap until the bridge is updated.
   </Accordion>
 
   <Accordion title="Last seen is never set">
@@ -117,16 +139,40 @@ Configuring this page is a separate grant — **Configure analysers and interfac
     The accession number entered at the machine is not matching the order. Check how your radiographers are keying it — a leading zero or a prefix dropped at the console is the usual cause — and attach the waiting studies in the meantime.
   </Accordion>
 
+  <Accordion title="I discarded a study by mistake">
+    There is no undo and no confirmation on **Discard**. Re-send the study from the machine, or from your archive, and it reappears in the queue.
+  </Accordion>
+
   <Accordion title="Open full viewer does nothing">
     Both **OHIF viewer URL** and **Orthanc DICOMweb URL (tunnelled)** must be saved, and the study must have images. Save the pair, reload the report and try again.
   </Accordion>
 
-  <Accordion title="Nothing is archiving to the cloud">
-    Check the **Auto-archive to cloud** switch is on, that the machine is in **Modalities to auto-archive** (or that none are selected, which means all), and that the study clears **Minimum images**.
-  </Accordion>
-
   <Accordion title="I cannot open the Modalities page at all">
     You do not hold **Configure analysers and interfaces**. It is granted separately from reporting — ask an owner or manager, see [Permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do our images get uploaded to ClinikEHR?">
+    No. Only two addresses are stored, and the viewer reads pixels straight from your own archive. The single exception is **Auto-archive to cloud**, which is off until you switch it on.
+  </Accordion>
+
+  <Accordion title="What should I put in Type?">
+    Whatever your department calls the machine — **CT**, **MRI**, **US**, **XR**. It is free text and nothing checks it, so pick one spelling per machine class and stick to it, because the **Modality Distribution** chart groups on exactly what you typed.
+  </Accordion>
+
+  <Accordion title="Can two machines share one key?">
+    They can technically, but do not. A key identifies a bridge, so sharing one makes **Last seen** meaningless and means rotating a key silently stops a second machine you had forgotten about.
+  </Accordion>
+
+  <Accordion title="What happens to a paused machine's studies?">
+    They are not taken. Pausing does not queue them for later — the bridge simply has nowhere to deliver, so resume the modality before the machine sends anything you need.
+  </Accordion>
+
+  <Accordion title="Is this the same as connecting a lab analyser?">
+    It is the same idea and the same grant, on different hardware. Analysers have their own registry and review queue — see [Connect your analysers](/lims/quality/analyzers).
   </Accordion>
 </AccordionGroup>
 

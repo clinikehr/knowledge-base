@@ -16,6 +16,19 @@ Every cart at the till and every script on the dispensing form is checked for dr
 
 <Path steps={['Sidebar', 'Pharmacy Station', 'Inventory', 'Fill Rx']} />
 
+## What you're looking at
+
+Screening has no screen of its own. It appears in three places, always in the right-hand column above the **Cart** card at the till, or above the lines on the dispensing form:
+
+| What appears | When |
+| --- | --- |
+| A coloured alert panel | A contraindicated, major or moderate finding in the current cart |
+| A dashed **not screened** panel | One or more products have no ingredients on file |
+| A small **Provisional dataset — pending pharmacist review.** line | Nobody at your branch has accepted the ruleset yet |
+| A dashed **Drug & food interaction screening** card with **Upgrade** | Your plan is below Professional |
+
+When there is nothing to say, **nothing appears** — an empty column above the cart means a clean screen, not a screen that failed. There is no "all clear" badge, deliberately: a green tick on every sale is noise that teaches people to stop reading.
+
 ## Why some alerts stop you and others do not
 
 This is the question the counter asks first, and the ranking is deliberate. Alerting on everything trains people to dismiss everything, which is worse than not screening at all. So the product is loud exactly four times and quiet the rest of the time.
@@ -83,7 +96,32 @@ Screening is gated. On Starter, the place the alerts would sit shows a quiet das
 
 A plan that lapses out of active or trialing loses the feature the same way.
 
-## If something goes wrong
+## Who can do this
+
+Screening is not itself permission-gated — everyone who reaches the till or the dispensing form is screened, including a cashier, and that is the point. What differs is who may *clear* a block and who may change the ruleset.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| See alerts on a cart | Anyone who can open **POS** or the dispensing form | Role — plus the Professional plan |
+| Acknowledge a contraindicated or major finding | Anyone at the till; in practice your Pharmacist-in-Charge | Role, and your own branch policy |
+| Map an unscreened product's ingredients | Anyone who reaches **Inventory** — not a Cashier | Role |
+| Accept the ruleset for clinical use | Owner, manager, pharmacist | Role |
+| Witness a controlled-drug dispense the alert relates to | Dispensing Supervisor, Pharmacist-in-Charge | **Witness a controlled-drug dispense** |
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not** — and so is every acknowledgement, whether or not anyone was denied. The name on **Reason for proceeding** is the name that stands behind the decision.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- Adding a known interacting pair to a cart raises the panel within a moment, without you running anything.
+- After mapping a product's ingredients, the dashed **not screened** panel loses that product; when nothing is left the sheet reads **Everything is mapped**.
+- After accepting the ruleset, the provisional line is gone and the panel reads **In clinical use here**.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="A sale is blocked and I disagree with the finding">
@@ -102,8 +140,36 @@ A plan that lapses out of active or trialing loses the feature the same way.
     Saving **Contents unknown** deliberately leaves it unscreened. Re-open the sheet and choose **Medication** or **Supplement**, then declare the ingredients.
   </Accordion>
 
-  <Accordion title="Screening while the till is offline">
-    Screening runs against the ruleset the device already holds, and the cart labels it as stale rather than hiding its age. See [Selling offline](/pharmacy/pos/offline).
+  <Accordion title="The alert sheet reopened on a cart I had already acknowledged">
+    You changed the cart. Any change re-screens, and a new line can raise a new finding. Read it — it is not the one you just cleared.
+  </Accordion>
+
+  <Accordion title="The panel says the dataset is provisional and I cannot find who accepts it">
+    Acceptance is a pharmacist's call, not a permission switch. Select the review link, read **Interaction rules**, and use **Accept for clinical use**. It applies to your branch only.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does screening work while the till is offline?">
+    Yes. It runs against the ruleset the device already holds, including a pharmacist's acknowledgement, and the cart labels the rules as stale rather than hiding their age. See [Selling when the internet is down](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Why are minor interactions not shown at all?">
+    Because showing them would bury the four findings that matter. Contraindicated and major stop you, moderate shows as an inline badge, minor is silent. Alerting on everything trains people to dismiss everything.
+  </Accordion>
+
+  <Accordion title="Is the AI counselling note part of the finding?">
+    No. It sits under the rule, is always badged as AI-generated, and is sometimes absent entirely. Treat it as counselling copy for the customer; the rule above it is the finding.
+  </Accordion>
+
+  <Accordion title="Do I have to accept the ruleset again after an update?">
+    Yes. A new dataset version returns to provisional and has to be accepted again, at each branch. The alerts keep firing throughout — provisional means unreviewed, not switched off.
+  </Accordion>
+
+  <Accordion title="Does marking something a consumable hide a real interaction?">
+    **Consumable (not a medicine)** is for gloves, saline and dressings — things with nothing to interact with. Use **Contents unknown** only when the contents genuinely are, and expect it to stay unscreened.
   </Accordion>
 </AccordionGroup>
 

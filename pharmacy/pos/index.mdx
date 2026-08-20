@@ -17,7 +17,7 @@ The point of sale is the screen your counter lives on. This page covers the whol
 
 <TaskHeader before="At least one stock item, and the 'Dispense and sell at the till' permission" time="Under a minute once you know the screen" after="A completed sale, stock drawn down, and a receipt" />
 
-## What is on the screen
+## What you're looking at
 
 The header reads **Sales POS** with today's date, followed by two tiles for the day so far — **\{n\} Sales** and **\{amount\} Today** — the offline and sync bar, and a **Calculator** button.
 
@@ -34,6 +34,8 @@ The header reads **Sales POS** with today's date, followed by two tiles for the 
 <Note>
   **The grid shows 100 tiles, not your whole catalogue.** The count badge says so out loud — **100 of 5,841** while you browse, **first 100 matches** while you search — and everything else is reachable by searching or scanning. Nothing is missing from your stock; a grid of several thousand tiles would be unusable, so search is the way in.
 </Note>
+
+**A brand-new pharmacy** sees both day tiles at zero, an empty **Available Products** grid and an **Add New Medication** button in place of the tiles. The **Cart** card reads as empty and **Complete Sale** stays disabled until something is in it. Add a stock item first — see [Add your first stock item](/pharmacy/get-started/first-stock-item).
 
 ## Ring up the sale
 
@@ -71,6 +73,30 @@ The header reads **Sales POS** with today's date, followed by two tiles for the 
   </Step>
 </Steps>
 
+## Who can do this
+
+**Role** decides whether **POS** opens. A **Cashier** reaches **POS** and **Sales** and nothing else — that is the whole of their sidebar, deliberately. A **Pharmacy Technician** gets the till plus the station, stock and customers, but not the money screens.
+
+**Permission** decides what you may do at the till.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Ring up a sale and complete it | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Open the drawer outside a sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Open the cash drawer** |
+| Discount a line or the whole cart | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Discount beyond the set limit** |
+| Change an item's price on the sale in front of you | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
+| Refund or void a completed sale | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+| Cash up and close the trading day | Pharmacy Manager, Dispensing Supervisor | **Cash up and close the day** |
+
+A default **Cashier** holds exactly two of these — **Dispense and sell at the till** and **Open the cash drawer**. Everything else at the counter is somebody else's authorisation, which is the point: the person taking the money is not the person who decides the price or reverses the sale.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted — no checks apply to them at all. The sheet warns **"Saving starts enforcing"**, and the first save takes effect immediately, mid-shift.
+- **A denied action is recorded; an allowed one is not.** A hidden control is a convenience; the real check happens when you submit.
+
+Gated figures never show a zero — a margin you may not see reads **Hidden — needs authorisation**, or the column is not there at all. See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - A **Sale Complete!** panel appears with the **Sale Number**, the **Total** and the **Change Due**, offering **Print Receipt** and **New Sale**, and a toast reads **Sale completed successfully!**
@@ -79,29 +105,55 @@ The header reads **Sales POS** with today's date, followed by two tiles for the 
 - The sale appears in **Sales History** on the [Sales page](/pharmacy/money/sales) with a receipt number.
 - Stock falls by what you sold, drawn from the batches that expire soonest.
 
-## Things the till does that surprise people
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="An out-of-stock product still sells">
-    If **Selling without stock** is on — it is on by default — an out-of-stock tile stays sellable, and the sale toasts that the item "has no recorded stock — the sale will be logged for reconciliation in Inventory." After the sale you are told how many items went beyond recorded stock.
-
-    Stock can therefore read as negative, such as **-3 oversold**, because the figure is what you have minus what you owe. Clear these on **Inventory › Reconciliation** — see [Stock, batches and expiry](/pharmacy/inventory/batches-and-expiry).
-  </Accordion>
-
-  <Accordion title="Some items refuse to be sold at the till">
-    A product that requires a witnessed dispense cannot go through POS: "… requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." Controlled drugs need a second person's countersignature, and the till has no place to capture one. See [The dispensing station](/pharmacy/dispensing/station).
-  </Accordion>
-
-  <Accordion title="Stock figures are shown as of a time, not as of now">
-    The **Stock as of HH:MM** badge is the truth about how fresh the catalogue is. When the figures are stale, low-stock badges are muted rather than shown as confident warnings — a stale number is never dressed up as a live one. See [Selling when the internet is down](/pharmacy/pos/offline).
+  <Accordion title="Complete Sale will not enable">
+    The cart is empty, the cash tendered is below the total (**Amount Needed** is showing), or a tender that needs a reference has not been given one.
   </Accordion>
 
   <Accordion title="The product is not in the catalogue at all">
-    From the empty grid, **Add New Medication** opens the inventory **Add item** sheet without losing the till. See [Inventory](/pharmacy/inventory/index).
+    The grid only holds what you stock. From the empty grid, **Add New Medication** opens the inventory **Add item** sheet without losing the till. See [Inventory](/pharmacy/inventory/index).
   </Accordion>
 
   <Accordion title="A red interaction alert will not let me continue">
-    Screening blocks only on contraindicated and major interactions, and clearing the block needs one acknowledgement with a reason from the pharmacist. Moderate interactions show as an inline badge and minor ones are not shown at all. It is available on **Professional** and above — below that, the panel reads **Available on Professional and above**. See [Interaction screening](/pharmacy/dispensing/interaction-screening).
+    Screening blocks only on contraindicated and major interactions, and clearing the block needs one acknowledgement with a reason. Moderate interactions show as an inline badge and minor ones are not shown at all. It needs **Professional** and above — below that the panel reads **Available on Professional and above**. See [Interaction screening](/pharmacy/dispensing/interaction-screening).
+  </Accordion>
+
+  <Accordion title="An item refuses to be sold at the till">
+    A product that requires a witnessed dispense cannot go through POS: "… requires a witnessed dispense — use the inventory Fill Rx flow instead of POS." A controlled drug needs a second person's countersignature and the till has nowhere to capture one. See [The pharmacy station](/pharmacy/dispensing/station).
+  </Accordion>
+
+  <Accordion title="The Discount link does nothing for me">
+    You do not hold **Discount beyond the set limit**. A Cashier does not have it by default. Ask an owner or manager, or have them apply the discount.
+  </Accordion>
+
+  <Accordion title="Pressing Enter did not complete the sale">
+    Enter is ignored while you are in the search field (that Enter is a scan), on a button or link, in a text area, or while any menu or dialog is open. Close whatever is open, or select **Complete Sale • \{total\}**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I sell something that is out of stock?">
+    Yes, when **Selling without stock** is on — it is on by default. The sale toasts that the item "has no recorded stock — the sale will be logged for reconciliation in Inventory", and stock can then read as negative, such as **-3 oversold**, because the figure is what you have minus what you owe. Clear these on **Inventory › Reconciliation**.
+  </Accordion>
+
+  <Accordion title="Why does the stock figure say 'as of' a time?">
+    Because it is a cached copy, and the **Stock as of HH:MM** badge is the truth about how fresh it is. Low-stock badges are muted while the figures are stale rather than shown as confident warnings — a stale number is never dressed up as a live one. See [Selling when the internet is down](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Do I have to attach a customer to every sale?">
+    No. **Walk-in** is the default and needs nothing. Attach a registered customer when the sale involves money on account, loyalty or part payment — a balance has to belong to somebody.
+  </Accordion>
+
+  <Accordion title="Does a discount on a line stack with a discount on the cart?">
+    Yes, both apply. Check the **Total** before completing rather than assuming — it is easy to give away twice what you meant to. See [Hold a cart and apply discounts](/pharmacy/pos/held-carts).
+  </Accordion>
+
+  <Accordion title="Which batch does a sale come out of?">
+    The one that expires soonest, chosen for you, so short-dated stock moves first. See [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
   </Accordion>
 </AccordionGroup>
 

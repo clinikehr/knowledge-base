@@ -11,103 +11,175 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Solo and Team" roles="Owner, Manager" note="Serving the page from your own domain needs the Team plan." />
 
-Your booking page is a public web page where anyone can pick a service, choose a time and book it, without an account. You design it in the **Booking Page Designer**, and it goes live at `/book/` followed by your page address.
+Your booking page is a public web page where anyone can pick a service, choose a time and book it, without an account. You design it in the **Booking Page Designer**, and it goes live at `/book/` followed by your page slug.
 
 <Path steps={['Sidebar', 'Appointment', 'Booking Page']} />
 
 <TaskHeader before="At least one service, and a payment provider connected if you want to take money at booking" time="15 minutes" after="A live page clients can book from, on a link you can share" />
 
+## What you're looking at
+
+The page is headed **Booking Page Designer** — "Create and customize your online appointment booking page". Above the editor sits the **Booking Page URL** card, showing the live address with a **Live** or **Draft** badge and **Copy** and **Open** buttons.
+
+The header carries **Preview** (which becomes **Edit**), a save button reading **Save Changes** when you have unsaved work and **Save** when you do not, and **Publish** / **Unpublish**. Unsaved work shows the banner "You have unsaved changes. Don't forget to save your work!"
+
+The editor has five tabs, with a live preview beside them:
+
+| Tab | Holds |
+| --- | --- |
+| **Design** | Colours, logo, layout, the **Page Slug**, and the **Custom domain** card |
+| **Content** | Your practice's name, introduction, address and any notice |
+| **Services** | Which services the page offers |
+| **Forms** | The questions a client answers while booking |
+| **Settings** | **Booking Settings** and **Payment Settings** |
+
+The preview switches between **Mobile**, **Tablet** and **Desktop**; it opens on **Mobile**, which is how most people will see it.
+
+<Note>
+  **Opening hours are not in the designer.** They live in **Settings → Booking Settings** under **Clinic Availability** and **Special Dates**. That is why a page can be published, correct and still show no times to book.
+</Note>
+
 ## Two things make bookings possible
 
-Everything else on the page is presentation. Online booking works only when both of these are true:
+Everything else is presentation. Online booking works only when both of these are true:
 
-1. **Allow Online Booking** is switched on, on the **Settings** tab.
-2. At least one service is marked visible on the **Services** tab.
+1. **Allow Online Booking** is on, on the **Settings** tab.
+2. At least one service has been added on the **Services** tab.
 
 A page with neither loads for the visitor and offers them nothing to book.
 
-## Design the page
+## Add the services
 
-The designer has five tabs and a live preview beside them; switch the preview between desktop and mobile as you work, because most people book on a phone.
+The **Services** tab is headed **Services Management** — "Select services from your clinic to display on the booking page". Each service card carries one button: **Add to Page**, which becomes a disabled **Added to Page** once it is on. There is no visibility switch, and nothing is on the page until you add it.
 
 <Steps>
-  <Step title="Design — colours, logo and layout">
-    Set the look of the page. This tab also carries the **Custom domain** card, where a page can be served from an address like `book.yourclinic.com` instead of the ClinikEHR one. That card needs the Team plan — see [Custom domains](/platform/settings/custom-domain).
+  <Step title="Find the service">
+    Use **Search services...** or the **Category:** filter. If nothing is there at all you get **No Services Found** — "You haven't added any appointment services yet. Create them first, then add them to your booking page." — with **Manage Appointment Services**.
   </Step>
-  <Step title="Content — the words">
-    Your practice's name, introduction, address and any notice a client should read before booking.
+  <Step title="Select Add to Page">
+    The toast reads **Service Added**. A second card, **Services on Your Booking Page**, now lists what the public will see.
   </Step>
-  <Step title="Services — what can be booked">
-    Choose which services appear and in what order. A service that is not visible here cannot be booked online, whatever else is configured. Manage the services themselves under **Settings → Appointment Services**.
-  </Step>
-  <Step title="Forms — what you ask for">
-    The questions a client answers while booking. Ask for what you need at the desk and no more; every extra field loses bookings.
-  </Step>
-  <Step title="Settings — the rules">
-    Covered below. This is where booking is switched on.
+  <Step title="Order and feature them">
+    **Make Featured** promotes a service; **Remove** takes one back off the page.
   </Step>
 </Steps>
 
 ## Set the booking rules
 
-On the **Settings** tab, the **Booking Settings** card holds three controls:
+On the **Settings** tab, the **Booking Settings** card holds four controls:
 
 | Control | What it does |
 | --- | --- |
-| **Allow Online Booking** | Enables direct booking from the page. Off means the page is read-only. |
-| **Advance Booking Days** | How far ahead a client may book |
+| **Allow Online Booking** | "Enable direct booking from the page" |
+| **Clinic Timezone** | The timezone every offered time is calculated in |
+| **Advance Booking Days** | "How many days in advance patients can book appointments" |
 | **Booking Confirmation Message** | The text shown after a successful booking |
 
 ## Take payment at booking
 
-The same tab has a payments section, opened by the **Accept Payments** switch.
+The **Payment Settings** card is hidden until **Accept Payments** is on. Then:
 
 | Control | What it does |
 | --- | --- |
-| **Payment Methods** | Which methods the page offers — card, bank transfer, cash, insurance and the wallets |
+| **Payment Methods** | Which methods the page offers — card, cash, bank transfer, insurance and the wallets |
+| **Currency** | Shows your clinic default; leave it unless you bill this page differently |
 | **Require Upfront Payment** | Whether the booking completes without payment |
-| **Payment Provider** | Which connected provider processes the charge |
-| **Deposit Percentage** | Take part of the fee now and the rest at the visit |
+| **Payment Provider** | **Stripe (International Cards)** or **Paystack (Nigerian Banks & Cards)** — only shown once upfront payment is required |
+| **Deposit Percentage** | "0 = full amount, 1-99 = partial deposit" |
 | **Payment Instructions** | Shown at checkout |
 | **Refund Policy** | Shown before they pay |
 
-Connect the provider first under **Settings → Online Payments**. Until you do, a page set to require payment can take a card from nobody. Amounts are shown in your clinic's own currency, set under [Currency](/platform/settings/currency).
+Connect the provider first under **Settings → Online Payments**. Until you do, the provider select is replaced by **Stripe not connected** or **Paystack not connected** and a link to those settings.
 
 ## Publish and share
 
-Save the designer, then open the page at `/book/` and your page address to see exactly what a client sees. Share that link on your website, in your email signature and on your listings.
+Set the **Page Slug** on the **Design** tab — "This will be part of your booking page URL". A live check tells you whether it is free, and Save and Publish stay disabled until it is. Then **Publish**, and use **Copy** on the **Booking Page URL** card to take the link.
+
+<Warning>
+  **The slug is the link.** Changing it after you have shared the page breaks every copy already out there — your website, your email signature, printed cards, listings and any link a client has kept. Choose it once, before you publish.
+</Warning>
+
+## Who can do this
+
+Role decides whether the designer opens at all. It reaches the same settings screen the rest of your clinic configuration lives on.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open the designer and edit it | Owner, manager | Role — the Settings screen is theirs |
+| Publish or unpublish the page | Owner, manager | Role |
+| Change the **Page Slug** | Owner, manager | Role |
+| Add or remove services on the page | Owner, manager | Role |
+| Connect a **Custom domain** | Owner, manager, on the Team plan | Plan — "Custom domains are part of the **Team** plan and above." |
+| Connect the payment provider | Owner | Role — Online Payments is owner-only |
+
+No per-action permission covers the booking page: on Solo and Team the lever is the **role** somebody holds. The **Permissions** sheet on a team member ("What they may do on the pages their role already opens") carries only clinical-authority acts such as signing and countersigning, and there is no per-role navigation editor on these plans.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- Opening the public link in a private browser window shows your branding, your content and your visible services.
-- Picking a service offers real times that match your availability in **Settings → Booking Settings**.
+- The **Booking Page URL** card shows a **Live** badge.
+- Opening that link in a private browser window shows your branding, your content and the services you added.
+- Picking a service offers real times that match **Settings → Booking Settings**.
 - Completing a booking creates an appointment on the calendar and shows your **Booking Confirmation Message**.
-- With payments on, the checkout offers the methods you enabled and shows your **Refund Policy**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The page loads but nothing can be booked">
-    Either **Allow Online Booking** is off, or no service is marked visible on the **Services** tab. Both are required.
+    Either **Allow Online Booking** is off, or no service has been added on the **Services** tab. Both are required, and a service card that still reads **Add to Page** is not on the page.
   </Accordion>
 
-  <Accordion title="Services are visible but every day is full">
-    The page shows real availability. Providers need schedules, special dates must not be closing the day, and any resource the service requires must be free. Fix it in **Settings → Booking Settings** — see [Manage the appointment book](/practice/work/appointments).
+  <Accordion title="Services are on the page but every day is full">
+    The page shows real availability, and opening hours are not in the designer. Providers need schedules under **Settings → Booking Settings → Clinic Availability**, no special date may be closing the day, and any resource the service needs must be free.
+  </Accordion>
+
+  <Accordion title="Times are offered in the wrong hours">
+    **Clinic Timezone** on the **Settings** tab is wrong. Every offered slot is calculated from it, so a mismatch shifts the whole day.
+  </Accordion>
+
+  <Accordion title="Save and Publish are both greyed out">
+    The **Page Slug** is taken or invalid. The availability indicator under the field says which; both buttons stay disabled until it clears.
   </Accordion>
 
   <Accordion title="Checkout will not accept a card">
-    No payment provider is connected, or the one selected in **Payment Provider** is not the connected one. Finish the connection under **Settings → Online Payments**.
+    No payment provider is connected — you will see **Stripe not connected** or **Paystack not connected** in place of the select. Finish the connection under **Settings → Online Payments**.
   </Accordion>
 
-  <Accordion title="The Custom domain card is not there">
-    Custom domains are a Team feature. See [Change your plan](/platform/plans/change-plan).
+  <Accordion title="The Custom domain card says Upgrade">
+    "Custom domains are part of the **Team** plan and above." See [Custom domains](/platform/settings/custom-domain) and [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens if I change the slug after sharing it?">
+    Every link already shared stops working — there is no redirect from the old address. If you must change it, publish the new link everywhere you published the old one, and expect enquiries from people holding the old one.
   </Accordion>
 
-  <Accordion title="I need to take the page down for a while">
-    Turn **Allow Online Booking** off on the **Settings** tab. The page still loads and still shows your details — it stops offering times. Nothing already booked is affected.
+  <Accordion title="What is the difference between Unpublish and turning booking off?">
+    **Unpublish** takes the page offline entirely. Turning **Allow Online Booking** off leaves the page up with your details on it, and simply stops offering times. Neither touches anything already booked.
+  </Accordion>
+
+  <Accordion title="Do clients need an account to book?">
+    No. The page is public and the booking creates or matches a client record for you. Portal access is a separate thing you grant afterwards.
+  </Accordion>
+
+  <Accordion title="Can I have more than one booking page?">
+    One page per practice. Use the **Services** tab to control what each audience sees, and **Make Featured** to put the service you most want booked at the top.
+  </Accordion>
+
+  <Accordion title="Does a deposit take the rest automatically?">
+    No. **Deposit Percentage** takes that share at booking; the balance is settled at the visit like any other invoice.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/appointment/page-designer/booking-page-designer.tsx, components/clinic/appointment/page-designer/settings-tab.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}
+{/* source of truth: components/clinic/appointment/page-designer/booking-page-designer.tsx, design-tab.tsx, services-tab.tsx, settings-tab.tsx, components/clinic/dashboard/settings/custom-domain-card.tsx */}

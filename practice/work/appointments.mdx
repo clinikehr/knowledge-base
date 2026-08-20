@@ -7,7 +7,7 @@ icon: /images/icons/calendar-days.svg
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Solo and Team" roles="Any staff member with access to Appointment" />
 
@@ -17,9 +17,9 @@ The **Appointment** workspace is where the day is booked and read. It holds the 
 
 <TaskHeader before="At least one service and one bookable provider" time="A minute to book; 10 minutes to set availability up properly" after="A calendar that reflects your real day, and slots clients can actually take" />
 
-## Find your way around
+## What you're looking at
 
-The workspace has its own rail with four entries:
+The sidebar row is **Appointment**, singular. Its own rail, headed **Appointments**, has four entries — and only the first stays in the workspace:
 
 | Entry | Opens |
 | --- | --- |
@@ -28,36 +28,43 @@ The workspace has its own rail with four entries:
 | **Booking Page** | The **Booking Page Designer** tab in Settings |
 | **Settings** | The **Booking Settings** tab in Settings |
 
-Everything except the calendar lives in your clinic settings, so changing a service or a working pattern is the same edit wherever you start from.
+Changing a service or a working pattern is therefore the same edit wherever you start from.
+
+The calendar's top row carries **Today**, back and forward arrows, the month, a **Live** or **Syncing** connection pill, the view switcher — **Day**, **Week**, **Month**, plus **Providers** and **Resources** swimlanes — and a colour control offering **Color by Status** and **Color by Service**.
+
+The row beneath it holds **Search patients, services...**, **More filters** with a count badge, **Refresh**, **Current Schedule** and **Create**.
+
+**More filters** opens **Calendar Filters** — "Refine your view by status, service, or staff." — with sections for **Appointment Status**, **Urgency Level**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**, and **Reset all filters** at the bottom.
+
+A booking carries one of seven statuses, which is what **Color by Status** colours: **Scheduled**, **Confirmed**, **In Progress**, **Completed**, **Cancelled**, **No Show** and **Rescheduled**.
+
+A brand-new practice sees the empty hour grid, not a message — the calendar always renders the day. The swimlanes do explain themselves: **Resources** reads "No rooms or equipment yet. Add them in Appointment Settings → Resources."
+
+<Note>
+  Only **Overview**, **Services**, **Booking Page** and **Settings** are part of the workspace today. Anything else you reach by editing the address bar is unreleased.
+</Note>
 
 ## Book an appointment
 
 <Steps>
-  <Step title="Open the calendar">
-    **Overview** opens on the calendar. Switch between **Day**, **Week**, **Month** and **Group** at the top, and use **Refresh** if a colleague has just booked something.
-  </Step>
   <Step title="Select a slot, or select Create">
-    Selecting an empty slot opens the booking sheet with that time already filled in. **Create** opens the same sheet with no time imposed, which is what you want when the client is standing in front of you.
+    Selecting an empty slot opens the sheet with that time already filled in. **Create** opens the same sheet — titled **Initial Entry** — with no time imposed, which is what you want when the client is standing in front of you. Its three tabs are **Appointment**, **Event** and **Task**.
   </Step>
-  <Step title="Choose the client, service and provider">
-    Search the client list, pick the service, then pick the provider — or leave it on **Any available provider** and let the slot decide. **Multiple Patients** turns the booking into a group appointment.
+  <Step title="Choose who it is for">
+    Leave the type on **Individual or couple**, or choose **Group** for a group session — that needs the Essential plan, and the gate reads **Upgrade for group sessions**. Then find the person with **Search Client**; **Create client** beside it registers somebody who is not on file yet.
+  </Step>
+  <Step title="Pick the services and the provider">
+    Add one or more under **Services**. Under **Select Provider**, choose a staff member or leave it on **Any available provider** and let the slot decide.
   </Step>
   <Step title="Set the time and place">
-    Choose the start time and duration, then the venue. Enter a room or address for an in-person visit; a telehealth visit generates its own joining link.
+    Set the start, end and **Duration** under **Schedule**. Choose **Location**: **Physical Office**, which asks for an address or room number, or **Video Office**, which generates its own joining link.
   </Step>
-  <Step title="Save the booking">
-    The appointment appears on the calendar immediately. Confirmation and reminder emails are sent from your notification settings — you do not send them by hand.
+  <Step title="Select Book appointment">
+    The toast reads **Appointment created successfully** and the booking appears on the calendar. Confirmation and reminder emails go out from your notification settings — you do not send them by hand.
   </Step>
 </Steps>
 
 Booking one for the first time, field by field, is walked through in [Schedule your first appointment](/practice/get-started/first-appointment).
-
-## Read the calendar quickly
-
-- **Calendar Filters** narrows the view by **Appointment Status**, **Services**, **Providers**, **Resources**, **Staff Members** and **Event Types**.
-- **Color by Status** and **Color by Service** switch what the block colours mean. Pick one and keep it — a room full of people reading two colour schemes is the failure this setting causes.
-- **Current Schedule** shows the working pattern behind the grid, so you can see why a slot is closed without leaving the calendar.
-- **Search patients, services...** finds a booking without scrolling to its day.
 
 ## Set availability
 
@@ -65,26 +72,44 @@ Availability is not on the calendar — it is in **Settings → Booking Settings
 
 | Setting | Decides |
 | --- | --- |
-| **Schedules** | The regular working pattern, per provider |
-| **Special dates** | One-off closures, holidays and extra sessions |
+| **Clinic Availability** | The regular working pattern, per provider |
+| **Special Dates** | One-off closures, holidays and extra sessions |
 | **Resources** | Rooms and equipment a booking has to reserve |
 | Per-provider booking policies | Notice, buffers and what each provider accepts online |
 
-A slot only appears to a client when the schedule is open, no special date closes it, and any resource the service needs is free.
-
-## Reminders and channels
-
-Which reminders go out is set under **Notifications**; the channels they travel on — SMS, voice, fax and email — are set under **Settings → Communications**. Both must be right: a reminder with no channel configured is never sent. See [Notification settings](/platform/settings/notifications).
+A slot only appears when the schedule is open, no special date closes it, and any resource the service needs is free. Which reminders go out is set under **Notifications**; the channels they travel on are set under **Settings → Communications**, and a reminder with no channel is never sent. See [Notification settings](/platform/settings/notifications).
 
 ## Charge the card automatically with Auto Pay
 
 **Auto Pay** charges a client's saved card when their appointment is **Confirmed** or **Completed** — you choose which — so a routine visit never needs a manual invoice. Turn it on in **Settings → Auto Pay**.
 
 <Warning>
-  **Auto Pay** takes real money without anyone pressing a button. It needs the Essential plan or above and a connected Stripe account, only charges people who already have a card on file, and carries a **1.9%** platform fee on every charge. Only the clinic owner can change these settings. Turn on **Email a receipt to the patient** so nobody is charged silently.
+  **Auto Pay** takes real money without anyone pressing a button. It needs the Essential plan or above and a connected Stripe account, only charges people who already have a card on file, and carries a **1.9%** platform fee on every charge. Only the practice owner can change these settings. Turn on **Email a receipt to the patient** so nobody is charged silently.
 </Warning>
 
-Card details are held by Stripe and never reach ClinikEHR. Connect the account first under **Settings → Online Payments**; until you do, the **Auto Pay** card shows **Connect Stripe to use Auto Pay** and stays inert. See [Billing](/practice/money/billing).
+Card details are held by Stripe and never reach ClinikEHR. Connect the account first under **Settings → Online Payments**; until you do, the **Auto Pay** card shows **Connect Stripe to use Auto Pay** and stays inert.
+
+## Who can do this
+
+Role decides whether **Appointment** opens. Permission decides what you may do once it is open.
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open the calendar and book | Any staff member | Role |
+| See bookings for clients who are not their own | Owner, manager, and anyone on **Full client list** or **Entire practice** | The access tier chosen when they were invited |
+| Change a service, a schedule or a resource | Owner, manager | Role — these live in Settings |
+| Turn **Auto Pay** on, or change what it charges | Owner | Role — the card is inert for everyone else |
+
+On Solo and Team the real levers are the **role** somebody holds and the **access tier** you picked when you invited them. There is no per-role navigation editor on these plans — that is an Enterprise feature — and no per-action permission covers booking: the **Permissions** sheet on a team member ("What they may do on the pages their role already opens") carries only clinical-authority acts such as signing and countersigning.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from somebody's sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+<AuditNote action="Opening an appointment" />
 
 ## Check it worked
 
@@ -92,15 +117,23 @@ Card details are held by Stripe and never reach ClinikEHR. Connect the account f
 - Opening it shows the client, the service and the venue you entered.
 - With **Auto Pay** on, a confirmed appointment for someone with a saved card produces a paid invoice rather than an outstanding one.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="No free slots show for a provider">
-    The provider has no schedule, a special date is closing the day, or a resource the service requires is already booked. Check all three in **Settings → Booking Settings** — the calendar only ever reflects them.
+    "No bookable slots for this date in your configured schedule." The provider has no schedule, a special date is closing the day, or a resource the service requires is already booked. **CONFIGURE AVAILABILITY** in that warning takes you straight to **Booking Settings**.
   </Accordion>
 
-  <Accordion title="The rail only lists four entries">
-    That is the whole workspace. **Overview**, **Services**, **Booking Page** and **Settings** are what Appointment does today.
+  <Accordion title="The person I want to book is not in the search">
+    They have no client record yet. Use **Create client** inside the booking sheet, or add them from **Clients** first — see [Manage your client list](/practice/work/clients).
+  </Accordion>
+
+  <Accordion title="Group is flagged and will not open">
+    Group sessions need the Essential plan — the gate reads **Upgrade for group sessions**. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="This appointment would run past midnight">
+    A start time plus a duration that crosses into the next day is refused: "Pick an earlier start time or a shorter duration." Split it into two bookings instead.
   </Accordion>
 
   <Accordion title="Auto Pay is on but nothing is being charged">
@@ -110,12 +143,32 @@ Card details are held by Stripe and never reach ClinikEHR. Connect the account f
   <Accordion title="Reminders are not arriving">
     Check the category is enabled under **Notifications**, then check the channel exists under **Settings → Communications**. A reminder with no channel is not queued and not retried.
   </Accordion>
+</AccordionGroup>
 
-  <Accordion title="The person I want to book is not in the search">
-    They have no client record yet. Use the **Create client** link inside the booking sheet, or add them from **Clients** first — see [Manage your client list](/practice/work/clients).
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does cancelling an appointment refund the client?">
+    No. Setting a booking to **Cancelled** frees the slot and stops its reminders; money already taken stays taken. Refund it from the invoice — see [Invoices](/practice/money/invoices).
+  </Accordion>
+
+  <Accordion title="What is the difference between Cancelled and No Show?">
+    **Cancelled** means the appointment was called off. **No Show** means it stood and the client did not arrive. Keep them apart: they are the two numbers you will want when you review a month.
+  </Accordion>
+
+  <Accordion title="Why does an online booking say Unassigned?">
+    A client who booked without choosing a provider lands under **Unassigned / Online** in the **Staff Members** filter. Open the booking and set a provider.
+  </Accordion>
+
+  <Accordion title="Can I book somebody into two places at once?">
+    The calendar will let you; the booking page will not offer the slot to a client, because online availability checks the provider and any resource the service needs. Double-booking is a deliberate act, never an accident of the public page.
+  </Accordion>
+
+  <Accordion title="Should the team use Color by Status or Color by Service?">
+    Pick one and keep to it. The setting is held per person and per browser, so a room full of people reading two different colour schemes is the failure it causes.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/appointment/general/appointment-sidebar.tsx, components/clinic/appointment/calendar/calendar-view.tsx, components/clinic/appointment/calendar/appointment-create-sheet.tsx, components/clinic/dashboard/settings/auto-pay-settings.tsx */}
+{/* source of truth: components/clinic/appointment/general/appointment-sidebar.tsx, calendar/calendar-view.tsx, calendar/appointment-create-sheet.tsx, components/clinic/dashboard/settings/auto-pay-settings.tsx */}

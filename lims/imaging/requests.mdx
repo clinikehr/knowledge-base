@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Raising and reporting studies is limited to imaging staff. Everyone else gets a view-only queue." />
+<Availability editions={['lims']} plans="All plans" roles="Raising and reporting studies is limited to imaging staff. A receptionist can raise a request; everyone else gets a view-only queue." />
 
 **Imaging Requests** is the working list of every study your diagnostic centre has been asked for — what is booked, what is on the machine, what is waiting on a radiologist. This page covers raising a request and reading the queue.
 
@@ -17,7 +17,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <TaskHeader before="A registered patient, and at least one imaging study in your test catalogue" time="2 minutes" after="A study on the queue, ready for acquisition and reporting" />
 
-## Read the queue
+## What you're looking at
 
 Three counters sit across the top:
 
@@ -31,7 +31,12 @@ Below them, three priority buttons carry their own counts and filter the list wh
 
 Narrow the list further with the search box — "Search studies, patients, or findings..." — and the **All statuses**, **All urgencies** and **All modalities** filters. **Toggle columns** hides the columns you do not use, per person.
 
-Statuses you will see on rows are **Pending**, **Scheduled**, **In Progress**, **Completed**, **Reported** and cancelled; urgencies are **Routine**, **Urgent** and **STAT**.
+| Badge type | Values |
+| --- | --- |
+| **Status** | **Pending** · **Scheduled** · **In Progress** · **Completed** · **Reported** · cancelled |
+| **Urgency** | **Routine** · **Urgent** · **STAT** |
+
+**The empty state.** A centre with nothing ordered yet sees all three counters at zero and an empty table. If you know studies exist and the table is still empty, a filter or a priority button is still selected — clear the search box and set the three filters back to **All**.
 
 ## Raise a request
 
@@ -40,7 +45,7 @@ Statuses you will see on rows are **Pending**, **Scheduled**, **In Progress**, *
     Select **Create Report** on the **Imaging Requests** toolbar. The order sheet opens.
   </Step>
   <Step title="Choose the patient">
-    Under **Select Patient**, search by name, ID, phone or email. The patient must already be registered — see [Register your first patient](/lims/get-started/first-patient).
+    Under **Select Patient**, search by name, ID, phone or email. The patient must already be registered — see [Patients](/lims/get-started/first-patient).
   </Step>
   <Step title="Add the studies">
     Use **Add New Study** to put each study on the order — the picker is headed **Choose an imaging study to order**. Everything offered comes from your test catalogue, so a missing study is a catalogue gap rather than a permissions problem. See [Add your tests and panels](/lims/get-started/tests-and-panels).
@@ -54,7 +59,7 @@ Statuses you will see on rows are **Pending**, **Scheduled**, **In Progress**, *
     Choose **Routine**, **Urgent** or **STAT (Emergency)**. **STAT** puts the study in front of the **Urgent Studies** count, so keep it meaning something.
   </Step>
   <Step title="Attribute the referral">
-    **Referring Doctor / Facility** credits the work to a referrer and feeds referral reporting. Leave it as **No referrer** for a walk-in. See [Referring clinics](/lims/business/referrers).
+    **Referring Doctor / Facility** credits the work to a referrer and feeds referral reporting and any commission you pay. Leave it as **No referrer** for a walk-in. Nothing is attributed retrospectively — see [Referring doctors and their portal](/lims/business/referrers).
   </Step>
   <Step title="Add anything the radiographer needs">
     **Special Instructions** ("Any special requirements...") carries mobility needs, contrast allergies, sedation, an interpreter — anything the person at the machine has to know before the patient arrives.
@@ -68,11 +73,30 @@ Statuses you will see on rows are **Pending**, **Scheduled**, **In Progress**, *
 
 ## Capturing an order offline
 
-Order capture keeps working when the connection drops. If it does, you get **Connection dropped — imaging order queued** and then **Imaging order saved offline**; the order replays as soon as the device is back online. Reporting, result entry and payment never happen offline. See [Working offline](/platform/apps/offline).
+Order capture keeps working when the connection drops. If it does, you get **Connection dropped — imaging order queued** and then **Imaging order saved offline**; the order replays as soon as the device is back online. Reporting, result entry and payment never happen offline — capture goes offline, completion does not. See [Working offline](/platform/apps/offline).
 
-## If your access is view-only
+## Who can do this
 
-Staff without reporting access get the queue in view-only mode — they can see studies and track progress but cannot raise or report them. Attempting to submit returns **You are not authorized to submit radiology orders.** That is role enforcement, not a fault: a radiologist reaches only the imaging screens, and a lab scientist does not reach them at all. See [Roles](/platform/team/roles).
+Role decides whether **Imaging Requests** opens. Permission decides what you may do once it is open.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open and read the queue | Owner, Manager, **Radiologist**, **Radiology Technician**, **Receptionist** | Role → route |
+| Raise a request | Owner, Manager, imaging staff, **Receptionist** | Role → route |
+| Attribute an order to a referrer | Anyone who may raise a request | Role → route — the picker is on the order form |
+| Report a study | Radiologists with reporting access | Role → route |
+| Release a report to the referring doctor | **Referrer Liaison**, **Lab Manager**, Owner, Manager | Permission — **Release a report to a referrer** |
+| See a referrer's account and their statements | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
+| See the queue but change nothing | Everyone else with the route | Role → route, in view-only mode |
+
+Staff without reporting access get the queue in view-only mode — they can see studies and track progress but cannot raise or report them. Attempting to submit returns **You are not authorized to submit radiology orders.** That is role enforcement, not a fault: a **Lab Scientist** does not reach the imaging screens at all, and a **Radiologist** reaches only them plus patient records. Access tiers — **Own bench**, **Whole lab**, **All sites** — widen how much of the lab a person sees; only **All sites** carries the referrer grants.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** The counters a person may not see render hidden or as a dash, never as a zero.
+
+See [Roles](/platform/team/roles) and [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
@@ -81,7 +105,7 @@ Staff without reporting access get the queue in view-only mode — they can see 
 - A **STAT** or **Urgent** study is counted under **Urgent Studies**.
 - The study is visible on the [radiology station](/lims/imaging/station) for the radiographer to work.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Create Report is missing or the order will not submit">
@@ -93,18 +117,46 @@ Staff without reporting access get the queue in view-only mode — they can see 
   </Accordion>
 
   <Accordion title="I cannot find the patient">
-    Search by phone or patient ID rather than name — a spelling difference is the usual cause. If they genuinely are not there, register them first.
+    Search by phone or patient ID rather than name — a spelling difference is the usual cause. If they genuinely are not there, register them on [Patients](/lims/get-started/first-patient) first.
   </Accordion>
 
-  <Accordion title="The order will not save">
-    An order needs at least one study — **Please add at least one radiology study to the order.** — and a patient. Check both before retrying.
+  <Accordion title="Please add at least one radiology study to the order.">
+    An order needs at least one study and a patient. Add a study with **Add New Study**, check the patient is chosen, then retry.
   </Accordion>
 
   <Accordion title="The queue is empty but I know studies exist">
     Clear the search box and set the filters back to **All statuses**, **All urgencies** and **All modalities**. A priority button left selected also filters the list.
   </Accordion>
+
+  <Accordion title="The referring doctor is missing from an order we already ran">
+    Attribution happens on the order form and is not applied afterwards. The order stays uncredited, so it will not appear on that doctor's commission statement — see [Referral commissions](/lims/business/commissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can a referrer see other doctors' patients?">
+    No. A referrer's portal shows only the orders that name them, and only after the result is released. They never see another doctor's work, your volumes or your prices.
+  </Accordion>
+
+  <Accordion title="What is the difference between Urgent and STAT?">
+    Both raise the study in the **Urgent Studies** count; **STAT (Emergency)** is the top of that. Neither changes what a machine does — they change what a human picks up next, so a lab that marks everything **STAT** has marked nothing.
+  </Accordion>
+
+  <Accordion title="Can I raise a request without a referring doctor?">
+    Yes. Leave **Referring Doctor / Facility** as **No referrer** for a walk-in. The order runs normally; it simply is not credited to anybody.
+  </Accordion>
+
+  <Accordion title="Does raising a request invoice the patient?">
+    No. Ordering and billing are separate. Raise the invoice from [Billing](/lims/business/billing) and record what you collect on [Payments](/lims/business/billing).
+  </Accordion>
+
+  <Accordion title="Can the patient book an imaging slot themselves?">
+    Not through a public booking page — a lab does not get the booking-page designer. Book them into a slot yourself on [Appointments](/lims/get-started/index).
+  </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="an imaging request" />
 
-{/* source of truth: components/clinic/radiology/radiology-actions.tsx, components/clinic/radiology/radiology-table.tsx, components/clinic/radiology/radiology-report-form.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/radiology/radiology-actions.tsx, components/clinic/radiology/radiology-table.tsx, components/clinic/radiology/radiology-report-form.tsx, lib/edition.ts (EDITION_ROLE_MODULES), lib/clinic-nav-registry.ts */}

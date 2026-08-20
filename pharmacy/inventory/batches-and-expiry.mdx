@@ -28,11 +28,13 @@ Leaving that setting off is a decision to accept undated lots. If you must recei
 
 Scanning the pack avoids the problem entirely: **Scan package (GS1)** on the **Receive** sheet reads the lot number and expiry off the DataMatrix, so neither is typed and neither is skipped.
 
-## The Alerts tab
+## What you're looking at
 
 <Path steps={['Sidebar', 'Inventory', 'Alerts']} />
 
-The tab header carries a count of open alerts. Above the table sit four panels.
+The tab reads **Alerts** on its own when nothing is open, and **Alerts (\{n\})** when something is — so the count is the first thing you check, before you open anything. A line above the tab strip repeats it: "\{n\} open inventory alerts — see the Alerts tab." A pharmacy with nothing outstanding sees the table's empty state, **"No open alerts. You're all stocked up."**
+
+Above the table sit four panels.
 
 ### Expiry risk
 
@@ -85,9 +87,38 @@ The **POS shortfall** panel lists each one as **Open** or **Settled**.
 - **Settle** draws the shortfall against stock you have since received. It reports how many units it settled, or tells you plainly when it could not: "No stock available to settle against — receive stock first, or write the shortfall off."
 - **Write off shortfall** records that the units will never be made whole. It takes a note, and it is the honest ending when the stock was never there.
 
-An empty tab reads "No oversells to reconcile".
+An empty tab reads "No oversells to reconcile", with "Every sale has been covered by recorded stock (or already reconciled)." underneath. A second panel, **Nothing to reconcile**, does the same job for dispenses.
 
-## If something goes wrong
+## Who can do this
+
+**Role** decides whether **Inventory** opens; a **Cashier / Till Operator** never reaches it. **Permission** decides what you may do with what you find here.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Read the **Alerts** tab and acknowledge an alert | Everyone who can open **Inventory** | Role |
+| Set the expiry alert horizons | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| See the money at risk on **Expiry risk** | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin**, plus the Professional plan |
+| **Draft PO from these** off the reorder strip | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
+| Open, edit or close a recall | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Settle or write off a POS shortfall | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+
+Where **View cost prices and margin** is missing, the valuation reads **"Hidden — needs authorisation from your clinic owner."** — never a zero, because a zero at risk reads as good news rather than as a permission boundary.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Acknowledging an alert is a record that a person saw it, not a record that anything was fixed.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A newly received lot appears on the **Stock** tab with its expiry date filled in, not blank.
+- Once a lot crosses a horizon, it is listed on **Alerts** and the tab count rises.
+- After settling a shortfall, its row on **Reconciliation** moves from **Open** to **Settled**.
+- After closing a recall, the quarantined lots are sellable again.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The till used a lot that expires later than one on the shelf">
@@ -99,7 +130,7 @@ An empty tab reads "No oversells to reconcile".
   </Accordion>
 
   <Accordion title="The expiry risk panel shows an upgrade card">
-    The projection is a Professional feature. A plan that has lapsed out of active or trialing loses it too.
+    The projection is a Professional feature — the card reads "Available on Professional and above". A plan that has lapsed out of active or trialing loses it too.
   </Accordion>
 
   <Accordion title="'Enter a whole number of days between 1 and 365.'">
@@ -110,8 +141,36 @@ An empty tab reads "No oversells to reconcile".
     Four is the maximum. Remove one before adding another.
   </Accordion>
 
-  <Accordion title="A shortfall will not settle">
-    There is no stock on hand to settle it against. Receive the delivery first, or write the shortfall off if the units are never coming.
+  <Accordion title="'Select at least one affected lot'">
+    A recall must name the lots it quarantines. Tick them under **Affected lots** — a recall with no lots would quarantine nothing and tell nobody.
+  </Accordion>
+
+  <Accordion title="'No stock available to settle against — receive stock first, or write the shortfall off.'">
+    There is nothing on hand to settle the shortfall with. Receive the delivery first, or **Write off shortfall** if the units are never coming.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does acknowledging an alert fix anything?">
+    No. It records that a person saw it and quietens it for 30 days. The lot is still expiring, the stock is still low. Acknowledge after you have decided what to do, not instead of deciding.
+  </Accordion>
+
+  <Accordion title="Why did the reorder suggestion skip some items?">
+    **Draft PO from these** deliberately leaves out anything also projected to expire unsold, and tells you how many it skipped. Ordering more of a line that is not selling only enlarges the write-off. Order those by hand if you have a reason to.
+  </Accordion>
+
+  <Accordion title="What is the difference between Expiry Risk and Expiry & Waste?">
+    **Expiry Risk** is the future: what is on your shelves now that will not sell through in time, with no period picker at all. **Expiry & Waste** is the past: what was actually written off in a window you choose. See [Reports and analytics](/pharmacy/money/analytics).
+  </Accordion>
+
+  <Accordion title="Can I receive a lot with no expiry date?">
+    Only while **Require expiry date on new lots** is off. It is worth turning on: an undated lot is invisible to oldest-first picking and to every expiry alert, so it sits there until somebody finds it out of date on the shelf.
+  </Accordion>
+
+  <Accordion title="What happens to a recall I never close?">
+    The affected lots stay quarantined and unsellable indefinitely. That is the safe failure, but it also means stock you have since cleared is still off the shelf — close the recall once the stock has actually been dealt with.
   </Accordion>
 </AccordionGroup>
 

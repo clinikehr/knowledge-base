@@ -17,6 +17,26 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <TaskHeader before="An analyser, or the bridge PC that talks to it, and someone who can configure that machine" time="5 minutes to register, seconds per result" after="A registered analyser and a review queue you accept results from" />
 
+## What you're looking at
+
+Two stacked sections, doing two different jobs.
+
+| Section | What it holds |
+| --- | --- |
+| The registry | Every instrument you have registered — **Analyzer**, **Model**, **Status**, **Last seen**, **Actions** — with **Register analyzer** above it |
+| **Results awaiting review (\{n\})** | Every payload that has arrived and not yet been accepted |
+
+| Column or action | What it tells you |
+| --- | --- |
+| **Status** | **Active** or **Paused**. A paused analyser's results are not taken. |
+| **Last seen** | When it last posted. **never** means nothing has arrived — the bridge is not talking to you. |
+| **New key** | Issues a replacement key and immediately invalidates the old one. |
+| **Pause** / **Resume** | Takes an instrument out of service without deleting it. |
+
+Each queued payload shows **Received**, **Analyzer**, **Specimen / LAN**, **Matched** and **Values**. **Matched** means the payload has been tied to an order on your worklist; **Unmatched** means it has not, and **Accept** is disabled on that row.
+
+**The empty state.** Before you register anything the table reads **No analyzers registered yet.** With nothing queued, the review section reads **Nothing waiting — new analyzer payloads appear here.** Below Professional Lab the whole page is a locked card.
+
 ## Register an analyser
 
 <Steps>
@@ -32,51 +52,54 @@ import { StillStuck } from '/snippets/support.mdx';
 </Steps>
 
 <Warning>
-  The bridge key is shown **once**, at the moment it is generated, and is never shown again. If you close the dialog without copying it, the only way forward is **New key** on that row — which issues a fresh key and stops the old one working, so the bridge goes silent until you reconfigure it.
+  The bridge key is shown **once**, at registration or rotation, and is never shown again. If you close the dialog without copying it, the only way forward is **New key** on that row — which issues a fresh key and stops the old one working, so the bridge goes silent until you reconfigure it.
 </Warning>
-
-## The registry
-
-Each registered instrument gets a row: **Analyzer**, **Model**, **Status**, **Last seen** and **Actions**.
-
-| Column or action | What it tells you |
-| --- | --- |
-| **Status** | **Active** or **Paused**. A paused analyser's results are not taken. |
-| **Last seen** | When it last posted. **never** means nothing has arrived yet — the bridge is not talking to you. |
-| **New key** | Issues a replacement key and immediately invalidates the old one. |
-| **Pause** / **Resume** | Takes an instrument out of service without deleting it. |
-
-Before anything is registered the table reads **No analyzers registered yet.**
 
 ## Accept a result
 
-The queue is headed **Results awaiting review (\{n\})**, with the rule underneath: "Accept runs the same screen \+ finalize path as the manual form. Urine payloads without SVT values must be entered manually."
+The queue carries the rule underneath its heading: "Accept runs the same screen \+ finalize path as the manual form. Urine payloads without SVT values must be entered manually."
 
 <Steps>
   <Step title="Read the row">
-    Each payload shows **Received**, **Analyzer**, **Specimen / LAN**, **Matched** and **Values**. **Matched** means ClinikEHR has tied the payload to an order on your worklist; **Unmatched** means it has not.
+    Check the **Matched** badge first. An **Unmatched** payload has no order to attach to, and **Accept** stays disabled on it.
   </Step>
   <Step title="Check the values against the specimen">
-    This is the review. Compare the reported values and the specimen or accession number on the row with the order you expect them to belong to.
+    This is the review, and it is the whole reason the queue exists. Compare the reported values and the specimen or accession number on the row with the order you expect them to belong to.
   </Step>
   <Step title="Accept or discard">
     Select **Accept** — the toast reads **Result accepted into screening** and the result travels the same screening and finalisation path as a manually entered one. Select **Discard** for a payload that should not be used at all; the toast reads **Payload discarded**.
   </Step>
 </Steps>
 
-When there is nothing to do the queue reads **Nothing waiting — new analyzer payloads appear here.**
+### Two things the instrument cannot finish for you
 
-## Two things the instrument cannot finish for you
+- **An unmatched result cannot be accepted.** The specimen or accession identifier the instrument sent does not match any order. Correct it at the bench and let the analyser resend, or enter the result manually against the order — see [Accession an incoming specimen](/lims/lab/accessioning).
+- **A urine payload with no validity values must be typed in.** Specimen validity testing is part of the screen, and an instrument that sends only the drug results has not completed it. Use the screening form instead — see [Screening and confirmation](/lims/dot/screening-and-confirmation).
 
-<AccordionGroup>
-  <Accordion title="An unmatched result cannot be accepted">
-    **Accept** stays disabled on any row badged **Unmatched**. There is no order for the result to attach to — usually the specimen or accession identifier the instrument sent does not match the one on the order. Correct the identifier at the bench and let the analyser resend, or enter the result manually against the order. See [Accession an incoming specimen](/lims/lab/accessioning).
-  </Accordion>
+## Who can do this
 
-  <Accordion title="A urine payload with no validity-testing values must be typed in">
-    Specimen validity testing is part of the screen, and an instrument that sends only the drug results has not completed it. Enter that result manually on the screening form instead — see [Screening and confirmation](/lims/dot/screening-and-confirmation).
-  </Accordion>
-</AccordionGroup>
+Role decides whether **Analyzers** appears at all. Permission decides what you may do on it — and this screen needs two different grants for two different acts.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Analyzers** | **Lab Manager**, Owner, Manager | Permission — **Configure analysers and interfaces** |
+| Register, pause or re-key an instrument | The same people | Permission — **Configure analysers and interfaces** |
+| **Accept** a queued result | Anyone on the **Whole lab** or **All sites** tier | Permission — **Verify and authorise results** |
+| **Discard** a payload | Anyone who may configure the interface | Permission — **Configure analysers and interfaces** |
+| Enter the result manually instead | Anyone on the **Own bench** tier and above | Permission — **Enter results at the bench** |
+
+Accepting is the sign-out step, not a data-entry step, which is why it needs the verify grant on top of anything else — and verification comes from the access tier, not from a job title. A **Lab Manager** who has never been given the **Whole lab** or **All sites** tier can register an analyser and still not accept a single result from it. A **QC Officer** is review-only by design and holds neither grant; a **Radiologist** does not reach this page at all — their equivalent is [Connect your imaging machines](/lims/imaging/modalities).
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not permitted to see renders hidden or as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
+<Note>
+  Analyser interfacing is still rolling out and what a given instrument needs varies with its make, age and bridge software. Talk to [support](/platform/help/contact-support) about your specific bench before you plan a cutover date.
+</Note>
 
 ## Check it worked
 
@@ -84,7 +107,7 @@ When there is nothing to do the queue reads **Nothing waiting — new analyzer p
 - New payloads raise the count in **Results awaiting review (\{n\})**.
 - An accepted result appears on the bench workflow exactly as a hand-entered one does — see [Enter and verify results](/lims/lab/results).
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The page shows a locked card instead of the registry">
@@ -96,7 +119,11 @@ When there is nothing to do the queue reads **Nothing waiting — new analyzer p
   </Accordion>
 
   <Accordion title="Accept is greyed out on a row I can see">
-    Either the row is **Unmatched**, or you hold "Configure analysers and interfaces" but not "Verify and authorise results". Accepting a result is the sign-out step, so it needs the verify grant as well — see [Permissions](/platform/team/permissions).
+    Either the row is **Unmatched** — there is no order to attach it to — or you hold **Configure analysers and interfaces** but not **Verify and authorise results**.
+  </Accordion>
+
+  <Accordion title="A urine result arrived but Accept will not finish it">
+    The payload has no specimen-validity values, so the screen is incomplete. Enter that result on the screening form instead.
   </Accordion>
 
   <Accordion title="I lost the key">
@@ -104,7 +131,31 @@ When there is nothing to do the queue reads **Nothing waiting — new analyzer p
   </Accordion>
 
   <Accordion title="Analyzers is not in the sidebar at all">
-    Analyser integration is still rolling out and is priced per interface. If you are on a plan that includes it and want an instrument connected, [contact support](/platform/help/contact-support).
+    Either you do not hold **Configure analysers and interfaces**, or the interface is not yet enabled for your lab. Analyser integration is still rolling out and is priced per interface — [contact support](/platform/help/contact-support).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why can't I accept this analyser result?">
+    Almost always one of two reasons: the row is **Unmatched**, so there is no order for it to land on, or you do not hold **Verify and authorise results**. Accepting signs a result out, so it is deliberately not a data-entry permission.
+  </Accordion>
+
+  <Accordion title="Does accepting skip any of the normal checks?">
+    No. Accept runs the same screening and finalisation path as the manual form, so a value that would be flagged if typed in is flagged when accepted. The instrument saves the typing, not the judgement.
+  </Accordion>
+
+  <Accordion title="What happens to payloads while an analyser is paused?">
+    They are not taken. Pausing does not queue them for later, so resume the instrument before it sends anything you need to keep.
+  </Accordion>
+
+  <Accordion title="Can one bridge PC serve two analysers?">
+    Register each instrument separately. A key identifies a bridge, so sharing one makes **Last seen** meaningless and rotating that key silently stops a second instrument you had forgotten about.
+  </Accordion>
+
+  <Accordion title="Is this the same as connecting an imaging machine?">
+    The same idea and the same grant, on different hardware. Imaging has its own registry and review queue — see [Connect your imaging machines](/lims/imaging/modalities).
   </Accordion>
 </AccordionGroup>
 
