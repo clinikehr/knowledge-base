@@ -90,12 +90,14 @@ Two separate gates. **Role** decides whether **Pharmacy Station** opens at all: 
 | --- | --- | --- |
 | Open the station and read **Analytics** | Any role except **Cashier** | Role |
 | Write a prescription | Any role that reaches the station | Role |
-| Dispense against stock on **Fill Rx** | Pharmacy Manager, Dispensing Supervisor, Inventory & Purchasing | **Adjust stock counts** |
+| Dispense against stock on **Fill Rx** | Anyone whose role reaches the station | Role — unless a controlled countersignature is recorded |
 | Witness a controlled-drug dispense | Dispensing Supervisor, and anyone named as Pharmacist-in-Charge | **Witness a controlled-drug dispense** |
 | See cost and margin on the stock screens | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
-| Receive a delivery into stock | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Receive a delivery into stock | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
 
-A **Pharmacy Manager** deliberately does **not** get the controlled-drug witness by default — that countersignature is a pharmacist's act, not a manager's, and the role bundle leaves it off on purpose.
+A **Pharmacy Manager** deliberately does **not** get the controlled-drug witness by default — that countersignature is a pharmacist's act, not a manager's, and the role bundle leaves it off on purpose. It is also not the only one they lack: **View per-cashier takings** is a default for no pharmacy role or tier and must be granted per person.
+
+**Three of the stock toggles are not wired to anything yet.** **Receive deliveries into stock**, **Adjust stock counts** and **Transfer stock between branches** are offered on a person's permissions sheet, but nothing in the product checks them today — reaching **Inventory** is the gate on all three. The stock permissions that *are* enforced on the server are **Manage suppliers and purchase orders** and, whenever a countersignature is actually recorded, **Witness a controlled-drug dispense**.
 
 Two behaviours surprise people:
 

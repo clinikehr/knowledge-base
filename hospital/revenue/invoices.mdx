@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Anyone permitted to create billing documents" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member who can open Billing" />
 
 An invoice lists what a patient owes the hospital, in your currency, and can be emailed as a branded PDF to the patient, to whoever is actually paying, or to both. This page covers building one, sending it, and what you can and cannot do to it afterwards.
 
@@ -89,16 +89,18 @@ Cancel is the right answer far more often than delete: it keeps the invoice on t
 
 **Role** decides whether **Billing** opens at all — an owner sets that per role under **Settings → Role Navigation**.
 
-**Permission** decides what you may do with an invoice. The relevant toggles in your staff sheet, in the product's own words:
+Once Billing opens, almost nothing narrows further:
 
-| Action | Who by default | Permission |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Create and edit an invoice | Billers, front desk, managers | **Create billing documents** |
-| Record a payment on it | Billers, front desk | **Add client payments** |
-| Change a service's price | Owners and managers | **Edit service fees** |
-| See the money figures | Owners, managers, executives | **View financial dashboard** |
-| Void a payment already taken | Owners, managers, accountants only | Enforced on the server regardless of the toggles |
+| Create and edit an invoice | Anyone who can open Billing | Nothing |
+| Record a payment on it | Anyone who can open Billing | Nothing |
+| Change a service's price | Anyone who can open Billing | Nothing |
+| See the money figures | Anyone who can open Billing | Nothing |
+| Void a payment already taken | Owners, managers, accountants only | Enforced on the server — "Only a clinic owner, manager or accountant can void a payment." |
 | Delete an invoice that has payments | Nobody | Refused on the server for everyone |
+
+Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
 
 Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not.
 

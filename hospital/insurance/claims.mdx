@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on." />
 
 A claim asks an insurer to pay for care you have already delivered. **Insurance Claims** is your hospital's claim register: you prepare each claim here, send it to the payer the way you already do, and track its answer. Nothing is transmitted electronically to a clearinghouse from this screen — knowing that up front saves waiting for a transmission that will not happen.
 
@@ -92,18 +92,11 @@ Record the payer's decision when it arrives, and record the money when that arri
 
 ## Who can do this
 
-**Role** decides whether the screen opens. On Enterprise, an owner controls which roles reach **Insurance** under **Settings → Role Navigation**; accountants and billers reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
+**Role Navigation** is what decides who gets here. The page itself checks nothing — its old hardcoded role list was retired — so anyone who can reach the **Insurance** group can prepare, submit and read a claim. Under **Settings → Role Navigation** accountants and billers reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
 
-**Permission** decides what a person may do inside:
+Your staff sheet's **Billing** section does carry **File insurance claims**, **Add insurance payments**, **Request coverage reports**, **Edit service fees** and **View financial dashboard**, and they are recorded against each person — but no insurance screen reads them, so they change nothing today. Restrict insurance at the **Role Navigation** layer instead.
 
-| Action | Who can do it by default | Permission |
-| --- | --- | --- |
-| Prepare and submit a claim | Owner, manager, biller | **File insurance claims** |
-| Record a payer's settlement | Owner, manager, biller | **Add insurance payments** |
-| Pull what a payer covers | Owner, manager, accountant, biller | **Request coverage reports** |
-| See the money figures | Owner, manager, biller | **View financial dashboard** |
-
-Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary — and a figure that is not yours to see is withheld rather than shown as **0**.
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary. No figure on this page is withheld by permission — if you can open Claims you see all of it.
 
 ## Check it worked
 

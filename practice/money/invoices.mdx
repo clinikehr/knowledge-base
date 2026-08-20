@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Anyone permitted to create billing documents" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member who can reach Billing" />
 
 An invoice lists what a client owes you, in your practice's currency, and can be emailed as a branded PDF to the client, to whoever is actually paying, or to both. This page covers creating one, sending it, and what you can change afterwards.
 
@@ -86,17 +86,16 @@ Select **Download PDF** from the invoice's actions for a paper bill at the desk.
 
 ## Who can do this
 
-| Action | Who by default | The permission, in the product's words |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open the **Invoices** tab | Owner, manager, front desk | Role — no permission of its own |
-| Create an invoice | Front desk, billers | **Create billing documents** |
-| Send or download the PDF | Front desk, billers | **Create billing documents** |
-| Record a payment against it | Front desk, billers | **Add client payments** |
-| Cancel an invoice | Owner, manager | **Create billing documents** |
-| See the totals on **Overview** | Owner, manager | **View financial dashboard** |
+| Open the **Invoices** tab | Any staff member | Nothing — the page is not role- or permission-gated |
+| Create an invoice | Any staff member | Nothing |
+| Send or download the PDF | Any staff member | Nothing |
+| Record a payment against it | Any staff member | Nothing |
+| Cancel an invoice | Any staff member | Nothing |
+| Delete an invoice that has a payment against it | Nobody | Server-side — "This invoice has recorded payments and cannot be deleted. Cancel it instead to keep the record." |
 
-- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding **Billing** from a sidebar is a convenience, not a security boundary. A permission-gated figure shows as a dash, never as a zero.
+The invite sheet's **Create billing documents**, **Add client payments** and **View financial dashboard** toggles are stored against a staff member but are **not enforced** on a solo or team practice — nothing on this tab reads them. The one real rule is the last row: an invoice with money against it can only be cancelled, never deleted, by anybody.
 
 See [Staff permissions](/platform/team/permissions).
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise; payment links need a connected payment account" roles="Anyone permitted to add payments" />
+<Availability editions={['clinic']} plans="All plans; payment links need a connected payment account" roles="Any staff member who can open Billing" />
 
 Money reaches a hospital two ways: somebody hands it over at a desk and you record it, or you send a link and they pay by card. **Payments Management** covers both, and shows what is still outstanding.
 
@@ -107,17 +107,19 @@ Nothing is deleted. The voided row stays visible, struck through and badged **Vo
 
 **Role** decides whether **Payments** opens; an owner sets that per role under **Settings → Role Navigation**.
 
-**Permission** decides what you may do inside:
+Once Payments opens, almost nothing narrows further:
 
-| Action | Who by default | Permission |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Record a payment | Front desk, billers | **Add client payments** |
-| Record an insurer's settlement | Billers | **Add insurance payments** |
-| See the money figures on **Overview** | Owners, managers, executives | **View financial dashboard** |
-| Open the payment reports | Owners, managers, billers | **View Payment Reports** |
-| Reverse money already taken | Owners, managers, accountants | **Refund payments**, plus a server check nobody bypasses |
+| Record a payment | Anyone who can open Payments | Nothing |
+| Record an insurer's settlement | Anyone who can open Payments | Nothing |
+| See the money figures on **Overview** | Anyone who can open Payments | Nothing |
+| Open the payment reports | Anyone who can open Payments | Nothing |
+| Void money already taken | Owners, managers, accountants | A server check nobody bypasses — "Only a clinic owner, manager or accountant can void a payment." |
 
-Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. A figure not yours to see shows as a dash, never as **0**.
+Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
+
+Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it.
 
 ## Check it worked
 

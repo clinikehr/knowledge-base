@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Records staff, owners and managers; editing is role-gated" note="Needs the Records care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open it; editing follows a fixed role list" note="Needs the Records care area · Solo and Team keep the same people under Clients" />
 
 **Patient Records** is the records office's door onto the hospital's patient list. Reception uses it to register people; the records office uses it to find, correct, export and account for what is held. This page covers the second job.
 
@@ -76,19 +76,19 @@ Documents sent to this person are listed on the record too, each with a **Docume
 
 ## Who can do this
 
-**Role** decides whether the screen opens. **Patient Records** needs the **Records** care area in **Settings → Facility**; **Patients** under Front Desk needs the **Front desk** one. On Enterprise an owner controls which roles see either group under **Settings → Role Navigation**.
+The screen checks no role when you open it. **Patient Records** needs the **Records** care area in **Settings → Facility**; **Patients** under Front Desk needs the **Front desk** one. An owner controls which roles see either group under **Settings → Role Navigation**.
 
-**Permission** decides what you may do inside:
+No individual permission governs anything here — the client permissions in the staff sheet are recorded against a person but no screen reads them. What decides each action is your role and your plan:
 
-| Action | Who by default | Permission |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Search and **View details** | Records and front-desk staff | **Search for clients** |
-| Create a record | Front desk and records staff | **Create client profiles** |
-| **Edit** a record | Staff whose role may edit | Role-gated; without it the record is read-only and **Edit** is absent |
-| Delete a record | Owners and managers | **Delete client profiles** |
-| Read documents on the chart | Records staff | **View all documents** |
-| **Send Consent** | Records and front-desk staff | **Share documents with clients** |
-| **Export** the registry | Owners and managers | **Settings → Data export** governs the wider exports |
+| Search and **View details** | Any staff member | Nothing |
+| Create a record | Anyone who can open the list | Plan — a Free workspace stops at its patient cap |
+| **Edit** a record | Staff on a fixed role list | Role — without it the record is read-only and **Edit** is absent |
+| Delete a record | Owners and managers | Role |
+| Read documents on the chart | Anyone who can open the record | Nothing |
+| **Send Consent** | Owners, managers, doctors, nurses, receptionists | The role list on [Documents](/hospital/records/documents) |
+| **Export** the registry | Anyone who can open the list | **Settings → Data export** governs the wider exports |
 
 Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, so hiding a patient list from a role tidies a sidebar rather than protecting anything. Every read of a patient record is logged whether or not a permission was involved.
 

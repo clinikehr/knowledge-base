@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans — Free is capped at 20 items" roles="Owners and managers; staff a clinic has not restricted" note="The Inventory care area controls whether it appears in the sidebar" />
+<Availability editions={['clinic']} plans="All plans — Free is capped at 20 items, 5 locations, 2 vendors and 5 purchase orders" roles="Any staff member" />
 
 Inventory is the ledger for everything physical your practice holds: "Stock, lots, and expiry across your rooms and devices."
 
@@ -94,20 +94,20 @@ For lots and expiry in depth see [Batches and expiry](/pharmacy/inventory/batche
 
 ## Who can do this
 
-A solo or team practice has 21 staff permissions, and none of them is about stock. Inventory is governed by **role** and by what your practice has switched on — not by a per-person toggle.
+A solo or team practice has 21 staff permission toggles, and none of them is about stock. Nor does this edition have a role→route layer. So **Inventory** is open to everybody in the practice, and what limits it is your **plan**.
 
-| Action | Who by default | The permission, in the product's words |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Inventory** | Owner, manager, staff | Role — no permission of its own |
-| Add an item, receive, dispense or transfer | Owner, manager, staff | Role |
-| Run a count and post its adjustment | Owner, manager | Role |
-| Change how expiry and receiving behave | Owner | Role — it is a settings tab |
-| See cost, valuation and margin | Owner, manager | **View financial dashboard** |
+| Open **Inventory** | Any staff member | Nothing — the page is not role- or permission-gated |
+| Add an item, receive, dispense or transfer | Any staff member | Plan — Free caps you at 20 items, 5 locations, 2 vendors and 5 purchase orders |
+| Run a count and post its adjustment | Any staff member | Nothing |
+| See cost, valuation and margin | Any staff member | Nothing |
+| Change how expiry and receiving behave | Owner, manager or accountant | Role — it is a settings tab |
+| Use the Danger Zone on that tab | Owner | Role — owner-only |
 
-- **Enforcement is opt-in, per person.** A staff member never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Turning the Inventory care area off only hides the link: "It does not delete anything, and existing records stay reachable by direct link." Hiding a module is a convenience, not a security boundary.
+Every paid plan lifts the capacity limits to unlimited; a lapsed or cancelled subscription drops you back to the Free caps.
 
-Cost figures you may not see render as a dash, never a zero — a zero would read as worthless stock. See [Staff permissions](/platform/team/permissions).
+Fencing colleagues out of stock screens by role is an Enterprise feature — it needs the Enterprise plan plus role-scoped navigation switched on. See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
@@ -135,7 +135,7 @@ Cost figures you may not see render as a dash, never a zero — a zero would rea
   </Accordion>
 
   <Accordion title="Inventory disappeared from my sidebar">
-    The Inventory care area has been switched off — "Turning an area off hides it from menus for everyone in this clinic." Nothing was deleted. See [Care areas](/platform/team/care-areas).
+    Not something a solo or team practice can do to itself: the sidebar entry here carries no care-area switch, and there is no per-role navigation editor on these plans. Reload; if it is still missing, note the time so support can check it. (Care areas *do* hide Inventory on Enterprise — see [Care areas](/platform/team/care-areas).)
   </Accordion>
 </AccordionGroup>
 

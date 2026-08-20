@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans — the chain-of-custody timeline is included on Starter Lab" roles="Anyone granted “Accession an incoming specimen”. Accessioning Clerk and Lab Manager hold it by default, as do the Whole lab and All sites tiers." />
+<Availability editions={['lims']} plans="All plans — the chain-of-custody timeline is included on Starter Lab" roles="Owner, Manager or Doctor. The accession form checks your job-title role, not a permission." note="Only at a full laboratory — a collection centre is refused" />
 
 Accessioning is the moment a specimen stops being someone else's problem and becomes yours. You give it an accession number, record when it arrived and in what condition, and the handoff is written to the chain of custody.
 
@@ -85,17 +85,19 @@ Events you will see include Order Created, CCF Completed, Specimen Collected, Sp
 
 ## Who can do this
 
-Role decides whether the bench opens. Permission decides whether you may book a specimen in or turn it away.
+Role decides whether the bench opens, and — for this one form — role also decides whether you may book a specimen in. Permission takes over from the screen onward.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open the **Worklist** and read a specimen | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, lab scientists, phlebotomists | Role → route |
-| Accession an incoming specimen | **Accessioning Clerk**, **Lab Manager**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
-| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Accession an incoming specimen | Owner, Manager, Doctor | Role — the form checks the job title |
+| Reject an unsuitable specimen (a broken seal, on the same form) | The same people | Role — the same check |
 | Record the screen that follows | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
 | Finalise the screen and decide how it is reported | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 
-The **Accessioning Clerk** role is exactly these two grants and nothing else — "registers patients, books collection slots, accessions incoming samples, raises the invoice". A **Lab Manager** holds them too, but **not** verify: authorising a result is a scientist's clinical act, and it arrives with the *access tier* rather than the administrative role. A **QC Officer** is review-only by design and holds neither.
+**The two specimen permissions are not enforced on this form.** **Accession an incoming specimen** and **Reject an unsuitable specimen** exist in the Diagnostics catalogue and the permissions sheet offers them, but the accession form does not read either one — it checks the person's job-title role instead, and accepts Owner, Manager and Doctor. Granting an Accessioning Clerk the specimen toggles does not by itself let them work this form; their **job title** is what decides. Rejection is not a separate act at all — it is the broken-seal branch of the same accession form.
+
+From the screen onward the permissions are real: **Enter results at the bench**, then **Verify and authorise results**. A **Lab Manager** holds neither by default — authorising a result is a scientist's clinical act, and it arrives with the *access tier* rather than the administrative role. A **QC Officer** is review-only by design.
 
 Two behaviours surprise people:
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Dispense and sell at the till'" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches POS or Sales; saving a barcode needs Inventory" />
 
 Scanning is the fastest way to build a cart, and it is the only practical way to work a catalogue bigger than the 100 tiles the grid shows. This page covers the three ways to scan a product, and the separate trick of scanning a customer's receipt.
 
@@ -69,11 +69,11 @@ On the [Sales page](/pharmacy/money/sales), the same scanner pulls up a transact
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Scan a product into the cart | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Scan a product into the cart | Anyone whose role reaches **POS** | Nothing — scanning is not gated |
 | Scan a receipt on the Sales page | Anyone who can open **Sales** | Role |
 | Open the amended sale a receipt scan lands on | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
-| Save a barcode onto a product, or **Generate…** one | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
-| Print barcode labels from an inventory row | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Save a barcode onto a product, or **Generate…** one | Anyone whose role reaches **Inventory** | Role — a cashier's sidebar has no **Inventory** |
+| Print barcode labels from an inventory row | Anyone whose role reaches **Inventory** | Role |
 
 Two behaviours surprise people:
 

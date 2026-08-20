@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Anyone granted “Access the referrer portal”. Releasing a report to one needs “Release a report to a referrer”." />
+<Availability editions={['lims']} plans="All plans — the Commission arrangement fields and the Commissions link need Business Lab" roles="Anyone granted “Access the referrer portal”. Commissions themselves are Owner and Manager only." />
 
 Register the doctors and facilities that send you tests, attribute each order to the person who sent it, and hand them a private link where they follow their own work. The page puts it plainly: "Register the doctors and facilities that send you tests. Each referrer gets a private portal link where they can follow their orders and pick up released results."
 
@@ -78,20 +78,22 @@ Work is split into tabs by type, each carrying its count — **Laboratory (\{n\}
 
 ## Who can do this
 
-Role decides whether **Referring Doctors** opens. Permission decides what you may do inside it — and releasing a report to a referrer is a separate grant from managing the list.
+One permission governs this whole screen — **Access the referrer portal**. What sits *beside* it, commissions, is governed by role and plan instead.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Referring Doctors** | **Referrer Liaison**, **Lab Manager**, anyone on the **All sites** tier, Owner, Manager | Permission — **Access the referrer portal** |
 | Add, edit, pause or remove a referrer | The same people | Permission — **Access the referrer portal** |
 | Generate or email a portal link | The same people | Permission — **Access the referrer portal** |
-| Release a report into a referrer's portal | **Referrer Liaison**, **Lab Manager**, **All sites** tier | Permission — **Release a report to a referrer** |
-| Open **Referral Commissions** from the toolbar | Owner, Manager only | Role → route |
+| Put a result in the referrer's portal | **Whole lab**, **All sites** | Permission — **Verify and authorise results**; there is no separate release act |
+| Open **Referral Commissions** from the toolbar | Owner, Manager only | Role → route, plus **Business Lab** |
 | See the **Commission arrangement** fields on the form | Anyone above, on Business Lab | Plan, not permission |
 
 Without **Access the referrer portal** the screen does not error — it reads **Referring doctors are hidden**, with **Needs authorisation from your clinic owner or manager.** beneath it.
 
-A **Lab Scientist** does not hold these grants — bench roles produce the result, the liaison releases it — and is refused **Referral Commissions** outright with **You don't have permission to manage referral commissions. Please contact your clinic administrator.** A **QC Officer** is review-only by design and holds neither grant.
+**Release a report to a referrer is not enforced anywhere.** It is in the Diagnostics catalogue and the **Referrer Liaison** role holds it by default, but no screen performs a per-report release: the portal shows a lab test once it is **Completed** and an imaging study once it is **Reported**. Signing the work out is the release, so the grant that governs it is **Verify and authorise results**.
+
+A **Lab Scientist** holds neither referrer grant, and is refused **Referral Commissions** outright with **You don't have permission to manage referral commissions. Please contact your clinic administrator.** A **QC Officer** is review-only by design and holds neither grant.
 
 Two behaviours surprise people:
 

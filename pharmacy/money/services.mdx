@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier or a pharmacy technician; pricing here is not separately gated" />
 
 A pharmacy sells stock, and stock is priced where it is received — in [Inventory](/pharmacy/inventory/index). **Services** is for everything else you charge for: a delivery fee, a blood-pressure or blood-sugar check, a private consultation, a compounding or dispensing charge, a monthly account fee. Without something on this list, an invoice has nothing to put on its lines.
 
@@ -90,11 +90,11 @@ Prefer this to deleting. A retired service keeps every historical invoice line r
 
 ## Who can do this
 
-**Role** decides whether **Billing** opens at all. Inside it, pricing is not separately gated in the Pharmacy edition — there is no "may set prices" permission, so anyone who can reach the screen can change what you charge.
+**Role** decides whether **Billing** opens at all: a **Cashier / Till Operator** reaches only **POS** and **Sales**, and a **Pharmacy Technician**'s sidebar stops before the money screens. Inside it, pricing is not separately gated in the Pharmacy edition — no pharmacy permission slug governs the service list, so anyone who can reach the screen can change what you charge.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Services** at all | Owner, manager, Pharmacy Manager | Role — a **Cashier / Till Operator** reaches only **POS** and **Sales** |
+| Open **Services** at all | Any role except a Cashier or a Pharmacy Technician | Role — neither of those two has **Billing** in their sidebar |
 | **New Service**, **New Category** | Everyone who can open **Billing** | Role |
 | **Edit Service**, retire a service | Everyone who can open **Billing** | Role |
 | **Delete Service**, delete a category | Everyone who can open **Billing** | Role |

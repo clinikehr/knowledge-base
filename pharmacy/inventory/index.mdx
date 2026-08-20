@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans, with quotas on Starter" roles="Any staff member with inventory access" />
+<Availability editions={['pharmacy']} plans="All paid plans, uncapped; a pharmacy with no active subscription is capped" roles="Any staff member whose role reaches Inventory — not a cashier" />
 
 **Inventory** is the ledger everything else draws from: the till, the dispensing form, purchase orders and branch transfers all move stock through this one screen. Its header reads **Inventory** — "Stock, lots, and expiry across your rooms and devices."
 
@@ -124,13 +124,15 @@ After adding an item it appears on **Catalog**; after receiving, it appears on *
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Inventory** and read the catalogue | Everyone except a cashier | Role |
-| Receive a delivery | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
-| Adjust or waste stock with **Dispense** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
-| Move stock to another branch | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
+| Receive a delivery | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
+| Adjust or waste stock with **Dispense** | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
+| Move stock to another branch | Anyone whose role reaches **Transfers** | Role — the toggle exists but nothing reads it yet |
 | Raise a PO or edit a supplier | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
 | Countersign a controlled dispense | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
 | See the valuation and margin columns | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 | Reset the inventory from the **Danger Zone** | The owner of record, nobody else | Ownership — not a grantable permission |
+
+**Three of the stock toggles are not wired to anything yet.** **Receive deliveries into stock**, **Adjust stock counts** and **Transfer stock between branches** are offered on a person's permissions sheet, but nothing in the product checks them today — reaching **Inventory** is the gate on all three. The stock permissions that *are* enforced on the server are **Manage suppliers and purchase orders** and, whenever a countersignature is actually recorded, **Witness a controlled-drug dispense**.
 
 On top of the role bundle, each person carries an access tier — **Own till**, **Whole branch** or **All branches** — which is what decides how much of the business their figures cover.
 
@@ -147,7 +149,7 @@ Two behaviours surprise people:
 
 See [Staff permissions](/platform/team/permissions).
 
-On the Starter plan a **Free plan** strip shows your usage against the limit for each countable kind — items, locations and purchase orders — with **Upgrade for unlimited**. At the limit, creation is refused rather than silently dropped. See [Change your plan](/platform/plans/change-plan).
+The caps belong to the **free** plan, not to Starter: every paid pharmacy plan — Starter included — is uncapped while the subscription is active or trialing. A pharmacy with no active subscription (typically after the 7-day trial lapses) gets a **Free plan** strip showing usage against the limit for each countable kind — 20 items, 5 locations, 2 vendors and 5 purchase orders — with **Upgrade for unlimited**. At the limit, creation is refused rather than silently dropped. See [Change your plan](/platform/plans/change-plan).
 
 ## Inventory settings
 
@@ -197,7 +199,7 @@ On the Starter plan a **Free plan** strip shows your usage against the limit for
   </Accordion>
 
   <Accordion title="'Your Free plan includes up to {n} items. Upgrade to a paid plan for unlimited inventory.'">
-    You are at your plan's item limit, so **Add item** was refused rather than silently dropped. The **Free plan** strip shows your usage per kind — items, locations, vendors and purchase orders — and **Upgrade for unlimited** removes the caps.
+    Your pharmacy has no active paid subscription, so it is on the free tier's 20-item cap and **Add item** was refused rather than silently dropped. The **Free plan** strip shows your usage per kind — items, locations, vendors and purchase orders — and **Upgrade for unlimited** removes the caps. Any paid pharmacy plan, Starter upward, is uncapped.
   </Accordion>
 
   <Accordion title="'Hidden — needs authorisation from your clinic owner.'">

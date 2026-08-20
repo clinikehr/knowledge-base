@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans — lab intake is included from Starter Lab" roles="Owner or Manager to switch the mode; any bench staff member to raise an intake order" />
+<Availability editions={['lims']} plans="All plans — lab intake is included from Starter Lab" roles="Owner or Manager to switch the mode. Raising an intake order needs Owner, Manager, Doctor or Nurse — the form checks the job title, not a permission." />
 
 Some laboratories never see a donor. Sealed specimens arrive from external collection sites with their chain-of-custody paperwork already complete, and what the lab owes back is a report an external Medical Review Officer (MRO) can act on. **Reference Lab — Intake to Report Only** is that shape: intake → screening → confirmation → finalized PDF report, with the collection, MRO and DER modules taken away.
 
@@ -113,19 +113,22 @@ Once the order is on the queue, the rest is the ordinary bench workflow with two
 
 ## Who can do this
 
-Role decides whether **Lab Intake** appears. Permission decides what happens to the specimen after it is booked in — raising the intake order itself is not behind a separate grant, because whoever takes delivery is who must record it.
+Role decides whether **Lab Intake** appears, and role also decides who may book a specimen in. Permission takes over at the bench — from the screening readings onward.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Switch the workflow mode | Owner or Manager only | Role |
-| Open **Lab Intake** and raise a **New Intake** | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
-| Accession the specimen and check its seals | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
-| Reject it on seal, volume or labelling | The same people | Permission — **Reject an unsuitable specimen** |
+| Open **Lab Intake** and read the queue | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Raise a **New Intake** | Owner, Manager, Doctor, Nurse | Role — the form checks the job title |
+| Accession the specimen and check its seals | Owner, Manager, Doctor | Role — see [Accession an incoming specimen](/lims/lab/accessioning) |
+| Reject it on seal, volume or labelling | The same people | Role — it is the broken-seal branch of the same form |
 | Enter screen and confirmation readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
 | **Finalize Lab Report** and send it out | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 | Build custom analytes and panels | Owner or Manager | Role |
 
-A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, which is why a manager can book a specimen in and still find **Finalize Lab Report** greyed out. A **QC Officer** is review-only by design. A **phlebotomist** reaches test requests, this queue and patients, and nothing else.
+**Opening the queue and working it are different tests.** A phlebotomist or lab scientist reaches this page through their route list, then meets a job-title check on the intake and accession forms. If someone can see the queue but is refused on save, that is the role, and no toggle in the permissions sheet changes it.
+
+From the bench onward the permissions are real. A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, which is why a manager can book a specimen in and still find **Finalize Lab Report** greyed out. A **QC Officer** is review-only by design.
 
 - **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
 - **A denied action is recorded; an allowed one is not.** Renaming a sidebar row is a convenience, not a security boundary.

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Radiologists and imaging staff with reporting access. Everyone else sees the report read-only." />
+<Availability editions={['lims']} plans="All plans" roles="Writing and submitting a report is Radiologist, Doctor or Owner. A Radiology Technician and a Manager reach the screen but see it read-only." />
 
 Reporting is the point at which images become a clinical document. You open the study, read it against the indication, write the findings and the impression, and submit — and from then on someone will treat a patient from what you wrote.
 
@@ -98,19 +98,21 @@ Three actions sit on the **Study Information** card beside the report:
 
 ## Who can do this
 
-Role decides whether **Radiology Reports** opens. Permission decides whether you may sign a report out or release it.
+Role decides everything about writing a report here — reporting access is a **job title**, not a grantable permission. The only permissions on this page belong to the referrer and analytics surfaces beside it.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open a report read-only | Owner, Manager, **Radiologist**, **Radiology Technician** | Role → route |
-| Write findings and save a draft | Imaging staff with reporting access | Role → route |
-| Submit or update a report | The reporting radiologist | Role → route |
-| Release the report to the referring doctor | **Referrer Liaison**, **Lab Manager**, Owner, Manager | Permission — **Release a report to a referrer** |
+| Open a report read-only | Owner, Manager, **Radiologist**, **Radiology Technician**, Doctor | Role |
+| Write findings and save a draft | **Radiologist**, **Doctor**, Owner | Role — no permission grants this |
+| Submit or update a report | The same people | Role |
+| Put the report in the referring doctor's portal | The same people | Role — a study appears once its status is **Reported**; there is no release act |
 | Open a referrer's account to check what they hold | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
 | Read the reporting-time figures on **Analytics** | **Lab Manager**, **Referrer Liaison**, **QC Officer** | Permission — **View turnaround-time analytics** |
-| Download or archive the study | Anyone who can open the report | Role → route |
+| Download or archive the study | Anyone who can open the report | Role |
 
-Attempting to submit without reporting access returns **You don't have permission to submit reports**. A **Lab Scientist** does not reach the imaging screens at all; a **QC Officer** is review-only by design and never signs a report out. Access tiers widen what a person sees rather than what they may do: **Own bench**, **Whole lab** and **All sites**, the last of which is the only tier that carries the referrer grants.
+Attempting to submit without reporting access returns **You don't have permission to submit reports** — and a **Radiology Technician** or a **Manager** meets it, because reporting is Radiologist, Doctor or Owner only. No permission in the Diagnostics catalogue widens that; the fix is the person's job-title role.
+
+**Release a report to a referrer is not enforced.** The slug exists and the permissions sheet offers it, but no screen performs a per-report release: the referrer portal shows an imaging study the moment its status reaches **Reported**. Submitting the report *is* the release. A **Lab Scientist** does not reach the imaging screens at all.
 
 Two behaviours surprise people:
 

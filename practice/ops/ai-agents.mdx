@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Starter, Essential and Team — the builder is closed on Free" roles="Owners and managers" note="Agent and Classify steps consume credits" />
+<Availability editions={['clinic']} plans="Starter and above — the builder is closed on Free" roles="Any staff member; the webhook trigger is owner or manager only" note="Agent and Classify steps consume credits" />
 
 An agent is a small automation you draw rather than code: something starts it, it does a few steps, it stops. Use it for jobs nobody wants to do by hand — triaging an inbox, drafting a follow-up, tagging a form.
 
@@ -93,16 +93,14 @@ This page is the map; the detail sits in the platform section:
 
 ## Who can do this
 
-| Action | Who by default | The permission, in the product's words |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **AI Agents** and draft | Owner, manager | Role — no permission of its own |
-| Deploy or undeploy an agent | Owner, manager | Role |
-| Publish a public agent UI | Owner, manager | Role |
-| Configure the webhook trigger | Owner, manager | Role — "Only clinic owners and managers can configure webhook triggers." |
-| See the credit balance and run costs | Owner, manager | **View financial dashboard** |
+| Open **AI Agents** and draft | Any staff member | Plan — the builder is closed on Free |
+| Publish an agent | Any staff member | Plan — Free publishes 1, Starter 5, Essential and above unlimited; drafts are always unlimited |
+| Publish a public agent UI | Any staff member | Plan — Free none, Starter 2, Essential 5, Team unlimited |
+| Configure the webhook trigger | Owner, manager | Role — "Only clinic owners and managers can configure webhook triggers." The trigger itself needs Team |
 
-- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding **AI Agents** from a sidebar is a convenience, not a security boundary. A credit figure you may not see renders as a dash, not a zero.
+Only the webhook trigger has a real role check on it. Everything else on this page is bounded by your **plan**, not by who you are — a colleague you invited can draft and publish agents that spend your credits.
 
 See [Staff permissions](/platform/team/permissions).
 

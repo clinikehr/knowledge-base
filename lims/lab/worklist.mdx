@@ -82,12 +82,14 @@ Role decides whether **Worklist** opens. Permission decides what you may do on t
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Worklist** and read the queue | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, lab scientists, phlebotomists | Role → route |
-| Accession a specimen from a row | **Accessioning Clerk**, **Lab Manager**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
-| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Accession a specimen from a row | Owner, Manager, Doctor | Role — the accession form checks the job title, not a permission |
+| Reject an unsuitable specimen | The same people | Role — it is the broken-seal branch of the same form |
 | Record a screen, including **Mark batch negative** | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
 | Finalise the screen and decide how it is reported | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 
-The three access tiers do most of the work here. **Own bench** grants result entry only; **Whole lab** adds accessioning, rejection, verification and QC review at that site; **All sites** grants everything, everywhere. **A Lab Manager does not hold verify by default** — authorising a result is a scientist's clinical act, and it arrives with the *access tier*, not the administrative role.
+The two access tiers that matter here are **Own bench**, which grants result entry only, and **Whole lab** or **All sites**, which add verification. **A Lab Manager does not hold verify by default** — authorising a result is a scientist's clinical act, and it arrives with the *access tier*, not the administrative role.
+
+Accessioning is the exception on this page: the specimen permissions in the Diagnostics catalogue are not read by the accession form, which checks the person's job-title role instead. See [Accession an incoming specimen](/lims/lab/accessioning).
 
 A **phlebotomist** reaches test requests, the intake queue and patients, and nothing else in the lab. A **lab scientist** reaches the whole bench but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
 

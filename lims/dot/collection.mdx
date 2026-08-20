@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Collectors at a full lab or a collection centre. Not available in Reference Lab or Standard Clinical Lab mode." />
+<Availability editions={['lims']} plans="All plans — DOT testing is included from Starter Lab" roles="Owner, Manager, Doctor and Nurse. The CCF and collection forms check the job-title role, not a permission." note="Needs the DOT Full or Both workflow mode — set in Settings › Lab Workflow" />
 
 Collection is where the custody chain starts. You complete the federal custody and control form (CCF) with the donor in front of you, take the specimen, read its temperature, seal both bottles in the donor's sight, and dispatch it. Everything downstream — the screen, the confirmation, the MRO's verified result — rests on this half-hour being done properly.
 
@@ -90,17 +90,20 @@ A site registered as a collection centre carries a banner reading **This site is
 
 ## Who can do this
 
-Role decides whether the collection screens open at all. Permission decides what happens to the specimen afterwards — collection itself is deliberately not behind a separate grant, because the person with the donor in front of them is the person who must complete the form.
+Role decides whether the collection screens open **and** whether the collection forms will save. Collection itself is deliberately not behind a permission — the person with the donor in front of them is the person who must complete the form — so what governs it is the job-title role.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **DOT Testing**, raise an order, complete the CCF and the collection form | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
-| Accession the specimen when it lands | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
-| Reject it on seal, volume or labelling | The same people | Permission — **Reject an unsuitable specimen** |
+| Open **DOT Testing** and read the queue | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Raise an order, complete the CCF, record collection, mark it shipped | Owner, Manager, Doctor, Nurse | Role — the forms check the job title, not a permission |
+| Accession the specimen when it lands | Owner, Manager, Doctor | Role — see [Accession an incoming specimen](/lims/lab/accessioning) |
+| Reject it on seal, volume or labelling | The same people | Role — it is the broken-seal branch of the accession form |
 | Enter the bench readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
 | Finalize the screen or the report | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 
-A **phlebotomist** reaches test requests, the drug-testing queue and patients, and nothing else — which is exactly the collector's job. A **Lab Manager** does **not** hold **Verify and authorise results** by default; that comes from the access tier, not the administrative role. A **QC Officer** is review-only by design.
+**Reaching the queue and working it are two different tests.** A phlebotomist's route list includes the drug-testing queue, so the module opens for them; the collection forms then apply their own job-title check. If a collector reports "Insufficient permissions" on save, that is the role check, not a toggle somebody forgot — no grant in the permissions sheet changes it.
+
+From the bench onward the permissions are real. A **Lab Manager** does **not** hold **Verify and authorise results** by default; that comes from the access tier, not the administrative role. A **QC Officer** is review-only by design.
 
 - **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
 - **A denied action is recorded; an allowed one is not.** The collection-centre banner is a site rule, not a permission — every bench action there is refused regardless of who you are.

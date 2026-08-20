@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Anyone permitted to add payments" note="Payment links need a connected payment account" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member; voiding a payment is owner, manager or accountant" note="Payment links need a connected payment account" />
 
 Money arrives two ways: somebody hands it over at the desk and you record it, or you send them a link and they pay by card. This page covers both, and how to see what is still outstanding.
 
@@ -85,22 +85,17 @@ To charge a card on file automatically after an appointment rather than asking e
 
 ## Who can do this
 
-| Action | Who by default | The permission, in the product's words |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Payments** | Owner, manager, front desk | Role — no permission of its own |
-| Record a payment | Front desk, billers | **Add client payments** |
-| Send a payment link | Front desk, billers | **Add client payments** |
-| Record an insurer's payment | Billers | **Add insurance payments** |
-| Reverse or refund a payment | Owner, manager | **Refund payments** |
-| See the figures on **Overview** | Owner, manager | **View financial dashboard** |
-| Open the payment reports | Owner, manager, billers | **View Payment Reports** |
+| Open **Payments** | Any staff member | Nothing — the page is not role- or permission-gated |
+| Record a payment | Any staff member | Nothing |
+| Send a payment link | Any staff member | Nothing |
+| Record an insurer's payment | Any staff member | Nothing |
+| **Void a recorded payment** | Owner, manager, accountant | Server-side — "Only a clinic owner, manager or accountant can void a payment." |
 
-Adding and reversing are deliberately separate: taking money is a daily job, and putting it back is not.
+Taking money and putting it back are deliberately separate, and voiding is the one that is actually enforced — by the database, not by a toggle. The invite sheet's **Add client payments**, **Add insurance payments**, **Refund payments** and **View Payment Reports** switches are recorded against a staff member but read by nothing on this screen.
 
-- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding **Payments** from a sidebar tidies the rail; the permission is the boundary.
-
-A figure you may not see renders as a dash, not a zero. See [Staff permissions](/platform/team/permissions).
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 

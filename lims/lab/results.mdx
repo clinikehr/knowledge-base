@@ -9,9 +9,9 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Entering results needs “Enter results at the bench”. Moving a test to Completed needs “Verify and authorise results”. Changing a completed result needs “Amend a verified result”." />
+<Availability editions={['lims']} plans="All plans" roles="Entering readings is open to anyone who reaches Lab Reports. Moving a test to Completed needs “Verify and authorise results”. Changing a completed result needs “Amend a verified result”." />
 
-Entering a result and authorising it are two different acts, held by two different permissions, and often by two different people. A technician can run the sample and type the reading. Moving that test into **Completed** is the clinical sign-out — the point at which the result becomes reportable — and only someone who may verify can do it.
+Entering a result and authorising it are two different acts, and often two different people. A technician can run the sample and type the reading — on this screen that is not behind a permission at all, so anyone who reaches Lab Reports can do it. Moving that test into **Completed** is the clinical sign-out — the point at which the result becomes reportable, and the point at which a referring doctor can see it — and only someone holding **Verify and authorise results** can do it.
 
 <Path steps={['Sidebar', 'Lab Reports', 'Lab Reports']} />
 
@@ -75,13 +75,15 @@ Role decides whether the bench opens. Permission decides which half of the job i
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open the tests and read them | Owner, Manager, **Lab Manager**, lab scientists | Role → route |
-| **Start Test** and record readings | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
+| **Start Test** and record readings | Anyone who can open the page | Role → route — no permission on this screen |
 | Move a test to **Completed** | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 | **Edit Results** on a completed test | **All sites**, or a named verifying scientist | Permission — **Amend a verified result** |
 | **Cancel Test** | Owner, Manager | Role |
-| Release the report that follows | **Referrer Liaison**, **Lab Manager** | Permission — **Release a report to a referrer** |
+| Put the result in a referring doctor's portal | **Whole lab**, **All sites** | Permission — **Verify and authorise results**; the referrer sees a test once it is Completed |
 
-**A Lab Manager does not hold verify by default.** Managing the lab and signing a result out are different jobs: verification arrives with the *access tier*, where **Own bench** grants result entry only, **Whole lab** adds accessioning, rejection, verification and QC review at that site, and **All sites** adds amendment on top. A **QC Officer** is review-only by design and holds neither.
+**Only the status change is gated here.** Typing readings into the parameter form and moving a test from Pending to In Progress are ungated — the check fires on the transition *into* **Completed**, and again on any edit to a test already Completed. So a clinic that wants the two-person rule enforced must rely on **Verify and authorise results**; withholding **Enter results at the bench** will not stop anyone typing a reading on this screen. (That permission is real elsewhere — it gates the DOT screening forms and analyser acceptance.)
+
+**A Lab Manager does not hold verify by default.** Managing the lab and signing a result out are different jobs: verification arrives with the *access tier*, where **Own bench** grants result entry only, **Whole lab** adds verification at that site, and **All sites** adds amendment on top. A **QC Officer** is review-only by design and holds neither.
 
 ### Supervision — who checks whose work
 

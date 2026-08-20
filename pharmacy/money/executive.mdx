@@ -8,7 +8,7 @@ import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="Professional and above" roles="The net position and cost columns need their own permissions" />
+<Availability editions={['pharmacy']} plans="Professional and above" roles="Not reachable by a cashier or a pharmacy technician; the net position and margin figures need their own permissions" />
 
 **Executive** is the screen you open when you are not in the shop. It answers one question — is the business alright today? — and then hands you off: every tile on it corresponds to somewhere else in the product where you can actually do something about the answer.
 
@@ -88,16 +88,16 @@ Three separate gates decide what this page shows you, and they fail in different
 
 **Plan.** Without **Professional** the whole page is a single card headed **Executive dashboard**: "Available on Professional and above — Upgrade to get the owner's remote view of your pharmacy." The multi-branch roll-up needs more than that: the multi-branch reports feature *and* more than one branch. With one branch you simply get the single-site view, with no select and no **By branch** card.
 
-**Role.** A **Cashier / Till Operator** reaches only **POS** and **Sales**, so they cannot open this page at all.
+**Role.** A **Cashier / Till Operator** reaches only **POS** and **Sales**, and a **Pharmacy Technician** is carved out of Expenses and Executive specifically — neither can open this page at all. Every other pharmacy role can.
 
 **Permission.**
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Executive** | Owner, manager, Pharmacy Manager | Role |
+| Open **Executive** | Any role except a Cashier or a Pharmacy Technician | Role |
 | See the **Net profit** headline and the financial cards | Pharmacy Manager | **View the net position** |
 | See the **Margin** column on **Top products** | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
-| See sales attributed to each cashier by name | Dispensing Supervisor | **View per-cashier takings** |
+| See sales attributed to each cashier by name | Not on this page — it is the **By cashier** scope in [Analytics](/pharmacy/money/analytics) | **View per-cashier takings**, a default for no role or tier |
 | **Export Excel** on any tab | Everyone who can open the page | Role |
 
 Without **View the net position** the financial block reads **"Financial figures are hidden — needs authorisation from your clinic owner."** Without **View cost prices and margin** the **Margin** column is not drawn. Neither degrades to a zero — a zero would be read as "we made nothing", which is a lie; absent says "not yours to see".

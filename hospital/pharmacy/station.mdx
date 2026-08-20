@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Prescribers write; pharmacy staff dispense" note="Needs the In-house pharmacy care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open it; only a pharmacist can dispense" note="Needs the In-house pharmacy care area · with Role Navigation on, no built-in role rule includes the Pharmacy Station" />
 
 The **Pharmacy Station** is the dispensary's own dashboard: how the unit is performing, the stock behind it, and the form you write a new prescription on. It is the screen a pharmacy lead keeps open.
 
@@ -88,15 +88,15 @@ Writing a script and moving stock are two steps on purpose. Until stock is drawn
 
 ## Who can do this
 
-**Role** decides whether the screen opens. The **Pharmacy** group needs the **In-house pharmacy** care area in **Settings → Facility**, and on Enterprise an owner can hide it from a role under **Settings → Role Navigation**.
+The station checks no role when you open it — anyone who can reach the **Pharmacy** group can read it. The group needs the **In-house pharmacy** care area in **Settings → Facility**, and an owner can hide it from a role under **Settings → Role Navigation** — where no built-in role rule reaches the Pharmacy Station, so switching it on takes this page away from your pharmacist until you add it to their rule.
 
-**Permission** decides what you may do inside it.
+Role, not permission, decides what you may do inside it. The dispensing permissions belong to the standalone Pharmacy edition and are inert in a hospital workspace.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open the station and read Analytics | Anyone the role navigation lets in | Role → route |
 | Write a prescription | Prescribers and pharmacists | Role → route |
-| **Dispense** a script | Pharmacists, owners and managers | The signed-in user's pharmacist role |
+| **Dispense** a script | Pharmacists only | The signed-in user's role — the dispense itself is refused for anyone whose role is not **pharmacist**, the owner included |
 | Draw stock in **Fill Rx** | Pharmacy and stock staff | Role → route |
 | Witness a controlled dispense | Any colleague the sheet offers | The **Witness (controlled item)** field, which cannot be left empty |
 

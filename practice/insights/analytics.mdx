@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers; staff granted access to figures" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member — the report catalogue is filtered by edition and care area, not by role" />
 
 **Analytics** is the menu of every report your practice can open. The sidebar entry is a single link, not a collapsible list — the page it opens *is* the menu.
 
@@ -40,7 +40,7 @@ The page counts itself at the top: "\{n\} reports available for this clinic. Eac
 | **Insurance Claims** | Electronic claims: volume, status and what has been paid | — |
 | **e-Prescribing** | Prescriptions transmitted, and how many landed | — |
 
-Three things filter that list: your plan, the modules you use, and your own permissions. A report only appears once the module behind it is in use, so a new practice sees a short list. If the page says **No reports available**, nothing is broken — there is nothing yet for a report to describe.
+Three things filter that list: your plan, your edition, and the care areas your practice has switched on. A report only appears once the module behind it is in use, so a new practice sees a short list. If the page says **No reports available**, nothing is broken — there is nothing yet for a report to describe.
 
 The last two rows are specific to solo and team plans, because the [electronic claims](/practice/money/insurance-claims) and [e-prescribing](/platform/integrations/eprescribe) workflows they report on are too.
 
@@ -87,17 +87,18 @@ Some reports are snapshots rather than periods. Those have no period select, say
 
 ## Who can do this
 
-| Action | Who by default | The permission, in the product's words |
+On a solo or team practice there is no role→route layer, so **Analytics** is reachable by anybody in the practice. What narrows the catalogue is the practice's edition, plan and care areas — not the person opening it.
+
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open Analytics | Owner, manager | **View financial dashboard** |
-| Open the Revenue report | Owner, manager, whoever handles billing | **View Payment Reports** |
-| Open a non-money report | Owner, manager, granted staff | **View financial dashboard** |
+| Open Analytics | Any staff member | Nothing — the page is not role- or permission-gated |
+| Open any report on the list | Any staff member | The catalogue, which filters by edition, plan and care area |
 | Export a report's rows | Same as opening it | Whatever governs that report |
 
-- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding **Analytics** from a sidebar is a convenience, not a security boundary.
+- **The invite sheet's money toggles — View financial dashboard, View Payment Reports — are recorded, not enforced here.** They are stored against the staff member; no gate on this page reads them.
+- **A shorter list is the catalogue, not a permission.** A report you cannot see is one your practice has no data or no module for.
 
-A report you are not permitted to see is simply not listed, and a permission-gated figure inside one renders as a dash — never as a zero. See [Staff permissions](/platform/team/permissions).
+See [Staff permissions](/platform/team/permissions).
 
 <AuditNote action="Opening a report" />
 
@@ -115,7 +116,7 @@ A report you are not permitted to see is simply not listed, and a permission-gat
   </Accordion>
 
   <Accordion title="A report vanished from the list">
-    Two usual causes: the subscription lapsed and every gate fell back to Free, or a permission was changed. See [Change your plan](/platform/plans/change-plan) and [Staff permissions](/platform/team/permissions).
+    The usual cause is a lapsed subscription: every gate falls back to Free. The other is a care area being switched off. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="There is no period select on this report">

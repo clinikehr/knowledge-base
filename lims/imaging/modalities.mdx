@@ -9,13 +9,13 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “Configure analysers and interfaces”. Radiologists and lab scientists do not hold it by default." />
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Everyone who reaches the Radiology Station — Radiologist, Radiology Technician, Owner, Manager. A Lab Scientist does not reach imaging at all." note="No permission gate — the plan and your role are the only gates" />
 
 Once your machines are registered, a finished study finds its own order. The **Modalities** page explains itself in a line: "Register each imaging machine (or its bridge PC) with a private key. Finished studies with a matching accession attach automatically; anything ambiguous waits below for review."
 
 <Path steps={['Sidebar', 'Modalities']} />
 
-<TaskHeader before="Professional Lab plan, the “Configure analysers and interfaces” grant, and whoever looks after your imaging machines available" time="10 minutes per machine" after="A registered modality whose finished studies attach to orders by themselves" />
+<TaskHeader before="Professional Lab plan, access to the Radiology Station, and whoever looks after your imaging machines available" time="10 minutes per machine" after="A registered modality whose finished studies attach to orders by themselves" />
 
 ## Your images stay in your building
 
@@ -90,17 +90,17 @@ Two addresses turn on **Open full viewer** in the reporting form: **OHIF viewer 
 
 ## Who can do this
 
-Role decides whether **Modalities** appears at all. Permission decides whether you may change anything on it.
+Your **plan** decides whether **Modalities** exists; **role** decides whether it appears at all. Nothing on this page is behind a permission.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Modalities** | **Lab Manager**, anyone on the **All sites** tier, Owner, Manager | Permission — **Configure analysers and interfaces** |
-| Register, pause or re-key a machine | The same people | Permission — **Configure analysers and interfaces** |
-| Attach or discard a waiting study | The same people | Permission — **Configure analysers and interfaces** |
-| Save the PACS, archive and viewer settings | The same people | Permission — **Configure analysers and interfaces** |
-| Report the study once its images land | **Radiologist**, **Radiology Technician** | Role → route |
+| Open **Modalities** | **Radiologist**, **Radiology Technician**, Owner, Manager | Plan only — the modality-integration feature |
+| Register, pause or re-key a machine | The same people | Plan only — no permission |
+| Attach or discard a waiting study | The same people | Plan only — no permission |
+| Save the PACS, archive and viewer settings | The same people | Plan only — no permission |
+| Write and submit the report once its images land | **Radiologist**, Doctor, Owner | Role — see [Radiology reports](/lims/imaging/reports) |
 
-Configuring this page is a separate grant from anything else in imaging, because it changes how machines talk to the system rather than what a report says. A **Radiologist** reaches only the imaging screens and does not hold it; a **Lab Scientist** does not reach imaging at all; a **QC Officer** is review-only by design.
+**Configure analysers and interfaces is not enforced here.** The permission is in the Diagnostics catalogue and the permissions sheet offers it, but no imaging screen reads it — this page is reachable by anyone whose role reaches the Radiology Station, and the paid feature is the only other gate. A **Lab Scientist** does not reach imaging at all, which is a role rule, not a permission.
 
 Two behaviours surprise people:
 
@@ -148,7 +148,7 @@ See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="I cannot open the Modalities page at all">
-    You do not hold **Configure analysers and interfaces**. It is granted separately from reporting — ask an owner or manager, see [Permissions](/platform/team/permissions).
+    Either your role does not reach the Radiology Station — a **Lab Scientist** never does — or your plan is below **Professional Lab**. No permission grant opens it, so the fix is the person's role or the plan. See [Roles](/platform/team/roles).
   </Accordion>
 </AccordionGroup>
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager to add a subscription; any staff member for their own account" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager" note="A Google or Outlook account can only be linked by the person who owns it — nobody can connect a colleague's." />
 
 If a provider's real commitments live in Google, Outlook or a therapy network, ClinikEHR needs to know about them — otherwise your booking page happily offers a slot that is already gone. Connecting a calendar brings those events **into** ClinikEHR so availability is calculated against them.
 
@@ -25,7 +25,7 @@ The tab has two sections, and picking the right one saves a lot of confusion.
 | --- | --- | --- |
 | How you connect | Sign in to Google or Outlook | Paste a secret `.ics` link |
 | Direction | Two-way | One-way, into ClinikEHR only |
-| Who sets it up | Each staff member connects **their own** account | An owner or manager, for any calendar |
+| Who sets it up | Each person connects **their own** account — but this tab is only reachable by an owner, manager or accountant | An owner or manager, for any calendar |
 | Good for | A provider's own working calendar | Apple calendars, and platforms like **Headway, Alma, Rula or Grow Therapy** |
 
 A subscription is read-only in the strictest sense: ClinikEHR reads those calendars and **never writes back to them**. Nothing you do in ClinikEHR appears on the subscribed calendar.
@@ -55,7 +55,11 @@ A subscription is read-only in the strictest sense: ClinikEHR reads those calend
 
 ## Connect a Google or Outlook account
 
-Under **Connected Accounts**, select **Google** or **Outlook** and sign in. Each staff member links their own account — you cannot connect a colleague's calendar for them, and trying produces "That calendar can only be connected by its own staff member."
+Under **Connected Accounts**, select **Google** or **Outlook** and sign in. Each person links their own account — you cannot connect a colleague's calendar for them, and trying produces "That calendar can only be connected by its own staff member."
+
+<Note>
+  This tab lives inside **Settings**, which only an owner, manager or accountant can open. So a provider who is none of those cannot link their own calendar here; an owner or manager should add a read-only **subscription** to that provider's `.ics` feed instead and assign it to them.
+</Note>
 
 Once connected, choose which of that account's calendars to sync. The row shows **Connected** with a count of calendars syncing, and gives you **Sync now** and a way to disconnect. If the badge turns to **Reconnect**, the permission has lapsed at the provider's end — sign in again from that row.
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors and nurses" note="Needs the Diagnostics care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone on the team can open it; only lab scientists and the owner can enter results" note="Needs the Diagnostics care area" />
 
 The **Lab Test List** is the bench's inbox: **Here's a list of all lab requests for today!** From here you pick up a request, run it, and record what the analyser or the microscope said.
 
@@ -81,10 +81,10 @@ Your **role** decides whether the **Laboratory** group opens at all, and whether
 
 | Action | Who by default | How it is governed |
 | --- | --- | --- |
-| Open the list and read results | Clinical and lab staff | Role |
+| Open the list and read results | Anyone on the team | Nothing — this page has no role check of its own |
 | **Conduct Lab Test** / **Update Lab Test** | Lab scientists, and the hospital owner | Role — anyone else is told **Only lab scientists can conduct or update lab tests** |
 | Order a new test | Clinicians and lab staff | Role |
-| See the money on a request | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never as a zero |
+| See the money on a request | Anyone who can open the list | Nothing — a hospital workspace has no permission that hides money |
 
 Enforcement of the per-person permissions is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is written to the audit log**; an allowed one is not. Hiding a module from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Lab scientists, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member" note="Needs the Diagnostics care area · with Role Navigation on, no built-in role rule reaches the Lab Station" />
 
 **Lab Station** is the laboratory's own dashboard: how much work came through, how fast it went, and the catalogue of tests that every request is built from. It is where a lab manager looks, not where a bench scientist records a result.
 
@@ -92,14 +92,14 @@ Before anything has been generated the pane reads **No lab report available**, w
 
 ## Who can do this
 
-Your **role** decides whether the **Laboratory** group opens, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). Inside it:
+The station itself checks nothing: anyone who reaches it can use every tab. Where role matters is [Role navigation](/hospital/settings/role-navigation) — and if it is switched on, none of the built-in role rules include the Lab Station, so a lab scientist keeps **Laboratory** but is turned away from the station until an owner adds it to their rule. Inside the page:
 
 | Action | Who by default | How it is governed |
 | --- | --- | --- |
-| Read the Analytics tab | Lab and clinical staff, managers, owners | Role |
-| Add, edit or delete a catalogue test | Lab scientists, managers, owners | Role |
-| Generate and export an AI report | Lab and clinical staff | Role |
-| See prices and revenue figures | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never as a zero |
+| Read the Analytics tab | Anyone who can open the station | Nothing |
+| Add, edit or delete a catalogue test | Anyone who can open the station | Nothing |
+| Generate and export an AI report | Anyone who can open the station | Nothing |
+| See prices and revenue figures | Anyone who can open the station | Nothing — a hospital workspace has no permission that hides money |
 
 Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is written to the audit log**; an allowed one is not. Hiding the group from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
 

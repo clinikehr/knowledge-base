@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers and billing staff" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member the Revenue group is shown to" />
 
 **Billing Dashboard** is where a hospital's money picture lives: what has been invoiced, what has been collected, what is still owed, and every invoice ever raised. It is the first of three revenue screens, and the one people open when they want a number.
 
@@ -92,23 +92,13 @@ The **Invoices** tab is the full ledger.
 
 ## Who can do this
 
-**Role** decides whether the screen opens. On Enterprise, an owner controls which roles reach **Billing** under **Settings → Role Navigation** — a ward nurse has no reason to arrive here, and a biller has every reason.
+**Role Navigation** is what decides who gets here. The page itself checks nothing — its old hardcoded role list was retired — so anyone who can reach the **Revenue** group can open Billing, read every figure and raise an invoice. An owner narrows that per role under **Settings → Role Navigation**: a ward nurse has no reason to arrive here, and a biller has every reason.
 
-**Permission** decides what you may do inside. Your hospital's staff sheet carries a **Billing** section of per-person toggles, described in the product's own words:
-
-| Permission | What it is for |
-| --- | --- |
-| **Create billing documents** | Raising invoices and receipts |
-| **Add client payments** | Recording money received against an invoice |
-| **Add insurance payments** | Recording a payer's settlement |
-| **Edit service fees** | Repricing the catalogue |
-| **View Payment Reports** | The payment reporting screens |
-| **View financial dashboard** | The money figures on this page |
-| **Refund payments** | Reversing money already taken |
+Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
 
 Two acts are enforced on the server whatever else is set: **voiding a payment** is limited to a clinic owner, manager or accountant — "Only a clinic owner, manager or accountant can void a payment." — and an invoice with a recorded payment cannot be deleted by anyone.
 
-Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Billing** from a role is a convenience, not a security boundary — and where a figure is not yours to see, it renders as a dash or the row is withheld, never as **0**.
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Billing** from a role is a convenience, not a security boundary. No figure on this page is withheld by permission — if you can open Billing you see all of it.
 
 ## Check it worked
 

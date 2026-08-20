@@ -7,7 +7,7 @@ icon: /images/icons/id-card.svg
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 
-<Availability editions={['all']} plans="All plans; Role Navigation is enterprise only" roles="Owner, Manager" />
+<Availability editions={['all']} plans="All plans" roles="Owner" note="Role Navigation, below, needs an Enterprise Clinic workspace." />
 
 A role answers one question: **which pages does this person get?** What they may _do_ on those pages is a separate setting — see [Permissions](/platform/team/permissions).
 
@@ -17,7 +17,7 @@ Roles come in two halves, and someone can hold both. A **clinical role** says wh
 
 ## Owners and managers
 
-**Owners bypass the permission system entirely** inside their own workspace: they can perform every act their edition and plan allow. Managers sit just below and can administer staff, roles and permissions.
+**Owners bypass the permission system entirely** inside their own workspace: they can perform every act their edition and plan allow. Managers also bypass it, but they do not inherit the owner's administration screens — inviting a colleague, changing a specialty and editing permissions are all on the owner-only **Actions** menu of **Staff Members**.
 
 Both are deliberately absent from the role-based navigation controls further down this page. There is no configuration that hides a page from an owner, and that is intentional — somebody has to be able to see everything.
 
@@ -94,7 +94,7 @@ ClinikEHR puts people where their work is rather than on a generic dashboard. A 
 
 ## Role Navigation
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner, Manager" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager" note="Enterprise Clinic workspaces only — the clinic type set at creation, not a subscription tier." />
 
 Hospitals can go further and state, per role, which parts of the building appear in the sidebar at all.
 
@@ -127,6 +127,10 @@ Two things about this screen are worth knowing before you use it.
 ## Changing someone's role
 
 From the row menu on **Staff Members**, **Change Specialty** updates the specialty for an existing member. Their administrative role and permissions are managed from the same menu under **Permissions**.
+
+<Note>
+  **That row menu is owner-only.** A manager or accountant can open **Settings** → **Staff & Teams** and read the list, but the **Actions** column — Change Specialty, Permissions and Remove Staff — is rendered only for the workspace owner, and so is **Invite Staff**. Managers administer people through the owner, not around them.
+</Note>
 
 ## Related
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy counter staff" note="Needs the In-house pharmacy care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacists, doctors, nurses, managers and owners" note="Needs the In-house pharmacy care area · with Role Navigation on, no built-in role rule includes the Pharmacy Station" />
 
 **POS** is the hospital pharmacy unit's till. It sells from the same stock the wards and the dispensary draw on, takes payment at the counter, and prints a receipt. It is the same point of sale that ships as the standalone Pharmacy edition, so the deep detail lives on those pages and this one covers what a hospital needs on top.
 
@@ -79,17 +79,17 @@ Over-alerting is how staff learn to dismiss warnings without reading them, which
 
 ## Who can do this
 
-**Role** decides whether the till opens. **POS** needs the **In-house pharmacy** care area, and on Enterprise an owner can hide the Pharmacy group from a role under **Settings → Role Navigation**.
+**Role** decides whether the till opens: pharmacists, doctors, nurses, managers and owners pass, and everyone else is refused. **POS** needs the **In-house pharmacy** care area, and an owner can hide the Pharmacy group from a role under **Settings → Role Navigation** — where note that no built-in role rule reaches the Pharmacy Station, so switching Role Navigation on takes the till away from your pharmacist until you add it to their rule.
 
-**Permission** decides what you may do at the counter.
+Nothing at the counter is governed by an individual permission: the till and cash-drawer permissions belong to the standalone Pharmacy edition and are inert in a hospital workspace.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open the till and complete a sale | Anyone the role navigation lets in | Role → route |
+| Open the till and complete a sale | Pharmacists, doctors, nurses, managers, owners | Role — a fixed list on this page |
 | Sell a controlled item | Nobody — refused at the till by design | The item's controlled status, not a permission |
 | Dispense a controlled item | Pharmacy staff, with a named witness | The **Fill Rx** sheet in [Inventory](/hospital/supply/inventory) |
-| Return or void a sale | Owners, managers and pharmacy leads | Role → route, on the [Sales](/hospital/pharmacy/sales) screen |
-| See cost and margin figures | Owners and managers | The financial figures on Sales, not the till |
+| Return or void a sale | Anyone who can open [Sales](/hospital/pharmacy/sales) | Role — the Sales page's own list, not a permission |
+| See cost and margin figures | Anyone who can open [Sales](/hospital/pharmacy/sales) | Nothing — the cost-and-margin permission is a Pharmacy-edition one and does not apply here |
 
 Enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not.
 

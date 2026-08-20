@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, and anyone on the All sites tier" />
+<Availability editions={['lims']} plans="All plans" roles="Everyone whose role reaches Billing — Owner, Manager, Receptionist, Biller, Accountant, Doctor. Bench and imaging roles do not." />
 
 **Services** is your price list. Every test you sell gets a name, a price and a category here, and that price is what an invoice line picks up when the work is billed.
 
@@ -91,17 +91,17 @@ Deleting is offered — the row menu's **Delete Service** asks a second time, re
 
 ## Who can do this
 
-Pricing is a commercial act, not a bench one, so it follows the business roles rather than the Diagnostics permission slugs.
+Pricing is a commercial act, not a bench one, so it follows the **Billing** route rules rather than the Diagnostics permission slugs. No permission in the Diagnostics catalogue governs any row below, and no access tier does either — reaching the route is the whole test.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Services** | Owner, Manager, **Lab Manager** | Role → route |
+| Open **Services** | Owner, Manager, Receptionist, Biller, Accountant, Doctor — everyone whose role reaches Billing | Role → route |
 | Add, edit or reprice a test | The same people | Role → route |
 | Retire or delete a test | The same people | Role → route |
-| See test pricing across sites | Anyone on the **All sites** access tier | Access tier |
-| Define a test's analytes and ranges on the **Test List** | **Lab Manager**, scientists on **Whole lab** or **All sites** | Permission — **Enter results at the bench** and the tier above it |
+| Open **Services** as a Lab Scientist, Radiologist, Radiology Technician or Phlebotomist | Nobody — Billing is not on their route list | Role → route |
+| Define a test's analytes and ranges on the **Test List** | Everyone who reaches **Lab Station**, bench scientists included | Role → route — no permission |
 
-An **Accessioning Clerk** raises invoices but does not set prices. A **lab scientist** and a **QC Officer** do not reach this screen at all — the QC role is review-only by design. Two behaviours surprise people:
+A **lab scientist** does not reach this screen at all — pricing sits under Billing, and a bench role's route list does not include it. That is the fix when somebody cannot find **Services**: change their job-title role, or have a colleague who reaches Billing set the price. Granting a permission will not open it. Two behaviours surprise people:
 
 - **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
 - **A denied action is recorded; an allowed one is not.** Where a price is not yours to see, the column renders as a dash rather than a zero.

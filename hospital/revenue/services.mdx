@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners and managers; changing a price is a separate permission" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member who can open Billing" />
 
 Your service catalogue is the hospital's price list. Invoices are built from it, your booking page offers what is on it, and revenue reporting groups by it. Getting it right once makes everything downstream faster.
 
@@ -69,17 +69,17 @@ Switch **Active** off rather than deleting. An inactive service stops being offe
 
 **Role** decides whether **Services** opens; an owner sets that per role under **Settings → Role Navigation**. Most hospitals restrict it to management and the billing office, because a price list edited by everyone stops being a price list.
 
-**Permission** decides what you may do inside:
+Once Services opens, nothing narrows further:
 
-| Action | Who by default | Permission |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
 | Read the catalogue | Anyone the role navigation lets in | Role → route |
-| Add a service or a category | Owners and managers | Role → route |
-| Change a price | Owners and managers | **Edit service fees** |
-| Put a service on an invoice | Billers and front desk | **Create billing documents** |
-| See the earnings figures on **Overview** | Owners, managers, executives | **View financial dashboard** |
+| Add a service or a category | Anyone who can open Services | Nothing |
+| Change a price | Anyone who can open Services | Nothing |
+| Put a service on an invoice | Anyone who can open Billing | Nothing |
+| See the earnings figures on **Overview** | Anyone who can open Services | Nothing |
 
-Repricing is deliberately separate from creating: the people who maintain the catalogue are not automatically the people who should be able to change what the hospital charges.
+Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead. That includes **Edit service fees**: repricing is not separated from creating today, so the way to stop a price list being edited by everyone is to keep **Billing** out of most roles' navigation.
 
 Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, and hiding **Services** from a role is a convenience rather than a security boundary.
 

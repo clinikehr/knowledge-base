@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Theatre staff" note="Needs the Surgical theatre care area — off by default" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the board; every act on a case is permission-gated" note="Needs the Surgical theatre care area — off by default · with Role Navigation on, no built-in role rule includes Theatre" />
 
 **Theatre List** is the day's operating list: **Scheduled cases, their status, and what is running late.** Every case carries its safety checklist, its status and its operation note in a single sheet.
 
@@ -104,7 +104,7 @@ Enter **Findings**, **Procedure** and **Post-operative instructions**. **Save dr
 
 ## Who can do this
 
-Your **role** decides whether the **Theatre** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). **Permissions** decide each act inside it:
+The board itself checks no role — anyone who can reach the **Theatre** group can read today's list. [Role navigation](/hospital/settings/role-navigation) is what narrows that, and there is a catch worth knowing: none of the built-in role rules include **Theatre**, so switching Role Navigation on leaves the group with owners and managers until you add it to a surgeon's rule. **Permissions** then decide each act:
 
 | Action | Who by default | Permission |
 | --- | --- | --- |
@@ -133,7 +133,7 @@ Enforcement is **opt-in per person** — someone never saved in the permissions 
   </Accordion>
 
   <Accordion title="Two-factor verification is required to view the theatre list.">
-    A signed-in session is not enough for theatre records. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
+    Your hospital requires two-factor for staff, so a signed-in session is not enough for theatre records. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa). A hospital that does not require two-factor never sees this.
   </Accordion>
 
   <Accordion title="A Move to button is disabled">

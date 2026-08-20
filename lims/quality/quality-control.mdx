@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “Review QC runs”. QC Officer holds it by default." />
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Owner, Manager and everyone else who reaches Lab Station, bench scientists included. Radiology-only roles do not." note="No permission gate — the plan is the only gate on this page" />
 
 Record the day's control values against each material and ClinikEHR evaluates every run for you. The page says so in its own subtitle: "Record daily controls per material; every run is evaluated against Westgard rules (1-3s, 2-2s, R-4s, 4-1s, 10x — 1-2s warns) the moment it's saved." You enter a number; you get back a verdict and a charted point.
 
@@ -94,17 +94,19 @@ Do this once per analyte and level.
 
 ## Who can do this
 
-Role decides whether **Quality Control** appears in your sidebar. Permission decides what you may do on it.
+Your **plan** decides whether **Quality Control** exists; **role** decides whether it appears in your sidebar. There is no permission gate on this page at all.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Quality Control** | **QC Officer**, **Lab Manager**, anyone on the **Whole lab** or **All sites** tier, Owner, Manager | Permission — **Review QC runs** |
-| Add a control material | The same people | Permission — **Review QC runs** |
-| Record a run and read the verdict | The same people | Permission — **Review QC runs** |
+| Open **Quality Control** | Everyone who reaches **Lab Station** — Owner, Manager, bench scientists and the business roles | Plan only — the quality-control feature |
+| Add a control material | The same people | Plan only — no permission |
+| Record a run and read the verdict | The same people | Plan only — no permission |
 | Act on a rejection at the bench — recalibrate, re-run patients | Anyone on the **Own bench** tier and above | Permission — **Enter results at the bench** |
 | Release patient results once controls pass | Anyone on the **Whole lab** or **All sites** tier | Permission — **Verify and authorise results** |
 
-**QC Officer is review-only by design.** The role inspects work rather than altering it, so it holds **Review QC runs** and **View turnaround-time analytics** and nothing else. Someone who can open this page may still be unable to touch a patient result — and that is the point.
+**Review QC runs is not consulted here.** The permission exists in the Diagnostics catalogue and the permissions sheet will let you grant or withhold it, but nothing on this page or in the **Quality Control** report reads it — the paid feature is the whole gate. Granting it changes nothing; withholding it locks nobody out. Your local procedure decides who records controls, not the software.
+
+**QC Officer is review-only by design** in every other respect: the role inspects work rather than altering it, and holds nothing that lets it touch a patient result.
 
 The three access tiers decide the last two rows. **Own bench** grants result entry only; **Whole lab** adds accessioning, rejection, verification and QC review at that site; **All sites** grants everything, across every site. Managing the lab is not the same as authorising a result — a **Lab Manager** does not get entry, verification or amendment by virtue of managing.
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors and managers" note="Needs the Diagnostics care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member" note="Needs the Diagnostics care area · with Role Navigation on, no built-in role rule reaches the Radiology Station" />
 
 **Radiology Station** is the imaging unit's own dashboard: how much work came through, on which machines, and the catalogue of studies every request is built from. It is where a unit manager looks, not where a study is reported.
 
@@ -75,14 +75,14 @@ What you define here is what a requesting clinician sees, what the patient is to
 
 ## Who can do this
 
-**Role** decides whether the **Radiology** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation).
+The station itself checks nothing: anyone who reaches it can use every tab. Where role matters is [Role navigation](/hospital/settings/role-navigation) — and if it is switched on, none of the built-in role rules include the Radiology Station, so a radiologist keeps **Radiology** but is turned away from the station until an owner adds it to their rule.
 
 | Action | Who by default | How it is governed |
 | --- | --- | --- |
-| Read the Analytics tab | Imaging and clinical staff, managers, owners | Role |
-| Add, edit or delete a catalogue study | Radiologists, technicians, managers, owners | Role |
-| Open the **Modalities** tab | Imaging staff, managers, owners | Plan — the imaging bridge is a Professional feature |
-| See prices and revenue figures | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+| Read the Analytics tab | Anyone who can open the station | Nothing |
+| Add, edit or delete a catalogue study | Anyone who can open the station | Nothing |
+| Open the **Modalities** tab | Nobody on a Clinic & Hospital plan today | Plan — the imaging bridge ships with the Diagnostics edition from **Professional Lab** upward |
+| See prices and revenue figures | Anyone who can open the station | Nothing — a hospital workspace has no permission that hides money |
 
 Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. Hiding the group from a role's sidebar is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
 
@@ -101,7 +101,7 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
   </Accordion>
 
   <Accordion title="The Modalities tab is missing">
-    The imaging bridge is a Professional feature and is off below that plan. Everything else on this page works without it. See [Modalities](/hospital/diagnostics/modalities).
+    The imaging bridge is not part of any Clinic & Hospital plan — it ships with the Diagnostics edition from **Professional Lab** upward — so on a hospital the tab is simply absent. Everything else on this page works without it. See [Modalities](/hospital/diagnostics/modalities).
   </Accordion>
 
   <Accordion title="The Reports tab has nothing in it">

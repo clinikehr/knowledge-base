@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Professional Lab and above" roles="Registering an analyser needs “Configure analysers and interfaces”. Accepting a result also needs “Verify and authorise results”." />
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Registering an analyser is open to everyone who reaches Lab Station, bench scientists included. Accepting a result needs “Enter results at the bench” and “Verify and authorise results”." note="“Configure analysers and interfaces” is catalogued but not enforced on this screen" />
 
 **Nothing an instrument sends enters a report on its own.** Results arrive in a review queue, a scientist accepts each one, and accepting runs exactly the same path as typing the result in by hand. The screen's own subtitle says it: "Register each analyzer (or its bridge PC) with a private key. Incoming results queue below for review — nothing enters a report until a scientist accepts it."
 
@@ -80,17 +80,19 @@ The queue carries the rule underneath its heading: "Accept runs the same screen 
 
 ## Who can do this
 
-Role decides whether **Analyzers** appears at all. Permission decides what you may do on it — and this screen needs two different grants for two different acts.
+Your **plan** decides whether **Analyzers** exists and **role** decides whether it appears at all. Only one act on the screen — accepting a result — is behind a permission.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Analyzers** | **Lab Manager**, anyone on the **All sites** tier, Owner, Manager | Permission — **Configure analysers and interfaces** |
-| Register, pause or re-key an instrument | The same people | Permission — **Configure analysers and interfaces** |
-| **Accept** a queued result | Anyone on the **Whole lab** or **All sites** tier | Permission — **Verify and authorise results** |
-| **Discard** a payload | Anyone who may configure the interface | Permission — **Configure analysers and interfaces** |
+| Open **Analyzers** | Everyone who reaches **Lab Station** — Owner, Manager, bench scientists and the business roles | Plan only — the analyzer-integration feature |
+| Register, pause or re-key an instrument | The same people | Plan only — no permission |
+| **Accept** a queued result | Anyone on the **Whole lab** or **All sites** tier | Permissions — **Enter results at the bench**, then **Verify and authorise results** |
+| **Discard** a payload | Anyone who can open the page | Plan only — no permission |
 | Enter the result manually instead | Anyone on the **Own bench** tier and above | Permission — **Enter results at the bench** |
 
-Accepting is the sign-out step, not a data-entry step, which is why it needs the verify grant on top of anything else — and verification comes from the access tier, not from a job title. A **Lab Manager** who has never been given the **Whole lab** or **All sites** tier can register an analyser and still not accept a single result from it. A **QC Officer** is review-only by design and holds neither grant; a **Radiologist** does not reach this page at all — their equivalent is [Connect your imaging machines](/lims/imaging/modalities).
+**Configure analysers and interfaces is not enforced here.** The permission is in the Diagnostics catalogue and the permissions sheet offers it, but nothing on this screen reads it — registering, pausing, re-keying and discarding are governed by the plan and the route alone.
+
+Accepting is different, and it is the one act that is really gated: it writes the reading into the screening path and then signs it out, so it takes **Enter results at the bench** *and* **Verify and authorise results**. Someone on **Own bench** holds only the first and gets as far as the reading, never the sign-out — verification comes from the access tier, not from a job title, so a **Lab Manager** who was never given **Whole lab** or **All sites** can register an analyser and still not accept a single result from it. A **Radiologist** does not reach this page at all — their equivalent is [Connect your imaging machines](/lims/imaging/modalities).
 
 Two behaviours surprise people:
 
@@ -121,7 +123,7 @@ See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Accept is greyed out on a row I can see">
-    Either the row is **Unmatched** — there is no order to attach it to — or you hold **Configure analysers and interfaces** but not **Verify and authorise results**.
+    Either the row is **Unmatched** — there is no order to attach it to — or you hold **Enter results at the bench** but not **Verify and authorise results**.
   </Accordion>
 
   <Accordion title="A urine result arrived but Accept will not finish it">
@@ -133,7 +135,7 @@ See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Analyzers is not in the sidebar at all">
-    Either you do not hold **Configure analysers and interfaces**, or the interface is not yet enabled for your lab. Analyser integration is still rolling out and is priced per interface — [contact support](/platform/help/contact-support).
+    Either your role does not reach **Lab Station** at all, or the interface is not yet enabled for your lab. Analyser integration needs **Professional Lab** or above, is still rolling out and is priced per interface — [contact support](/platform/help/contact-support).
   </Accordion>
 </AccordionGroup>
 

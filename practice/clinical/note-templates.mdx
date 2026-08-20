@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team — building your own templates needs Starter or above" roles="Any clinical staff member" />
+<Availability editions={['clinic']} plans="All plans — building your own templates needs Starter or above" roles="Any clinical staff member" />
 
 A template is the shape of a whole note: sections, prompts and fields already laid out, so you fill in rather than compose. ClinikEHR ships a library of them, and your practice can build its own.
 
@@ -76,19 +76,16 @@ Building custom templates needs the Starter plan. On Free, **Create Template** i
 
 ## Who can do this
 
-Role decides whether **Notes** opens at all. Permission decides whether you may change the shared library.
+Plan, not role, is what gates the template library on a solo or team practice.
 
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Use any template | Any clinical staff member | Role |
-| Preview or copy a template's content | Any clinical staff member | Role |
-| Create, edit or delete a custom template | Owner, manager | Permission — **Edit note and form templates** |
+| Use any template | Any staff member | Nothing |
+| Preview or copy a template's content | Any staff member | Nothing |
+| Create, edit or delete a custom template | Any staff member | Plan — the **New template** button is disabled on Free |
 | Delete a pre-built template | Nobody | Fixed — the shipped library is read-only |
 
-Two behaviours surprise people:
-
-- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding the page from a sidebar is a convenience, not a security boundary.
+The invite sheet carries an **Edit note and form templates** toggle. It is stored against the staff member but is **not enforced** here — nothing on this screen reads it, so anyone who can open Notes can change the shared library.
 
 See [Staff permissions](/platform/team/permissions).
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Radiologists, radiology technicians, doctors, nurses and managers" note="Needs the Diagnostics care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, radiologists, radiology technicians, doctors and nurses" note="Needs the Diagnostics care area · with Role Navigation on, no built-in role rule reaches the Radiology Station" />
 
 **Radiology Reports** is the reporting surface: **Manage radiology studies, reports, and imaging analytics.** It is where a radiologist opens a study with its images beside it, writes the report, and releases it.
 
@@ -90,8 +90,8 @@ Raising an imaging order keeps working. One captured offline is confirmed as **I
 | Open the list and view a study | Imaging and clinical staff | Role |
 | Move a study through scheduling and performance | Technicians and radiologists | Role |
 | Write, save or submit a report | Radiologists and doctors | Role — others get **You don't have permission to submit reports** |
-| Submit a report at all | Anyone with the above | Two-factor — an unverified session is refused with **Two-factor verification is required.** |
-| See payment and revenue | Staff with billing visibility | Permission — a figure you may not see renders as a dash, never a zero |
+| Submit a report at all | Anyone with the above | Two-factor, but only in a hospital that requires it — where it does, an unverified session is refused with **Two-factor verification is required.** |
+| See payment and revenue | Anyone who can open the page | Nothing — a hospital workspace has no permission that hides money |
 
 Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).
 
@@ -106,7 +106,7 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
 
 <AccordionGroup>
   <Accordion title="Two-factor verification is required.">
-    Submitting a report needs a second-factor-verified session. You are taken to the verification step automatically — complete it and submit again. See [Two-factor authentication](/platform/security/mfa).
+    Your hospital requires two-factor for staff, so writing to a patient record needs a verified session. You are taken to the verification step automatically — complete it and submit again. A hospital that does not require two-factor never sees this. See [Two-factor authentication](/platform/security/mfa).
   </Accordion>
 
   <Accordion title="Open full viewer does nothing">

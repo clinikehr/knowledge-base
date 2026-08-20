@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Owners and managers; staff granted access to figures" />
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member — Executive is not role-gated on these plans" />
 
 **Executive** is your practice at a glance — six headline figures, and a card for every report your practice can open. Each figure is a link to the report that explains it, so a number you do not believe is one select away from its workings.
 
@@ -58,25 +58,22 @@ A tile shows an em dash while its figure is still loading, and a number only onc
   </Step>
 </Steps>
 
-The **Reports** list below the tiles is the same set as the Analytics page, filtered the same way — by your plan, the modules you actually use, and your own permissions.
+The **Reports** list below the tiles is the same set as the Analytics page, filtered the same way — by your plan, your edition, and the care areas your practice has switched on.
 
 ## Who can do this
 
-Role decides whether **Executive** opens at all. Permission decides whether the figures inside it resolve.
+A solo or team practice has no role→route layer: everybody invited into it can open **Executive**, and every tile resolves for all of them.
 
-| Action | Who by default | The permission, in the product's words |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open the Executive page | Owner, manager | **View financial dashboard** |
-| See the money tiles | Owner, manager | **View financial dashboard** |
-| Open the Revenue report | Owner, manager, whoever handles billing | **View Payment Reports** |
-| Open the Appointments and Patients reports | Owner, manager, granted staff | **View financial dashboard** |
+| Open the Executive page | Any staff member | Nothing — the page is not role- or permission-gated |
+| See the money tiles | Any staff member | Nothing |
+| Open any report from a tile | Any staff member | The report catalogue — edition, plan and care area |
 
-Two behaviours surprise people:
+- **The invite sheet's View financial dashboard and View Payment Reports toggles are recorded, not enforced here.** They are stored against the staff member; nothing on this page reads them. If you need money figures hidden from a colleague, this page is not where that happens today.
+- **Fencing people out of pages by role is an Enterprise feature.** It needs the Enterprise plan plus role-scoped navigation switched on for the practice.
 
-- **Enforcement is opt-in, per person.** A staff member who has never been saved in the permissions sheet is unrestricted. The sheet says so — **"Saving starts enforcing"** — so the act of saving somebody's permissions for the first time is what begins limiting them.
-- **A denied action is recorded; an allowed one is not.** And hiding a page from somebody's sidebar is a convenience, not a security boundary — the permission is the boundary.
-
-Where a figure is permission-gated it renders as a dash, or the report simply is not listed. It never renders as a zero, because a zero would be a lie. See [Staff permissions](/platform/team/permissions).
+A tile that shows an em dash is a figure that has not arrived, never a permission refusal — it never renders as a zero, because a zero would be a lie. See [Staff permissions](/platform/team/permissions).
 
 <AuditNote action="Opening the executive dashboard" />
 
@@ -98,11 +95,11 @@ Where a figure is permission-gated it renders as a dash, or the report simply is
   </Accordion>
 
   <Accordion title="Every money figure is a dash but the appointment counts are fine">
-    You may open the page but not see financial figures. Viewing the financial dashboard is granted per person — see [Staff permissions](/platform/team/permissions).
+    The money reads failed while the rest succeeded. Reload; if it persists, note the time so support can match it against your audit log.
   </Accordion>
 
   <Accordion title="A report I expected is not in the list">
-    Reports follow your plan, the modules you use and your permissions. [Reports and analytics](/practice/insights/analytics) lists exactly what a practice gets.
+    Reports follow your plan, your edition and the care areas you have on. [Reports and analytics](/practice/insights/analytics) lists exactly what a practice gets.
   </Accordion>
 
   <Accordion title="Collected this month does not match my bank">

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Staff with the adjust stock permission; controlled counts also need a witness" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches Inventory; a controlled count also needs a witness" />
 
 A count compares what the system holds against what is actually on the shelf, and then makes the system agree with the shelf. Opening a count takes a snapshot of current stock, so counting and selling can carry on side by side without the figures moving underneath you.
 
@@ -92,12 +92,14 @@ Treat a large "less than expected" as an event, not a correction. It is the sign
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Read the **Counts** tab and an existing worksheet | Everyone who can open **Inventory** | Role |
-| Open a count and key quantities | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
-| Approve a count and post the variances | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Open a count and key quantities | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
+| Approve a count and post the variances | Anyone whose role reaches **Inventory** | Role — except a controlled count, below |
 | Countersign a **DEA CII count** or **Biennial DEA inventory** | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
 | See the variances valued in money | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 
-The countersignature is the one to plan around: it sits with the **Dispensing Supervisor** bundle and **not** with **Pharmacy Manager**, because countersigning a controlled count is a pharmacist's act rather than a manager's. If nobody on shift holds it, a controlled count cannot be approved — check before you start counting, not after.
+The countersignature is the one real gate on this page, and the one to plan around: it sits with the **Dispensing Supervisor** bundle and **not** with **Pharmacy Manager**, because countersigning a controlled count is a pharmacist's act rather than a manager's. **Both halves are checked** — the person approving and the colleague they name as witness. If nobody on shift holds it, a controlled count cannot be approved — check before you start counting, not after.
+
+**Adjust stock counts** is offered on the permissions sheet but nothing in the product reads it yet, so switching it off does not stop anyone who can open **Inventory** from keying or approving an ordinary count.
 
 Without **View cost prices and margin** the variance totals read **"Hidden — needs authorisation from your clinic owner."** The counted quantities are still yours; only their value is withheld, and it is withheld as text rather than as a zero.
 

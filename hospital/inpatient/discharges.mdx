@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Clinicians with the discharge permission" note="Needs the In-patient care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member — this page is a read-only record" note="Needs the In-patient care area" />
 
 Discharging is the act that ends a stay and frees the bed for the next patient. **Ward Discharges** is where every completed stay is then kept, in one place, for as long as you need to look back at it.
 
@@ -94,12 +94,12 @@ Each tab says plainly when there is nothing in it — **No consultation records 
 
 ## Who can do this
 
-Your **role** decides whether the **Inpatient** group opens at all, and whether an owner has hidden it from that role under [Role navigation](/hospital/settings/role-navigation). **Permissions** decide what you may do inside it, and they are granted per person:
+This page checks nothing of its own: it is a read-only record of stays that have already ended, and anyone who can reach the **Inpatient** group can read it. [Role navigation](/hospital/settings/role-navigation) is what narrows that. The discharge permission below governs the ward chart, not this screen:
 
 | Action | Who by default | Permission |
 | --- | --- | --- |
-| Discharge a patient | Clinicians | **Discharge a patient** — "End the stay and free the bed — this cannot be undone" |
-| Open **Ward Discharges** and read a stay | Anyone with the Inpatient group | Governed by role, not by a separate permission |
+| Discharge a patient | Clinicians | **Discharge a patient** — "End the stay and free the bed — this cannot be undone". The act happens on the ward chart in [Admissions](/hospital/inpatient/admissions), never here |
+| Open **Ward Discharges** and read a stay | Any staff member the Inpatient group is shown to | Nothing — this page has no role check and no permission |
 | Record observations or doses on a live stay | Doctors and nurses | **Record observations** · **Give a medication** |
 
 Enforcement is **opt-in per person**: anyone who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before you save the first one. A **denied action is written to the audit log**; an allowed one is not. Hiding the group from a role is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).

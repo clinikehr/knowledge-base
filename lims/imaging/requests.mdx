@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Raising and reporting studies is limited to imaging staff. A receptionist can raise a request; everyone else gets a view-only queue." />
+<Availability editions={['lims']} plans="All plans" roles="Radiologist, Radiology Technician, Doctor, Owner, Manager. Everyone else — a Receptionist, a Lab Scientist, a Phlebotomist — is refused the module outright." />
 
 **Imaging Requests** is the working list of every study your diagnostic centre has been asked for — what is booked, what is on the machine, what is waiting on a radiologist. This page covers raising a request and reading the queue.
 
@@ -81,15 +81,16 @@ Role decides whether **Imaging Requests** opens. Permission decides what you may
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open and read the queue | Owner, Manager, **Radiologist**, **Radiology Technician**, **Receptionist** | Role → route |
-| Raise a request | Owner, Manager, imaging staff, **Receptionist** | Role → route |
-| Attribute an order to a referrer | Anyone who may raise a request | Role → route — the picker is on the order form |
-| Report a study | Radiologists with reporting access | Role → route |
-| Release a report to the referring doctor | **Referrer Liaison**, **Lab Manager**, Owner, Manager | Permission — **Release a report to a referrer** |
+| Open and read the queue | Owner, Manager, **Radiologist**, **Radiology Technician**, **Doctor** | Role |
+| Raise a request | The same people | Role |
+| Attribute an order to a referrer | Anyone who may raise a request | Role — the picker is on the order form |
+| Write and submit the report | **Radiologist**, **Doctor**, Owner | Role — see [Radiology reports](/lims/imaging/reports) |
+| Open **Imaging Requests** as a Receptionist, Lab Scientist or Phlebotomist | Nobody | Role — the module refuses them |
 | See a referrer's account and their statements | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
-| See the queue but change nothing | Everyone else with the route | Role → route, in view-only mode |
 
-Staff without reporting access get the queue in view-only mode — they can see studies and track progress but cannot raise or report them. Attempting to submit returns **You are not authorized to submit radiology orders.** That is role enforcement, not a fault: a **Lab Scientist** does not reach the imaging screens at all, and a **Radiologist** reaches only them plus patient records. Access tiers — **Own bench**, **Whole lab**, **All sites** — widen how much of the lab a person sees; only **All sites** carries the referrer grants.
+**The radiology module has its own role check on top of the route rules, and a Receptionist does not pass it.** Reaching the address is not enough: the module admits Radiologist, Radiology Technician, Doctor, Manager and Owner, and everyone else gets **You don't have permission to access the radiology module. Please contact your clinic administrator.** — including a receptionist whose route list does include `radiology`. If your front desk needs to raise imaging requests, that is a job-title question, not a permission you can grant.
+
+A **Radiology Technician** is admitted to the queue but is not a reporter — writing and submitting findings is Radiologist, Doctor or Owner. A **Lab Scientist** does not reach imaging at all.
 
 Two behaviours surprise people:
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise — every note feature is included" roles="Any clinical staff member" note="No care area needed — Clinic Notes is always in the Enterprise sidebar" />
+<Availability editions={['clinic']} plans="All plans — signing, snippets, custom templates and the AI writing tools need a paid plan" roles="Any staff member" note="No care area needed — Clinic Notes is in every plan's sidebar" />
 
 **Clinic Notes** is the hospital's standalone documentation surface: a note about a patient written *without* going through a department queue. Use it for a ward review, a handover, a discharge summary or anything else that is clinical writing rather than an outpatient encounter. Documentation that belongs to an outpatient visit goes on the [consultation](/hospital/outpatient/consultation) chart instead.
 
@@ -23,7 +23,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 ## Before you start
 
-**Clinic Notes** has no care-area switch — it is always in the sidebar on Enterprise, and every feature on this page is included in the plan. The patient must exist first; register them in [Patients](/hospital/front-desk/patients).
+**Clinic Notes** has no care-area switch — it is in the sidebar on every plan, and on Enterprise every feature on this page is included. The patient must exist first; register them in [Patients](/hospital/front-desk/patients).
 
 ## What you're looking at
 
@@ -86,11 +86,11 @@ Three tools, and they are different things:
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Clinic Notes** and write | Any clinical staff member the Outpatient group is shown to | Role Navigation |
-| Sign and lock a note | Clinicians | The **Sign and lock a consultation** permission where your hospital has set one |
+| Open **Clinic Notes** and write | Any staff member the Outpatient group is shown to | Role Navigation |
+| Sign and lock a note | Anyone who can open a note | Plan — signing is blocked on Free. No permission governs it here; the signing permission belongs to [Consultation](/hospital/outpatient/consultation) |
 | Countersign someone else's note | Supervisors | **Countersign a colleague's note** |
-| Unlock a signed note | Whoever may sign | Same permission as signing |
-| Create and edit shared templates | Owners and managers, in practice | Role |
+| Unlock a signed note | Whoever may sign | Same rule as signing |
+| Create and edit shared templates | Anyone who can open the page | Plan — creating custom templates and snippets is blocked on Free |
 
 Two behaviours worth knowing. Permission enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — so nothing changes for existing staff until they are saved once. And a denied action is recorded in the audit log while an allowed one is not, so hiding **Clinic Notes** in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary. See [Permissions](/platform/team/permissions).
 
@@ -151,7 +151,7 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person**: s
   </Accordion>
 
   <Accordion title="Are notes included on our plan?">
-    Yes. Every note feature — signing, locking, countersignature, templates, snippets and the AI writing tools — is included on Enterprise.
+    Yes. Every note feature — signing, locking, countersignature, templates, snippets and the AI writing tools — is included on Enterprise. Only the Free plan withholds them.
   </Accordion>
 </AccordionGroup>
 

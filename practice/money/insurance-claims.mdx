@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Solo and Team" roles="Owners, managers and billers" note="Blocked on the Free plan — the upgrade prompt names Starter." />
+<Availability editions={['clinic']} plans="Starter and above" roles="Any staff member" note="Blocked on the Free plan — the upgrade prompt names Starter." />
 
 Insurance in a solo or team practice is electronic end to end: you add the payers you bill, enrol your providers with them, check a client's cover before the visit, and turn appointments you have not billed yet into real claims that are transmitted, tracked and reconciled.
 
@@ -89,18 +89,18 @@ A claim showing **Paid** with nothing reconciled against it is money you have no
 
 ## Who can do this
 
-Role decides whether **Insurance** opens. Plan decides whether it opens at all.
+Plan, not role, is what decides this screen. There is no role→route layer on a solo or team practice, so **Insurance** opens for everybody in it once the plan allows.
 
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Open **Insurance** and read every tab | Owner, manager, biller | Role — plus Starter or above |
-| Create claims from unbilled appointments | Owner, manager, biller | Role |
-| Submit or void a claim | Owner, manager, biller | Role — and enough claim credits |
-| Run an eligibility check, single or **Batch verify** | Owner, manager, biller | Role — blocked entirely on Free |
-| Record an insurance payment | Owner, manager, biller | Role |
-| Add, deactivate or remove a payer | Owner, manager | Role — Settings is theirs |
+| Open **Insurance** and read every tab | Any staff member | Plan — Starter or above |
+| Create claims from unbilled appointments | Any staff member | Plan |
+| Submit or void a claim | Any staff member | Plan — and enough claim credits |
+| Run an eligibility check, single or **Batch verify** | Any staff member | Plan — blocked entirely on Free |
+| Record an insurance payment | Any staff member | Plan |
+| Add, deactivate or remove a payer | Owner, manager, accountant | Role — it lives in Settings |
 
-The invite sheet carries a **File insurance claims** toggle, but on Solo and Team it is recorded rather than enforced: the working levers here are the **role** you gave somebody and your **plan**. There is no per-role navigation editor on these plans.
+The invite sheet carries a **File insurance claims** toggle, but on Solo and Team it is recorded rather than enforced: the working lever here is your **plan**. There is no per-role navigation editor on these plans.
 
 Where a genuine server-side rule exists, the product states it. Voiding a recorded payment is owner, manager or accountant only — "Only a clinic owner, manager or accountant can void a payment." And an invoice with a payment against it cannot be deleted by anybody: "This invoice has recorded payments and cannot be deleted. Cancel it instead to keep the record."
 

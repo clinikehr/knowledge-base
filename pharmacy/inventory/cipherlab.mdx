@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Staff with the adjust stock permission" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches Inventory; a controlled-scope count also needs a witness" />
 
 A CipherLab 8000-series terminal counts a whole pharmacy far faster than a worksheet does: you scan and key quantities on the shelf, then dock the terminal and send the batch to ClinikEHR in one transfer. This page covers the transfer and the reconciliation. Opening the count is the same as any other — see [Run a stock count](/pharmacy/inventory/stock-counts).
 
@@ -104,13 +104,13 @@ Opening the count moves you to the **Physical count** sheet, headed with the sco
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Connect the cradle and collect a transfer | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
-| Assign an unmatched barcode to a product | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
-| **Apply changes to inventory** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| Connect the cradle and collect a transfer | Anyone whose role reaches **Inventory** | Role — nothing about the device is permission-gated |
+| Assign an unmatched barcode to a product | Anyone whose role reaches **Inventory** | Role |
+| **Apply changes to inventory** | Anyone whose role reaches **Inventory** | Role — except a controlled scope, below |
 | Countersign a controlled-scope count | Dispensing Supervisor only | **Witness a controlled-drug dispense** |
 | See the variance totals valued in money | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 
-The countersignature sits with the **Dispensing Supervisor** bundle and not with **Pharmacy Manager** — a controlled count cannot be applied unless somebody holding it is available. Check that before you walk the shelves.
+The countersignature is the only real permission on this page. It sits with the **Dispensing Supervisor** bundle and not with **Pharmacy Manager**, and both halves are checked — the person applying the count and the colleague they name as witness. A controlled count cannot be applied unless somebody holding it is available; check that before you walk the shelves. **Adjust stock counts** is offered on the permissions sheet but nothing reads it yet, so it does not stop an ordinary count being applied.
 
 Without **View cost prices and margin**, **More than expected**, **Less than expected** and **Net difference** read **"Hidden — needs authorisation from your clinic owner."** rather than showing a zero.
 

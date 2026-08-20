@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy staff; only a pharmacist gets the dispensing actions" note="Needs the In-house pharmacy care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the list; only a pharmacist gets the dispensing actions" note="Needs the In-house pharmacy care area" />
 
 **Prescription List** is the pharmacy unit's working queue: every script written across the hospital today, waiting for someone at the dispensary to pick it up. It is where a pharmacy shift starts.
 
@@ -92,7 +92,7 @@ Two different gates decide what you get here.
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open the list and **View Details** | Any staff member the role navigation lets in | Role → route |
-| **Dispense** / **Update** a script | Pharmacists, owners and managers | The signed-in user's pharmacist role |
+| **Dispense** / **Update** a script | Pharmacists, and the owner for the form itself | The signed-in user's role — the dispense is refused for anyone whose role is not **pharmacist**, the owner included |
 | Write a new script | Prescribers and pharmacists | Role → route |
 | Draw the stock in **Fill Rx** | Pharmacy and stock staff | Role → route |
 

@@ -9,21 +9,21 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Theatre staff with a two-factor-verified session" note="Needs the Surgical theatre care area — off by default" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member" note="Needs the Surgical theatre care area — off by default · a hospital that requires two-factor needs a verified session · with Role Navigation on, no built-in role rule includes Theatre" />
 
 **Case History** answers the question the day list cannot: what happened to a case that was not today. It searches **Past and upcoming cases across days** and opens each one in the same sheet the theatre list uses.
 
 <Path steps={['Sidebar', 'Theatre', 'Case History']} />
 
 <TaskHeader
-  before="A two-factor-verified sign-in, and the Surgical theatre care area switched on"
+  before="The Surgical theatre care area switched on, and — where your hospital requires two-factor — a verified sign-in"
   time="Under a minute to find a case"
   after="The case open, with its checklist, status history and operation note"
 />
 
 ## Before you start
 
-Theatre history is gated on two-factor verification. A signed-in session is not enough — if yours has not been verified with a second factor you are told **Two-factor verification is required to view theatre history.** and nothing loads. Set it up under [Two-factor authentication](/platform/security/mfa).
+Where your hospital requires two-factor for staff, theatre history is gated on it. A signed-in session is then not enough — if yours has not been verified with a second factor you are told **Two-factor verification is required to view theatre history.** and nothing loads. Set it up under [Two-factor authentication](/platform/security/mfa). A hospital that does not require two-factor never meets this.
 
 ## What you're looking at
 
@@ -79,14 +79,14 @@ Three things have to line up, and they are different kinds of thing:
 | Layer | What it decides |
 | --- | --- |
 | Care area | Whether **Theatre** exists in this hospital at all — **Surgical theatre**, off by default |
-| Role | Whether this page opens for you, including whether an owner hid **Theatre** from your role under [Role navigation](/hospital/settings/role-navigation) |
-| Two-factor | Whether the records load — a verified session is required for theatre history |
+| Role | Nothing on the page itself — it has no role check. With [Role navigation](/hospital/settings/role-navigation) switched on, no built-in role rule includes **Theatre**, so the group stays with owners and managers until you add it to a rule |
+| Two-factor | Whether the records load — but only in a hospital that requires two-factor for staff |
 
 Permissions then govern the acts you can perform on a case you have opened:
 
 | Action | Who by default | Permission |
 | --- | --- | --- |
-| Open and read a past case | Theatre staff | Governed by role and two-factor, not a separate permission |
+| Open and read a past case | Any staff member the Theatre group is shown to | Nothing — no role check and no permission on the read |
 | Write the operation note | Theatre staff | **Record the operation note** |
 | Sign the operation note | Surgeons | **Sign the operation note** |
 | Reschedule a live case found here | Theatre staff | **Book and reschedule cases** |
@@ -104,7 +104,7 @@ Enforcement is **opt-in per person**: someone never saved in the permissions she
 
 <AccordionGroup>
   <Accordion title="Two-factor verification is required to view theatre history.">
-    Your session is signed in but not second-factor verified. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
+    Your hospital requires two-factor and your session is signed in but not second-factor verified. Sign in again and complete your second factor — see [Two-factor authentication](/platform/security/mfa).
   </Accordion>
 
   <Accordion title="That range is too large to search. Choose a shorter period.">

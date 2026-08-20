@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans — each plan caps how many patients you can hold" roles="Every lab role can open it. Editing a record and deciding waitlist requests need Receptionist, Radiologist, Radiology Technician, Owner or Manager." />
+<Availability editions={['lims']} plans="All plans — no Diagnostics plan caps how many patients you can hold" roles="Every lab role can open it and add a patient. Editing a record and deciding waitlist requests exclude Lab Scientist, Phlebotomist and Accountant." />
 
 This is your patient register, and everything downstream hangs off it: a specimen is attached to a patient, and a result and a report carry that identity onto paper. A patient must exist here before you can raise an order against them.
 
@@ -21,7 +21,7 @@ This is your patient register, and everything downstream hangs off it: a specime
 
 The page opens on **Patients Management**, with the line "Register, view, and manage patient records across your clinic" underneath it.
 
-Four buttons sit top right: **Refresh**, **Import**, **Export** and **New Patient**. **Export** is greyed out until you have at least one patient, and **New Patient** greys out once you have reached your plan's patient limit.
+Four buttons sit top right: **Refresh**, **Import**, **Export** and **New Patient**. **Export** is greyed out until you have at least one patient. **New Patient** carries a plan-limit lock shared with the other editions, but every Diagnostics plan has an unlimited patient allowance, so on a lab workspace with a live subscription it never trips.
 
 Below that are six cards.
 
@@ -108,12 +108,15 @@ Role is the lever here too. The grantable lab permissions cover specimens, resul
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Patients** and use **View details** | Every lab role, including Lab Scientist and Phlebotomist | Role → route |
-| **New Patient**, **Edit**, **Import** | Receptionist, Radiologist, Radiology Technician, Owner, Manager | Role |
+| **New Patient** and **Import** | Anyone who can open the register | Role → route |
+| **Edit** an existing record | Owner, Manager, Receptionist, Radiologist, Radiology Technician, Doctor, Biller, Employee | Role |
 | **Approve request** / **Decline request** | The same people | Role |
 | **Send Consent** | Anyone who can open the register | Role → route |
-| **New Patient** once the plan cap is reached | Nobody — the button is disabled for everyone | Plan limit |
+| **Edit** as a Lab Scientist, Phlebotomist or Accountant | Nobody — the row opens read-only instead | Role |
 
-A **Lab Scientist** or **Phlebotomist** therefore reads the register but does not edit it — selecting a row opens the record read-only. That is by design: a name corrected at the bench is a name that no longer matches the request form. A **QC Officer** is review-only across the product for the same reason.
+A **Lab Scientist** or **Phlebotomist** therefore reads the register, and may add a patient, but cannot correct an existing one — selecting a row opens the record read-only. That is by design: a name corrected at the bench is a name that no longer matches the request form. An **Accountant** is outside the edit list for the same structural reason.
+
+**No Diagnostics plan limits patient numbers.** Starter Lab through Enterprise all carry an unlimited patient allowance, so the plan-cap wall on **New Patient** does not appear on a lab workspace with an active subscription. If you meet it, the subscription itself has lapsed — see [Change your plan](/platform/plans/change-plan).
 
 Two behaviours surprise people:
 
@@ -134,7 +137,7 @@ See [Permissions](/platform/team/permissions).
 
 <AccordionGroup>
   <Accordion title="New Patient is greyed out">
-    You have reached your plan's patient limit. Hovering the button shows the upgrade panel with your current plan and limit on it. See [Change your plan](/platform/plans/change-plan).
+    No Diagnostics plan caps patient numbers, so this is a subscription problem rather than a size problem — the lock reads a plan allowance and your workspace currently has no active one. Hovering the button shows the upgrade panel with the plan and limit it thinks you are on. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
   <Accordion title="Export does nothing / is disabled">

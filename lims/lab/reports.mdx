@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans. Releasing to a referring doctor through the referrer portal is a Business feature." roles="Anyone who can view the test can download its report. Releasing to a referrer needs “Release a report to a referrer”." />
+<Availability editions={['lims']} plans="All plans — the referrer portal is on every plan; only commission tracking needs Business Lab" roles="Anyone who can view the test can download its report. Signing it out needs “Verify and authorise results”." note="A referring doctor sees a result automatically once it is Completed — there is no release step" />
 
 A report is the document that leaves the building. It is produced from a completed test, so the work of getting it right happens on [Enter and verify results](/lims/lab/results) — this page covers producing it, finding it later, and getting it to whoever asked for the test.
 
@@ -60,9 +60,13 @@ The table carries a **Search reports...** box and a status filter of **All Statu
 
 ## Releasing to a referring doctor
 
-A doctor who sent you the patient sees results through the referrer portal, and putting a report in front of them is its own grant — **Release a report to a referrer**, "publish an authorised report to the referring clinic". The word *authorised* is doing work there: only a signed-out result belongs in someone else's portal.
+A doctor who sent you the patient sees results through the referrer portal, and there is **no separate release button**. The portal shows a clinical lab test the moment its status reaches **Completed** — signing the test out *is* the release, which is why the verify grant is the one that matters here. A test still pending or in progress is listed to the referrer without its result.
 
-The **Referrer Liaison** role exists for exactly this and carries portal access, report release and turnaround-time analytics together. Set the doctor up first — see [Referring doctors](/lims/business/referrers) — and, if you pay for referrals, [Referral commissions](/lims/business/commissions).
+So the thing to get right is the sign-out, not a hand-over: verify the test, and the referring doctor has it. Set the doctor up first — see [Referring doctors](/lims/business/referrers) — and, if you pay for referrals, [Referral commissions](/lims/business/commissions).
+
+<Note>
+  The permissions sheet offers **Release a report to a referrer**, and the **Referrer Liaison** role holds it by default. Nothing reads it — no screen in the product performs a per-report release. It is **Verify and authorise results** that decides whether a referrer can see a result.
+</Note>
 
 ## Who can do this
 
@@ -75,9 +79,9 @@ Role decides whether **Lab Reports** opens. Permission decides whether a report 
 | Sign the test out so the report is not preliminary | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 | Correct a report after it was authorised | **All sites**, or a named verifying scientist | Permission — **Amend a verified result** |
 | Open a referrer's account and statements | **Referrer Liaison**, **Lab Manager**, **All sites** | Permission — **Access the referrer portal** |
-| Release a report into a referrer's portal | **Referrer Liaison**, **Lab Manager**, **All sites** | Permission — **Release a report to a referrer** |
+| Put a result in front of the referring doctor | **Whole lab**, **All sites** | Permission — **Verify and authorise results**; there is no separate release act |
 
-Releasing is separated from producing on purpose: bench roles make the result, the liaison hands it over. A **Lab Scientist** holds neither referrer grant, and **a Lab Manager does not hold verify by default** — authorising a result arrives with the *access tier* (**Whole lab** or **All sites**), not with the administrative role. A **QC Officer** is review-only by design.
+**A Lab Manager does not hold verify by default** — authorising a result arrives with the *access tier* (**Whole lab** or **All sites**), not with the administrative role. That matters more than it looks: since signing out is what publishes the result to the referrer, the tier is what decides whether a referring doctor ever sees it. A **QC Officer** is review-only by design.
 
 Two behaviours surprise people:
 
@@ -112,8 +116,8 @@ See [Permissions](/platform/team/permissions).
     The period select filters everything on the page. Widen it to **All Time**, and clear the status filter, before assuming the report is gone.
   </Accordion>
 
-  <Accordion title="I cannot release to the referrer">
-    You do not hold **Release a report to a referrer**. An owner or manager can grant it, or assign the **Referrer Liaison** role — see [Permissions](/platform/team/permissions).
+  <Accordion title="The referring doctor cannot see the result">
+    There is no release button to press. The referrer portal shows a clinical lab test only once its status is **Completed**, so the test is still pending or in progress — or the doctor is not set up as a referrer on the order. Sign the test out (needs **Verify and authorise results**) and check the referrer on [Referring doctors](/lims/business/referrers).
   </Accordion>
 
   <Accordion title="This is a DOT report">

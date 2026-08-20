@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Records staff, owners and managers" note="Needs the Records care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member" note="Needs the Records care area · a hospital that requires two-factor needs a verified session" />
 
 **Records** is a triage queue, not a filing cabinet. It shows "What needs a person today. The full document ledger lives in Documents." If you are hunting for a specific document, go to Documents. If you are clearing what is outstanding, stay here.
 
@@ -89,18 +89,18 @@ Each queue shows only its first hundred rows: "Showing the first 100 conflicts. 
 
 ## Who can do this
 
-**Role** decides whether the desk opens. **Records** needs the **Records** care area in **Settings → Facility**, and on Enterprise an owner controls which roles see the **Records** group under **Settings → Role Navigation**.
+The desk checks no role of its own — anyone who can reach the **Records** group can open it. **Records** needs the **Records** care area in **Settings → Facility**, and an owner controls which roles see the group under **Settings → Role Navigation**. If your hospital requires two-factor and your session is not verified, the queues are replaced by "Two-factor verification is required to view records queues."
 
-**Permission** decides what you may do inside:
+No individual permission governs anything here — the document permissions in the staff sheet are recorded against a person but no screen reads them:
 
-| Action | Who by default | Permission |
+| Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open the desk and read the queues | Records staff, owners, managers | Role → route |
-| **Accept** or **Reject** a conflict | Records staff, owners, managers | Role → route |
+| Open the desk and read the queues | Any staff member the Records group is shown to | Role → route |
+| **Accept** or **Reject** a conflict | Anyone who can open the desk | Nothing |
 | Add coverage from a conflict | Whoever may edit a patient record | The patient's insurance tab |
-| **File it** on an unfiled upload | Records staff | **View all documents** |
-| Send or re-send for signature | Records and front-desk staff | **Share documents with clients** |
-| Change the chase thresholds | Owners | **Settings → Facility** |
+| **File it** on an unfiled upload | Anyone who can open the desk | Nothing |
+| Send or re-send for signature | Owners, managers, doctors, nurses, receptionists | The role list on [Documents](/hospital/records/documents) |
+| Change the chase thresholds | Owners and managers | **Settings → Facility** |
 
 Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not, so hiding **Records** from a role tidies a sidebar rather than securing anything.
 

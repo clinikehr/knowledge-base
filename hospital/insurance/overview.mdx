@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on." />
 
 **Insurance Management** is a register your hospital maintains itself: who your insurers are, what you have agreed to charge each of them, what their plans cover, and which patients hold a policy. Everything on the [Pre-authorization](/hospital/insurance/pre-authorization) and [Claims](/hospital/insurance/claims) screens is built from what you set up here.
 
@@ -95,16 +95,9 @@ A patient's own policy is captured from the request or claim you are raising, no
 
 ## Who can do this
 
-**Role** decides whether the screen opens at all. On Enterprise, an owner controls which roles reach **Insurance** under **Settings → Role Navigation** — by default the accountant and biller roles do, alongside owners and managers, and a role with no rule of its own is unrestricted.
+**Role Navigation** is what decides who gets here. The screens themselves check nothing — their old hardcoded role lists were retired — so anyone who can reach the **Insurance** group can use all of it. Under **Settings → Role Navigation** the accountant and biller roles reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
 
-**Permission** decides what a person may do once inside. The **Billing** section of your staff sheet carries these, in the product's own words:
-
-| Permission | What it is for |
-| --- | --- |
-| **File insurance claims** | Preparing and submitting a claim |
-| **Add insurance payments** | Recording a payer's settlement |
-| **Request coverage reports** | Pulling what a payer covers |
-| **Edit service fees** | Repricing what you charge |
+Your staff sheet's **Billing** section does carry **File insurance claims**, **Add insurance payments**, **Request coverage reports**, **Edit service fees** and **View financial dashboard**, and they are recorded against each person — but no insurance screen reads them, so they change nothing today. Restrict insurance at the **Role Navigation** layer instead.
 
 Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary.
 

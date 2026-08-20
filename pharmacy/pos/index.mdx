@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans; interaction screening needs Professional and above" roles="Anyone with 'Dispense and sell at the till'" />
+<Availability editions={['pharmacy']} plans="All plans; interaction screening needs Professional and above" roles="Anyone whose role reaches POS — a cashier included" note="Discounts, price overrides and reversals are separately gated; selling itself is not" />
 
 The point of sale is the screen your counter lives on. This page covers the whole flow from finding a product to completing the sale; payment, receipts, barcodes, held carts and offline selling each have their own page.
 
@@ -81,14 +81,14 @@ The header reads **Sales POS** with today's date, followed by two tiles for the 
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Ring up a sale and complete it | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
-| Open the drawer outside a sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Open the cash drawer** |
+| Ring up a sale and complete it | Anyone whose role reaches **POS**, a Cashier included | Role — selling is not permission-gated |
+| Open the drawer outside a sale | Anyone whose role reaches **POS** | Role — the toggle exists but nothing reads it yet |
 | Discount a line or the whole cart | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Discount beyond the set limit** |
 | Change an item's price on the sale in front of you | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
 | Refund or void a completed sale | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
-| Cash up and close the trading day | Pharmacy Manager, Dispensing Supervisor | **Cash up and close the day** |
+| Cash up and close the trading day | Anyone whose role reaches **POS** | Role — the toggle exists but nothing reads it yet |
 
-A default **Cashier** holds exactly two of these — **Dispense and sell at the till** and **Open the cash drawer**. Everything else at the counter is somebody else's authorisation, which is the point: the person taking the money is not the person who decides the price or reverses the sale.
+**Three of the till toggles are not wired to anything yet.** **Dispense and sell at the till**, **Open the cash drawer** and **Cash up and close the day** appear on a person's permissions sheet and can be switched off, but nothing in the product checks them today — reaching **POS** is the only gate on selling. The three that *are* enforced on the server are **Discount beyond the set limit**, **Override the selling price** and **Refund or void a sale**, and a default **Cashier** holds none of them. That is still the line that matters: the person taking the money is not the person who decides the price or reverses the sale.
 
 Two behaviours surprise people:
 

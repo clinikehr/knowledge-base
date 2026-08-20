@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Pharmacy staff; amending and voiding are for leads" note="Needs the In-house pharmacy care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants, pharmacists, doctors and nurses" note="Needs the In-house pharmacy care area · with Role Navigation on, no built-in role rule includes the Pharmacy Station" />
 
 **Sales** is the record of everything the pharmacy counter has rung up: what came in, what sold, who still owes, and every individual transaction with its receipt. It is where a shift is checked and a customer query is answered.
 
@@ -77,21 +77,21 @@ Both actions appear only on a sale at **Completed**, and they answer different q
 
 ## Who can do this
 
-**Role** decides whether the screen opens. **Sales** needs the **In-house pharmacy** care area, and on Enterprise an owner can hide the Pharmacy group from a role under **Settings → Role Navigation**.
+**Role** decides whether the screen opens: owners, managers, accountants, pharmacists, doctors and nurses pass, and everyone else is refused. **Sales** needs the **In-house pharmacy** care area, and an owner can hide the Pharmacy group from a role under **Settings → Role Navigation** — no built-in role rule reaches the Pharmacy Station, so switching it on takes this page away from your pharmacist until you add it to their rule.
 
-**Permission** decides what you may do here.
+Once you are in, nothing here is narrowed further. The refund and cost-visibility permissions belong to the standalone Pharmacy edition and are inert in a hospital workspace.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open Sales and search it | Anyone the role navigation lets in | Role → route |
+| Open Sales and search it | Owners, managers, accountants, pharmacists, doctors, nurses | Role — a fixed list on this page |
 | Reprint or download a receipt | The same people | Role → route |
-| **Edit sale** | Owners, managers and pharmacy leads | Role → route |
-| **Return / void all** | Owners, managers and pharmacy leads | Role → route |
-| See cost, margin and **Net position** | Owners and managers | The financial figures on this page |
+| **Edit sale** | Anyone who can open the page | Nothing |
+| **Return / void all** | Anyone who can open the page | Nothing |
+| See cost, margin and **Net position** | Anyone who can open the page | Nothing — the cost-and-margin permission is a Pharmacy-edition one and does not apply here |
 
 Two behaviours to know. Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And a **denied action is recorded**, while an allowed one is not; hiding this page from a role is convenience, not a security boundary.
 
-Where a money figure is not yours to see, the row or the column is withheld rather than shown as **0** — a zero would be a false statement about the day's takings.
+A standalone pharmacy can withhold cost and margin from a cashier, and where it does the row or column is left out rather than shown as **0**. A hospital workspace has no such switch, so everyone who can open this page sees every figure on it.
 
 ## Check it worked
 

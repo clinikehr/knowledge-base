@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Included from Starter Lab. Expiry-risk figures need Professional Lab; its recommendations need Business Lab." roles="Owner, Manager, Lab Manager, Lab Scientist and anyone else who reaches the lab bench" />
+<Availability editions={['lims']} plans="Included from Starter Lab. Expiry-risk figures need Professional Lab; its recommendations need Business Lab." roles="Owner, Manager, Lab Scientist and the business roles. A Phlebotomist, Receptionist or imaging role does not reach Inventory." />
 
 **A new reagent lot arrives quarantined.** It is received, it is on the shelf, it shows in your stock — and it cannot be used until someone validates it against the lot in service. Labs that do not know this spend a week wondering why good stock is unusable. It is waiting on the **Validation** tab.
 
@@ -108,10 +108,11 @@ This screen is governed by **role**, not by the Diagnostics permission list, whi
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Reagents & Inventory** | Owner, Manager, **Lab Manager**, **Lab Scientist**, **Phlebotomist** | Role → route |
+| Open **Reagents & Inventory** | Owner, Manager, **Lab Scientist**, and the business roles (Doctor, Biller, Accountant, Employee) | Role → route |
 | Add an item, receive stock, run a count, set a test's **Reagents consumed** | The same people | Role → route |
 | **Validate** a quarantined lot | The same people — record the **Reviewer** who signed it off | Role → route |
-| See the **Reagents** and **Expiry Risk** reports | Owner, Manager and management roles | Role → route — see [The report catalogue](/lims/business/analytics) |
+| See the **Reagents** and **Expiry Risk** reports | Owner, Manager and the business roles | Role → route — see [The report catalogue](/lims/business/analytics) |
+| Open it as a Phlebotomist, Receptionist, Radiologist or Radiology Technician | Nobody — Inventory is not on their route list | Role → route |
 
 Nothing here is gated by **Enter results at the bench** or **Verify and authorise results**. Your local procedure, and the **Reviewer** field on the validation sheet, are what enforce who may sign a lot into patient use — not the software.
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Anyone with 'Dispense and sell at the till'" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches POS; discounts and price overrides need their own permissions" />
 
 The payment summary is the bottom-right card on the till. It totals the cart, takes the tender and completes the sale.
 
@@ -92,15 +92,15 @@ The outstanding amount then appears in the **Debtors** sheet on the [Sales page]
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Take any tender and complete the sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
-| Take part payment on credit | Anyone who can complete a sale | **Dispense and sell at the till** |
+| Take any tender and complete the sale | Anyone whose role reaches **POS**, a Cashier included | Role — taking payment is not permission-gated |
+| Take part payment on credit | Anyone who can complete a sale | Role — not permission-gated |
 | Discount the sale before taking payment | Pharmacy Manager, Dispensing Supervisor | **Discount beyond the set limit** |
 | Change an item's price on this sale | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
-| Open the drawer outside a sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Open the cash drawer** |
+| Open the drawer outside a sale | Anyone whose role reaches **POS** | Role — the toggle exists but nothing reads it yet |
 | Reverse a payment after the fact | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
-| Count the drawer and close the day | Pharmacy Manager, Dispensing Supervisor | **Cash up and close the day** |
+| Count the drawer and close the day | Anyone whose role reaches **POS** | Role — the toggle exists but nothing reads it yet |
 
-Taking money and *deciding how much* are deliberately different permissions. A default **Cashier** can take every tender in the list but cannot discount, override a price or reverse anything.
+Taking money and *deciding how much* are deliberately different. Taking a tender is not permission-gated at all — **Dispense and sell at the till**, **Open the cash drawer** and **Cash up and close the day** are on the permissions sheet but nothing checks them yet. What *is* checked on the server is the pricing: a default **Cashier** can take every tender in the list but cannot discount, override a price or reverse anything.
 
 Two behaviours surprise people:
 

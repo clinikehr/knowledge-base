@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Staff who can open Transfers — not a cashier" note="Needs a second pharmacy branch under the same owner" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches Transfers — not a cashier; no permission gates the move" note="Needs a second pharmacy branch under the same owner" />
 
 **Branch transfers** moves stock from this pharmacy to another pharmacy you own — "Move stock between your pharmacy branches." The sending branch loses the stock on dispatch; the receiving branch gains it when someone there confirms it arrived.
 
@@ -87,17 +87,17 @@ Each row carries a transfer number and a status badge. A dispatched transfer rea
 
 ## Who can do this
 
-**Role** decides whether **Transfers** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, so this screen is not theirs at any tier. **Permission** is the vocabulary an owner grants in: **Transfer stock between branches** — "Send and receive stock moves across the business" — is the one that names this act.
+**Role** decides whether **Transfers** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, so this screen is not theirs at any tier. **There is no permission gate on the move itself.** **Transfer stock between branches** — "Send and receive stock moves across the business" — is the *vocabulary* an owner grants in, and it names the act, but nothing on the server checks it: dispatch and receipt are authorised by clinic membership alone. The only thing that disables **Transfer to branch** is having no second branch to send to.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Transfers** and read both cards | Anyone whose role reaches the screen | Role — the screen itself is not separately gated |
-| Dispatch with **Transfer to branch** | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
-| **Receive** an incoming transfer | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
-| Receive a supplier delivery instead | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Dispatch with **Transfer to branch** | Anyone whose role reaches the screen | Role — the toggle exists but nothing reads it yet |
+| **Receive** an incoming transfer | Anyone whose role reaches the screen | Role — the toggle exists but nothing reads it yet |
+| Receive a supplier delivery instead | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
 | See what the transferred stock cost | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 
-Two roles are deliberately outside it. A **Dispensing Supervisor** holds the till authorisations — refunds, price overrides, the controlled-drug countersignature — and none of the stock ones, so they cannot dispatch. A **Cashier / Till Operator** holds only **Dispense and sell at the till** and **Open the cash drawer**.
+Two role bundles are deliberately outside that vocabulary. A **Dispensing Supervisor** holds the till authorisations — refunds, price overrides, the controlled-drug countersignature — and none of the stock ones. A **Cashier / Till Operator** holds only **Dispense and sell at the till** and **Open the cash drawer**. Read that as intent rather than as enforcement: because the stock toggles are not yet checked anywhere, what actually keeps a cashier off this screen is their *role*, not the missing permission.
 
 Access tier is the other half of the picture: only **All branches** carries **Transfer stock between branches** by default. **Whole branch** carries **Receive deliveries into stock** and **Adjust stock counts** but not the cross-branch move, which is the correct default — a branch move is a decision about the business, not about one counter.
 

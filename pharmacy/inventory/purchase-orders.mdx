@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans, with a purchase-order quota on Starter" roles="Staff with the manage suppliers and purchase orders permission" />
+<Availability editions={['pharmacy']} plans="All paid plans, uncapped; a pharmacy with no active subscription is capped at 5 purchase orders" roles="Staff with the manage suppliers and purchase orders permission" />
 
 A purchase order is what you send a supplier and what you receive against when the delivery arrives. Raising one from ClinikEHR means the received quantities, the costs and the lots all land back on the same document instead of on a printout somebody has to reconcile later.
 
@@ -23,7 +23,7 @@ A purchase order is what you send a supplier and what you receive against when t
 
 Two of those three buttons are permission-locked. Without **Manage suppliers and purchase orders**, **New PO** and **Draft PO from these** are visible but disabled, with the reason attached: "Needs authorisation — buying on the clinic's account is purchasing authority. Ask your clinic owner to allow “Manage suppliers and purchase orders” for you." **Vendors** stays open to everyone and simply opens read-only — it is also the picker you use when receiving stock.
 
-A pharmacy that has never ordered anything sees an empty list and, on the Starter plan, a **Free plan** strip counting purchase orders against the cap.
+A pharmacy that has never ordered anything sees an empty list, and — only when it has no active paid subscription — a **Free plan** strip counting purchase orders against a cap of five. Every paid pharmacy plan, Starter upward, is uncapped.
 
 ## Raise a purchase order
 
@@ -89,7 +89,7 @@ Each row can be downloaded or printed as a PDF for the supplier file.
 | Read the **Purchasing** tab and open a PO | Everyone who can open **Inventory** | Role |
 | Open **Vendors** and read a supplier | Everyone who can open **Inventory** | Role — the sheet degrades to read-only |
 | **New PO**, **Draft PO from these**, editing a supplier | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
-| Receive a delivery against a PO line | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Receive a delivery against a PO line | Anyone whose role reaches **Inventory** | Role — receiving is deliberately outside the purchasing permission |
 | See negotiated unit costs and supplier account numbers | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
 | See margin on a voucher line | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 
@@ -116,7 +116,7 @@ See [Staff permissions](/platform/team/permissions).
 
 <AccordionGroup>
   <Accordion title="New PO is greyed out">
-    Either you do not hold **Manage suppliers and purchase orders** — hover it and the tooltip says so — or you are at your plan's purchase-order limit on Starter. The **Free plan** strip shows which.
+    Either you do not hold **Manage suppliers and purchase orders** — hover it and the tooltip says so — or your pharmacy has no active paid subscription and you are at the free tier's cap of five purchase orders. The **Free plan** strip shows which.
   </Accordion>
 
   <Accordion title="I can see vendors but cannot change them">

@@ -86,20 +86,21 @@ Two further rules are enforced for you and worth knowing before you meet them:
 
 ## Who can do this
 
-Role decides whether the module opens at all. Permission decides whether a particular act inside it is allowed — and in Diagnostics those permissions are real, grantable switches, not job titles.
+Role decides whether the module opens, who may raise an order, and who may book a specimen in. Permission takes over at the bench — from the screening readings onward, the Diagnostics grants are real, and they are what separate entering a reading from signing it out.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **DOT Testing** / **Lab Intake** | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
 | Set the workflow mode | Owner or Manager only | Role |
-| Accession an incoming specimen | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
-| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Raise an order or a new intake | Owner, Manager, Doctor, Nurse | Role — the form checks the job title |
+| Accession an incoming specimen | Owner, Manager, Doctor | Role — see [Accession an incoming specimen](/lims/lab/accessioning) |
+| Reject an unsuitable specimen | The same people | Role — it is the broken-seal branch of the same form |
 | Enter screen or confirmation readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
 | Finalize a screen, or finalize a lab report | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 | Amend something already reported | **All sites** | Permission — **Amend a verified result** |
-| Release a report to a referring practice | **Lab Manager**, **Referrer Liaison**, **All sites** | Permission — **Release a report to a referrer** |
+| Put a report in a referring practice's portal | **Whole lab**, **All sites** | Permission — **Verify and authorise results**; there is no separate release act |
 
-A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, because authorising a result is a scientist's act rather than a manager's. A **QC Officer** is review-only by design. A **phlebotomist** reaches test requests, the drug-testing queue and patients, and nothing else.
+A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, because authorising a result is a scientist's act rather than a manager's. A **QC Officer** is review-only by design. A **phlebotomist** reaches test requests, the drug-testing queue and patients, and nothing else — and reaching the queue is not the same as being able to work it: the order and accession forms apply their own job-title check on save.
 
 - **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
 - **A denied action is recorded; an allowed one is not.** Hiding a row from a sidebar is a convenience, not a security boundary.

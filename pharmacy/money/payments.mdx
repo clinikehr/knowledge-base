@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier or a pharmacy technician; voiding is owner, manager or accountant" />
 
 In a pharmacy the till is where money arrives, so **Payments** is the screen for the exceptions: an account customer settling later, an institutional buyer paying against an invoice, a delivery billed after the goods went out. If you came here looking for the day's takings, you are on the wrong screen — that is [the sales dashboard](/pharmacy/money/sales).
 
@@ -97,11 +97,11 @@ This is the usual route, and it starts on the invoice, not here.
 
 ## Who can do this
 
-**Role** decides whether **Billing** opens at all. **Permission** decides what you may do once it does.
+**Role** decides whether **Billing** opens at all: a **Cashier / Till Operator** reaches only **POS** and **Sales**, and a **Pharmacy Technician**'s sidebar stops at the counter and the stockroom. **Permission** decides what you may do once it does.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Payments** at all | Owner, manager, Pharmacy Manager | Role — a **Cashier / Till Operator** reaches only **POS** and **Sales** |
+| Open **Payments** at all | Any role except a Cashier or a Pharmacy Technician | Role — neither of those two has **Billing** in their sidebar |
 | **New Payment**, **Record Payment** | Everyone who can open **Billing** | Role |
 | **Void Payment** | Owner, manager or accountant only | Role, checked on the server |
 | See the money tiles on **Overview** | Pharmacy Manager | **View the net position** |
