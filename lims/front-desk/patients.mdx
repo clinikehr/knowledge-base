@@ -1,0 +1,188 @@
+---
+title: Patients
+description: "The register every sample, result and report attaches to — search it, import into it, and approve the requests waiting on your waitlist."
+icon: /images/icons/address-book.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans — each plan caps how many patients you can hold" roles="Every lab role can open it. Editing a record and deciding waitlist requests need Receptionist, Radiologist, Radiology Technician, Owner or Manager." />
+
+This is your patient register, and everything downstream hangs off it: a specimen is attached to a patient, and a result and a report carry that identity onto paper. A patient must exist here before you can raise an order against them.
+
+<Path steps={['Sidebar', 'Patients']} />
+
+<TaskHeader before="Nothing — this is usually the first thing a new lab fills in" time="A minute per patient, or one import for an existing list" after="A register you can raise test requests against" />
+
+## What you're looking at
+
+The page opens on **Patients Management**, with the line "Register, view, and manage patient records across your clinic" underneath it.
+
+Four buttons sit top right: **Refresh**, **Import**, **Export** and **New Patient**. **Export** is greyed out until you have at least one patient, and **New Patient** greys out once you have reached your plan's patient limit.
+
+Below that are six cards.
+
+| Card | What it counts |
+| --- | --- |
+| **Total Patients** | Everyone registered |
+| **New Patients** | "Last 30 days" |
+| **Active Patients** | "With recent activity" |
+| **Consultations** | Consultations in the last 30 days |
+| **Triages** | Triages in the last 30 days |
+| **Top Blood Type** | The most common blood type on file |
+
+**Consultations** and **Triages** count clinical work a diagnostic centre does not record, so in most labs they sit at zero and stay there. That is expected, not a fault.
+
+Two tabs follow: **All Patients** is the register itself, **Analytics** breaks it down by gender, age, country and chronic conditions.
+
+**The register's toolbar** has **Search patients...**, a **Waitlist** toggle that shows only self-registered requests awaiting a decision, and **Columns**, which lists every column under **Visible Columns**. **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit** are shown by default. **Lab Tests**, **Blood Type**, **Genotype**, **Email**, **Occupation**, **Country**, **Triages** and **Prescriptions** are hidden until you switch them on — turn on **Lab Tests** if you want to see at a glance who your repeat testers are.
+
+**Each row's menu** offers **View details**, **Edit**, **Send Consent**, and on a waitlist row, **Approve request** and **Decline request**.
+
+**The empty state.** A brand-new lab does not get a blank table. It gets a panel headed "Your patient registry is empty" with a primary button, **Explore with sample patients** — "About 60 seconds · nothing is saved to your clinic" — plus two cards, **Import patients** and **Add your first patient**. A green note underneath makes the promise explicit: "We never auto-create patient records on your behalf." Nothing in this register exists unless a person put it there.
+
+<AuditNote action="Opening a patient record" />
+
+## Register a patient
+
+<Steps>
+  <Step title="Start the record">
+    Select **New Patient**. The intake form opens with **Personal Information**, **Contact Information** and **Medical Profile** sections.
+  </Step>
+  <Step title="Get the identity right">
+    Name, gender and date of birth print on every report you release. A report carrying the wrong identity is the one error this workflow cannot absorb, so check them against an ID document rather than a spelling on a request form.
+  </Step>
+  <Step title="Save">
+    The patient appears in the register and can be selected on a test request straight away.
+  </Step>
+</Steps>
+
+The full field-by-field walkthrough is on [Register your first patient](/lims/get-started/first-patient). Once the record exists, raise the order from [Raise a test request](/lims/lab/test-requests).
+
+## Bring an existing list in
+
+<Steps>
+  <Step title="Open the importer">
+    Select **Import**. On an empty register the **Import patients** card does the same thing — "Bring an existing list in from a CSV".
+  </Step>
+  <Step title="Match your columns and import">
+    Every row is registered as a real patient record, with the same checks as a record typed at the desk.
+  </Step>
+  <Step title="Check the count">
+    **Total Patients** should rise by the number of rows you brought in. If it rises by fewer, some rows were rejected — usually a missing name or an unreadable date of birth.
+  </Step>
+</Steps>
+
+**Export** does the reverse for the register you already hold, and stays disabled while the register is empty.
+
+## Decide a waitlist request
+
+Patients who register themselves land on the waitlist rather than straight into your register, so somebody at the desk sees them before a sample is ever attached.
+
+<Steps>
+  <Step title="Show the queue">
+    Select **Waitlist**. The button turns amber and the register narrows to requests awaiting a decision. Select it again to clear the filter.
+  </Step>
+  <Step title="Open the row menu">
+    Choose **Approve request** or **Decline request**.
+  </Step>
+  <Step title="Decide on portal access before you approve">
+    **Approve** opens a dialog explaining that the person will "become an active patient in your clinic", with a checkbox, **Enable client portal access** — "Lets them sign in via magic link to view records, book appointments, and message your team." Clear it if they should not get a login. Then select **Approve**.
+  </Step>
+  <Step title="Or decline it">
+    **Decline** archives the request and removes it from the waitlist. The dialog says plainly that this "does not notify the requester", so call or email them yourself if they are expecting an answer.
+  </Step>
+</Steps>
+
+<Warning>
+  **Enable client portal access** arrives already ticked. Approve without looking and you have handed that person a login that shows their records and lets them message your team. Clear the checkbox first whenever portal access is not what you intend.
+</Warning>
+
+## Who can do this
+
+Role is the lever here too. The grantable lab permissions cover specimens, results, quality and referrers — **Accession an incoming specimen**, **Enter results at the bench**, **Verify and authorise results**, **Review QC runs**, **Access the referrer portal** and the rest — and none of them governs the patient register. What differs between people is which actions their role allows.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Patients** and use **View details** | Every lab role, including Lab Scientist and Phlebotomist | Role → route |
+| **New Patient**, **Edit**, **Import** | Receptionist, Radiologist, Radiology Technician, Owner, Manager | Role |
+| **Approve request** / **Decline request** | The same people | Role |
+| **Send Consent** | Anyone who can open the register | Role → route |
+| **New Patient** once the plan cap is reached | Nobody — the button is disabled for everyone | Plan limit |
+
+A **Lab Scientist** or **Phlebotomist** therefore reads the register but does not edit it — selecting a row opens the record read-only. That is by design: a name corrected at the bench is a name that no longer matches the request form. A **QC Officer** is review-only across the product for the same reason.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Where a figure is not yours to see it renders as a dash or the row disappears — never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The patient appears in the register, with a **Patient ID** on their row.
+- **Total Patients** has gone up by one, and **New Patients** counts them under "Last 30 days".
+- Searching their surname in **Search patients...** finds them.
+- They can be selected as the patient on a new test request.
+- After approving a waitlist request, the **Waitlist** filter no longer shows them and the register does.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="New Patient is greyed out">
+    You have reached your plan's patient limit. Hovering the button shows the upgrade panel with your current plan and limit on it. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Export does nothing / is disabled">
+    **Export** stays disabled while the register is empty. Register or import at least one patient first.
+  </Accordion>
+
+  <Accordion title="The patient is not in the list">
+    Check three things in order: the **Waitlist** filter is not still on, the search box is empty, and the record was actually saved rather than left open in the form. A self-registered patient sits on the waitlist until somebody approves them.
+  </Accordion>
+
+  <Accordion title="Selecting a row opens the record read-only">
+    Your role can view but not edit — Lab Scientists and Phlebotomists read the register rather than change it. Ask the front desk or a manager to make the correction.
+  </Accordion>
+
+  <Accordion title="I approved someone and they now have a portal login">
+    **Enable client portal access** is ticked by default in the approve dialog. Turn their portal access off in the patient's record, and clear the checkbox on the next approval.
+  </Accordion>
+
+  <Accordion title="Consultations and Triages are always zero">
+    They count clinical activity a diagnostic centre does not record. Use **Lab Tests** — switch the column on under **Columns** — for the number that means something in a lab.
+  </Accordion>
+
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I have to register a patient before raising an order?">
+    Yes. A test request is raised against a patient record, and the specimen, the result and the report all carry that identity. Register them first, then order.
+  </Accordion>
+
+  <Accordion title="Are the sample patients real records?">
+    No. **Explore with sample patients** is a 60-second tour and "nothing is saved to your clinic". ClinikEHR never auto-creates patient records, so your register stays exactly as you left it.
+  </Accordion>
+
+  <Accordion title="Does declining a request tell the person?">
+    No. The dialog states that declining "does not notify the requester" — it archives the request and removes it from the waitlist. Contact them yourself if they are waiting on an answer.
+  </Accordion>
+
+  <Accordion title="What is the Category column?">
+    It is the patient type on the record — whether they are registered in their own right or linked to a sponsor, such as a parent or an employer account paying for them.
+  </Accordion>
+
+  <Accordion title="Can I put a patient in without a phone number or an email?">
+    You can, but a contact number is what lets you call a critical result through instead of waiting for someone to open a report. Add one wherever you have it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the patient register" />
+
+{/* source of truth: components/clinic/patients-management/patient-management-dashboard.tsx, .../enhanced-patients-table.tsx, .../table-columns.ts, components/clinic/clients-management/patients-empty-state.tsx, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

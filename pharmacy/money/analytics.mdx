@@ -1,67 +1,27 @@
 ---
-title: Reports and the executive dashboard
-description: "Run the pharmacy report set, export any view to CSV or Excel, and read the owner's remote view of the business."
+title: Run a report
+description: "Pick one of the eleven pharmacy reports, read it over a period you choose, and export the view to CSV or Excel."
 icon: /images/icons/chart-column.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="Executive needs Professional and above; Analytics on all plans" roles="Some scopes need their own permission" />
+<Availability editions={['pharmacy']} plans="All plans; Expiry Risk needs Professional" roles="Not reachable by a cashier; one scope needs its own permission" />
 
-Two screens answer the "how is the business doing?" question, and they are not the same tool. **Executive** is a glance — today, this week, per branch. **Analytics** is the workbench — pick a report, pick a period, read it, export it.
+**Analytics** is the report workbench: pick a report, pick a period, read the tiles and charts, export the table. If you want a glance at today rather than a report over a period, that is the [executive dashboard](/pharmacy/money/executive) instead.
 
-<Columns cols={2}>
-  <Card title="Executive" icon="/images/icons/briefcase.svg">
-    <Path steps={['Sidebar', 'Executive']} />
+<Path steps={['Sidebar', 'Analytics']} />
 
-    The owner's remote view. Today's numbers, alerts, and four quick reports.
-  </Card>
+<TaskHeader before="Some trading history — a brand-new pharmacy has nothing to aggregate" time="Under a minute per report" after="A report on screen, and a spreadsheet copy if you need one" />
 
-  <Card title="Analytics" icon="/images/icons/table.svg">
-    <Path steps={['Sidebar', 'Analytics']} />
+## What you're looking at
 
-    Eleven reports over a period you choose, each with an export.
-  </Card>
-</Columns>
+**Analytics** opens on an index of report cards, grouped **Clinical**, **Operations** and **Money**. The list is generated from what your pharmacy can actually populate, so nothing clinical appears — a pharmacy has no wards or consultations to report on, and those reports do not exist for you rather than sitting empty.
 
-## The executive dashboard
-
-The heading reads **Today at a glance** with today's date. Run more than one branch and it becomes **All branches** or the branch you have selected, with a branch select alongside.
-
-Underneath: today's and this week's tiles, and the headline **Today's net (revenue − cost − expenses)**. That figure is only as good as your recorded running costs — see [Track expenses and your net position](/pharmacy/money/expenses).
-
-With several branches you also get a **By branch** card, listing each one with its sales count and net. Select a branch to switch the whole page to it.
-
-**Revenue mix this week** splits takings between **Medication \{n\}%** and **Retail \{n\}%**. It appears only once both sides have sold something — a bar reading 100% / 0% tells you nothing you did not already know.
-
-### The Reports card
-
-A range select — **Today**, **7 days**, **1 month**, **3 months**, **6 months**, **All time** — and four tabs:
-
-| Tab | Answers |
-| --- | --- |
-| **Top products** | What is actually moving |
-| **Sales Report** | Takings day by day |
-| **Customer Report** | Who spends, and how much |
-| **Payment Methods** | Cash versus card versus everything else |
-
-Each has **Export Excel**, which is the fastest way to get a shareable copy of any of the four.
-
-### Plan gating
-
-Executive needs the **Professional** plan. Below that the entire page is one card:
-
-> **Executive dashboard** — Available on Professional and above — Upgrade to get the owner's remote view of your pharmacy.
-
-The multi-branch roll-up needs more again: the multi-branch reports feature **and** more than one branch on your account. With a single branch you get the single-pharmacy view, which is the right view for a single pharmacy. See [Change your plan](/platform/plans/change-plan).
-
-## The Analytics workbench
-
-**Analytics** lists every report your pharmacy can populate. Nothing clinical appears — a pharmacy has no wards or consultations to report on, so those reports do not exist for you rather than sitting empty.
-
-| Report | What it covers | Scopes |
+| Report | What it covers | Scope tabs |
 | --- | --- | --- |
 | **Revenue** | Invoiced and paid money | **Invoices** · **Payments** |
 | **POS Sales** | Till takings and payment mix, net of refunds | **Takings** · **Transactions** · **By cashier** |
@@ -75,13 +35,46 @@ The multi-branch roll-up needs more again: the multi-branch reports feature **an
 | **Expiry & Waste** | Stock actually written off in the period | — |
 | **Predictive Analysis** | Demand, revenue and stock forecasts | — |
 
-### Expiry Risk and Expiry & Waste are not the same report
+Open one and every report has the same shape, which is the point of one workbench: a period select, scope tabs where the report has them, summary tiles, a chart over time, a breakdown chart, and a data table with **Over time**, **Breakdown** and **Summary** views plus an **Export** button.
 
-These two are confused constantly, so read this once:
+**A report with nothing in it says so rather than drawing an empty chart** — "Nothing to tabulate", with "This report returned no rows for \{period\}." underneath. On a new pharmacy that is the normal answer, not a fault.
+
+## Read a report
+
+<Steps>
+  <Step title="Choose a report from the index">
+    Select its card. The workbench opens on the **Last 30 days**.
+  </Step>
+  <Step title="Set the period">
+    The select offers **Last 30 days**, **Last 90 days** and **Last 12 months**. There are three, deliberately — a free-form date range on an aggregate invites comparisons between windows of different lengths.
+  </Step>
+  <Step title="Pick a scope, if the report has tabs">
+    **Revenue** splits **Invoices** (what you billed) from **Payments** (what actually arrived). **POS Sales** splits **Takings**, **Transactions** and **By cashier**. A report with one scope shows no tabs at all.
+  </Step>
+  <Step title="Read the tiles first, then the charts">
+    The tiles are the period's totals; the time chart is the shape; the breakdown chart is the split. The footer states the rule everyone eventually trips over: "Figures are aggregates for the selected period. Periods longer than 12 months are shortened server-side."
+  </Step>
+  <Step title="Switch the table view if you need the numbers">
+    **Over time**, **Breakdown** and **Summary** are three tabulations of the same report — pick the one you want to export before you export it.
+  </Step>
+</Steps>
+
+## Export it
+
+Select **Export** above the data table:
+
+- **CSV — this view** — exactly the rows on screen. The toast reads **Exported** — "\{n\} rows · \{period\}. Opens in Excel, Numbers or Sheets."
+- **Excel (.xlsx) — this view** — a formatted workbook, built for you and downloaded. Its toast reads **Exported** — "Excel workbook · \{period\}."
+
+"This view" is literal: you get the table tab you are looking at, over the period you have selected, and nothing else. If the workbook cannot be built you get **Not exported** with the reason.
+
+## Expiry Risk and Expiry & Waste are not the same report
+
+These two are confused constantly, so read this once.
 
 <Columns cols={2}>
   <Card title="Expiry Risk — the future" icon="/images/icons/triangle-exclamation.svg">
-    A **snapshot**. What is on your shelves right now that will not sell through before it expires. It has **no date picker** at all — the header simply says **As it stands now**, because a period control that changed nothing would be a lie you could not see. Act on it: discount, transfer, return.
+    A **snapshot**. What is on your shelves right now that will not sell through before it expires. It has **no period select** at all — in its place the header reads **As it stands now**, because a period control that changed nothing would be a lie you could not see. Act on it: discount, transfer, return.
   </Card>
 
   <Card title="Expiry & Waste — the past" icon="/images/icons/trash-can.svg">
@@ -89,57 +82,97 @@ These two are confused constantly, so read this once:
   </Card>
 </Columns>
 
-### Reading a report
+**Expiry Risk needs the Professional plan.** Below that the report is not offered on the index — see [Change your plan](/platform/plans/change-plan). The recommendations that go with it — discount-to-clear targets, supplier returns, transfers to the branch where an item still sells — are a **Business** feature and appear on the expiry-risk panel in [Inventory](/pharmacy/inventory/batches-and-expiry), not in this report.
 
-Every report has the same shape, which is the point of having one workbench: a period select (**Last 30 days**, **Last 90 days**, **Last 12 months**), optional scope tabs, summary tiles, a chart over time, a breakdown chart, and a data table.
+## Who can do this
 
-Periods longer than twelve months are shortened, and the page says so: "Figures are aggregates for the selected period. Periods longer than 12 months are shortened server-side."
+**Role** decides whether **Analytics** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, and a pharmacy technician's sidebar stops before the money screens — neither of them has this entry. **Permission** decides one scope tab inside it.
 
-### Exporting
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Analytics** and any report | Pharmacy Manager, Inventory & Purchasing, Dispensing Supervisor | Role — not a grantable permission |
+| Change the period, switch scopes, read the charts | Everyone who can open the report | Role |
+| **Export** to CSV or Excel | Everyone who can open the report | Role — there is no separate export permission |
+| The **By cashier** scope on **POS Sales** | Nobody by default — granted per person, plus owners and managers | **View per-cashier takings** |
+| See **Expiry Risk** at all | Everyone, on **Professional** and above | Plan, not a permission |
 
-**Export** on the data table offers two:
+On top of the role bundle each person carries an access tier — **Own till**, **Whole branch** or **All branches** — which decides how much of the business their figures cover. Someone on **Own till** reads the same reports about a smaller slice of the pharmacy.
 
-- **CSV — this view** — exactly the rows on screen, opens in Excel, Numbers or Sheets.
-- **Excel (.xlsx) — this view** — a formatted workbook.
+**View per-cashier takings** is the one worth understanding, because it is granted to nobody by default. The till total and *who took it* are different questions, and only the second is colleague-performance visibility — so **POS Sales** stays open to everyone and just that tab is gated. **If the scope is not yours the workbench silently opens the first one you can see.** You are not told which tab is missing; if you expected **By cashier** and there is no tab strip at all, that is why.
 
-The toast tells you what you got: **Exported** — "\{n\} rows · \{period\}".
+Cost and margin figures are gated separately by **View cost prices and margin**, but that gate does not bite here — it governs [Inventory](/pharmacy/inventory/index) and the [sales dashboard](/pharmacy/money/sales), where it withholds the figure as **"Hidden — needs authorisation from your clinic owner."** rather than showing a zero.
 
-### Scopes you may not have
+Two behaviours surprise people:
 
-The **By cashier** scope on **POS Sales** needs the **View per-cashier takings** permission. The till total and _who took it_ are different questions, and only the second is colleague-performance visibility — so the report stays open to everyone and just that tab is gated.
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A scope quietly falling back is not a denied action and is not logged.
 
-If a scope is not yours, the workbench quietly opens the first one you can see rather than showing an error. You will not be told which tab you are missing; if you expect a tab that is not there, that is why. See [Staff permissions](/platform/team/permissions).
+See [Staff permissions](/platform/team/permissions).
 
 <AuditNote action="Opening a report" />
 
-## If something goes wrong
+## Check it worked
+
+- The tiles, both charts and the table all describe the same period as the select.
+- Switching scope changes the figures — **Invoices** and **Payments** on **Revenue** should rarely match exactly.
+- An export downloads a file whose row count matches the toast.
+
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="The Executive page is one card offering an upgrade">
-    Executive needs **Professional** or above. Everything on **Analytics** is still available to you. See [Change your plan](/platform/plans/change-plan).
-  </Accordion>
-
-  <Accordion title="No branch select, and no By branch card">
-    Both need the multi-branch reports feature and more than one branch. A single-branch pharmacy sees the single-branch view.
+  <Accordion title="'Nothing to tabulate'">
+    The report returned no rows for that period. Widen the period, or check you are on the scope you meant — **Payments** is empty until money is actually recorded, even when **Invoices** is not.
   </Accordion>
 
   <Accordion title="Expiry Risk has no date picker">
-    Correct. It is a snapshot of your shelves as they stand now. For a period-shaped view of what was written off, open **Expiry & Waste**.
+    Correct, and deliberate. It is a snapshot of your shelves as they stand now. For a period-shaped view of what was written off, open **Expiry & Waste**.
   </Accordion>
 
   <Accordion title="A report I expected is not listed">
-    The list is generated from what your pharmacy can actually populate, so a report you cannot fill is not offered. Some are also permission-gated — ask an owner or manager.
+    The index is generated from what your pharmacy can populate, so a report you cannot fill is not offered. **Expiry Risk** additionally needs **Professional** — see [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
-  <Accordion title="I want an export from the Sales page">
-    There is no export button there. Use the **Reports** card on **Executive**, or any report in **Analytics**. See [The sales dashboard](/pharmacy/money/sales).
+  <Accordion title="There is no By cashier tab">
+    You do not hold **View per-cashier takings**, so the workbench opened the first scope you can see instead. Ask an owner or manager to grant it.
+  </Accordion>
+
+  <Accordion title="'Not exported'">
+    The Excel workbook could not be built; the toast carries the reason. Take **CSV — this view** instead — it is produced in your browser and does not depend on the same step.
   </Accordion>
 
   <Accordion title="The exported file will not open properly">
     Take the Excel option rather than CSV if your spreadsheet mangles accents or currency symbols on import.
   </Accordion>
+
+  <Accordion title="I cannot see Analytics in the sidebar">
+    Your role does not reach the reporting screens. A cashier's sidebar is **POS** and **Sales** only. Ask an owner or manager to change your role — see [Staff permissions](/platform/team/permissions).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is Expiry Risk missing a date picker?">
+    Because it does not report on a period. It answers "what on my shelves is going to expire before it sells", which is true of this moment and nothing else. A period control that silently changed no figure would be worse than none, so the header says **As it stands now** instead.
+  </Accordion>
+
+  <Accordion title="Can I pick my own date range?">
+    No — the periods are **Last 30 days**, **Last 90 days** and **Last 12 months**. Anything longer is shortened, and the footer says so. For a specific window, export the view and filter it in your spreadsheet.
+  </Accordion>
+
+  <Accordion title="Why do Revenue and POS Sales disagree?">
+    They count different money. **POS Sales** is what the till took, net of refunds. **Revenue** is invoiced and paid money — the account and institutional side. A pharmacy that rarely invoices will see a large **POS Sales** figure and a small **Revenue** one, and that is correct.
+  </Accordion>
+
+  <Accordion title="Does exporting a report share it with anyone?">
+    No. The file downloads to the machine you are on. It does leave a record that you opened and exported the report, with your name and the time.
+  </Accordion>
+
+  <Accordion title="Where did the executive dashboard go?">
+    It has its own screen — **Executive** in the sidebar. Reports answer "how did the last 90 days go"; the executive dashboard answers "how is today going". See [the executive dashboard](/pharmacy/money/executive).
+  </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a report" />
 
-{/* source of truth: lib/analytics/report-catalog.ts, components/clinic/dashboard/analytics/ (report-workbench.tsx, report-data-table.tsx, analytics-index.tsx), components/clinic/dashboard/pharmacy-station/admin/ (admin-dashboard-content.tsx, admin-reports-tabs.tsx), lib/pharmacy-range.ts */}
+{/* source of truth: lib/analytics/report-catalog.ts (REPORT_CATALOG, availableReports, availableScopes), components/clinic/dashboard/analytics/ (report-workbench.tsx, report-data-table.tsx, analytics-index.tsx), lib/analytics/report-table.ts, hooks/use-pharmacy-features.ts, lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES) */}

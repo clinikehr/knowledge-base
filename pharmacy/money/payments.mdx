@@ -1,0 +1,179 @@
+---
+title: Payments
+description: "Record money that arrives away from the till — an account customer, an institutional buyer, a delivery billed later — and void a payment entered in error."
+icon: /images/icons/hand-coins.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+
+In a pharmacy the till is where money arrives, so **Payments** is the screen for the exceptions: an account customer settling later, an institutional buyer paying against an invoice, a delivery billed after the goods went out. If you came here looking for the day's takings, you are on the wrong screen — that is [the sales dashboard](/pharmacy/money/sales).
+
+<Path steps={['Sidebar', 'Billing', 'Payments']} />
+
+<TaskHeader before="A payment that did not go through the till, and the invoice or the outstanding items it settles" time="1–2 minutes" after="The money on the record, the balance reduced, and a receipt you can hand over" />
+
+<Note>
+  **This screen is shared with the other ClinikEHR editions, so its wording is clinic-flavoured.** You will meet "patient" and "clinic" where your pharmacy would say customer and pharmacy. It behaves exactly as described here — only the vocabulary has not been translated.
+</Note>
+
+## What you're looking at
+
+The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". Alongside it sit a date-range picker, **Refresh** and **New Payment**.
+
+Three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | Four tiles — **Total Collected** (all time), **Pending Balance** (with the number of customers outstanding), **Recent Payments** (last 7 days) and **Top Method** — then the **Payments by Method** chart over the last six months and a **Recent Activity** list |
+| **Payments** | Every payment received: **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**, with **Search payments...** and pagination |
+| **Pending** | Who still owes you — **Patient Name**, **Patient ID**, **Items**, **Oldest Item** and **Total Pending**, one row per customer |
+
+A voided payment stays in the list with its amount struck through and a red **Voided** badge; hover it to read the reason.
+
+**A pharmacy that has never invoiced sees zeroes and empty tabs, not an error.** **Top Method** reads **None** / "No payments recorded", the **Payments** tab reads "No payments found", and **Pending** says "No patients found matching your search with pending payments."
+
+The date-range picker in the header is decorative — it does not filter the tabs. Use the search box and the tab itself.
+
+## Record a payment against an invoice
+
+This is the usual route, and it starts on the invoice, not here.
+
+<Steps>
+  <Step title="Open the invoice's row menu">
+    Go to **Billing** › **Billing Dashboard**, **Invoices** tab, and open the menu on the invoice being settled. **Record Payment** appears only while the invoice is neither cancelled nor fully paid.
+  </Step>
+  <Step title="Check the amount">
+    The **Record Payment** dialog names the invoice and its balance due, and **Amount** is prefilled to that balance. Type a smaller figure for a part-payment — the invoice moves to **Partially Paid** and the remainder stays outstanding.
+  </Step>
+  <Step title="Set the method and reference">
+    **Payment Method** offers **Cash**, **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other**. **Reference (optional)** is where the transfer or receipt number goes — fill it in for anything that is not cash, because it is the only way to tie the money back to a bank line later. **Notes (optional)** takes anything else.
+  </Step>
+  <Step title="Select Record Payment">
+    The button reads **Recording…** while it saves, then a toast confirms **Payment recorded** and the invoice badge updates.
+  </Step>
+</Steps>
+
+## Record a payment with no invoice behind it
+
+**New Payment** opens the full payment form for money owed against items rather than a document.
+
+<Steps>
+  <Step title="Choose the customer">
+    **Patient Details** › **Select Patient**. The form only fills in once someone is chosen.
+  </Step>
+  <Step title="Pick what is being paid for">
+    **Payment Items** offers two routes: **Direct Payment** — tick outstanding items from **Pending**, **Services** or **Consultations** — or **Pay Invoice**, which lists that customer's open invoices. Each ticked item shows its outstanding balance and accepts a smaller figure for a part-payment.
+  </Step>
+  <Step title="Set the method">
+    **Payment Method** is a tile picker: **Cash**, **Card**, **Insurance**, **Mobile Money**, **Bank Transfer**, **Other**. Then **Amount to Pay**, **Reference (Optional)** and **Notes (Optional)**.
+  </Step>
+  <Step title="Submit">
+    The button carries the figure — **Process Patient Payment (…)**, or **Process Insurance Claim (…)** when the method is **Insurance**. It stays disabled until at least one item or an invoice is selected.
+  </Step>
+</Steps>
+
+## Void a payment entered in error
+
+<Steps>
+  <Step title="Find it on the Payments tab">
+    Search by customer, reference or invoice number, then open the row menu — **View Details**, **Receipt**, **Void Payment**. A payment already voided has no **Void Payment** entry.
+  </Step>
+  <Step title="Read the dialog and give a reason">
+    **Void this payment?** names the method, the amount and the invoice, and says the balance will be restored. **Reason (optional)** — "e.g. Recorded in error — already paid by card" — is worth filling in, because it is what a colleague sees when they hover the badge.
+  </Step>
+  <Step title="Confirm">
+    Select **Void payment**. A toast reads **Payment voided** — "The invoice balance has been restored."
+  </Step>
+</Steps>
+
+<Warning>
+  Voiding does not move money. It reverses the *record* only — the payment stays visible, struck through and badged **Voided**, and the invoice goes back to owing. Returning cash to a customer is a separate act at the till; see [Returns, voids and amendments](/pharmacy/pos/returns).
+</Warning>
+
+## Who can do this
+
+**Role** decides whether **Billing** opens at all. **Permission** decides what you may do once it does.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Payments** at all | Owner, manager, Pharmacy Manager | Role — a **Cashier / Till Operator** reaches only **POS** and **Sales** |
+| **New Payment**, **Record Payment** | Everyone who can open **Billing** | Role |
+| **Void Payment** | Owner, manager or accountant only | Role, checked on the server |
+| See the money tiles on **Overview** | Pharmacy Manager | **View the net position** |
+
+Voiding is the one hard stop here. Anyone else gets "Only a clinic owner, manager or accountant can void a payment."
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a screen from someone's sidebar is a convenience, not a boundary.
+
+Where a figure is gated it reads **"Hidden — needs authorisation from your clinic owner."** or the card is absent — never a zero, because a zero would be read as "we took nothing". See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The payment is on the **Payments** tab with today's date, the right method and your name under **Received By**.
+- The invoice badge reads **Paid** or **Partially Paid**, and **View Payments** on its row lists what came in.
+- **Pending Balance** on **Overview** has dropped by the amount, and the customer has left the **Pending** tab if they now owe nothing.
+- **Receipt** on the row menu produces a copy for the customer.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Only a clinic owner, manager or accountant can void a payment.'">
+    Voiding is restricted no matter what your sidebar shows. Ask an owner, a manager or whoever holds the accountant role to void it for you.
+  </Accordion>
+
+  <Accordion title="'You are not authorized to process payments.'">
+    The form could not match you to a staff record in this pharmacy. An owner needs to check your entry under **Settings** › **Team** — usually this is an invitation that was never fully accepted.
+  </Accordion>
+
+  <Accordion title="'Please select at least one item or service.' / 'Please select an invoice.'">
+    The submit button will not release until the form knows what the money is for. On **Direct Payment** tick at least one outstanding item; on **Pay Invoice** choose an invoice.
+  </Accordion>
+
+  <Accordion title="'This item might have been paid recently.'">
+    Somebody else has just taken money against the same item. Cancel out, refresh the **Payments** tab and check before recording it a second time.
+  </Accordion>
+
+  <Accordion title="Picking a date range changes nothing">
+    The picker beside **Refresh** does not drive the tabs — the tables read the whole record. Narrow with **Search payments...** instead, and use [Analytics](/pharmacy/money/analytics) when you want a period.
+  </Accordion>
+
+  <Accordion title="A payment I recorded is not on the sales dashboard">
+    Correct, and deliberate. This screen records money against invoices and outstanding items; the till records sales. They are different ledgers and neither one backfills the other.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is the day's takings not on this screen?">
+    Because counter sales do not pass through it. Everything rung up at the till lands on [Sales](/pharmacy/money/sales), which is where the day's revenue, the payment-method split and the receipt lookup live. **Payments** only holds money that arrived away from the counter.
+  </Accordion>
+
+  <Accordion title="Can I refund from here?">
+    No. **Void Payment** reverses a record; it does not return money and it does not put stock back. A refund to a customer is worked from the sale — see [Returns, voids and amendments](/pharmacy/pos/returns).
+  </Accordion>
+
+  <Accordion title="What is the difference between this and a customer's prepaid balance?">
+    A prepaid balance is money the customer has already given you to spend later, held on their account and drawn down at the till. A payment here settles something already owed. See [Money on account](/pharmacy/customers/wallet).
+  </Accordion>
+
+  <Accordion title="Can somebody pay part of an invoice?">
+    Yes. Type a smaller figure in **Amount** and the invoice moves to **Partially Paid** with the balance still outstanding. Record each instalment as its own payment so the reference on every one stays meaningful.
+  </Accordion>
+
+  <Accordion title="Does voiding delete the payment?">
+    No, and it is not meant to. The row stays, struck through, badged **Voided** and carrying its reason — "The record is kept for your books and audit trail." An invoice with a payment against it also cannot be deleted; cancel it instead.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="recording a payment" />
+
+{/* source of truth: components/clinic/dashboard/payments/ (payments-content-dashboard.tsx, payments-form.tsx, payments-table.tsx, pending-payments-table.tsx, payments-stats.tsx), components/clinic/dashboard/billing/invoice-actions.tsx, db/actions/billing.ts (voidPayment), lib/edition.ts (EDITION_ROLE_MODULES.pharmacy) */}

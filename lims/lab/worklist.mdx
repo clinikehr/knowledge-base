@@ -7,31 +7,37 @@ icon: /images/icons/list-check.svg
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Anyone granted “enter results at the bench”. Whole-lab and all-sites access include it." />
+<Availability editions={['lims']} plans="All plans" roles="Anyone granted “Enter results at the bench”. The Own bench, Whole lab and All sites tiers all include it." />
 
 <Note>
-  **The Worklist is the drug-testing bench queue.** If your lab runs only standard clinical work, it will be empty — and that is correct, not a fault. Clinical requests are worked from [Test requests](/lims/lab/test-requests) and the **Lab Station**.
+  **The Worklist is the drug-testing bench queue, and it reads drug-testing orders only.** A lab running standard clinical work will find it **empty** — and that is correct, not a fault. Clinical requests are worked from [Test requests](/lims/lab/test-requests) and the [Lab Reports](/lims/lab/reports) table.
 </Note>
 
-The **Worklist** puts every regulated specimen in one oldest-first list so the bench can see what is ageing, and lets you clear a run of negative oral-fluid screens in a single action. Its subtitle says the job out loud: "The bench queue, oldest first. Filter, select a batch, and mark received oral-fluid screens negative in one pass — urine and non-negatives go through the per-specimen forms."
+The **Worklist** puts every regulated specimen in one oldest-first list so the bench can see what is ageing, and lets you clear a run of negative oral-fluid screens in a single action.
 
 <Path steps={['Sidebar', 'Worklist']} />
 
 <TaskHeader before="Specimens accessioned and received, and a completed bench run to report from" time="Seconds for a batch; a minute per specimen otherwise" after="A queue filtered to what you are working, and negative screens recorded" />
 
-## Find what you are working on
+## What you're looking at
 
-Along the top, the status chips double as filters and carry live counts: **All**, **Lab intake**, **Collected**, **In transit**, **Received**, **Screening**, **Confirmed**. Alongside them are a search box (**Specimen ID, LAN or donor…**) and a specimen-type select offering **All specimen types**, **Oral fluid** and **Urine**.
+The heading is **Worklist** and the subtitle states the job: "The bench queue, oldest first. Filter, select a batch, and mark received oral-fluid screens negative in one pass — urine and non-negatives go through the per-specimen forms."
 
-The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel**, **Status** and **Received**. When nothing matches you get **Nothing in the queue for these filters.** — widen the filters before you assume something is lost.
+Along the top, the status chips double as filters and each carries a live count in brackets — **All**, **Lab intake**, **Collected**, **In transit**, **Received**, **Screening**, **Confirmed**. Beside them are a search box (**Specimen ID, LAN or donor…**), a specimen-type select offering **All specimen types**, **Oral fluid** and **Urine**, the **List** | **Rack** view toggle, and a refresh button with no label on it.
 
-## List or rack
+The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel** (shown as **\{n\} analytes**), **Status** and **Received**, with a tick box on each row.
 
-The **List | Rack** toggle switches the layout, and the rack density select offers 5, 6, 8, 10 or 12 per row.
+**The empty state.** When nothing matches you get **Nothing in the queue for these filters.** — widen the filters before you assume something is lost. A lab that runs no regulated collections sees that message on every filter, permanently.
 
-Rack view lays the current filter out FIFO and colours each well by status, so an ageing specimen is visible from across the bench. Its own caption is the thing to remember: "FIFO layout of the current filter — positions are a bench aid, not stored assignments. Click a well to select it for a batch action; double-click to open the specimen."
+<AuditNote action="Opening a specimen from the queue" />
+
+## Switch between list and rack
+
+**Rack** view lays the current filter out FIFO and colours each well by status, so an ageing specimen is visible from across the bench. A columns select appears next to the toggle in this view only, offering **5 / row**, **6 / row**, **8 / row**, **10 / row** and **12 / row**.
+
+The caption is the thing to remember: "FIFO layout of the current filter — positions are a bench aid, not stored assignments. Click a well to select it for a batch action; double-click to open the specimen."
 
 Nothing about a well is saved. Move the physical rack and the screen does not follow.
 
@@ -42,22 +48,24 @@ Nothing about a well is saved. Move the physical rack and the screen does not fo
     Select the **Received** chip and set the specimen-type select to **Oral fluid**. Batch screening only ever applies to received oral-fluid specimens.
   </Step>
   <Step title="Select the specimens">
-    Tick the rows, or click the wells in rack view. The action bar reports **\{n\} selected · \{n\} eligible for batch screen (received oral-fluid only)**. If those two numbers differ, something in your selection is not eligible.
+    Tick the rows, or click the wells in rack view. The action bar reads **\{n\} selected**, and adds **· \{n\} eligible for batch screen (received oral-fluid only)** whenever your selection contains something that is not eligible. **Clear** drops the selection.
   </Step>
   <Step title="Open the batch action">
-    Select **Mark batch negative (\{n\})**. The dialog reads **Mark \{n\} screens negative?**
+    Select **Mark batch negative (\{n\})**. The dialog opens as **Mark \{n\} screens negative?** and explains what it will do: "Records an all-negative initial immunoassay screen for every selected received oral-fluid specimen and finalizes each as a negative result."
   </Step>
   <Step title="Name the technician">
-    Enter the **Screening technician** — "Name as it should appear on the chain of custody". This is the name that will be read back in a challenge, so enter the person who ran the specimens.
+    Enter the **Screening technician** — the field prompts for the "Name as it should appear on the chain of custody". This is the name that will be read back in a challenge, so enter the person who ran the specimens. The submit button stays disabled until you do.
   </Step>
   <Step title="Record the screens">
-    Select **Record \{n\} negative screens**. The toast reads **\{n\} specimens screened negative** and the specimens move on.
+    Select **Record \{n\} negative screens**. It reads **Recording…** while it runs, then the toast reads **\{n\} specimens screened negative** and the specimens move on. Anything that failed is named individually so you can work it by hand.
   </Step>
 </Steps>
 
 <Warning>
-  Only do this after the bench run confirmed every one of these specimens screened negative — any specimen with a non-negative must go through its own screen form instead.
+  The dialog's own words are a compliance instruction, not a formality: "Only do this after the bench run confirmed every one of these specimens screened negative — any specimen with a non-negative must go through its own screen form instead." A batch attests to a negative screen for every specimen in it, under your named technician.
 </Warning>
+
+At most 100 specimens go in one batch — a larger selection returns **Batch too large — select at most 100 specimens**.
 
 ## Why urine is excluded
 
@@ -67,29 +75,60 @@ Batch negative is limited to oral fluid on purpose. Urine needs per-specimen val
 
 Selecting a row opens the order workflow sheet with **Workflow** and **Chain of Custody** tabs. The **Workflow** tab shows whichever form the current status calls for — accession, screen, confirmation — so you never have to know which step is next. See [Accession an incoming specimen](/lims/lab/accessioning).
 
+## Who can do this
+
+Role decides whether **Worklist** opens. Permission decides what you may do on the specimens in it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Worklist** and read the queue | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, lab scientists, phlebotomists | Role → route |
+| Accession a specimen from a row | **Accessioning Clerk**, **Lab Manager**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
+| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Record a screen, including **Mark batch negative** | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
+| Finalise the screen and decide how it is reported | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+
+The three access tiers do most of the work here. **Own bench** grants result entry only; **Whole lab** adds accessioning, rejection, verification and QC review at that site; **All sites** grants everything, everywhere. **A Lab Manager does not hold verify by default** — authorising a result is a scientist's clinical act, and it arrives with the *access tier*, not the administrative role.
+
+A **phlebotomist** reaches test requests, the intake queue and patients, and nothing else in the lab. A **lab scientist** reaches the whole bench but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — from then on they can only do what is switched on there.
+- **A denied action is recorded; an allowed one is not.** Where a figure is not yours to see it renders hidden or as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The specimens you batched have left the **Received** filter and the **Screening** count has moved by the same number.
 - Each one's **Chain of Custody** tab shows an Initial Immunoassay Screen event naming the technician you entered.
 - The counts on the status chips add up to the **All** count.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The Worklist is empty">
     Expected, if you do not run drug testing. Regulated collections populate this queue; clinical requests live in [Test requests](/lims/lab/test-requests).
   </Accordion>
 
-  <Accordion title="Mark batch negative is greyed out or counts zero eligible">
-    Your selection contains something other than a received oral-fluid specimen. Filter to **Received** and **Oral fluid** first, then reselect.
+  <Accordion title="Mark batch negative is greyed out, or counts zero eligible">
+    Your selection contains something other than a received oral-fluid specimen. Filter to **Received** and **Oral fluid** first, then reselect — the bar tells you how many of your selection qualify.
+  </Accordion>
+
+  <Accordion title="Batch too large — select at most 100 specimens">
+    A batch is capped at 100. Split the run and record it in two passes.
+  </Accordion>
+
+  <Accordion title="A few specimens failed inside the batch">
+    Each failure is toasted with its specimen ID and reason, and the rest still went through. The usual cause is a specimen whose status moved while you were selecting. Open those on their own.
   </Accordion>
 
   <Accordion title="A specimen screened non-negative">
-    Take it out of the batch and open it on its own. A non-negative goes to confirmation, never through the batch action.
+    Take it out of the batch and open it on its own. A non-negative goes to confirmation, never through the batch action — see [Screening and confirmation](/lims/dot/screening-and-confirmation).
   </Accordion>
 
-  <Accordion title="The rack positions do not match my bench">
-    They never will on their own — rack view is a FIFO drawing of the current filter, not a stored map of your physical rack.
+  <Accordion title="Everything on the bench is disabled">
+    You are at a collection centre, which shows **This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here.**
   </Accordion>
 
   <Accordion title="I entered the wrong screening technician">
@@ -97,6 +136,30 @@ Selecting a row opens the order workflow sheet with **Workflow** and **Chain of 
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is my Worklist empty?">
+    Because it lists drug-testing orders and nothing else. It is not a fault, a filter problem or a permission problem — a lab doing only clinical chemistry will never see a row here. Work those from [Test requests](/lims/lab/test-requests).
+  </Accordion>
+
+  <Accordion title="Do rack positions match my physical rack?">
+    No, and they are not meant to. Rack view is a FIFO drawing of the current filter — "positions are a bench aid, not stored assignments" — so nothing you do on screen moves a tube, and nothing you do at the bench moves a well.
+  </Accordion>
+
+  <Accordion title="Can I batch urine if I ran validity testing on every one?">
+    No. The action only ever accepts received oral-fluid specimens, by design. Urine goes through the per-specimen screen form so the validity results are recorded against the specimen they belong to.
+  </Accordion>
+
+  <Accordion title="Does a batch negative finish the specimen?">
+    It records an all-negative initial immunoassay screen and finalises each one as a negative result, so those specimens leave the bench. Anything non-negative is untouched by it and still needs confirmation before any analyte can be called **Positive**.
+  </Accordion>
+
+  <Accordion title="Can I work offline from this queue?">
+    Order capture goes offline; the bench does not. Accessioning, screening, confirmation, result entry and verification are status-guarded steps whose conflicts need a person at the bench, so they stay online — see [Working offline](/platform/apps/offline).
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="the bench queue" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/worklist/worklist-content.tsx, components/clinic/dashboard/lab-station/worklist/rack-map.tsx */}
+{/* source of truth: components/clinic/dashboard/lab-station/worklist/worklist-content.tsx, .../worklist/rack-map.tsx, db/actions/dot-lims.ts (batchNegativeScreenAction), lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

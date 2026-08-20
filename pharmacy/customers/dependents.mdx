@@ -1,7 +1,7 @@
 ---
 title: Who may collect on someone's behalf
 description: "Record the family members and errand runners allowed to pick up for a customer, so your counter can check in one glance."
-icon: /images/icons/users.svg
+icon: /images/icons/user-group.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
@@ -17,19 +17,38 @@ Someone is at the counter collecting for a regular customer. Is that expected? T
 
 <TaskHeader before="A registered customer" time="Under a minute per person" after="A named list your counter can check before handing anything over" />
 
+## What you're looking at
+
+**People** is the fourth tab on a customer's profile, between **Account** and **Insights**. It is a plain list, one card per person, and a single button above it: **Add someone who may collect**.
+
+A pharmacy that has never added anyone sees **No dependents** — "Add a family member or errand runner allowed to collect."
+
+Each card carries:
+
+| On the card | What it tells the counter |
+| --- | --- |
+| The name, in bold | Who to expect |
+| The relationship and phone underneath | How they are connected, and who to ring |
+| Any notes you wrote | The condition on the collection — read this before handing anything over |
+| An **Own profile** badge | This person also shops with you in their own right, and that record is named |
+| An **Inactive** badge, dimmed | They were authorised once and are not now |
+| **Edit** | The only button on the card — everything else happens in the dialog |
+
+**Add someone who may collect** opens **Add dependent** — "Someone allowed to collect products on this customer's behalf." — with four fields: **Full name**, **Phone**, **Relationship** and **Notes**. Only the first is required, and the confirm button reads **Add**. Selecting **Edit** on a card reopens the same dialog headed **Edit dependent**, where the button reads **Save** and a red **Deactivate** appears in the bottom-left corner. **Deactivate** is not on the card — you get to it through **Edit**.
+
 ## Add someone who may collect
 
 <Steps>
   <Step title="Open the People tab">
-    Find the customer under **Customers**, open their profile, and select **People**. An empty list reads **No dependents** — "Add a family member or errand runner allowed to collect."
+    Find the customer under **Customers**, open their profile, and select **People**.
   </Step>
   <Step title="Select Add someone who may collect">
-    The **Add dependent** dialog opens — "Someone allowed to collect products on this customer's behalf."
+    The **Add dependent** dialog opens.
   </Step>
   <Step title="Enter who they are">
     **Full name** is the only required field; without it you get **"A dependent needs a name."**
 
-    **Phone** is optional but worth having — it is what lets your counter ring the customer's contact rather than the customer themself when something is unclear.
+    **Phone** is optional but worth having — it is what lets your counter ring the person who is collecting rather than the customer themself when something is unclear.
   </Step>
   <Step title="Say how they are connected">
     **Relationship** takes a free-text description — "e.g. Daughter, Driver". Write what your staff would actually say out loud, because this is the line they read at the counter.
@@ -37,24 +56,10 @@ Someone is at the counter collecting for a regular customer. Is that expected? T
   <Step title="Add anything the counter should check">
     **Notes** — "Anything the counter should check". This is the field that earns the feature its keep: "collects the monthly repeat only", "must show her own ID", "not authorised for controlled items".
   </Step>
-  <Step title="Save">
-    Select **Save**. You get **"Dependent added"**, and the person appears in the list with their relationship and phone.
+  <Step title="Add them">
+    Select **Add**; the button reads **Saving…** while it commits. You get **"Dependent added"**, and the person appears in the list with their relationship and phone. On an existing person the same button reads **Save** and confirms **"Dependent updated"**.
   </Step>
 </Steps>
-
-## Check it worked
-
-- The **People** tab lists the person, with their relationship and phone underneath the name.
-- If the dependent is themselves a registered customer, their row carries an **Own profile** badge naming that record.
-- **Edit** on the row reopens the same dialog for changes.
-
-## Deactivate — do not delete
-
-When someone should no longer collect, open their row and select **Deactivate**. Confirm on the **Deactivate dependent** dialog, which spells out what happens:
-
-> \{Name\} will no longer be listed as allowed to collect. The record is kept, so who was authorised and when can still be answered.
-
-That last sentence is the whole reason deactivation exists. If a collection is ever questioned — the wrong person picked up, a family disagreement, a supply query — the useful answer is _who was on the list at the time_, and a deleted record cannot give it. A deactivated person stays visible, dimmed, with an **Inactive** badge, and can be reactivated by editing them again.
 
 ## Using the list at the counter
 
@@ -62,10 +67,10 @@ Dependents are a **record, not a rule**. Nothing in the till blocks a sale to so
 
 <Steps>
   <Step title="Find the customer">
-    Search **Customers** by name or phone. See [Customer records](/pharmacy/customers/index).
+    Search **Customers** by name, phone or ID number. See [Customer records](/pharmacy/customers/index).
   </Step>
   <Step title="Open People">
-    Read the name, the relationship and the notes.
+    Read the name, the relationship and the notes. The notes are the part that changes a decision.
   </Step>
   <Step title="Hand over, or don't">
     An **Inactive** badge means this person was authorised once and is not now. Treat it as a "no", not as an out-of-date entry.
@@ -76,15 +81,60 @@ Dependents are a **record, not a rule**. Nothing in the till blocks a sale to so
   A dependent is not a login. They cannot see the customer's records, and adding them grants no access to anything — it only records that the customer said they may collect.
 </Note>
 
-## If something goes wrong
+## Deactivate — do not delete
+
+When someone should no longer collect, select **Edit** on their card and then **Deactivate** at the bottom left of the dialog. Confirm on the **Deactivate dependent** dialog, which spells out what happens:
+
+> \{Name\} will no longer be listed as allowed to collect. The record is kept, so who was authorised and when can still be answered.
+
+That last sentence is the whole reason deactivation exists. If a collection is ever questioned — the wrong person picked up, a family disagreement, a supply query — the useful answer is _who was on the list at the time_, and a deleted record cannot give it. A deactivated person stays visible, dimmed, with an **Inactive** badge, and can be put back on the list by editing them and saving. You get **"Dependent deactivated"** on the way out and **"Dependent updated"** on the way back.
+
+## Who can do this
+
+**Role** decides whether **Customers** opens at all, and that is the only gate on this tab. A **Cashier / Till Operator** reaches **POS** and **Sales** and nothing else, so the person most likely to be standing at the counter when a dependent turns up cannot open the list themselves. Plan for that: either the check happens on a manager's screen, or the till role is the wrong one for that colleague.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **People** and read the list | Anyone who can open **Customers** | Role — a cashier cannot reach it |
+| Add someone with **Add dependent** | Anyone who can open **Customers** | Role — not a grantable permission |
+| **Edit** a dependent's details or notes | Anyone who can open **Customers** | Role — not a grantable permission |
+| **Deactivate** someone, or put them back | Anyone who can open **Customers** | Role — not a grantable permission |
+| Hand over a controlled item to whoever collects | Dispensing Supervisor | **Witness a controlled-drug dispense** |
+| Sell to them at the counter | Cashier / Till Operator and above | **Dispense and sell at the till** |
+
+There is no separate permission for the list itself, and nothing here gates a figure — a dependent record holds no money, so nothing on this tab ever renders as **"Hidden — needs authorisation from your clinic owner."**
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Customers** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The **People** tab lists the person, with their relationship and phone underneath the name.
+- If the dependent is themselves a registered customer, their row carries an **Own profile** badge naming that record.
+- **Edit** on the row reopens the same dialog for changes.
+- After a deactivation the row is still there, dimmed, with an **Inactive** badge.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'A dependent needs a name.'">
-    **Full name** is required. Everything else on the dialog is optional.
+    **Full name** is required. Everything else on the dialog is optional — though a phone number and a relationship are what make the entry useful at the counter.
+  </Accordion>
+
+  <Accordion title="'Could not save'">
+    The dependent was not added or updated and the list is unchanged. Reopen **People** to check before entering the person a second time.
+  </Accordion>
+
+  <Accordion title="'Could not deactivate'">
+    The person is still active and still listed as allowed to collect. Try again, and if it persists, add a note on the record so the counter has the instruction in the meantime.
   </Accordion>
 
   <Accordion title="I cannot find the Deactivate button">
-    It shows only on someone who is currently active. A person already deactivated carries an **Inactive** badge instead; edit them and save to put them back on the list.
+    It is inside the dialog, not on the card: select **Edit**, and **Deactivate** sits at the bottom left. It also shows only on someone currently active — a person already deactivated carries an **Inactive** badge instead, and editing them and saving puts them back on the list.
   </Accordion>
 
   <Accordion title="The dependent also shops with us in their own right">
@@ -92,10 +142,34 @@ Dependents are a **record, not a rule**. Nothing in the till blocks a sale to so
   </Accordion>
 
   <Accordion title="I cannot open the Customers screen at all">
-    A cashier reaches only **POS** and **Sales**. Ask an owner or manager to check your role — see [Staff permissions](/platform/team/permissions).
+    A cashier reaches only **POS** and **Sales**. Ask an owner or manager to check your role — no permission toggle re-opens this screen for a till role.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can someone collect for a customer who isn't listed?">
+    Yes. Nothing at the till checks this list or blocks the sale — it is a record your staff read, not a rule the system enforces. The judgement stays with the person at the counter, and the list is there to make that judgement quick.
+  </Accordion>
+
+  <Accordion title="Does adding a dependent let them see the customer's records?">
+    No. A dependent is not a login and grants no access to anything. It records only that the customer said this person may collect for them.
+  </Accordion>
+
+  <Accordion title="How many people can I add?">
+    As many as the customer names. In practice the list is most useful when it is short and specific — three named people with clear notes beats a dozen entries nobody reads.
+  </Accordion>
+
+  <Accordion title="Should I delete someone who has moved away?">
+    Deactivate them instead. A deleted record cannot answer "who was authorised at the time", which is the exact question that gets asked when a collection is queried months later.
+  </Accordion>
+
+  <Accordion title="Can a dependent collect a controlled item?">
+    That is a dispensing decision, not a list decision. Use **Notes** to record the customer's own instruction — "not authorised for controlled items" is a common one — and let the person holding **Witness a controlled-drug dispense** make the call at the counter.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="dependents" />
 
-{/* source of truth: components/clinic/customers-management/dependent-sheet.tsx, customer-commerce-tabs.tsx (dependents panel) */}
+{/* source of truth: components/clinic/customers-management/dependent-sheet.tsx, customer-commerce-tabs.tsx (dependents panel), lib/edition.ts (EDITION_ROLE_MODULES.pharmacy), lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS) */}

@@ -9,9 +9,9 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier or a pharmacy technician" />
 
-In a pharmacy the till is the rule and an invoice is the exception. Reach for **Billing** only when money is not changing hands at the counter — and for everything a customer pays for in front of you, use the till instead. See [Ring up a sale](/pharmacy/pos/index).
+In a pharmacy the till is the rule and an invoice is the exception. Reach for **Billing** only when money is not changing hands at the counter — for everything a customer pays for in front of you, use the till. See [Ring up a sale](/pharmacy/pos/index).
 
 <Path steps={['Sidebar', 'Billing', 'Billing Dashboard']} />
 
@@ -21,28 +21,28 @@ In a pharmacy the till is the rule and an invoice is the exception. Reach for **
 
 Four situations, and they are the whole list:
 
-- **A clinic, surgery or company you supply on account** and bill monthly rather than per collection.
+- **A surgery or company you supply on account** and bill monthly rather than per collection.
 - **A school, care home or hostel** buying a standing order in bulk.
 - **A delivery round** where the goods leave before the money arrives.
-- **A corporate customer who needs a document** — a purchase-order number, a VAT line, something their accounts team can file.
+- **A corporate buyer who needs a document** — a purchase-order number, a tax line, something their accounts team can file.
 
-If none of those describe the sale in front of you, close this page. A counter sale that goes through **Billing** is a sale that never reaches your takings, your cash-up or your stock draw.
+If none of those describe the sale in front of you, close this page. A counter sale put through **Billing** never reaches your takings, your cash-up or your stock draw.
 
 <Note>
-  **These screens are shared with the other ClinikEHR editions, so their wording is clinic-flavoured.** You will meet "patient", "clinic" and "consultation" where your pharmacy would say customer, pharmacy and sale. The screens behave exactly as described here — the vocabulary has simply not been translated for the Pharmacy edition. There is no separate pharmacy billing screen to go looking for; this is it.
+  **These screens are shared with the other ClinikEHR editions, so their wording is clinic-flavoured.** You will meet "patient", "clinic" and "client" where your pharmacy would say customer and pharmacy. They behave exactly as described here, and there is no separate pharmacy billing screen to go looking for — this is it.
 </Note>
 
 ## What you're looking at
 
-**Billing** is a collapsible sidebar entry with three children. This page is the first; the other two have their own pages.
+**Billing** is a collapsible sidebar entry with three children.
 
-| Screen | Tabs | Buttons |
-| --- | --- | --- |
-| **Billing Dashboard** | **Overview** · **Invoices** · **Insights** | **Refresh**, **New Invoice**, and a date-range picker |
-| [**Payments Management**](/pharmacy/money/billing) | **Overview** · **Payments** · **Pending** | **Refresh**, **New Payment** |
-| [**Services Dashboard**](/pharmacy/money/billing) | **Overview** · **Services** · **Categories** | **Refresh**, plus **New Service** — or **New Category** while **Categories** is open |
+| Sidebar entry | Page heading | Tabs | Buttons |
+| --- | --- | --- | --- |
+| **Billing Dashboard** | **Billing Dashboard** | **Overview** · **Invoices** · **Insights** | a date-range picker, **Refresh**, **New Invoice** |
+| [**Payments**](/pharmacy/money/payments) | **Payments Management** | **Overview** · **Payments** · **Pending** | a date-range picker, **Refresh**, **New Payment** |
+| [**Services**](/pharmacy/money/services) | **Services Dashboard** | **Overview** · **Services** · **Categories** | **Refresh**, plus **New Service** — or **New Category** while **Categories** is open |
 
-**Overview** is the money picture and **Invoices** is the working list of every invoice. **Insights** is headed **Financial Insights** and reads "Financial analytics and insights will be shown here." — the trends live in [the reports workbench](/pharmacy/money/analytics), so go there rather than waiting for that tab to fill.
+**Overview** is the money picture and **Invoices** is the working list. **Insights** is headed **Financial Insights** and reads "Financial analytics and insights will be shown here." — it is a placeholder, so do not wait for it to fill. The trends live in [the reports workbench](/pharmacy/money/analytics).
 
 Each invoice row carries a status badge:
 
@@ -51,19 +51,19 @@ Each invoice row carries a status badge:
 | **Draft** | Not issued. Nothing is owed yet. |
 | **Pending** | Issued and awaiting payment. **The default on a new invoice.** |
 | **Paid** | Settled in full. |
-| **Partially Paid** | Some money in, a balance outstanding. |
+| **Partially paid** | Some money in, a balance outstanding. |
 | **Overdue** | Past its **Due Date** and still unpaid. |
 | **Cancelled** | Withdrawn, but still on the record. |
 
-The row menu carries **Edit Invoice**, **Send Invoice**, **Record Payment**, **View Payments**, **Download PDF** and **Delete Invoice**.
+The row menu is headed **Invoice Actions**: **View Details**, **Edit Invoice**, **Download PDF**, **Send Invoice**, **Record Payment**, **View Payments** and **Delete Invoice**. **Record Payment** is absent on a cancelled or fully paid invoice, and **View Payments** appears only once there is a payment to view.
 
-**A pharmacy that has never invoiced sees empty tabs and zeroes, not an error** — and an invoice form whose picker finds nothing, because it searches your service list. That is the usual reason a first invoice feels broken when it is not: build the [service list](/pharmacy/money/billing) first.
+**A pharmacy that has never invoiced sees empty tabs and zeroes, not an error** — and an invoice form whose item picker finds nothing, because it searches your service list. That is the usual reason a first invoice feels broken when it is not: build the [service list](/pharmacy/money/services) first.
 
 ## Raise an invoice
 
 <Steps>
   <Step title="Select New Invoice">
-    On the **Billing Dashboard**, select **New Invoice**. The form opens with no **Status** field — see the note below.
+    The **Create Invoice** form opens. It has no **Status** field — see the note below.
   </Step>
   <Step title="Choose who it is for">
     **Select Client \*** is required; its picker searches with "Search for a client...". This is the shared wording — the person or organisation you are billing.
@@ -72,13 +72,13 @@ The row menu carries **Edit Invoice**, **Send Invoice**, **Record Payment**, **V
     **Invoice Date \*** is required. **Due Date** is optional — "Payment expected by this date" — and it is the only thing that ever tips an unpaid invoice into **Overdue**. Leave it blank and nothing chases itself.
   </Step>
   <Step title="Add the lines">
-    Pull items in with the service picker ("Search services to add..."). Each line has **Description**, **Type**, **Qty**, **Unit Price**, **Disc %** and **Total**, all editable — so a one-off discount never changes the underlying service price.
+    Pull items in with the service picker ("Search services to add..."), or add a one-off with **Custom Item**. Each line has **Description**, **Type**, **Qty**, **Unit Price**, **Disc %** and **Total**, all editable — so a one-off discount never changes the underlying service price.
   </Step>
   <Step title="Set discounts, tax and notes">
-    **Global Discount (%)** — "Applied to subtotal before tax" — **Tax Rate (%)**, and **Notes (Optional)** for anything the buyer must read, such as their purchase-order number.
+    Under **Notes & Discounts**: **Global Discount (%)** — "Applied to subtotal before tax" — **Tax Rate (%)**, and **Notes (Optional)** for anything the buyer must read, such as their purchase-order number.
   </Step>
   <Step title="Save it">
-    The invoice appears under **Invoices** with its number, already **Pending**.
+    You get **Invoice created successfully**, then an **Invoice Created** dialog offering **Download PDF**, **Send Invoice** and **Print Receipt**. The invoice is on the **Invoices** tab, already **Pending**.
   </Step>
 </Steps>
 
@@ -90,9 +90,9 @@ The row menu carries **Edit Invoice**, **Send Invoice**, **Record Payment**, **V
 
 Select **Send Invoice** from the row menu. The dialog explains itself: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
 
-**Send to** offers the buyer's email on file, **A different email**, or both. The last two reveal **Other emails** — "Up to 3 addresses, separated by commas." Exceed that and you get "You can add up to 3 other email addresses."
+**Send to** offers the buyer's email on file, **A different email**, or **Both**. The last two reveal **Other emails** — "Up to 3 addresses, separated by commas."
 
-That choice is what makes account billing work: a care home's manager gets the delivery note and their accounts office gets the bill, from one send.
+That choice is what makes account billing work: a care home's manager gets the delivery note and their accounts office gets the bill, from one send. You are told where it went — **Invoice emailed to \{address\}**.
 
 **Download PDF** gives you the same branded document for the counter, confirmed with **Invoice PDF downloaded**.
 
@@ -102,34 +102,32 @@ That choice is what makes account billing work: a care home's manager gets the d
 
 ## Record what they pay
 
-Payments are recorded on the [**Payments Management**](/pharmacy/money/billing) screen — **New Payment**, then either a **Direct Payment** or **Pay Invoice** against an existing one. A part-payment is allowed: the invoice moves to **Partially Paid** and the remainder stays outstanding.
+Payments are recorded on the [**Payments**](/pharmacy/money/payments) screen — **New Payment**, then either a direct payment or one against an existing invoice. A part-payment is allowed: the invoice moves to **Partially paid** and the remainder stays outstanding.
 
 Money at the counter never comes through here. Till takings settle themselves and appear on [the sales dashboard](/pharmacy/money/sales).
 
 ## Cancel, do not delete
 
-An invoice with a payment recorded against it cannot be deleted. The menu item is disabled and reads "Has payments — cancel instead":
+An invoice with a payment recorded against it cannot be deleted. **Delete Invoice** is disabled, reads "Has payments — cancel instead", and its tooltip says "Invoices with recorded payments can't be deleted".
 
-> This invoice has recorded payments and cannot be deleted. Cancel it instead to keep the record.
-
-Cancelling keeps the invoice and the payment reconciled, which is what your books and your buyer both need. Deleting is only for an invoice raised entirely by mistake before anyone paid against it.
+Cancelling keeps the invoice and the payment reconciled, which is what your books and your buyer both need. Deleting is only for an invoice raised entirely by mistake before anyone paid against it, and it asks first — "This action cannot be undone."
 
 ## Who can do this
 
-**Role** decides whether **Billing** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, so the whole section is absent from their sidebar. **Permission** decides which figures inside it you are allowed to see.
+**Role** decides whether **Billing** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, and a pharmacy technician's sidebar stops at the counter and the stockroom — for both, the whole section is absent. **Permission** decides which figures inside it you are allowed to see.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Billing** and its three screens | Pharmacy Manager, Inventory & Purchasing, Dispensing Supervisor | Role — not a grantable permission |
 | **New Invoice**, **Send Invoice**, **Download PDF** | Everyone who can open **Billing** | Role |
 | **Record Payment** against an invoice | Everyone who can open **Billing** | Role |
-| See cost or margin on a line | Pharmacy Manager | **View cost prices and margin** |
-| See the **Net position** card on the money screens | Pharmacy Manager | **View the net position** |
+| See cost or margin figures | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+| See the net position on the money screens | Pharmacy Manager, and anyone on **All branches** | **View the net position** |
 | Refund or void a **till** sale (not an invoice) | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
 
 On top of the role bundle each person carries an access tier — **Own till**, **Whole branch** or **All branches** — which decides how much of the business their figures cover.
 
-Two gates change what the screen *shows*, not just what it does. **View cost prices and margin** turns a margin figure into **"Hidden — needs authorisation from your clinic owner."**, never a zero. **View the net position** removes the net position card entirely rather than zeroing it — see [Track expenses and your net position](/pharmacy/money/expenses).
+Both money gates withhold rather than zero: a cost or margin figure becomes **"Hidden — needs authorisation from your clinic owner."**, and the net figures become **"Net position is hidden — needs authorisation from your clinic owner."** A zero would read as a bad month rather than as a boundary — see [Track expenses and your net position](/pharmacy/money/expenses).
 
 Two behaviours surprise people:
 
@@ -145,13 +143,13 @@ See [Staff permissions](/platform/team/permissions).
 - The invoice is on the **Invoices** tab with the buyer, the total and a **Pending** badge.
 - **View Payments** on the row lists what has been received against it.
 - After sending, every recipient you chose has the email with the PDF attached.
-- Once settled, the badge reads **Paid** or **Partially Paid**, and the payment appears on the **Payments** tab.
+- Once settled, the badge reads **Paid** or **Partially paid**, and the payment appears on the **Payments** tab.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="The screen says 'patient' and 'clinic' everywhere">
-    Expected. These three screens are shared across editions and have not been relabelled for pharmacies. Read "patient" as your customer or institutional buyer, and "clinic" as your pharmacy.
+    Expected. These three screens are shared across editions and have not been relabelled for pharmacies. Read "patient" or "client" as your customer or institutional buyer, and "clinic" as your pharmacy.
   </Accordion>
 
   <Accordion title="The invoice I just made is already Pending, not Draft">
@@ -159,7 +157,11 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="'Has payments — cancel instead'">
-    **Delete Invoice** is disabled because money has been recorded against this invoice. Cancel it — the record of the money stays, which is the point. If the payment itself was the mistake, deal with the payment first.
+    **Delete Invoice** is disabled because money has been recorded against this invoice. Cancel it — the record of the money stays, which is the point. If the payment itself was the mistake, deal with the payment first on the [Payments](/pharmacy/money/payments) screen.
+  </Accordion>
+
+  <Accordion title="'You can add up to 3 other email addresses.'">
+    **Other emails** takes three at most. Send twice, or use a distribution list of the buyer's own.
   </Accordion>
 
   <Accordion title="The invoice went out with no way to pay it">
@@ -167,15 +169,11 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The service picker finds nothing">
-    Your service list is empty, or every service on it is inactive. Add one under [Services](/pharmacy/money/billing). Stock items are sold at the till, not invoiced from the catalogue.
-  </Accordion>
-
-  <Accordion title="The amounts are in the wrong currency">
-    Currency comes from **Settings** › **Billing**, not from the invoice, and it applies everywhere money is shown. Change it there — see [Currency and tax](/platform/settings/currency).
+    Your service list is empty, or every service on it is inactive. Add one under [Services](/pharmacy/money/services). Stock items are sold at the till, not invoiced from the catalogue.
   </Accordion>
 
   <Accordion title="I cannot see Billing in the sidebar">
-    You are signed in as a **Cashier / Till Operator**, whose sidebar is deliberately just **POS** and **Sales**. Ask an owner or manager to change your role — see [Staff permissions](/platform/team/permissions).
+    You are signed in on a role whose sidebar stops short of the money screens — a cashier gets **POS** and **Sales** only. Ask an owner or manager to change your role, not your permissions: this one is decided by the role.
   </Accordion>
 </AccordionGroup>
 
@@ -183,15 +181,15 @@ See [Staff permissions](/platform/team/permissions).
 
 <AccordionGroup>
   <Accordion title="Does an invoice draw stock off my shelves?">
-    No. Only a till sale moves stock. An invoice is a document that says money is owed; if the goods have physically left, ring them through the till as well, or record the movement in [Inventory](/pharmacy/inventory/index), or your shelf count will drift.
+    No. Only a till sale moves stock. An invoice is a document saying money is owed; if the goods have physically left, ring them through the till as well or record the movement in [Inventory](/pharmacy/inventory/index), or your shelf count will drift.
   </Accordion>
 
   <Accordion title="Can I invoice a walk-in customer?">
-    You can, but you almost never should. A walk-in pays at the counter, and a counter sale that goes through **Billing** never reaches your takings or your cash-up. Part-pay at the till instead — the balance shows under **Debts** on the customer's record, where it can be chased and settled. See [Money on account](/pharmacy/customers/wallet).
+    You can, but you almost never should. A walk-in pays at the counter, and a counter sale put through **Billing** never reaches your takings or your cash-up. Part-pay at the till instead — the balance shows under **Debts** on the customer's record, where it can be chased and settled. See [Money on account](/pharmacy/customers/wallet).
   </Accordion>
 
   <Accordion title="What is the difference between Overdue and Pending?">
-    Only the **Due Date**. **Pending** means issued and awaiting payment; it becomes **Overdue** once that date passes with a balance still outstanding. An invoice with no due date stays **Pending** for ever, which is why it is worth setting one on account customers.
+    Only the **Due Date**. **Pending** means issued and awaiting payment; it becomes **Overdue** once that date passes with a balance outstanding. An invoice with no due date stays **Pending** for ever, which is why it is worth setting one on account customers.
   </Accordion>
 
   <Accordion title="Can the buyer pay the invoice by card online?">
@@ -199,10 +197,14 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Why is my margin column blank?">
-    Because you do not hold **View cost prices and margin**. Cost and margin figures are withheld as text — **"Hidden — needs authorisation from your clinic owner."** — rather than rendered as a zero, because a zero reads as no margin rather than as a permission boundary. Ask an owner or manager.
+    Because you do not hold **View cost prices and margin**. Cost and margin are withheld as text — **"Hidden — needs authorisation from your clinic owner."** — rather than rendered as a zero, because a zero reads as no margin rather than as a boundary. Ask an owner or manager.
+  </Accordion>
+
+  <Accordion title="What currency do invoices print in?">
+    Whatever is set under **Settings** › **Billing** for the whole pharmacy — it is not per invoice. Change it there and every money figure in the product follows. See [Currency and tax](/platform/settings/currency).
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="an invoice" />
 
-{/* source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, invoice-form.tsx, send-invoice-dialog.tsx), components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, db/actions/billing.ts, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS), lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, invoice-form.tsx, invoice-actions.tsx, invoice-send-dialog.tsx, recent-invoices.tsx), components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, db/actions/billing.ts, lib/billing/invoice-send.ts, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS), lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES) */}

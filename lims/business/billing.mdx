@@ -1,6 +1,6 @@
 ---
-title: Billing and payments
-description: "Price your tests, invoice the patient, employer or referring facility that owes for the work, and record what you collect against each invoice."
+title: Billing dashboard
+description: "Raise an invoice for lab work, send it to whoever actually pays — often an employer, not the patient — and track what is still owed."
 icon: /images/icons/receipt.svg
 ---
 
@@ -9,93 +9,139 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, Accessioning Clerk" />
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, Accessioning Clerk, Receptionist. Bench roles do not reach the money screens." />
 
-A lab's money runs on three things: a **test has a price**, the **work is invoiced** to whoever owes for it — the patient, an employer or a referring facility — and **payments are recorded against invoices**. Those three live on three screens under **Billing**.
+**Billing Dashboard** is where lab work becomes a receivable. You raise an invoice against the tests performed, send it to whoever is paying for them, and watch it move from owed to settled.
 
 <Path steps={['Sidebar', 'Billing']} />
 
-| Screen | Tabs | What it is for |
-| --- | --- | --- |
-| **Billing Dashboard** | **Overview** · **Invoices** · **Insights** | Raising and tracking invoices. Buttons **Refresh** and **New Invoice**. |
-| **Payments** | **Overview** · **Payments** · **Pending** | Recording money received. Button **New Payment**. |
-| **Services** | **Overview** · **Services** · **Categories** | The priced catalogue. Buttons **New Service** and **New Category**. |
+<TaskHeader before="Your tests priced in the services catalogue" time="2 minutes per invoice" after="A sent invoice, visible on the Invoices tab, waiting on payment" />
+
+## Three screens sit under Billing, and this is one of them
+
+Get these apart before you go looking for a control that is not here.
+
+| Screen | What it is for |
+| --- | --- |
+| **Billing Dashboard** — this page | Raising, sending and tracking invoices |
+| **Payments** | Recording money received against those invoices — see [Payments](/lims/business/payments) |
+| **Services** | The priced catalogue every invoice line draws its amount from — see [Tests and prices](/lims/business/services) |
 
 <Note>
-  These three screens are shared across every ClinikEHR edition, so their wording is clinic-flavoured — you will see "patient" and "clinic" on them even though the rest of your navigation says lab. The behaviour is the same; only the nouns differ.
+  All three are shared across every ClinikEHR edition, so their wording is clinic-flavoured. This page's own subtitle reads "Manage your clinic's financial activities and billing operations", and the invoice columns say **Patient** — you will see "clinic" and "patient" here even though the rest of your navigation says lab. Only the nouns differ; the behaviour is the same.
 </Note>
 
-<TaskHeader before="Your tests priced in the services catalogue" time="2 minutes per invoice" after="A sent invoice and a recorded payment against it" />
+## What you're looking at
 
-## Price the work first
+A date range picker sits at the top, with **Refresh** and **New Invoice** beside it, over three tabs.
 
-A test gets its price in the services catalogue, and that is where an invoice line finds its amount. Set it up before you invoice anything — see [Add your tests and panels](/lims/get-started/tests-and-panels). Use **Categories** to group panels the way your price list is organised, so the catalogue stays navigable once it holds a few hundred tests.
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The four figures — **Total Revenue**, **Pending Payments**, **Invoices Sent** and **Collection Rate** — plus recent invoices |
+| **Invoices** | The full list, searchable and filterable by status |
+| **Insights** | Reserved. It currently reads **Financial analytics and insights will be shown here.** — the reporting you want is on [Analytics](/lims/business/analytics) |
 
-## Raise and send an invoice
+The invoice table is **Invoice #**, **Patient**, **Amount**, **Status**, **Date** and **Actions**, and you can sort on everything except **Patient**. **Filter by status** offers **All Statuses**, **Draft**, **Pending**, **Paid**, **Partially Paid**, **Overdue** and **Cancelled**.
+
+| Status | Means |
+| --- | --- |
+| **Pending** | Raised and owed. This is what a new invoice is. |
+| **Partially paid** | Some money recorded, a balance outstanding |
+| **Paid** | Settled in full |
+| **Overdue** | Past its due date and still owed |
+| **Cancelled** | Withdrawn, but kept on the record |
+| **Draft** | Only reachable by editing an existing invoice — you cannot create one |
+
+**The empty state.** A lab that has invoiced nothing reads **No Invoices Found** with **You haven't created any invoices yet.** and a **Create New Invoice** button. Once you are filtering, the same heading appears with **There are no invoices matching your search criteria.** instead — check your filters before concluding an invoice is missing.
+
+## Raise an invoice
 
 <Steps>
-  <Step title="Create the invoice">
-    On **Billing Dashboard**, select **New Invoice** and add the tests being billed. The amounts come from the services catalogue.
+  <Step title="Create it">
+    Select **New Invoice** and add the tests being billed. Each line takes its amount from the services catalogue, so price the work first — see [Tests and prices](/lims/business/services).
   </Step>
   <Step title="Expect Pending, not Draft">
-    A new invoice is created as **Pending** — it is a live receivable from the moment you save it, not a draft you have to promote. If you are only exploring what something would cost, do not save an invoice for it.
+    A saved invoice is **Pending** — a live receivable from the moment you save it, not a draft you promote later. There is no status picker on the create form at all. If you are only exploring what something would cost, do not save an invoice for it.
   </Step>
-  <Step title="Choose who receives it">
-    Sending opens **Send Invoice**, which attaches the invoice as a PDF and asks **Send to**. The choices are the patient's **email on file**, **A different email**, or **Both**. Picking either of the last two reveals **Other emails**, which takes up to three addresses separated by commas.
+  <Step title="Confirm and move on">
+    The **Invoice Created** dialog names the invoice and offers **Download PDF**, **Send Invoice** and **Done**. The toast reads **Invoice created successfully**.
   </Step>
-  <Step title="Send it">
-    The confirmation names the invoice number. The recipients you picked each get the branded email with the PDF attached.
+</Steps>
+
+## Send it to whoever actually pays
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **Send Invoice** from the row menu. The dialog explains what is about to leave the building: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
+  </Step>
+  <Step title="Choose the recipients">
+    **Send to** offers three choices — **\{patient\}'s email on file**, **A different email**, and **Both — \{patient\} and a different email**. Either of the last two reveals **Other emails**, which takes **Up to 3 addresses, separated by commas.**
+  </Step>
+  <Step title="Send">
+    Select **Send Invoice**. The toast names everyone it went to — **Invoice emailed to \{addresses\}**.
   </Step>
 </Steps>
 
 ### The case this exists for: employer-billed drug testing
 
-Regulated collections are almost never paid by the person who gave the specimen. The employer pays. So on a DOT invoice, choose **A different email**, put the employer's accounts address in **Other emails**, and the invoice goes to the people who will actually pay it — without sending an employee an invoice for their own test. Where the employer wants a copy and the patient needs one too, choose **Both**. See [DOT testing](/lims/dot/index).
-
-## Record the payment
-
-On **Payments**, select **New Payment** and record what you received against the invoice it settles. The **Pending** tab is where money that has not yet been matched to an invoice waits — work it down rather than leaving it, because an unmatched payment leaves the invoice looking unpaid and keeps the patient or employer on your chase list.
-
-Money collected here is also what feeds the lab's revenue figures and any referral commission you owe — both are worked out on money **collected**, not money invoiced. See [Reports and analytics](/lims/business/analytics) and [Referral commissions](/lims/business/commissions).
+Regulated collections are almost never paid by the person who gave the specimen — the employer pays. So on a DOT invoice, choose **A different email**, put the employer's accounts address in **Other emails**, and the invoice reaches the people who will actually settle it without sending an employee a bill for their own test. Where both need a copy, choose **Both**. See [DOT testing](/lims/dot/index).
 
 ## Cancel, do not delete
 
 <Warning>
-  An invoice with a payment recorded against it cannot be deleted — cancel it instead. Deleting removes the record; cancelling leaves it visible with its history intact, which is what an auditor and your own reconciliation both need.
+  An invoice with a payment recorded against it **cannot be deleted**. **Delete Invoice** is greyed out on those rows, annotated **Has payments — cancel instead**, and hovering it reads **Invoices with recorded payments can't be deleted**. Cancelling keeps the row and its history, which is what an auditor and your own reconciliation both need. Deleting an unpaid invoice, by contrast, is permanent — the dialog says so.
 </Warning>
 
-## Where the settings live
+## Who can do this
 
-| Setting | Where |
-| --- | --- |
-| Currency and tax | <Path steps={['Settings', 'Billing']} /> |
-| The payment channels printed on an invoice — bank account, transfer details | <Path steps={['Settings', 'Payment Details']} /> |
+Role decides whether the money screens open. The Diagnostics permission list governs bench, QC and referrer work — it has no slug for invoicing — so this table is mostly role-driven, which catches people out when they go hunting for a switch.
 
-Currency is set once for the whole lab and every amount follows it; see [Set your currency](/platform/settings/currency).
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Billing Dashboard** | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, **Receptionist** | Role → route |
+| Raise and send an invoice | The same people | Role → route |
+| Cancel an invoice | The same people | Role → route |
+| Delete an unpaid invoice | The same people | Role → route |
+| Record a payment against it | Owner, Manager, **Lab Manager**, **Accessioning Clerk** | Role → route — see [Payments](/lims/business/payments) |
+| See lab-wide revenue reporting | Owner, Manager | Permission — **View turnaround-time analytics** |
+
+Raising the invoice is deliberately part of the front-desk job: an **Accessioning Clerk** books the sample in and bills it in the same visit. A **Lab Scientist** does not reach any of this — the bench produces the result, not the receivable — and a **QC Officer** is review-only by design.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see renders hidden or as a dash — never as a zero. Hiding an entry from the sidebar is a convenience, not a boundary.
+
+See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The invoice appears on the **Invoices** tab as **Pending**, and moves once payment is recorded.
-- The recipients you chose received the email, with the invoice PDF attached.
-- The payment appears on the **Payments** tab against the right invoice, and not on **Pending**.
+- The invoice appears on the **Invoices** tab as **Pending**, with today's date.
+- Everyone you picked in **Send to** received the branded email with the PDF attached.
+- **Pending Payments** on **Overview** has risen by the invoice amount.
+- Once payment is recorded, the status moves to **Paid** or **Partially paid** and **Collection Rate** follows.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="An invoice line has no price">
-    The test is not priced in the services catalogue. Price it there and it carries through to every future invoice — see [Add your tests and panels](/lims/get-started/tests-and-panels).
+    The test is not priced in the services catalogue. Price it there once and it carries through to every future invoice — see [Tests and prices](/lims/business/services).
   </Accordion>
 
   <Accordion title="The invoice went to the patient when the employer is paying">
     **Send to** defaults to the address on file. Re-send with **A different email** and the employer's accounts address in **Other emails**.
   </Accordion>
 
-  <Accordion title="I cannot delete an invoice">
-    It has a payment recorded against it. Cancel it instead, then raise a corrected one.
+  <Accordion title="Delete Invoice is greyed out">
+    That invoice has a payment recorded against it. Cancel it instead and raise a corrected one — the tooltip reads **Invoices with recorded payments can't be deleted**.
   </Accordion>
 
-  <Accordion title="A payment is sitting on the Pending tab">
-    It has not been matched to an invoice. Open it and attach it to the invoice it settles, or the invoice will keep showing as owed.
+  <Accordion title="“You can add up to 3 other email addresses.”">
+    **Other emails** takes three at most. Send to three now and re-send to the rest, or ask the payer for a single distribution address.
+  </Accordion>
+
+  <Accordion title="The Insights tab is empty">
+    It is a placeholder — **Financial analytics and insights will be shown here.** Revenue reporting lives on [Analytics](/lims/business/analytics) and [Lab analytics](/lims/business/lab-analytics).
   </Accordion>
 
   <Accordion title="Amounts show in the wrong currency">
@@ -107,6 +153,30 @@ Currency is set once for the whole lab and every amount follows it; see [Set you
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why can't I save an invoice as a draft?">
+    The create form has no status picker — everything you save is **Pending**. **Draft** exists only as something an existing invoice can be edited into, so treat saving as committing.
+  </Accordion>
+
+  <Accordion title="Can one invoice cover several patients?">
+    No. An invoice belongs to one patient record, even when an employer is paying for a batch of them. Raise one per patient and send them all to the employer's accounts address.
+  </Accordion>
+
+  <Accordion title="Does sending an invoice twice charge anyone twice?">
+    No. Sending only emails the PDF; it does not create a second receivable or take any money. Re-send freely when an address was wrong.
+  </Accordion>
+
+  <Accordion title="What is the difference between cancelling and deleting?">
+    Cancelling leaves the invoice on the list marked **Cancelled**, with its history intact. Deleting removes it and everything attached to it, permanently, and is blocked entirely once any payment exists.
+  </Accordion>
+
+  <Accordion title="Why do the reports show less than I have invoiced?">
+    Every revenue figure across the lab is **collected** money, not invoiced money. An invoice raised and never paid counts as nothing — see [Payments](/lims/business/payments) and [Referral commissions](/lims/business/commissions).
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="an invoice" />
 
-{/* source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, invoice-send-dialog.tsx), components/clinic/dashboard/payments/payments-content-dashboard.tsx, components/clinic/dashboard/services/services-content-dashboard.tsx, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS) */}
+{/* source of truth: components/clinic/dashboard/billing/ (billing-content-dashboard.tsx, recent-invoices.tsx, invoice-actions.tsx, invoice-send-dialog.tsx, invoice-form.tsx), lib/billing/invoice-send.ts, db/actions/billing.ts, lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS), lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

@@ -1,0 +1,168 @@
+---
+title: Payments
+description: "Record what the lab collects, chase what is still owed, and void a payment taken in error — for payers who are often employers, not patients."
+icon: /images/icons/banknote.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, Accessioning Clerk. Voiding is owner, manager or accountant only." />
+
+**Payments** is where money the lab has actually received gets written against the work it settles. It is the other half of [Billing and payments](/lims/business/billing): the invoice says what is owed, this screen says what came in.
+
+<Path steps={['Sidebar', 'Billing', 'Payments']} />
+
+<TaskHeader before="At least one invoice raised for the work" time="1 minute per payment" after="A payment recorded against the right invoice, and a shrinking Pending list" />
+
+## The payer is often not the patient
+
+This is the thing a lab has to get right and a clinic never thinks about. In a diagnostic business the person who gave the specimen is frequently **not** the person who pays for it:
+
+- A **DOT or workplace drug panel** is almost always billed to the **employer**. The donor should never receive an invoice for their own regulated test.
+- A **referred test** is often settled by the **referring practice**, which bills its own patient separately.
+- Only walk-in and self-pay work is genuinely paid by the patient at the desk.
+
+So when you record a payment, the question is not "did the patient pay" but "who owed this, and has that account settled". Money collected here is also the base for what you owe a referring doctor, and commission is worked out on money **collected**, never money invoiced — see [Referral commissions](/lims/business/commissions) and [Referring doctors](/lims/business/referrers).
+
+<Note>
+  The billing screens are shared across every ClinikEHR edition, so their wording is clinic-flavoured — you will see **Patient** on columns that, for you, may hold an employer's account. The behaviour is the same; only the noun differs.
+</Note>
+
+## What you're looking at
+
+The screen is headed **Payments Management**, with a date range picker, **Refresh** and **New Payment** across the top, and three tabs.
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The tiles — **Total Collected**, **Outstanding Balance**, **Recent Payments**, **Top Method** — plus a payments-by-method chart and a recent activity list |
+| **Payments** | Everything received: **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference**, **Received By**, with a **Search payments…** box |
+| **Pending** | Accounts that still owe: **Patient Name**, **Patient ID**, **Items**, **Oldest Item**, **Total Pending**, with **Search patients…** |
+
+**Outstanding Balance** counts everything pending and partly paid, and **Oldest Item** on the **Pending** tab is your ageing list in one column — sort your chasing by it.
+
+A voided payment stays on the list with its amount **struck through** and a red **Voided** badge; hovering the badge shows the reason someone gave.
+
+**The empty state.** A new lab sees **No payments recorded** on the Overview tiles, **No payments found** on **Payments**, and **No Pending Payments** on **Pending**. Nothing appears here until an invoice exists to settle.
+
+## Record a payment against an invoice
+
+The quickest route is from the invoice itself, because the amount is already known.
+
+<Steps>
+  <Step title="Find the invoice">
+    On **Billing Dashboard › Invoices**, open the row menu for the invoice being settled and select **Record Payment**. The option is not offered on a cancelled invoice, or one already paid in full.
+  </Step>
+  <Step title="Check the amount">
+    **Amount** is prefilled with the **balance due**. Leave it for a full settlement; type a smaller figure for a part payment — an employer settling half a month's collections, for example — and the invoice moves to partly paid rather than paid.
+  </Step>
+  <Step title="Pick the method">
+    **Payment Method** offers **Cash**, **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other**. Choose what actually happened; this is what the **Top Method** tile and the method chart are built from.
+  </Step>
+  <Step title="Add a reference">
+    **Reference (optional)** is the field that makes reconciliation possible later — put the bank transfer reference, the employer's remittance number or the purchase-order number in it. **Notes (optional)** takes anything a colleague would need to understand the payment.
+  </Step>
+  <Step title="Save it">
+    The toast reads **Payment recorded**, the invoice balance drops, and the payment appears on the **Payments** tab.
+  </Step>
+</Steps>
+
+Use **New Payment** on this screen instead when money arrives without an invoice in front of you — a walk-in paying at the desk, or an account settling several items at once. That opens the fuller payment screen, where you choose the payer and tick the items being paid for.
+
+## Void a payment taken in error
+
+<Steps>
+  <Step title="Open the payment">
+    On the **Payments** tab, open the row menu and select **Void Payment**.
+  </Step>
+  <Step title="Say why">
+    The dialog asks **Void this payment?** and explains what will happen — the payment is marked voided and the invoice balance is restored. Give a reason; the placeholder suggests "e.g. Recorded in error — already paid by card".
+  </Step>
+  <Step title="Confirm">
+    The toast reads **Payment voided**. The row stays visible, struck through and badged **Voided** — the record is kept for your books and audit trail rather than deleted.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role decides whether the money screens open at all; the Diagnostics permission list governs bench and referrer work, not billing. So the table below is mostly role-driven, and that surprises people who expect a switch for it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Payments** | Owner, Manager, **Lab Manager**, **Accessioning Clerk** | Role → route |
+| Record a payment | The same people | Role → route |
+| **Void** a payment | Owner, Manager, **Accountant** — nobody else | Role. Others are refused with "Only a clinic owner, manager or accountant can void a payment." |
+| Open a referring practice's account or statement | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
+| See lab-wide revenue reporting | Owner, Manager | Permission — **View turnaround-time analytics** |
+
+A **lab scientist** does not reach the billing screens, and a **QC Officer** is review-only by design. Two behaviours catch people out:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see renders hidden or as a dash — never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The payment appears on the **Payments** tab with the right **Method** and **Reference**, and names you under **Received By**.
+- The invoice's balance has fallen by the amount you recorded, and its status has moved.
+- The payer has dropped off the **Pending** tab, or their **Total Pending** has fallen.
+- **Total Collected** on **Overview** has risen by the same amount.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Record Payment is not in the invoice menu">
+    The invoice is cancelled, or already settled in full. A cancelled invoice cannot take money; raise a corrected one.
+  </Accordion>
+
+  <Accordion title="“Only a clinic owner, manager or accountant can void a payment.”">
+    Voiding is deliberately narrow, because it moves money back out of your books. Ask an owner, manager or accountant to do it.
+  </Accordion>
+
+  <Accordion title="An employer paid but the patient still shows as owing">
+    The payment went in without being attached to the invoice it settles. Open it and record it against that invoice, or the account keeps appearing on **Pending**.
+  </Accordion>
+
+  <Accordion title="A payer sits on Pending long after they paid">
+    Check the **Oldest Item** column — usually one old item was never settled while later ones were. Part payments leave the remainder pending by design.
+  </Accordion>
+
+  <Accordion title="Revenue by referring doctor looks lower than we billed">
+    Commission and revenue are both worked out on money **collected**. Anything invoiced and not yet paid counts as nothing — see [Referral commissions](/lims/business/commissions).
+  </Accordion>
+
+  <Accordion title="Amounts show in the wrong currency">
+    Currency is a lab-wide billing setting, not a per-payment one — see [Set your currency](/platform/settings/currency).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I record a part payment?">
+    Yes. Type a figure below the prefilled balance and the invoice becomes partly paid, with the remainder still showing on **Pending**. Employers settling a month's collections in instalments are the usual case.
+  </Accordion>
+
+  <Accordion title="What is the difference between voiding and deleting?">
+    There is no delete. Voiding keeps the row, marks it **Voided** with your reason and restores the invoice balance — which is what an auditor and your own reconciliation both need.
+  </Accordion>
+
+  <Accordion title="Does recording a payment send anyone a receipt?">
+    Not from this screen. Send the invoice from **Billing Dashboard** and choose who receives it — the employer's accounts address rather than the patient, where the employer is paying.
+  </Accordion>
+
+  <Accordion title="Which method should I pick for an employer's bank transfer?">
+    **Bank Transfer**, with the remittance number in **Reference**. That pairing is what lets you match a bank statement line back to this row months later.
+  </Accordion>
+
+  <Accordion title="Do payments here feed the reports?">
+    Yes — every revenue figure across the lab's reporting is collected money on orders created in the range, and it comes from this screen. See [Lab analytics](/lims/business/lab-analytics).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a payment" />
+
+{/* source of truth: components/clinic/dashboard/payments/ (payments-content-dashboard.tsx, payments-table.tsx, pending-payments-table.tsx, payments-stats.tsx), components/clinic/dashboard/billing/invoice-actions.tsx, db/actions/billing.ts (voidPayment) */}

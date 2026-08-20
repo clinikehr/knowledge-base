@@ -6,12 +6,13 @@ icon: /images/icons/test-tube-diagonal.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Owner or Manager to set the mode; bench and MRO permissions per step" />
+<Availability editions={['lims']} plans="All plans — drug testing and lab intake are included from Starter Lab" roles="Owner or Manager to set the mode; bench and MRO permissions per step" />
 
 Workplace drug testing is not clinical lab work with different paperwork. It is a regulated chain that a lawyer may read years later, and every stage of it — who held the specimen, which seal was intact, which cutoff a value was measured against, who certified the result — has to survive that reading. ClinikEHR's DOT-LIMS module is built around that chain rather than around the result.
 
-This section covers the whole lifecycle for a diagnostic centre running Department of Transportation and SAMHSA-regulated testing, and the lighter reference-lab variant for labs that only receive and report.
+In drug testing the person tested is the **donor**, not the patient — that is the word the custody and control form (CCF), the collector and the Medical Review Officer (MRO) all use, and the word the screens use. Elsewhere in your lab they are patients as usual.
 
 ## Choose how your lab runs
 
@@ -26,7 +27,7 @@ The module has four shapes, set once by an owner or manager. The card is titled 
 | **Reference Lab — Intake to Report Only** (carries a **New** badge) | "For laboratories that receive sealed specimens from external collection sites and produce a PDF report for an external MRO. Hides collection, MRO, and DER modules." |
 | **Both — Standard \+ DOT Full Workflow** | "Clinics that do both in-house clinical lab work and DOT testing on-site." |
 
-Choose a mode, then select **Save Workflow Mode** — **Reset** puts the card back as you found it. On success you get **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode.**
+The mode you are on now carries an **Active** badge. Choose a mode, then select **Save Workflow Mode** — **Reset** puts the card back as you found it. On success you get **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode.**
 
 <Note>
   Switching modes does not migrate orders already in flight. They stay in the workflow they were raised under and finish there. Anyone with a DOT-LIMS page already open must reload before the new mode reaches their screen.
@@ -34,9 +35,33 @@ Choose a mode, then select **Save Workflow Mode** — **Reset** puts the card ba
 
 Reference Lab mode renames the navigation rather than removing it: **DOT Testing** becomes **Lab Intake** and **DOT History** becomes **Intake History**. The full detail of that mode, including the intake order form, is on [Reference lab mode](/lims/dot/lab-intake-mode).
 
+## What you're looking at
+
+The sidebar's **DOT Testing** row opens **DOT Drug Testing** — "Active DOT/SAMHSA specimen orders and workflow queue". In Reference Lab mode the same screen is headed **Lab Intake Queue** — "Specimens received for laboratory analysis".
+
+Above the list sits a search box — **Search by specimen ID or donor name…** — which also matches employer name and lab accession number, a status filter (**All Orders**, **Active**, **In Lab**, **MRO Review**, **Completed**), a **Collection supplies** sheet, a **Settings** shortcut to the Lab Workflow card, and **New DOT Order**. Columns are **Specimen ID**, **LAN**, **Donor**, **Test Reason**, **Agency**, **Status** and **Ordered**.
+
+The **Status** badge is the order's position in the chain, and there are fourteen of them:
+
+| Group | Badges |
+| --- | --- |
+| Collection | **Pending Collection** · **Collected** · **In Transit** |
+| Laboratory | **Lab Received** · **Screening** · **Confirmed** |
+| Review and release | **Reported to MRO** · **MRO Review** · **MRO Verified** · **Reported to DER** |
+| Reference Lab only | **Intake Pending** · **Report Finalized** |
+| Ended early | **Cancelled** · **Rejected for Testing** |
+
+Selecting a row — or **View / Proceed** from its ⋯ menu — opens the order panel, headed with its specimen ID and status badge, with two tabs: **Workflow**, which shows only the form for the stage the specimen has actually reached, and **Chain of Custody**, the full custody timeline.
+
+**The empty state.** A lab that has raised nothing sees **No orders found** — "No DOT drug test orders match the current filter. Create a new order to get started."
+
+If your site is registered as a collection centre, a banner sits above everything: "This site is a **collection center** — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here."
+
+<AuditNote action="Opening a donor's drug-testing order" />
+
 ## The lifecycle
 
-In full DOT mode a specimen moves through five stages, each owned by a different person and each writing its own custody event.
+In full DOT mode a specimen moves through five stages, each owned by a different person and each writing its own custody event with a **Seal Intact** or **Seal Broken** pill, the released-by → received-by handoff and the elapsed time since the previous event.
 
 | Stage | Who does it | Where it happens |
 | --- | --- | --- |
@@ -46,7 +71,7 @@ In full DOT mode a specimen moves through five stages, each owned by a different
 | GC-MS / LC-MS/MS confirmation | Bench technician, certified by the lab director | [Screen and confirm a specimen](/lims/dot/screening-and-confirmation) |
 | MRO review and the DER report | Medical Review Officer | [MRO review and the employer report](/lims/dot/reports) |
 
-In Reference Lab mode the first and last stages fall away: the specimen arrives already sealed and already documented, and the finished report goes to an external Medical Review Officer as a PDF.
+In Reference Lab mode the first and last stages fall away: the specimen arrives already sealed and already documented, and the finished report goes to an external MRO as a PDF.
 
 ## The rule the whole module exists to enforce
 
@@ -59,15 +84,79 @@ Two further rules are enforced for you and worth knowing before you meet them:
 - **Methamphetamine needs amphetamine alongside it.** 49 CFR § 40.97(b)(3): methamphetamine above its cutoff with amphetamine below the linkage threshold **cannot** be reported as confirmed positive, and ClinikEHR downgrades it to Negative.
 - **Some drugs can never be verified Negative.** 49 CFR § 40.151(f): THC, PCP and 6-acetylmorphine cannot be verified as Negative by the MRO regardless of any prescription or medical explanation the donor provides.
 
-## Seals and the chain of custody
+## Who can do this
 
-Every handoff is recorded. The **Laboratory Accession** card asks for an **Accession Number \***, a **Received Date & Time \***, and the condition of both seals — **Primary Specimen Seal (Bottle A) \*** and **Split Specimen Seal (Bottle B) \*** — as Yes/No answers. Answering "no" to either makes **Seal Condition Notes \*** required, and a broken seal raises a confirmation before the order can proceed. **Bottle B Storage Location** records where the split went, in enough detail that a colleague can retrieve it ("Freezer A-2, Rack 3, Position 7").
+Role decides whether the module opens at all. Permission decides whether a particular act inside it is allowed — and in Diagnostics those permissions are real, grantable switches, not job titles.
 
-The **Chain of Custody** tab groups every event into **Specimen Intake**, **Laboratory Analysis**, **Reporting** and **Post-Report**. Each event shows a **Seal Intact** or **Seal Broken** pill, the released-by → received-by handoff, any notes, its timestamp and the elapsed time since the previous event. Full detail on [Accession an incoming specimen](/lims/lab/accessioning).
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **DOT Testing** / **Lab Intake** | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Set the workflow mode | Owner or Manager only | Role |
+| Accession an incoming specimen | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
+| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Enter screen or confirmation readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
+| Finalize a screen, or finalize a lab report | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+| Amend something already reported | **All sites** | Permission — **Amend a verified result** |
+| Release a report to a referring practice | **Lab Manager**, **Referrer Liaison**, **All sites** | Permission — **Release a report to a referrer** |
 
-## The people the module talks about
+A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, because authorising a result is a scientist's act rather than a manager's. A **QC Officer** is review-only by design. A **phlebotomist** reaches test requests, the drug-testing queue and patients, and nothing else.
 
-In drug testing the person tested is the **donor**, not the patient — that is the word the CCF, the collector and the MRO all use, and it is the word the forms use. Elsewhere in your lab they are patients as usual.
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a row from a sidebar is a convenience, not a security boundary.
+
+See [Permissions](/platform/team/permissions).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no DOT Testing row in my sidebar">
+    Your lab is on **Standard Clinical Lab**, which hides the drug-testing rows entirely, or on **Reference Lab — Intake to Report Only**, where the row is renamed **Lab Intake**. An owner or manager sets this on the **Lab Workflow** card.
+  </Accordion>
+
+  <Accordion title="My team still sees the old sidebar after I changed the mode">
+    They need to reload. The success toast says so: **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode.**
+  </Accordion>
+
+  <Accordion title="An order still shows MRO Review after switching to Reference Lab">
+    Orders raised before the switch finish in their original workflow. Nothing is migrated and nothing is lost.
+  </Accordion>
+
+  <Accordion title="Everything on the bench is disabled and there is a blue banner">
+    Your site is a collection centre. The banner is correct behaviour, not a permissions fault — a collection centre registers and dispatches, and the full lab accessions, screens and reports.
+  </Accordion>
+
+  <Accordion title="Save Workflow Mode is greyed out">
+    Nothing has changed yet — the button only enables once you pick a different mode. If it stays grey after picking one, you are not an owner or manager.
+  </Accordion>
+
+  <Accordion title="I cannot finalize, only save">
+    You hold **Enter results at the bench** but not **Verify and authorise results**. That separation is deliberate supervision — hand it to your verifying scientist or Lab Director.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does switching workflow mode move my existing orders?">
+    No. Switching migrates nothing: orders already in flight stay in the workflow they were raised under and finish there, so a lab mid-changeover runs both shapes side by side for a while. That is intended.
+  </Accordion>
+
+  <Accordion title="Can I report a screen positive without confirmation?">
+    No. Per 49 CFR § 40.97 an analyte cannot be designated **Positive** without GC-MS or LC-MS/MS confirmation. Finalizing anyway is offered only as **Finalize as Non-Negative**, and the report says **Non-Negative** (presumptive screen result) with a footnote citing § 40.97.
+  </Accordion>
+
+  <Accordion title="Why does it say donor rather than patient?">
+    Because the federal paperwork does. The same person is a patient everywhere else in your lab; on a drug-testing order they are the donor, and matching the CCF's vocabulary is what stops transcription errors.
+  </Accordion>
+
+  <Accordion title="Do we need a plan upgrade for drug testing?">
+    No. Drug testing and lab intake are included from Starter Lab. Some surrounding screens are gated — turnaround-time analytics and analyser interfaces need Professional Lab — but nothing in this section is.
+  </Accordion>
+
+  <Accordion title="Can one lab run clinical work and DOT work together?">
+    Yes — that is **Both — Standard \+ DOT Full Workflow**. Clinical lab orders and drug-testing orders keep separate queues and separate rules; only the sidebar shows both.
+  </Accordion>
+</AccordionGroup>
 
 ## Where to go next
 
@@ -92,9 +181,11 @@ In drug testing the person tested is the **donor**, not the patient — that is 
     Accession numbers, seal checks and reading the chain of custody.
   </Card>
 
-  <Card title="Work the bench queue" icon="/images/icons/list-check.svg" href="/lims/lab/worklist">
-    The queue every drug-testing specimen sits on between stages.
+  <Card title="Look up a finished order" icon="/images/icons/clock-rotate-left.svg" href="/lims/dot/history">
+    The cross-day record of completed, cancelled and rejected drug-testing orders.
   </Card>
 </Columns>
 
-{/* source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, lib/dot-lims-cutoffs.ts, components/clinic/dot-lims/general/chain-of-custody-timeline.tsx */}
+<StillStuck topic="drug testing" />
+
+{/* source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, components/clinic/dot-lims/dot-lims-content.tsx, .../dot-lims-actions.tsx, .../dot-lims-table.tsx, .../dot-order-workflow-sheet.tsx, .../general/order-status-badge.tsx, .../general/collection-center-banner.tsx, lib/dot-lims-cutoffs.ts, lib/edition-staff-roles.ts, lib/edition.ts */}

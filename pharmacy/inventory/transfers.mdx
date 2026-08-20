@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="Plans that include branch transfers" roles="Staff with the transfer stock between branches permission" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Staff who can open Transfers — not a cashier" note="Needs a second pharmacy branch under the same owner" />
 
 **Branch transfers** moves stock from this pharmacy to another pharmacy you own — "Move stock between your pharmacy branches." The sending branch loses the stock on dispatch; the receiving branch gains it when someone there confirms it arrived.
 
@@ -30,7 +30,22 @@ This is the single thing that catches people out, because the product uses the w
 
 A **branch** is a whole separate pharmacy workspace under the same owner, with its own staff, its own till and its own stock. Adding a fridge or a back room is **not** a branch — that is a location, created on **Inventory** › **Locations**.
 
-If you run one pharmacy, this screen tells you so: "You have no other pharmacy branches to transfer to.", and **Transfer to branch** is disabled. That is not a fault, and it is not fixed by adding a location. Everything you need is the Inventory toolbar's **Transfer** — see [Stock control](/pharmacy/inventory/index).
+If you run one pharmacy, this screen tells you so, and **Transfer to branch** is disabled. That is not a fault, and it is not fixed by adding a location. Everything you need is the Inventory toolbar's **Transfer** — see [Stock control](/pharmacy/inventory/index).
+
+## What you're looking at
+
+The page is headed **Branch transfers** — "Move stock between your pharmacy branches." — with **Transfer to branch** at the top right. Below it sit two cards, and nothing else:
+
+| Card | What it holds | Empty state |
+| --- | --- | --- |
+| **Incoming transfers** — "Stock dispatched to this branch, awaiting receipt." | Everything on its way to you, each with a **Receive** button | "Nothing incoming." |
+| **Sent transfers** | Everything you have dispatched, newest first, with its line count and date | "No transfers sent yet." |
+
+Each row carries a transfer number and a status badge. A dispatched transfer reads **In transit** — the plain-English name for stock that has left this branch and not yet been confirmed at the other. That is the only badge most branches ever see; once a transfer is received it drops out of **Incoming transfers** altogether.
+
+**A brand-new workspace with one branch** sees both cards empty and the button greyed out, with a single line underneath: "You have no other pharmacy branches to transfer to."
+
+**Transfer to branch** opens a dialog with three fields — **Destination branch** ("Choose a branch…"), **Add items** ("Search medications…") and **Notes (optional)** ("e.g. urgent restock") — above a **Dispatch** button.
 
 ## Dispatch a transfer
 
@@ -58,11 +73,9 @@ If you run one pharmacy, this screen tells you so: "You have no other pharmacy b
 
 ## Receive a transfer
 
-At the receiving branch, **Incoming transfers** — "Stock dispatched to this branch, awaiting receipt." — lists everything on its way.
-
 <Steps>
   <Step title="Find the transfer">
-    Open **Transfers** at the receiving branch. If there is nothing to collect the card reads "Nothing incoming."
+    Open **Transfers** at the receiving branch and look under **Incoming transfers**. If there is nothing to collect the card reads "Nothing incoming."
   </Step>
   <Step title="Check the goods against the lines">
     Match what is physically in the box against the lines on the transfer before confirming. Confirming is what puts the stock on your shelf in the system.
@@ -72,17 +85,42 @@ At the receiving branch, **Incoming transfers** — "Stock dispatched to this br
   </Step>
 </Steps>
 
+## Who can do this
+
+**Role** decides whether **Transfers** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales**, so this screen is not theirs at any tier. **Permission** is the vocabulary an owner grants in: **Transfer stock between branches** — "Send and receive stock moves across the business" — is the one that names this act.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Transfers** and read both cards | Anyone whose role reaches the screen | Role — the screen itself is not separately gated |
+| Dispatch with **Transfer to branch** | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
+| **Receive** an incoming transfer | Pharmacy Manager, Inventory & Purchasing | **Transfer stock between branches** |
+| Receive a supplier delivery instead | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| See what the transferred stock cost | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+
+Two roles are deliberately outside it. A **Dispensing Supervisor** holds the till authorisations — refunds, price overrides, the controlled-drug countersignature — and none of the stock ones, so they cannot dispatch. A **Cashier / Till Operator** holds only **Dispense and sell at the till** and **Open the cash drawer**.
+
+Access tier is the other half of the picture: only **All branches** carries **Transfer stock between branches** by default. **Whole branch** carries **Receive deliveries into stock** and **Adjust stock counts** but not the cross-branch move, which is the correct default — a branch move is a decision about the business, not about one counter.
+
+Where cost is denied, the figure reads **"Hidden — needs authorisation from your clinic owner."** rather than a zero, so nobody reads a hidden value as a free transfer.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Transfers** from a sidebar is a convenience, not a security boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - At the sending branch, the transfer appears under **Sent transfers** marked **In transit**, and the quantities have left the **Stock** tab. An empty card reads "No transfers sent yet."
 - At the receiving branch, the lines appear on the **Stock** tab after receiving, with a movement on the **Ledger** tab.
 - Once received, the transfer no longer sits in **Incoming transfers**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'You have no other pharmacy branches to transfer to.'">
-    This owner has only one pharmacy workspace. A second **location** does not create a branch. Use the Inventory toolbar's **Transfer** for room-to-room moves, or [contact support](/platform/help/contact-support) about opening a second branch.
+    This owner has only one pharmacy workspace, so **Transfer to branch** is disabled. A second **location** does not create a branch. Use the Inventory toolbar's **Transfer** for room-to-room moves, or [contact support](/platform/help/contact-support) about opening a second branch.
   </Accordion>
 
   <Accordion title="'Choose a destination branch.'">
@@ -93,12 +131,12 @@ At the receiving branch, **Incoming transfers** — "Stock dispatched to this br
     The transfer has no lines, or every line has a quantity of zero.
   </Accordion>
 
-  <Accordion title="Transfer to branch is disabled and I do have other branches">
-    Either your plan does not include branch transfers, or you do not hold the "transfer stock between branches" permission. See [Change your plan](/platform/plans/change-plan) and [Staff permissions](/platform/team/permissions).
+  <Accordion title="'Could not dispatch'">
+    The transfer was refused as a whole and no stock left the shelf. The usual cause is a line whose quantity now exceeds what this branch holds — someone sold it while the dialog was open. Re-check the quantities and dispatch again.
   </Accordion>
 
   <Accordion title="The stock left but never arrived">
-    It is still **In transit**. Somebody at the receiving branch has to select **Receive**. Until they do, it belongs to neither shelf.
+    It is still **In transit**. Somebody at the receiving branch has to select **Receive**. Until they do, it belongs to neither shelf — which is why a forgotten transfer looks like missing stock at both ends.
   </Accordion>
 
   <Accordion title="I sent it to the wrong branch">
@@ -110,6 +148,30 @@ At the receiving branch, **Incoming transfers** — "Stock dispatched to this br
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Who owns the stock while it is in transit?">
+    Nobody, in stock terms. It has left the sending branch's shelf and has not reached the receiving branch's, so it counts as sellable at neither. That is deliberate — the alternative is stock that appears twice — but it does mean a transfer left unreceived quietly reduces what the business can sell.
+  </Accordion>
+
+  <Accordion title="Can I cancel a transfer after dispatching it?">
+    Not from this screen. Have the receiving branch **Receive** it, then dispatch it straight back. Two honest transfers are easier to explain at a stock count than a pair of manual adjustments.
+  </Accordion>
+
+  <Accordion title="Can the receiving branch confirm only part of a delivery?">
+    **Receive** confirms the transfer as it was sent, and the toast reports how many lines landed. Where the box and the lines genuinely disagree, receive it and then correct the difference with a stock adjustment at the receiving branch, so the shortfall is recorded where it was found.
+  </Accordion>
+
+  <Accordion title="Does a transfer move the lot and expiry too?">
+    Yes — the lines carry the lot number and expiry date with them, so a short-dated pack arrives short-dated rather than resetting. Say so in **Notes (optional)** if it needs selling first.
+  </Accordion>
+
+  <Accordion title="Is this how I move stock into the fridge?">
+    No. That is the **Transfer** button on the **Inventory** toolbar, which moves stock between locations inside this branch and takes effect immediately with nobody to confirm it. Same word, different screen — see the table at the top of this page.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="a branch transfer" />
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/transfers/branch-transfers-content.tsx, components/inventory/stock-movement-sheet.tsx */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/transfers/branch-transfers-content.tsx, db/actions/branch-transfers.ts, components/inventory/stock-movement-sheet.tsx, lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS), lib/edition.ts (EDITION_ROLE_MODULES.pharmacy) */}

@@ -17,38 +17,29 @@ Import loads products into your catalogue from a spreadsheet. Export takes your 
 
 <TaskHeader before="A spreadsheet of products, ideally started from the sample file" time="5 minutes for a few hundred rows" after="Your products in the catalogue, ready to receive stock into" />
 
-## The two things people get wrong
-
-Read these before you build a file. Almost every question about import and export is one of them.
+## The two rules that explain everything else
 
 <Note>
-  **Import creates catalogue rows only.** A row becomes a product, not a quantity on a shelf. The sheet says so itself: "Each row creates one catalog item — stock is added afterwards through Receive". Quantities arrive through **Receive**, or in bulk through the separate **Opening stock** button — see [Stock control](/pharmacy/inventory/index).
+  **Import creates catalogue rows only.** The sheet says so itself: "Each row creates one catalog item — stock is added afterwards through Receive". A row becomes a product, never a quantity on a shelf.
 
   **Export deliberately leaves on-hand quantities out** — "Stock on hand is not included — quantities are managed through Receive and Dispense, so re-importing this file never overwrites your live stock."
 </Note>
 
-Together those mean one thing worth saying plainly: your stock levels live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue and a way to read one, never a way to set what you hold.
+Your stock levels live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue and a way to read one, never a way to set what you hold. Quantities arrive through **Receive**, or in bulk through the separate **Opening stock** button — see [Stock control](/pharmacy/inventory/index).
 
 ## What you're looking at
 
 Neither is a page — each opens a sheet over the screen you are on.
 
-**Import** opens **Bulk-import items**, badged **Catalog Import**. Under **Start from the template** sits **Download sample CSV** — "Download the sample CSV to see the required headers, expected formats, and two example rows." Below that, **Upload your file** is a **Click to upload or drag and drop** target, constrained to "**.csv, .xlsx or .xls — max 5MB, up to 1000 rows**". While it reads, the sheet says **Reading spreadsheet…**; afterwards **Replace file** swaps the upload.
+**Import** opens **Bulk-import items**, badged **Catalog Import**. Under **Start from the template** sits **Download sample CSV** — "Download the sample CSV to see the required headers, expected formats, and two example rows." Below it, **Upload your file** is a **Click to upload or drag and drop** target, constrained to "**.csv, .xlsx or .xls — max 5MB, up to 1000 rows**". While it reads, the sheet says **Reading spreadsheet…**; afterwards **Replace file** swaps the upload.
 
-The **Preview** that follows is the part worth slowing down for. Three badges count what it found — **\{n\} new**, **\{n\} to update** and **\{n\} need fixing** — and each row is labelled either **new** or "updates existing · matched on upc" (or `sku`). A row that changes nothing says so: "No changes — this row matches what is already stored." A **Field reference** below lists every column with its hint, and required ones carry a star.
+The **Preview** is the part worth slowing down for. Three badges count what it found — **\{n\} new**, **\{n\} to update** and **\{n\} need fixing** — and every row is labelled either **new** or "updates existing · matched on upc" (or `sku`). A row that changes nothing says so: "No changes — this row matches what is already stored." A **Field reference** below lists all 27 columns with their hints, and required ones carry a star.
+
+That "to update" count is the word "import" hiding an update. Each row is matched against your catalogue on its **barcode first, then its SKU**. A match updates that product and leaves untouched any column your sheet omits; no match creates a new product. So a corrected price list is a legitimate re-import rather than a duplicate-maker — provided your barcodes and SKUs are right. Where they are missing or wrong, the same product arrives twice under two names.
 
 **Export** opens **Export inventory catalog**, badged **Catalog Export**. It shows "\{n\} item(s) ready to export", a **File format** choice — **Excel (.xlsx)**, "Formatted workbook — opens natively in Excel.", the default, or **CSV (.csv)**, "Plain text — universal, opens anywhere." — and the full **Columns included** list. The footnote reads "The export is logged against the audit trail."
 
-**An empty catalogue** can still open both. Export simply refuses, with the button reading **No items to export** rather than handing you a header row and nothing under it.
-
-## Import is an update as well as an insert
-
-This is the fact the word "import" hides. Every row is matched against your catalogue on its **barcode first, then its SKU**:
-
-- **A match** updates that product. Columns your sheet leaves out are left untouched.
-- **No match** creates a new product.
-
-So a corrected price list is a legitimate re-import, not a duplicate-maker — provided your barcodes and SKUs are right. Where they are missing or wrong, the same product arrives twice under two names.
+**An empty catalogue** can still open both. Export simply refuses, its button reading **No items to export** rather than handing you a header row with nothing under it.
 
 ## Import your catalogue
 
@@ -63,7 +54,7 @@ So a corrected price list is a legitimate re-import, not a duplicate-maker — p
     Select **Click to upload or drag and drop**. Only `.csv`, `.xlsx` and `.xls` are accepted, up to 5 MB.
   </Step>
   <Step title="Read the preview before you commit">
-    Check the **\{n\} new** and **\{n\} to update** counts against what you expected. A file you meant as new products showing mostly "to update" means it is matching things you did not intend to change — stop and check your barcode column.
+    Check **\{n\} new** and **\{n\} to update** against what you expected. A file you meant as new products showing mostly "to update" is matching things you did not intend to change — stop and check your barcode column.
   </Step>
   <Step title="Import">
     The button names the outcome — **Add \{n\}, update \{n\}** — then reports **Submitted**, **Created**, **Updated** and **Failed**. Anything that failed comes back through **Download failed rows with error column**: fix that file and re-upload only it.
@@ -71,7 +62,7 @@ So a corrected price list is a legitimate re-import, not a duplicate-maker — p
 </Steps>
 
 <Tip>
-  If you upload a sales report exported from an old till system, the importer recognises it — "POS report recognised and converted" — strips duplicate and subtotal rows, and numbers repeated price variants "#2" for you to rename. It still imports no quantities.
+  Upload a sales report exported from an old till system and the importer recognises it — "POS report recognised and converted" — strips duplicate and subtotal rows, and numbers repeated price variants "#2" for you to rename. It still imports no quantities.
 </Tip>
 
 ## Export your catalogue
@@ -81,7 +72,7 @@ So a corrected price list is a legitimate re-import, not a duplicate-maker — p
     Select **Export** on the toolbar.
   </Step>
   <Step title="Choose the file format">
-    **Excel (.xlsx)** if a person will read it; **CSV (.csv)** if it is going into another system.
+    **Excel (.xlsx)** if a person will read it; **CSV (.csv)** if it is going into another system. Both carry identical columns.
   </Step>
   <Step title="Check the columns">
     **Columns included** names all 27, from **Item name** and **Item type** through **Barcode (UPC/EAN)**, **Reorder level**, **Unit cost**, **Sell price**, **Controlled schedule** and **Track lot & expiry**. No quantity column exists.
@@ -95,18 +86,23 @@ Stock movements and valuations come from **Reports** on the same toolbar instead
 
 ## Who can do this
 
-**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**, so neither button is theirs. Inside **Inventory**, importing and exporting the catalogue are not separately gated.
+**Role** decides whether **Inventory** opens at all — a **Cashier / Till Operator** reaches only **POS** and **Sales**, so neither button is theirs. **Permission** decides what happens to the products once they are in: importing writes catalogue rows, and the stock that fills them is gated.
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Import** and load a catalogue | Everyone who can open **Inventory** | Role — not a grantable permission |
-| Open **Export** and download the file | Everyone who can open **Inventory** | Role — not a grantable permission |
+| Open **Import** and load a catalogue | Anyone who can open **Inventory** | Role — not a grantable permission |
+| Open **Export** and download the file | Anyone who can open **Inventory** | Role — not a grantable permission |
+| Receive stock against the products you imported | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
+| Load quantities in bulk with **Opening stock** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
 | See **Unit cost** and margin on the **Catalog** screen | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
-| Receive the stock these products will hold | Pharmacy Manager, Inventory & Purchasing | **Receive deliveries into stock** |
-| Enter quantities in bulk with **Opening stock** | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+| See supplier pricing and purchase-order costs | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
+
+A **Dispensing Supervisor** holds the till authorisations, not the stock ones, so they can import a catalogue but not receive against it. Access tier matters too: **Whole branch** carries **Receive deliveries into stock** and **Adjust stock counts**, **All branches** carries those plus cost visibility, and **Own till** carries neither.
+
+Where cost is denied, the **Catalog** screen reads **"Hidden — needs authorisation from your clinic owner."** — never a zero, because a zero would be read as a free product.
 
 <Warning>
-  **The export file carries Unit cost and Sell price for every product**, whether or not the person downloading it can see the margin column on screen. On screen, that figure reads **"Hidden — needs authorisation from your clinic owner."**; in the file it is a plain number. Treat an exported catalogue as commercially sensitive and send it accordingly.
+  **The export file carries Unit cost and Sell price for every product**, whether or not the person downloading it can see the margin column on screen. Hidden on screen is still a plain number in the file. Treat an exported catalogue as commercially sensitive and send it accordingly.
 </Warning>
 
 Two behaviours surprise people:
@@ -147,10 +143,6 @@ See [Staff permissions](/platform/team/permissions).
     Every row failed validation. Compare your headers against the sample CSV — a renamed or missing required column invalidates every row at once. **Item name** and **Item type** are the two that must be there.
   </Accordion>
 
-  <Accordion title="'Re-select the file and try again'">
-    The file was released before the import ran, usually after a long pause. Choose it again and import straight away.
-  </Accordion>
-
   <Accordion title="The preview says 'to update' for products I meant to add">
     Those rows matched an existing barcode or SKU. Either the products are already in your catalogue under different names, or two suppliers share a code. Fix the codes in the spreadsheet before importing, not afterwards.
   </Accordion>
@@ -176,7 +168,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Excel or CSV — which should I export?">
-    Excel for anything a person will read, and if your spreadsheet mangles accents or currency symbols on import. CSV if the file is going into another system. Both carry identical columns.
+    Excel for anything a person will read, and if your spreadsheet mangles accents or currency symbols on import. CSV if the file is going into another system.
   </Accordion>
 
   <Accordion title="Is there a limit on how many rows I can import at once?">
@@ -186,4 +178,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck topic="an import or export" />
 
-{/* source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, stock-prefill-sheet.tsx, lib/inventory-csv.ts (INVENTORY_CSV_FIELDS), lib/edition-staff-roles.ts */}
+{/* source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, stock-prefill-sheet.tsx, lib/inventory-csv.ts (INVENTORY_CSV_FIELDS), lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS, ADMIN_ROLE_SLUG_DEFAULTS) */}

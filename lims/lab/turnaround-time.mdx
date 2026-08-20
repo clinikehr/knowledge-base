@@ -6,62 +6,102 @@ icon: /images/icons/timer.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “view turnaround-time analytics”. QC Officer and Referrer Liaison have it by default." />
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Anyone granted “View turnaround-time analytics”. Lab Manager, Referrer Liaison and QC Officer hold it by default, as does the All sites tier." />
 
 The **Turnaround Time** dashboard answers one question: where is time going. Its own subtitle puts it plainly — "Request-to-result medians and 90th percentiles across drug testing, laboratory and imaging. Slow rows are where the next hour of bench time pays off."
 
 <Path steps={['Sidebar', 'Turnaround Time']} />
 
+<TaskHeader before="The Professional Lab plan, the analytics grant, and enough completed work for a median to mean something" time="5 minutes to read" after="A ranked view of where the lab is slow, by pipeline, stage, test, scientist and site" />
+
 <Note>
-  This is not the **Turnaround Time** chart on the **Lab Station** **Analytics** tab. That one is a simple view of performance against a 24-hour target. The dashboard on this page is the real measure — medians, 90th percentiles, per-stage breakdowns and rankings.
+  This is not the **Turnaround Time** chart on the **Lab Station** **Analytics** tab. That one is a simple view of average hours against a 24-hour target. The dashboard on this page is the real measure — medians, 90th percentiles, per-stage breakdowns and rankings.
 </Note>
 
-## What the page shows
+## What you're looking at
 
-At the top are a range select — **Last 7 days**, **Last 30 days**, **Last 90 days** — and **Refresh**. Everything below reflects the range you pick.
+At the top are a range select — **Last 7 days**, **Last 30 days**, **Last 90 days**, defaulting to 30 — and an unlabelled refresh button. Everything below reflects the range you pick.
 
 ### The three pipeline tiles
 
-One tile each for **Drug Testing**, **Laboratory** and **Imaging**. Each leads with the median, then:
+One tile each for **Drug Testing**, **Laboratory** and **Imaging**. Each leads with the median and the words **median TAT**, then:
 
 | Line | Means |
 | --- | --- |
 | **p90 \{x\}** | Nine in ten finished within this. The number a referrer actually experiences on a bad day. |
 | **\{n\} completed** | How many results the median is drawn from. A median over three results is not a trend. |
-| **\{n\} pending · oldest \{n\}d** | What is still open, and the age of the oldest. The age turns amber past three days. |
+| **\{n\} pending · oldest \{n\}d** | What is still open, and the age of the oldest. The age turns amber once it passes three days. |
 
 Read the p90 before the median. The median tells you what a normal day looks like; the p90 tells you what your slowest tenth is doing, and that is what generates the phone calls.
 
+Durations are written at the scale that suits them — whole minutes under an hour (**45 min**), then hours to one decimal up to two days (**3.7 h**), then days (**2.6 d**). Where there is nothing to measure you get a dash, never a zero.
+
 ### Drug-testing stage medians
 
-The **Drug-testing stage medians** card splits the pipeline into **Order → received**, **Received → screened** and **Screened → report**, so a slow total can be traced to a stage. A long "order → received" is a courier or collection problem, not a bench one — no amount of bench speed fixes it.
+The **Drug-testing stage medians** card splits the pipeline into **Order → received**, **Received → screened** and **Screened → report**, so a slow total can be traced to a stage. A long "order → received" is a courier or collection problem, not a bench one — no amount of bench speed fixes it. The card only appears once at least one of the three stages has a median to show.
 
 ### The three rankings
 
-**By test**, **By scientist** and **By site** are ranked tables with an inline magnitude bar, so the outliers are visible without reading numbers.
+**By test**, **By scientist** and **By site** are ranked tables with an inline magnitude bar, so the outliers are visible without reading numbers. The columns are **Completed**, **Median TAT**, **p90** and **Slowest**.
 
-Durations are written at the scale that suits them: minutes under an hour, hours under two days, then days.
+**The empty state.** With nothing finished in the range, **By test** and **By scientist** read **Nothing completed in this period.** and **By site** reads **No drug-testing collection sites in this period.**
 
 Treat **By scientist** as a workload signal, not a scoreboard. A scientist holding the confirmations will always look slower than one running screens.
 
 ## The same numbers elsewhere
 
-Turnaround also appears as a **Turnaround Time** report in the Analytics report catalogue, with **Laboratory** and **Radiology** scopes. It is the same measure over the same records — if the two disagree, check that the date range and scope match before reporting a discrepancy. See [Lab analytics](/lims/business/analytics).
+Turnaround also appears as a **Turnaround Time** report in the Analytics report catalogue — "Median time from request to result, and where it is slipping." — with **Laboratory** and **Radiology** scopes, and it can be exported. It is the same measure over the same records; if the two disagree, check that the date range and scope match before reporting a discrepancy. See [Lab analytics](/lims/business/analytics).
+
+## Who can do this
+
+Two gates sit in front of this page, and they fail differently.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Turnaround Time** | **Lab Manager**, **Referrer Liaison**, **QC Officer**, **All sites** | Permission — **View turnaround-time analytics**, on the Professional Lab plan |
+| Read the same measure in the report catalogue | The same people | The same permission, plus the same plan |
+| Export the **Turnaround Time** report | The same people | The same permission |
+| Act on what it shows — accession sooner, clear the bench | **Accessioning Clerk**, bench staff | **Accession an incoming specimen**, **Enter results at the bench** |
+
+A **QC Officer** holds this grant and **Review QC runs**, and nothing else — the role inspects work rather than altering it, so someone who can read every turnaround number on this page may be unable to touch a single result. A **Lab Scientist** reaches the whole bench but is denied **Executive**, **Lab Analytics** and **Referral Commissions**; a **phlebotomist** reaches test requests, lab intake and patients only.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — from then on they can only do what is switched on there.
+- **A denied action is recorded; an allowed one is not.** This page degrades quietly rather than erroring, and a figure you are not entitled to see is hidden or rendered as a dash — never as a zero.
+
+See [Permissions](/platform/team/permissions).
 
 ## If you cannot see it
 
 Two different gates, with two different fixes.
 
-- **Plan.** The dashboard is a Professional Lab feature and appears locked on Starter Lab, alongside the other Professional capabilities — quality control, analyzer integration and the owner dashboard. See [Change your plan](/platform/plans/change-plan).
-- **Permission.** On a plan that includes it, someone without the analytics grant sees **Turnaround analytics is hidden — Needs authorisation from your clinic owner or manager.** An owner or manager grants "view turnaround-time analytics" — see [Permissions](/platform/team/permissions).
+- **Plan.** The dashboard reads **TAT dashboard is a Professional feature** — "Track turnaround-time percentiles per test, per scientist and per site — for the lab and the imaging suite. Included from the Professional Lab plan." — with a **View plans** button. See [Change your plan](/platform/plans/change-plan).
+- **Permission.** On a plan that includes it, someone without the grant sees **Turnaround analytics is hidden** over "Needs authorisation from your clinic owner or manager." An owner or manager grants **View turnaround-time analytics**.
 
-## If the numbers look wrong
+## Check it worked
+
+- All three tiles carry a median, or a dash where that pipeline has no completed work.
+- The **\{n\} completed** count is large enough for the median to mean something before you act on it.
+- Changing the range changes every figure on the page, tiles and rankings alike.
+- The **Turnaround Time** report in the Analytics catalogue agrees with this page over the same range and scope.
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Everything reads faster than it feels">
-    Turnaround is measured from the request, and for drug testing from the received time entered at accessioning. A specimen accessioned late in the day but stamped with the time it actually arrived measures honestly — one accessioned with the keyboard time does not. See [Accession an incoming specimen](/lims/lab/accessioning).
+    Turnaround is measured from the request, and for drug testing from the received time entered at accessioning. A specimen stamped with the time it actually arrived measures honestly — one stamped with the time somebody got to the keyboard does not. See [Accession an incoming specimen](/lims/lab/accessioning).
+  </Accordion>
+
+  <Accordion title="Turnaround analytics is hidden">
+    You do not hold **View turnaround-time analytics**. The page degrades to that message rather than erroring, and an owner or manager can grant it.
+  </Accordion>
+
+  <Accordion title="TAT dashboard is a Professional feature">
+    The dashboard is gated on Professional Lab and above, alongside quality control, analyser integration and the owner dashboard. **View plans** takes you to the ladder.
   </Accordion>
 
   <Accordion title="A tile shows a median but no pending count">
@@ -81,6 +121,30 @@ Two different gates, with two different fixes.
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the TAT dashboard count weekends?">
+    Yes. Every figure is elapsed clock time from the request, so a Friday-evening request that is reported on Monday carries the whole weekend. That is what a referrer experiences, which is why it is measured that way — compare like-for-like ranges rather than trying to net the weekend out.
+  </Accordion>
+
+  <Accordion title="Is this the same as the Turnaround Time report in Analytics?">
+    Yes — the same measure over the same records, offered in two places because people look for it in two places. The report adds **Laboratory** and **Radiology** scopes and can be exported. If they disagree, the range or the scope differs.
+  </Accordion>
+
+  <Accordion title="Why is the median so different from the p90?">
+    Because a lab's slow work is rarely typical work. The median describes the ordinary specimen; the p90 describes the tenth that waited on a courier, a repeat run or a confirmation. A wide gap between the two is a queueing problem, not a speed problem.
+  </Accordion>
+
+  <Accordion title="Can I use By scientist in an appraisal?">
+    Read it as workload, not performance. The measure is elapsed time on the record, so whoever holds the confirmations, the repeats and the difficult panels will always rank slower than whoever runs the routine screens.
+  </Accordion>
+
+  <Accordion title="Why can a QC Officer see this but not fix anything?">
+    That is the role working as designed. A **QC Officer** holds **Review QC runs** and **View turnaround-time analytics** and nothing else — quality oversight inspects work rather than altering it, and is read-only on patient records.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="turnaround time" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/tat/tat-dashboard-content.tsx, lib/clinic-nav-registry.ts (LIMS), lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/dashboard/lab-station/tat/tat-dashboard-content.tsx, db/actions/lab-analytics.ts, lib/analytics/report-catalog.ts (turnaround), hooks/use-lims-features.ts, lib/edition-staff-roles.ts */}

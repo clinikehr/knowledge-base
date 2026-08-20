@@ -25,7 +25,7 @@ The page is one screen in three stacked parts.
 
 | Part | What it holds |
 | --- | --- |
-| The material picker | **Select control material**, listing each control as `\{code\} — \{name\} (lot \{lot\})` with its target and SD beside it, plus **Add control material** |
+| The material picker | **Select control material**, listing each control as `\{code\} — \{name\} (lot \{lot\})` with **Target \{mean\} · SD \{sd\}** beside it, plus **Add control material** and a **Refresh** button |
 | The **Levey-Jennings** chart | The last 30 runs for the chosen material, plotted in sequence over reference bands at the mean and ±1, ±2 and ±3 SD |
 | The run form and history | **Measured value**, **Technician** and **Record run**, above a table of **When**, **Value**, **z**, **Verdict**, **Rules** and **Technician** |
 
@@ -98,7 +98,7 @@ Role decides whether **Quality Control** appears in your sidebar. Permission dec
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Quality Control** | **QC Officer**, **Lab Manager**, Owner, Manager | Permission — **Review QC runs** |
+| Open **Quality Control** | **QC Officer**, **Lab Manager**, anyone on the **Whole lab** or **All sites** tier, Owner, Manager | Permission — **Review QC runs** |
 | Add a control material | The same people | Permission — **Review QC runs** |
 | Record a run and read the verdict | The same people | Permission — **Review QC runs** |
 | Act on a rejection at the bench — recalibrate, re-run patients | Anyone on the **Own bench** tier and above | Permission — **Enter results at the bench** |
@@ -134,6 +134,10 @@ See [Permissions](/platform/team/permissions).
 
   <Accordion title="Every run comes back rejected on a new lot">
     The targets belong to the old lot. Add the new lot as its own control material with its own mean and SD. New reagent lots are also quarantined until validated — see [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+
+  <Accordion title="Record run refuses with “Enter the measured control value”">
+    Either **Measured value** is blank, or no material is picked in **Select control material**. The message covers both, so check the picker before you retype the number.
   </Accordion>
 
   <Accordion title="The chart says there are no runs">

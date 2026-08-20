@@ -1,120 +1,184 @@
 ---
-title: "Reports, Lab Analytics and the owner summary"
-description: "Three different reporting surfaces, what each one answers, and the one definition of revenue that stops people reconciling against the wrong number."
+title: The report catalogue
+description: "One workbench per subject — diagnostics, revenue, referrals, turnaround, reagents — each with a period you choose and a CSV or Excel export."
 icon: /images/icons/chart-column.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Lab Analytics needs Business Lab. Executive needs Professional Lab." roles="Owner, Manager and management roles. Bench and imaging roles do not see these screens." />
+<Availability editions={['lims']} plans="The catalogue is on every plan; individual reports need the feature they report on — Quality Control and Expiry Risk from Professional Lab, Referrals and Turnaround Time from Business Lab." roles="Owner, Manager and management roles. Bench roles are not offered it." />
 
-The lab has **three** reporting surfaces, and they are constantly mistaken for each other. They answer different questions, sit at different addresses, and unlock on different plans.
+**Analytics** is the lab's cross-cutting report catalogue: one card per subject, each opening a workbench with a period, tiles, charts, a data table and an export. It is where you go when the question is "how much / how many / how long", and it covers the whole lab rather than one bench.
 
-| Surface | Where | Answers |
+<Path steps={['Sidebar', 'Analytics']} />
+
+<TaskHeader before="Some completed work in the period you want to look at" time="2 minutes per report" after="A report on screen, and a CSV or Excel copy of exactly what you are looking at" />
+
+## Three screens are called analytics. This is the third
+
+People quote a figure from one while looking at another and the numbers never reconcile. Tell them apart by what they are for.
+
+| Screen | Where | Answers |
 | --- | --- | --- |
-| **Lab Analytics** | <Path steps={['Sidebar', 'Lab Analytics']} /> | How is the lab trading — trends, mix, revenue by test and by referrer |
-| **Analytics** | <Path steps={['Sidebar', 'Analytics']} /> | The report catalogue — one workbench per subject, with an export |
-| **Executive** | <Path steps={['Sidebar', 'Executive']} /> | Today and this week, for the owner |
+| **Lab Analytics** | <Path steps={['Sidebar', 'Lab Analytics']} /> | How is the lab trading — trends, mix, revenue by test and by referrer. See [Lab analytics](/lims/business/lab-analytics). |
+| **Executive** | <Path steps={['Sidebar', 'Executive']} /> | Today and this week, for the owner. See [The owner summary](/lims/business/executive). |
+| **Analytics** — this page | <Path steps={['Sidebar', 'Analytics']} /> | The catalogue. One report per subject, with an export. |
 
-## One definition of revenue
+## What you're looking at
 
-On both **Lab Analytics** and the report catalogue, revenue means **money collected, on orders created in the range you picked**. Not money invoiced.
+The index is headed **Analytics**, with a subtitle counting what you can open — "\{n\} reports available for this clinic. Each one covers a period you choose and can be exported." Cards are grouped under **Clinical**, **Operations** and **Money**, in that order.
 
-That distinction is the single most common reason two people quote different numbers for the same month. An order raised in March and paid in April counts in March, at the amount collected. An invoice raised and never paid counts as nothing. If you are reconciling against a billed figure, you are reconciling against a number this page does not report — see [Billing and payments](/lims/business/billing).
+Opening one gives you the same workbench every time:
 
-## Lab Analytics — the lab's own dashboard
-
-Headed **Analytics**, with the subtitle "Trends and mix across drug testing, lab and imaging. Revenue = collected on orders created in the range."
-
-Pick a range — **Last 30 days**, **Last 90 days** or **Last 180 days** — and everything below follows it.
-
-| Tile | Reads |
+| Part | What it does |
 | --- | --- |
-| **Orders** | Every order created in the range, across all three work types |
-| **Collected revenue** | Money collected on those orders |
-| **Patients (lab \+ imaging)** | With "\{n\} new · \{n\} returning" beneath it |
-| **Avg collected per order** | Your real average ticket |
+| The period select | **Last 30 days**, **Last 90 days** or **Last 12 months** |
+| Scope tabs | On the reports that have them — **Laboratory** / **Radiology**, **Invoices** / **Payments** |
+| Tiles and charts | The headline figures, then **\{report\} over time** and **\{report\} by category** |
+| The data table | Three views — **Over time**, **Breakdown** and **Summary** — with **Export** above them |
 
-Below the tiles: **Collected revenue by day**, **Orders by day**, **Revenue by test** and **Revenue by referring doctor**. The last of those is the one to read before renegotiating a commission — see [Referral commissions](/lims/business/commissions).
+A footer note states the arithmetic: "Figures are aggregates for the selected period. Periods longer than 12 months are shortened server-side."
 
-Lab Analytics needs the Business Lab plan; below it the page reads **Advanced analytics is a Business feature**.
+**The empty states.** A period with no activity reads **No data for this period** — "Try a longer period, or check back once there is activity." A report that returns nothing to tabulate reads **Nothing to tabulate**. If the index itself is bare it reads **No reports available**.
 
-## Analytics — the report catalogue
+## The reports a lab sees
 
-A catalogue of subject-specific reports. Each opens a workbench with a period select, optional scope tabs, tiles, charts and a data table with **Export**.
+Twelve, in the order the index groups them.
 
-| Report | Scopes | Notes |
+| Report | Scopes | Needs |
 | --- | --- | --- |
-| **Revenue** | **Invoices** · **Payments** |  |
-| **Appointments** | — | Collection slots and bookings |
-| **Patients** | — |  |
-| **Diagnostics** | **Laboratory** · **Radiology** | The core report for a lab — volume, turnaround, abnormal rate |
-| **Referrals** | — | Needs the referral-network capability and "Access the referrer portal" |
-| **Turnaround Time** | **Laboratory** · **Radiology** | Needs the turnaround capability and "View turnaround-time analytics" |
-| **Quality Control** | — | Needs the quality-control capability |
-| **Staff** | — |  |
-| **Workload** | — | Cross-department load and peak hours |
-| **Reagents** | — | Valuation, turnover and expiry risk |
-| **Expiry Risk** | — | A snapshot as things stand — it has no period picker. Needs the expiry-risk capability |
-| **Predictive Analysis** | — | Demand, revenue and stock forecasts |
+| **Diagnostics** | **Laboratory** · **Radiology** | — the core report for a lab: volume, turnaround and abnormal rate |
+| **Quality Control** | — | The quality-control feature (Professional Lab) |
+| **Appointments** | — | — collection slots and bookings |
+| **Patients** | — | — |
+| **Turnaround Time** | **Laboratory** · **Radiology** | The turnaround feature **and** **View turnaround-time analytics** |
+| **Staff** | — | — |
+| **Workload** | — | — cross-department load and peak hours |
+| **Reagents** | — | Valuation and turnover — see [Reagents and consumables](/lims/inventory/reagents) |
+| **Predictive Analysis** | — | — demand, revenue and stock forecasts |
+| **Revenue** | **Invoices** · **Payments** | — |
+| **Referrals** | — | The referral-network feature **and** **Access the referrer portal** |
+| **Expiry Risk** | — | The expiry-risk feature. It has no period — it reads **As it stands now** |
 
-A report you cannot see is missing for one of two reasons, and they have different fixes: the **capability** is not on your plan ([Change your plan](/platform/plans/change-plan)), or the **permission** is not on your account ([Permissions](/platform/team/permissions)).
+**Quality Control** is gated on the feature only, not on **Review QC runs** — a manager who cannot open the QC bench can still read the report about it.
 
-The deeper turnaround measure has its own dashboard as well — see [Turnaround time](/lims/lab/turnaround-time).
+### Invoiced or collected — pick one and say which
 
-## Executive — the owner summary
+The **Revenue** report's two scopes are the single commonest reason two people quote different numbers for the same month. **Invoices** is what you billed; **Payments** is what actually arrived. An invoice raised and never paid is a large number under one scope and nothing under the other. Every other money figure in the lab — **Lab Analytics**, the owner summary, referral commissions — is worked out on money **collected**, so **Payments** is the scope that reconciles against them. See [Payments](/lims/business/payments).
 
-Headed **Owner Summary** (or **All Sites**, or the name of the site you have selected), with the subtitle "Today's intake and the week at a glance — the same numbers as your morning digest email."
+## Run a report
 
-| Tile | Reads |
-| --- | --- |
-| **Orders today** | With "\{n\} drug testing · \{n\} lab · \{n\} imaging" beneath |
-| **Collected today** | Today's takings |
-| **This week** | The week so far |
-| **Backlog** | Everything still open, split the same three ways |
-| **Lab TAT (7d median)** · **Imaging TAT (7d median)** · **Drug-testing TAT (7d median)** | Seven-day medians. On the all-sites view these read "per site — pick a site" |
-| **Reagents at risk** | Value projected to expire unsold, with low-stock count |
+<Steps>
+  <Step title="Open it from the index">
+    Select the card. Reports your plan or your permissions do not cover are not listed at all.
+  </Step>
+  <Step title="Set the period">
+    Choose **Last 30 days**, **Last 90 days** or **Last 12 months**. Everything below follows it. **Expiry Risk** has no period — it is a snapshot, labelled **As it stands now**.
+  </Step>
+  <Step title="Narrow with a scope, where there is one">
+    On **Diagnostics** and **Turnaround Time**, pick **Laboratory** or **Radiology**. On **Revenue**, pick **Invoices** or **Payments**.
+  </Step>
+  <Step title="Read the table, not just the chart">
+    Switch between **Over time**, **Breakdown** and **Summary**. The chart shows the shape; the table is what you can defend a decision with.
+  </Step>
+</Steps>
 
-Below them: **By site**, **Top tests this week** and **Top referring doctors**. The site select reads **All sites (\{n\})**, and a collection centre is marked **(center)** so you can tell a draw station from a full laboratory.
+## Take a copy away
 
-Executive needs the Professional Lab plan — below it the card reads **Owner dashboard is a Professional feature**. Two parts of the page have their own gates: **By site** needs multi-location reporting, and the reagent-risk tile needs the expiry-risk capability. Without the latter the tile falls back to a plain **Reagent alerts** count.
+Select **Export** above the data table and choose **CSV — this view** or **Excel (.xlsx) — this view**. Both take exactly what is on screen — the period, the scope and the table view you have selected — so change the view first, then export.
 
-## Who can open these
+A CSV confirms with **Exported** and "\{n\} rows · \{period\}. Opens in Excel, Numbers or Sheets." A failed workbook confirms with **Not exported** and the reason.
 
-A lab scientist cannot open **Executive** or **Lab Analytics**, and that is deliberate — bench roles get the bench, not the lab's revenue. Management roles and the owner get both. Where a permission rather than a plan is missing, the screen degrades quietly to **Analytics is hidden — Needs authorisation from your clinic owner or manager** rather than erroring. See [Roles](/platform/team/roles).
+<AuditNote action="Opening a report, and exporting one," />
 
-<AuditNote action="Opening a report" />
+## Who can do this
 
-## If the numbers look wrong
+Role decides whether **Analytics** appears in the sidebar; a feature on your plan decides whether a report exists; a permission decides whether a gated one is offered to you. All three are separate, and the failure looks different in each case.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Analytics** and its ungated reports | Owner, Manager, **Lab Manager**, **Referrer Liaison**, **QC Officer** | Role → route |
+| Open **Turnaround Time** | **QC Officer**, **Referrer Liaison**, **Lab Manager**, **All sites** tier | Permission — **View turnaround-time analytics** |
+| Open **Referrals** | **Referrer Liaison**, **Lab Manager**, **All sites** tier | Permission — **Access the referrer portal** |
+| Open **Quality Control** | Anyone who reaches the catalogue | Plan only — no permission |
+| Export any report you can open | The same people | Role → route |
+| Open **Lab Analytics** or **Executive** | Owner, Manager and management roles | Role → route |
+
+A **Lab Scientist** is denied **Executive**, **Lab Analytics** and **Referral Commissions** outright — bench roles get the bench, not the lab's revenue. A **QC Officer** reaches quality and turnaround reporting and nothing that alters a record, which is the whole point of the role.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see renders hidden or as a dash — never as a zero, which would read as real data.
+
+A report you are not permitted to open is not listed on the index, and its address does not resolve — you get a page-not-found rather than a lock card. The bespoke **Lab Analytics** and **Turnaround Time** dashboards behave differently and show **Analytics is hidden** / **Turnaround analytics is hidden** with **Needs authorisation from your clinic owner or manager.** See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The report opens with tiles that change when you change the period.
+- The data table has rows under **Breakdown**, not **Nothing to tabulate**.
+- **Export** produces a file whose row count matches the **Exported** toast.
+- The **Payments** scope of **Revenue** agrees with the **Total Collected** figure on [Payments](/lims/business/payments).
+
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Two people quote different revenue for the same month">
-    Almost always billed versus collected. These surfaces report **collected** money on orders **created** in the range. Compare against the payments figure, not the invoice total — see [Billing and payments](/lims/business/billing).
+    One is reading the **Invoices** scope and the other **Payments**. Agree which before you argue about the number — every other money figure in the lab is collected money.
   </Accordion>
 
-  <Accordion title="Revenue looks low in a month you know was busy">
-    Work created in the range but paid later has not been collected yet. Widen the range, or check the **Pending** tab on **Payments** for money that was received but never matched to an invoice.
+  <Accordion title="A report I was told about is not on the index">
+    Either the feature is not on your plan, or the permission is not on your account. They have different fixes: [Change your plan](/platform/plans/change-plan) for the first, [Permissions](/platform/team/permissions) for the second.
   </Accordion>
 
-  <Accordion title="Revenue by referring doctor is empty">
-    Orders are not being attributed to referrers at intake. The referrer has to be picked on the intake or order form — see [Referring doctors](/lims/business/referrers).
+  <Accordion title="A report link gives a page-not-found">
+    That is what a permission-denied catalogue report looks like — it is not listed and its address does not resolve. Ask an owner or manager for the grant named against it in the table above.
+  </Accordion>
+
+  <Accordion title="“No data for this period”">
+    Nothing happened in the range you picked, or nothing has been completed yet. Try **Last 12 months** before assuming the report is broken.
   </Accordion>
 
   <Accordion title="Expiry Risk ignores the period I picked">
-    It has no period. It is a snapshot of what is at risk as things stand now — see [Reagents and consumables](/lims/inventory/reagents).
+    It has no period. It reads **As it stands now** — a snapshot of what is at risk today, not a range. See [Reagents and consumables](/lims/inventory/reagents).
   </Accordion>
 
-  <Accordion title="Executive shows no By site section">
-    Either your lab runs a single site, or multi-location reporting is not on your plan — see [Plans](/platform/plans/overview).
+  <Accordion title="Revenue by referring doctor is empty">
+    Orders are not being attributed to referrers at intake. The referrer must be picked on the intake or order form — see [Referring doctors](/lims/business/referrers).
   </Accordion>
 
-  <Accordion title="A scientist says the sidebar has no Executive entry">
-    Correct, and intentional. Those screens are not offered to bench or imaging roles — see [Roles](/platform/team/roles).
+  <Accordion title="The export has fewer rows than the chart suggests">
+    **Export** takes the table view you are on. Switch to **Breakdown** or **Over time** first, then export again.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Which of the three analytics screens should I use?">
+    **Executive** for the two-minute morning read, **Lab Analytics** for trading trends and mix, and this catalogue when you want one subject in depth with an export. They are not different views of one dataset — they answer different questions.
+  </Accordion>
+
+  <Accordion title="Is opening a report logged?">
+    Yes. Viewing and exporting a report are both written to your audit log with your name and the time, because reports aggregate patient work. That is a HIPAA requirement, not a setting.
+  </Accordion>
+
+  <Accordion title="Can I schedule a report to arrive by email?">
+    Not from here. Export it yourself, or read the owner summary, which arrives as a morning digest email — see [The owner summary](/lims/business/executive).
+  </Accordion>
+
+  <Accordion title="Why can a QC Officer see turnaround time?">
+    Both quality and turnaround are oversight of how the lab performs rather than changes to a patient record, so they travel together on that role. See [Turnaround time](/lims/lab/turnaround-time).
+  </Accordion>
+
+  <Accordion title="Can I go back more than 12 months?">
+    Not on this screen — **Last 12 months** is the longest period, and anything longer is shortened for you. Export successive periods and join them outside the product.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a report" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/analytics/analytics-content.tsx, components/clinic/dashboard/lab-station/admin/admin-dashboard-content.tsx, lib/analytics/report-catalog.ts, lib/clinic-nav-registry.ts (LIMS) */}
+{/* source of truth: lib/analytics/report-catalog.ts (labels, editions, entitlements, permissionSlug, periodless), components/clinic/dashboard/analytics/ (analytics-index.tsx, report-workbench.tsx, report-data-table.tsx), lib/analytics/report-table.ts, lib/clinic-nav-registry.ts (LIMS), lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

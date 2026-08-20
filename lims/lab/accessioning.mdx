@@ -1,76 +1,120 @@
 ---
 title: Accession an incoming specimen
-description: "Log a specimen into the lab with an accession number, received time and seal check, and record it on the chain of custody."
+description: "Log a specimen into the lab with an accession number, received time and seal check, and record the handoff on the chain of custody."
 icon: /images/icons/barcode.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans — the chain-of-custody timeline is included on Starter Lab" roles="Anyone granted “accession an incoming specimen”. Accessioning Clerk and Lab Manager have it by default." />
+<Availability editions={['lims']} plans="All plans — the chain-of-custody timeline is included on Starter Lab" roles="Anyone granted “Accession an incoming specimen”. Accessioning Clerk and Lab Manager hold it by default, as do the Whole lab and All sites tiers." />
 
 Accessioning is the moment a specimen stops being someone else's problem and becomes yours. You give it an accession number, record when it arrived and in what condition, and the handoff is written to the chain of custody.
 
 <Path steps={['Sidebar', 'Worklist']} />
 
-<TaskHeader before="A specimen physically in front of you, and the request it belongs to on the queue" time="1 minute per specimen" after="A specimen accessioned, sealed condition recorded, and a custody event on the timeline" />
+<TaskHeader before="A specimen physically in front of you, and the order it belongs to on the queue" time="1 minute per specimen" after="A specimen accessioned, seal condition recorded, and a custody event on the timeline" />
 
 ## Before you start: is this site a full lab?
 
-A site registered as a collection centre cannot accession. Its bench screens carry a banner reading **This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here.**
+A site registered as a collection centre cannot accession. Its bench screens carry a banner reading **This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here.** Push past it and the action returns **This site is a collection center — accession, screening and reporting happen at your full laboratory**.
 
 That is deliberate. A collection centre draws and refers; the full lab receives and reports. The site kind is chosen when the workspace is created — **Full laboratory — testing on site** or **Collection center — samples drawn and referred to your lab** — and it is not a per-user setting. If your banner is wrong, [contact support](/platform/help/contact-support).
+
+## What you're looking at
+
+You reach the form from the [Worklist](/lims/lab/worklist): select the specimen's row and the order workflow sheet opens with **Workflow** and **Chain of Custody** tabs. The **Workflow** tab shows whichever form the current status calls for, so an **In transit** or **Lab intake** specimen shows the **Laboratory Accession** card.
+
+| Field | What it wants |
+| --- | --- |
+| **Accession Number \*** | "Must be unique. This is the lab's internal identifier for this specimen." Shaped like `LAB-2024-00001` |
+| **Received Date & Time \*** | "Pick received date & time" — the moment the specimen actually arrived |
+| **Primary Specimen Seal (Bottle A) \*** | **Yes — Seal Intact** or **No — Seal Broken** |
+| **Split Specimen Seal (Bottle B) \*** | **Yes — Intact** or **No — Broken** |
+| **Seal Condition Notes \*** | Appears once the primary seal is marked broken — "Describe the condition of the seal in detail." |
+| **Bottle B Storage Location** | "Where the split specimen is stored (freezer ID, rack, position, etc.)" — for example "Freezer A-2, Rack 3, Position 7" |
+
+The submit button changes with the answer you give: **Record Accession** normally, **Reject Specimen** the moment the primary seal is marked broken.
+
+<AuditNote action="Opening a specimen and accessioning it" />
 
 ## Accession the specimen
 
 <Steps>
   <Step title="Open the specimen">
-    On the **Worklist**, find the specimen — filter by the **Received** chip or search by **Specimen ID, LAN or donor…** — and select the row. The order workflow sheet opens with **Workflow** and **Chain of Custody** tabs, and the **Workflow** tab shows the form the current status calls for.
+    On the **Worklist**, find it — filter by a status chip or search by **Specimen ID, LAN or donor…** — and select the row.
   </Step>
   <Step title="Enter the accession number and time">
-    On the **Laboratory Accession** card, fill in **Accession Number \*** — the lab's own identifier, in the shape `LAB-2024-00001` — and **Received Date & Time \***. Record the time the specimen actually arrived, not the time you got to the keyboard; it is the clock every turnaround measure runs from.
+    Fill in **Accession Number \*** and **Received Date & Time \***. Record the time the specimen actually arrived, not the time you got to the keyboard; it is the clock every turnaround measure runs from, and a keyboard time flatters your numbers. See [Turnaround time](/lims/lab/turnaround-time).
   </Step>
   <Step title="Check both seals">
-    **Primary Specimen Seal (Bottle A) \*** and **Split Specimen Seal (Bottle B) \*** are Yes/No choices, shown green for intact and red for not. Inspect the seals against the paperwork before you answer.
+    Answer **Primary Specimen Seal (Bottle A) \*** and **Split Specimen Seal (Bottle B) \*** against the paperwork, inspecting the bottles rather than the shipping box.
   </Step>
   <Step title="Describe any damage">
-    Answering "no" to either seal reveals **Seal Condition Notes \***, which is then required. Describe what you saw — the seal was torn, the signature did not match, the bottle leaked. This note is what a reviewer reads months later.
+    Marking the primary seal broken reveals **Seal Condition Notes \***. Describe what you saw — the seal was torn, the signature did not match, the bottle leaked. This note is what a reviewer reads months later.
   </Step>
   <Step title="Record where Bottle B is stored">
-    Fill in **Bottle B Storage Location** in enough detail that a colleague can retrieve it without you — the field's own example is "Freezer A-2, Rack 3, Position 7".
+    Fill in **Bottle B Storage Location** in enough detail that a colleague can retrieve the split without you.
   </Step>
   <Step title="Save the accession">
-    Save the form. The specimen moves on to the next stage of the queue and a custody event is written with the time and your name.
+    Select **Record Accession**. The toast reads **Lab accession recorded**, the specimen moves on to the next stage of the queue, and a custody event is written with the time and your name.
   </Step>
 </Steps>
 
+## A broken seal is a fatal flaw
+
+Mark the primary seal broken and the form says so before you go any further: **Fatal Flaw — Broken Seal** — "A broken tamper-evident seal is a fatal flaw per 49 CFR § 40.83. This specimen will be rejected for testing and cannot be used for any result determination."
+
+Selecting **Reject Specimen** then raises **Confirm Specimen Rejection**: "You are about to reject this specimen for testing due to a broken seal. This action will advance the order status to "Rejected for Testing" and cannot be undone. The donor may need to be retested." Choose **Confirm Rejection** and the toast reads **Specimen rejected for testing due to broken seal**.
+
 <Warning>
-  A broken seal raises a confirmation before the order can continue. Do not click through it to clear your queue. A compromised specimen produces a result nobody can stand behind — reject it instead, and let the requester recollect.
+  Rejection cannot be undone, and it is the correct outcome. Do not click back through the form to make a broken seal go away so the queue clears — a compromised specimen produces a result nobody can stand behind, and the donor is recollected instead.
 </Warning>
 
-## Rejecting an unsuitable specimen
+## Rejecting for other reasons
 
-Rejecting is a separate grant from accessioning, and both together are the Accessioning Clerk's whole job. Reject when the specimen cannot produce a defensible result: wrong tube, insufficient volume, no label, a seal you cannot vouch for, a transport delay past the analyte's stability. The rejection is recorded as its own custody event, so the reason survives.
+Rejecting is a separate grant from accessioning, and the two together are the Accessioning Clerk's whole job. Reject when the specimen cannot produce a defensible result: wrong tube, insufficient volume, no label, a seal you cannot vouch for, a transport delay past the analyte's stability. The rejection is recorded as its own custody event, so the reason survives.
 
 ## Reading the chain of custody
 
-The **Chain of Custody** tab groups every event into four phases — **Specimen Intake**, **Laboratory Analysis**, **Reporting** and **Post-Report**. Each event card shows a **Seal Intact** or **Seal Broken** pill, the released-by → received-by handoff, any notes, the timestamp and the elapsed time since the previous event.
+The **Chain of Custody** tab groups every event into four phases — **Specimen Intake**, **Laboratory Analysis**, **Reporting** and **Post-Report** — each headed with its own event count. Every event card shows a **Seal Intact** or **Seal Broken** pill, the released-by → received-by handoff, any notes, the timestamp and the elapsed time since the previous event.
 
 Events you will see include Order Created, CCF Completed, Specimen Collected, Specimen Shipped, Specimen Received at Lab, Specimen Rejected, Initial Immunoassay Screen, GC-MS / LC-MS-MS Confirmation, Lab Report Finalized, Report Sent to MRO, MRO Verified, Reported to DER, Order Cancelled, Split Retest Requested, Split Retest Completed and Custody Transfer.
 
+## Who can do this
+
+Role decides whether the bench opens. Permission decides whether you may book a specimen in or turn it away.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the **Worklist** and read a specimen | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, lab scientists, phlebotomists | Role → route |
+| Accession an incoming specimen | **Accessioning Clerk**, **Lab Manager**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
+| Reject an unsuitable specimen | The same people | Permission — **Reject an unsuitable specimen** |
+| Record the screen that follows | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
+| Finalise the screen and decide how it is reported | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+
+The **Accessioning Clerk** role is exactly these two grants and nothing else — "registers patients, books collection slots, accessions incoming samples, raises the invoice". A **Lab Manager** holds them too, but **not** verify: authorising a result is a scientist's clinical act, and it arrives with the *access tier* rather than the administrative role. A **QC Officer** is review-only by design and holds neither.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — from then on they can only do what is switched on there.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or rendered as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
 ## Check it worked
 
-- The specimen has left the **Received** filter and carries its accession number.
+- The specimen carries its accession number and has moved to the **Received** filter on the **Worklist**.
 - The **Chain of Custody** tab shows a new event under **Specimen Intake** with your name, the received time and the correct seal pill.
 - The elapsed time on the new event is measured from the previous handoff, not from now.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The accession form is not on the Workflow tab">
-    The tab shows the form for the specimen's current status. If the specimen is still **In transit**, it has not been received yet; mark the arrival first. If it is already **Screening**, accessioning is done.
+    The tab shows the form for the specimen's current status. If it is still **Collected** or **In transit**, the arrival has not been recorded yet; if it is already **Screening**, accessioning is done.
   </Accordion>
 
   <Accordion title="Everything on the bench is disabled">
@@ -78,7 +122,15 @@ Events you will see include Order Created, CCF Completed, Specimen Collected, Sp
   </Accordion>
 
   <Accordion title="I cannot save without seal notes">
-    **Seal Condition Notes \*** becomes required as soon as either seal is marked not intact. Describe the damage; there is no way to skip it, by design.
+    **Seal Condition Notes \*** appears as soon as the primary seal is marked broken, and it is there to be filled in. Describe the damage rather than looking for a way round it.
+  </Accordion>
+
+  <Accordion title="The button now says Reject Specimen and I did not want that">
+    You answered **No — Seal Broken** on **Primary Specimen Seal (Bottle A)**. If that was a mis-tap, correct the answer before submitting and the button returns to **Record Accession**.
+  </Accordion>
+
+  <Accordion title="Failed to record accession">
+    The save did not go through. Check the accession number is not already in use — it must be unique — and try again.
   </Accordion>
 
   <Accordion title="I used the wrong accession number">
@@ -86,10 +138,34 @@ Events you will see include Order Created, CCF Completed, Specimen Collected, Sp
   </Accordion>
 
   <Accordion title="The Worklist is empty">
-    The **Worklist** is the drug-testing bench queue. A lab running only standard clinical work sees nothing there, correctly — work those requests from [Test requests](/lims/lab/test-requests) instead. See [Work the bench queue](/lims/lab/worklist).
+    It is the drug-testing bench queue. A lab running only standard clinical work sees nothing there, correctly — work those from [Test requests](/lims/lab/test-requests).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens if a seal is broken on arrival?">
+    The form names it as a fatal flaw under **49 CFR § 40.83**, and the specimen is rejected for testing rather than accessioned. It cannot be used for any result determination, the rejection cannot be undone, and the donor may need to be recollected.
+  </Accordion>
+
+  <Accordion title="Why does Bottle B matter if we only test Bottle A?">
+    Because a donor may request a split retest of Bottle B after a confirmed positive. Recording where it is stored is what makes that possible months later — and the storage note is the only thing standing between a request and a search of the freezer.
+  </Accordion>
+
+  <Accordion title="Should I use the time on the courier's paperwork or the time I keyed it in?">
+    The time the specimen arrived. Turnaround is measured from it, so a keyboard time makes your lab look slower or faster than it is and misstates the custody record.
+  </Accordion>
+
+  <Accordion title="Can I accession offline?">
+    No. Order capture goes offline; accessioning does not. It is a status-guarded step whose conflicts need a person at the bench — see [Working offline](/platform/apps/offline).
+  </Accordion>
+
+  <Accordion title="Does accessioning a specimen report anything to anyone?">
+    No. It only books the specimen in. Screening, confirmation and the report are separate steps, and no analyte can be called **Positive** until confirmation — see [Screening and confirmation](/lims/dot/screening-and-confirmation).
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="accessioning" />
 
-{/* source of truth: components/clinic/dot-lims/lab/lab-accession-form.tsx, components/clinic/dot-lims/general/chain-of-custody-timeline.tsx, components/clinic/dot-lims/general/collection-center-banner.tsx */}
+{/* source of truth: components/clinic/dot-lims/lab/lab-accession-form.tsx, components/clinic/dot-lims/general/chain-of-custody-timeline.tsx, components/clinic/dot-lims/general/collection-center-banner.tsx, db/actions/dot-lims.ts, lib/edition-staff-roles.ts */}

@@ -1,0 +1,173 @@
+---
+title: Services and prices
+description: "Price the things you charge for that are not stock — a delivery fee, a blood-pressure check, a compounding charge — and group them into categories."
+icon: /images/icons/concierge-bell.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Not reachable by a cashier" />
+
+A pharmacy sells stock, and stock is priced where it is received — in [Inventory](/pharmacy/inventory/index). **Services** is for everything else you charge for: a delivery fee, a blood-pressure or blood-sugar check, a private consultation, a compounding or dispensing charge, a monthly account fee. Without something on this list, an invoice has nothing to put on its lines.
+
+<Path steps={['Sidebar', 'Billing', 'Services']} />
+
+<TaskHeader before="A list of the non-stock things you charge for, and what each one costs" time="1 minute per service" after="Priced services you can pick on an invoice or a payment" />
+
+<Note>
+  **This screen is shared with the other ClinikEHR editions, so its wording is clinic-flavoured** — "clinic", "consultation", "accommodation". It behaves exactly as described here; only the vocabulary has not been translated for a pharmacy.
+</Note>
+
+## What you're looking at
+
+The heading reads **Services Dashboard** — "Manage your clinic's services, prices, and categories". Alongside it sit a date-range picker, **Refresh**, and one create button that swaps with the tab: **New Category** while **Categories** is open, **New Service** everywhere else. You will never see both at once.
+
+Three tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | Four tiles — **Total Services**, **Active Services**, **Service Types**, **Inactive Services** — then **Service Categories** and **Recent Services** side by side, each with **View All** |
+| **Services** | The full list: **Service Name**, **Code**, **Type**, **Category**, **Price**, **Status**, with **Filter services...** and a type filter (**All Types**, **Consultation**, **Procedure**, **Administration**, **Accommodation**, **Other**) |
+| **Categories** | Your groupings, each with its description and status |
+
+**Status** is a badge: **Active** (offered) or **Inactive** (retired — kept on the record, not offered). **Code** is generated for you from the pharmacy name and the category; select it to copy it.
+
+A pharmacy that has never priced a service sees **No services found** — "Get started by adding your first service." — with an **Add Service** button, and **No categories found** on the third tab. Prices always render in your own currency, whatever that is.
+
+## Add a service
+
+<Steps>
+  <Step title="Select New Service">
+    From any tab except **Categories**. The **Add New Service** sheet opens.
+  </Step>
+  <Step title="Name it the way you would say it out loud">
+    **Service Name\*** is what appears on the invoice line and on the customer's receipt — "Home delivery", "Blood pressure check", "Compounding fee". Avoid internal shorthand nobody outside the counter would recognise.
+  </Step>
+  <Step title="Set the price">
+    **Price\*** is what you charge, in your workspace's currency. It is a price, not a cost — this list has no cost side and no margin, because there is no stock behind it.
+  </Step>
+  <Step title="Choose a type and a category">
+    **Service Type\*** offers **Consultation**, **Procedure**, **Administration**, **Accommodation** and **Other**; a delivery or account fee is usually **Administration**, a BP check a **Procedure**. **Service Category** is optional but drives the generated **Code**, so set one before you have fifty rows to sort out.
+  </Step>
+  <Step title="Fill in the optional fields and save">
+    **Procedure Code** and **Description** are free text. Leave **Active** on so the service can be charged. Saving closes the sheet and the new row appears at the top of **Recent Services**.
+  </Step>
+</Steps>
+
+## Group services into categories
+
+<Steps>
+  <Step title="Open the Categories tab">
+    The header button becomes **New Category**.
+  </Step>
+  <Step title="Name and describe it">
+    **Category Name\*** plus an optional **Description**. Keep the set small — "Delivery", "Health checks", "Dispensing" beats twenty near-identical groups.
+  </Step>
+  <Step title="Save">
+    The category is immediately available in **Service Category** on the service sheet, and appears on the **Overview** card.
+  </Step>
+</Steps>
+
+## Retire a service you no longer offer
+
+Prefer this to deleting. A retired service keeps every historical invoice line readable; a deleted one leaves old paperwork pointing at nothing.
+
+<Steps>
+  <Step title="Edit the service">
+    Open the row menu on the **Services** tab — **Copy ID**, **Edit Service**, **Delete Service** — and choose **Edit Service**.
+  </Step>
+  <Step title="Turn Active off and save">
+    The badge becomes **Inactive** and the service stops being offered on new invoices. It stays in the list and on the **Inactive Services** tile.
+  </Step>
+</Steps>
+
+<Warning>
+  **Delete Service** is a two-step control — it changes to **Confirm Delete?** and the second click removes the service permanently. Use it only for something priced by mistake and never charged. Anything a customer has been billed for should be made **Inactive** instead.
+</Warning>
+
+## Who can do this
+
+**Role** decides whether **Billing** opens at all. Inside it, pricing is not separately gated in the Pharmacy edition — there is no "may set prices" permission, so anyone who can reach the screen can change what you charge.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Services** at all | Owner, manager, Pharmacy Manager | Role — a **Cashier / Till Operator** reaches only **POS** and **Sales** |
+| **New Service**, **New Category** | Everyone who can open **Billing** | Role |
+| **Edit Service**, retire a service | Everyone who can open **Billing** | Role |
+| **Delete Service**, delete a category | Everyone who can open **Billing** | Role |
+| Change a price *on a sale at the till* | Pharmacy Manager, Dispensing Supervisor | **Override the selling price** |
+
+That last row is the distinction worth holding on to: **Override the selling price** governs a one-off change on the sale in front of a customer, not the standing price set here.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a screen from someone's sidebar is a convenience, not a boundary.
+
+Where a money figure elsewhere in the product is permission-gated it reads **"Hidden — needs authorisation from your clinic owner."** or the card disappears — never a zero. Nothing on this screen is gated that way, because a price list is not a takings figure. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The service appears on the **Services** tab with the right **Price** and an **Active** badge.
+- **Total Services** and **Active Services** on **Overview** have gone up by one.
+- The service is offered on the invoice form's line picker — see [Invoices and payments](/pharmacy/money/billing).
+- A retired service has an **Inactive** badge, is counted under **Inactive Services**, and no longer appears on a new invoice.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'No services found' when raising an invoice">
+    The invoice line picker searches this list, so an empty list makes a first invoice feel broken when it is not. Add the services you charge for here first.
+  </Accordion>
+
+  <Accordion title="The Code column shows '-'">
+    Codes are generated from the pharmacy name and the category, so a service saved with no **Service Category** has nothing to build from. Edit the service, set a category, and save.
+  </Accordion>
+
+  <Accordion title="'Failed to save service'">
+    Usually a missing required field — **Service Name**, **Price** and **Service Type** all carry an asterisk — or a price typed with a currency symbol or a thousands separator. Enter digits only.
+  </Accordion>
+
+  <Accordion title="'Failed to load service categories'">
+    The sheet could not fetch your categories, so the picker is empty. Close it, select **Refresh**, and reopen. If it persists, the connection dropped — this screen has no offline mode.
+  </Accordion>
+
+  <Accordion title="I deleted a service and old invoices look wrong">
+    Deleting is permanent and historical lines lose what they pointed at. Recreate the service with the same name and price to make the paperwork readable again, then retire it with **Active** off rather than deleting.
+  </Accordion>
+
+  <Accordion title="Picking a date range changes nothing">
+    The picker beside **Refresh** does not filter this screen — a price list has no period. Use **Filter services...** and the type filter instead.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a service need stock?">
+    No — that is the whole point of the list. A service has a price and no stock line, nothing is drawn down when you charge for it, and it never appears on a stock count. Anything you take off a shelf belongs in [Inventory](/pharmacy/inventory/index) instead.
+  </Accordion>
+
+  <Accordion title="Should I price my medicines here?">
+    No. Stock is priced on the product itself when it is received, and that is the price the till uses. Putting a medicine on this list gives you two prices that will drift apart, and the one on the shelf will win.
+  </Accordion>
+
+  <Accordion title="Can I sell a service at the till?">
+    The till sells stock. A non-stock charge is billed — raise an invoice, or take it as a direct payment against the customer. See [Invoices and payments](/pharmacy/money/billing) and [Payments](/pharmacy/money/payments).
+  </Accordion>
+
+  <Accordion title="What is the difference between a type and a category?">
+    **Service Type** is a fixed set the product uses to classify the charge. **Service Category** is yours — you name it, it groups the list and it feeds the generated code. Most pharmacies need three or four categories and never touch the types again.
+  </Accordion>
+
+  <Accordion title="Do prices here change automatically with my currency?">
+    They render in whatever currency your workspace is set to, but the number itself is unchanged. If you switch currency, revisit this list — nothing converts a price for you.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="services and prices" />
+
+{/* source of truth: components/clinic/dashboard/services/ (services-content-dashboard.tsx, service-form-sheet.tsx, service-category-form-sheet.tsx, service-list.tsx, category-list.tsx, services-stats.tsx), lib/clinic-nav-registry.ts (BILLING_SUBSECTIONS), lib/edition.ts (EDITION_ROLE_MODULES.pharmacy), lib/edition-staff-roles.ts */}

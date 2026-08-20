@@ -1,0 +1,176 @@
+---
+title: Appointments
+description: "Book collection slots, draw times and imaging appointments on the lab's calendar, and move each booking through its statuses."
+icon: /images/icons/calendar-days.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Front desk and management — Receptionist, Owner, Manager. Lab scientists, radiologists, radiology technicians and phlebotomists cannot open it." />
+
+This is the lab's diary: sample-collection slots, draw times and imaging appointments, all on one grid. It is where the front desk answers "when can you fit me in" without walking to the bench to ask.
+
+<Path steps={['Sidebar', 'Appointment']} />
+
+<TaskHeader before="A registered patient and at least one service in your catalogue" time="Under two minutes per booking" after="A booked slot everyone at the desk can see, in real time" />
+
+## What you're looking at
+
+The page is **only** a calendar, edge to edge. There is no page heading, no subtitle and no stat cards above it — the grid fills the screen and the two toolbar rows are the whole of the interface.
+
+**The top row** carries **Today**, a back and forward chevron pair, and the month you are viewing. To the right sit two small pills: a blue **Syncing** pill that appears while the calendar is refreshing, and a **Live** pill that means the calendar is updating itself as colleagues book. If it reads **Connect** instead, live updates are not running and you are looking at a snapshot.
+
+Next to those is the view control — **Day**, **Week**, **Month**, plus two swimlane views: **Providers** (who is free, in session or off) and **Resources** (which rooms, chairs and machines are free). There is no list view. A **By Status** / **By Service** picker decides what the colours mean — the options read **Color by Status** and **Color by Service** — and a gear button opens a three-item menu.
+
+<Note>
+  All three gear items — **Services**, **Booking Page** and **Availability** — leave the calendar and open a settings tab. A diagnostic centre gets the appointment book but **not** the public booking-page designer; that surface is clinical-edition only, so **Booking Page** is of limited use to a lab.
+</Note>
+
+**The second row** is the working row: **Search patients, services...**, **More filters** (with a badge counting how many are active), **Refresh**, **Current Schedule** (**Schedule** on a phone) and **Create**.
+
+**Statuses.** Every appointment carries one, set from the appointment's own dropdown.
+
+| Status | Means |
+| --- | --- |
+| **Scheduled** | Booked, not yet confirmed with the patient |
+| **Confirmed** | The patient has confirmed they are coming |
+| **In Progress** | They have arrived and collection or imaging has started |
+| **Completed** | Done — the specimen or study exists |
+| **Cancelled** | Called off before it happened |
+| **No Show** | The slot was held and nobody came |
+
+**The empty state.** A new lab sees an empty grid with today outlined, and nothing else. There is nothing to switch on here — the calendar is live from the first day. What you may not have yet is anything to book *into*, which is what **Services** and **Availability** on the gear menu are for.
+
+## Book a slot
+
+<Steps>
+  <Step title="Open the booking sheet">
+    Select **Create**, or select the empty slot you want on the grid — starting from the grid pre-fills the date and time you selected. The sheet is titled **Initial Entry**.
+  </Step>
+  <Step title="Stay on the Appointment tab">
+    The sheet has three tabs: **Appointment** · **Event** · **Task**. **Event** is for anything that occupies the diary without a patient — a maintenance visit, a training block. **Task** is a to-do with a due date, not a slot.
+  </Step>
+  <Step title="Choose the patient and the service">
+    Pick the patient the sample will belong to, and the service they are booked for — the venepuncture, the swab collection, the scan. If the patient has no record, register them first; see [Patients](/lims/front-desk/patients).
+  </Step>
+  <Step title="Set where it happens">
+    Location is **Video Office** or **Physical Office**. Collection and imaging are always **Physical Office**; **Video Office** suits a pre-test consultation or a results discussion.
+  </Step>
+  <Step title="Book it">
+    Select **Book appointment**. On the other two tabs the same button reads **Create event** or **Create task**. The booking appears on the grid immediately, and on colleagues' screens too while the pill reads **Live**.
+  </Step>
+</Steps>
+
+## Find the booking you need
+
+<Steps>
+  <Step title="Search by name or service">
+    Enter a name or a service into **Search patients, services...**. This narrows the calendar itself rather than opening a separate result list.
+  </Step>
+  <Step title="Filter">
+    Select **More filters** to open **Calendar Filters** — "Refine your view by status, service, or staff." The sections are **Appointment Status**, **Urgency Level**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**. **Reset all filters** at the foot clears everything at once.
+  </Step>
+  <Step title="Switch the view to the question you are asking">
+    **Day** for the desk, **Week** for planning, **Month** for capacity. Use **Providers** when you need to know which phlebotomist is free, and **Resources** when the constraint is the room, the chair or the scanner rather than the person.
+  </Step>
+  <Step title="Recolour by what matters today">
+    Choose **Color by Service** to see the shape of the day's workload, **Color by Status** when you are chasing unconfirmed slots.
+  </Step>
+</Steps>
+
+## Move an appointment through the day
+
+<Steps>
+  <Step title="Open it">
+    Select the appointment on the grid. Its detail sheet opens with everything recorded about the booking.
+  </Step>
+  <Step title="Set the status">
+    Use the status dropdown: **Confirmed** when the patient confirms, **In Progress** when they arrive and collection starts, **Completed** when the specimen or study exists. Mark **No Show** rather than deleting the slot — a deleted booking takes its history with it, and no-show rates are worth knowing.
+  </Step>
+  <Step title="Hand the list to the bench">
+    **Current Schedule** gives the day's bookings as a list you can work down or print for the collection room.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role is the lever on this screen. The grantable lab permissions cover specimens (**Accession an incoming specimen**), results (**Verify and authorise results**), quality (**Configure analysers and interfaces**) and referrers (**Release a report to a referrer**) — and none of them governs the appointment book. Whoever can open the screen can use it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Appointment** | Receptionist, Owner, Manager | Role → route |
+| Book, edit, cancel or re-status a booking | The same people | Role → route |
+| Open **Appointment** as a Lab Scientist, Radiologist, Radiology Technician or Phlebotomist | Nobody — the route is not theirs | Role → route |
+| Reach **Services**, **Booking Page** or **Availability** from the gear | Owner, Manager | Settings access |
+
+That last-but-one row is the answer to "why can't I see this". The bench and imaging roles are pointed at their stations, not the diary, and no permission grant opens it for them — the fix is the person's role.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from a sidebar is a convenience, not a security boundary.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The booking sits on the grid at the right time, in the right colour for its status.
+- The pill reads **Live**, and a colleague on another machine sees the same booking without refreshing.
+- **Current Schedule** lists it among the day's slots.
+- Once the patient arrives and you set **In Progress**, the block changes colour under **By Status**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Appointment is not in my sidebar">
+    Your role does not reach it. Lab scientists, radiologists, radiology technicians and phlebotomists are routed to their stations instead. Ask an owner or manager — this is a role change, not a permission you can be granted.
+  </Accordion>
+
+  <Accordion title="The pill says Connect instead of Live">
+    The calendar has lost its live connection, so bookings made elsewhere will not appear on their own. Select **Refresh** to pull the current picture, and reload the page if it stays on **Connect**.
+  </Accordion>
+
+  <Accordion title="Half the day's bookings have vanished">
+    A filter is still on. **More filters** shows a count badge when any are active — open it and select **Reset all filters**.
+  </Accordion>
+
+  <Accordion title="I cannot pick the service I need">
+    It is not in your catalogue yet, or it is not offered at the time you selected. Add it under **Services** on the gear menu, and check the hours under **Availability**.
+  </Accordion>
+
+  <Accordion title="Booking Page opens a settings tab I do not need">
+    The gear menu is shared across editions. A diagnostic centre has the appointment book but not the public booking-page designer, so ignore that item and use **Services** and **Availability**.
+  </Accordion>
+
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does booking an appointment raise a test request?">
+    No. The diary and the order are separate — book the slot here, then raise the order on [Raise a test request](/lims/lab/test-requests). This is deliberate: patients rebook, and the order should not move with them.
+  </Accordion>
+
+  <Accordion title="What is the difference between an Event and a Task?">
+    An **Event** occupies time on the calendar but has no patient — analyser servicing, a delivery window, a training block. A **Task** is a piece of work with a due date and a priority; it does not hold a slot.
+  </Accordion>
+
+  <Accordion title="Can I take walk-ins without booking them?">
+    Yes. The calendar is not a gate — a specimen can be accessioned without any appointment behind it. Book walk-ins retrospectively only if you want them in your capacity figures.
+  </Accordion>
+
+  <Accordion title="Why is there no list view?">
+    The views are **Day**, **Week**, **Month**, **Providers** and **Resources**. When you want a list, use **Current Schedule**, which is the day's bookings in order.
+  </Accordion>
+
+  <Accordion title="Should I delete a booking the patient missed?">
+    Set it to **No Show** instead. Deleting removes the evidence that the slot was ever held, and no-show rates are one of the few numbers that tell you whether your reminder settings are working.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the appointment calendar" />
+
+{/* source of truth: components/clinic/appointment/calendar/calendar-view.tsx, .../appointment-create-sheet.tsx, .../calendar-item-detail-sheet.tsx, .../current-schedule-sheet.tsx, app/u/clinic/appointment/[clinicId]/page.tsx, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

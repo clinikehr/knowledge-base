@@ -13,87 +13,119 @@ import { StillStuck } from '/snippets/support.mdx';
 
 Receipts are 80mm thermal. In the [desktop app](/pharmacy/hardware/desktop-app) they print silently through your operating system's printer driver; in a browser you get the normal print dialog and choose the printer yourself.
 
-The one setting on this page — **Receipt printer paper** — is the fix for the single most common counter fault: receipts that come out **blank or cut short**.
+The one setting on this page — **Receipt printer paper** — is the fix for the most common counter fault there is: receipts that come out **blank or cut short**.
 
-<Path steps={['Sidebar', 'POS', 'the printer settings control']} />
+<Path steps={['Sidebar', 'Sales', 'a sale', 'Printer settings']} />
 
 <TaskHeader before="An 80mm thermal printer installed on this computer over USB or the network, and the desktop app" time="2 minutes per till" after="Receipts printing silently at full length on this machine" />
+
+## What you're looking at
+
+Open a sale on the [sales list](/pharmacy/money/sales) and its receipt dialog appears, headed **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer or download a PDF copy."
+
+In the footer of that dialog, **and only inside the desktop app**, sits a small gear labelled **Printer settings**. A browser has no such control, because a browser picks its paper in its own print dialog. If you cannot find the gear, you are not in the app.
+
+Selecting it opens a popover headed **Receipt printer paper**:
+
+> If receipts come out blank or cut short on this machine, pick the paper form its printer driver understands. Saved for this computer only.
+
+Underneath is a single select, **Paper handling**, and a line of explanation for whichever option is currently chosen.
 
 ## Set the paper form
 
 <Steps>
   <Step title="Install the printer in the operating system first">
-    ClinikEHR prints through the driver, so the printer has to be reachable over USB or your network and working from the OS **before** you start. Print the driver's own test page if you are unsure.
+    ClinikEHR prints through the driver, so the printer has to be reachable over USB or your network and working from the operating system **before** you start. Print the driver's own test page if you are unsure.
   </Step>
-  <Step title="Open the printer settings control on the till">
-    In the desktop app, the till header carries a settings control labelled **Printer settings**. It does not exist in a browser — a browser picks paper in its own print dialog.
+  <Step title="Open a recent sale's receipt dialog">
+    On **Sales**, open a sale you can safely reprint. Do not ring up a new one to test with.
   </Step>
-  <Step title="Read what it is asking">
-    The popover is headed **Receipt printer paper**:
-
-    > If receipts come out blank or cut short on this machine, pick the paper form its printer driver understands. Saved for this computer only.
+  <Step title="Select Printer settings">
+    The gear in the dialog footer. Desktop app only.
   </Step>
   <Step title="Choose a Paper handling option">
-    The **Paper handling** select offers:
+    - **Auto (recommended)** — "Let the app pick per printer — custom roll for Epson-class drivers, 80mm × A4 for Star TSP100."
+    - **80mm × A4 form** — matches the **80mm x A4** paper form. "The verified choice for Star TSP100-family drivers."
+    - **3-inch × Letter form** — matches the **3 inch x Letter** paper form "some thermal drivers enumerate instead."
+    - **Custom roll (cut after content)** — "An exact-height 80mm page. Best on Epson-class drivers — the cut lands right after the receipt."
+    - **Driver default form** — "Print on whatever paper form the printer driver is configured for in the OS."
 
-    - **Auto (recommended)** — lets the app pick per printer.
-    - **80mm × A4 form** — matches the "80mm x A4" paper form. The verified choice for Star TSP100-family drivers.
-    - **3-inch × Letter form** — matches the "3 inch x Letter" form some thermal drivers enumerate instead.
-    - **Custom roll (cut after content)** — an exact-height 80mm page. Best on Epson-class drivers, where the cut lands right after the receipt.
-    - **Driver default form** — whatever paper form the driver is configured for in the OS.
-
-    Each option explains itself underneath the select. Start on **Auto**; only change it if receipts misprint.
+    Start on **Auto**. Only change it if receipts misprint.
   </Step>
-  <Step title="Print a receipt and check the paper">
-    Reprint a recent sale rather than ringing one up — see [Print and reprint receipts](/pharmacy/pos/receipts).
+  <Step title="Reprint and check the paper">
+    Print the same receipt again and look at what came out. Work down the list one option at a time — see [Print and reprint receipts](/pharmacy/pos/receipts).
   </Step>
 </Steps>
 
-**This setting is saved for this computer only.** It is a property of the machine's printer driver, not of your pharmacy — the same business can run one till that needs a custom roll and another that only prints on its own enumerated form. **Every till has to be set separately**, and a new or reimaged machine starts again on **Auto**.
+**This setting is saved for this computer only.** It is a property of the machine's printer driver, not of your pharmacy — the same business can run one till that needs a custom roll and another that only prints on its own enumerated form. **Every till has to be set separately**, it survives signing out, and a new or reimaged machine starts again on **Auto**.
 
 ## Why the paper form matters at all
 
-A thermal driver decides what it will accept. Some enumerate a fixed list of paper forms and silently discard a job whose page size is not on it — the paper feeds, nothing prints, and the till reports success because as far as the app is concerned the job was accepted. Others cut best on an exact-height page and leave a hand's length of blank roll on anything else.
+A thermal driver decides what it will accept. Some enumerate a fixed list of paper forms and silently discard a job whose page size is not on that list — the paper feeds, nothing prints, and the till reports success, because as far as the app is concerned the job was accepted. Others cut best on an exact-height page and leave a hand's length of blank roll on anything else.
 
 There is no heuristic that covers every driver, which is why the choice is made once, on the machine, by the person standing in front of the printer.
+
+## Two things about what prints
+
+- **A real sale's receipt number prints as a scannable barcode**, so you can scan a customer's receipt to pull the sale back up on the [sales list](/pharmacy/money/sales).
+- **A receipt printed while offline carries a provisional number and no barcode**, and says so on the paper. There is no server-issued receipt number yet, and a barcode for a number that does not exist would scan to nothing. See [Selling when the internet is down](/pharmacy/pos/offline).
+
+<Note>
+  **Receipts use no grey text, and that is on purpose.** A thermal head is one-bit — it can burn a dot or not — so grey is dithered into sparse dots and the lines a customer most needs become the faintest on the paper. Ranking is done with size and weight instead. If you are designing anything that ends up on this roll, do the same.
+</Note>
+
+## Who can do this
+
+**No permission gates printing.** Anyone who can reach the till can print and reprint a receipt, and anyone sitting at a machine can set its paper form — it is a property of that computer, not of a person or of your pharmacy.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Print a receipt on a sale | Anyone who can use the till | Nothing — printing is not gated |
+| Reprint a past sale's receipt | Anyone who can open **Sales** | Role decides who reaches **Sales**, not a permission |
+| Set **Receipt printer paper** | Anyone using that machine | Nothing — a per-computer setting |
+| Refund or void the sale you just reprinted | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+
+The only gate near a receipt is on the *money*, not the paper: reversing a sale needs **Refund or void a sale**, and cost or margin figures need **View cost prices and margin** wherever they appear.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Printing is neither — it is not an act the permission model governs at all.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
 - The receipt prints **at full length**, with the total and the footer on the paper rather than past the cut.
 - Nothing feeds blank before or after it.
 - In the desktop app you get the toast **"Receipt sent to printer"** and no print dialog appears.
-- In a browser, the print dialog opens instead and there is no toast — that is correct behaviour, not a fault.
+- In a browser the print dialog opens instead and there is no toast — correct behaviour, not a fault.
 
-## Two things about what prints
-
-- **A real sale's receipt number prints as a scannable barcode**, so you can scan a customer's receipt to pull the sale back up on the [sales list](/pharmacy/money/sales).
-- **A receipt printed while offline carries a provisional number and no barcode.** There is no server-issued receipt number yet, and a barcode for a number that does not exist would scan to nothing. See [Selling when the internet is down](/pharmacy/pos/offline).
-
-<Note>
-  **Receipts use no grey text, and that is on purpose.** A thermal head is one-bit — it can burn a dot or not — so grey is dithered into sparse dots and the lines a customer most needs become the faintest ones on the paper. Ranking is done with size and weight instead. If you are designing anything that ends up on this paper, do the same.
-</Note>
-
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The receipt is blank, or cut short">
-    This is the fault this page exists for. Open **Printer settings** › **Receipt printer paper** and work down the list: try **80mm × A4 form** first on a Star TSP100-family printer, **Custom roll (cut after content)** on an Epson-class one, then **Driver default form**. Print a test receipt after each change.
+    This is the fault this page exists for. Open **Printer settings** › **Receipt printer paper** and work down the list: **80mm × A4 form** first on a Star TSP100-family printer, **Custom roll (cut after content)** on an Epson-class one, then **Driver default form**. Reprint after each change.
   </Accordion>
 
   <Accordion title="'Direct printing unavailable — using the print dialog'">
-    The app could not reach the printer directly and fell back to the dialog, so the receipt is still printable. Check the printer is powered, has paper, and appears as ready in the operating system, then try again.
+    The app could not reach the printer directly and fell back to the dialog, so the receipt is still printable. Check the printer is powered, has paper, and shows as ready in the operating system — this also appears while it is busy finishing another job.
   </Accordion>
 
   <Accordion title="A print dialog opens on every sale">
-    You are in a browser, not the desktop app. Silent printing is the desktop app's job — see [Install the desktop app](/pharmacy/hardware/desktop-app).
+    You are in a browser, not the desktop app. Silent printing is the app's job — see [Install the desktop app](/pharmacy/hardware/desktop-app).
+  </Accordion>
+
+  <Accordion title="I cannot find the Printer settings gear">
+    It exists only inside the desktop app, and only in the footer of a sale's receipt dialog — not on the till screen. In a browser there is nothing to find: choose your paper in the print dialog.
   </Accordion>
 
   <Accordion title="It printed on the wrong printer">
-    Silent printing uses the machine's printer. Set the thermal printer as the default in the operating system, or in a browser choose it in the print dialog.
+    Silent printing uses the machine's own printer. Set the thermal printer as the default in the operating system, or in a browser choose it in the print dialog.
   </Accordion>
 
   <Accordion title="A new till prints badly even though the old one is fine">
-    The paper form is stored per computer. Set it again on the new machine.
+    The paper form is stored per computer. Set it again on the new machine — nothing carries across.
   </Accordion>
 
   <Accordion title="No toast appeared, but the receipt printed">
@@ -101,6 +133,30 @@ There is no heuristic that covers every driver, which is why the choice is made 
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I use any thermal printer?">
+    Any 80mm thermal printer that installs a driver on the machine and prints its own test page will work, because ClinikEHR prints through that driver rather than talking to the printer directly. What varies between models is which paper form the driver accepts — which is exactly what **Receipt printer paper** is for. Star TSP100-family and Epson-class printers are the two the options are named after.
+  </Accordion>
+
+  <Accordion title="Do I need the desktop app to print receipts?">
+    No. A browser prints them through its own print dialog. The app removes the dialog, which is what makes a busy counter workable — but nothing is unprintable without it.
+  </Accordion>
+
+  <Accordion title="Why is the setting per computer rather than per pharmacy?">
+    Because it describes a printer driver, and two tills in one shop can have different ones. Storing it on the account would mean the second till inherited the first one's answer and misprinted every receipt.
+  </Accordion>
+
+  <Accordion title="Can I reprint a receipt weeks later?">
+    Yes. Open the sale on **Sales** and print from its receipt dialog, or take the PDF copy. A reprint carries the same receipt number and the same barcode as the original.
+  </Accordion>
+
+  <Accordion title="Can I print a receipt on ordinary A4 paper?">
+    Yes — pick the A4 printer in the browser's print dialog, or download the PDF. It prints the same 80mm-wide document down the middle of the page, which is fine for a file copy and wasteful for a customer.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="receipt printing" />
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/pos/printer-paper-setting.tsx, lib/printer-paper.ts (PRINTER_PAPER_OPTIONS), apps/apps-desktop/src/print-profile.ts, components/clinic/dashboard/pharmacy-station/sales/pos-receipt-dialog.tsx */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/pos/printer-paper-setting.tsx, lib/printer-paper.ts (PRINTER_PAPER_OPTIONS), components/clinic/dashboard/pharmacy-station/sales/pos-receipt-dialog.tsx, apps/apps-desktop/src/print-profile.ts, apps/apps-desktop/src/printing.ts, lib/pharmacy-receipt-render.ts */}

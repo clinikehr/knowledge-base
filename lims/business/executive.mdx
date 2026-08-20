@@ -1,0 +1,164 @@
+---
+title: The owner summary
+description: "Today's intake and the week at a glance — the same numbers as your morning digest email, and where to go when one of them looks wrong."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Professional Lab and above" roles="Owner, Manager and management roles. Bench roles are not offered it." />
+
+The owner summary is a two-minute morning read: what came in today, how the week is running, and what is stuck. It states its own job in a line — "Today's intake and the week at a glance — the same numbers as your morning digest email."
+
+<Path steps={['Sidebar', 'Executive']} />
+
+<TaskHeader before="The Professional Lab plan, and a management role" time="2 minutes each morning" after="A decision about where in the lab to spend your day" />
+
+## This is a page you read, not a page you act on
+
+Nothing on this screen changes anything. Every tile is a pointer: it tells you which part of the lab needs you, and then you leave and act somewhere else. Read it top to bottom, pick the one number that is out of line, and go to the screen that owns it.
+
+| Tile or card | What it counts | Where to go and act |
+| --- | --- | --- |
+| **Orders today** | Everything created today, with "\{n\} drug testing · \{n\} lab · \{n\} imaging" beneath | [Worklist](/lims/lab/worklist) |
+| **Collected today** | Money actually received today | [Payments](/lims/business/payments) |
+| **This week** | Orders so far this week, with the week's collected total beneath | [Billing and payments](/lims/business/billing) |
+| **Backlog** | Everything still open, split the same three ways. It turns red past a couple of dozen | [Worklist](/lims/lab/worklist) |
+| **Lab TAT** · **Imaging TAT** · **Drug-testing TAT** | Seven-day median turnaround per pipeline | [Turnaround time](/lims/lab/turnaround-time) |
+| **Reagents at risk** | The value projected to expire before it is used, with the low-stock count | [Reagents and consumables](/lims/inventory/reagents) |
+| **Top tests this week** | Your volume and revenue leaders | [Tests and prices](/lims/business/services) |
+| **Top referring doctors** | Who is sending you work | [Referring doctors](/lims/business/referrers) |
+
+## What you're looking at
+
+The heading tells you the scope you are reading. On a single-site lab it reads **Owner Summary**. On a multi-site lab it reads **All Sites**, or the name of the site you have picked.
+
+Eight tiles sit across the top, then two cards — **Top tests this week** and **Top referring doctors** — and, on the all-sites view only, a **By site** card above them. A refresh control sits beside the heading.
+
+**Where a figure is honest about not knowing.** A turnaround median with nothing behind it reads **—**. On the all-sites view the three TAT tiles read **per site — pick a site**, because a median of several sites' medians would be a made-up number. While the summary loads you see placeholder blocks rather than figures. Nothing on this page invents a zero.
+
+**The empty state.** A lab with no work yet shows zeroes on the counts, and the two cards read **No orders yet this week.** and **No attributed referrals this week.** The referrers card stays empty for as long as nobody is picking a referring doctor at intake, even when the orders are arriving.
+
+## Read the morning summary
+
+<Steps>
+  <Step title="Start with Backlog">
+    It is the only tile that turns red on its own. A backlog climbing day on day means work is arriving faster than the bench clears it, and the fix is on the [Worklist](/lims/lab/worklist), not here.
+  </Step>
+  <Step title="Compare Orders today against the same day last week">
+    Use the **This week** tile as the reference. A quiet Monday is a Monday; three quiet days is a referrer who has stopped sending.
+  </Step>
+  <Step title="Check the three turnaround medians">
+    A median drifting up is the earliest warning you get of a bench in trouble, and it moves before the backlog does — see [Turnaround time](/lims/lab/turnaround-time).
+  </Step>
+  <Step title="Finish on Reagents at risk">
+    A money figure here is stock you have already bought and will throw away. Act on it in [Reagents and consumables](/lims/inventory/reagents) while there is still time to use the lot.
+  </Step>
+</Steps>
+
+## Switch between sites
+
+<Steps>
+  <Step title="Open the site select">
+    It appears only on a multi-site lab and reads **All sites (\{n\})**. A collection centre is marked **(center)** so you can tell a draw station from a full laboratory at a glance.
+  </Step>
+  <Step title="Pick a site">
+    Every tile re-reads for that site alone, and the heading changes to its name. This is the only way to get a real turnaround median, since the all-sites view will not aggregate them.
+  </Step>
+  <Step title="Jump from By site">
+    On the all-sites view, the **By site** card lists each site with its order count and today's takings. Selecting a row switches the whole page to that site.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening the owner summary" />
+
+## Who can do this
+
+Two gates stack here, and they fail differently: a **plan** gate replaces the page with an upgrade card, while a **role** gate means the sidebar row never appears.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Executive** | Owner, Manager and management roles | Role → route, plus the **Professional Lab** plan |
+| See the **By site** card and the site select | The same people, on a lab with more than one site | Multi-branch reporting on the plan |
+| See **Reagents at risk** as a money figure | The same people | The expiry-risk feature. Without it the tile falls back to a plain **Reagent alerts** count |
+| Open the deeper turnaround dashboard | Anyone granted **View turnaround-time analytics** | Permission |
+| Open a referring doctor's account | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
+
+**A lab scientist is denied this page entirely**, and that is deliberate rather than a fault — bench roles get the bench, not the lab's revenue. It is the commonest "why can't I see this" in a new lab, and the answer is that the row is not offered to that role at all. An **Accessioning Clerk** and a **QC Officer** are likewise outside it; QC is review-only by design.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or renders as a dash — never as a fabricated zero. Hiding a row from the sidebar is a convenience, not a security boundary.
+
+See [Roles](/platform/team/roles) and [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The heading names the scope you expect — **Owner Summary**, **All Sites**, or the site you picked.
+- **Orders today** matches what the [Worklist](/lims/lab/worklist) shows for today.
+- **Collected today** matches the day's total on [Payments](/lims/business/payments).
+- The figures agree with your morning digest email, because both are built from the same read of the lab.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="“Owner dashboard is a Professional feature”">
+    The summary is included from the Professional Lab plan. **View plans** on that card takes you to the ladder — see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A scientist says there is no Executive row in their sidebar">
+    Correct and intended. The page is not offered to bench roles — see [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="“Failed to load the owner summary”">
+    The summary could not be read just then. Use the refresh control beside the heading; if it keeps failing, note the time and contact support.
+  </Accordion>
+
+  <Accordion title="The turnaround tiles read “per site — pick a site”">
+    You are on the all-sites view, which will not average several sites' medians together. Pick a single site from the select to see real figures.
+  </Accordion>
+
+  <Accordion title="There is no By site card">
+    Either the lab has only one site, or multi-branch reporting is not on your plan — see [Plans](/platform/plans/overview).
+  </Accordion>
+
+  <Accordion title="Top referring doctors is empty although referrals are arriving">
+    Orders are not being attributed at intake. The referring doctor has to be picked on the order form — see [Referring doctors](/lims/business/referrers).
+  </Accordion>
+
+  <Accordion title="Reagents at risk shows a count, not an amount">
+    The predictive expiry-risk feature is not on your plan, so the tile falls back to **Reagent alerts** — see [Reagents and consumables](/lims/inventory/reagents).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this the same as the daily email?">
+    Yes — the digest and this page are built from one read of the lab, so they always agree. The page is simply the live version.
+  </Accordion>
+
+  <Accordion title="Does “Collected today” mean invoiced today?">
+    No. It is money actually received today. Anything invoiced and unpaid counts as nothing here — see [Lab analytics](/lims/business/lab-analytics) for the same rule applied over a longer range.
+  </Accordion>
+
+  <Accordion title="How is this different from Lab Analytics?">
+    This is today and this week, for the owner. **Lab Analytics** is trends and mix over thirty days or more, on the Business Lab plan — see [Lab analytics](/lims/business/lab-analytics).
+  </Accordion>
+
+  <Accordion title="Can I export these numbers?">
+    Not from here. The report catalogue is where reports carry an **Export** — see [Reports and analytics](/lims/business/analytics).
+  </Accordion>
+
+  <Accordion title="Does a collection centre get its own summary?">
+    Yes. Pick it from the site select, where it is marked **(center)**. Its tiles read only its own intake.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the owner summary" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/admin/admin-dashboard-content.tsx, hooks/use-lims-features.ts, db/actions/lims-owner.ts */}

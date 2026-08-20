@@ -1,0 +1,152 @@
+---
+title: Look up a finished drug-testing order
+description: "The cross-day record of completed, cancelled and rejected drug-testing orders — and why the row is called something else in reference lab mode."
+icon: /images/icons/clock-rotate-left.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, lab scientists and phlebotomists. Front-desk and imaging roles do not reach it." note="Needs a drug-testing workflow mode" />
+
+Once an order leaves the live queue it is not gone — it is here. **DOT History** is the cross-day record of every drug-testing order that has finished, been cancelled or been rejected, which is where you look when an employer, a Medical Review Officer or an auditor asks about something from last month.
+
+<Path steps={['Sidebar', 'DOT History']} />
+
+<TaskHeader before="A drug-testing workflow mode switched on, and at least one order that has finished" time="Under a minute" after="The finished order found, its result read, and its specimen ID or accession number copied" />
+
+## Before you start — the row changes name, or disappears
+
+This page follows your lab's workflow mode, and that is the single most common reason someone cannot find it.
+
+| Workflow mode | Sidebar row | Page heading |
+| --- | --- | --- |
+| **DOT / SAMHSA — Full Workflow**, or **Both** | **DOT History** | **DOT Testing History** |
+| **Reference Lab — Intake to Report Only** | **Intake History** | **Lab Report History** |
+| **Standard Clinical Lab** | *the row is not shown at all* | — |
+
+If you cannot see it, you are almost certainly in the wrong mode rather than missing a permission. An owner or manager sets the mode on the **Lab Workflow** settings card — see [Reference lab mode](/lims/dot/lab-intake-mode) and [DOT and workplace drug testing](/lims/dot/index).
+
+## What you're looking at
+
+The heading names the bucket, and the subtitle says what is in it: "Completed, cancelled, and rejected orders", or in reference lab mode "Finalized lab reports, cancelled and rejected specimens".
+
+Only terminal orders appear. Four statuses reach this page:
+
+| Badge | Means |
+| --- | --- |
+| **Reported to DER** | The verified result went to the employer's Designated Employer Representative |
+| **Report Finalized** | A reference-lab report has been finalized for an external MRO |
+| **Cancelled** | The order was stopped before it completed |
+| **Rejected for Testing** | The specimen could not be tested — seal, volume, labelling or transport |
+
+Above the list sits a search box — **Search by specimen ID or donor name…**, or **Search by specimen ID, LAN, or donor…** in reference lab mode — which also matches the employer name. Beside it is a status filter, and a **Settings** shortcut to the lab-workflow card. There is deliberately **no New order button here**; new orders are raised on the live queue.
+
+The columns are **Specimen ID** (with a copy control), **LAN**, **Donor**, **Test Reason**, **Agency**, **Status** and **Ordered**. In reference lab mode **Test Reason** is dropped and the date column reads **Received**. The **Status** cell can carry up to three marks: the status badge, a result chip — **NEG**, **POS**, **ADULT**, **SUBST**, **INVALID** or **PEND** — and an **MRO** chip where the report was sent to a Medical Review Officer. **Agency** shows **FMCSA**, **FAA**, **FRA**, **FTA**, **PHMSA**, **USCG** or **Non-DOT**.
+
+**The empty state.** With nothing finished yet you see **No completed orders yet** — "Completed, cancelled and rejected DOT orders will appear here." In reference lab mode it reads **No finalized reports yet**.
+
+If your site is a collection centre, a banner sits above everything: "This site is a **collection center** — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here."
+
+<AuditNote action="Opening a donor's order" />
+
+## Find a finished order
+
+<Steps>
+  <Step title="Search for it">
+    Type into the search box. It matches on specimen ID, donor name, employer name and lab accession number, so any of the four identifiers an employer might quote will find the row.
+  </Step>
+  <Step title="Narrow by status if you need to">
+    The status filter offers **All Orders**, **Active**, **In Lab**, **MRO Review** and **Completed** — or **All Orders**, **Intake Pending**, **In Analysis** and **Finalized** in reference lab mode. On this page only **Completed** (or **Finalized**) has anything in it; the other buckets belong to the live queue.
+  </Step>
+  <Step title="Open the order">
+    Select the row, or choose **View Report** from its ⋯ menu. The workflow panel opens read-only on the finished chain — the custody events, the screen, any confirmation and the report.
+  </Step>
+  <Step title="Copy the identifier you were asked for">
+    **Copy Specimen ID** gives you **Specimen ID copied**. In reference lab mode a row with an accession number also offers **Copy LAN** — **LAN copied**.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role decides whether the row exists for you. Permission decides what the acts behind these rows required in the first place — nothing on this page changes a record.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **DOT History** / **Intake History** | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Read a donor's finished order | The same people | Role → route |
+| Amend something already reported | **All sites** access tier | Permission — **Amend a verified result** |
+| Release a report to a referring practice | **Lab Manager**, **Referrer Liaison**, **All sites** | Permission — **Release a report to a referrer** |
+| Reject an unsuitable specimen (why a row lands **Rejected for Testing**) | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Reject an unsuitable specimen** |
+
+A **Lab Manager** does not hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role. A **QC Officer** is review-only by design. A lab scientist reaches the whole bench, including this page, but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a row from a sidebar is a convenience, not a security boundary.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- An order you finished today appears here, and has left the live queue.
+- Its badge matches how it ended — **Reported to DER**, **Report Finalized**, **Cancelled** or **Rejected for Testing**.
+- Searching the specimen ID, the donor's name or the accession number finds it.
+- Opening it shows the full custody chain, not an editable form.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no DOT History row in my sidebar">
+    Your lab is in **Standard Clinical Lab** mode, which hides the drug-testing rows entirely. An owner or manager can change it on the **Lab Workflow** settings card.
+  </Accordion>
+
+  <Accordion title="The row says Intake History and the page says Lab Report History">
+    That is reference lab mode working as intended. Same page, renamed for a lab that only receives and reports — see [Reference lab mode](/lims/dot/lab-intake-mode).
+  </Accordion>
+
+  <Accordion title="I filtered by Active or In Lab and got nothing">
+    Those buckets only exist on the live queue. History holds terminal orders only, so use **Completed** — or **Finalized** in reference lab mode — or leave it on **All Orders**.
+  </Accordion>
+
+  <Accordion title="The order I finished is not here yet">
+    It has not reached a terminal status. An order still at MRO review or awaiting DER reporting stays on the live queue until that last step is recorded.
+  </Accordion>
+
+  <Accordion title="The LAN column shows a dash">
+    No lab accession number has been recorded against that order — usual for one cancelled before the lab received it.
+  </Accordion>
+
+  <Accordion title="Failed to copy">
+    Your browser refused clipboard access. Open the order and select the identifier by hand, or grant the page clipboard permission and try again.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I edit an order from here?">
+    No. History is a record. A correction after authorisation is an amendment, which needs **Amend a verified result** and is made from the order itself.
+  </Accordion>
+
+  <Accordion title="How far back does it go?">
+    All of it. This is the cross-day record for the site, filtered by search rather than by date, which is why the search box matches four different identifiers.
+  </Accordion>
+
+  <Accordion title="Does switching workflow mode lose these orders?">
+    No. Switching modes never deletes data — orders stay in the workflow they were raised under and finish there. Only the labels and which rows are shown change.
+  </Accordion>
+
+  <Accordion title="Why is a rejected specimen in the same list as a completed one?">
+    Because both are finished. A rejection is a legitimate end to the custody chain and has to be as findable as a result, particularly when an employer asks why no result exists.
+  </Accordion>
+
+  <Accordion title="What is the difference between this and DOT reports?">
+    This finds an order. [DOT reports](/lims/dot/reports) is about producing the documents an employer or MRO receives.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a finished drug-testing order" />
+
+{/* source of truth: components/clinic/dot-lims/dot-lims-content.tsx, .../dot-lims-actions.tsx, .../dot-lims-table.tsx, .../general/order-status-badge.tsx, .../general/collection-center-banner.tsx, app/u/clinic/dashboard/lab-station/dot-lims/history/[clinicId]/page.tsx, lib/clinic-nav-registry.ts, lib/edition.ts */}

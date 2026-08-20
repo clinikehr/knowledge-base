@@ -1,0 +1,172 @@
+---
+title: Tests and prices
+description: "The priced catalogue: what each test costs, grouped into categories. The commercial twin of the Test List, which defines what a test measures."
+icon: /images/icons/tags.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager, and anyone on the All sites tier" />
+
+**Services** is your price list. Every test you sell gets a name, a price and a category here, and that price is what an invoice line picks up when the work is billed.
+
+<Path steps={['Sidebar', 'Billing', 'Services']} />
+
+## Two screens define a test, and they are constantly confused
+
+Read this before anything else, because getting it wrong is the single commonest support ticket in a new lab. A test in ClinikEHR is defined in **two places**, and neither one is a substitute for the other:
+
+| Screen | Where | What it gives the test |
+| --- | --- | --- |
+| **Services** (this page) | <Path steps={['Billing', 'Services']} /> | The **price** — plus its category, procedure code and whether it is still offered |
+| **Test List** | <Path steps={['Lab Station', 'Test List']} /> | The **science** — its analytes, units, reference ranges and specimen requirements |
+
+A test priced here but missing from the **Test List** can be invoiced and has nowhere for a scientist to record a result. A test on the **Test List** with no entry here reaches the bench fine and lands on an invoice with no amount. A working catalogue needs both, and the names should match exactly so nobody has to guess which "FBC" is which.
+
+See [Lab Station](/lims/lab/lab-station) for the Test List, and [Add your tests and panels](/lims/get-started/tests-and-panels) for setting the two up together the first time.
+
+<TaskHeader before="Your price list, and the categories you want it grouped under" time="1 minute per test" after="Every test you offer priced, so invoices fill in their own amounts" />
+
+## What you're looking at
+
+The page is headed **Services Dashboard**, with a date range picker, **Refresh** and one create button across the top — and that button **swaps with the tab you are on**. On **Categories** it reads **New Category**; on **Overview** and **Services** it reads **New Service**. You never see both at once, which is why people report the category button as missing.
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The tiles — **Total Services**, **Active Services**, **Service Types**, **Inactive Services** — with **Service Categories** and **Recent Services** beneath |
+| **Services** | The full catalogue: **Service Name**, **Code**, **Type**, **Category**, **Price**, **Status**, with a **Filter services…** box and a **Filter by type** select |
+| **Categories** | Your groupings, each with its own name, description and active state |
+
+**Status** is **Active** or **Inactive** — that is the retire switch, covered below. **Code** is generated for you from the lab's name and the test's category; select it to copy, and if the test has no category you are told codes are auto-generated from the category, which is the nudge to give it one.
+
+**The empty state.** A new lab reads **No services found** on the **Services** tab, and every tile shows zero. Nothing can be invoiced until this list has entries.
+
+## Price a test
+
+<Steps>
+  <Step title="Open the form">
+    On **Overview** or **Services**, select **New Service**.
+  </Step>
+  <Step title="Name it exactly as the bench does">
+    **Service Name\*** should match the name on the **Test List** character for character. Two spellings of the same panel split your revenue reporting into two rows that never add up.
+  </Step>
+  <Step title="Set the price">
+    **Price\*** is the list price in the lab's own currency — there is no currency picker here, because it is set once for the whole lab under **Settings › Billing**.
+  </Step>
+  <Step title="Classify it">
+    **Service Type\*** offers **Consultation**, **Procedure**, **Administration**, **Accommodation** and **Other**. Most lab work is **Procedure**. Pick **Service Category** as well: it drives the generated code and the way your list is grouped.
+  </Step>
+  <Step title="Add the billing detail">
+    **Procedure Code** carries the billing code a payer expects on the invoice, and **Description** is free text for whoever reads the price list next. Leave **Active** on.
+  </Step>
+  <Step title="Save">
+    The new test appears in **Recent Services** and on the **Services** tab, and is immediately available to an invoice line.
+  </Step>
+</Steps>
+
+## Group the list into categories
+
+<Steps>
+  <Step title="Switch tabs first">
+    Select the **Categories** tab. The header button becomes **New Category** — this is the only place it appears.
+  </Step>
+  <Step title="Name the grouping">
+    **Category Name\*** should be how your printed price list is organised — Haematology, Chemistry, Serology, Drug Testing, Imaging. **Description** is optional.
+  </Step>
+  <Step title="Save, then assign">
+    Existing tests do not move themselves. Edit each one and set its **Service Category**, which also regenerates its code.
+  </Step>
+</Steps>
+
+Categories are worth the ten minutes. A lab's catalogue reaches a few hundred rows quickly, and an ungrouped list is one people stop reading and start guessing from.
+
+## Retire a test you no longer offer
+
+When you stop offering a test, **switch it Inactive — do not delete it.** Edit the service and turn **Active** off. It disappears from the pickers staff use, so nobody can order or invoice it again, while every historical invoice, statement and revenue report that referenced it stays intact and still adds up.
+
+Deleting is offered — the row menu's **Delete Service** asks a second time, reading **Confirm Delete?** — but it removes the entry rather than closing it, and past reporting that leaned on it loses its name. Reserve it for a row created by mistake this morning, never for a test that has been sold.
+
+## Who can do this
+
+Pricing is a commercial act, not a bench one, so it follows the business roles rather than the Diagnostics permission slugs.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Services** | Owner, Manager, **Lab Manager** | Role → route |
+| Add, edit or reprice a test | The same people | Role → route |
+| Retire or delete a test | The same people | Role → route |
+| See test pricing across sites | Anyone on the **All sites** access tier | Access tier |
+| Define a test's analytes and ranges on the **Test List** | **Lab Manager**, scientists on **Whole lab** or **All sites** | Permission — **Enter results at the bench** and the tier above it |
+
+An **Accessioning Clerk** raises invoices but does not set prices. A **lab scientist** and a **QC Officer** do not reach this screen at all — the QC role is review-only by design. Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Where a price is not yours to see, the column renders as a dash rather than a zero.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The test appears on the **Services** tab with the right **Price**, **Category** and a generated **Code**, badged **Active**.
+- **Total Services** and **Active Services** on **Overview** have both risen.
+- Raising an invoice for that test fills its amount in by itself — see [Billing and payments](/lims/business/billing).
+- A retired test no longer appears when staff pick a test, but still names itself on old invoices.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="An invoice line has no amount">
+    The test is not priced here, or is priced under a different spelling. Add it, or correct the name so it matches the one the bench uses.
+  </Accordion>
+
+  <Accordion title="I cannot find the New Category button">
+    It only exists on the **Categories** tab. On every other tab the same button reads **New Service** — the two never show together.
+  </Accordion>
+
+  <Accordion title="A test I priced does not appear at the bench">
+    Pricing does not create a testable item. It also needs an entry on the **Test List** with its analytes and reference ranges — see [Lab Station](/lims/lab/lab-station).
+  </Accordion>
+
+  <Accordion title="Revenue by test shows the same panel twice">
+    Two catalogue rows with slightly different names. Retire one, keep the other, and align the name with the **Test List**.
+  </Accordion>
+
+  <Accordion title="A service has no code">
+    Codes are generated from the lab's name and the test's **category**. Give it a category and the code fills in.
+  </Accordion>
+
+  <Accordion title="I deleted a test and an old report lost its name">
+    Deleting removes the entry rather than retiring it. Recreate it with the same name and switch it **Inactive**, so future reporting can resolve the name again.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does changing a price rewrite old invoices?">
+    No. An invoice keeps the amount that was in force when its line was created. Repricing only affects work billed from that point on.
+  </Accordion>
+
+  <Accordion title="Can different sites charge different prices?">
+    The catalogue is set once for the lab, and every site bills from it. Where a collection centre needs its own rate, price it as a separate, clearly named entry.
+  </Accordion>
+
+  <Accordion title="What is Service Type for, if everything is a test?">
+    It is the shared classification the billing screens use across all ClinikEHR editions. Most lab work is **Procedure**; the tiles on **Overview** count by it.
+  </Accordion>
+
+  <Accordion title="Should a panel be one entry or several?">
+    Price it the way you sell it. If a patient buys a panel as one item, it is one entry here — even where the **Test List** breaks it into a dozen analytes.
+  </Accordion>
+
+  <Accordion title="Where do I set currency and tax?">
+    Under **Settings › Billing**, once, for the whole lab — see [Set your currency](/platform/settings/currency).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the price list" />
+
+{/* source of truth: components/clinic/dashboard/services/ (services-content-dashboard.tsx, service-list.tsx, service-form-sheet.tsx, category-list.tsx, service-category-form-sheet.tsx, services-stats.tsx) */}

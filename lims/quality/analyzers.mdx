@@ -33,7 +33,9 @@ Two stacked sections, doing two different jobs.
 | **New key** | Issues a replacement key and immediately invalidates the old one. |
 | **Pause** / **Resume** | Takes an instrument out of service without deleting it. |
 
-Each queued payload shows **Received**, **Analyzer**, **Specimen / LAN**, **Matched** and **Values**. **Matched** means the payload has been tied to an order on your worklist; **Unmatched** means it has not, and **Accept** is disabled on that row.
+Each queued payload shows **Received**, **Analyzer**, **Specimen / LAN**, **Matched**, **Values** and a **Review** column holding the two actions. **Matched** means the payload has been tied to an order on your worklist; **Unmatched** means it has not, and **Accept** is disabled on that row.
+
+The heading always carries its count, so **Results awaiting review (0)** is the normal state of a lab that is on top of its queue.
 
 **The empty state.** Before you register anything the table reads **No analyzers registered yet.** With nothing queued, the review section reads **Nothing waiting — new analyzer payloads appear here.** Below Professional Lab the whole page is a locked card.
 
@@ -47,7 +49,7 @@ Each queued payload shows **Received**, **Analyzer**, **Specimen / LAN**, **Matc
     Enter a **Name** the bench will recognise (for example `Chemistry bench analyzer`) and, optionally, the **Model** (for example `Mindray BS-240`). Select **Register**.
   </Step>
   <Step title="Copy the key immediately">
-    The **Bridge key for \{name\}** dialog appears with the key in a read-only field. Select the copy button — the toast reads **Key copied** — then paste it into the analyser bridge's configuration before you close the dialog with **Done**.
+    The **Bridge key for \{name\}** dialog appears with the key in a read-only field, and tells you where it goes: "Configure this key on the analyzer's bridge PC as the `X-Analyzer-Key` header. For security it is shown once — generate a new key if it is lost (the old one stops working)." Select the copy button — the toast reads **Key copied** — then paste it into the bridge's configuration before you close the dialog with **Done**.
   </Step>
 </Steps>
 
@@ -82,7 +84,7 @@ Role decides whether **Analyzers** appears at all. Permission decides what you m
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open **Analyzers** | **Lab Manager**, Owner, Manager | Permission — **Configure analysers and interfaces** |
+| Open **Analyzers** | **Lab Manager**, anyone on the **All sites** tier, Owner, Manager | Permission — **Configure analysers and interfaces** |
 | Register, pause or re-key an instrument | The same people | Permission — **Configure analysers and interfaces** |
 | **Accept** a queued result | Anyone on the **Whole lab** or **All sites** tier | Permission — **Verify and authorise results** |
 | **Discard** a payload | Anyone who may configure the interface | Permission — **Configure analysers and interfaces** |

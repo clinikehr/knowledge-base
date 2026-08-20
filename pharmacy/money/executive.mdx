@@ -1,0 +1,177 @@
+---
+title: The executive dashboard
+description: "The owner's remote view: today's net, this week's trend, every branch on one card, and four exportable reports — read the shop from anywhere."
+icon: /images/icons/briefcase.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="Professional and above" roles="The net position and cost columns need their own permissions" />
+
+**Executive** is the screen you open when you are not in the shop. It answers one question — is the business alright today? — and then hands you off: every tile on it corresponds to somewhere else in the product where you can actually do something about the answer.
+
+<Path steps={['Sidebar', 'Executive']} />
+
+## What you're looking at
+
+The heading reads **Today at a glance** with today's date beneath it. Run more than one branch and it becomes **All branches** or the name of the branch you have selected, with a branch select beside the heading.
+
+Then, in order down the page:
+
+| Block | What it shows |
+| --- | --- |
+| **Financials · \{range\}** | A range select — **Today**, **7 days**, **1 month**, **3 months**, **6 months**, **All time** — over the headline **Net profit (revenue − cost − expenses − stock loss)** and four cards: **Revenue**, **Cost of goods**, **Expenses**, **Stock loss** |
+| The tile row | **This week net**, **Discounts today**, **Pending credit** ("Owed by customers"), **Stock at risk** or **Expiring soon**, **Low stock** ("Reorder needed"), **Rewards redeemed** |
+| **By branch** | One row per branch with its sales count and net — multi-branch, **All branches** view only |
+| **Reports** | Its own range select and four tabs, each with **Export Excel** |
+| **Revenue mix this week** | **Medication \{n\}%** / **Retail \{n\}%** as a split bar |
+
+Each financial card carries a small percentage against the **immediately preceding window of the same length** — last week against the week before, not against a target. Green means the good direction, which for **Cost of goods**, **Expenses** and **Stock loss** is *down*. On **All time** the arrows disappear rather than invent a comparison, and they also hide when the previous window was zero.
+
+**Revenue mix this week** appears only once both sides have sold something. A bar reading 100% / 0% says nothing you did not already know, so the product does not draw it.
+
+A pharmacy whose till has been quiet reads zeroes, not an error. A pharmacy without the plan sees one card instead of the page — see [Who can do this](#who-can-do-this).
+
+## Read the shop, then go and act
+
+The dashboard deliberately does not let you fix anything. Every figure has a home:
+
+| Tile | What it counts | Where to act |
+| --- | --- | --- |
+| **Net profit** / **This week net** | Revenue minus cost of goods, recorded expenses and stock written off | [Expenses](/pharmacy/money/expenses) — the figure is only as honest as what you record there |
+| **Revenue** | Takings over the selected range | [Sales](/pharmacy/money/sales) |
+| **Cost of goods** | What the stock you sold cost you | [Stock control](/pharmacy/inventory/index) — cost comes from what you paid on receipt |
+| **Expenses** | Running costs recorded over the range | [Expenses](/pharmacy/money/expenses) |
+| **Stock loss** | Expired and damaged stock, valued at cost | [Stock control](/pharmacy/inventory/index) |
+| **Discounts today** | What you gave away at the till, plus loyalty rewards | [Sales](/pharmacy/money/sales) |
+| **Pending credit** | Money owed by customers on part-paid sales | [Sales](/pharmacy/money/sales) › **Debtors** |
+| **Stock at risk** / **Expiring soon** | Value that will expire unsold, or the count of open expiry alerts | [Stock control](/pharmacy/inventory/index) |
+| **Low stock** | Lines below their reorder point | [Stock control](/pharmacy/inventory/index) |
+
+## Switch between branches
+
+<Steps>
+  <Step title="Open the branch select">
+    It sits beside the heading and appears only when you run more than one branch on a plan that includes multi-branch reports. The first entry is **All branches (\{n\})**.
+  </Step>
+  <Step title="Read the roll-up first">
+    On **All branches** the figures are the whole business added up, and the **By branch** card lists each site with its sales count and today's net — red where a branch is under water.
+  </Step>
+  <Step title="Select a branch to drill in">
+    Either pick it from the select or select its row on the **By branch** card; the whole page switches to that site. A branch other than the one you are signed in to shows the simpler **Today's net (revenue − cost − expenses)** card rather than the range-filtered financials.
+  </Step>
+</Steps>
+
+## Pull a report out
+
+Exports live here on purpose — there is **no export button on the Sales page**.
+
+<Steps>
+  <Step title="Set the range on the Reports card">
+    It has its own select, separate from the financials above it, and it starts on **7 days**.
+  </Step>
+  <Step title="Pick the tab">
+    **Top products** ranks products by revenue, with a **Margin** column. **Sales Report** is a bar chart plus a day-by-day table. **Customer Report** ranks customers by spend. **Payment Methods** is a doughnut with the money and share behind each tender.
+  </Step>
+  <Step title="Select Export Excel">
+    The button reads **Exporting…** while the workbook is built, then downloads. It is built from the same figures the screen is reading, so the file can never disagree with what you are looking at.
+  </Step>
+</Steps>
+
+For anything deeper — dispensing, workload, staff, predictive — use the full report workbench on [Analytics](/pharmacy/money/analytics) rather than stretching these four tabs.
+
+## Who can do this
+
+Three separate gates decide what this page shows you, and they fail in different ways.
+
+**Plan.** Without **Professional** the whole page is a single card headed **Executive dashboard**: "Available on Professional and above — Upgrade to get the owner's remote view of your pharmacy." The multi-branch roll-up needs more than that: the multi-branch reports feature *and* more than one branch. With one branch you simply get the single-site view, with no select and no **By branch** card.
+
+**Role.** A **Cashier / Till Operator** reaches only **POS** and **Sales**, so they cannot open this page at all.
+
+**Permission.**
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Executive** | Owner, manager, Pharmacy Manager | Role |
+| See the **Net profit** headline and the financial cards | Pharmacy Manager | **View the net position** |
+| See the **Margin** column on **Top products** | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
+| See sales attributed to each cashier by name | Dispensing Supervisor | **View per-cashier takings** |
+| **Export Excel** on any tab | Everyone who can open the page | Role |
+
+Without **View the net position** the financial block reads **"Financial figures are hidden — needs authorisation from your clinic owner."** Without **View cost prices and margin** the **Margin** column is not drawn. Neither degrades to a zero — a zero would be read as "we made nothing", which is a lie; absent says "not yours to see".
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a row from someone's sidebar is a convenience, not a boundary.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The date under the heading is **your** today, not the server's — the page reads your device's local business day.
+- **Revenue** for **Today** matches **Total Revenue** on [Sales](/pharmacy/money/sales) with the period set to **Today**.
+- After recording a running cost, the **Expenses** card rises and **Net profit** falls by the same amount.
+- An exported workbook opens with the same rows, in the same order, as the tab you exported it from.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Available on Professional and above'">
+    The page is plan-gated. Everything on it is derived from data you already have, so it appears in full the moment the plan changes — nothing needs rebuilding. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="'Financial figures are hidden — needs authorisation from your clinic owner.'">
+    You can open the page but not read the net position. An owner grants **View the net position** in the permissions sheet. The tiles below the block still work.
+  </Accordion>
+
+  <Accordion title="'Financial figures could not be loaded.'">
+    A different message, and a different cause: you have the permission but the figures did not arrive. Change the range and back to re-read, and check the connection — this page has no offline mode.
+  </Accordion>
+
+  <Accordion title="Net profit looks far too healthy">
+    Almost always unrecorded running costs. Rent, salaries, power and transport only reach the calculation once they are on [Expenses](/pharmacy/money/expenses); until then the figure is revenue minus stock cost, which is not profit.
+  </Accordion>
+
+  <Accordion title="There is no branch select, and I run three shops">
+    Either the plan does not include multi-branch reports, or the branches are not all under the same ownership in the product. One branch always renders the single-site view.
+  </Accordion>
+
+  <Accordion title="The Margin column is missing from Top products">
+    That column needs **View cost prices and margin**. Where you do have it and a single product still shows **—**, no cost was recorded when that stock was received — see [Receiving stock](/pharmacy/inventory/purchase-orders).
+  </Accordion>
+
+  <Accordion title="Yesterday's numbers under today's date">
+    Refresh the page. The figures are computed for your device's local business day, and a browser tab left open overnight is still asking about yesterday.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is my net position blank?">
+    Because it is permission-gated and you have not been granted **View the net position**. It renders as a message rather than a zero on purpose — a zero would read as a bad day rather than a closed door. An owner or manager can grant it per person.
+  </Accordion>
+
+  <Accordion title="Why is there no export button on the Sales page?">
+    Exports were deliberately consolidated here. One **Reports** card, one range, four tabs, one workbook per tab — so two people exporting "last month's sales" get the same file. Everything wider lives on [Analytics](/pharmacy/money/analytics).
+  </Accordion>
+
+  <Accordion title="What do the little percentages mean?">
+    Each one compares the card with the window immediately before it, of the same length. Green is the good direction, which for costs, expenses and stock loss is downward. They vanish on **All time**, and when the previous window was zero.
+  </Accordion>
+
+  <Accordion title="Can I act on anything from this screen?">
+    No, and that is the design. It is a read-only view for someone away from the counter. Follow the table above to the screen that owns the number, and do the work there.
+  </Accordion>
+
+  <Accordion title="Is this the same as Analytics?">
+    No. **Executive** is a glance — today, this week, per branch, four quick reports. [**Analytics**](/pharmacy/money/analytics) is the workbench: the full report set over any period, each with its own export. Owners tend to live here and visit there.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the executive dashboard" />
+
+{/* source of truth: components/clinic/dashboard/pharmacy-station/admin/ (admin-dashboard-content.tsx, admin-financial-overview.tsx, admin-reports-tabs.tsx), lib/pharmacy-range.ts, hooks/use-pharmacy-features.ts, lib/edition.ts (EDITION_ROUTE_ALIASES, EDITION_ROLE_MODULES.pharmacy), lib/edition-staff-roles.ts */}

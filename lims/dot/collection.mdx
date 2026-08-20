@@ -7,11 +7,11 @@ icon: /images/icons/clipboard-check.svg
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="All plans" roles="Collectors at a full lab or a collection centre. Not available in Reference Lab or Standard Clinical Lab mode." />
 
-Collection is where the custody chain starts. You complete the federal custody and control form with the donor in front of you, take the specimen, read its temperature, seal both bottles in the donor's sight, and dispatch it. Everything downstream — the screen, the confirmation, the MRO's verified result — rests on this half-hour being done properly.
+Collection is where the custody chain starts. You complete the federal custody and control form (CCF) with the donor in front of you, take the specimen, read its temperature, seal both bottles in the donor's sight, and dispatch it. Everything downstream — the screen, the confirmation, the MRO's verified result — rests on this half-hour being done properly.
 
 <Path steps={['Sidebar', 'DOT Testing']} />
 
@@ -21,36 +21,38 @@ Collection is where the custody chain starts. You complete the federal custody a
   These screens exist only in **DOT / SAMHSA — Full Workflow** and **Both — Standard \+ DOT Full Workflow**. A lab running **Reference Lab — Intake to Report Only** has no collection module at all, by design — see [Reference lab mode](/lims/dot/lab-intake-mode).
 </Note>
 
+## What you're looking at
+
+Find the donor's order on the **DOT Drug Testing** queue — it will be at **Pending Collection** — and select the row, or **View / Proceed** from its ⋯ menu. The panel is headed with the specimen ID and its status badge, then the agency, test reason and employer.
+
+It has two tabs. **Workflow** shows one form only — the one for the stage the specimen has actually reached, so you cannot fill in the lab's paperwork from the collection room. **Chain of Custody** shows every event recorded so far.
+
+| Status | Which form Workflow shows |
+| --- | --- |
+| **Pending Collection** | The five-step CCF wizard |
+| **Collected** | **Specimen Collection** — temperature, volumes, seals, shipping |
+| **In Transit** | The laboratory's accession form, worked at the full lab |
+
+**The empty state.** A queue with nothing on it reads **No orders found** — "No DOT drug test orders match the current filter. Create a new order to get started." Raise the order with **New DOT Order** before the donor arrives, not while they are waiting.
+
+<AuditNote action="Opening a donor's drug-testing order" />
+
 ## Complete the custody and control form
 
-Open the order from the queue. The CCF is a five-step wizard, and the steps run in the order the federal form does:
-
-| Step | What it captures |
-| --- | --- |
-| **1 Employer & Donor Info** | Who is being tested and who ordered it |
-| **2 Test Type Verification** | Agency, test reason and the panel |
-| **3 Collection Information** | Site, collector and the collection itself |
-| **4 Collector Certification** | Your attestation |
-| **5 Donor Certification** | The donor's attestation |
+The wizard runs in the order the federal form does — **1 Employer & Donor Info**, **2 Test Type Verification**, **3 Collection Information**, **4 Collector Certification**, **5 Donor Certification**. The indicator across the top lets you jump back; each step saves on its own with **Step \{n\} saved**.
 
 <Steps>
-  <Step title="Confirm employer and donor">
-    Step **1 Employer & Donor Info** carries the employer's details and the donor's identity forward from the order. Check them against the donor's photo ID before you go on — a mismatch found here is an inconvenience, and one found at MRO review is a cancelled test.
-  </Step>
-  <Step title="Verify the test type">
-    Step **2 Test Type Verification** confirms which agency the test falls under and why it is being run. The donor is entitled to know both.
+  <Step title="Confirm the employer, donor and test type">
+    Step **1 — Employer & Donor Information** carries **Employer Name**, **Employer Address**, **MRO Name**, **MRO Phone** and **Remarks** forward from the order, alongside the donor identification card. Check the donor against their photo ID: a mismatch found here is an inconvenience, one found at MRO review is a cancelled test. Step **2 — Test Type Verification** confirms the agency and the reason for the test — the donor is entitled to know both, and an unchecked test reason is a correctable flaw.
   </Step>
   <Step title="Record the collection">
-    Step **3 Collection Information** captures the collection site, the collector and the circumstances. Your signature belongs here — a missing collector signature at Step 3 is one of the flaws that lets an MRO cancel the test outright.
+    Step **3 — Collection Information** captures **Collection Site**, **Collector Name** and **Collection Date & Time**. Your signature belongs here — a missing collector signature at Step 3 is one of the flaws that lets an MRO cancel the test outright.
   </Step>
   <Step title="Certify as the collector">
-    Step **4 Collector Certification** is your attestation: "I certify that this collection was performed in accordance with all applicable Federal requirements…". Do not sign it for a collection you did not personally perform.
+    Step **4 — Collector Certification** reads "By certifying, the collector attests that the specimen was collected, labeled, and sealed in accordance with 49 CFR Part 40 and that the information on this form is true and accurate." The box you tick begins "I certify that this collection was performed in accordance with all applicable Federal requirements…". Do not sign it for a collection you did not personally perform.
   </Step>
   <Step title="Read the donor certification to the donor">
-    Step **5 Donor Certification** quotes the statement the donor is agreeing to: "I certify that I provided my specimen to the collector; that I have not adulterated it in any manner; that each specimen bottle used was sealed with a tamper-evident seal in my presence…". Tick **Donor has read and acknowledged the above statement** only once they have. Without it the wizard refuses to finish with **Donor must acknowledge before completing CCF**.
-  </Step>
-  <Step title="Finish the form">
-    Completing step 5 gives **CCF complete — order advanced to Collected**, and the order moves on in the queue.
+    Step **5 — Donor Certification** quotes the statement the donor is agreeing to: "I certify that I provided my specimen to the collector; that I have not adulterated it in any manner; that each specimen bottle used was sealed with a tamper-evident seal in my presence; and that the information provided on this form and on the label affixed to each specimen bottle is correct." Tick **Donor has read and acknowledged the above statement** only once they have — without it the wizard refuses to finish with **Donor must acknowledge before completing CCF**. Completing it gives **CCF complete — order advanced to Collected**.
   </Step>
 </Steps>
 
@@ -60,72 +62,109 @@ Open the order from the queue. The CCF is a five-step wizard, and the steps run 
 
 ## Record the collection itself
 
-The **Specimen Collection** form is where the physical detail goes.
+Once the order reads **Collected**, the **Specimen Collection** form takes the physical detail.
 
 <Steps>
-  <Step title="Enter the collection time">
-    **Collection Date & Time \*** is the moment the donor handed the specimen over, not the moment you reached the keyboard. Every elapsed time on the chain of custody is measured from it.
+  <Step title="Enter the time and temperature">
+    **Collection Date & Time \*** is the moment the donor handed the specimen over, not the moment you reached the keyboard — every elapsed time on the chain of custody is measured from it. **Temperature Reading (°F) \*** must be taken within four minutes. A reading outside the band raises **Temperature Out of Range** — "Specimen temperature is outside the acceptable range of 90–100°F. A second collection under direct observation is required per 49 CFR § 40.65(c)."
   </Step>
-  <Step title="Read and record the temperature">
-    **Temperature Reading (°F) \*** must be taken within four minutes of collection. A reading outside the acceptable band raises a **Temperature Out of Range** alert — that is a finding to act on with the donor present, not a validation message to dismiss.
-  </Step>
-  <Step title="Record the volumes">
-    The **Specimen Volumes** block takes Bottle A, Bottle B and the **Total Volume**. Undocumented volume is a correctable flaw an MRO will come back to you about, so fill all three.
-  </Step>
-  <Step title="Describe the specimen">
-    **Specimen Condition** records anything unusual about what you received — colour, sediment, odour, foreign matter.
+  <Step title="Record the volumes and condition">
+    **Specimen Volumes** takes **Bottle A Volume (mL)**, **Bottle B Volume (mL)** and **Total Volume** — undocumented volume is a correctable flaw, so fill all three. **Condition \*** offers **Normal**, **Unusual Color**, **Unusual Odor**, **Foreign Objects**, **Excessive Foam** and **Other**; anything but **Normal** opens **Condition Notes**.
   </Step>
   <Step title="Record a directly observed collection">
-    If the collection was observed, complete **Direct Observation** with the observer's name and gender. The observer must be of the same gender as the donor, and the reason for observation belongs in the record.
+    If the collection was observed, complete **Direct Observation** with the observer's name and **Observer Gender**. The observer must be of the same gender as the donor, and the reason for observation belongs in the record.
   </Step>
   <Step title="Confirm the seals">
-    **Seal Confirmation** records that both bottles were sealed, initialled and dated in the donor's presence. This is the entry the accessioning clerk will check the physical seals against.
+    **Seal Confirmation** records that both bottles were sealed, initialled and dated in the donor's presence, with a **Seal Date**. This is what the accessioning clerk checks the physical seals against. Saving gives **Collection details saved**.
   </Step>
   <Step title="Ship the specimen">
-    Choose a shipping carrier, enter the **Airway Bill / Tracking Number** and the shipped date, then mark it shipped. The toast reads **Specimen marked as in transit**. Trying to ship without a carrier is refused with **Select a shipping carrier before marking as shipped**.
+    Choose a **Shipping Carrier** — **FedEx**, **UPS**, **USPS** or **Other** — enter the **Airway Bill / Tracking Number** and **Shipped Date & Time**, then mark it shipped: **Specimen marked as in transit**. Trying to ship without a carrier is refused with **Select a shipping carrier before marking as shipped**.
   </Step>
 </Steps>
 
-## Drawing down your collection supplies
+## Supplies and collection centres
 
-Each collection consumes cups, seals, bottles and forms, and you can have ClinikEHR account for them automatically. The **Collection supplies** sheet — "Configure the inventory supplies one specimen collection consumes" — links the consumables to the collection event, so your stock falls as you work rather than as someone remembers to count. See [Reagents and consumables](/lims/inventory/reagents).
+Each collection consumes cups, seals, bottles and forms. The **Collection supplies** sheet — "Configure the inventory supplies one specimen collection consumes" — links those consumables to the collection event so your stock falls as you work. Where a draw-down cannot complete the save still succeeds, with an **Inventory** warning beside it. See [Reagents and consumables](/lims/inventory/reagents).
 
-## If you work at a collection centre
+A site registered as a collection centre carries a banner reading **This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here.** That is correct behaviour, not a permissions problem: a collection centre draws and dispatches; the full lab receives, screens, confirms and reports.
 
-A site registered as a collection centre carries a banner reading **This site is a collection center — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here.**
+## Who can do this
 
-That is correct behaviour, not a permissions problem. A collection centre draws and dispatches; the full lab receives, screens, confirms and reports.
+Role decides whether the collection screens open at all. Permission decides what happens to the specimen afterwards — collection itself is deliberately not behind a separate grant, because the person with the donor in front of them is the person who must complete the form.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **DOT Testing**, raise an order, complete the CCF and the collection form | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Accession the specimen when it lands | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
+| Reject it on seal, volume or labelling | The same people | Permission — **Reject an unsuitable specimen** |
+| Enter the bench readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
+| Finalize the screen or the report | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+
+A **phlebotomist** reaches test requests, the drug-testing queue and patients, and nothing else — which is exactly the collector's job. A **Lab Manager** does **not** hold **Verify and authorise results** by default; that comes from the access tier, not the administrative role. A **QC Officer** is review-only by design.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** The collection-centre banner is a site rule, not a permission — every bench action there is refused regardless of who you are.
+
+See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The order has advanced to **Collected**, and then to in transit once you marked it shipped.
-- The **Chain of Custody** tab shows **CCF Completed**, **Specimen Collected** and **Specimen Shipped** events under **Specimen Intake**, each with your name and a **Seal Intact** pill.
+- The order has advanced to **Collected**, and then to **In Transit** once you marked it shipped.
+- The **Chain of Custody** tab shows the collection events under **Specimen Intake**, each with your name and a **Seal Intact** pill.
 - The tracking number on the order matches the airway bill in your hand.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
-  <Accordion title="The wizard will not let me finish">
-    Step 5 needs **Donor has read and acknowledged the above statement** ticked. The guard reads **Donor must acknowledge before completing CCF** and there is no way past it, deliberately.
+  <Accordion title="Donor must acknowledge before completing CCF">
+    Step 5 needs **Donor has read and acknowledged the above statement** ticked, by the donor. There is no way past it, deliberately.
   </Accordion>
 
-  <Accordion title="The temperature was out of range">
-    Treat it as a possible substitution while the donor is still with you. Follow your own site's directly observed recollection procedure, record what happened in **Specimen Condition**, and complete **Direct Observation** on the recollection. Do not simply re-read the strip until it agrees with you.
+  <Accordion title="Temperature Out of Range">
+    Treat it as a possible substitution while the donor is still with you. The alert names the rule — a second collection under direct observation per 49 CFR § 40.65(c). Follow it, record what happened under **Condition Notes**, and complete **Direct Observation** on the recollection. Do not re-read the strip until it agrees with you.
   </Accordion>
 
-  <Accordion title="I cannot mark the specimen as shipped">
-    A carrier is required — the guard reads **Select a shipping carrier before marking as shipped**. Choose the carrier, add the **Airway Bill / Tracking Number**, then try again.
+  <Accordion title="Select a shipping carrier before marking as shipped">
+    A carrier is required. Choose **FedEx**, **UPS**, **USPS** or **Other**, add the **Airway Bill / Tracking Number**, then try again.
   </Accordion>
 
   <Accordion title="A seal broke while I was packing">
-    Do not ship it. Seal a fresh collection under a new CCF and record what happened. A specimen whose seal cannot be vouched for is rejected at accessioning anyway — see [Accession an incoming specimen](/lims/lab/accessioning).
+    Do not ship it. Seal a fresh collection under a new CCF and record what happened — a specimen whose seal cannot be vouched for is rejected at accessioning anyway. See [Accession an incoming specimen](/lims/lab/accessioning).
   </Accordion>
 
   <Accordion title="There is no DOT Testing entry in my sidebar">
-    Your lab is on **Standard Clinical Lab** mode, or on **Reference Lab — Intake to Report Only** where the entry is renamed **Lab Intake** and collection is hidden. An owner or manager can check under Settings › Lab Workflow — see [DOT and workplace drug testing](/lims/dot).
+    Your lab is on **Standard Clinical Lab**, or on **Reference Lab — Intake to Report Only** where the entry is renamed **Lab Intake** and collection is hidden. An owner or manager can check the **Lab Workflow** card — see [DOT and workplace drug testing](/lims/dot/index).
+  </Accordion>
+
+  <Accordion title="I got an Inventory warning after saving">
+    The collection saved; the supply draw-down did not. Check the **Collection supplies** sheet and your stock levels.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can a donor refuse the observed collection?">
+    They can decline, and that is not something you argue with — you record it. A refusal is documented on the CCF and the MRO decides what it means; under DOT rules a refusal to submit is its own outcome, not a missing test. Never tick the donor's certification for them to get past the screen.
+  </Accordion>
+
+  <Accordion title="What if the temperature is out of range?">
+    It is a finding, not an error. The band is 90–100°F, and a reading outside it calls for a second collection under direct observation per 49 CFR § 40.65(c). Do it while the donor is still on site and record both collections.
+  </Accordion>
+
+  <Accordion title="Can I complete the CCF after the donor has left?">
+    No. Steps 4 and 5 are attestations about what happened in the room. Completing them later makes the specimen indefensible even when the facts are true.
+  </Accordion>
+
+  <Accordion title="Can I go back and change an earlier step?">
+    Yes, until the CCF is complete — select the step in the indicator and save it again. Once the order advances to **Collected**, corrections belong in the record as notes.
+  </Accordion>
+
+  <Accordion title="Do I need a separate permission to collect?">
+    No. Collection is governed by role and by your site kind, not by a permission switch. The grants start at accessioning, because that is where two people could otherwise disagree about the same specimen.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a collection" />
 
-{/* source of truth: components/clinic/dot-lims/collection/ccf-form.tsx, components/clinic/dot-lims/collection/specimen-collection-form.tsx, components/clinic/dot-lims/dot-consumables-sheet.tsx, components/clinic/dot-lims/general/collection-center-banner.tsx */}
+{/* source of truth: components/clinic/dot-lims/collection/ccf-form.tsx, components/clinic/dot-lims/collection/specimen-collection-form.tsx, components/clinic/dot-lims/dot-order-workflow-sheet.tsx, components/clinic/dot-lims/dot-consumables-sheet.tsx, components/clinic/dot-lims/general/collection-center-banner.tsx, lib/edition-staff-roles.ts, lib/edition.ts */}

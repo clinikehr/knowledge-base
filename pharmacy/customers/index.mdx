@@ -14,7 +14,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Path steps={['Sidebar', 'Customers']} />
 
-## What is on the screen
+## What you're looking at
 
 The header reads **Customers** — "Purchases, debts, money on account, and who may collect." — with **Refresh** and **New customer** beside it, and two tabs below: **Customers** and **Prospects**.
 
@@ -28,13 +28,13 @@ Three tiles sit above the table:
 
 **Two of those three tiles are page totals, not book totals.** They say "(this page)" for a reason: they add up only the rows the table is showing right now, so filtering or searching changes them. Never quote **On account (this page)** or **Owed (this page)** as what your whole business holds or is owed — for the business-wide figure, use the [Expenses page](/pharmacy/money/expenses) and the [reports workbench](/pharmacy/money/analytics).
 
-Below them is the **Customer accounts** table, with **Search name, phone, ID…** and a status filter (**All statuses**, **Active**, **Prospect**, **Inactive**, **Blocked**). Search matches on name, phone and ID number.
+Below them is the **Customer accounts** table, with **Search name, phone, ID…** and a status filter (**All statuses**, **Active**, **Prospect**, **Inactive**, **Blocked**). Search matches on name, phone and ID number. A pharmacy that has never registered anyone sees the tiles at zero and an empty table — the till's **Walk-in** sales do not create records, so this screen fills only as you add people.
 
 <Note>
   **"Showing the closest matches only — narrow the search to see the rest."** Your search matched more people than the table will list at once. Add a surname or a phone number rather than paging through — the missing rows are not missing records.
 </Note>
 
-## The customer profile
+### The customer profile
 
 Selecting a row opens the profile. Three figures sit across the top:
 
@@ -42,45 +42,118 @@ Selecting a row opens the profile. Three figures sit across the top:
 - **Owed** — what they still owe on part-paid sales.
 - **Lifetime** — everything they have spent with you.
 
-Next to them are a status select, **Money on account**, **Email statement**, and a **\{n\} reward(s) available** badge when loyalty is running.
+Next to them are a status select, **Money on account**, **Email statement**, and a **\{n\} reward(s) available** badge when loyalty is running. Underneath, five tabs:
 
-Underneath, five tabs:
+| Tab | What it holds | Empty state |
+| --- | --- | --- |
+| **Purchases** | Every sale: its number, date, item count, payment method and total | "No purchases yet" |
+| **Debts** | Part-paid sales with a balance due, each with **Settle from account** | "Nothing owed — Every sale is settled." |
+| **Account** | Deposits, cash-outs, corrections and spends, in order | "No account activity" |
+| **People** | Who may collect on this customer's behalf | "No dependents" |
+| **Insights** | Loyalty, reminder preferences and a **Most bought** analysis | — |
 
-| Tab | What it holds |
-| --- | --- |
-| **Purchases** | Every sale: its number, date, item count, payment method and total |
-| **Debts** | Part-paid sales with a balance due, each with **Settle from account** |
-| **Account** | The running list of deposits, cash-outs, corrections and spends |
-| **People** | Who may collect on this customer's behalf |
-| **Insights** | Loyalty, reminder preferences and a **Most bought** analysis |
+**Purchases state refunds; they never net them away.** A sale that was partly refunded or discounted says so on its own line — **"\{amount\} refunded or discounted"** — as well as showing the net total. A figure that quietly shrank is a figure someone will query at the counter, so the screen shows both halves.
 
-### Purchases state refunds, they never net them away
-
-A sale that was partly refunded or discounted says so on its own line — **"\{amount\} refunded or discounted"** — as well as showing the net total. A figure that quietly shrank is a figure someone will query at the counter, so the screen shows both halves.
-
-### Insights
-
-The loyalty panel names your programme, the spend threshold and the reward, and tells you how far off the next one is. With no programme configured it reads **"No loyalty programme running — Set one up in Settings → Loyalty to reward repeat customers."**
-
-The same tab carries **Reminders to this customer** — **Outstanding balance reminders** and **Loyalty reward emails**. Both are per-customer switches on top of your pharmacy's own settings: "Only sent while your clinic has the matching reminder switched on." A customer with no email address on file receives nothing regardless.
+**Insights** names your loyalty programme, its spend threshold and its reward, and how far off the next one is. With none configured it reads **"No loyalty programme running — Set one up in Settings → Loyalty to reward repeat customers."** The same tab carries **Reminders to this customer** — **Outstanding balance reminders** and **Loyalty reward emails** — both per-customer switches on top of your pharmacy's own settings: "Only sent while your clinic has the matching reminder switched on." A customer with no email address on file receives nothing regardless.
 
 ## Email a statement
 
 **Email statement** sends the customer their balance and what they owe. It is disabled when there is nothing to send, with the tooltip **"Nothing to send — no debt and no balance"**. On success you get **"Statement emailed to the customer"**.
 
-## Prospects are a different shape
+## Statuses, and prospects
 
-The **Prospects** tab lists enquiries — people who have contacted you but never bought. A prospect has no account, no purchases and no balance, which is exactly why they get their own tab instead of appearing in the customer table as a dormant account. Promote one from its own row action; until you do, none of the account machinery applies to them.
+**Active**, **Prospect**, **Inactive** and **Blocked**. Only one has teeth: **Blocked** stops the account taking on new credit, so a blocked customer cannot walk out part-paid. The rest are labels for your own filtering, and changing one confirms with **"Marked inactive"** or the equivalent.
 
-## Statuses
-
-**Active**, **Prospect**, **Inactive** and **Blocked**. Only one has teeth: **Blocked** stops the account taking on new credit, so a blocked customer cannot walk out part-paid. The rest are labels for your own filtering.
+The **Prospects** tab lists enquiries — people who have contacted you but never bought. A prospect is a different shape: no account, no purchases and no balance, which is exactly why they get their own tab instead of appearing in the customer table as a dormant account. Promote one from its own row action; until you do, none of the account machinery applies to them.
 
 <AuditNote action="Opening a customer record, and every change you make to it," />
 
-## Who can open this screen
+## Who can do this
 
-A cashier cannot reach **Customers** at all — the till role is deliberately narrow, and reaches only **POS** and **Sales**. A pharmacy technician reaches customers but not the money surfaces. See [Staff permissions](/platform/team/permissions).
+**Role** decides whether **Customers** opens at all, and this is the sharpest role boundary in the pharmacy edition. A **Cashier / Till Operator** reaches **POS** and **Sales** and nothing else — they cannot open **Customers**, or **Inventory**, at any access tier. That is deliberate: the till serves, and the counter's record of a person is somebody else's job.
+
+**Permission** decides what a person may do with money once they are on the screen. Money on account is real money movement, so it is worth being explicit about who moves it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Customers**, search and read a profile | Pharmacy Manager, Inventory & Purchasing, Dispensing Supervisor, pharmacy technicians | Role — a cashier cannot reach it |
+| Add a customer with **New customer** | Anyone who can open the screen | Role — not a grantable permission |
+| Take a deposit, cash out or record a correction | Anyone who can open the screen | Role — not a grantable permission |
+| **Settle from account** against a debt | Anyone who can open the screen | Role — not a grantable permission |
+| Reverse the sale that created the debt | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+| See the business-wide money these figures roll into | Pharmacy Manager | **View the net position** |
+| See takings attributed to each cashier by name | Nobody by default — grant it explicitly | **View per-cashier takings** |
+
+Read that table the right way round: nothing on this screen asks for a separate money permission, so **who can open Customers is who can move money on an account**. If a colleague should not be taking deposits, the control is their role, not a toggle — see [Staff permissions](/platform/team/permissions).
+
+Where a money figure is gated elsewhere in the product, it renders **"Hidden — needs authorisation from your clinic owner."** — never a zero, because a zero reads as "nothing owed" and this screen is about what people owe.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding a module from the sidebar is a convenience, not a security boundary.
+
+## Check it worked
+
+- A new customer appears in **Customer accounts** and is findable by name, phone or ID number.
+- Their **Lifetime** figure grows after their next sale at the till, and the sale appears on **Purchases**.
+- A part-paid sale shows on **Debts** with the balance in red, and in the **Owed (this page)** tile while that row is listed.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I cannot open the Customers screen at all">
+    A cashier reaches only **POS** and **Sales**. Ask an owner or manager to change your role — no permission toggle re-opens this screen for a till role.
+  </Accordion>
+
+  <Accordion title="'Showing the closest matches only — narrow the search to see the rest.'">
+    Your search matched more people than the table lists at once. Add a surname, a phone number or an ID rather than paging — the rows you cannot see are not missing records.
+  </Accordion>
+
+  <Accordion title="The tiles disagree with my end-of-day figures">
+    **On account (this page)** and **Owed (this page)** total only the rows currently listed, so a search or a status filter changes them. For business-wide money use the [reports workbench](/pharmacy/money/analytics).
+  </Accordion>
+
+  <Accordion title="'Could not load customers'">
+    The list did not come back. Select **Refresh**. If it persists on a good connection, the account may have lost access to this branch — check with an owner.
+  </Accordion>
+
+  <Accordion title="'Could not change the status'">
+    The status was not saved and the row is unchanged. Reopen the profile before trying again, in case somebody else changed it in the meantime.
+  </Accordion>
+
+  <Accordion title="Email statement is greyed out">
+    The tooltip says **"Nothing to send — no debt and no balance"**. There is genuinely nothing to report on. It also sends nothing to a customer with no email address on file.
+  </Accordion>
+
+  <Accordion title="A regular customer is not in the list">
+    They were probably served as **Walk-in**. A till sale with no customer attached creates no record. Add them with **New customer**, then attach them at the counter next time — see [Ring up a sale](/pharmacy/pos/index).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="What happens to a customer's balance if they stop coming?">
+    Nothing. Money on account does not expire, and marking someone **Inactive** is a filing label — it does not touch their balance, their debts or their history. The money stays theirs until you hand it back with a **Cash out**.
+  </Accordion>
+
+  <Accordion title="Can someone collect for a customer who isn't listed?">
+    Yes — the **People** tab is a record, not a rule, and nothing at the till blocks a sale to someone who is not on it. It exists so your counter can check in one glance instead of making a phone call. See [Who may collect](/pharmacy/customers/dependents).
+  </Accordion>
+
+  <Accordion title="Does blocking a customer stop them buying?">
+    No. **Blocked** stops the account taking on new credit, so they cannot walk out part-paid. They can still buy anything they pay for in full.
+  </Accordion>
+
+  <Accordion title="Can I merge two records for the same person?">
+    Not from this screen. Keep the record with the purchases and the balance, move anything useful across by hand, and mark the other **Inactive** so the history is still answerable.
+  </Accordion>
+
+  <Accordion title="Is a prospect just an inactive customer?">
+    No — a prospect has never bought, so it has no account, no purchases and no balance. That is why it lives on its own tab. Promote it and the account machinery starts on the day they become a customer.
+  </Accordion>
+</AccordionGroup>
 
 <StillStuck topic="a customer record" />
 
@@ -104,4 +177,4 @@ A cashier cannot reach **Customers** at all — the till role is deliberately na
   </Card>
 </Columns>
 
-{/* source of truth: components/clinic/customers-management/ (customers-content.tsx, customer-profile-sheet.tsx, customer-commerce-tabs.tsx, customer-loyalty-panel.tsx, customer-reminder-prefs.tsx), lib/customer-wallet.ts, lib/edition.ts (EDITION_ROLE_MODULES.pharmacy) */}
+{/* source of truth: components/clinic/customers-management/ (customers-content.tsx, customer-profile-sheet.tsx, customer-commerce-tabs.tsx, customer-loyalty-panel.tsx, customer-reminder-prefs.tsx), lib/customer-wallet.ts, lib/edition.ts (EDITION_ROLE_MODULES.pharmacy), lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS) */}

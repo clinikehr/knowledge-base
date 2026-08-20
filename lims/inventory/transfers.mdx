@@ -1,0 +1,169 @@
+---
+title: Send specimens to a hub lab
+description: "Dispatch collected specimens from a collection centre to your hub laboratory, and receive a batch so it accessions itself onto the bench."
+icon: /images/icons/truck.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} roles="Owner, Manager, Lab Scientist, Doctor, Nurse or Staff at either site" note="Needs a second full laboratory to send to" />
+
+A collection centre takes the sample; a hub laboratory runs it. **Specimen Transfers** is the hand-off between them, and its point is that the receiving lab does not re-key anything: the page says so itself — "Hand collected specimens to one of your hub laboratories. Receiving auto-creates the order at the hub — chain of custody carries over, nothing is re-keyed."
+
+<Path steps={['Sidebar', 'Transfers']} />
+
+<TaskHeader before="Specimens already collected at this site, and at least one other full laboratory under the same owner" time="A minute per shipment" after="A batch in transit, and — once received — the same specimens accessioned onto the hub's bench" />
+
+## What you're looking at
+
+The heading is **Specimen Transfers**, with **Dispatch specimens** in the top right. There are no tabs. Below sit two cards:
+
+| Card | What it holds |
+| --- | --- |
+| **Incoming** | Batches other sites have sent *to* you. Hidden entirely when this site is a collection centre — a collection centre never receives |
+| **Outgoing** | Batches you have sent |
+
+Each row reads "\{n\} specimens", a status badge, the dispatch time and, where given, the courier and the time it was received. There is no draft state — a transfer exists only once it has been dispatched.
+
+| Badge | Means |
+| --- | --- |
+| **In transit** | Dispatched and not yet received |
+| **Received** | The hub took it in and the specimens are on their bench |
+| **Cancelled** | Struck through — the batch was pulled back |
+
+Actions appear only on an **In transit** row: **Receive & accession** on an incoming one, **Cancel** on an outgoing one. **Received** and **Cancelled** rows carry no actions at all.
+
+**The empty state.** **Incoming** reads "No incoming transfers. Collection centers dispatch here." and **Outgoing** reads "Nothing dispatched yet. Collect specimens, then dispatch them to a hub lab."
+
+If this site is a collection centre you also meet the banner elsewhere in the product: "This site is a **collection center** — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here." This page is the other half of that sentence.
+
+<AuditNote action="Dispatching or receiving a specimen batch" />
+
+## Dispatch a batch
+
+<Steps>
+  <Step title="Open the dialog">
+    Select **Dispatch specimens**. The button is never disabled — if this site has nowhere to send to, the dialog tells you why. **Dispatch specimens to a hub lab** explains the batch: "Pick the collected specimens going into this shipment. The hub receives the whole batch and accessioning happens automatically on their side."
+  </Step>
+  <Step title="Choose the destination">
+    Pick a **Destination lab** — the placeholder is **Select hub laboratory**. Where you have only one, it is chosen for you.
+  </Step>
+  <Step title="Tick the specimens">
+    The list is headed **Specimens (\{n\} of \{m\} selected)** and shows every collected specimen still waiting, with its specimen ID, type and test reason. Tick the ones physically going in this shipment — not everything on the shelf.
+  </Step>
+  <Step title="Label the shipment">
+    **Courier (optional)** ("GIG Logistics") and **Note (optional)** ("Morning batch") are free text, and both show on the manifest later. Filling them in is what makes a chased shipment findable.
+  </Step>
+  <Step title="Send it">
+    The submit button reads **Dispatch \{n\}** and stays disabled until a destination and at least one specimen are chosen. On success you get **\{n\} specimens dispatched** and the batch appears under **Outgoing** as **In transit**.
+  </Step>
+</Steps>
+
+## Receive a batch at the hub
+
+<Steps>
+  <Step title="Find the incoming row">
+    At the hub, the batch sits under **Incoming** as **In transit**. Select the row first to open **Transfer manifest** — "\{n\} specimens · \{courier\} · \{note\}" — and check the contents against the box in front of you.
+  </Step>
+  <Step title="Take it in">
+    Select **Receive & accession**. Every specimen in the batch is accessioned in one action and its order is created at the hub with the custody chain carried across. The toast reads **\{n\} specimens accessioned — now on your bench**.
+  </Step>
+  <Step title="Work it as normal">
+    The specimens are now ordinary hub work — they appear on [Worklist](/lims/lab/worklist) and go through [Accessioning](/lims/lab/accessioning) and results as usual.
+  </Step>
+</Steps>
+
+<Warning>
+  **Receiving cannot be undone from this screen.** A **Received** row carries no actions, and the orders it created are live at the hub. Open the manifest and check the box first — a batch received before it physically arrives puts specimens on a bench that does not hold them.
+</Warning>
+
+## Cancel a dispatch
+
+Select **Cancel** on an outgoing **In transit** row. The toast reads **Transfer cancelled — specimens returned to your bench**, and the row stays visible, struck through, as **Cancelled**. Use it when a courier never collected, or when the wrong specimens were ticked — not to undo a receipt, which is not possible here.
+
+## Who can do this
+
+Access to this screen is **role-based**, not plan-based, and both sites use the same page.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Specimen Transfers** | Owner, Manager, Lab Scientist, Doctor, Nurse, Staff | Role → route |
+| Dispatch a batch | The same people, at a site with somewhere to send to | Role → route |
+| **Receive & accession** an incoming batch | The same people, at a full laboratory | Permission — **Accession an incoming specimen** covers the act it performs |
+| Cancel an outgoing batch | The same people, at the dispatching site | Role → route |
+| Reject a specimen once it is on the bench | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Reject an unsuitable specimen** |
+
+Anyone outside that role set sees a single message instead of the page: "You don't have permission to manage specimen transfers. Please contact your clinic administrator."
+
+Note that a **Lab Manager** does not hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role — and a **QC Officer** is review-only by design. A lab scientist reaches this page and the rest of the bench, but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.**
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The batch appears under **Outgoing** as **In transit**, with the courier you entered.
+- At the hub the same batch shows under **Incoming**, and the manifest lists every specimen.
+- After **Receive & accession**, the row flips to **Received** and the specimens appear on the hub's bench queue.
+- The dispatching site's collected-specimen list no longer offers those specimens for a second dispatch.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No destination labs found. The owner needs at least one full laboratory besides this site to receive specimens.">
+    You have nowhere to send to. Transfers move specimens between two sites under the same owner, and the destination must be a full laboratory — not another collection centre. The owner sets this up.
+  </Accordion>
+
+  <Accordion title="No collected specimens waiting. Collect specimens first, then dispatch them here.">
+    The dialog only offers specimens already recorded as collected. Collect them first — see [Collect a specimen](/lims/dot/collection) — then come back.
+  </Accordion>
+
+  <Accordion title="I have no Incoming card">
+    This site is a collection centre, and a collection centre never receives. Receiving happens at the hub laboratory.
+  </Accordion>
+
+  <Accordion title="Dispatch is greyed out">
+    The **Dispatch \{n\}** button needs both a **Destination lab** and at least one ticked specimen. The header button itself is never disabled.
+  </Accordion>
+
+  <Accordion title="You don't have permission to manage specimen transfers. Please contact your clinic administrator.">
+    Your role is outside the set that reaches the bench surfaces. An owner or manager can change it in the team settings.
+  </Accordion>
+
+  <Accordion title="We received the batch by mistake">
+    There is no undo on this screen — the orders now exist at the hub. Handle it as ordinary bench work: reject the specimens that never arrived, so the record says what actually happened.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does the hub have to re-enter the donor and the order?">
+    No, and that is the whole point. Receiving creates the order at the hub automatically and carries the chain of custody over, so the collection site's record and the hub's are one continuous chain.
+  </Accordion>
+
+  <Accordion title="Is this the same as the pharmacy's stock transfers?">
+    No. They share a sidebar position but they are different screens for different things: this moves patient specimens between laboratories, not stock between branches.
+  </Accordion>
+
+  <Accordion title="Can I split one batch across two hub labs?">
+    Not in a single shipment — a batch has one **Destination lab**. Dispatch twice, ticking a different set of specimens each time.
+  </Accordion>
+
+  <Accordion title="What happens to a cancelled batch's specimens?">
+    They return to your bench and become available to dispatch again. The cancelled row stays on the page, struck through, so the attempt is still on the record.
+  </Accordion>
+
+  <Accordion title="Can I add a specimen to a batch already in transit?">
+    No. Dispatch a second batch for it. Editing a shipment after it has left would break the custody record the transfer exists to protect.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a specimen transfer" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/transfers/transfers-content.tsx, app/u/clinic/dashboard/lab-station/transfers/[clinicId]/page.tsx, db/actions/lims-transfers.ts, db/queries/lims-transfers.ts, components/clinic/dot-lims/general/collection-center-banner.tsx, lib/edition-staff-roles.ts */}

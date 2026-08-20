@@ -9,45 +9,64 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="Included from Starter Lab. Expiry-risk figures need Professional Lab; its recommendations need Business Lab." roles="Owner, Manager, Lab Manager" />
+<Availability editions={['lims']} plans="Included from Starter Lab. Expiry-risk figures need Professional Lab; its recommendations need Business Lab." roles="Owner, Manager, Lab Manager, Lab Scientist and anyone else who reaches the lab bench" />
 
 **A new reagent lot arrives quarantined.** It is received, it is on the shelf, it shows in your stock — and it cannot be used until someone validates it against the lot in service. Labs that do not know this spend a week wondering why good stock is unusable. It is waiting on the **Validation** tab.
 
 <Path steps={['Sidebar', 'Reagents & Inventory']} />
 
 <Note>
-  The vocabulary drifts on this one screen, so screenshots and menus will not agree. Your sidebar says **Reagents & Inventory**, the report catalogue calls it **Reagents**, and the screen itself is the general inventory screen with general inventory wording. Same place, three names.
+  The vocabulary drifts on this one screen, so menus and screenshots will not agree. Your sidebar says **Reagents & Inventory**, the report catalogue calls it **Reagents**, and the screen itself is the general inventory screen — headed **Inventory**, subtitled "Stock, lots, and expiry across your rooms and devices." Same place, three names.
 </Note>
 
 <TaskHeader before="Nothing — the catalogue starts empty" time="5 minutes to add a reagent, a minute to validate a lot" after="A validated reagent lot in active stock, attached to the tests that consume it" />
+
+## What you're looking at
+
+A toolbar of stock actions — **Receive**, **Dispense**, **Transfer**, **Reports**, **Import**, **Opening stock**, **Export** and **Add item** — over a long row of tabs. A lab uses a handful of them daily and can ignore the rest.
+
+| Tab | What it holds |
+| --- | --- |
+| **Catalog** | Every item you stock, with its type and pricing |
+| **Stock** | On-hand quantities by **Item**, **Location**, **Qty** and **Reserved** |
+| **Ledger** | Every movement in and out, with its reference |
+| **Counts** | Physical stock counts, and the variances they find |
+| **Validation (\{n\})** | Quarantined reagent lots awaiting lot-to-lot validation |
+| **Purchasing** | Reorder suggestions and purchase orders |
+| **Recalls** · **Vouchers** · **Locations** · **Reconciliation** | Recalled lots; issued vouchers; your fridges, benches and sites; and reconciling counted stock against the ledger |
+| **Alerts (\{n\})** | Expiry and low-stock alerts, the expiry-risk panel and the alert settings |
+
+Only **Validation** and **Alerts** carry a number, and only when there is something in them — a bare **Validation** means the queue is clear. Tabs for work a lab does not do, such as **Fill Rx**, sit alongside these and can be left alone.
+
+**The empty states.** A new catalogue reads **No items yet.** and **Stock** reads **No stock on hand. Receive a lot to get started.** The queue you care about reads **No reagent lots awaiting validation. New reagent lots arrive here quarantined until validated.**, and a clear alerts tab reads **No open alerts. You're all stocked up.**
 
 ## Add a reagent to the catalogue
 
 <Steps>
   <Step title="Create the item">
-    On the **Catalog** tab, add an item and set its type to **Reagent** — or **Kit**, for something supplied as an assembled kit.
+    Select **Add item** and set its type to **Reagent** — or **Kit**, for something supplied as an assembled kit. Those two sit alongside **Consumable**, **Supply**, **Device** and the clinical types in the same list.
   </Step>
   <Step title="Turn on lot-to-lot validation">
-    Switch on **Lot-to-lot validation (lab reagent)**. The field says what it does: "New lots arrive quarantined until validated." Leave it off only for something that genuinely needs no lot check.
+    Switch on **Lot-to-lot validation (lab reagent)** — "New lots arrive quarantined until validated." Leave it off only for something that genuinely needs no lot check. Leave **Track by lot / expiry** on, and **Refrigerated** on for anything with a cold chain.
   </Step>
   <Step title="Receive the stock">
-    Receive it against its lot number and expiry date on the **Stock** tab. Lot and expiry are what every later alert, count and validation hangs off, so never receive a reagent without them.
+    Use **Receive** to book it in against its lot number and expiry date. Lot and expiry are what every later alert, count and validation hangs off, so never receive a reagent without them.
   </Step>
 </Steps>
 
 ## Release a new lot through Validation
 
-The **Validation (\{n\})** tab holds quarantined reagent lots waiting for lot-to-lot validation. It lists **Reagent**, **Lot**, **On hand** and **Expiry**, and each row carries a **Validate** button. When there is nothing waiting it reads **No reagent lots awaiting validation. New reagent lots arrive here quarantined until validated.**
+The **Validation (\{n\})** tab lists **Reagent**, **Lot**, **On hand** and **Expiry**, with a **Validate** button on each row and a **Search reagents…** box above. A lot that has already failed once carries a **failed** badge beside its lot number.
 
 <Steps>
   <Step title="Open the sheet">
-    Select **Validate**. The **Validate lot** sheet opens, stating its purpose: "Lot-to-lot validation before patient use. Pass releases the lot to active stock."
+    Select **Validate**. **Validate lot** opens, stating its purpose: "Lot-to-lot validation before patient use. Pass releases the lot to active stock." A banner names the lot and what is on hand.
   </Step>
   <Step title="Say what you compared it against">
     Choose the lot in service under **Compared against (current in-use lot)**, or **None / first lot** if this is the first lot you have held.
   </Step>
   <Step title="Record what you did">
-    Enter the **Method**, pick a **Reviewer** for sign-off, and summarise the outcome in **Result summary** (for example `Within 2SD of in-use lot`). Put observations and deviations in **Notes**.
+    Enter the **Method** — the placeholder suggests `parallel_testing` — pick a **Reviewer** for sign-off, and summarise the outcome in **Result summary** (for example `Within 2SD of in-use lot`). Put observations and deviations in **Notes**.
   </Step>
   <Step title="Pass or fail it">
     **Pass & release** puts the lot into active stock — the toast reads **Lot validated — released to active stock**. **Fail** records the failure and the toast reads **Validation recorded as failed — lot stays quarantined**.
@@ -58,27 +77,9 @@ The **Validation (\{n\})** tab holds quarantined reagent lots waiting for lot-to
   **Pass & release** puts that lot into patient use. Do it only when you have actually run the comparison and the reviewer has seen the result — a lot released on a guess produces patient results nobody will question until a clinician acts on one.
 </Warning>
 
-## What each tab is for
-
-| Tab | What it holds |
-| --- | --- |
-| **Catalog** | Every item you stock, with its type and pricing |
-| **Stock** | On-hand quantities by lot, expiry and location |
-| **Ledger** | Every movement in and out |
-| **Counts** | Physical stock counts, and the variances they find |
-| **Validation (\{n\})** | Quarantined reagent lots awaiting lot-to-lot validation |
-| **Purchasing** | Reorder suggestions and purchase orders |
-| **Vouchers** | Issued vouchers |
-| **Recalls** | Recalled lots and what became of them |
-| **Locations** | Fridges, benches, stores and sites |
-| **Alerts (\{n\})** | Expiry and low-stock alerts |
-| **Reconciliation** | Reconciling counted stock against the ledger |
-
-The **Validation** tab only appears once at least one item is flagged for lot-to-lot validation — before that there is nothing for it to show.
-
 ## Attach reagents to a test
 
-A catalogue test carries a **Reagents consumed** card. Each row is a **Reagent**, a **Qty** and an **Opt.** flag for something not always used. Use **Add reagent** for rows and **Save reagents** to save — the toast reads **Reagents saved**. An empty card reads **No reagents yet. Add the items this test consumes.**
+A catalogue test carries a **Reagents consumed** card, which explains itself: "Drawn from inventory each time this test is completed — linked to the order & patient." Each row is a **Reagent**, a **Qty** and an **Opt.** flag for something not always used. Use **Add reagent** for rows and **Save reagents** to save — the toast reads **Reagents saved**. An empty card reads **No reagents yet. Add the items this test consumes.**
 
 Completing that test then draws its reagents down, so counts follow the bench without anyone counting bottles. See [Add your tests and panels](/lims/get-started/tests-and-panels) and [Enter and verify results](/lims/lab/results).
 
@@ -88,27 +89,47 @@ Completing that test then draws its reagents down, so counts follow the bench wi
 
 ### Collection consumables are configured separately
 
-The supplies a specimen collection uses — cups, seals, tamper tape — are not on the test. They live in the **Collection supplies** sheet, which "Configure the inventory supplies one specimen collection consumes"; saving it toasts **Collection kit saved**. See [DOT collection](/lims/dot/collection).
+The supplies a specimen collection uses — cups, split bottles, seals, temperature strips — are not on the test. They live in the **Collection supplies** sheet, which draws them "each time a specimen is collected … shortfalls warn, never block a collection". Saving it toasts **Collection kit saved**. See [DOT collection](/lims/dot/collection).
 
 ## Expiry and low stock
 
-The **Alerts (\{n\})** tab carries both expiry and low-stock alerts. Alongside them the **Expiry risk** panel projects what is heading for the bin, reading **Expiry risk — \{amount\} projected to expire unsold** with the number of lots at risk beside it. The projection uses your last 90 days of consumption, per lot, oldest expiry first, and an acknowledged alert stays quiet for 30 days.
+The **Alerts (\{n\})** tab lists each alert as **Type**, **Item**, **Location** and **When**, with an **Acknowledge** button that keeps it quiet for 30 days. Above them the expiry-risk panel projects what is heading for the bin — **Expiry risk — \{amount\} projected to expire unsold**, from "your last 90 days of sales, per lot, first-expiry-first-out".
 
 | You get | On |
 | --- | --- |
-| The expiry-risk figures — value at risk, lots at risk | Professional Lab |
-| The recommendations — supplier returns, and transfers to the site that still uses the item | Business Lab |
+| The expiry-risk figures — value at risk, lots at risk, which lots | Professional Lab |
+| The recommendations — discount-to-clear, supplier returns, and transfers to a site that still uses the item | Business Lab |
 
-Batch and lot tracking, expiry monitoring, low-stock alerts and purchase orders are all included from **Starter Lab**. See [Plans](/platform/plans/overview).
+Below Professional Lab the panel is replaced entirely by **Expiry risk — predictive**, **Available on Professional and above**. Batch and lot tracking, expiry monitoring, low-stock alerts and purchase orders are all included from **Starter Lab**. See [Plans](/platform/plans/overview).
+
+## Who can do this
+
+This screen is governed by **role**, not by the Diagnostics permission list, which has no slug for stock. A bench scientist therefore reaches it, deliberately — the person who runs out of a reagent should be able to see why.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Reagents & Inventory** | Owner, Manager, **Lab Manager**, **Lab Scientist**, **Phlebotomist** | Role → route |
+| Add an item, receive stock, run a count, set a test's **Reagents consumed** | The same people | Role → route |
+| **Validate** a quarantined lot | The same people — record the **Reviewer** who signed it off | Role → route |
+| See the **Reagents** and **Expiry Risk** reports | Owner, Manager and management roles | Role → route — see [The report catalogue](/lims/business/analytics) |
+
+Nothing here is gated by **Enter results at the bench** or **Verify and authorise results**. Your local procedure, and the **Reviewer** field on the validation sheet, are what enforce who may sign a lot into patient use — not the software.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Where a figure is not yours to see it renders hidden or as a dash — never as a zero, which on a stock screen would read as "we have none".
+
+See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The new lot leaves the **Validation** tab and its quantity appears as usable stock.
+- The new lot leaves the **Validation** tab, the count in the tab label drops, and its quantity appears as usable stock.
 - The **Reagents consumed** card on the test lists the items and quantities you saved.
-- Completing a test moves the reagent's on-hand figure on the **Stock** tab.
-- The **Reagents at risk** tile on **Executive** reflects what the expiry panel shows — see [Reports, Lab Analytics and the owner summary](/lims/business/analytics).
+- Completing a test moves the reagent's on-hand figure on the **Stock** tab, and a matching row appears on **Ledger**.
+- The **Reagents at risk** tile on **Executive** agrees with the expiry-risk panel — see [The owner summary](/lims/business/executive).
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="Stock is on the shelf but the bench cannot use it">
@@ -120,15 +141,19 @@ Batch and lot tracking, expiry monitoring, low-stock alerts and purchase orders 
   </Accordion>
 
   <Accordion title="Reagent stock did not move after a test completed">
-    Either the test has no **Reagents consumed** rows, or the drawdown fell behind the status change. Check the card first, then reconcile with a stock count.
+    Either the test has no **Reagents consumed** rows, or the drawdown fell behind the status change. Check the card first, then reconcile with a stock count on **Counts**.
   </Accordion>
 
   <Accordion title="Save reagents refuses with “Pick a reagent for each row”">
-    A row was added but left empty. Choose an item on it, or remove the row.
+    A row was added but left empty. Choose an item on it, or remove the row with its **Remove** button.
   </Accordion>
 
   <Accordion title="Expiry risk shows a number but no recommendations">
-    The figures are a Professional Lab capability and the recommendations — supplier returns and transfers — are a Business Lab one. The panel says so itself. See [Change your plan](/platform/plans/change-plan).
+    The figures are a Professional Lab capability; the recommendations — discount-to-clear, supplier returns and branch transfers — are a Business Lab one. The panel says so itself. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A validated lot shows a “failed” badge">
+    It failed a previous validation attempt and stayed quarantined. Investigate the cause, then validate again — the sheet keeps a record of both attempts.
   </Accordion>
 
   <Accordion title="Collection supplies are not being drawn down">
@@ -136,6 +161,30 @@ Batch and lot tracking, expiry monitoring, low-stock alerts and purchase orders 
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do reagent counts update themselves?">
+    Yes — completing a test draws down whatever is on its **Reagents consumed** card, and receiving, dispensing or transferring stock writes to the ledger. The drawdown is best-effort alongside the status change, so run a periodic count rather than trusting the figure indefinitely.
+  </Accordion>
+
+  <Accordion title="Should every reagent have lot-to-lot validation switched on?">
+    Only where a lot change can shift results — most assay reagents and kits. Buffers, tips and general consumables do not need it, and switching it on for them just fills the queue with work nobody will do.
+  </Accordion>
+
+  <Accordion title="What happens to a lot I fail?">
+    It stays quarantined and unusable, carries a **failed** badge, and remains in the queue. Nothing is discarded for you — dispose of it or return it to the supplier under your own procedure.
+  </Accordion>
+
+  <Accordion title="Can I validate the first lot of a brand-new reagent?">
+    Yes. Choose **None / first lot** under **Compared against (current in-use lot)** and record what you did in **Method** and **Result summary** instead.
+  </Accordion>
+
+  <Accordion title="Why does this screen say “clinic” and show tabs we never use?">
+    It is the general inventory screen, shared with the other editions. The vocabulary and the extra tabs come with it; everything a lab needs is on **Catalog**, **Stock**, **Validation**, **Counts** and **Alerts**.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="reagent stock" />
 
-{/* source of truth: components/inventory/inventory-content.tsx (tabs, validation queue), components/inventory/item-form-sheet.tsx (item types, lot-to-lot switch), components/inventory/lot-validation-sheet.tsx, components/inventory/lab-test-consumables-card.tsx, components/inventory/expiry-risk-panel.tsx, components/clinic/dot-lims/dot-consumables-sheet.tsx */}
+{/* source of truth: components/inventory/inventory-content.tsx (tabs, toolbar, validation queue, alerts), components/inventory/item-form-sheet.tsx (item types, lot-to-lot switch), components/inventory/lot-validation-sheet.tsx, components/inventory/lab-test-consumables-card.tsx, components/inventory/expiry-risk-panel.tsx, components/clinic/dot-lims/dot-consumables-sheet.tsx, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

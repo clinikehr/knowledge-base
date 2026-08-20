@@ -1,0 +1,159 @@
+---
+title: Read the Lab Station dashboard
+description: "Your lab's home screen: volume and turnaround analytics, the test catalogue where analytes are defined, and AI lab reports."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Owner, Manager, Lab Manager and bench staff. Radiology-only roles do not reach it." />
+
+**Lab Station** is the screen your lab lands on, and the first thing to know is what it is *not*: it is an analytics dashboard and a catalogue, not a work queue. Nothing on this page is a specimen waiting for you — the bench queue is [Worklist](/lims/lab/worklist).
+
+<Path steps={['Sidebar', 'Lab Station']} />
+
+<TaskHeader before="At least one test defined and a few requests raised — the charts are empty until the lab has history" time="A minute to read; 5 minutes to define a test" after="A read on the lab's volume, backlog and turnaround, and a test catalogue your bench can order from" />
+
+## What you're looking at
+
+The heading is **Lab Station**. Beside it sit a date-range picker, which scopes every figure below, and a primary **New Lab Test** button that opens the lab-report form rather than anything on this page.
+
+Underneath are three tabs, and they do genuinely different jobs.
+
+| Tab | What it holds |
+| --- | --- |
+| **Analytics** | Four tiles and seven charts for the chosen date range |
+| **Test List** | The test **catalogue** — every test your lab offers, with its parameters, units and limits |
+| **Reports** | **Lab AI Reports** — generated written summaries of the same data |
+
+The four tiles are **Total Lab Tests**, **Pending Tests** ("Awaiting processing"), **Completed Tests** ("\{n\}% completion rate") and **Critical Results** ("Requires immediate attention"). Each carries a week-on-week comparison, and **Total Lab Tests** adds "\{n\}% monthly growth".
+
+The seven charts are **Test Volume Trends** ("Daily test ordering and completion patterns"), **Most Requested Tests**, **Turnaround Time** ("Average hours to process tests"), **Staff Performance** ("Lab scientist activity and efficiency metrics"), **Test Type Distribution**, **Patient Demographics** and **Test Correlations** ("Commonly ordered test combinations").
+
+**The empty state.** A brand-new lab sees zeros in every tile and blank charts, and **Test List** reads **No lab tests found for this clinic**. That is correct, not a fault — define your tests first.
+
+<AuditNote action="Opening this dashboard" />
+
+## Test List is the catalogue, not a queue
+
+This is the single most useful thing on the page to get straight. **Test List** is where a test is *defined*: its name, its category and department, and the parameters it reports — each with a unit, a reference range, normal low/high values and critical low/high limits. It never lists patients or specimens.
+
+<Steps>
+  <Step title="Open the catalogue">
+    Select the **Test List** tab. Search with **Search lab tests**, and use **View Columns** to show or hide **Test Name**, **Category**, **Department**, **Price**, **Parameters**, **Usage Count** and **Created**.
+  </Step>
+  <Step title="Create the test">
+    Select **New Test Record**. The **Create Lab Test** panel asks for **Test Name \*** ("e.g., Complete Blood Count"), **Price \*** and **Category \***. If the category picker shows **No categories available**, use **Create New Category** and give it a **Category Name \***, a **Department \*** and an optional **Description**.
+  </Step>
+  <Step title="Add each analyte">
+    Add the parameters the test reports. **Add Test Parameter** takes **Parameter Name \*** ("e.g., Hemoglobin"), **Parameter Type \***, **Unit** ("e.g., g/dL"), **Reference Range** ("e.g., 12.0-15.5"), **Normal Low** and **Normal High**, **Critical Low** and **Critical High**, and **Display Order**. For a categorical analyte, list its **Possible Values** instead ("Comma-separated values, e.g., Positive, Negative, Indeterminate").
+  </Step>
+  <Step title="Reopen it later">
+    A row opens as **View Lab Test**; switch to **Edit Lab Test** to change anything. **Usage Count** tells you how heavily a test is being ordered before you change it.
+  </Step>
+</Steps>
+
+<Warning>
+  **Critical Low** and **Critical High** are what make a result flag as critical. Widening or clearing them stops future results triggering the **Critical Results** tile and the alerts that follow it. Change them only on a clinical decision, and tell the bench when you do.
+</Warning>
+
+## Generate an AI lab report
+
+<Steps>
+  <Step title="Pick a report type">
+    On the **Reports** tab, the **Report Types** card ("Select a lab report type") offers **Comprehensive**, **Test Trends**, **Staff Performance**, **Department Distribution**, **Parameter Abnormality**, **Critical Results**, **Patient Demographics** and **Test Correlations**.
+  </Step>
+  <Step title="Generate it">
+    Select **Generate Report**. The button reads **Generating…** while it works, and the written report appears beside the list. With none yet you see **No lab report available** — "Generate your first lab AI report to see insights about test trends, staff performance, and lab metrics."
+  </Step>
+  <Step title="Keep or refresh it">
+    **Export** saves a copy, **Regenerate** rebuilds it from current data, and **Refresh** re-reads the stored list. A generated report is a summary for a human to check, not a signed clinical document.
+  </Step>
+</Steps>
+
+## Who can do this
+
+Role decides whether **Lab Station** opens. Permission decides what you may do once inside.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Lab Station** and read the tiles and charts | Owner, Manager, **Lab Manager**, lab scientists and bench staff | Role → route |
+| Define or edit a test in **Test List** | Owner, Manager, **Lab Manager**, anyone on the **All sites** tier | Role → route, plus the pricing reach of **All sites** |
+| Generate an AI report | The same people who can open the tab | Role → route |
+| Read turnaround-time reporting on [Turnaround time](/lims/lab/turnaround-time) | **Lab Manager**, **Referrer Liaison**, **QC Officer**, **All sites** | Permission — **View turnaround-time analytics** |
+| Verify and authorise a result | **Whole lab** and **All sites** access tiers | Permission — **Verify and authorise results** |
+
+Two things surprise people here. **A Lab Manager does not hold verify by default** — authorising a result is a scientist's clinical act, and it comes from the *access tier*, not the administrative role. And a **QC Officer** is review-only by design: they review QC runs and turnaround times and never alter a result.
+
+A lab scientist reaches Lab Station and the whole bench, but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or rendered as a dash — never as a zero.
+
+See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A test you just created appears in **Test List** with its **Parameters** count.
+- Raising a request for that test moves **Total Lab Tests** and **Pending Tests** on the next reload.
+- Narrowing the date range changes every tile and chart together.
+- The test is orderable from [Test requests](/lims/lab/test-requests).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No lab tests found for this clinic">
+    Your catalogue is empty. Select **New Test Record** on the **Test List** tab — nothing can be ordered until a test exists here.
+  </Accordion>
+
+  <Accordion title="Every tile shows zero and the charts are blank">
+    The date range has no activity in it. Widen the picker before assuming data is missing; the range scopes the whole **Analytics** tab.
+  </Accordion>
+
+  <Accordion title="I came here for the specimens waiting on the bench">
+    Lab Station has no work queue. Use [Worklist](/lims/lab/worklist) for the bench queue and [Test requests](/lims/lab/test-requests) for incoming clinical requests.
+  </Accordion>
+
+  <Accordion title="The Turnaround Time chart disagrees with the Turnaround Time page">
+    They are two different things. The chart here plots average hours per test against a flat 24-hour target. The [Turnaround time](/lims/lab/turnaround-time) page is the real dashboard, with your own targets and breach reporting.
+  </Accordion>
+
+  <Accordion title="No categories available in the test form">
+    Categories are created separately. Use **Create New Category** inside the same panel, then pick it.
+  </Accordion>
+
+  <Accordion title="Export failed — Could not export the report. Please try again.">
+    The export could not be built. Select **Regenerate**, wait for the report to finish, then export again.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Where does a test get its price?">
+    A price is set on the test here, and the commercial side of it — what a payer is actually charged and how it reaches an invoice — lives on [Billing](/lims/business/billing). **Test List** defines the analytes; billing defines the money. The two are constantly confused.
+  </Accordion>
+
+  <Accordion title="Does New Lab Test create a catalogue entry?">
+    No. **New Lab Test** at the top of the page opens the lab-report form for a patient's test. To add a test to the catalogue, use **New Test Record** on the **Test List** tab.
+  </Accordion>
+
+  <Accordion title="Can I edit a test that is already in use?">
+    Yes, and **Usage Count** shows how heavily. Results already reported keep the ranges they were reported against; the change applies to work from then on.
+  </Accordion>
+
+  <Accordion title="Is the AI report safe to send to a referring doctor?">
+    Treat it as an internal summary. It is generated from your own numbers and needs a person to check it before it leaves the lab — an authorised patient report is a different document entirely.
+  </Accordion>
+
+  <Accordion title="Why does Patient Demographics show ages and genders?">
+    It groups lab activity by age band and gender so you can see who your lab serves. It names no one, and opening the dashboard is written to your audit log like any other view of patient data.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the Lab Station dashboard" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/lab-dashboard-content.tsx, .../test-list/lab-test-list-content.tsx, .../test-list/lab-test-actions.tsx, .../test-list/table-columns.ts, .../test-list/lab-test-form.tsx, .../reports/lab-reports-dashboard.tsx, lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

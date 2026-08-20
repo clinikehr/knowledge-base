@@ -23,29 +23,41 @@ Money on account is a prepaid balance: cash a customer has already handed you, h
 
 > Not enough on account — short by \{amount\}. Money owed belongs on a sale, not a negative balance.
 
-That is not a technicality. A negative wallet is an invisible loan with no sale behind it, no line items, no receipt and nothing to chase. Put the shortfall on the sale instead — part-pay at the till and the balance shows up under **Debts**, where it can be settled, reported and reminded on.
+That is not a technicality. A negative wallet is an invisible loan with no sale behind it — no line items, no receipt, nothing to chase, and nothing that shows up in what you are owed. Put the shortfall on the sale instead: part-pay at the till, and the balance appears under **Debts**, where it can be settled, reported and reminded on.
+
+## What you're looking at
+
+**Money on account** sits beside **Email statement** on the customer's profile, under the three figures in the header — **On account**, **Owed** and **Lifetime**. Selecting it opens a dialog titled **Money on account**, subtitled with the customer's name and their current balance.
+
+The dialog is three tabs, and picking the right one is the whole decision:
+
+| Tab | The product's own words | Use it for |
+| --- | --- | --- |
+| **Deposit** | "Cash taken in and held on the account." | Money coming in |
+| **Cash out** | "Money handed back from the account." | Money going back to the customer |
+| **Correction** | "Fix a mistake. May go negative — use sparingly and say why." | A keying error, never a shortfall |
+
+Below the tabs sit **Amount**, a **Reason** box, and a preview panel that names the movement — **Adding** or **Taking** — and the **New balance** underneath it. **Record** commits; **Cancel** closes.
+
+The running record lives on the **Account** tab of the profile: every deposit, cash-out, correction and spend, each with its time, its amount signed **+** or **−**, and the reason you wrote. A customer who has never had money on account reads **"No account activity"**.
 
 ## Move money on an account
 
 <Steps>
   <Step title="Open the customer">
-    Select **Customers** in the sidebar, find the person, and open their profile. The header shows **On account**, **Owed** and **Lifetime**.
+    Select **Customers** in the sidebar, find the person, and open their profile.
   </Step>
   <Step title="Select Money on account">
-    The dialog has three tabs, and picking the right one is the whole decision:
-
-    - **Deposit** — "Cash taken in and held on the account." Money coming in.
-    - **Cash out** — "Money handed back from the account." Money going back to the customer.
-    - **Correction** — "Fix a mistake. May go negative — use sparingly and say why."
+    Choose **Deposit**, **Cash out** or **Correction** using the table above. The hint under the tabs restates what you have chosen.
   </Step>
   <Step title="Enter the amount">
     Fill **Amount**. The panel previews the movement and the **New balance** before you commit, so you can check the arithmetic against the cash in your hand.
   </Step>
   <Step title="Say why">
-    **Reason** is optional on a deposit or cash-out — fill it anyway for anything unusual, because the ledger shows it later. On a **Correction** the label changes to **Reason (required for a correction)** and **Record** stays disabled until you write one.
+    **Reason** is optional on a deposit or cash-out — "e.g. cash deposit at the counter" — and worth filling for anything unusual, because the ledger shows it later. On a **Correction** the label changes to **Reason (required for a correction)** and **Record** stays disabled until you write one.
   </Step>
   <Step title="Record it">
-    Select **Record**. The button reads **Saving…** while it commits.
+    Select **Record**. The button reads **Saving…** while it commits, and the header figure updates to the previewed balance.
   </Step>
 </Steps>
 
@@ -59,10 +71,10 @@ When a customer has prepaid money and an outstanding sale, you can clear one wit
 
 <Steps>
   <Step title="Open the Debts tab">
-    Each row shows the sale number, the date, "paid \{amount\} of \{amount\}", and the balance due in red.
+    Each row shows the sale number, the date, "paid \{amount\} of \{amount\}", and the balance due in red. An account with nothing outstanding reads "Nothing owed — Every sale is settled."
   </Step>
   <Step title="Select Settle from account">
-    The button is disabled, with the tooltip **"Not enough on account"**, when the balance will not cover the whole debt.
+    The button is disabled, with the tooltip **"Not enough on account"**, when the balance will not cover the whole debt. It reads **Settling…** while it commits.
   </Step>
   <Step title="Confirm the toast">
     You get **"Settled \{amount\} from the account"**. The debt clears and the balance drops by the same amount.
@@ -75,21 +87,44 @@ At the point of sale, a registered customer with money on account gets a full-wi
 
 - **It needs a connection.** Offline it is unavailable — "Account balance needs a connection — take cash or card, or wait for the network." Take another tender instead. See [Selling when the internet is down](/pharmacy/pos/offline).
 - **It is disabled when the balance is short**, showing **\{amount\} · short**. Part-pay with the balance plus cash, or take a different tender entirely — see [Take payment](/pharmacy/pos/payments).
-- **It resets to cash if the customer changes or the connection drops.** The balance is held centrally, not on the till, so a figure the terminal remembered from ten minutes ago could be refused after the goods had already left the counter. Resetting is cheaper than a sale that cannot be paid for.
+- **It resets to cash if the customer changes or the connection drops.** The balance is held centrally, not on the till, so a figure the terminal remembered ten minutes ago could be refused after the goods had already left the counter. Resetting is cheaper than a sale that cannot be paid for.
+
+## Who can do this
+
+**Role** decides whether **Customers** opens, and that is the whole gate on this dialog. A **Cashier / Till Operator** reaches only **POS** and **Sales**, so a till role cannot take a deposit, cash anything out or write a correction. Everyone else who can open the screen can do all three.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Take a **Deposit** onto an account | Anyone who can open **Customers** | Role — not a grantable permission |
+| **Cash out** money from an account | Anyone who can open **Customers** | Role — not a grantable permission |
+| Record a **Correction**, including below zero | Anyone who can open **Customers** | Role — not a grantable permission |
+| **Settle from account** against a debt | Anyone who can open **Customers** | Role — not a grantable permission |
+| Spend a balance at the till with **Account balance** | Cashier / Till Operator and above | **Dispense and sell at the till** |
+| Reverse the sale a debt came from | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
+| See what the day's takings and balances add up to | Pharmacy Manager | **View the net position** |
+
+The honest version, because it matters for cash handling: **there is no separate "may move money on account" permission**. Whoever can open **Customers** can move a balance. If someone should not be doing that, change their role rather than looking for a toggle — see [Staff permissions](/platform/team/permissions).
+
+Where a money figure is permission-gated elsewhere in the product it reads **"Hidden — needs authorisation from your clinic owner."**, never a zero — a zeroed balance would be read as an empty account and handed nothing back.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Hiding **Customers** from a sidebar is a convenience, not a security boundary.
 
 ## Check it worked
 
 - The **On account** figure in the profile header matches the **New balance** the dialog previewed.
-- The **Account** tab has a new line with the entry type, the time, the amount signed **\+** or **−**, and your reason underneath it.
+- The **Account** tab has a new line with the entry type, the time, the amount signed **+** or **−**, and your reason underneath it.
 - At the till, **Account balance** appears as a tender for that customer and shows the new figure.
 
 <AuditNote action="Every movement on a customer's account" />
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'Not enough on account — short by \{amount\}.'">
-    You are trying to take out more than the account holds. The wallet does not go negative on a cash-out or a settlement. If this is money the customer owes, put it on the sale as a part-payment instead, where it becomes a debt you can chase.
+    You are trying to take out more than the account holds. The balance does not go negative on a cash-out or a settlement. If this is money the customer owes, put it on the sale as a part-payment instead, where it becomes a debt you can chase.
   </Accordion>
 
   <Accordion title="Record stays disabled on a correction">
@@ -98,6 +133,10 @@ At the point of sale, a registered customer with money on account gets a full-wi
 
   <Accordion title="'That entry was already recorded'">
     The same entry was submitted twice, usually a double-select. It was recorded once. Check the **Account** tab before re-entering anything.
+  </Accordion>
+
+  <Accordion title="'Could not update the account'">
+    Nothing was recorded and the balance is unchanged. Reopen the dialog and check the **Account** tab before retrying, so a slow save is not entered twice.
   </Accordion>
 
   <Accordion title="Account balance is missing at the till">
@@ -109,6 +148,30 @@ At the point of sale, a registered customer with money on account gets a full-wi
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I undo a cash-out?">
+    Not as an undo — there is no reversal button. Record the money back on as a **Deposit** if the customer handed it back, or as a **Correction** with a reason if the entry itself was wrong. Both leave a line on the **Account** tab, which is the point: the ledger shows what happened rather than pretending it did not.
+  </Accordion>
+
+  <Accordion title="Why can't the balance just go negative when someone is short?">
+    Because a negative balance is an invisible loan. There is no sale behind it, no receipt and nothing on **Debts** to chase or remind on. Part-paying the sale records the same shortfall somewhere it can actually be recovered.
+  </Accordion>
+
+  <Accordion title="Does money on account expire?">
+    No. It stays on the account until it is spent, settled against a debt or handed back with a **Cash out** — including for a customer marked **Inactive**.
+  </Accordion>
+
+  <Accordion title="Can a customer pay part with their balance and part in cash?">
+    Yes. Where the balance will not cover the sale, **Account balance** shows **\{amount\} · short** rather than disappearing; take what is there and settle the rest with another tender — see [Take payment](/pharmacy/pos/payments).
+  </Accordion>
+
+  <Accordion title="Can I see everything a customer's balance has done?">
+    Yes — the **Account** tab is the full record: deposits, cash-outs, corrections and spends, each with the reason that was written at the time. **Email statement** sends the customer their own summary of the balance and what they owe.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="money on account" />
 
-{/* source of truth: components/clinic/customers-management/wallet-entry-sheet.tsx, customer-commerce-tabs.tsx; lib/customer-wallet.ts (canDebitWallet); components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx */}
+{/* source of truth: components/clinic/customers-management/wallet-entry-sheet.tsx, customer-commerce-tabs.tsx, customer-profile-sheet.tsx; lib/customer-wallet.ts (canDebitWallet); components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx; lib/edition.ts (EDITION_ROLE_MODULES.pharmacy) */}

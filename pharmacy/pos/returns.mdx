@@ -17,14 +17,24 @@ Everything after the sale happens on the **Sales** page: reversing a whole trans
 
 <TaskHeader before="The completed sale, and the 'Refund or void a sale' permission" time="Under a minute" after="A corrected sale, the money accounted for, and stock back in its exact lots if you restocked" />
 
-## Find the sale
+## What you're looking at
 
-The **Sales Dashboard** — "Track and analyze your pharmacy sales performance" — opens on **Overview**. Go to **Recent Sales** for the **Sales History** table, listing **Sale #**, **Date & Time**, **Customer**, **Items**, **Payment**, **Amount** and **Status**.
+The **Sales Dashboard** — "Track and analyze your pharmacy sales performance" — opens on **Overview**. Go to **Recent Sales** for the **Sales History** table: **Sale #**, **Date & Time**, **Customer**, **Items**, **Payment**, **Amount** and **Status**.
 
 - Narrow the period with the select: **Today**, **Last 7 Days**, **This Month** or **All Time**.
 - Filter by state: **All Status**, **Completed**, **Pending**, **Cancelled**, **Refunded**.
 - Search or scan into "Search or scan receipt..." — scanning the barcode on the customer's receipt opens their sale directly.
 - A sale taken during an outage carries an **Offline** badge.
+
+Each row's **⋯** menu lists **Print Receipt** and **Download PDF**, and then — **on completed sales only** — **Edit sale** and **Return / void all**. Those last two, plus the **Debtors** sheet at the top of the page, are the whole of this page.
+
+| Surface | What it is for |
+| --- | --- |
+| **Edit sale** sheet | Part of a sale: void the units that came back, discount what the customer keeps, or both |
+| **Return sale \{sale number\}** dialog | The whole sale, reversed in one action |
+| **Debtors** sheet | Money still owed on a part-paid sale |
+
+**With no sales yet**, the table shows **No sales found** and there are no **⋯** menus to open. A line with nothing left to give back carries a **Fully settled** badge inside **Edit sale**.
 
 ## Amend part of a sale
 
@@ -32,16 +42,16 @@ Use this when the customer brings some of it back, or keeps everything and you a
 
 <Steps>
   <Step title="Open Edit sale">
-    On the row's **⋯** menu, select **Edit sale** — "\{sale number\} · void returned units or discount what the customer keeps". It is offered on completed sales only.
+    On the row's **⋯** menu, select **Edit sale** — "\{sale number\} · void returned units or discount what the customer keeps".
   </Step>
   <Step title="Void the units that came back">
     Each line offers **Void units (max \{n\})**, where the maximum is what has not already been given back. A line that is done reads **(none left)**, and the sheet shows **Already given back: \{amount\}** for anything previously refunded.
   </Step>
   <Step title="Or discount what they keep">
-    **Discount (max \{amount\})** takes money off without returning goods, with presets for **10%**, **25%**, **50%** and **All**. The sheet shows the equivalent percentage as you type.
+    **Discount (max \{amount\})** takes money off without returning goods, with presets for **10%**, **25%**, **50%** and **All**. The sheet shows the equivalent percentage as you type — "≈ 12.5% off".
   </Step>
   <Step title="Decide whether the goods go back on the shelf">
-    Tick **Restock the voided units** only when the stock is genuinely resaleable — "Only after inspecting the goods — they go back into the exact lots they left."
+    Once you have staged at least one voided unit, **Restock the voided units** appears — "Only after inspecting the goods — they go back into the exact lots they left." Tick it only when the stock is genuinely resaleable.
 
     Leave it unticked and the sheet is explicit: "Voided units will NOT return to stock. Tick restock above if the goods came back."
   </Step>
@@ -49,9 +59,11 @@ Use this when the customer brings some of it back, or keeps everything and you a
     **Reason** is free text — "e.g. damaged outer packaging, customer returned 2 packs…". Write what you would want to read in three months when the figures are queried.
   </Step>
   <Step title="Apply">
-    Check the summary — **Voiding \{n\} unit(s)**, **Discount**, **Back to customer** — then select **Apply changes**.
+    Check the summary — **Voiding \{n\} unit(s)**, **Discount**, **Back to customer** — then select **Apply changes**. The toast reads **Sale \{number\} updated — \{n\} unit(s) voided · stock restored · \{amount\} discounted**, naming only the parts you actually did.
   </Step>
 </Steps>
+
+Everything is staged and committed in one action, so a half-finished amendment cannot be left behind. If part of it fails, the sheet stays open and reloads with the real remaining figures rather than closing on a guess.
 
 ## Reverse the whole sale
 
@@ -62,11 +74,14 @@ Use this when the customer brings some of it back, or keeps everything and you a
   <Step title="Give a reason">
     "e.g. wrong item, damaged packaging, customer changed mind…".
   </Step>
-  <Step title="Inspect, then decide on restocking">
-    **Restock inventory** — "Only tick this after inspecting the goods — returned stock goes back into its exact lots." You must also confirm **I have inspected the returned goods and confirm this refund**; without it the dialog says "Confirm inspection before restocking."
+  <Step title="Decide on restocking">
+    **Restock inventory** — "Only tick this after inspecting the goods — returned stock goes back into its exact lots." Tick it when the goods are resaleable and leave it clear when they are not.
+  </Step>
+  <Step title="Confirm the inspection">
+    **Confirm return** stays disabled until you tick **I have inspected the returned goods and confirm this refund.** That is required on every return, restock or no. If you tick restock without it, the dialog says "Confirm inspection before restocking."
   </Step>
   <Step title="Confirm">
-    Select **Confirm return**. The toast reads **Sale \{number\} returned · stock restored** when you restocked.
+    Select **Confirm return**. The toast reads **Sale \{number\} returned · stock restored** when you restocked, and **Sale \{number\} returned** when you did not.
   </Step>
 </Steps>
 
@@ -74,16 +89,37 @@ Use this when the customer brings some of it back, or keeps everything and you a
   Restocking puts the goods back into the exact lots they came out of, and they will be dispensed to the next customer. Only tick it after you have physically inspected what came back — cold-chain items, opened packs and anything that left the premises unaccounted for should never go back on the shelf.
 </Warning>
 
-## Money still owed: the Debtors sheet
+## Settle what is still owed
 
 Part payments create a balance, and **Debtors** at the top of the Sales page is where you clear them — "Sales with an outstanding balance. Record a payment when the customer settles up."
 
 - **Total outstanding** heads the sheet when anything is owed. When nothing is, it reads "No outstanding balances — everyone's paid up."
-- Each row shows **Paid \{amount\} of \{total\}**, the phone number, and the **Balance**. A registered customer with wallet funds also shows **\{amount\} on account**.
+- Each row shows **Paid \{amount\} of \{total\}**, the phone number, and the **Balance**. A registered customer with prepaid funds also shows **\{amount\} on account**.
 - **Record payment** takes the money now — enter the **Amount** and choose the **Method**: **Cash**, **Card**, **Bank transfer** or **Mobile money**.
-- **Settle from account** debits the customer's wallet and pays the sale in one step, when they have the funds and you are online. See [Customer wallets](/pharmacy/customers/wallet).
+- **Settle from account** debits the customer's prepaid balance and pays the sale in one step, when they have the funds and you are online. See [Customer wallets](/pharmacy/customers/wallet).
 
 Paying more than is owed is refused rather than absorbed — put the extra on the customer's account instead, so it stays theirs.
+
+## Who can do this
+
+This is the sharpest permission line in the product, and it is deliberate: the person who took the money is not the person who reverses it. **Refund or void a sale** governs *both* surfaces on this page — the return dialog and the edit sheet — and a Cashier does not have it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Sales** and find a past sale | Cashier, Pharmacy Manager, Dispensing Supervisor | Reaching the module at all |
+| **Edit sale** — void units or discount | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Refund or void a sale** |
+| **Return / void all** | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Refund or void a sale** |
+| Restock the returned goods | Whoever may refund | **Refund or void a sale** |
+| **Record payment** on a debt | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+
+**Role** governs the sidebar: a Cashier reaches **POS** and **Sales**, so the **⋯** menu is on their screen and **Edit sale** opens — the **Apply changes** and **Confirm return** buttons are simply disabled, with the reason on their tooltip.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted and *can* refund, whatever their role bundle. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A refused reversal leaves a line in the audit trail; one you were entitled to make does not.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
@@ -91,11 +127,11 @@ Paying more than is owed is refused rather than absorbed — put the extra on th
 - If you restocked, the item's quantity in **Inventory** goes back up, into the same lots and expiry dates it left.
 - A settled debt disappears from **Debtors**, with a toast of **Paid in full** or **Payment recorded — \{amount\} still due**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'Needs authorisation — amending a completed sale is reserved for your Pharmacist-in-Charge.'">
-    You do not have **Refund or void a sale**. It is deliberately separate from selling, so the person who took the money is not the person who reverses it. See [Staff permissions](/platform/team/permissions).
+    You do not have **Refund or void a sale**. The reversal dialog says the same thing in its own words. Ask an owner or manager to allow it, or have them make the correction.
   </Accordion>
 
   <Accordion title="The return is refused as outside the window">
@@ -103,11 +139,11 @@ Paying more than is owed is refused rather than absorbed — put the extra on th
   </Accordion>
 
   <Accordion title="Edit sale is not on the menu">
-    It appears on **Completed** sales only. A sale that is already refunded or cancelled cannot be amended again.
+    **Edit sale** and **Return / void all** appear on **Completed** sales only. A sale that is already refunded or cancelled cannot be amended again.
   </Accordion>
 
   <Accordion title="'Confirm inspection before restocking.'">
-    The inspection tick is required whenever you restock. It exists so that putting goods back is a decision somebody made, not a default.
+    You ticked **Restock inventory** without confirming the inspection. **Confirm return** needs that tick on every return anyway — it exists so that putting goods back is a decision somebody made, not a default.
   </Accordion>
 
   <Accordion title="I refunded but the stock did not come back">
@@ -123,8 +159,32 @@ Paying more than is owed is refused rather than absorbed — put the extra on th
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a refund put the stock back?">
+    Only if you tick the restock box. Reversing a sale always returns the money, but the goods stay off the shelf unless you say they came back — most of the time they have not, or they are not fit to sell. When you do tick it, the units go back into the exact lots and expiry dates they left.
+  </Accordion>
+
+  <Accordion title="Can I amend the same sale more than once?">
+    Yes. Each line remembers what has already been given back, so the caps shrink: **Void units (max \{n\})** counts down, and a line with nothing left reads **(none left)** with a **Fully settled** badge. The sheet shows **Already given back: \{amount\}** so you can see the history before adding to it.
+  </Accordion>
+
+  <Accordion title="What is the difference between voiding and discounting?">
+    Voiding says goods came back, so units can be restocked. Discounting says the customer kept everything and you took money off. They are kept separate on purpose: collapsing them would consume a customer's right to actually return what they still hold.
+  </Accordion>
+
+  <Accordion title="Can I return a sale that was taken offline?">
+    Once it has synced, yes — it behaves like any other completed sale. While it is still queued on the terminal it is not in **Sales History**, so there is nothing to open. Wait for the till's status button to read **Synced**.
+  </Accordion>
+
+  <Accordion title="Does a refund change my sales figures for the day?">
+    Yes — it is netted out of the sales reports for the period the sale belongs to, so the takings you see are money you actually kept. That is also why an amendment carries a reason rather than being a silent edit.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="a return" />
 
-The Sales page as a whole — the overview, product performance and the day's figures — is covered in [Sales](/pharmacy/money/sales).
+The Sales page as a whole — the overview, product performance and the day's figures — is covered in [The sales dashboard](/pharmacy/money/sales).
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/sales/pharmacy-sales-content.tsx, pos-edit-sale-sheet.tsx, pos-return-dialog.tsx, debtors-sheet.tsx, db/actions/pharmacy-pos.ts */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/sales/pharmacy-sales-content.tsx, pos-edit-sale-sheet.tsx, pos-return-dialog.tsx, debtors-sheet.tsx, lib/pos-sale-edit.ts, lib/edition-staff-roles.ts */}

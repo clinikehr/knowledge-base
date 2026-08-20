@@ -1,6 +1,6 @@
 ---
 title: Produce and release a report
-description: "Turn a completed test into a report, download it, and release it to the requesting doctor without letting a draft look final."
+description: "Turn a completed test into a report, find it again later, and release it to the referring doctor without letting a draft look final."
 icon: /images/icons/file-text.svg
 ---
 
@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans. Releasing to a referring doctor through the referrer portal is a Business feature." roles="Anyone who can view the test can download its report. Releasing to a referrer needs “release a report to a referrer”." />
+<Availability editions={['lims']} plans="All plans. Releasing to a referring doctor through the referrer portal is a Business feature." roles="Anyone who can view the test can download its report. Releasing to a referrer needs “Release a report to a referrer”." />
 
 A report is the document that leaves the building. It is produced from a completed test, so the work of getting it right happens on [Enter and verify results](/lims/lab/results) — this page covers producing it, finding it later, and getting it to whoever asked for the test.
 
@@ -17,39 +17,74 @@ A report is the document that leaves the building. It is produced from a complet
 
 <TaskHeader before="A test in Completed status" time="Under a minute" after="A downloaded report, and a referrer who has it" />
 
+## What you're looking at
+
+The heading is **Lab Reports** — "Manage and track laboratory test results" — with a **New Report** button and a period select ("Select period") offering **Today**, **Last 7 Days**, **This Month** and **All Time**. The period scopes everything below it.
+
+| Tab | What it holds |
+| --- | --- |
+| **Overview** | The four stat cards, plus **Test Volume Trends**, **Status Distribution** and **Recent Lab Reports** |
+| **Lab Reports** | The **Lab Test Reports** table — "Complete list of all laboratory tests" |
+| **Analytics** | **Test Type Distribution**, **Completion Rate Trend** and **Performance Summary** |
+| **Reports** | Document generation — **Daily Summary**, **Monthly Report**, **Critical Results**, **Pending Tests**, **Performance Report** and **Custom Report** |
+
+<Note>
+  **Two of the four tabs are called Reports.** The second reads **Lab Reports** on a wide screen and shortens to **Reports** on a phone; the fourth is always **Reports**. The one you want for a patient's result is the table — **Lab Test Reports** — not the document-generation tab at the end.
+</Note>
+
+The stat cards read **Total Tests** ("\{n\}% from last week"), **Pending Tests** ("Awaiting processing"), **Completed** ("\{n\}% completion rate") and **Critical Results** ("Requires attention").
+
+The table carries a **Search reports...** box and a status filter of **All Status**, **Pending**, **In Progress**, **Completed** and **Cancelled**.
+
+**The empty state.** When the chosen period holds nothing you get **No lab reports found for this period** — widen the period before you conclude a report is missing.
+
+<AuditNote action="Downloading or releasing a report" />
+
 ## Produce the report
 
 <Steps>
   <Step title="Open the completed test">
-    From **Test Requests** or the **Lab Station** test list, open the test in view mode. A test that is not yet **Completed** has nothing final to print.
+    From **Lab Test Reports**, use the row menu's **View Details**. A test that is not yet **Completed** has nothing final to print.
   </Step>
   <Step title="Download it">
-    Select **Download report**. The button reads **Preparing…** while the document is built, then the file arrives. The report is assembled from the saved record — your lab's details, the patient, each analyte with its reference range, and the verifying scientist's credentials.
+    Select **Download report**. The button reads **Preparing…** while the document is built, then the file arrives. The report is assembled from the saved record — your lab's details, the patient, each analyte with its reference range, and the verifying scientist's credentials. A second **Download Report (PDF)** button in the right-hand column does the same thing.
   </Step>
   <Step title="Print or send it">
-    **Print Report** prints the clinical report. **Print Receipt** is the money slip and is a different document — do not hand one out in place of the other.
+    From the row menu, **Print Report** prints the clinical report and **Print Receipt** prints the money slip. They are different documents — do not hand one out in place of the other.
   </Step>
 </Steps>
 
 <Warning>
-  A report produced before the test is signed out is stamped as preliminary. Do not remove that stamp, screenshot around it, or pass a preliminary result on as a final one — a draft must never leave the building looking final. Verify the test first, then produce the report.
+  A report produced before the test is signed out is stamped as preliminary, and a preliminary report must never leave the building looking final. Do not remove the stamp, screenshot around it, or pass a preliminary result on as a final one. Verify the test first, then produce the report.
 </Warning>
-
-## The Lab Reports page
-
-**Lab Reports** is where reports are found afterwards. It has a period select and four tabs — **Overview**, **Lab Reports**, **Analytics** and **Documents**.
-
-The stat cards read **Total Tests**, **Pending Tests**, **Completed** and **Critical Results**, over cards for **Test Volume Trends**, **Status Distribution** and **Recent Lab Reports**.
-
-The **Lab Test Reports** table has **Search reports…** and a status filter of **Pending**, **Completed** or **Cancelled**. When the period holds nothing you get **No lab reports found for this period** — widen the period before you conclude a report is missing.
 
 ## Releasing to a referring doctor
 
-A doctor who sent you the patient sees results through the referrer portal, and putting a report in front of them is its own grant: "release a report to a referrer". The **Referrer Liaison** admin role exists for exactly this work and carries portal access, report release and turnaround-time analytics together.
+A doctor who sent you the patient sees results through the referrer portal, and putting a report in front of them is its own grant — **Release a report to a referrer**, "publish an authorised report to the referring clinic". The word *authorised* is doing work there: only a signed-out result belongs in someone else's portal.
 
-Set the doctor up first — see [Referring doctors](/lims/business/referrers) — and, if you pay for referrals, [Referral commissions](/lims/business/commissions).
+The **Referrer Liaison** role exists for exactly this and carries portal access, report release and turnaround-time analytics together. Set the doctor up first — see [Referring doctors](/lims/business/referrers) — and, if you pay for referrals, [Referral commissions](/lims/business/commissions).
 
-<AuditNote action="Downloading or releasing a report" />
+## Who can do this
+
+Role decides whether **Lab Reports** opens. Permission decides whether a report may leave the lab.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Lab Reports** and read the tiles | Owner, Manager, **Lab Manager**, lab scientists | Role → route |
+| Download or print a report for a test you can see | The same people | Role → route |
+| Sign the test out so the report is not preliminary | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+| Correct a report after it was authorised | **All sites**, or a named verifying scientist | Permission — **Amend a verified result** |
+| Open a referrer's account and statements | **Referrer Liaison**, **Lab Manager**, **All sites** | Permission — **Access the referrer portal** |
+| Release a report into a referrer's portal | **Referrer Liaison**, **Lab Manager**, **All sites** | Permission — **Release a report to a referrer** |
+
+Releasing is separated from producing on purpose: bench roles make the result, the liaison hands it over. A **Lab Scientist** holds neither referrer grant, and **a Lab Manager does not hold verify by default** — authorising a result arrives with the *access tier* (**Whole lab** or **All sites**), not with the administrative role. A **QC Officer** is review-only by design.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — from then on they can only do what is switched on there.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or rendered as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
@@ -58,7 +93,7 @@ Set the doctor up first — see [Referring doctors](/lims/business/referrers) �
 - The test appears under **Recent Lab Reports** on the **Overview** tab.
 - The referring doctor can see it in their portal.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The report says preliminary">
@@ -74,18 +109,42 @@ Set the doctor up first — see [Referring doctors](/lims/business/referrers) �
   </Accordion>
 
   <Accordion title="No lab reports found for this period">
-    The period select filters everything on the page. Widen it, and clear the status filter, before assuming the report is gone.
+    The period select filters everything on the page. Widen it to **All Time**, and clear the status filter, before assuming the report is gone.
   </Accordion>
 
   <Accordion title="I cannot release to the referrer">
-    You do not hold "release a report to a referrer". An owner or manager can grant it, or assign the **Referrer Liaison** role — see [Permissions](/platform/team/permissions).
+    You do not hold **Release a report to a referrer**. An owner or manager can grant it, or assign the **Referrer Liaison** role — see [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="This is a DOT report">
-    Regulated drug-testing reports have their own release path, including the MRO and employer steps. See [DOT reports](/lims/dot/reports).
+    Regulated drug-testing reports have their own release path, including the MRO and employer steps, and their own rule about what may be called **Positive**. See [DOT reports](/lims/dot/reports).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I send a result before it is verified?">
+    No, and the product will not help you pretend otherwise — an unsigned test produces a report stamped preliminary. If a clinician needs the number urgently, telephone it and say it is preliminary, then send the final report once it is signed out.
+  </Accordion>
+
+  <Accordion title="What is the difference between Print Report and Print Receipt?">
+    **Print Report** is the clinical document — analytes, reference ranges, the verifying scientist's credentials. **Print Receipt** is the money slip on 80mm till roll. They are produced by different parts of the product and are never interchangeable.
+  </Accordion>
+
+  <Accordion title="Does downloading a report tell the patient or the referrer?">
+    No. Downloading gives you a file and nothing more. A referrer only sees a report once it is released into their portal, which is a separate, separately-granted act.
+  </Accordion>
+
+  <Accordion title="Why do the tiles here differ from the Lab Station ones?">
+    They count the same work with slightly different labels — this page says **Total Tests** and **Completed** where the **Lab Station** says **Total Lab Tests** and **Completed Tests** — and each obeys its own period or date range. Match the ranges before comparing them.
+  </Accordion>
+
+  <Accordion title="Can I reissue a report after correcting a result?">
+    Yes. Amend the result with **Amend a verified result**, then produce the report again; it is rebuilt from the saved record. The original result and the correction both remain in the record.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a lab report" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/reports/, components/clinic/dashboard/lab-station/lab-report/, components/clinic/lab-referrers/ */}
+{/* source of truth: components/clinic/dashboard/lab-station/lab-report/lab-report-content.tsx, .../lab-report/lab-report-table.tsx, .../lab-report/lab-report-form.tsx, components/clinic/lab-referrers/, lib/edition-staff-roles.ts */}

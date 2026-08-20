@@ -7,11 +7,11 @@ icon: /images/icons/inbox.svg
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans" roles="Owner or Manager to switch the mode; any bench staff member to raise an intake order" />
+<Availability editions={['lims']} plans="All plans — lab intake is included from Starter Lab" roles="Owner or Manager to switch the mode; any bench staff member to raise an intake order" />
 
-Some laboratories never see a donor. Sealed specimens arrive from external collection sites with their chain-of-custody paperwork already complete, and what the lab owes back is a report an external Medical Review Officer can act on. **Reference Lab — Intake to Report Only** is that shape: intake → screening → confirmation → finalized PDF report, with the collection, MRO and DER modules taken away.
+Some laboratories never see a donor. Sealed specimens arrive from external collection sites with their chain-of-custody paperwork already complete, and what the lab owes back is a report an external Medical Review Officer (MRO) can act on. **Reference Lab — Intake to Report Only** is that shape: intake → screening → confirmation → finalized PDF report, with the collection, MRO and DER modules taken away.
 
 <Path steps={['Settings', 'Lab Workflow']} />
 
@@ -21,18 +21,15 @@ Some laboratories never see a donor. Sealed specimens arrive from external colle
 
 <Steps>
   <Step title="Open the Lab Workflow card">
-    Under Settings, open the **Lab Workflow** tab. The card explains its own scope: "Determines which laboratory module is shown to your staff. Switching modes does not delete any data — orders remain in their original workflow."
+    Under Settings, open the **Lab Workflow** tab. The card explains its own scope: "Determines which laboratory module is shown to your staff. Switching modes does not delete any data — orders remain in their original workflow." Your current mode carries an **Active** badge.
   </Step>
   <Step title="Choose Reference Lab">
     Select **Reference Lab — Intake to Report Only**, which carries a **New** badge: "For laboratories that receive sealed specimens from external collection sites and produce a PDF report for an external MRO. Hides collection, MRO, and DER modules."
 
     Choosing it reveals an alert headed **Reference Lab mode**: "This mode hides the collection, MRO review, and DER reporting modules from the DOT-LIMS sidebar. Orders move from intake → screening → confirmation → finalized PDF report. Existing in-flight orders are unaffected."
   </Step>
-  <Step title="Save">
-    Select **Save Workflow Mode** — **Reset** abandons the change. The toast reads **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode.**
-  </Step>
-  <Step title="Tell your team to reload">
-    Anyone with a DOT-LIMS page already open keeps the old mode until they reload. Reference Lab mode also reveals two further settings cards — **Lab Report Branding** and **Custom Panels** — which is worth setting up before your first report goes out. See [MRO review and the employer report](/lims/dot/reports) for custom panels.
+  <Step title="Save, then tell your team to reload">
+    Select **Save Workflow Mode** — **Reset** abandons the change. The toast reads **Lab workflow updated — Reload your DOT-LIMS pages to see the new mode**, and anyone with a DOT-LIMS page already open keeps the old mode until they do. Reference Lab mode also reveals two further settings cards — **Lab Report Branding** and **Custom Panels** — worth setting up before your first report goes out. See [MRO review and the employer report](/lims/dot/reports).
   </Step>
 </Steps>
 
@@ -40,25 +37,28 @@ Some laboratories never see a donor. Sealed specimens arrive from external colle
   Switching modes migrates nothing. Orders already in flight stay in the workflow they were raised under and finish there, so a lab mid-changeover will run both shapes side by side for a while. That is intended.
 </Note>
 
-## What changes on screen
+## What you're looking at
 
 The DOT entries are renamed rather than removed, and the screens behind them are re-labelled for intake working:
 
 | In full DOT mode | In Reference Lab mode |
 | --- | --- |
-| **DOT Testing** in the sidebar | **Lab Intake** |
-| **DOT History** in the sidebar | **Intake History** |
-| Page heading **DOT Drug Testing** | **Lab Intake Queue** |
-| Page heading **DOT Testing History** | **Lab Report History** |
+| Sidebar **DOT Testing** · **DOT History** | **Lab Intake** · **Intake History** |
+| Headings **DOT Drug Testing** · **DOT Testing History** | **Lab Intake Queue** ("Specimens received for laboratory analysis") · **Lab Report History** |
 | Filter: All Orders / Active / In Lab / MRO Review / Completed | **All Orders / Intake Pending / In Analysis / Finalized** |
+| Search **by specimen ID or donor name…** | **Search by specimen ID, LAN, or donor…** |
 | Button **New DOT Order** | **New Intake** |
-| Collection supplies sheet | Hidden |
+| Column **Test Reason**, date column **Ordered** | Test Reason dropped, date column reads **Received** |
 
-The collection-supplies sheet is hidden because a reference lab transcribes an external chain-of-custody form and runs no collection of its own. On a lab running **Standard Clinical Lab**, the DOT entries are hidden entirely instead.
+The remaining columns are **Specimen ID**, **LAN**, **Donor**, **Agency** and **Status**, and a row's ⋯ menu offers **View / Proceed**, **Copy Specimen ID** and — once a LAN exists — **Copy LAN**. The collection-supplies sheet is hidden because a reference lab transcribes an external chain-of-custody form and runs no collection of its own; on **Standard Clinical Lab** the DOT entries are hidden entirely instead.
+
+**The empty state.** A queue with nothing on it reads **No specimens in the queue** — "When a specimen arrives, click + New Intake to log it." On the history page it reads **No finalized reports yet**.
+
+<AuditNote action="Opening a donor's intake order" />
 
 ## Book in a specimen
 
-Select **New Intake** to open the **New Lab Intake Order** sheet. Its cards run in the order you will work them.
+Select **New Intake** to open the **New Lab Intake Order** sheet. Its five cards run in the order you will work them.
 
 <Steps>
   <Step title="Identify the specimen">
@@ -67,21 +67,18 @@ Select **New Intake** to open the **New Lab Intake Order** sheet. Its cards run 
     **Lab Accession Number (LAN)** is filled in for you — "Auto-generated. Edit if needed." — in the shape `LAB-{year}-{5 digits}`. Then record **Date & Time Received \***: when the specimen physically arrived at your bench.
   </Step>
   <Step title="Record the test information">
-    **Agency / Program \*** takes Non-DOT, FMCSA, FAA, FRA, FTA, PHMSA or USCG. **Test Reason \*** takes Pre-Employment, Random, Reasonable Suspicion, Post-Accident, Return to Duty, Follow-Up or Other. Choose the specimen type — urine or oral fluid, with oral fluid pre-selected — and then the **Drug Panel \***.
+    On **Test Information**, **Agency / Program \*** takes **Non-DOT**, **FMCSA**, **FAA**, **FRA**, **FTA**, **PHMSA** or **USCG**, each spelled out in full in the list. **Test Reason \*** takes Pre-Employment, Random, Reasonable Suspicion, Post-Accident, Return to Duty, Follow-Up or Other.
 
-    The specimen type decides which cutoffs the bench works to and whether specimen validity testing is required, so read it off the CCF rather than accepting the default. See [Screen and confirm a specimen](/lims/dot/screening-and-confirmation).
+    **Specimen Type \*** is **Oral Fluid** or **Urine**, pre-selected to oral fluid, and says why it matters: "Oral fluid uses HHS OFMG cutoffs and does not require Specimen Validity Testing. Urine uses HHS MG cutoffs and requires SVT." Read it off the CCF rather than accepting the default. Then pick the **Drug Panel \*** — see [Screen and confirm a specimen](/lims/dot/screening-and-confirmation).
   </Step>
   <Step title="Attach the donor">
-    Under **Donor**, use **Search Patient \*** ("Select donor…") to attach the person, then record the donor identifier the chain-of-custody form carries — an Employee ID, an SSN, or a CDL with its state and number.
+    Under **Donor**, use **Search Patient \*** ("Select donor…") to attach the person, then record the identifier the chain-of-custody form carries — an **Employee ID**, an **SSN**, or a **CDL** with its **CDL State** and **CDL Number**. Identifiers are stored encrypted and shown masked afterwards, so you cannot read one back off the order; to correct one, enter it in full again.
   </Step>
   <Step title="Transcribe the collection metadata">
-    **Collection metadata (from CCF)** is where the external site's record goes: when it was collected, the collector's name and phone, the collection site's name, address and phone, and whether the collection was observed and why. Copy it from the form in front of you rather than from memory.
+    **Collection Metadata (from physical CCF)** is where the external site's record goes: **Date & Time Collected** ("As written on CCF Step 4"), **Collector Name** ("As signed on CCF"), **Collector Phone** ("SAMHSA-required contact for the collector."), the **Collection Site Name**, **Address** and **Phone**, an optional **Referring Doctor / Facility**, and **Directly Observed Collection** — "Check if the CCF indicates the collection was directly observed per 49 CFR § 40.67." Copy it from the form in front of you rather than from memory.
   </Step>
-  <Step title="Record the employer">
-    **Employer** takes the name, address and any remarks, plus an optional referring doctor so the work is attributed for your referrer reporting. See [Referring clinics](/lims/business/referrers).
-  </Step>
-  <Step title="Create the order">
-    Save the sheet. The toast reads **Lab intake order created — LAN: \{LAN\}**, and the order joins the **Lab Intake Queue** under **Intake Pending**.
+  <Step title="Record the employer and create the order">
+    **Employer (from CCF Step 1)** takes the **Employer Name** and **Employer Address**, plus **CCF Remarks** for anything in the CCF Step 3 box. Then select **Create Lab Intake Order** — **Lab intake order created — LAN: \{LAN\}** — and the order joins the **Lab Intake Queue** under **Intake Pending**. A referring doctor attributes the work for your referrer reporting, see [Referring clinics](/lims/business/referrers).
   </Step>
 </Steps>
 
@@ -91,18 +88,19 @@ Select **New Intake** to open the **New Lab Intake Order** sheet. Its cards run 
 
 ## Scanning the specimen ID
 
-The field accepts three inputs. A handheld barcode wedge types into it like a keyboard and needs no setup. The camera button scans the barcode on the CCF with the device's own camera. And where no external form exists, **Generate random ID** produces one.
+The field accepts three inputs. A handheld barcode wedge types into it like a keyboard and needs no setup. The camera button opens **Scan Specimen / CCF ID** — "Point your device camera at the barcode on the Custody and Control Form or specimen bottle." — and a successful read gives **Specimen ID scanned**. Where no external form exists, the refresh button generates a random ID.
 
-Two camera messages you may meet:
+Two camera messages you may meet: **Camera access requires HTTPS. Open this page over a secure connection to scan.** means the connection, so use the normal `app.clinikehr.com` address rather than a local one; **Camera permission denied. Allow camera access in your browser settings to scan.** means the browser permission. A wedge scanner works in both cases and is the more reliable choice at a busy receiving bench.
 
-- **Camera access requires HTTPS. Open this page over a secure connection to scan.** — the page is not on a secure connection. Use the normal `app.clinikehr.com` address rather than a local one.
-- **Camera permission denied. Allow camera access in your browser settings to scan.** — grant the camera permission to the site, then reopen the scanner.
+## If the connection drops
 
-A wedge scanner works in both cases and is the more reliable choice at a busy receiving bench.
+Intake keeps working offline, because a specimen arriving at a receiving bench cannot wait for a network. A bar at the top of the sheet shows the state of the queue and stays quiet while you are online with nothing waiting.
 
-## Donor identifiers are stored encrypted
+- No connection: **Intake saved offline — It will sync automatically when the connection returns.**
+- A connection that fails mid-request: **Connection dropped — intake queued**. The order is sent once and once only when you are back, even if the first attempt had already reached us.
+- A save the server actively refuses — a duplicate specimen ID, a bad field — is **Failed to create order** and is not queued.
 
-The identifier you enter — SSN, employee number or CDL — is stored encrypted and shown masked afterwards. You will not be able to read it back off the order, so if you need to correct it, re-enter it in full.
+Only *capture* goes offline. Screening, confirmation and finalisation need a connection, by design.
 
 ## From intake to report
 
@@ -113,6 +111,29 @@ Once the order is on the queue, the rest is the ordinary bench workflow with two
 | Screening and confirmation | [Screen and confirm a specimen](/lims/dot/screening-and-confirmation) |
 | Finalize, download and send to the external MRO | [MRO review and the employer report](/lims/dot/reports) |
 
+## Who can do this
+
+Role decides whether **Lab Intake** appears. Permission decides what happens to the specimen after it is booked in — raising the intake order itself is not behind a separate grant, because whoever takes delivery is who must record it.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Switch the workflow mode | Owner or Manager only | Role |
+| Open **Lab Intake** and raise a **New Intake** | Owner, Manager, **Lab Manager**, lab scientists, phlebotomists | Role → route, plus the workflow mode |
+| Accession the specimen and check its seals | **Lab Manager**, **Accessioning Clerk**, **Whole lab**, **All sites** | Permission — **Accession an incoming specimen** |
+| Reject it on seal, volume or labelling | The same people | Permission — **Reject an unsuitable specimen** |
+| Enter screen and confirmation readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
+| **Finalize Lab Report** and send it out | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+| Build custom analytes and panels | Owner or Manager | Role |
+
+A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, which is why a manager can book a specimen in and still find **Finalize Lab Report** greyed out. A **QC Officer** is review-only by design. A **phlebotomist** reaches test requests, this queue and patients, and nothing else.
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** Renaming a sidebar row is a convenience, not a security boundary.
+
+A site registered as a collection centre cannot run intake at all: "This site is a **collection center** — register specimens and dispatch them to your laboratory. Accessioning, screening and reporting are done at the full lab and are disabled here."
+
+See [Permissions](/platform/team/permissions).
+
 ## Check it worked
 
 - The sidebar reads **Lab Intake** and **Intake History**, and the queue is headed **Lab Intake Queue**.
@@ -120,7 +141,7 @@ Once the order is on the queue, the rest is the ordinary bench workflow with two
 - Your new order appears under **Intake Pending** with the LAN from the toast.
 - Settings › Lab Workflow now also shows **Lab Report Branding** and **Custom Panels**.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="My team still sees the old sidebar">
@@ -136,11 +157,11 @@ Once the order is on the queue, the rest is the ordinary bench workflow with two
   </Accordion>
 
   <Accordion title="The camera scanner will not open">
-    Read the message. **Camera access requires HTTPS** means the connection, not the camera; **Camera permission denied** means the browser permission. Either way a barcode wedge scanner will work immediately.
+    Read the message. **Camera access requires HTTPS** means the connection; **Camera permission denied** means the browser permission. Either way a barcode wedge scanner will work immediately.
   </Accordion>
 
-  <Accordion title="The donor identifier reads back as masked">
-    That is correct. Identifiers are stored encrypted and shown masked. To change one, enter the full value again.
+  <Accordion title="Intake saved offline, or the donor identifier reads back as masked">
+    Both are correct behaviour. An offline order is queued locally and sends itself when you are back online; identifiers are stored encrypted and shown masked, so to change one, enter the full value again.
   </Accordion>
 
   <Accordion title="The panel I need is not in the Drug Panel list">
@@ -148,6 +169,30 @@ Once the order is on the queue, the rest is the ordinary bench workflow with two
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does switching workflow mode move my existing orders?">
+    No. Nothing is migrated. Orders already in flight stay in the workflow they were raised under and finish there — so for a while you will see both shapes on the same queue, which is correct.
+  </Accordion>
+
+  <Accordion title="Why is the LAN different from the specimen ID?">
+    The **Specimen / CCF ID** belongs to the external collection site and is printed on the bottle; the **Lab Accession Number** is yours, generated as `LAB-{year}-{5 digits}`, and is what your own bench and report quote.
+  </Accordion>
+
+  <Accordion title="Can I still take collections in this mode?">
+    No, and that is the point of it. Reference Lab mode hides the collection module and the collection-supplies sheet entirely. A lab doing both wants **Both — Standard \+ DOT Full Workflow** instead.
+  </Accordion>
+
+  <Accordion title="Who reviews the result if there is no MRO module?">
+    An external Medical Review Officer. You finalize the report and send it to them — see [MRO review and the employer report](/lims/dot/reports). ClinikEHR never verifies a result on their behalf.
+  </Accordion>
+
+  <Accordion title="Can I book a specimen in while the internet is down?">
+    Yes — capture is queued locally and syncs when the connection returns. Screening, confirmation and finalisation still need a connection.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="lab intake" />
 
-{/* source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, components/clinic/dot-lims/intake/lab-intake-form.tsx, components/clinic/dot-lims/intake/barcode-scanner-input.tsx, components/clinic/dot-lims/intake/webcam-barcode-scanner.tsx, components/clinic/dot-lims/dot-lims-content.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/lab-workflow-settings.tsx, components/clinic/dot-lims/intake/lab-intake-form.tsx, components/clinic/dot-lims/intake/barcode-scanner-input.tsx, components/clinic/dot-lims/intake/webcam-barcode-scanner.tsx, components/clinic/dot-lims/dot-lims-content.tsx, .../dot-lims-actions.tsx, .../dot-lims-table.tsx, lib/lab-offline, lib/edition-staff-roles.ts */}

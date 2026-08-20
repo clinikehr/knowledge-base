@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} plans="All plans" roles="Anyone who can open POS or Sales" />
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone who can sell: 'Dispense and sell at the till'" />
 
 Receipts are 80mm thermal. On a counter machine running the desktop app they print silently on the receipt printer; in a browser you get the ordinary print dialog.
 
@@ -19,31 +19,38 @@ Receipts are 80mm thermal. On a counter machine running the desktop app they pri
 
 ## What you're looking at
 
-Receipts appear in two places, and neither is a screen of its own.
+Receipts have no screen of their own — they surface in two places.
 
-At the till, the **Sale Complete!** panel replaces the cart and offers **Print Receipt** and **New Sale**. On **Sales › Recent Sales**, every row's **⋯** menu carries **Print Receipt** and **Download PDF** under an **Actions** heading; both open the same dialog, **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer or download a PDF copy." — with **Print** and **Download PDF** on it.
+**At the till**, completing a sale opens the **Sale Complete!** dialog — "Transaction processed successfully" — showing the **Sale Number**, the **Total** and, on a cash sale, **Change Due**. Two buttons sit under it: **Print Receipt** and **New Sale**. A sale rung up during an outage opens the same dialog headed **Sale Saved Offline** instead.
 
-In the desktop app the till also carries **Printer settings**, which is where the paper form is chosen. In a browser that button is not there, because the browser's own print dialog handles the paper.
+**On Sales › Recent Sales**, every row's **⋯** menu lists **Print Receipt** and **Download PDF** under an **Actions** heading. Both open the same dialog, **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer or download a PDF copy."
 
-**A brand-new pharmacy** has nothing to reprint: **Recent Sales** is empty and the **⋯** menus with it. The first receipt you can reprint is the first sale you ring up.
+| On that dialog | What it does |
+| --- | --- |
+| The preview pane | The exact 80mm receipt, as it will print |
+| **Print** | Sends it to paper — silently in the desktop app |
+| **Download PDF** | Saves a narrow PDF copy of the same receipt |
+| The gear button, **Printer settings** | Desktop app only — per-machine paper handling |
+
+**A brand-new pharmacy** has nothing to reprint: **Recent Sales** shows **No sales found**, and there are no **⋯** menus. The first receipt you can reprint is the first sale you ring up.
 
 ## Print at the point of sale
 
-When a sale completes, the **Sale Complete!** panel offers **Print Receipt**. Select it and, in the desktop app, the receipt goes straight to the counter printer with no dialog — that silence is the design, not a failure.
+On the **Sale Complete!** dialog, select **Print Receipt**. In the desktop app the receipt goes straight to the counter printer with no dialog — that silence is the design, not a failure.
 
-If direct printing is not available, the app falls back and tells you so: **Direct printing unavailable — using the print dialog**.
+If direct printing is not available, the app falls back and tells you so: **Direct printing unavailable — using the print dialog**. Nothing is lost; print from the dialog that appears.
 
 ## Reprint or download a past receipt
 
 <Steps>
   <Step title="Find the sale">
-    Open **Sales**, go to **Recent Sales**, and find the transaction — or scan the barcode on the customer's copy into "Search or scan receipt...". See [Scan barcodes at the till](/pharmacy/pos/barcode).
+    Open **Sales**, go to **Recent Sales**, and find the transaction — widen the period select to **All Time** if it is older than the current view. You can also scan the barcode on the customer's copy into "Search or scan receipt...", or use the small barcode button in that box to scan with the camera. See [Scan barcodes at the till](/pharmacy/pos/barcode).
   </Step>
   <Step title="Open the row menu">
     Select the row's **⋯** menu. Under **Actions** you get **Print Receipt** and **Download PDF**.
   </Step>
   <Step title="Print or save">
-    Both open **Receipt · \{sale number\}** — "Reprint on an 80mm/thermal printer or download a PDF copy." Select **Print** for paper, or **Download PDF** for a copy to email or file.
+    Both open **Receipt · \{sale number\}**. Select **Print** for paper, or **Download PDF** for a copy to email or file.
 
     On the desktop app a successful print confirms with **Receipt sent to printer**. In a browser there is no toast, because the print dialog is already in front of you.
   </Step>
@@ -51,19 +58,15 @@ If direct printing is not available, the app falls back and tells you so: **Dire
 
 ## What is on the receipt
 
-A completed receipt is headed **SALES RECEIPT**, carries your pharmacy's name and contact details, the lines with their prices, the totals, the tender and change, then **Thank you for your purchase!** and **Keep this receipt for your records.**
+A completed receipt is headed **SALES RECEIPT**, carries your pharmacy's name, address and phone, then the date, the **Receipt No:**, the customer, the lines with quantity and amount, the totals, the payment method with cash tendered and change, **Served By**, and a footer of **Thank you for your purchase!** and **Keep this receipt for your records.**
 
 The receipt number looks like **POS-20260816-59E46A** and prints as a **barcode** at the bottom. That barcode is what lets a returning customer's slip be scanned straight back into the sales list.
 
 ### An offline receipt is deliberately different
 
-A sale rung up during an outage prints:
+A sale rung up during an outage prints **PROVISIONAL — WILL CONFIRM ON SYNC** across the top, a **Provisional No:** instead of a receipt number, and **no barcode at all** — the provisional number does not exist on the server yet, so a barcode would scan to nothing.
 
-- **PROVISIONAL — WILL CONFIRM ON SYNC** across the top,
-- **Provisional No:** instead of a receipt number,
-- and **no barcode at all**.
-
-There is no barcode because the provisional number does not exist on the server yet — printing one would produce a code that scans to nothing. Once the sale syncs it gets its real number, and a reprint from the Sales page carries the scannable barcode. Tell the customer their slip is their proof of purchase and that the confirmed number follows. See [Selling when the internet is down](/pharmacy/pos/offline).
+Once the sale syncs it gets its real number, and a reprint from the Sales page carries the scannable barcode. Tell the customer their slip is their proof of purchase and that the confirmed number follows. See [Selling when the internet is down](/pharmacy/pos/offline).
 
 <Note>
   **Use each document's own print button.** The receipt path is for sales, and anything sent through it is stamped **SALES RECEIPT**. Payments, prescriptions and orders have their own printouts that say what they actually are.
@@ -74,14 +77,14 @@ There is no barcode because the provisional number does not exist on the server 
 This is the most common printer complaint at a counter, and it is almost always the paper form the driver expects rather than the printer itself.
 
 <Steps>
-  <Step title="Open the printer settings">
-    In the desktop app, select **Printer settings** at the till.
+  <Step title="Open a receipt on the desktop app">
+    On **Recent Sales**, open any sale's **⋯** menu and select **Print Receipt** to reach the **Receipt · \{sale number\}** dialog.
   </Step>
-  <Step title="Read what it says">
-    Under **Receipt printer paper**: "If receipts come out blank or cut short on this machine, pick the paper form its printer driver understands. Saved for this computer only."
+  <Step title="Select the gear">
+    The gear button in the dialog's footer is **Printer settings**. It appears in the desktop app only — in a browser, the browser's own print dialog handles the paper.
   </Step>
   <Step title="Choose a paper handling option">
-    **Paper handling** offers:
+    Under **Receipt printer paper** — "If receipts come out blank or cut short on this machine, pick the paper form its printer driver understands. Saved for this computer only." — **Paper handling** offers:
 
     | Option | When to use it |
     | --- | --- |
@@ -92,11 +95,32 @@ This is the most common printer complaint at a counter, and it is almost always 
     | **Driver default form** | Whatever the printer is set to in the operating system |
   </Step>
   <Step title="Print a test receipt">
-    Reprint a past sale. The setting is saved for **this computer only**, so each counter machine is set up once, on its own.
+    Select **Print** again. The setting is saved for **this computer only**, so each counter machine is set up once, on its own.
   </Step>
 </Steps>
 
 See [Thermal printers](/pharmacy/hardware/thermal-printer) for the full hardware guide.
+
+## Who can do this
+
+Printing is not a separate privilege. Anyone who can ring a sale up can print its receipt and reprint it later — a customer asking for their slip back is not a decision anybody needs to authorise.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Print at the point of sale | Cashier, Pharmacy Manager, Dispensing Supervisor | **Dispense and sell at the till** |
+| Reprint a past receipt | The same people | **Dispense and sell at the till** |
+| Download a receipt as a PDF | The same people | **Dispense and sell at the till** |
+| Change **Printer settings** on a machine | Anyone at that machine | Nothing — it is a per-computer preference |
+| Amend or reverse the sale you just reprinted | Pharmacy Manager, Dispensing Supervisor — **not** a Cashier | **Refund or void a sale** |
+
+**Role** governs the sidebar: a Cashier reaches **POS** and **Sales** only, which is enough for everything on this page.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, whatever their role bundle. The sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A refused amendment leaves a line in the audit trail; a reprint you were entitled to make does not.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
@@ -104,15 +128,19 @@ See [Thermal printers](/pharmacy/hardware/thermal-printer) for the full hardware
 - A completed receipt carries a barcode; scanning it on the Sales page opens that sale.
 - **Download PDF** saves a copy of the same receipt.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'Direct printing unavailable — using the print dialog'">
-    The app could not reach the counter printer directly, so it handed you the browser dialog instead. Nothing is lost — print from the dialog. In the desktop app, check the printer is switched on and selected.
+    The app could not reach the counter printer directly, so it handed you the browser dialog instead. Nothing is lost — print from the dialog. Then check the printer is switched on, connected and selected in the operating system.
   </Accordion>
 
   <Accordion title="The receipt is blank, or stops halfway">
     Change **Paper handling** as above. A thermal driver given a page size it does not enumerate will happily feed blank paper.
+  </Accordion>
+
+  <Accordion title="There is no gear button on the receipt dialog">
+    **Printer settings** exists in the desktop app only. In a browser, pick the paper in the browser's own print dialog.
   </Accordion>
 
   <Accordion title="The customer's slip will not scan">
@@ -126,12 +154,32 @@ See [Thermal printers](/pharmacy/hardware/thermal-printer) for the full hardware
   <Accordion title="'Could not load this sale. Please try again.'">
     The receipt could not be fetched — usually a dropped connection. Reprints need a connection; the sale itself is safe either way.
   </Accordion>
+</AccordionGroup>
 
-  <Accordion title="The logo prints as a black blob">
-    An 80mm head is one-bit: it has no greys and dithers them into blotches. Use a simple, high-contrast logo — see [Complete your pharmacy profile](/pharmacy/get-started/pharmacy-profile).
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I reprint a receipt from last month?">
+    Yes. Set the period select to **All Time**, find the sale in **Recent Sales**, and use **Print Receipt** on its **⋯** menu. There is no cut-off — every completed sale keeps its receipt. You do need a connection, because the reprint is built from the stored sale rather than from anything held on the till.
+  </Accordion>
+
+  <Accordion title="Is a reprint identical to the original slip?">
+    It is the same document, rendered again from the stored sale — so it carries the same receipt number and the same barcode. If the sale has been amended since, the reprint shows the sale as it stands now, not as it was first printed.
+  </Accordion>
+
+  <Accordion title="Can I email a receipt to a customer?">
+    Not from this dialog. Use **Download PDF** and attach the file yourself. The PDF is a narrow, receipt-shaped page rather than a full A4 sheet, so it reads correctly on a phone.
+  </Accordion>
+
+  <Accordion title="Does the paper setting apply to all our tills?">
+    No — it is saved for that computer only, because which paper form works is a property of the driver installed on that machine. Set it once on each counter machine that misbehaves and leave the rest on **Auto (recommended)**.
+  </Accordion>
+
+  <Accordion title="Why does the desktop app not show a print dialog?">
+    Because a dialog at a counter costs a queue. In the desktop app the receipt goes straight to the thermal printer and confirms with **Receipt sent to printer**. If you see a dialog there, direct printing was unavailable and the app fell back on purpose.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="printing receipts" />
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/sales/pos-receipt-dialog.tsx, pos/printer-paper-setting.tsx, lib/printer-paper.ts, lib/pharmacy-receipt-render.ts, lib/pos-sale-scan.ts, apps/apps-desktop/src/printing.ts */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/sales/pos-receipt-dialog.tsx, pos/printer-paper-setting.tsx, pos/pharmacy-pos-form.tsx, lib/printer-paper.ts, lib/pharmacy-receipt-render.ts, lib/pos-sale-scan.ts, lib/edition-staff-roles.ts */}

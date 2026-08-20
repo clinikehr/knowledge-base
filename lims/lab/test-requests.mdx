@@ -1,69 +1,102 @@
 ---
 title: Raise a test request
-description: "Order a test for a patient from the Lab Station or the Test Requests table, and put it on the bench queue."
+description: "Order a test for a patient, then work the day's requests from the Test Requests list and hand each one to the bench."
 icon: /images/icons/test-tube.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
-import { StillStuck } from '/snippets/support.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} plans="All plans — test requests are unlimited on every plan" roles="Lab scientist, Lab Manager, Owner. Receptionists and phlebotomists can raise a request but not work it." />
+<Availability editions={['lims']} plans="All plans — test requests are unlimited on every plan" roles="Anyone who reaches the page can raise a request. Only lab scientists can conduct or update a test from it." />
 
-A test request is the record everything else hangs off: the specimen you accession against it, the results you enter, the report you release and the invoice you raise. This page covers the two ways to create one.
+A test request is the record everything else hangs off: the specimen you accession against it, the results you enter, the report you release and the invoice you raise. **Test Requests** is the plain working list of them — today's requests, in one table.
 
 <Path steps={['Sidebar', 'Test Requests']} />
 
-<TaskHeader before="At least one test in your catalogue and a registered patient" time="2 minutes" after="A Pending request on the bench queue, ready to accession and run" />
+<TaskHeader before="At least one test in your catalogue and a registered patient" time="2 minutes" after="A Pending request the bench can pick up" />
 
-## The full ordering form
+## What you're looking at
 
-Use this when you are ordering for a patient at the desk and want the price and the parameters in front of you.
+The page opens with a greeting — "Good Morning, \{your name\}!" — over the line **Here's a list of all lab requests for today!**. Below that is the table and nothing else. This screen is deliberately simple.
+
+The toolbar holds **Search for patient**, **New Test Report**, a refresh button (**Refresh table**) and **View Columns**, whose menu is headed **Toggle columns** and offers **Patient ID**, **Patient Name**, **Status**, **Conducted By**, **Requested By**, **Date**, **Patient Type**, **Test Name** and **Result**.
+
+| Column | Reads |
+| --- | --- |
+| **Status** | **Pending** or **Completed** — those two, and no others |
+| **Conducted By** | The scientist who ran it, or **Not conducted yet** |
+| **Requested By** | The clinician who ordered it |
+| **Result** | The recorded value, once there is one |
+
+<Note>
+  **Everything richer lives on [Lab Reports](/lims/lab/reports), not here.** The four-status ladder (**Pending**, **In Progress**, **Completed**, **Cancelled**), the **Critical** badge, the **Paid** / **Partial** / **Pending** payment badges, **Select Lab Test**, **Order Summary** and the **\{n\} / \{n\} parameters filled** counter are all on that page. If you are looking for one of them, you are on the wrong screen.
+</Note>
+
+**The empty state.** A new lab sees **No lab test data found.** — correct until the first request is raised. **No recent lab test data available for this clinic.** means the same thing.
+
+<AuditNote action="Opening a request" />
+
+## Raise a request
 
 <Steps>
-  <Step title="Open the form">
-    Go to **Lab Station** and select **New Lab Test**.
+  <Step title="Open the order form">
+    Select **New Test Report**. It takes you to the full ordering form on [Lab Reports](/lims/lab/reports), where the price and the parameters are in front of you.
   </Step>
-  <Step title="Choose the patient">
-    Fill in **Patient Details**. If the patient has no record yet, create one first — see [Register your first patient](/lims/get-started/first-patient).
+  <Step title="Choose the patient and the tests">
+    Fill in the patient, then add each test from the catalogue. If the patient has no record yet, create one first — see [Register your first patient](/lims/get-started/first-patient).
   </Step>
-  <Step title="Pick the tests">
-    Under **Select Lab Test** ("Choose a test to order"), use **Search lab tests...** to find each test. Everything you add builds up in the **Order Summary** rail on the right under **Order Items**, priced from your catalogue.
-  </Step>
-  <Step title="Fill in what you already know">
-    **Test Parameters** lists every analyte on the test, with a counter reading **\{n\} / \{n\} parameters filled** and a **Critical** badge on the ones that trigger a critical flag. You do not have to complete these now — the bench normally does, on [Enter and verify results](/lims/lab/results).
-  </Step>
-  <Step title="Add context and submit">
-    Use **Additional Notes** for clinical details the scientist needs — the indication, current medication, a fasting state. Submit the order. The toast reads **Lab test orders created successfully**.
+  <Step title="Submit">
+    Submit the order. It appears back here as **Pending**, ready for the bench.
   </Step>
 </Steps>
 
-## The quick way, from the table
+## Work a request from the table
 
-<Path steps={['Sidebar', 'Test Requests']} />
+Each row's menu offers **View Lab Results** and, for a lab scientist only, **Conduct Lab Test** on a pending request or **Update Lab Test** on a completed one. On a phone the same menu is shorter: **View Results** and **Conduct Test**.
 
-The **Test Requests** table is the working list of everything ordered. Its toolbar carries **Search for patient**, **New Test Report**, **Refresh** and **View Columns** ("Toggle columns"). Select **New Test Report** to raise a request without leaving the list.
-
-Each row's menu offers **View Details**, **Conduct Test** and **Update Results**. Selecting one opens a sheet whose header changes to match what you are doing — **Conduct Lab Test**, **View Lab Results** or **Update Lab Results** — with **Patient Information** and **Laboratory Tests** cards and a field per parameter (**Enter test result**, **Enter \{parameterName\}**, **Select value**).
+Selecting one opens a full page rather than a panel, headed **Conduct Lab Test**, **View Lab Results** or **Update Lab Results** to match what you are doing. It carries a **Patient Information** card and a **Laboratory Tests** card, and under **Test Parameters** a field per analyte — **Enter test result**, **Enter \{parameterName\}** or **Select value** for a list — each showing **Reference: \{range\}**. Finish with **Submit Lab Results** or **Update Lab Results**; **Cancel** leaves it untouched.
 
 <Note>
-  Only lab scientists may conduct or update a test through this path. Everyone else who opens the sheet gets read-only view mode and the message **Only lab scientists can conduct or update lab tests**. That is a role limit, not a fault — see [Roles](/platform/team/roles).
+  Only lab scientists may conduct or update a test through this path. Everyone else who opens a request gets read-only view mode and the message **Only lab scientists can conduct or update lab tests**. That is a role limit, not a fault — see [Roles](/platform/team/roles).
 </Note>
 
 ## Raising a request with no connection
 
 Order capture works offline. Raise the request as normal and it queues on the device, then syncs when the connection returns. The offline bar reads **Offline · reference data \{staleness\} — new lab orders queue and sync on reconnect** and carries a **Sync now** button.
 
-Two things change offline. Patient search is reduced to name and patient number and returns at most 25 matches, so search precisely. And payment is never taken offline — a replayed order arrives unpaid and settles at the desk. Accessioning, screening, result entry and verification all stay online. See [Working offline](/platform/apps/offline).
+Two things change offline. Patient search is reduced to name and patient number and returns at most 25 matches, so search precisely. And payment is never taken offline — a replayed order arrives unpaid and settles at the desk. Accessioning, screening, result entry and verification all stay online, because they are status-guarded steps whose conflicts need a person at the bench. See [Working offline](/platform/apps/offline).
+
+## Who can do this
+
+Role decides whether **Test Requests** opens, and whether the working actions appear on a row. Permission decides what happens on the form those actions open.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Test Requests** and read the list | Owner, Manager, **Lab Manager**, **Accessioning Clerk**, lab scientists, phlebotomists, receptionists | Role → route |
+| Raise a request with **New Test Report** | The same people | Role → route |
+| **Conduct Lab Test** / **Update Lab Test** on a row | Lab scientists only | Role — everyone else gets view mode |
+| Record readings on the form | Anyone on **Own bench** and above | Permission — **Enter results at the bench** |
+| Move the test to **Completed** | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
+| Change a result after completion | **All sites**, or a named verifying scientist | Permission — **Amend a verified result** |
+
+**A Lab Manager does not hold verify by default.** Managing the lab and signing a result out are different jobs, and verification arrives with the *access tier* — **Whole lab** or **All sites** — not with the administrative role. A **phlebotomist** reaches this page, the intake queue and patients, and nothing else in the lab; a **lab scientist** reaches the whole bench but is denied **Executive**, **Lab Analytics** and **Referral Commissions**.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Somebody never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — from then on they can only do what is switched on there.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or rendered as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The request appears in **Test Requests** with the status **Pending** and a payment badge of **Paid**, **Partial** or **Pending**.
+- The request appears in **Test Requests** with the status **Pending**.
 - The **Lab Station** **Analytics** tab counts it under **Total Lab Tests** and **Pending Tests** ("Awaiting processing").
 - The patient's record lists the request.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="The test I want is not in the search">
@@ -74,8 +107,12 @@ Two things change offline. Patient search is reduced to name and patient number 
     Price lives on the catalogue test, not the request. Open the test in **Test List** and set a price on the **Basic Information** tab; new orders then price themselves.
   </Accordion>
 
-  <Accordion title="Conduct Test is missing from the row menu">
-    You are not signed in as a lab scientist. Ask an owner or manager to change your role, or hand the request to someone at the bench. See [Permissions](/platform/team/permissions).
+  <Accordion title="Conduct Lab Test is missing from the row menu">
+    You are not signed in as a lab scientist, or the request is already **Completed**, where the action becomes **Update Lab Test**. Opening it anyway gives **Only lab scientists can conduct or update lab tests**.
+  </Accordion>
+
+  <Accordion title="I cannot find the Critical badge or the payment status">
+    They are not on this table. Both live on [Lab Reports](/lims/lab/reports), along with the **In Progress** and **Cancelled** statuses.
   </Accordion>
 
   <Accordion title="My offline order has not appeared">
@@ -87,6 +124,30 @@ Two things change offline. Patient search is reduced to name and patient number 
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why does this list only show Pending and Completed?">
+    Because it is the day's working list, not the reporting surface. A request is either waiting for the bench or done. The fuller status ladder — including **In Progress** and **Cancelled** — is on [Lab Reports](/lims/lab/reports).
+  </Accordion>
+
+  <Accordion title="Does New Test Report add a test to my catalogue?">
+    No. It orders a test for a patient. To define a new test and its analytes, use **New Test Record** on **Lab Station › Test List** — see [Add your tests and panels](/lims/get-started/tests-and-panels).
+  </Accordion>
+
+  <Accordion title="Can a receptionist raise a request?">
+    Yes. Raising is not a bench act, so anyone who reaches the page can order a test. Conducting and updating it are limited to lab scientists.
+  </Accordion>
+
+  <Accordion title="Can I amend a result after it has been reported?">
+    Only with **Amend a verified result**, and the change is recorded alongside the original. Tell a verifier rather than working around it — see [Enter and verify results](/lims/lab/results).
+  </Accordion>
+
+  <Accordion title="Where do drug-testing requests appear?">
+    Not here. They populate the [Worklist](/lims/lab/worklist), the drug-testing bench queue, which is empty for a lab doing only clinical work.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="a test request" />
 
-{/* source of truth: components/clinic/lab/, components/clinic/dashboard/lab-station/lab-dashboard-content.tsx, lib/clinic-nav-registry.ts (LIMS), lib/lab-offline/ */}
+{/* source of truth: components/clinic/lab/lab-header.tsx, .../lab-table.tsx, .../lab-actions.tsx, .../table-columns.ts, .../new-lab-request-form.tsx, lib/lab-offline/, lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

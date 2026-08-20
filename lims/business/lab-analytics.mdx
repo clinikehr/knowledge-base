@@ -1,0 +1,167 @@
+---
+title: Lab analytics
+description: "Trends and mix across drug testing, lab and imaging — and how to tell this screen apart from the other two that are also called analytics."
+icon: /images/icons/chart-line.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="Business Lab and above" roles="Owner, Manager and management roles granted “View turnaround-time analytics”. Bench roles are not offered it." />
+
+This is the lab's own trading dashboard: how much work came in over the last month or six, what mix it was, and which tests and referrers actually earned the money. The page says so itself — "Trends and mix across drug testing, lab and imaging. Revenue = collected on orders created in the range."
+
+<Path steps={['Sidebar', 'Lab Analytics']} />
+
+## Three screens are called analytics. Here is which is which
+
+Before you go any further: the lab has **three** reporting surfaces with confusingly similar names. People quote figures from one while looking at another, and the numbers never reconcile. Tell them apart by their address bar, which is unambiguous even when the heading is not.
+
+| Sidebar row | Address bar | What it is | Plan |
+| --- | --- | --- | --- |
+| **Lab Analytics** | `/u/clinic/lab-analytics` | **This page.** The lab's operational dashboard — trends, mix, revenue by test and by referrer over a range you pick | Business Lab |
+| **Analytics** | `/u/clinic/analytics` | The report **catalogue** — one workbench per subject, each with its own filters and an **Export**. See [Reports and analytics](/lims/business/analytics) | Varies by report |
+| **Executive** | `/u/clinic/executive` | The owner's **daily** summary — today and this week, same numbers as the morning email. See [The owner summary](/lims/business/executive) | Professional Lab |
+
+The awkward part is that this page's own heading reads simply **Analytics**, the same word as the catalogue's. The sidebar row and the address are what separate them.
+
+## Revenue means one thing here
+
+**Revenue is money collected, on orders created in the range you picked.** Not money invoiced.
+
+Both halves matter, and people trip on each of them:
+
+- **Collected, not billed.** An invoice raised and never paid counts as nothing. If you are reconciling against a billed total, you are reconciling against a figure this page does not report.
+- **Orders created in the range.** An order raised in March and paid in April counts in **March**, at the amount collected. Widening the range does not move it; it changes which orders are in scope.
+
+That single definition is behind almost every "two people quote different revenue" argument in a lab. Settle it here and the rest of the page reads cleanly. The **Payment mix** table at the foot of the page shows **Collected** and **Billed** side by side, which is the quickest way to see the gap.
+
+<TaskHeader before="The Business Lab plan, and the “View turnaround-time analytics” grant" time="5 minutes" after="A view of which tests and referrers your lab actually earns from" />
+
+## What you're looking at
+
+A range select sits beside the heading and offers **Last 30 days**, **Last 90 days** and **Last 180 days**. Everything below follows it.
+
+| Tile | Reads |
+| --- | --- |
+| **Orders** | Every order created in the range, across all three pipelines |
+| **Collected revenue** | Money collected on those orders |
+| **Patients (lab + imaging)** | With "\{n\} new · \{n\} returning" beneath it |
+| **Avg collected per order** | Your real average ticket — it reads **—**, not zero, when there is nothing to average |
+
+Then four cards. **Collected revenue by day** and **Orders by day** are daily bars; hover one and the readout above the plot names the day and its figures, and until you do it prompts **Hover a day for details**. The orders chart is stacked by pipeline with a fixed colour for each — drug testing, lab and imaging keep the same colour whatever their rank, so the legend never means something different from one week to the next.
+
+**Revenue by test** and **Revenue by referring doctor** are ranked bars with the count and the amount alongside. The referrer card is the one to read before renegotiating a rate — see [Referral commissions](/lims/business/commissions).
+
+**The empty state.** A range with nothing in it reads **No orders in this range.** on the revenue and test cards, and **No attributed referrals in this range.** on the referrer card. That last one persists for as long as nobody picks a referring doctor at intake, however busy the lab is.
+
+## Read a range
+
+<Steps>
+  <Step title="Pick the range deliberately">
+    **Last 30 days** shows you this month's shape; **Last 180 days** shows you a trend. Comparing two months means reading the daily chart, not switching ranges — the tiles always total the whole range.
+  </Step>
+  <Step title="Read Orders against Collected revenue">
+    Rising orders with flat revenue means either your mix has shifted to cheaper tests, or work is being invoiced and not collected. **Avg collected per order** tells you which.
+  </Step>
+  <Step title="Check the mix on Orders by day">
+    The stacked bars show whether growth is coming from drug testing, lab or imaging. A pipeline flattening out is a business change, not a bench one.
+  </Step>
+  <Step title="Finish on Revenue by test and by referrer">
+    These are the two lists a lab acts on: what to price properly, and who to look after. Anything that never appears here is either not attributed or not collected.
+  </Step>
+</Steps>
+
+<AuditNote action="Opening a report" />
+
+## Who can do this
+
+A **plan** gate and a **permission** gate stack, and they look different on screen — one offers you an upgrade, the other quietly says the page is hidden.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open **Lab Analytics** | Owner, Manager and management roles | Permission — **View turnaround-time analytics**, plus the **Business Lab** plan |
+| See revenue by referring doctor | The same people | The same permission |
+| Open a referrer's account or statement | **Referrer Liaison**, **Lab Manager** | Permission — **Access the referrer portal** |
+| Open the owner's daily summary | Owner, Manager | Role → route, plus **Professional Lab** |
+| Enter or verify results at the bench | Scientists on **Own bench**, **Whole lab** or **All sites** | Permissions — **Enter results at the bench**, **Verify and authorise results** |
+
+**A lab scientist is denied this page**, as they are denied the owner summary and referral commissions. That is deliberate: bench roles get the bench, not the lab's revenue. A **QC Officer** holds **View turnaround-time analytics** for quality reporting but is review-only by design, and an **Accessioning Clerk** holds neither.
+
+Worth knowing about the permission itself: **View turnaround-time analytics** is the single grant behind turnaround, workload and backlog reporting across the lab — so granting it for one screen grants it for all of them.
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** Someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A figure you are not entitled to see is hidden or renders as a dash, never as a zero.
+
+See [Permissions](/platform/team/permissions) and [Roles](/platform/team/roles).
+
+## Check it worked
+
+- The range select shows the period you chose, and the daily charts start and end on the dates you expect.
+- **Collected revenue** agrees with the totals on [Payments](/lims/business/payments) for the same orders.
+- **Orders** is at least as large as the count on the owner summary for a day inside the range.
+- **Revenue by referring doctor** lists the practices you know are sending you work.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="“Advanced analytics is a Business feature”">
+    The dashboard is included from the Business Lab plan, and **View plans** on that card takes you to the ladder — see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="“Analytics is hidden — Needs authorisation from your clinic owner or manager”">
+    That is the permission gate, not the plan. Ask an owner or manager for **View turnaround-time analytics** — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="Two of us quote different revenue for the same month">
+    Almost always billed against collected. This page reports **collected** money on orders **created** in the range. Compare the two columns on the **Payment mix** table to see the gap.
+  </Accordion>
+
+  <Accordion title="Revenue looks low in a month I know was busy">
+    Work created in the range but paid afterwards has not been collected yet. Check what is still owed on the **Pending** tab of [Payments](/lims/business/payments).
+  </Accordion>
+
+  <Accordion title="Revenue by referring doctor is empty">
+    Orders are not being attributed to a referrer at intake, and attribution cannot be added afterwards from here — see [Referring doctors](/lims/business/referrers).
+  </Accordion>
+
+  <Accordion title="Avg collected per order shows a dash">
+    There were no orders in the range, so there is nothing to average. The page shows a dash rather than inventing a zero.
+  </Accordion>
+
+  <Accordion title="A colleague sees a different Analytics screen">
+    They are probably on the report catalogue at `/u/clinic/analytics`, which is a different surface with different filters — see [Reports and analytics](/lims/business/analytics).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I pick my own start and end dates?">
+    No — the range is thirty, ninety or a hundred and eighty days back from today. For an arbitrary period, use the report catalogue, where each report carries its own period picker and an **Export**.
+  </Accordion>
+
+  <Accordion title="Are imaging and drug testing included?">
+    Yes. All three pipelines are counted together in the tiles and separated by colour in **Orders by day**. The patient count covers lab and imaging.
+  </Accordion>
+
+  <Accordion title="What counts as a returning patient?">
+    Someone who had been seen by your lab before the order in this range. New against returning is the quickest read of whether growth is coming from new demand or repeat work.
+  </Accordion>
+
+  <Accordion title="Does this page match the owner summary?">
+    They agree, but they answer different questions — the summary is today and this week, this page is the whole range. Comparing a single day against a 30-day total is the usual reason they look inconsistent.
+  </Accordion>
+
+  <Accordion title="Can I export a chart?">
+    Not from this page. Exports live in the report catalogue — see [Reports and analytics](/lims/business/analytics).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a lab analytics figure" />
+
+{/* source of truth: components/clinic/dashboard/lab-station/analytics/analytics-content.tsx, db/actions/lab-analytics.ts, lib/edition-staff-roles.ts (view_tat_analytics), hooks/use-lims-features.ts */}

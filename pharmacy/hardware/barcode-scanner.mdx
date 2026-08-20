@@ -11,7 +11,11 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Any staff member at the till" />
 
-Two very different devices get called "the barcode scanner", and mixing them up is the reason most of this goes wrong. Decide which one you have before you read any further:
+Two very different devices get called "the barcode scanner", and mixing them up is why most of this goes wrong. Decide which one you have before you read any further.
+
+<TaskHeader before="Products with a barcode saved on their catalogue entry" time="Minutes for a till scanner" after="Scanning that adds products to the cart and pulls up past sales" />
+
+## What you're looking at
 
 |  | **Keyboard-wedge scanner** | **Portable count terminal** |
 | --- | --- | --- |
@@ -19,8 +23,11 @@ Two very different devices get called "the barcode scanner", and mixing them up 
 | Used for | Selling at the till | Counting stock on the shelves |
 | Setup in ClinikEHR | **None** — plug it in and scan | Connect, then upload, in a deliberate sequence |
 | Where it works | Anywhere in the product | Stock counts only |
+| Browser needed | Any | Chrome, Edge or the desktop app |
 
-<TaskHeader before="Products with a barcode saved on their catalogue entry" time="Minutes for a till scanner" after="Scanning that adds products to the cart and pulls up past sales" />
+There is a third route with no hardware at all: a **camera button** sits beside the search box on the till and on the [sales list](/pharmacy/money/sales), and on the **Add item** sheet in Inventory. It uses the machine's webcam.
+
+The till's own search box reads **Search or scan (name, generic, brand, barcode)…**, and the sales list's reads **Search or scan receipt...** — the two take different things, which is worth knowing before you aim a gun at one of them.
 
 ## The till scanner: nothing to install
 
@@ -38,11 +45,13 @@ A keyboard-wedge scanner **types what it reads**. To your computer it is a keybo
   </Step>
 </Steps>
 
-On a match you get **"Scanned: \{name\}"** and the product is in the cart. On a miss: **"No medication matches that barcode"** — which nearly always means the barcode is not saved against the product yet, not that the scanner failed.
+On a match you get **"Scanned: \{name\}"** and the product is in the cart. On a miss: **"No medication matches that barcode"** — which nearly always means the barcode is not saved against the product yet, not that the scanner failed. The code is dropped into the search box so you can look for the item by name instead.
 
 <Note>
-  Scanning is ignored while you are typing in another field — an amount, a reference, a note. The characters are already landing where you put the cursor, and adding to the cart as well would leave junk in the field. Click out of the field, then scan.
+  Scanning is ignored while you are typing in another field — an amount, a reference, a note — and while a dialog is open over the page. The characters are already landing where you put the cursor, and adding to the cart as well would leave junk in the field. Select somewhere neutral, then scan.
 </Note>
+
+A scan is recognised by its speed: a burst of at least six characters with almost no gap between them, finished with the Enter your scanner sends. That is why typing a barcode by hand does not add to the cart — use the search box for that.
 
 ## Put barcodes on your products
 
@@ -53,44 +62,72 @@ A product cannot be scanned until its code is saved on its catalogue entry.
     <Path steps={['Sidebar', 'Inventory', 'Add item']} /> — or edit an existing item.
   </Step>
   <Step title="Fill Barcode / UPC (optional)">
-    The field's placeholder is **"Scan pack, or Generate…"**. Put the cursor in it and scan the pack — that is the fastest way and it cannot mistype.
+    The field's placeholder is **"Scan pack, or Generate…"**. Put the cursor in it and scan the pack — the fastest way, and it cannot mistype. You get **"Barcode captured: \{code\}"**.
   </Step>
   <Step title="Or mint your own code">
-    For a product with no barcode on the pack — a repack, a loose line, a service — select **Generate in-house code**. **Camera scan** reads a code with a webcam if you have no scanner to hand.
+    For a product with no barcode on the pack — a repack, a loose line — select **Generate in-house code**. It is greyed out while the field already holds something ("Clear the field to generate a new code"), so empty the field first if you mean to replace a code. It confirms with **"Generated in-house barcode \{code\} — print its label after saving"**.
+  </Step>
+  <Step title="Or read it with the webcam">
+    **Camera scan** opens **Scan product barcode** — "Point the camera at the pack's barcode to capture it for this item."
+  </Step>
+  <Step title="Save the item">
+    The code is live immediately: the next scan at the till finds it.
   </Step>
 </Steps>
 
 ### Print shelf and pack labels
 
-From an inventory row, **Print barcode label** opens a sheet with a **Copies** field. Print a strip for a shelf edge or one per repacked pack, and everything you have coded becomes scannable at the counter.
-
-## Scan with a webcam
-
-No hardware scanner? There is a camera button at the till and on the sales list. It needs two things a laptop usually already has: a **secure connection** ("Camera access requires HTTPS. Open this page over a secure connection to scan.") and **camera permission** ("Camera permission denied. Allow camera access in your browser settings to scan.").
-
-It is a genuine fallback rather than a counter tool — a phone camera on a crowded shelf is slower than a scanner, and it stops the till while it focuses.
+From an inventory row, **Print barcode label** opens a sheet with a **Copies** field, up to 100 at a time. Print a strip for a shelf edge or one per repacked pack, and everything you have coded becomes scannable at the counter.
 
 ## Scan a receipt to find a sale
 
-On the [sales list](/pharmacy/money/sales), the **Search or scan receipt...** box takes a scan of the barcode printed at the bottom of a customer's receipt and pulls the sale straight up — the fastest route into a return or a query.
+On the [sales list](/pharmacy/money/sales), the **Search or scan receipt...** box takes a scan of the barcode printed at the bottom of a customer's receipt and pulls the sale straight up — the fastest route into a return or a query. A refunded or cancelled sale still opens, and says which it is.
 
-Scan something that is not one and you get **"That barcode is not a ClinikEHR receipt."** A receipt printed while the till was offline carries a provisional number and no barcode at all; find those by date and amount instead. See [Print and reprint receipts](/pharmacy/pos/receipts).
+Scan something that is not a receipt and you get **"That barcode is not a ClinikEHR receipt."** A receipt printed while the till was offline carries a provisional number and no barcode at all; find those by date and amount instead. See [Print and reprint receipts](/pharmacy/pos/receipts).
+
+## Scan with a webcam
+
+No hardware scanner? The camera button needs two things a laptop usually already has: a **secure connection** ("Camera access requires HTTPS. Open this page over a secure connection to scan.") and **camera permission** ("Camera permission denied. Allow camera access in your browser settings to scan.").
+
+It is a genuine fallback rather than a counter tool — a camera on a crowded shelf is slower than a scanner, and it stops the till while it focuses.
 
 ## The count terminal is a different job
 
 A portable count terminal — the CipherLab in its USB cradle — is for **stock counts, not selling**. It collects codes and quantities on the shelves, then hands them over in one upload.
 
-It needs Chrome, Edge or the [desktop app](/pharmacy/hardware/desktop-app), and a deliberate connect-then- upload sequence rather than a plug-and-scan. The full procedure is in [Count stock with a CipherLab terminal](/pharmacy/inventory/cipherlab).
+It needs Chrome, Edge or the [desktop app](/pharmacy/hardware/desktop-app), and a deliberate connect-then-upload sequence rather than a plug-and-scan. The full procedure is in [Count with a CipherLab scanner](/pharmacy/inventory/cipherlab).
 
-Do not try to sell with it, and do not try to count with the till scanner — see [Stock counts](/pharmacy/inventory/stock-counts).
+Do not try to sell with it, and do not try to count a whole shop with the till scanner — see [Run a stock count](/pharmacy/inventory/stock-counts).
+
+## Who can do this
+
+**No permission gates scanning.** A barcode is an input device, like a keyboard: anyone who can reach a screen can scan into it, and what happens next is governed by whatever that screen is already governed by. **Role** still decides which screens they reach.
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Scan a product into the cart at the till | Anyone who can use the till | Nothing — scanning is not gated |
+| Scan a receipt on the sales list | Anyone who can open **Sales** | Role decides who reaches **Sales** |
+| Save a barcode on a product, or **Generate in-house code** | Pharmacy Manager, Inventory & Purchasing, Dispensing Supervisor | Role — a cashier's sidebar has no **Inventory** |
+| **Print barcode label** | Anyone who can open **Inventory** | Role |
+| Upload a count from a CipherLab terminal | Pharmacy Manager, Inventory & Purchasing | **Adjust stock counts** |
+
+The one real permission in that list belongs to the count terminal, and it bites when the count is *applied* rather than when the device is connected — see [Count with a CipherLab scanner](/pharmacy/inventory/cipherlab).
+
+Two behaviours surprise people:
+
+- **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**.
+- **A denied action is recorded; an allowed one is not.** A scan that matches nothing is not a denial — it is a missing barcode, and nothing is logged.
+
+See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
 - Scanning at the till toasts **"Scanned: \{name\}"** and adds a cart line.
 - It works with the cursor resting nowhere in particular, not only in the search box.
 - Scanning a receipt on the sales list opens the sale.
+- A printed shelf label scans to the same product as the pack does.
 
-## If something goes wrong
+## Common issues
 
 <AccordionGroup>
   <Accordion title="'No medication matches that barcode'">
@@ -102,7 +139,11 @@ Do not try to sell with it, and do not try to count with the till scanner — se
   </Accordion>
 
   <Accordion title="Nothing happens at all when I scan">
-    Confirm the scanner types at all: open any text field, scan, and see whether characters appear. If they do not, it is the device or its dongle, not ClinikEHR. If they do but the till does not react, check whether a dialog is open over the page.
+    Confirm the scanner types at all: open any text field, scan, and see whether characters appear. If they do not, it is the device or its dongle, not ClinikEHR. If they do but the till does not react, check whether a dialog is open over the page — scanning is deliberately ignored while one is.
+  </Accordion>
+
+  <Accordion title="Only part of the code arrives, or it takes two scans">
+    The scanner is sending too slowly to read as one burst, usually because an inter-character delay is configured on the device. Set that delay to zero in the scanner's own configuration sheet, and make sure it sends an Enter at the end.
   </Accordion>
 
   <Accordion title="The camera scanner will not start">
@@ -118,6 +159,30 @@ Do not try to sell with it, and do not try to count with the till scanner — se
   </Accordion>
 </AccordionGroup>
 
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need the desktop app to use a barcode scanner?">
+    Not for a till scanner. A keyboard-wedge scanner is a keyboard, so it works in any browser with nothing installed. The **count terminal** is the one with a requirement: it talks over a serial cradle, which only Chrome, Edge and the [desktop app](/pharmacy/hardware/desktop-app) can do, and only on the machine the cradle is plugged into.
+  </Accordion>
+
+  <Accordion title="Which barcode symbology should I buy for?">
+    Any general-purpose retail scanner is fine — it reads what is on the pack and types the digits, and ClinikEHR matches on those digits regardless of the symbology. Codes you generate in-house are 12 digits, which every scanner reads.
+  </Accordion>
+
+  <Accordion title="Can I reuse a supplier's barcode on a repack?">
+    No. A repack is a different product with a different quantity, and sharing a code means one scan is ambiguous. Use **Generate in-house code** and print its label.
+  </Accordion>
+
+  <Accordion title="Does scanning work offline?">
+    Yes. Matching a scan against your catalogue happens on the device, so the till keeps scanning through an outage — the sale queues as normal. See [Selling when the internet is down](/pharmacy/pos/offline).
+  </Accordion>
+
+  <Accordion title="Can I scan straight into a stock count?">
+    Yes, but consider the tool. The till scanner works on a count worksheet like any other field, which is fine for a shelf or two. For a whole shop, a [CipherLab terminal](/pharmacy/inventory/cipherlab) walks the aisles without a computer and uploads in one transfer.
+  </Accordion>
+</AccordionGroup>
+
 <StillStuck topic="a barcode scanner" />
 
-{/* source of truth: lib/barcode-wedge.ts, lib/barcode-match.ts, lib/barcode-mint.ts, components/inventory/item-form-sheet.tsx, components/inventory/barcode-label-sheet.tsx, components/clinic/dot-lims/intake/webcam-barcode-scanner.tsx, components/clinic/dashboard/pharmacy-station/{pos/pharmacy-pos-form.tsx,sales/pharmacy-sales-content.tsx} */}
+{/* source of truth: lib/barcode-wedge.ts (MAX_INTER_KEY_MS, MIN_CODE_LENGTH), lib/barcode-match.ts, lib/barcode-mint.ts, lib/pos-sale-scan.ts, hooks/use-barcode-scanner.ts, components/inventory/item-form-sheet.tsx, components/inventory/barcode-label-sheet.tsx, components/clinic/dot-lims/intake/webcam-barcode-scanner.tsx, components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx, components/clinic/dashboard/pharmacy-station/sales/pharmacy-sales-content.tsx */}
