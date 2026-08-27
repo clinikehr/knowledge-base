@@ -33,6 +33,19 @@ A brand-new hospital sees **No wards available** with **Please contact your admi
 
 Selecting a bed card opens the **Bed \{number\} Details** dialog, where the detail lives: **Admitted**, **Diagnosis**, **Attending Doctor**, **Notes** and **Last Updated**. The grid stays deliberately sparse so an empty bay is obvious from across the room.
 
+## Find a bed, or the patient in it
+
+Once you have opened a ward, a search box and filter buttons sit above the bed grid, on the same row as **Back** and the **Wards › \<ward\>** trail.
+
+- **Search** matches on **bed number**, **patient name** and **attending doctor**, in any order — so you can find a bed you know the number of, or a patient whose bed you do not.
+- **Bed status** narrows to **Occupied**, **Available**, **Reserved** or **Under maintenance**.
+- **Patient status** narrows to **Critical**, **Under observation**, **Stable** or **Recovering**. It is deliberately separate from bed status: "which beds are free" and "who is critical" are different questions.
+- **Clear filter** empties one; **Clear all** appears once anything is narrowing the grid.
+
+<Note>
+  A grid that a search has emptied says so and tells you how many beds it is drawn from. It never reads as a ward with no beds.
+</Note>
+
 ## Admit a patient
 
 Admission starts from the consultation that decided the patient needs a bed, not from this page.
@@ -57,15 +70,78 @@ From an occupied bed, **Record Patient Vitals** opens a dialog in four sections 
 
 Opening an occupied bed opens the inpatient chart. Its tabs are:
 
-**SnapShot · Flowsheets · MAR · Orders · Notes · Results · Care History · Problem List · Care Plan · Medications · History · Media**
+**SnapShot · Flowsheets · MAR · Orders · Notes · Results · Care History · Problem List · Care Plan · Medications · Maternity · History · Media**
+
+**Maternity** appears only for an admission with a labour or an open pregnancy behind it — see below.
 
 <Note>
   Two pairs of names look alike and are not. **Care History** is the running record of *this* stay; **History** is the structured past history a provider entered. The **Problem List** belongs to the *patient* and follows them between admissions; the **Care Plan** belongs to *this admission* and ends with it.
 </Note>
 
-A badge next to the patient's name states the stay in both directions — **Admitted**, **Discharged**, or **Admission date not recorded** — and the line under it reads ward · bed · **Day 3**.
+A badge next to the patient's name states the stay in both directions — **Admitted**, **Discharged**, or **Admission date not recorded** — and the line under it reads ward · bed · **Day 3**. For a patient with an open pregnancy record it ends with her gestation — **28+3**, or **Dating unavailable** where the dating will not derive it. Where there is no open pregnancy the segment is simply not there: it is never blank and never a zero.
 
 The header carries four actions in a deliberate order: **Discharge** leftmost and never primary, then **Notes**, then **New order**, with **Record obs** in the primary slot. The frequent, safe action is where your thumb lands; the irreversible one is not.
+
+### Guardians
+
+Where a patient has a guardian recorded, a **Guardians** card appears in the chart's left-hand rail. Each row gives the person's name, a **Primary** badge where they are the primary guardian, and then their relationship and what they may see:
+
+| Reads | Means |
+| --- | --- |
+| **Can access records** | Somebody recorded that they may |
+| **No records access** | Somebody recorded that they may not |
+| **Records access not recorded** | **Nobody has answered.** A new guardian starts here and stays until somebody chooses |
+
+<Warning>
+  **Records access not recorded is not the same as no access.** It means the question was never answered, not that the answer was no. Do not treat it as a decision somebody made when deciding what to tell a relative at the desk.
+</Warning>
+
+<Note>
+  **A guardian recorded earlier may read Can access records although nobody chose it.** That answer used to be filled in automatically when a guardian was added; it is not any more, and nothing was rewritten when that changed. So on an older row, **Can access records** is not by itself evidence that anybody decided. Re-answer it on the patient's record where it matters.
+</Note>
+
+A second list headed **Guardian for** shows people this patient is the guardian *of*. The two are never merged, because a mother is the guardian of a baby and not the reverse.
+
+**A patient with nobody on file shows no card at all** — that is silence, not a statement that they have no guardian. Where the lookup itself fails the card says **Guardian links could not be checked for this patient.**
+
+The card carries no phone number, email or address: a guardian is another person, and their contact details are not part of this patient's clinical identity. Who pays is not shown here either.
+
+The card is read-only — it has no controls. The same card also appears on the patient's own profile page, after their contacts.
+
+Both are set on the patient's own record, on the guardian rows of the add and edit sheets:
+
+| Control | What it does |
+| --- | --- |
+| **Access to this patient's records** | **Not recorded** · **Can access records** · **No records access**. A new guardian starts on **Not recorded**, and leaving it there is a real answer that is stored as one |
+| **Primary guardian** | Chooses which guardian is primary — deliberately, rather than whoever was entered first. **Clear primary guardian** removes the choice, leaving none |
+
+### The pregnancy on the ward chart
+
+Where the patient has an open pregnancy record, a **Pregnancy** card joins the chart's left-hand rail — the same card the [consultation chart](/hospital/maternity/pregnancy-on-the-chart) carries, in the same order: the gestation, a **Post-dates** badge from 42 weeks, **Expected delivery**, **Gravida / Para** and the risk factors recorded at booking. It is amber when she is post-dates; red belongs to the allergy band alone.
+
+The card is in the **rail**, so it shows from large screens up. On a narrower screen the gestation is on the stay line under her name instead, which is why that segment is there.
+
+The gestation on the stay line and the gestation on the card are worked out once, together, and change over at midnight — so the two can never disagree by a day.
+
+<Note>
+  **A delivered or closed pregnancy record produces neither.** The stay line stamps what she is **now**, so a record that has been closed stops stamping rather than counting weeks past a birth. The **Maternity** tab can still be there when the card is not: the tab is the record of a labour that happened.
+</Note>
+
+Both need a connection — the pregnancy is not part of the cached ward chart, so on a chart opened offline neither appears. A chart already open when the connection drops keeps them.
+
+### The Maternity tab
+
+A **Maternity** tab appears on the ward chart for an admission with a live delivery record on that stay, or a patient with an open pregnancy record. It carries the delivery record, the labour chart and the babies, so a woman labouring on your ward is charted from her ward chart rather than from another module.
+
+<Note>
+  **The tab is decided by the record, never by role and never by sex.** It is present because there is a pregnancy or a labour to show. A patient with neither has no tab, and that is not a claim about who they are.
+</Note>
+
+Its heading is the record's own answer: **Labour record** once a delivery record or a charted observation exists, and **Pregnancy** when neither does — where it says plainly that nothing on the chart says she is in labour, and shows the pregnancy as context for whatever she was admitted for. An antenatal admission reaching this tab is intended, not an accident.
+
+It needs a connection. The partograph and the delivery record are not part of the cached ward chart, so offline the tab says **The labour record needs a connection** and spells out what that does and does not mean: "this is **not** a statement that nothing has been recorded. Reconnect to read them." A failed read says the same thing — "This is not a statement that there are no observations — nothing was read" — with **Try again**.
+
+The full screen, including the **Babies** card and who may write on it, is on its own page: [The Maternity tab on a ward chart](/hospital/maternity/ward-maternity-tab). The records themselves are the same ones the maternity route holds — see [The labour record](/hospital/maternity/labour-record) and [The labour chart](/hospital/maternity/labour-chart).
 
 <AuditNote action="Opening an inpatient chart" />
 

@@ -68,7 +68,9 @@ An **MCP** node lets an agent call a system you already use.
     Pick **No auth**, **Bearer token**, or **OAuth**. OAuth asks for the authorization endpoint, the token endpoint, a client ID, a client secret and a scope, then opens the provider's own sign-in window.
   </Step>
   <Step title="Check it responds">
-    Use the test action before saving. It reports how many tools the server offers and names the first few, so you know you have the right address before you build against it.
+    **No auth** and **Bearer token** can be tested before saving: the test reports how many tools the server offers and names the first few, so you know you have the right address before you build against it.
+
+    **OAuth cannot be tested before saving**, and the button says so — there is no token to authenticate with until you have been through the provider's sign-in. Add the server, connect it, then use **Test** on its row in <Path steps={['Settings', 'AI Settings']} /> under **Connected tools (MCP)**. That test works for every server, whichever way it authenticates, and is the one to reach for when a connection stops behaving later.
   </Step>
   <Step title="Pick the tools the agent may call">
     Select the server on the **MCP** node, then choose which of its tools this agent is allowed to use. Give an agent the one tool it needs, not the whole server.

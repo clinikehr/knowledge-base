@@ -7,6 +7,149 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="August 27, 2026" tags={["Pharmacy","Billing"]} description="Pharmacy edition">
+  ## Part-payment at the till now actually creates the debt
+
+  **Ticking Part-payment / credit left the full amount in the box**, so the sale completed as paid in full and no debt was ever created — nothing reached the Debtors sheet, the customer's Debts tab or their outstanding balance. Not one part-payment had ever been recorded.
+
+  - **The amount is now cleared when you tick the box**, because only you know what was handed over. Enter what they are paying today — **0 is allowed** for a sale taken entirely on credit.
+  - **The button says what is being taken**: **Take \{amount\} • owe \{balance\}**, instead of promising the full total.
+  - **A "credit" sale paid in full is refused, and says why** — "This is paid in full, so there is no balance to track. Lower the amount paid, or switch off Part-payment." — rather than quietly recording a paid sale under a ticked credit box.
+  - **The debt appears in three places from one figure**: the Debtors sheet, the customer's Debts tab, and the Outstanding total in their record header. Sales taken offline carry the same amount when they sync.
+  - **Any purchase on a customer's record opens.** Select a line in their **Purchases** tab and the same **Edit sale** sheet the Sales page uses opens on it — void returned units, or discount what they keep — and the debts, balance and header figures re-read when you apply it.
+  - **That sheet, and the two ward note sheets, use the full width of a large screen** instead of a fixed narrow column.
+</Update>
+
+<Update label="August 27, 2026" tags={["Hospital"]} description="Full and Enterprise editions">
+  ## Register a newborn, close a pregnancy on sign-off, and find a bed on a busy ward
+
+  - **Registering a newborn works.** **Register newborn** failed every time with *"This action is not allowed"* — which read as a permissions problem and was not one. Because it never succeeded, no baby ever got a patient record, which is why the **Birth doses** panel could only ever offer *"Record one given elsewhere"* and why babies stayed listed as unregistered on Postnatal. All of it follows from the one fix.
+  - **Signing the delivery closes the pregnancy.** A woman who had given birth stayed on **Today's Clinic** with her gestation still counting past her own delivery. Signing the delivery record now closes the pregnancy with the outcome taken from the births recorded against it, so she moves to the **Antenatal Register** and **Postnatal**. If no birth has been recorded there is no outcome to state, so the record is left open and the person signing is told — a closed pregnancy cannot be reopened.
+  - **Search and filter the beds on a ward.** Search by **bed number, patient name or attending doctor** — so you can find a bed you know the number of, or a patient whose bed you do not — and narrow by bed status or patient status, which stay separate questions.
+  - **One row of navigation above the beds.** **Back** now sits on the same line as **Wards › \<ward\>** instead of on its own row above it, giving a phone back most of a screen.
+  - **Breadcrumbs name the woman, not an identifier.** A maternity record read **Maternity / Episode / E852b5df 9ccb 4f55…**; it now shows her name, or the kind of record where the name cannot be read. Two of those crumbs also led to pages that did not exist.
+  - **The General Information settings card fits a phone**, with the padding the other settings cards use and one column of fields until there is real room for two.
+</Update>
+
+<Update label="August 27, 2026" tags={["Hospital"]} description="Full and Enterprise editions">
+  ## Maternity: a referral that reaches the doctor, a next-contact date you can act on, and a way to find anybody
+
+  Three things a midwife needed from the maternity lists every day.
+
+  - **A referral now reaches a consultation list.** Switching on **Refer to a clinician** — on an antenatal or a postnatal contact — asks **Send her to**, and the visit appears on that department's consultation list so a doctor can open it. Previously the referral was recorded on her chart and reached no department, so no consultation list ever showed her. Where your clinic charges for consultations, only what she has paid for can be chosen; a free clinic fills in general outpatients for you.
+  - **Next contact answers "when should she next be seen".** It reads **Today** while her window is open, the opening date while it is still ahead, and **Was due by 14 August** once it has closed. It used to show the day the window opened whatever her situation, so the *next* contact was routinely a date in the past.
+  - **A late booking is measured against the contacts she can actually attend.** A woman booking at 38 weeks on the eight-contact schedule is no longer offered a twenty-week contact dated months before she first came, no longer counted as having missed six contacts she was never there for, and no longer shown as "1 of 8" for a schedule she could not have completed.
+  - **Search and filter on Today's Clinic, the Antenatal Register, the Labour Ward and Postnatal.** Search by name or patient number in any order, and narrow each list by what it is for — contact status and trimester, outcome, gestation and risk, or which checks are outstanding. On the labour ward **one search covers all three lists**, so you no longer have to know which one a woman is on to find her.
+  - **A filtered list says it is filtered.** It tells you how many records it is drawn from and offers **Clear search and filters** — it never reads as an empty clinic or an empty ward, and the counts beside the labour ward's headings stay the full counts.
+</Update>
+
+<Update label="August 27, 2026" tags={["Diagnostics"]} description="Diagnostics edition">
+  ## A DOT result is never reported unless the laboratory produced one
+
+  Every stage of a DOT test now confirms that what you entered was actually stored before it tells you it was — and before it writes the step into the chain of custody. Where the record could not be written, you are told what is missing and which step rebuilds it, instead of seeing a green tick.
+
+  - **A screen that could not be saved says so.** Entering readings against a specimen whose laboratory record is missing used to end in **Initial screen results finalized**, with the values discarded and the order moved on regardless. It now stops, keeps you on the form, and names the step to re-run.
+  - **No result is reported negative by default.** A screen can only be finalized as negative when the laboratory actually returned one. A specimen whose result could not be read is now held, not cleared — and a urine screen with no specimen-validity reading cannot be finalized at all.
+  - **The § 40.151(f) rule holds even when the result cannot be read.** Marijuana, PCP and amphetamines can never be verified negative on a medical explanation. That check now refuses when it cannot see the confirmed analytes, rather than passing.
+  - **The employer report names the drugs, and knows when the Clearinghouse applies.** A report can no longer be produced without the laboratory result behind it, or without knowing which DOT agency the test was collected under — the fact that decides whether an FMCSA Clearinghouse report is required.
+  - **Cancellations, split-specimen requests and shipments are confirmed too.** A cancelled order that did not cancel, a § 40.171 split request that was not recorded, and a shipment whose carrier and airway bill were not stored each used to report success. All three now report the truth.
+  - **Transcribing a CCF at intake never half-lands.** If the laboratory record or the form details cannot be saved, the order is left awaiting accession and says so — and tells you not to re-enter the CCF, so one specimen never becomes two orders.
+</Update>
+
+<Update label="August 26, 2026" tags={["Hospital","Solo & Team"]} description="All editions">
+  ## Search the patient list without losing your place — and filter it by status and billing
+
+  Typing in **Search patients...** used to drop the cursor out of the box after every single character, so finding somebody meant clicking back into the field letter by letter. It now behaves like a search box.
+
+  - **The same three filters the client list has.** **Patient status** narrows to **Active**, **Inactive**, **Prospective** or **Archived**, and **Billing type** to **Self pay** or **Insurance** — alongside the existing **Waitlist** toggle. Each shows a count while it is on and offers **Clear filter**, and **Clear all** appears once any of them is set.
+  - **Columns stays where it was.** The **Visible Columns** picker is unchanged, and every column you had switched on still is.
+  - **A bigger search box and bigger filter buttons**, so the toolbar is usable with a thumb on a tablet at the desk. On a narrow screen the filter row scrolls sideways rather than squeezing the buttons.
+</Update>
+
+<Update label="August 25, 2026" tags={["Hospital"]} description="v9.37.0 · Full and Enterprise editions">
+  ## Run an antenatal clinic in ClinikEHR
+
+  Midwives have been keeping pregnancies on paper cards while the rest of the record lived here — so the doctor reviewing a woman at the consultation chart could not see a single antenatal reading, and nobody could answer "how many women are due this week" without counting by hand.
+
+  **Maternity** is a new care area covering the whole pregnancy: booking, antenatal contacts, labour, the birth, and the six-week postnatal visit. It is **off until you switch it on** at **Settings → Facility**, so nothing changes for a hospital that does not run one. See [Set up Maternity](/hospital/get-started/maternity-setup).
+
+  - **[Today's Clinic](/hospital/maternity/todays-clinic)** lists the women booked with you, each showing her gestation and whether her next contact is due or overdue — on whichever contact schedule you run (WHO eight-contact, focused four-visit, or one of your own).
+  - **[The antenatal card](/hospital/maternity/antenatal-card)** reads down a column the way its paper ancestor did: every contact, every reading, every dose, on one page. The due date is worked out from the dating you recorded, so it is never re-typed — and [changing it](/hospital/maternity/pregnancy-records) records who changed it, from what, and why.
+  - **Order the booking bloods in one act.** **Order antenatal profile** puts up HIV, hepatitis B, syphilis, a full blood count, urinalysis and malaria together — and names any your catalogue does not carry, rather than quietly ordering the rest. See [Record a contact](/hospital/maternity/record-a-contact).
+  - **[IPTp, tetanus and iron-folate](/hospital/maternity/programme-doses)** are tracked as a series, so "has she had IPTp-2?" is answerable at last. **Give it now, from stock** draws the dose and records the lot in the same step — or record one given at another facility, marked as such.
+  - **[The labour ward](/hospital/maternity/labour-ward)**, a [delivery record](/hospital/maternity/labour-record) and your choice of [labour chart](/hospital/maternity/labour-chart) — the WHO Labour Care Guide or the classic partograph, whichever your midwives trained on.
+  - **[Babies](/hospital/maternity/babies)** get a birth record, and can be registered as patients in their own right, linked to their mother — so a newborn's chart shows a real age in days and weeks, and the mother can be given access to it. **BCG, OPV-0 and the hepatitis B birth dose** are tracked on the birth record: give one from stock, or record one given elsewhere, and see at a glance which of the three are still outstanding.
+  - **[Postnatal contacts](/hospital/maternity/postnatal)** and the [PMTCT continuum](/hospital/maternity/pmtct) close the loop to six weeks. When a midwife refers a woman to a clinician, [the clinician can close that referral](/hospital/maternity/close-a-referral) — and the record shows whether they signed it themselves or the midwife reported the visit.
+  - **The doctor needs no extra step.** Antenatal readings appear in the Vitals flowsheet on the [consultation chart](/hospital/maternity/pregnancy-on-the-chart) beside blood pressure and weight, with fundal height, fetal heart rate and presentation shown for pregnant patients only. **A fetal heart rate outside 110–160 is flagged** there like any other abnormal vital, and says which way. Admitted women carry the same summary on the [ward chart](/hospital/maternity/ward-maternity-tab).
+  - **A record entered against the wrong woman can be corrected.** **Mark as entered in error** takes a reason, leaves the contact's slot free, and keeps the original in the audit trail — [nothing is ever deleted](/hospital/maternity/retract-a-record).
+  - **[The register](/hospital/maternity/register)** and **[coverage indicators](/hospital/maternity/coverage)** — ANC1, ANC4+, ANC8+, IPTp, tetanus, caesarean and stillbirth rates — come from the contacts you already recorded, alongside a **PMTCT cascade** that follows enrolled women through treatment to their baby's prophylaxis. Maternity also appears in **Analytics** as a report of its own.
+  - **Postnatal checks now take her vitals.** Blood pressure, pulse, temperature and the rest are recorded on the contact and reach the doctor's chart — postpartum pre-eclampsia presents *after* a normal delivery, and there was previously nowhere to write the reading that finds it.
+  - **The delivery and each baby appear on the chart timeline**, so a doctor reading back through a patient's record sees the birth where it happened, nested under the labour admission. **A registered baby's birth is on her own chart too**, under her own cot or NICU stay rather than her mother's — the one event that defines a newborn patient is no longer only on somebody else's record.
+  - **Every postnatal check reaches the chart.** The whole examination is there — the timing, the danger signs, whether she was referred, involution, lochia, the Edinburgh score — and **danger signs are shown in red** so a clinician reading back cannot pass over one. A newborn's check appears on her mother's chart named for her, and on her own once she is registered; before, a baby's check reached no chart at all. A check where you ticked **None** reads **No danger signs**, which is a finding, and reads differently from one where the question was never answered.
+  - **Assess a woman in labour on admission.** A labour ward triage records her observations and puts her on the board as **In labour** before there is anything to say about a delivery — so the assessment that decides her care is written down at the moment it is made, not reconstructed afterwards. A record still in labour is not counted as a delivery anywhere.
+
+  - **The PMTCT continuum reaches the baby's test.** Record an exposed baby's test result — at birth, six weeks, nine months, eighteen months or after breastfeeding stopped — on the mother's own PMTCT panel, alongside her status. A specimen sent and not yet returned is recorded as **Awaiting result**, so the baby is not bled twice and somebody knows to chase it; it is not counted as a tested baby until a result comes back. The **[PMTCT cascade](/hospital/maternity/coverage)** now runs the whole way: enrolled → on treatment → delivered → prophylaxis → tested. Results can be recorded long after the pregnancy record has closed, because that is when this testing happens.
+
+  - **Babies waiting to be registered are now listed.** The postnatal board shows every baby born alive here who has no patient record of their own yet, with **Register** on each row — before, the only way in was to find and reopen the birth record. A stillbirth never appears on the list, and the screen says so, so an empty list is never read as a missing baby.
+  - **A monthly activity return.** **Maternity Activity** counts what actually happened in a month — contacts held, doses given, deliveries, births and postnatal visits — and can be exported. It sits beside **Antenatal Coverage**, which follows the women who booked in a month through their care. The two answer different questions and will show different figures for the same month; each says which it is.
+
+  A woman's HIV status is shown only on her own PMTCT panel, to staff you have granted that act. It never appears on a worklist, a register or an export — and neither does her baby's test result, which is why it is recorded there and not on the babies list.
+</Update>
+
+<Update label="August 26, 2026" tags={["Platform"]} description="All editions">
+  ## Single-module data exports work again
+
+  Exporting one module from **Settings → Data Export** — one CSV, rather than a ZIP of several — failed at the upload step with a technical error about the file type. Multi-module exports were unaffected. Fixed: a single module now comes out as its CSV, exactly as described.
+
+  - **Very large exports can no longer get stuck.** A job interrupted mid-way used to show the same progress forever and keep the export button disabled; it is now marked failed with a plain message, so you can try again with a narrower range.
+  - **Every export now carries the patient's name**, in a **Patient Name** column beside the patient's ID — a spreadsheet of bare IDs was unusable for an access request or a mail merge. The name is left blank where a record has no resolvable patient, never guessed.
+  - **The Clinical Notes export now contains the notes.** It previously carried the title, type and diagnosis codes and not one word a clinician wrote; each row now includes the full note text, section by section, flattened the same way the signed PDF renders it.
+</Update>
+
+<Update label="August 26, 2026" tags={["Platform", "Hospital", "Solo & Team"]} description="All editions">
+  ## The patient ID prefix you chose is now the one that gets used
+
+  Clinics that set their own medical-record-number prefix would have kept getting numbers built from the first three characters of the clinic name — punctuation and spaces included, so "Dr. Jones" produced numbers like **DR.-0001**.
+
+  Numbers are now issued from the prefix you chose, and the count they continue from can no longer skip or repeat.
+
+  - **Nobody is renumbered.** Existing numbers stay exactly as they are, and the sequence continues from them — a clinic switching from CIT to CMC goes **CIT-0133 → CMC-0134**, not back to 0001.
+  - **Two people registered at the same moment can no longer be issued the same number**, and deleting a patient no longer hands their number to the next person registered.
+</Update>
+
+<Update label="August 25, 2026" tags={["Hospital"]} description="v9.37.0">
+  ## Giving a medication asks the same permission everywhere
+
+  If you use staff permissions to control who may give a drug, **Give a medication** governed the drug chart but not the Inventory module's own administration screen — so someone you had not granted it could still record a dose there and draw it from stock.
+
+  Both routes now ask for it. Nothing changes for clinics that have not set staff permissions, or for owners and managers.
+</Update>
+
+<Update label="August 22, 2026" tags={["Platform", "Hospital", "Solo & Team"]} description="All editions">
+  ## Babies and infants now show a real age
+
+  Anywhere the product showed a patient's age, everyone under twelve months read **0 years** — a three-day-old and an eleven-month-old looked identical on the chart header, the storyboard, and every lab, radiology and prescription form.
+
+  Ages are now written the way a clinician says them: **3 days**, **6 weeks**, **11 months**, **42 years**. Dense tables use the short form — **3d**, **6w**, **11m**, **42y**.
+
+  - Newborn observations are now checked against **newborn reference ranges** for pulse and breathing rate, rather than the range for a baby up to a year old.
+  - A date of birth typed in the future now reads **Not yet born** instead of showing a wrong age.
+  - Where age decides something — a reference range, an AI note's age band — the calculation is the same one everywhere, so two screens can no longer disagree about the same patient.
+</Update>
+
+<Update label="August 22, 2026" tags={["Platform", "Billing"]} description="All editions">
+  ## Change plan without paying for two
+
+  If you already pay for a plan and choose another — a higher tier, a lower one, or the same plan billed yearly instead of monthly — the change is now made to the subscription you have. Before, every plan click started a fresh checkout, which could leave the old plan quietly billing alongside the new one.
+
+  - **Upgrades and monthly → yearly apply immediately**, and you see the exact amount before you confirm: the new price less credit for the unused part of the period you already paid for, worked out to the second. The button reads **Pay … and switch**. A declined card changes nothing — "Your card was not charged and your plan is unchanged".
+  - **Downgrades and yearly → monthly apply at the end of your current period.** Nothing is charged today, you keep everything you paid for until then, and the banner shows **Scheduled: … starts on** the date with a **Withdraw change** button if you change your mind.
+  - Plan cards now say what they do — **Upgrade to Essential**, **Downgrade to Starter**, **Switch to annual billing**, **Switch to monthly billing** — and the banner shows whether you bill monthly or annually.
+  - Works the same for Stripe and Paystack billing, in every edition.
+
+  See [Change your plan](/platform/plans/change-plan).
+</Update>
+
 <Update label="August 20, 2026" tags={["Platform", "Solo & Team", "Hospital"]} description="Help Center">
   ## Solo practices and hospitals now have their own guides
 

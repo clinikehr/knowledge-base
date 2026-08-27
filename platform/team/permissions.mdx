@@ -61,42 +61,53 @@ New acts get added to the product as it grows. For anyone already governed, a ne
 
 <Tabs>
   <Tab title="Clinic & Hospital">
-    **Client care** — Create client profiles · Delete client profiles · Search for clients · View all documents · Share documents with clients · Schedule appointments · Edit appointments · Manage appointment requests
-
-    **Billing** — Edit clients' billing info · Edit service fees · Create billing documents · Add client payments · Add insurance payments · File insurance claims · View Payment Reports · Request coverage reports · Refund payments · View financial dashboard
-
-    **Operations** — Edit note and form templates · Add team members · Send client announcements
-
-    Hospitals get three more groups, because a hospital has acts a practice does not:
+    The switches cover the acts where two people on the same screen should not have the same authority. Everything else a role can reach is decided by the **role** itself — see [Roles](/platform/team/roles).
 
     | Group | Acts |
     | --- | --- |
-    | **Consultation** | Sign and lock a consultation · Countersign a colleague's note · Admit a patient to a ward |
+    | **Consultation** | Sign and lock a consultation · Countersign a colleague's note · Admit a patient to a ward · Prescribe medications |
     | **Ward** | Give a medication · Record observations · Discharge a patient · Amend the problem list · Change or stop a medication |
     | **Theatre** | Book and reschedule cases · Advance a case through theatre · Cancel a case · Record the operation note · Sign the operation note · Manage theatres and the safety checklist |
+    | **Results** | Enter results at the bench · Verify and authorise results · Amend a verified result |
+    | **Maternity** | Open a pregnancy record · Change a confirmed due date · Close a pregnancy record · Record an antenatal contact · Record a programme dose · Record a delivery · Sign a delivery record · Register a newborn as a patient · Record a postnatal contact · Record a PMTCT status |
 
-    A hospital group only appears if the matching care area is switched on — see [Care areas](/platform/team/care-areas).
+    A group only appears if the matching care area is switched on — see [Care areas](/platform/team/care-areas). **Results** is new in August 2026: a hospital running its own lab or DOT testing can now govern who enters a result and who authorises it, which it previously could not.
+
+    <Note>
+      **This list used to be longer, and the extra switches did nothing.**
+
+      Until August 2026 the sheet also offered twenty-one toggles under **Client care**, **Billing** and **Operations** — "Refund payments", "Edit service fees", "Add team members" and so on. No part of the product ever read them: switching one off restricted nobody, and there was no way to tell that from the screen.
+
+      They have been removed rather than left in place, because a switch that governs nothing is worse than no switch — it tells you a job is done. If you relied on one, the control you actually want today is the person's **role**: a Clinic Scheduler cannot open Billing at all.
+    </Note>
   </Tab>
   <Tab title="Pharmacy">
     | Group | Acts |
     | --- | --- |
-    | **Till** | Dispense and sell at the till · Override the selling price · Discount beyond the set limit · Refund or void a sale · Open the cash drawer · Cash up and close the day |
-    | **Stock** | Receive deliveries into stock · Adjust stock counts · Transfer stock between branches · Manage suppliers and purchase orders |
+    | **Till** | Override the selling price · Discount beyond the set limit · Refund or void a sale · Write money on or off an account |
+    | **Stock** | Manage suppliers and purchase orders |
     | **Controlled drugs** | Witness a controlled-drug dispense |
     | **Money** | View cost prices and margin · View the net position |
     | **Oversight** | View per-cashier takings |
 
-    Each switch carries its own explanation in the sheet. **Witness a controlled-drug dispense** — "Countersign the register when a controlled drug leaves the shelf" — is the one to be deliberate about: it is a legal countersignature, not a convenience.
+    Each switch carries its own explanation in the sheet. **Witness a controlled-drug dispense** — "Countersign the register when a controlled drug leaves the shelf" — is the one to be deliberate about: it is a legal countersignature, not a convenience. **Write money on or off an account** covers paying out, refunding or correcting a [customer's prepaid balance](/pharmacy/customers/wallet) with no sale behind it; taking a top-up and spending a balance at the till are the counter working, and are not gated.
+
+    <Note>
+      **Selling at the till, receiving stock, adjusting counts, branch transfers, opening the drawer and cashing up are not switches.** They were offered until August 2026 and not one of them was ever checked. Anyone who can open the till can use it; anyone who can open Inventory can receive and adjust. Restricting those is a role decision today, not a per-person one.
+    </Note>
   </Tab>
   <Tab title="Diagnostics">
     | Group | Acts |
     | --- | --- |
-    | **Specimens** | Accession an incoming specimen · Reject an unsuitable specimen |
     | **Results** | Enter results at the bench · Verify and authorise results · Amend a verified result |
-    | **Quality** | Review QC runs · Configure analysers and interfaces · View turnaround-time analytics |
-    | **Referrers** | Access the referrer portal · Release a report to a referrer |
+    | **Quality** | View turnaround-time analytics |
+    | **Referrers** | Access the referrer portal |
 
     **Verify and authorise results** is described in the sheet as "the clinical authority step" — it is what makes a result reportable. **Amend a verified result** issues a corrected report after that point. Keep both narrow.
+
+    <Note>
+      **Accessioning, specimen rejection, QC review, analyser setup and releasing a report to a referrer are not switches.** They were offered until August 2026 and none was ever checked. Who does that work is decided by the bench role you give someone.
+    </Note>
   </Tab>
 </Tabs>
 

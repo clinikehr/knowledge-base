@@ -1,0 +1,171 @@
+---
+title: The labour record
+description: "Open one woman's labour — the delivery record and the labour chart in one place — and take it from draft to signed."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with Record a delivery; signing needs its own permission" note="Needs the Maternity care area" />
+
+The labour record is one woman's whole labour on one page: the **Delivery record** at the top, then the **Labour chart**, then **Babies**. The chart has its own page — [The labour chart](/hospital/maternity/labour-chart) — and so do the births: [Babies and birth records](/hospital/maternity/babies).
+
+<Path steps={['Sidebar', 'Maternity', 'Labour Ward', '⋯', 'Labour record']} />
+
+<TaskHeader
+  before="A delivery record already started from the labour board"
+  time="Written up across the labour, completed once"
+  after="A delivery record that says when the birth was, how it was conducted, and how labour started"
+/>
+
+## What you're looking at
+
+Her name at the top, with **Labour record**, her gestation and her EDD underneath. **Labour Ward** at the top right goes back.
+
+Three blocks follow: **Delivery record**, then the **Labour chart** — a cervicograph and an observation matrix — then **Babies**, with a count and one row per baby. **Babies** appears only once a delivery record exists, since a birth is recorded against the labour.
+
+The **Delivery record** card carries a state badge — **Not started**, **Draft**, **Recorded, unsigned** or **Signed** — and a button reading **Start delivery record** or **Open record**. Before one exists the card says: "Nothing is claimed about this labour yet. Starting the record is what puts her on the Labour Ward board."
+
+## The three states, and why they are separate
+
+| State | What it means |
+| --- | --- |
+| **Draft** | **Nothing is claimed yet.** A labour in progress needs no time of birth and no mode — the banner says "Fill in what you know now; it does not need the time of birth or the mode until you complete it." |
+| **Recorded, unsigned** | It carries when the birth was, how it was conducted and how labour started. Complete but not attested |
+| **Signed** | Your attestation, with your name and the time. **It can no longer be amended** |
+
+Completing the record is a deliberate act with its own button, so a record never becomes a clinical claim as a side effect of typing into a field.
+
+## Write up the delivery
+
+Select **Open record**. The sheet is headed **Delivery record** and notes: "one labour, one record — twins are two birth records against this one."
+
+<Steps>
+  <Step title="Labour">
+    **Onset**, **Mode of delivery**, **Labour started** and **Time of birth**. **Induction method** appears only when labour was induced. The stage durations — **First stage**, **Second stage**, **Third stage** — are in minutes.
+  </Step>
+  <Step title="Third stage">
+    **Placenta**, **Estimated blood loss** in ml, and **Oxytocic given**.
+  </Step>
+  <Step title="Perineum">
+    **Perineum**, **Episiotomy**, and **Tear degree** — which appears only where the perineum tore.
+  </Step>
+  <Step title="Outcome and attendant">
+    **Complications** is a comma-separated line, **Attendant** picks a member of staff, and **Notes** is free text.
+  </Step>
+  <Step title="Save it as a draft, or complete it">
+    **Save draft** keeps it open with nothing claimed — "Draft saved", "Nothing is claimed yet — complete it once you have the time, the mode and how labour started."
+
+    **Complete record** promotes it, and confirms **Delivery recorded** — "It is the record of this birth. Sign it when you are ready to attest it."
+  </Step>
+</Steps>
+
+## Sign it
+
+**Sign record** appears on a saved, completed, unsigned record — and on the board row. Confirm at **Sign this delivery record?**: signing "attests it as the clinical record of this birth, under your name and with the time you signed. It can no longer be amended afterwards; a correction then has to be recorded as one."
+
+<Warning>
+  **Sign is disabled while you have unsaved changes**, and the page says **Save your changes before signing.** Signing over unsaved edits would attest something nobody can read back. Save first, read what stands, then sign.
+</Warning>
+
+A signed record is read-only throughout, and the banner says why: "This is the signed clinical record of the birth. It can no longer be amended — record an amendment rather than changing it."
+
+**Signing also closes the pregnancy record**, so she leaves [Today's Clinic](/hospital/maternity/todays-clinic) — a woman who has given birth is not an antenatal patient. The outcome is taken from the births you recorded: **Live birth** if any baby was born alive, **Stillbirth** if none was. She appears in the [Antenatal Register](/hospital/maternity/register) with that outcome, and on [Postnatal](/hospital/maternity/postnatal) for her and her babies' checks. The confirmation says so.
+
+<Warning>
+  **If no birth has been recorded against the delivery, the pregnancy record is left open** and you are told. There is no outcome to state, and a pregnancy cannot be reopened once closed — so it waits for the birth rather than being closed as a guess.
+</Warning>
+
+## Retract a record that should never have existed
+
+At the bottom of the sheet, **Mark as entered in error** retracts the whole delivery record — for a labour filed against the wrong woman, or a duplicate. It is offered on a signed record too, because refusing it would leave a signed claim that a woman gave birth when she did not, with no way out.
+
+It asks for a reason, which becomes part of the record, and it says what it will and will not move: the record stays on file read-only, drops out of the delivery and coverage figures, and "Nothing else moves. The pregnancy record, the labour observations, the ward admission and the theatre case stay exactly as they are." Any birth still recorded against the labour has to be retracted first.
+
+The full sequence, the refusals and what a signed record additionally needs are on [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+
+<AuditNote action="Opening a labour record" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open and read the labour record | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the page has no check of its own |
+| Start, write up or complete the record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Sign it | Anyone not yet governed; otherwise only if switched on | **Sign a delivery record** |
+| Mark it as entered in error | Anyone not yet governed; otherwise only if switched on | **Record a delivery** — and **Sign a delivery record** as well, once it is signed |
+
+Signing is a separate permission from recording on purpose — writing up a birth and attesting to it are different acts. Retracting rides the recording permission, because whoever may say a birth happened may say it did not; retracting a **signed** record needs signing authority as well, because unmaking an attestation takes the same authority as making one.
+
+## Check it worked
+
+- The card's badge reads **Recorded, unsigned** after **Complete record**, and **Signed** afterwards.
+- Her row on [Labour Ward](/hospital/maternity/labour-ward) shows the same state.
+- Once a **Time of birth** is on the record, the board's **In labour for** column reads **Born …**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A completed delivery record has to say when the birth was, how it was conducted, and how labour started.">
+    "Save it as a draft until you have those." **Time of birth**, **Mode of delivery** and **Onset** are what completing the record claims.
+  </Accordion>
+
+  <Accordion title="Labour can't have started after the birth.">
+    **Labour started** is later than **Time of birth**. Check both.
+  </Accordion>
+
+  <Accordion title="A birth can't be recorded in the future.">
+    **Time of birth** is ahead of now. Check the time as well as the date.
+  </Accordion>
+
+  <Accordion title="An induction method can only be recorded when labour was induced.">
+    Set **Onset** to induced, or clear **Induction method**.
+  </Accordion>
+
+  <Accordion title="A tear degree can only be recorded when the perineum tore.">
+    Set **Perineum** to a tear, or clear **Tear degree**.
+  </Accordion>
+
+  <Accordion title="A draft can't be signed. Complete the record first, then sign it.">
+    Select **Complete record**, check what it says, then **Sign record**.
+  </Accordion>
+
+  <Accordion title="This delivery record has already been signed.">
+    Somebody signed it while your sheet was open. Reload — a signed record cannot be amended.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I correct a signed record?">
+    Not by editing it — the record is closed, and a correction is recorded as an amendment. If the record should never have existed at all, that is a different act: **Mark as entered in error**, which needs signing authority on a signed record. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+  </Accordion>
+
+  <Accordion title="What about twins?">
+    One labour is one delivery record, and each baby is a birth of its own. Twins are **Baby 1** and **Baby 2** in the **Babies** section — see [Babies and birth records](/hospital/maternity/babies).
+  </Accordion>
+
+  <Accordion title="Does completing the record close her pregnancy?">
+    No. Closing the pregnancy record is a separate act with its own permission — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+  </Accordion>
+
+  <Accordion title="What happens once a Time of birth is on the record?">
+    She appears on [Postnatal](/hospital/maternity/postnatal), with her four WHO contacts and a row for each baby. Nothing else has to be done to put her there.
+  </Accordion>
+
+  <Accordion title="Can I leave it a draft for a whole shift?">
+    Yes — that is what a draft is for. It claims nothing and needs no time or mode.
+  </Accordion>
+
+  <Accordion title="Who appears in Attendant?">
+    Active staff at your hospital.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a delivery record" />
+
+{/* source of truth: components/clinic/maternity/labour-record-view.tsx, components/clinic/maternity/delivery-form.tsx, db/actions/maternity.ts (recordDelivery, signDeliveryRecord) */}

@@ -1,0 +1,212 @@
+---
+title: The labour chart
+description: "Chart a labour — the cervicograph, the observation matrix, and what the two charting systems do and do not judge."
+icon: "/images/icons/chart-line.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area and a ward admission" />
+
+Below the delivery record on [the labour record](/hospital/maternity/labour-record) sit two views of the same observations: a **Cervicograph** and a **Labour observations** matrix.
+
+<Path steps={['Sidebar', 'Maternity', 'Labour Ward', '⋯', 'Labour record']} />
+
+<TaskHeader
+  before="Her delivery record started, and a ward admission — observations are charted against a bed"
+  time="A minute per observation"
+  after="A cervicograph and an observation matrix that show the labour as it happened"
+/>
+
+## She needs a bed first
+
+**Record observation** is disabled until she has a ward admission, and the page says why: "Observations are recorded against a ward admission. Admit her to a bed to start the labour chart." A woman showing **Not admitted** on the labour board cannot be charted.
+
+## Chart an observation
+
+<Steps>
+  <Step title="Select Record observation">
+    The sheet is headed **Labour observation** and names her.
+  </Step>
+  <Step title="Set Observed at">
+    The field states the rule: "When the observation was MADE, not when it is being typed." A future time is refused.
+  </Step>
+  <Step title="Labour progress">
+    **Cervical dilatation**, **Head descent** (fifths palpable), **Contractions** per 10 minutes, **Contraction strength**, **Contraction duration**, **Moulding** and **Caput**.
+  </Step>
+  <Step title="Fetal condition">
+    **Fetal heart rate** and **Liquor**.
+  </Step>
+  <Step title="Maternal condition">
+    **Pulse**, **Blood pressure**, **Temperature**, **Urine volume**, **Urine protein** and **Urine acetone**.
+  </Step>
+  <Step title="Treatment">
+    **Oxytocin running**, **Drugs and IV fluids**, and **Notes**.
+  </Step>
+  <Step title="Select Chart observation">
+    It confirms **Observation charted** — "It is on the labour chart."
+  </Step>
+</Steps>
+
+<Note>
+  **An entirely empty observation is refused**: "Record at least one observation — an empty entry would look like a gap that was covered." Chart what you took, and leave the rest blank.
+</Note>
+
+## The cervicograph
+
+Cervical dilatation against **hours since the onset of active labour** — not against the clock. The card states where hour zero comes from: the recorded onset of active labour, or, where none is recorded, the first observation at the active-phase threshold.
+
+### Two charting systems, and they disagree on purpose
+
+The chart carries a badge naming which is in force, every time, because the two judge differently and a reader who does not know which is speaking cannot read the flags at all. Your hospital chooses which one it runs — see [Choose your labour chart](/hospital/get-started/maternity-setup).
+
+| | **WHO Labour Care Guide (2020)** | **Classic partograph (alert and action lines)** |
+| --- | --- | --- |
+| Active phase from | 5 cm | 4 cm |
+| Alert and action lines | Not drawn | Drawn |
+| Fetal heart rate | 110–160 bpm | 120–160 bpm |
+| After full dilatation | Still assessed | Nothing assessed |
+
+The Labour Care Guide draws no alert or action line because WHO retired the fixed 1 cm/hour gradient in 2020 — it over-diagnosed slow progress. The chart says so under itself, so its absence reads as the guideline rather than as a fault.
+
+The same reading can therefore be a flag on one chart and nothing at all on the other. A fetal heart rate of **115 bpm**, recorded once, is **Fetal heart rate below the reference range** on the classic chart and no flag on the Labour Care Guide.
+
+<Warning>
+  **The classic chart ends at full dilatation and evaluates nothing after it.** Once she reaches full dilatation the chart says so itself: "That silence is a limitation of this chart, not a statement that the second stage was normal — the Labour Care Guide is the version with second-stage rules." An empty chart in the second stage means the chart is not looking. Do not read it as reassurance.
+</Warning>
+
+<Note>
+  **The chart is measured against whichever system is set at the moment it is opened.** Nothing is recalculated, nothing is migrated and no observation changes — so a hospital that switches charts changes what its charts say about labours already in progress. The badge on the **Cervicograph** is always the answer to "which one am I reading".
+</Note>
+
+### Gaps are gaps
+
+Nothing is interpolated and nothing is carried forward. The notes under the chart print how many plots stand, **the longest interval between plots**, and how long ago the last observation was — with the point spelled out: *"the segment between two plots joins them, it does not stand for observations in between."*
+
+### The flags are advisory, and silence is not reassurance
+
+Findings appear under the chart with the values that fired them, headed **Advisory findings — read them, and dismiss any you disagree with. Nothing here is a decision.** Each carries the stage it belongs to.
+
+With none, the chart says: **No flags from what is recorded. That is not a statement that the labour is progressing normally, and it does not mean an observation was taken.**
+
+## Labour observations
+
+The matrix is one column per charted observation, one row per parameter. Its caption: "Each column is one charted observation. Values are shown as recorded — nothing here is judged; the findings are under the cervicograph."
+
+- Each column header carries the time and **+** the interval since the previous one — stated, never judged.
+- A parameter nobody has charted reads **not recorded on any observation** — never a zero, never "normal".
+- Only the most recent observations are shown; where earlier ones are off the end it says **Showing the most recent … observations · … earlier not shown.**
+- An entry with no usable time cannot be placed on the chart and is surfaced as **unplaced** rather than dropped.
+- The bottom row carries a **Correct** button under each standing observation — see below.
+- Empty: **No labour observations have been charted yet.**
+
+## Correct an observation
+
+The word is deliberately never "Edit". A correction **adds a new observation that supersedes the original** — both stay on the chart, and the reason is what makes the pair readable. The matrix's own footnote says it in full:
+
+> **Correct** does not edit an observation and does not remove it. It opens a new observation that supersedes the one you picked, with a reason — the original stays here, struck through, beside its correction. An observation that has already been corrected offers no Correct: correct the observation that superseded it instead.
+
+<Steps>
+  <Step title="Find the column and select Correct">
+    The bottom row of **Labour observations** is labelled **Correct** — "adds a new observation; the original stays" — with a button under each standing column.
+  </Step>
+  <Step title="Check the time">
+    The sheet is headed **Correct an observation** and names which one. It opens on the **original's** time, not on now, because you are re-stating what was found at that moment.
+  </Step>
+  <Step title="Enter what should have been recorded">
+    The same fields as any observation. Enter the values as they should stand.
+  </Step>
+  <Step title="Say why in Why this is being corrected">
+    Required. Above the first field the sheet restates what is about to happen: "This writes a new observation that supersedes … The original is not changed or removed — both stay on the chart, and the reason below is what makes the pair readable."
+  </Step>
+  <Step title="Select Chart correction">
+    It confirms **Correction charted** — "The original stays on the chart beside it, struck through."
+  </Step>
+</Steps>
+
+<Note>
+  **One observation can be corrected only once.** A column that has already been superseded shows **corrected** in place of the button rather than a control that would fail. If a correction itself was wrong, correct the correction.
+</Note>
+
+### What a struck-through column means
+
+The original keeps its place — drawn hollow and dashed on the cervicograph, struck through in the matrix, with the correction's reason on the cell. The matrix states it: *"**Struck through** is an observation a later entry corrected. It stays on the chart: the record of what was believed at the time is part of the record. Hover a cell for the correction's reason."*
+
+That is the whole point — a reader can see what was believed at the time, not just what is believed now.
+
+## Check it worked
+
+- A new column appears at the right of **Labour observations**, at the time you set.
+- The dilatation you charted is a new plot on the **Cervicograph**.
+- **Last observation** on the [labour board](/hospital/maternity/labour-ward) resets, and the count rises.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Record observation is greyed out">
+    She has no ward admission. "Observations are recorded against a ward admission. Admit her to a bed to start the labour chart."
+  </Accordion>
+
+  <Accordion title="A partograph is charted against an admission. Admit her before charting labour.">
+    The same cause, from the server: the admission went away, or was never linked to the delivery record.
+  </Accordion>
+
+  <Accordion title="An observation can't be recorded in the future.">
+    **Observed at** is ahead of now. It takes the time the observation was made.
+  </Accordion>
+
+  <Accordion title="Record at least one observation — an empty entry would look like a gap that was covered.">
+    Every field was left blank. Chart at least one value.
+  </Accordion>
+
+  <Accordion title="The cervicograph is empty although I have charted observations">
+    The chart plots cervical dilatation against time. Observations with no dilatation appear in the matrix but have nothing to plot. The empty chart states its own reason.
+  </Accordion>
+
+  <Accordion title="This pregnancy record is closed, so no further labour observations can be charted against it.">
+    The pregnancy record was closed. Nothing further can be added to it.
+  </Accordion>
+
+  <Accordion title="A column says corrected instead of offering a Correct button">
+    That observation has already been superseded. Correct the observation that superseded it — the one standing to its right.
+  </Accordion>
+
+  <Accordion title="Say why this observation is being corrected.">
+    "The original stays on the chart, so the reason is what makes the pair readable." Write what was wrong with the original.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I choose which charting system we use?">
+    Yes. The clinic owner sets it once for the whole hospital, on the **Partograph** card under **Settings → Facility**. The card compares the two side by side before you commit — see [Choose your labour chart](/hospital/get-started/maternity-setup). Every chart carries a badge naming the one in force.
+  </Accordion>
+
+  <Accordion title="We changed the chart while a woman was labouring — what happened to her chart?">
+    Nothing was rewritten. Her observations are untouched; they are simply measured against the new system from the moment you save, so flags can appear or disappear without anyone re-examining her. The card says so before the save and again in the confirmation.
+  </Accordion>
+
+  <Accordion title="Why is there no alert line on our chart?">
+    You are on the **WHO Labour Care Guide (2020)**, which retired the 1 cm/hour line. Its absence is the guideline, not a fault — the chart says so under it. If you want those lines, the owner can switch the hospital to the **Classic partograph (alert and action lines)**.
+  </Accordion>
+
+  <Accordion title="Can I delete an observation I charted by mistake?">
+    No. The chart is append-only — nothing is removed. Use **Correct** instead: the mistake stays, struck through, beside what should have been recorded and the reason.
+  </Accordion>
+
+  <Accordion title="Does a flag escalate anything or tell anyone?">
+    No. Flags are shown with the values that fired them and nothing else happens. Reading them and deciding is yours.
+  </Accordion>
+
+  <Accordion title="Why is the x-axis hours and not the time of day?">
+    Progress is judged against how long the active phase has run, so the chart is drawn in hours since its onset. Each observation's clock time is on its column in the matrix.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the labour chart" />
+
+{/* source of truth: components/clinic/maternity/partograph/partograph-chart.tsx, partograph-grid.tsx, partograph-entry-form.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/partograph.ts */}

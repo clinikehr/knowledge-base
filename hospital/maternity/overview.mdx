@@ -1,0 +1,146 @@
+---
+title: Maternity
+description: "How the maternity module works — the antenatal clinic, the labour ward, the postnatal board, and where a pregnancy is read from booking to outcome."
+icon: "/images/icons/woman.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+Maternity in ClinikEHR runs on three boards. **Today's Clinic** is where a pregnancy record is opened, worked and closed; **Labour Ward** is where a woman goes once somebody starts her delivery record; **Postnatal** is where she and each baby go once that record carries a time of birth. Everything else is a way of reading what those three produced.
+
+No board fills itself. A pregnancy appears on the first because somebody opened a record, on the second because somebody started a delivery record, and on the third because that record says when the baby was born — nothing is inferred from a gestation, a ward or an outcome.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal']} />
+
+## What is here today
+
+| Screen | What it is for |
+| --- | --- |
+| [Today's Clinic](/hospital/maternity/todays-clinic) | Every open pregnancy record, with the contact each is due |
+| [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records) | The three acts that bracket a pregnancy |
+| [Record an antenatal contact](/hospital/maternity/record-a-contact) | Vitals, obstetric findings and a referral, in one sheet |
+| [The antenatal card](/hospital/maternity/antenatal-card) | One pregnancy read over time — every contact in sequence |
+| [Programme doses](/hospital/maternity/programme-doses) | IPTp, tetanus and iron-folate against a pregnancy |
+| [Antenatal Register](/hospital/maternity/register) | Pregnancies that have been closed, with their outcome |
+| [Antenatal Coverage](/hospital/maternity/coverage) | ANC1, ANC4+, ANC8+, IPTp and tetanus coverage, plus the caesarean and stillbirth rates, by month booked |
+| [Labour Ward](/hospital/maternity/labour-ward) | Who is labouring, for how long, and who is expected |
+| [The labour record](/hospital/maternity/labour-record) | One labour — the delivery record, from draft to signed |
+| [The labour chart](/hospital/maternity/labour-chart) | The cervicograph and the observation matrix |
+| [Babies and birth records](/hospital/maternity/babies) | Each baby born, and registering a live birth as a patient |
+| [Postnatal](/hospital/maternity/postnatal) | The four WHO postnatal contacts, for the mother and for each baby |
+| [Retract a delivery or birth record](/hospital/maternity/retract-a-record) | Marking a record entered in error, and what that moves |
+| [The pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart) | What a clinician sees while the woman is in front of them |
+| [The Maternity tab on a ward chart](/hospital/maternity/ward-maternity-tab) | Charting a labour from the bedside, and what the tab says before anybody has |
+
+The module covers a pregnancy from booking, through labour, to each baby born and registered, and on to the six-week postnatal check.
+
+## The postnatal side is built from the delivery
+
+**Postnatal** takes its list from the delivery record, not from a birth outcome — so a woman has a row whatever happened, and a stillborn baby is still listed beside her with a line saying where her mother's care is recorded instead. The WHO schedule is four contacts: **within 24 hours**, **day 3**, **day 7–14** and **week 6**, counted from the birth, over a board that looks back 90 days and says so on screen.
+
+Two consequences are worth knowing before anybody works it:
+
+- **A baby is identified by her birth record, so postnatal care never waits on registration.** The first contact is due within 24 hours and nobody has done the paperwork by then. **Not registered yet** is context on the row, never a block.
+- **The Edinburgh score is recorded as scored and is not interpreted.** No band, no threshold, no colour and no referral is derived from it, here or anywhere downstream. If the score means she needs to be seen, **Refer to a clinician** on the contact is what carries that forward.
+
+## Nothing deletes; a wrong record is retracted
+
+A pregnancy record, a programme dose, an antenatal contact, a delivery record, a birth record and a postnatal contact can each be marked **entered in error**, with a reason. The row stays on file, read-only, and stops counting — which is also what frees its position for the corrected one.
+
+Retraction is refused, never cascaded, while anything is filed underneath: a delivery with live birth records against it will not retract until each is, and a birth with postnatal contacts against it will not either. And **a registered baby keeps their patient record** — retracting a birth never touches the child's chart or the mother's guardian link. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+
+## Gestation is worked out, never typed
+
+Nobody records a gestational age anywhere in ClinikEHR. A pregnancy record carries a due date, and every **28+3** you read — on the worklist, on the antenatal card, on the chart header, in the storyboard, on the **Pregnancy** tab — is worked out from that due date at the moment you look at it.
+
+That has two consequences worth knowing:
+
+- **Every screen agrees.** There is no second copy of the number to drift out of date, and a screen left open overnight recalculates rather than showing yesterday's week.
+- **Correcting the due date corrects the history with it.** If a dating scan moves the due date, the record then reads as though she had always been dated that way — including the gestation shown against contacts recorded weeks earlier. What the previous date was, and why it changed, is kept and shown on both the [antenatal card](/hospital/maternity/antenatal-card) and the chart.
+
+Where the dating on a record cannot be used, screens say **Dating unavailable** rather than leaving the space blank. A blank reads as "not pregnant"; the words read as "we cannot work this out", which is what is true.
+
+## When a contact falls due
+
+Contacts are scheduled against gestation, not against the calendar, so a re-dating moves them all together.
+
+Which schedule your hospital runs is an owner's decision under **Settings → Facility → Antenatal contact schedule**, and there are three answers — see [Set up antenatal care](/hospital/get-started/maternity-setup).
+
+**WHO 2016 — eight contacts** is where every hospital starts:
+
+| Contact | Window (completed weeks) |
+| --- | --- |
+| 1 — Booking (by 12 weeks) | up to 12 |
+| 2 — 20 weeks | 18 to 22 |
+| 3 — 26 weeks | 24 to 28 |
+| 4 — 30 weeks | 29 to 31 |
+| 5 — 34 weeks | 32 to 35 |
+| 6 — 36 weeks | 36 to 37 |
+| 7 — 38 weeks | 38 to 39 |
+| 8 — 40 weeks | 40 to 42 |
+
+**Focused ANC — four visits** is the older model, still in use at many sites: booking by 12 weeks, then 24–26, 30–32 and 36–38. **This hospital's own schedule** is a list you author yourself, one window at a time.
+
+A pregnancy is **Due** once the next window has opened, **Overdue** once it has closed with nothing recorded, and **Schedule complete** once the schedule's last contact is on the record.
+
+<Warning>
+  **The schedule is applied when a board is read, not when a record is written.** Nothing is stored against a pregnancy about which schedule it was booked under, so changing the schedule changes **who counts as Due or Overdue on every open pregnancy at once** — including women booked months ago. No record is altered; the question is simply asked again with different windows.
+</Warning>
+
+<Note>
+  **Contacts are counted, not matched to slots.** A woman who attends twice in the second trimester has had two contacts, whatever the schedule intended them to be. That is deliberate: matching each visit to a numbered slot would invent a precision the record does not have.
+</Note>
+
+## Which labour chart you run
+
+The [labour chart](/hospital/maternity/labour-chart) is the other owner's decision, under **Settings → Facility → Partograph**. Two systems ship, and they judge differently on purpose:
+
+| | **WHO Labour Care Guide (2020)** | **Classic partograph (alert and action lines)** |
+| --- | --- | --- |
+| Active phase from | 5 cm | 4 cm |
+| Alert and action lines | Not drawn | Drawn |
+| Fetal heart rate | 110–160 bpm | 120–160 bpm |
+| After full dilatation | Still assessed | Nothing assessed |
+
+Every hospital starts on the **WHO Labour Care Guide (2020)**. Like the contact schedule, the choice is applied when a chart is read rather than when an observation is written — so changing it changes what the chart says about a labour already in progress, without altering a single observation. See [Choose your labour chart](/hospital/get-started/maternity-setup).
+
+## Who can do what
+
+Role decides whether the **Maternity** group opens at all. Permission decides what may be done inside it.
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open **Today's Clinic** and the **Antenatal Register** | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the screens have no check of their own |
+| Record an antenatal contact | Anyone not yet governed; otherwise only if switched on | **Record an antenatal contact** |
+| Open a pregnancy record | Anyone not yet governed; otherwise only if switched on | **Open a pregnancy record** |
+| Change a confirmed due date | Anyone not yet governed; otherwise only if switched on | **Change a confirmed due date** |
+| Close a pregnancy record | Anyone not yet governed; otherwise only if switched on | **Close a pregnancy record** |
+| Start and write up a delivery record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Sign a delivery record | Anyone not yet governed; otherwise only if switched on | **Sign a delivery record** |
+| Register a newborn as a patient | Anyone not yet governed; otherwise only if switched on | **Register a newborn as a patient** |
+| Retract a delivery or birth record | Anyone not yet governed; otherwise only if switched on — a **signed** delivery needs signing authority too | **Record a delivery** |
+| Record or correct a programme dose | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
+| Record, amend or retract a postnatal contact | Anyone not yet governed; otherwise only if switched on | **Record a postnatal contact** |
+| Book a theatre case from the labour board | Anyone not yet governed; otherwise only if switched on | **Book and reschedule cases** — a **Theatre** switch, not a maternity one |
+
+Two behaviours surprise people. Enforcement is **opt-in per person** — a colleague who has never been saved in the permissions sheet is unrestricted and can do all of these, and the sheet warns **"Saving starts enforcing"**. Once they have been saved, the maternity switches start off, so grant them deliberately. And a **denied action is recorded** in the audit log while an allowed one is not, so an owner can tell "nobody tried" from "somebody was blocked". See [Permissions](/platform/team/permissions).
+
+<Info>
+  The **Maternity** permission group only appears in the sheet while the **Maternity** care area is on. Switch the area on first — [Set up antenatal care](/hospital/get-started/maternity-setup).
+</Info>
+
+## The module records; it does not decide
+
+Nothing in this module decides anything for you. A fundal height, a fetal heart rate, a dipstick result and a danger sign are recorded as they were found and shown as they were recorded — there are no traffic lights, no automatic escalation, and no alert raised on your behalf.
+
+The [antenatal card](/hospital/maternity/antenatal-card) and the [labour chart](/hospital/maternity/labour-chart) do name flags where a finding meets a threshold, with the values that fired them attached, and both state beside them that they do not replace your assessment. Nothing acts on them, escalates them or tells anybody.
+
+And silence is never a reassurance. When nothing is flagged, that means nothing recorded met a rule — not that she is well, and not that anybody took an observation. A measurement nobody took cannot say anything at all.
+
+<StillStuck topic="antenatal care" />
+
+{/* source of truth: lib/maternity/anc-schedule.ts, lib/maternity/gestation.ts, lib/clinic-nav-registry.ts, lib/edition-staff-roles.ts */}

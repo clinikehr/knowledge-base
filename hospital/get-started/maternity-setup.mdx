@@ -1,0 +1,229 @@
+---
+title: Set up antenatal care
+description: "Switch the Maternity care area on, choose the contact schedule and labour chart you run, and grant the acts a maternity unit keeps separate."
+icon: "/images/icons/baby.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner or manager" />
+
+This is an optional setup, not one of the five numbered steps. Do it whenever you are ready, once [step 1](/hospital/get-started/care-areas) is done and your clinical staff are in — granting the permissions needs people to grant them to.
+
+<Path steps={['Sidebar', 'Settings', 'Facility']} />
+
+<TaskHeader
+  before="An enterprise workspace, owner access, and your midwives and nurses already on the team"
+  time="15 minutes"
+  after="A Maternity group in the sidebar, running your contact schedule and your labour chart, open to the right people, with the acts you meant to grant switched on"
+/>
+
+## Switch the area on
+
+<Steps>
+  <Step title="Open Settings → Facility">
+    The card is headed **Facility** — "Which departments this hospital runs. These control what appears in navigation."
+  </Step>
+  <Step title="Find Maternity under Clinical units">
+    It sits alongside **In-patient care**, **In-house pharmacy**, **Surgical theatre** and **Diagnostics**, and describes itself as "Antenatal clinic — pregnancy records, contact schedule and register." Like the theatre, it starts **off**, because most hospitals that sign up do not run an antenatal clinic.
+  </Step>
+  <Step title="Switch it on">
+    It saves the moment you flip it and confirms **Area enabled** — "It now appears in navigation." Switching it back off confirms **Area hidden** — "It no longer appears in navigation. Existing records stay accessible by direct link." Nothing is deleted either way.
+  </Step>
+</Steps>
+
+## What appears, and what does not
+
+Switching **Maternity** on adds one group to the sidebar, with three entries in it:
+
+- **Antenatal** → **Today's Clinic**, **Antenatal Register** and **Coverage**
+- **Labour Ward** — one screen, no sub-entries
+- **Postnatal** — one screen, no sub-entries
+
+A woman's [antenatal card](/hospital/maternity/antenatal-card) hangs off **Today's Clinic** rather than the sidebar — it is reached by selecting her name.
+
+It also adds two blocks to this same **Facility** tab: **Antenatal contact schedule** and **Partograph**, which are the next two steps. Unlike the theatre, maternity brings **no settings tab of its own and no analytics report**.
+
+## Choose your contact schedule
+
+An **Antenatal contact schedule** block appears on the **Facility** tab as soon as the area is on. It decides when each pregnancy's next contact is due, and when she is shown as overdue on the antenatal worklist. **Only the clinic owner can change it** — a manager sees "Only the clinic owner can change this." Until anyone chooses one, the block says so plainly — "No schedule has been chosen, so this clinic runs **WHO 2016 — eight contacts**" — because that is the schedule you are running today, not a gap.
+
+<Steps>
+  <Step title="Pick a schedule">
+    **WHO 2016 — eight contacts** (where every hospital starts), **Focused ANC — four visits**, or **This hospital's own schedule**.
+  </Step>
+  <Step title="Adjust it, if you run your own">
+    Choosing **This hospital's own schedule** starts from whatever is on screen, so "WHO 2016, but with one extra visit" is an edit rather than a rebuild. Each row takes **From (weeks)**, **To (weeks)** and **What it is called**. **Add contact** adds a row after the last window; **Remove** takes one away, and the last remaining row cannot be removed.
+  </Step>
+  <Step title="Read the windows before you commit">
+    The resolved list is printed under the form — **… contacts**, each numbered with its label and its week range — so you see the schedule you are taking on. A row set is refused with the reason in a sentence beneath it if the windows do not ascend or they overlap.
+  </Step>
+  <Step title="Select Save schedule">
+    If the windows actually move, you are asked to confirm: **Change the antenatal schedule?** Confirm with **Change schedule**. It confirms **Antenatal schedule saved** — "The antenatal worklist and every antenatal card now measure contacts against this schedule."
+  </Step>
+</Steps>
+
+<Warning>
+  **Changing the schedule applies to every open pregnancy immediately, including women already booked.** Nothing is recalculated and no record changes — the worklist compares the contacts already recorded against whichever schedule is set when it is opened. So **who counts as Due or Overdue can change the moment you save**: women shown as up to date may appear due or overdue, and some currently overdue may not. Decide this before your first clinic rather than in the middle of a busy month.
+</Warning>
+
+<Note>
+  **An empty schedule of your own is refused**, and the refusal says why: "an empty schedule would mark nobody due, which looks exactly like everyone being up to date." That is the failure this rule exists to prevent — a board that quietly flags nobody is indistinguishable from a board with nothing outstanding.
+</Note>
+
+## Choose your labour chart
+
+A **Partograph** block sits under the schedule on the same **Facility** tab — "Which labour chart this clinic runs. It decides what the chart measures a labour against, and which findings are flagged on it." **Only the clinic owner can change it.** Every hospital starts on the **WHO Labour Care Guide (2020)**, and until anyone chooses one the block says so — "No chart has been chosen, so this clinic runs **WHO Labour Care Guide (2020)**".
+
+<Steps>
+  <Step title="Read the comparison before you pick">
+    Under **Chart**, choosing either option redraws a **Where they disagree** panel with a card per system. The one you have picked is badged **Selected**; the one your hospital is running right now is badged **In use now**. Four rows differ:
+
+    | | **WHO Labour Care Guide (2020)** | **Classic partograph (alert and action lines)** |
+    | --- | --- | --- |
+    | **Active phase from** | 5 cm | 4 cm |
+    | **Alert and action lines** | Not drawn | Drawn |
+    | **Fetal heart rate** | 110–160 bpm | 120–160 bpm |
+    | **After full dilatation** | Still assessed | Nothing assessed |
+  </Step>
+  <Step title="Read the worked example under it">
+    A single reading, answered twice: **A fetal heart rate of 115 bpm, recorded once** is **no flag** on the Labour Care Guide and **Fetal heart rate below the reference range** on the classic chart. The same observation, two different answers — which is the whole reason the choice matters.
+  </Step>
+  <Step title="Read what this particular change costs">
+    Once your choice differs from what is in force, a red panel lists only the differences that actually exist between those two — the lines appearing or disappearing, the heart-rate band moving, and whether anything is assessed after full dilatation.
+  </Step>
+  <Step title="Select Save partograph">
+    If the choice actually changes, you are asked to confirm at **Change the partograph?** Confirm with **Change partograph**. It confirms **Partograph saved** — "Every labour chart in this clinic is now read against …".
+  </Step>
+</Steps>
+
+<Warning>
+  **Changing the chart applies to every labour immediately, including one in progress right now.** No record is changed and nothing is recalculated or migrated: a chart is measured against whichever system is set at the moment it is opened. So flags on an open labour can appear or disappear without anyone re-examining the woman. The card says this before the save and again in the confirmation.
+</Warning>
+
+<Note>
+  **The classic chart stops at full dilatation and assesses nothing after it.** The card states this whichever system you are on: "An empty chart in the second stage means the chart is not looking — it is not a statement that the second stage is going well." If you run the classic chart, make sure your midwives read its second stage that way.
+</Note>
+
+## Check who can open it
+
+The group opens for **Doctor**, **Nurse Practitioner**, **Nurse** and **Midwife**. Owners and managers see everything and are never restricted by role.
+
+Once the area is on, a **Maternity** checkbox also appears in [Role navigation](/hospital/settings/role-navigation). Saving a role there replaces its shipped list with the boxes you ticked, so you can take the group away from a role that has it by default, or give it to one that does not — a records officer who runs the antenatal book, for example. Saving marks the role **Custom**, and **Reset to default** puts it back.
+
+## Grant the acts
+
+Maternity keeps its acts separate, and none of them is granted by a job title. An owner sets them per person.
+
+<Steps>
+  <Step title="Open the person's Permissions sheet">
+    On **Staff Members**, open their row's **Actions** menu and choose **Permissions**. The menu is rendered for the workspace owner only.
+  </Step>
+  <Step title="Find the Maternity group">
+    It only appears while the **Maternity** care area is on — that is why the area comes first.
+  </Step>
+  <Step title="Switch on what the person does">
+    | Switch | What it lets them do |
+    | --- | --- |
+    | **Open a pregnancy record** | "Start an antenatal record and set its expected delivery date" |
+    | **Change a confirmed due date** | "Re-date a pregnancy — this moves every gestational age and contact date that follows from it" |
+    | **Close a pregnancy record** | "End the record with its outcome — delivered, ended, or recorded in error" |
+    | **Record an antenatal contact** | "Record an antenatal visit — vitals, obstetric findings, and whether she needs to see a clinician today" |
+    | **Record a programme dose** | "Record IPTp, tetanus, iron-folate or ART against a pregnancy — including a dose given at another facility" |
+    | **Record a delivery** | "Write up how the birth happened — onset, mode, stages, blood loss and complications" |
+    | **Sign a delivery record** | "Put your name to the delivery record as the clinical record of the birth — after which it can no longer be edited" |
+    | **Register a newborn as a patient** | "Create the baby's own patient record from a birth record, and link the mother to it as guardian" |
+    | **Record a postnatal contact** | "Record a postnatal check of the mother and her baby — involution, lochia, feeding, cord and the Edinburgh screening score" |
+  </Step>
+  <Step title="Save">
+    The button reads **Save and start enforcing** the first time and **Save changes** afterwards.
+  </Step>
+</Steps>
+
+<Warning>
+  **The first save takes effect immediately, mid-shift.** Until someone is first saved in this sheet they are **unrestricted** and can do all of them. The moment you save, they can do only what is switched on — so set the switches before you save, and tell the person you have done it. See [Permissions](/platform/team/permissions).
+</Warning>
+
+**Change a confirmed due date** is the one to be deliberate about. Re-dating moves every gestational age and every contact date that follows from it, across the worklist and every chart, so keep it with the people who do the dating scans.
+
+**Sign a delivery record** is the other. Signing closes the record to editing for good, so it belongs with whoever attests the birth — not with everyone who may write one up. It also governs retracting a signed delivery record, because unmaking an attestation takes the same authority as making one.
+
+**Record a postnatal contact** covers the mother's check and her baby's — one switch, deliberately, because they are the same act at the same bedside. It also covers correcting one.
+
+## Check it worked
+
+- **Maternity** is in your sidebar, with **Antenatal**, **Labour Ward** and **Postnatal** under it.
+- Ask a midwife to look: they see the same group. Anyone outside the four clinical roles does not.
+- **Today's Clinic** opens and reads **No open pregnancy records** — correct on a hospital that has not opened one yet.
+- Selecting **Open a pregnancy record** opens the sheet, and a record you open appears on the board with its gestation.
+- That record's **Contacts** column reads **0 of …** with the number of contacts in the schedule you chose — **0 of 8** on WHO 2016, **0 of 4** on Focused ANC.
+- A colleague you granted **Open a pregnancy record** sees that button at the top right of **Today's Clinic**; one you did not, does not.
+- A colleague you granted **Record an antenatal contact** sees a **Record contact** button on a worklist row; one you did not, does not.
+- Open any labour chart: the badge beside **Cervicograph** names the chart you chose.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Facility card in my Settings">
+    Care areas exist on the Enterprise plan of the Clinic & Hospital edition only. See [Plans and what they include](/platform/plans/overview).
+  </Accordion>
+
+  <Accordion title="The switches are there but I cannot move them">
+    "Only the clinic owner or a manager can change these." Ask an owner.
+  </Accordion>
+
+  <Accordion title="I switched Maternity on and a staff member still cannot see it">
+    Check their role first — the group opens for doctors, nurse practitioners, nurses and midwives — and then that [role navigation](/hospital/settings/role-navigation) is not excluding it for them. Compare against an owner's sidebar: owners are never restricted by role, so if the owner sees it the difference is per-role.
+  </Accordion>
+
+  <Accordion title="The Maternity permissions are missing from someone's sheet">
+    The **Maternity** permission group only appears while the **Maternity** care area is on. Switch the area on first, then set the permissions.
+  </Accordion>
+
+  <Accordion title="There is no Antenatal contact schedule or Partograph block">
+    Both appear on the **Facility** tab only while the **Maternity** care area is on. A setting for a hidden area would be a control that governs nothing.
+  </Accordion>
+
+  <Accordion title="Save schedule is greyed out">
+    Either you are not the owner — "Only the clinic owner can change this." — or your own schedule has a problem, which is stated in red beneath the rows. Fix that and the button comes back. If there is no **Save schedule** button at all, the block could not read your setting — see below.
+  </Accordion>
+
+  <Accordion title="Save partograph is greyed out">
+    You are not the owner — the card says "Only the clinic owner can change this." Ask an owner. If the save is refused after you select it, you are told **Not saved** with the reason: "You do not have permission to change this clinic's settings." If there is no **Save partograph** button at all, the block could not read your setting — see below.
+  </Accordion>
+
+  <Accordion title="The block says it could not be read">
+    If the setting itself cannot be fetched, the block does not guess. It shows **This clinic's antenatal schedule could not be read** or **This clinic's partograph could not be read**, and the form is not shown at all — no chart or schedule is named, and there is nothing to save. That is deliberate: saving from a card that never read your setting could replace a schedule or chart your hospital has already set with one you were never shown. Select **Try again**. If it keeps failing, check your connection and that you are still signed in to this hospital.
+  </Accordion>
+
+  <Accordion title="Alert and action lines disappeared from every chart after I changed the partograph">
+    That is the change taking effect. The **WHO Labour Care Guide (2020)** draws neither line by design — WHO retired the fixed 1 cm/hour gradient in 2020. Switching back brings them straight to every chart again; no observation was altered either way.
+  </Accordion>
+
+  <Accordion title="Half the ward suddenly shows as overdue after I changed the schedule">
+    That is the change taking effect, not a fault. The new windows are applied to every open pregnancy at once, and the warning before the save said so. Switching back returns the board to what it was — no record was altered either way.
+  </Accordion>
+
+  <Accordion title="I switched the area off and someone can still reach the antenatal clinic">
+    Switching an area off removes it from navigation; a page somebody has bookmarked stays reachable, exactly as the screen says — "existing records stay accessible by direct link". It is a menu, not a lock. Use permissions to stop the acts.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="setting up maternity" />
+
+## Next
+
+<Columns cols={2}>
+  <Card title="Maternity" icon="/images/icons/woman.svg" href="/hospital/maternity/overview">
+    How the three boards, the schedule and the charts fit together.
+  </Card>
+
+  <Card title="Today's Clinic" icon="/images/icons/calendar-check.svg" href="/hospital/maternity/todays-clinic">
+    The board your midwives will work a session from.
+  </Card>
+</Columns>
+
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/partograph.ts, lib/clinic-nav-registry.ts, lib/edition.ts (EDITION_ROLE_MODULES), lib/edition-staff-roles.ts (MATERNITY_PERMISSIONS) */}

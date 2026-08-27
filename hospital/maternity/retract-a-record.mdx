@@ -1,0 +1,287 @@
+---
+title: Retract a record
+description: "Mark an antenatal contact, a delivery record or a birth record as entered in error — what it takes, what it changes, and what it deliberately leaves alone."
+icon: "/images/icons/circle-xmark.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with the permission that records the thing being retracted; a signed delivery also needs Sign a delivery record" note="Needs the Maternity care area" />
+
+A contact recorded against the wrong woman, a delivery filed against the wrong pregnancy, or a birth recorded twice, is corrected by marking it **entered in error**. Nothing is deleted: the record stays on file with your reason and your name on it, and stops counting.
+
+Every record in maternity is retracted the same way, and the permission is always the one that **records** that kind of record — whoever may say a visit happened may say it did not.
+
+| Retract | Where | Guide |
+| --- | --- | --- |
+| An antenatal contact | Her [antenatal card](/hospital/maternity/antenatal-card), on the contact's row | [Below](#retract-an-antenatal-contact) |
+| A postnatal contact | [Postnatal](/hospital/maternity/postnatal), on the recorded cell | [Below](#retract-from-the-bottom-up) |
+| A birth record | [The labour record](/hospital/maternity/labour-record), under **Babies** | [Below](#retract-from-the-bottom-up) |
+| A delivery record | [The labour record](/hospital/maternity/labour-record) | [Below](#retract-from-the-bottom-up) |
+
+## Retract an antenatal contact
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic", "the patient's name", 'Contacts']} />
+
+Each row in **Contacts** on her antenatal card ends with **Mark in error**.
+
+<TaskHeader
+  before="Any programme dose recorded at that visit retracted first"
+  time="A minute, plus the reason"
+  after="A visit kept as a correction, out of the series, the coverage figures and the consultation chart"
+/>
+
+<Steps>
+  <Step title="Select Mark in error on the contact's row">
+    The dialog names the visit it is about to retract — **Mark contact 3 as entered in error?** — so a mis-clicked row is visible before anything is written.
+  </Step>
+  <Step title="Read what it says the retraction means">
+    "Contact 3 on 4 August 2026 says this visit was never recorded here. It comes off her antenatal series and out of the coverage figures, and the vitals and findings taken at it stop appearing on her consultation chart. The record stays on file with your reason and your name. There is no way to undo it — the correction is a new contact."
+  </Step>
+  <Step title="Write the reason">
+    **Why is this wrong?** is required — "Whoever reads this record next sees this sentence and nothing else about why." Write the correction, not a note to yourself: "Recorded against the wrong woman; the visit belongs to the record on the next row of the clinic list."
+  </Step>
+  <Step title="Select Mark in error">
+    It confirms **Contact marked as entered in error** — "It is off her antenatal series and out of the coverage figures. The record and your reason stay on file."
+  </Step>
+</Steps>
+
+<Warning>
+  **The vitals go with it, and that is the point.** An antenatal contact is recorded as a triage encounter, so the blood pressure, pulse, weight, fundal height, fetal heart rate and bedside urine tests taken at that visit are on the woman's **consultation chart** as well as her antenatal card. Retracting the contact takes them off the chart too. Retracting the row on its own would leave a fetal heart rate that belongs to somebody else sitting in her doctor's flowsheet.
+</Warning>
+
+<Note>
+  **The row leaves the card.** A retracted contact is not shown struck through — it is simply no longer one of her contacts, the same way a retracted postnatal contact leaves its slot free rather than reading as done. Her **contact count** drops by one, which can move her back to **Due** or **Overdue** on [Today's Clinic](/hospital/maternity/todays-clinic). The record itself, and who retracted it, are in your [audit log](/platform/security/audit-log).
+</Note>
+
+<Note>
+  **Later contacts keep their numbers.** Retracting **Contact 3** does not renumber **Contact 4**. Each number was worked out at the moment that visit was written up and is a fact about it, not a live position in a list.
+</Note>
+
+## Retract a delivery or a birth record
+
+<Path steps={['Sidebar', 'Maternity', 'Labour Ward', '⋯', 'Labour record']} />
+
+<TaskHeader
+  before="Every record filed underneath it retracted first"
+  time="A minute, plus the reason"
+  after="A record kept as a correction, out of the coverage figures"
+/>
+
+## Retract from the bottom up
+
+A record with live records underneath it is **refused**, never cascaded — a cascade would stamp one person's reason across records they never looked at, and retract a real baby's birth as a side effect of correcting a labour. So work upwards:
+
+<Steps>
+  <Step title="Retract the postnatal contacts">
+    On [Postnatal](/hospital/maternity/postnatal), select the recorded cell and choose **Mark as entered in error**, with a reason for each.
+
+    Skip this and the birth record refuses: "This baby still has a postnatal contact recorded against them. Retract that contact first, with its own reason."
+  </Step>
+  <Step title="Retract each birth record">
+    On [the labour record](/hospital/maternity/labour-record), select **Open** on the baby's row, then **Mark as entered in error**.
+
+    Skip this and the delivery refuses, naming the count: "This labour still has 2 birth records against it. Retract each one first, with its own reason — a birth left pointing at a retracted labour is a baby the register can no longer explain."
+  </Step>
+  <Step title="Retract the delivery record">
+    Select **Open record**, then **Mark as entered in error** at the bottom of the sheet.
+  </Step>
+</Steps>
+
+## What the dialog asks
+
+Both dialogs say the same three things: what this claims, what it does not touch, and why.
+
+<Steps>
+  <Step title="Read what it says the retraction means">
+    **Mark this delivery record as entered in error?** — "this says the labour was never recorded here. There is no way to undo it."
+
+    On a baby it reads **Mark birth 1 as entered in error?** — "this says the birth was never recorded here."
+  </Step>
+  <Step title="Write the reason">
+    **Why is this being marked as entered in error?** is required, and it is part of the record: "Whoever reads this record next sees this sentence and nothing else about why." Write the correction, not a note to yourself — "Recorded against the wrong woman; duplicate of the record on the correct pregnancy."
+  </Step>
+  <Step title="Select Mark as entered in error">
+    A delivery confirms **Delivery record marked as entered in error**, and the sheet closes. A birth confirms **Birth record marked as entered in error** — "It stays on file with your reason. The baby's own patient record is untouched."
+  </Step>
+</Steps>
+
+<Warning>
+  **There is no un-retract.** A retracted record cannot be edited and cannot be brought back. The correction is a *new* record — **Triage** and **Start delivery record** appear again on the pregnancy, and a new birth is recorded from **Record a birth**.
+</Warning>
+
+<Note>
+  **A retracted birth still holds its number on the form.** After retracting **Birth 2**, the sheet still treats 2 as taken: entering it shows "Birth 2 is already recorded in this labour" and **Record birth** stays unavailable. Record the corrected baby at the next position the form offers, and say which baby she is in **Notes**.
+</Note>
+
+## A registered baby keeps their patient record
+
+This is the fear, and the answer is plain: **retracting a birth record never touches the child.** Their patient record, their chart and the mother's guardian link are all left exactly as they are. The dialog says it outright:
+
+> This baby has their own patient record. It is NOT deleted and their chart is not changed — a child is not a data-entry error. Only this birth record is retracted, and the corrected one can be linked to the same child.
+
+The corrected birth record can be linked back to the same child, so nobody has to register the baby a second time — which would give one child two patient records with their care split across both.
+
+## What changes, and what does not
+
+| Changes | Does not change |
+| --- | --- |
+| She leaves the **Labour Ward** board's in-labour list, and returns to the expected side if she is at or past term | The pregnancy record — a pregnancy closed as delivered **stays closed**, with the outcome it was closed with |
+| She leaves [Postnatal](/hospital/maternity/postnatal) — the board is built from the delivery | Every observation on the [labour chart](/hospital/maternity/labour-chart) |
+| The labour record card is badged **Retracted**, with the reason on it and **View retracted record** to read it | Her ward admission, and any theatre case booked for the labour |
+| The **Deliveries** count, the **Caesarean rate** and the **Stillbirth rate** on [Antenatal Coverage](/hospital/maternity/coverage) — **those totals will change** | A registered baby's patient record, chart and guardian link |
+
+<Note>
+  **The Antenatal Register does not move.** The confirmation mentions "the register"; what actually changes are the coverage figures. The [Antenatal Register](/hospital/maternity/register) lists **pregnancy records**, and retracting a delivery does not touch hers — a pregnancy closed with the outcome **Live birth** keeps that row and that outcome. Closing a pregnancy record cannot be undone, so if the outcome itself is wrong, the register will keep saying so.
+</Note>
+
+## What a retracted delivery looks like afterwards
+
+The labour record does not pretend the delivery never happened. The **Delivery record** card is badged **Retracted** and says so:
+
+> This labour was recorded and then marked as entered in error. The record stays on file, read-only, and nothing is claimed about this labour now — starting a new record is what replaces it.
+
+Under it, **Reason given:** and the reason you typed. **View retracted record** opens it read-only; **Start delivery record** sits beside it for the corrected one.
+
+The card is also where the register question is answered honestly: *"It is out of the delivery figures. It did not come off the Antenatal Register — the register lists pregnancies, and this pregnancy keeps its row and its outcome."*
+
+The **Babies** card stays, and **Record a birth** is unavailable there — "This labour is retracted, so no birth can be recorded against it. Start the corrected delivery record first, then record the babies against that."
+
+Where a pregnancy has been through this more than once, the card lists the earlier ones: **An earlier record for this pregnancy was retracted**, each with when it was recorded and the reason given.
+
+## Retracting a signed record
+
+A signed delivery record can be retracted, and that is deliberate: refusing it would leave a signed claim that a woman gave birth when she did not, standing on her chart and in the coverage figures for ever, with no way out.
+
+It takes more authority than an unsigned one. The dialog adds: "This record is signed. Retracting it withdraws that attestation; the signature stays visible on the retracted record." If you may record a delivery but not sign one, the button is unavailable and the page says why: **Retracting a signed record needs the same authority as signing it.**
+
+A **birth** record needs no extra permission even when the delivery is signed — the signature is on the labour, and nothing signs a birth record.
+
+<AuditNote action="Marking a delivery or birth record as entered in error" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Retract an unsigned delivery record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Retract a **signed** delivery record | The same, and only with signing authority as well | **Record a delivery** *and* **Sign a delivery record** |
+| Retract a birth record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Retract a postnatal contact | Anyone not yet governed; otherwise only if switched on | **Record a postnatal contact** |
+| Retract an antenatal contact | Anyone not yet governed; otherwise only if switched on | **Record an antenatal contact** |
+
+Retraction has no permission of its own on purpose. Whoever may assert that a birth or a visit happened may assert that it did not — splitting them would leave a delivery recorded against the wrong woman standing, because the only midwife on shift could not retract it. Signing is the one exception, because unmaking an attestation is an act of the same authority as making one.
+
+## Check it worked
+
+- After an **antenatal contact** is retracted, its row has gone from **Contacts** on her antenatal card, and the contact count in the pregnancy summary is one lower. The vitals and findings taken at that visit have gone from her consultation chart.
+- **ANC1**, **ANC4+** and **ANC8+** on [Antenatal Coverage](/hospital/maternity/coverage) are recalculated from her new contact count for her booking month.
+- After a **delivery** is retracted, the **Delivery record** card on the labour record is badged **Retracted**, carries your reason, and offers **View retracted record**.
+- After a **birth** is retracted, open it again: it is read-only, under **This birth record is marked as entered in error.** — "It stays on file as a correction and cannot be edited."
+- Her row has gone from the in-labour side of [Labour Ward](/hospital/maternity/labour-ward), and from [Postnatal](/hospital/maternity/postnatal).
+- **Deliveries** on [Antenatal Coverage](/hospital/maternity/coverage) is one lower for her booking month.
+- The retraction, with who did it and when, is in your [audit log](/platform/security/audit-log).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="This contact still has 2 programme doses recorded against it.">
+    "Mark each one as entered in error first, with its own reason — a dose left pointing at a retracted contact is a dose the register can no longer explain." The doses are in **Programme doses** on the same antenatal card; select **Mark in error** on each. The message names how many are left.
+  </Accordion>
+
+  <Accordion title="Say why this antenatal contact is being marked as entered in error.">
+    The reason is part of the record, not a confirmation click, and a box of spaces will not do. Write what was wrong with the visit.
+  </Accordion>
+
+  <Accordion title="This antenatal contact is already marked as entered in error.">
+    Somebody retracted it while your card was open. Reload — a contact is never retracted twice, and a second reason never overwrites the first.
+  </Accordion>
+
+  <Accordion title="A programme dose was recorded against this contact while you were retracting it.">
+    "Reload and check what it says now." Somebody recorded a dose at that visit in the seconds since you opened the dialog, so nothing was written. Retract the dose first, then the contact.
+  </Accordion>
+
+  <Accordion title="That antenatal contact could not be found, or you don't have permission to change it.">
+    One message covers both, on purpose. Check you are in the right workspace, that the card is not stale, and that **Record an antenatal contact** is switched on for you — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="This labour still has a birth record against it.">
+    "Retract that birth first, with its own reason — a birth left pointing at a retracted labour is a baby the register can no longer explain." Open each baby's record from **Babies** and retract it, then come back to the delivery. The message names how many are left.
+  </Accordion>
+
+  <Accordion title="This baby still has a postnatal contact recorded against them.">
+    "Retract that contact first, with its own reason." The contacts are on [Postnatal](/hospital/maternity/postnatal) — select the recorded cell and choose **Mark as entered in error**.
+  </Accordion>
+
+  <Accordion title="Say why this delivery record is being marked as entered in error.">
+    The reason is part of the record, not a confirmation click. Write what was wrong with it.
+  </Accordion>
+
+  <Accordion title="This delivery record is already marked as entered in error.">
+    Somebody retracted it while your sheet was open. Reload — a retracted record is never retracted twice.
+  </Accordion>
+
+  <Accordion title="This delivery record changed while you were retracting it.">
+    "Open it again and check what it says now." Somebody completed or signed it in the seconds since you opened the dialog, so nothing was written. Read what it says before deciding again.
+  </Accordion>
+
+  <Accordion title="Retracting a signed record needs the same authority as signing it.">
+    You have **Record a delivery** but not **Sign a delivery record**. Ask somebody with signing authority to retract it — see [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="That delivery record could not be found, or you don't have access to it.">
+    One message covers both, on purpose. Check you are in the right workspace and that the record still exists.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I delete a delivery, a birth or a contact instead?">
+    No. Nothing in maternity deletes. A record that should never have existed is marked **entered in error**, which keeps it on file with its reason — that is how somebody reading the record later can tell a mistake from a clinical event.
+  </Accordion>
+
+  <Accordion title="Do the vitals from a retracted antenatal contact stay on the consultation chart?">
+    No. An antenatal contact is recorded as a triage encounter, so its readings appear on the woman's consultation chart as well as her antenatal card. Retracting the contact removes that encounter from the chart. This matters most in the case retraction exists for: a visit recorded against the wrong woman would otherwise leave her carrying somebody else's blood pressure and fetal heart rate.
+  </Accordion>
+
+  <Accordion title="Does retracting a contact change her next-visit date?">
+    It changes her **contact count**, and the schedule is worked out from that count against her expected delivery date every time the page is drawn. So she may move back to **Due** or **Overdue** on Today's Clinic. Nothing is recalculated and stored — see [Today's Clinic](/hospital/maternity/todays-clinic).
+  </Accordion>
+
+  <Accordion title="Can I retract a contact on a pregnancy that is already closed?">
+    Yes. Correcting the record of what happened is not the same as reopening the pregnancy, and closing does not seal the contacts against correction. Retracting a contact never changes the pregnancy's status or outcome.
+  </Accordion>
+
+  <Accordion title="Can I read a retracted record afterwards?">
+    Yes, both. A retracted **birth** stays under **Babies**, marked **Retracted** and left out of the count; open it and the banner repeats it. A retracted **delivery** keeps its card, badged **Retracted**, with **View retracted record** to open it read-only. Who retracted either, and when, is in your [audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="Can I retract a draft delivery record, or one that only has an admission assessment on it?">
+    Yes, both. A wrong record of any kind still holds the one delivery slot on that pregnancy, so leaving it standing would block the correct delivery from ever being recorded against her. A record reading **Assessed on admission** retracts exactly like a draft.
+  </Accordion>
+
+  <Accordion title="What happens to the observations from the labour assessment?">
+    They leave her clinical chart with the record. The examination taken when she was assessed in labour — the cervical dilatation, the fetal heart rate, her blood pressure — is recorded as an encounter on her chart, and retracting the delivery record takes it off there too. That matters most when the record was opened against the wrong woman: the readings do not stay behind on a chart they never belonged to.
+
+    The encounter itself is not deleted, and it stays in her clinic's own records and in the [audit log](/platform/security/audit-log). What stops is it being shown as part of her clinical picture.
+  </Accordion>
+
+  <Accordion title="Does retracting a birth unregister the baby?">
+    No. The child's patient record, chart and guardian link are untouched, and the corrected birth record can be linked to the same child. Never register the baby again to work around it.
+  </Accordion>
+
+  <Accordion title="Does retracting the delivery reopen her pregnancy record?">
+    No — but it is what makes re-opening possible. Retracting a delivery never changes the pregnancy's outcome on its own. If the pregnancy was closed as delivered, re-open it afterwards from her [antenatal card](/hospital/maternity/antenatal-card) using **Re-open this record**, which clears the outcome. The order matters: re-opening is refused while a delivery still stands against the pregnancy. See [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+  </Accordion>
+
+  <Accordion title="What happens to the labour chart?">
+    Nothing. Every partograph observation stays exactly where it was — see [The labour chart](/hospital/maternity/labour-chart).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="retracting a maternity record" />
+
+{/* source of truth: db/actions/maternity.ts (markAncContactEnteredInError, voidDeliveryRecord, voidBirthRecord, markPncContactEnteredInError), components/clinic/maternity/anc-contact-retract-control.tsx, components/clinic/maternity/antenatal-card.tsx, components/clinic/maternity/delivery-form.tsx, components/clinic/maternity/birth-record-form.tsx, components/clinic/maternity/pnc-worklist-table.tsx, db/queries/maternity.ts (getAntenatalCard), db/queries/maternity-labour.ts (getDeliveryForEpisode) */}

@@ -1,0 +1,172 @@
+---
+title: The Maternity tab on a ward chart
+description: "Chart a labour from the bedside — why the tab appears for an antenatal admission, what it says before anybody charts, and the Babies card."
+icon: "/images/icons/bed.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any role that opens a ward chart" note="Needs the Maternity care area" />
+
+A woman labouring on your ward is already an inpatient, so she has the flowsheets, the drug chart, the orders and the notes by being one. The **Maternity** tab is the one thing a ward chart could not otherwise show: her labour. It carries the delivery record, the [labour chart](/hospital/maternity/labour-chart) and the babies, at the bedside, without leaving her chart.
+
+<Path steps={['Sidebar', 'Inpatient', 'Open an admission', 'Maternity']} />
+
+## When the tab is there
+
+It appears for an admission with a delivery record on that stay, **or** for a patient with an open pregnancy record. Two predicates, and the second is deliberate: a woman admitted at 22 weeks for hyperemesis has the tab too.
+
+<Note>
+  **The tab is decided by the record, never by a role and never by sex.** It is present because there is a pregnancy or a labour to show. A patient with neither has no tab, and that is not a claim about who they are.
+</Note>
+
+The second predicate is what makes the tab reachable at all — starting a delivery record is an act performed *on* this tab, so a tab that required one first could never be opened. It also means a woman who goes into labour in the bed she is already in never has to leave her own chart to say so.
+
+## What you're looking at
+
+The heading is the record's own answer, not an assumption:
+
+| Heading | When |
+| --- | --- |
+| **Pregnancy** | Neither a delivery record nor a charted observation exists |
+| **Labour record** | A delivery record has been started, **or** somebody has charted an observation |
+
+Under the heading, on one line: her gestation (or **Dating unavailable**), **EDD**, and her parity.
+
+### Before anybody has charted
+
+Under a **Pregnancy** heading a panel says so plainly — *"Nothing on this chart says she is in labour. Her pregnancy is shown here as context for whatever she was admitted for."* — followed by the risk factors **Recorded at booking**, or **No risk factors were recorded at booking.**
+
+The **Delivery record** card is still there, badged **Not started**, and it names its own consequence rather than sitting empty: *"Nothing is claimed about this labour yet. Starting the record is the act that says she is in labour: it puts her on the Labour Ward board, and the midwives there work from it. Start it when she is labouring, not because this section is empty."*
+
+<Note>
+  **The empty delivery card is not a gap to tidy away.** It is the truth about an antenatal admission. **Start delivery record** is deliberately the quieter button there — the loudest control on a chart must not be one that asserts a woman is labouring.
+</Note>
+
+### The delivery record
+
+The card is badged **Not started**, **In labour**, **Draft**, **Recorded, unsigned** or **Signed**, and the button reads **Start delivery record** or **Open record**. **In labour** means the record was opened by an assessment on the [labour ward](/hospital/maternity/labour-ward) and no birth has been written up yet — it is not a **Draft**, and it is counted as a delivery by nothing. It opens the same form the maternity route uses — see [The labour record](/hospital/maternity/labour-record).
+
+The stay she is labouring on is carried in from the chart that opened it. Nobody types it, which is what lets the labour chart be charted from here at all.
+
+### The labour chart
+
+**Labour chart** sits below, with **Record observation** where you hold the pen. The cervicograph and the observation matrix are the same two components the maternity route mounts, reading the same schedule your hospital chose — see [The labour chart](/hospital/maternity/labour-chart).
+
+Both are mounted on an antenatal admission too, unfiltered. Each owns an honest empty state; a chart that vanished when the log was empty would be a second, quieter answer to "has anything been recorded".
+
+A reading you supersede keeps its column, struck through. **Correct** appears only where you can actually write — if the entry cannot be corrected from here, no control is offered rather than one that would be refused.
+
+### Babies
+
+Once a delivery record exists, a **Babies** card lists the births against it, with a count beside the heading.
+
+| On the row | Shows |
+| --- | --- |
+| **Baby 1**, **Baby 2**, … | The birth order — one row per baby |
+| Outcome | As recorded on the birth record |
+| **Retracted** | On a birth marked entered in error |
+| **Registered** | Where the baby has their own patient record |
+| Time | When the birth was recorded as happening |
+| **Open** | Opens that birth record |
+
+**Record a birth** is available whether or not one is already recorded, and the card says why: *"One row per baby. A twin birth is two records against this one labour, never one row for both."* With none yet: **No birth has been recorded against this labour yet.**
+
+<Note>
+  **A retracted birth stays on the list and stops counting.** Hiding it would lose the record of what was believed at the time; the count is what the record claims *now*, so a retracted twin never leaves the card claiming two babies. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+</Note>
+
+If the birth records cannot be read, the card says **The birth records could not be loaded** with **Try again**, and states what that does not mean: *"Nothing was read, so this is not a statement that no baby was born. The rest of this labour record loaded."* The delivery record and the labour chart above it still render.
+
+## It needs a connection
+
+The partograph and the delivery record are not part of the cached ward chart. Offline the tab reads **The labour record needs a connection** — *"this is not a statement that nothing has been recorded. Reconnect to read them."*
+
+A failed read says the same kind of thing — **The labour record could not be loaded**, *"This is not a statement that there are no observations — nothing was read"* — with **Try again**.
+
+## Nothing here is worked out for you
+
+There is no fetal-heart band on this tab, no alert-line gradient, no active-phase threshold and no stage limit of its own. Every one of those belongs to the labour chart you chose, and a second copy on this surface would eventually flag a labour the cervicograph beside it did not.
+
+Gestation is the one exception, and it is arithmetic: it is worked out from the due date each time you look, along with how long ago each observation was, so a chart left open for a whole shift keeps telling the truth rather than freezing.
+
+<AuditNote action="Opening the Maternity tab" />
+
+## Who can do this
+
+Two layers apply, and they are different questions.
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the tab and read it | Any role that can open the ward chart | Nothing; the tab has no check of its own |
+| Start or open the delivery record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Record or amend a birth record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Register a newborn as a patient | Anyone not yet governed; otherwise only if switched on | **Register a newborn as a patient** |
+| Record or correct a labour chart observation | Any role the ward chart lets write | Nothing of its own — the ward's own write rule governs it |
+
+Charting an observation is treated as the labour equivalent of a nursing note, so it carries no switch of its own. Recording a birth rides **Record a delivery**, because writing up a baby's weight and Apgar *is* writing up the delivery; registering the newborn is separate because it creates a person — a patient record, a chart and a billing relationship. See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- On an antenatal admission the heading reads **Pregnancy**, and the delivery card is badged **Not started**.
+- Select **Start delivery record**: the heading becomes **Labour record**, and she appears under **In labour** on [Labour Ward](/hospital/maternity/labour-ward).
+- Chart one observation: it appears in the matrix, and **Last observation** changes on the labour board.
+- Record a birth: a **Baby 1** row appears on the **Babies** card and the count reads 1.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is a Maternity tab on a patient who is not in labour">
+    That is intended, and the tab says so. She has an open pregnancy record, so the tab is there as context for whatever she was admitted for — the heading reads **Pregnancy**, not **Labour record**, and nothing on it claims she is labouring.
+  </Accordion>
+
+  <Accordion title="There is no Babies card">
+    It appears only once a delivery record exists. Start one first — the births hang off the delivery, not off the admission.
+  </Accordion>
+
+  <Accordion title="The labour record needs a connection">
+    The delivery record and the labour chart are read live, so they are not in the offline chart. This is not a statement that nothing has been recorded. Reconnect and reopen the tab.
+  </Accordion>
+
+  <Accordion title="The birth records could not be loaded">
+    Only that read failed — the delivery record and the labour chart above it are real. Select **Try again**. Do not treat the empty card as "no baby was born"; nothing was read.
+  </Accordion>
+
+  <Accordion title="There is no Start delivery record button">
+    You do not hold **Record a delivery**. An owner grants it in the permissions sheet, under **Maternity**.
+  </Accordion>
+
+  <Accordion title="There is no Record observation button">
+    The ward chart has not given you a pen for this tab, or you are offline. Charting also needs the admission itself — that is why this tab can chart where the maternity route sometimes cannot.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why not hide the tab until she is actually in labour?">
+    Because nothing on the record distinguishes "admitted in labour, nobody has charted yet" from "admitted antenatal for something else" — they are the same row. The only candidate is a gestational threshold, and that would be wrong in both directions: preterm labour at 26 weeks is real, and an operation at 39 weeks is not labour. So the tab appears and states what it knows.
+  </Accordion>
+
+  <Accordion title="Is this the same record as the maternity route's?">
+    Yes — one record, two doors. The delivery record, the labour chart and the birth records are the same ones on [The labour record](/hospital/maternity/labour-record); this tab mounts them rather than keeping a copy.
+  </Accordion>
+
+  <Accordion title="Where is the Pregnancy summary?">
+    On the ward chart it is a **Pregnancy** card in the left-hand rail, not a tab — see [The pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart). This tab is the labour.
+  </Accordion>
+
+  <Accordion title="Twins — do I record one birth or two?">
+    Two. Each baby is a birth record of its own against the same labour, numbered by birth order. Select **Record a birth** again for the second. See [Babies and birth records](/hospital/maternity/babies).
+  </Accordion>
+
+  <Accordion title="Does starting the delivery record here differ from starting it on the labour board?">
+    No. It is the same act with the same consequence: she moves onto [Labour Ward](/hospital/maternity/labour-ward) and the midwives there work from the record.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the Maternity tab on a ward chart" />
+
+{/* source of truth: components/clinic/ward-admissions/chart/tabs/maternity-tab.tsx, db/queries/maternity-labour-client.ts, lib/ward/chart-access.ts, lib/edition-staff-roles.ts */}

@@ -70,17 +70,25 @@ When the customer pays some now and the rest later, tick **Part-payment / credit
     A balance has to belong to somebody. Attach a registered customer on the **Customer** card before you take part payment — see [Add your first customer](/pharmacy/get-started/first-customer).
   </Step>
   <Step title="Tick Part-payment / credit">
-    The **Amount Received** box is replaced by **Amount paid now**.
+    The **Amount Received** box is replaced by **Amount paid now**, and it is **emptied**. A part payment has no sensible default — only you know what was handed over — so the box waits for you rather than starting at the full total.
   </Step>
   <Step title="Enter what they are paying today">
-    An amber row shows **Balance due (credit)** with the remainder. That figure is what they will owe when they walk out.
+    An amber row shows **Balance due (credit)** with the remainder. That figure is what they will owe when they walk out. **0 is allowed**, for a sale taken entirely on credit.
   </Step>
   <Step title="Complete the sale">
-    Select **Complete Sale • \{total\}**. The receipt shows the amount paid and the balance.
+    The button reads **Take \{amount\} • owe \{balance\}** rather than the full total, because that is what is actually being taken. The receipt shows the amount paid and the balance.
   </Step>
 </Steps>
 
-The outstanding amount then appears in the **Debtors** sheet on the [Sales page](/pharmacy/money/sales), where you record the settlement later — either as a payment, or with **Settle from account** if they have wallet funds.
+The outstanding amount then appears in **three** places, all reading the same figure — total less anything refunded, less what has been paid:
+
+- the **Debtors** sheet on the [Sales page](/pharmacy/money/sales), where you record the settlement later — either as a payment, or with **Settle from account** if they have wallet funds;
+- the customer's own **Debts** tab, with a count beside it, on their [customer record](/pharmacy/customers);
+- their **Outstanding** figure in that record's header.
+
+<Note>
+  **If the amount still equals the total, the sale is not on credit and the button will say so.** "This is paid in full, so there is no balance to track. Lower the amount paid, or switch off Part-payment." A sale recorded as paid creates no debt, so nothing would reach any of the three places above.
+</Note>
 
 <Warning>
   Credit is a real debt against a real person, and only a registered customer can carry one. Selling on credit to **Walk-in** leaves you with a balance nobody is attached to — attach the customer before you tick the box, not after.
@@ -100,7 +108,7 @@ The outstanding amount then appears in the **Debtors** sheet on the [Sales page]
 | Reverse a payment after the fact | Pharmacy Manager, Dispensing Supervisor | **Refund or void a sale** |
 | Count the drawer and close the day | Anyone whose role reaches **POS** | Role — the toggle exists but nothing reads it yet |
 
-Taking money and *deciding how much* are deliberately different. Taking a tender is not permission-gated at all — **Dispense and sell at the till**, **Open the cash drawer** and **Cash up and close the day** are on the permissions sheet but nothing checks them yet. What *is* checked on the server is the pricing: a default **Cashier** can take every tender in the list but cannot discount, override a price or reverse anything.
+Taking money and *deciding how much* are deliberately different. Taking a tender is not permission-gated at all — the three toggles that once implied it was (**Dispense and sell at the till**, **Open the cash drawer**, **Cash up and close the day**) were never checked by anything and were removed in August 2026. What *is* checked on the server is the pricing: a default **Cashier** can take every tender in the list but cannot discount, override a price or reverse anything.
 
 Two behaviours surprise people:
 

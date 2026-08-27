@@ -1,0 +1,186 @@
+---
+title: Today's Clinic
+description: "Work the antenatal worklist — who is due a contact, who is overdue, and who is carrying a risk factor recorded at booking."
+icon: "/images/icons/calendar-check.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+**Today's Clinic** is the board you work an antenatal session from. It lists every open pregnancy record in the hospital, says how far on each woman is, and tells you which of them is due a contact today. It is also where a pregnancy record is opened in the first place.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic"]} />
+
+<TaskHeader
+  before="The Maternity care area switched on, and at least one open pregnancy record"
+  time="Continuous — this is the screen you leave open through a session"
+  after="Contacts recorded, and the women who still need seeing visible at a glance"
+/>
+
+## What you're looking at
+
+The heading reads **Today's Clinic**, and under it: **Open pregnancy records, with the next antenatal contact each one is due.** **Open a pregnancy record** sits at the top right, and is absent unless you hold that permission.
+
+Below that is a single table, earliest due date first — so the women closest to delivery are at the top.
+
+| Column | Shows |
+| --- | --- |
+| **Patient** | Her name — select it to open her [antenatal card](/hospital/maternity/antenatal-card) — with her patient number underneath, and an amber **risk factor** count if any were recorded when the record was opened |
+| **Gestation** | Completed weeks and days, written the way it is spoken — **28+3**. **Dating unavailable** when the record's dates cannot produce one, and a **Post-dates** badge from 42 weeks |
+| **Due date** | The expected delivery date, marked **(scan)** when it came from a dating scan |
+| **Contacts** | How many contacts are recorded against how many your [contact schedule](/hospital/maternity/overview) expects **for her** — **3 of 8** on the eight-contact schedule, and fewer for a woman who booked late, because a contact window that had already closed before she came was never hers to attend |
+| **Next contact** | When she should next be seen — **Today** while her window is open, the opening date while it is still ahead, and **Was due by …** once the window has closed |
+| **Status** | **Up to date**, **Due**, **Overdue** or **Schedule complete** — with a **… missed** count beside it where windows have closed with nothing recorded |
+| **Action** | **Record contact**, and a **⋯** menu carrying **Change due date** and **Close record** |
+
+On a hospital that has just switched maternity on, the board reads **No open pregnancy records** — "Use **Open a pregnancy record** above. It stays here until it is closed." That is correct, not broken.
+
+### The board keeps its own time
+
+Gestation and status are worked out fresh every half minute while the page is open, not fixed at the moment it loaded. A board left open through a morning clinic is still telling the truth at the end of it, and a woman crossing into her window becomes **Due** without a reload.
+
+The same is true of the schedule: **Due** and **Overdue** are measured against whichever contact schedule is set when the board is opened, not the one that was set when she booked. Changing it in **Settings → Facility** moves the whole board at once.
+
+## Find somebody on this list
+
+A search box and filter buttons sit above the board. They narrow what is drawn; they never change what is recorded.
+
+- **Search** matches on **name** and **patient number**, in any order — typing `bello 0042` finds Amina Bello with number MAT-0042. Case does not matter, and part of a word is enough.
+- **Contact status** narrows to **Overdue**, **Due now**, **Up to date** or **Schedule complete**.
+- **Trimester** narrows to first, second or third — or **Dating unavailable**, which is its own answer rather than an omission.
+- **Risk** narrows to **Has a risk factor**, **Post-dates**, or **Has missed a contact**.
+- **Clear filter** empties one; **Clear all** appears once anything is narrowing the list, with a count of how many things are.
+
+<Note>
+  A list that a search has emptied says so, and tells you how many records it is drawn from. It never reads as an empty clinic — that is a different statement, and you would have no way to tell the two apart.
+</Note>
+
+## Put a woman on the board
+
+Select **Open a pregnancy record** at the top right, find her, and date the pregnancy. She appears on the board immediately, with her gestation and her first contact window. Full detail: [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+
+## Record a contact from a row
+
+<Steps>
+  <Step title="Find her row">
+    The board is one list, ordered by due date. Read across to **Status** to see whether she is **Due** or **Overdue**.
+  </Step>
+  <Step title="Select Record contact">
+    The **Antenatal contact** sheet opens over the board, headed with her name and her gestation so you can see whose record you are writing to. You keep your place in the list.
+  </Step>
+  <Step title="Fill in what you found and save">
+    Full field-by-field detail is in [Record an antenatal contact](/hospital/maternity/record-a-contact).
+  </Step>
+</Steps>
+
+A row with no **Record contact** button means you do not hold the **Record an antenatal contact** permission. Ask an owner — see [Permissions](/platform/team/permissions).
+
+## Change a due date, or close a record
+
+The **⋯** menu at the end of a row carries **Change due date** and **Close record**. Each shows only if you hold its permission, and the menu itself disappears when you hold neither. Both are covered in [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+
+## Open her antenatal card
+
+Select her **name**. The card shows the pregnancy over time — every contact in sequence with the gestation at each, the schedule position, and the programme doses recorded. See [The antenatal card](/hospital/maternity/antenatal-card).
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the board and read it | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the board has no check of its own |
+| Open a pregnancy record | Anyone not yet governed; otherwise only if switched on | **Open a pregnancy record** |
+| Record a contact from a row | Anyone not yet governed; otherwise only if switched on | **Record an antenatal contact** |
+| Change a due date | Anyone not yet governed; otherwise only if switched on | **Change a confirmed due date** |
+| Close a record | Anyone not yet governed; otherwise only if switched on | **Close a pregnancy record** |
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. Hiding a button is a convenience — the check runs again when the act is submitted, and a refused attempt is written to the audit log while an allowed one is not.
+
+Which roles see the **Maternity** group at all is a separate question — see [Role navigation](/hospital/settings/role-navigation).
+
+## Check it worked
+
+- The row's **Contacts** count moves — **3 of 8** becomes **4 of 8**.
+- Its **Status** moves off **Due** or **Overdue**, and **Next contact** moves to her following window.
+- The findings appear on her chart, on the **Pregnancy** and **Vitals** tabs — see [The pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No open pregnancy records, but I know we have antenatal patients">
+    The board lists open pregnancy records, not appointments. A woman booked in for an antenatal visit does not appear until somebody selects **Open a pregnancy record** for her — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+  </Accordion>
+
+  <Accordion title="There is no Open a pregnancy record button">
+    You do not hold **Open a pregnancy record**. An owner grants it in the permissions sheet, under **Maternity**.
+  </Accordion>
+
+  <Accordion title="A row says Dating unavailable">
+    The dates held on that pregnancy record cannot produce a gestational age. **Next contact** and **Status** cannot be worked out either, so the row is shown without them rather than with a guess. Fix it with **Change due date** on the row's **⋯** menu.
+  </Accordion>
+
+  <Accordion title="Everyone is Overdue">
+    **Overdue** means the window for her next contact has closed with nothing recorded against it, so it is expected on a hospital that has just started using the module — contacts made before you began recording them here are not counted. It settles as the first round of contacts goes in.
+  </Accordion>
+
+  <Accordion title="The whole board's statuses changed and nobody touched a record">
+    Somebody changed the antenatal contact schedule. It is applied when the board is read, so new windows move every open pregnancy at once — no record was altered, and switching back restores the previous picture. See [Set up antenatal care](/hospital/get-started/maternity-setup).
+  </Accordion>
+
+  <Accordion title="There is no Record contact button on any row">
+    You do not hold **Record an antenatal contact**. An owner grants it in the permissions sheet, under **Maternity**.
+  </Accordion>
+
+  <Accordion title="Maternity is missing from the sidebar">
+    It needs the Enterprise plan and the **Maternity** care area, which starts switched **off**. See [Set up antenatal care](/hospital/get-started/maternity-setup).
+  </Accordion>
+
+  <Accordion title="I can see Maternity but a colleague cannot">
+    The group opens for doctors, nurse practitioners, nurses and midwives. Owners are never restricted by role navigation, so if you are the owner the difference is per-role — see [Role navigation](/hospital/settings/role-navigation).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does 3 of 8 mean she has had contacts 1, 2 and 3?">
+    It means three contacts are recorded, out of the number your schedule expects. Contacts are counted rather than matched to numbered slots — a woman who attends twice in one month has had two contacts, whatever the schedule intended them to be.
+  </Accordion>
+
+  <Accordion title="What does Next contact mean when it says Today, or Was due by?">
+    **Today** means her window is open and she can be seen now. A plain date ahead of you is the day her next window opens. **Was due by 14 August** means the window has closed with nothing recorded — the same thing the **Overdue** badge says, with the date she should have been seen by.
+
+    A **next** contact is never shown as a date in the past.
+  </Accordion>
+
+  <Accordion title="She booked late. Why does her schedule have fewer contacts?">
+    Because a contact window that had already closed before she first attended was never hers to attend. A woman who books at 38 weeks on the eight-contact schedule is measured against the contacts that are still ahead of her — not accused of missing the six that passed before she reached you.
+
+    Her booking gestation is on her [antenatal card](/hospital/maternity/antenatal-card) under **This Pregnancy**.
+  </Accordion>
+
+  <Accordion title="What does the Post-dates badge mean?">
+    She is at or past 42 completed weeks on the dating held on her record. It is the one gestation badge the board shows, because it is a threshold that is easy to miss when reading a number.
+  </Accordion>
+
+  <Accordion title="What do the risk factors under a name mean?">
+    They were written down when the pregnancy record was opened, by a person. Nothing is calculated into them and nothing acts on them automatically — open her chart to read what they are.
+  </Accordion>
+
+  <Accordion title="She has given birth — why is she still here?">
+    She leaves when the **delivery record is signed**, which is the act that closes the pregnancy with its outcome. A delivery that is written up but not yet signed keeps her on this board, because until somebody attests it there is no clinical record of the birth.
+
+    If the delivery is signed and she is still here, no birth was recorded against it — the pregnancy record is left open in that case rather than closed as a guess, and the person signing is told. Record the birth, or close her record from the **⋯** menu.
+  </Accordion>
+
+  <Accordion title="Does a closed pregnancy stay on this board?">
+    No. It leaves **Today's Clinic** the moment it is closed and appears in the [Antenatal Register](/hospital/maternity/register) with its outcome — unless it was marked as entered in error, which is kept out of the register too.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the antenatal worklist" />
+
+{/* source of truth: components/clinic/maternity/anc-worklist-table.tsx, components/clinic/maternity/maternity-content.tsx, lib/maternity/anc-schedule.ts */}

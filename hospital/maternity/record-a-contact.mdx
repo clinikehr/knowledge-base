@@ -1,0 +1,179 @@
+---
+title: Record an antenatal contact
+description: "Record one antenatal visit — vitals, obstetric findings and a referral — in a single sheet, straight onto the woman's chart."
+icon: "/images/icons/clipboard-plus.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with Record an antenatal contact" note="Needs the Maternity care area" />
+
+One sheet records the whole visit. You do not queue her through triage first and you do not write the findings twice — the vitals and the obstetric findings go onto her chart together, and the contact is counted against her schedule in the same action.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic", 'Record contact']} />
+
+<TaskHeader
+  before="An open pregnancy record for her, and the Record an antenatal contact permission"
+  time="Two minutes"
+  after="A contact counted against her schedule, and her findings readable on the chart"
+/>
+
+## Open the sheet
+
+Select **Record contact** on her row in [Today's Clinic](/hospital/maternity/todays-clinic). The sheet is headed **Antenatal contact** and names her underneath, with her gestation beside it — check that line before you type anything.
+
+## Fill it in
+
+<Steps>
+  <Step title="Set the Contact date">
+    It starts on today. You can back-date a visit that was written on paper, but not forward-date one: a date in the future is refused, because it would advance her schedule off a visit that has not happened.
+  </Step>
+  <Step title="Enter the vitals you took">
+    **Blood pressure** · **Pulse** · **Temperature** · **Respiratory rate** · **SpO₂** · **Weight** · **Height**.
+
+    Blood pressure is entered as two numbers with a slash — the field shows **120/80** and rejects anything else with **Use the form 120/80**.
+  </Step>
+  <Step title="Enter the obstetric findings">
+    **Fundal height** · **Fetal heart rate** · **Presentation** · **Lie** · **Fetal movements** · **Urine protein** · **Urine glucose** · **Oedema** · **Pallor**.
+
+    The pickers all start on **Not recorded**, and that is a real answer — leave one there and nothing is claimed about it. The urine fields read as they do at the bench: **Negative**, **Trace**, **1+** through **4+**. **Fundal height** carries its own note: "Read for dates on the chart, where the gestation is known."
+  </Step>
+  <Step title="List any danger signs">
+    **Danger signs** is a free-text line, and the field says how to use it: "Separate with commas. Shown on the chart; never acted on automatically." Write what she reported — headache, blurred vision, reduced movements — as you would say it.
+  </Step>
+  <Step title="Say whether she needs a clinician today">
+    **Refer to a clinician today** is a switch: "Puts her on a department's consultation list to be seen today. Without this the findings go to her chart only." Switch it on and two things appear — a **Reason for referral** box, which is required, and **Send her to**.
+  </Step>
+  <Step title="Choose where she is going">
+    **Send her to** lists your departments, and the sub-units inside whichever you pick. **This is what puts her in front of a doctor**: a referral with no department appears on no consultation list at all, so the sheet refuses to record one — "Choose a department. Without one this referral reaches no consultation list."
+
+    On a clinic that charges for consultations, only departments she has **paid for** can be chosen; the rest are marked **Not paid**, and a consultation fee that has expired is not a valid route. A free clinic fills in its general outpatient department for you.
+  </Step>
+  <Step title="Select Record contact">
+    The button reads **Recording…** while it saves, then the sheet closes and confirms **Contact 4 recorded** — with "The findings are on her chart", or the department she is now on the consultation list for.
+  </Step>
+</Steps>
+
+<Note>
+  **Everything except the date is optional, on purpose.** A midwife who did not measure the fundal height must still be able to record the contact she did have. An empty box stays empty on the record — it never becomes a zero, and a zero here would look exactly like a real measurement.
+</Note>
+
+<AuditNote action="Recording an antenatal contact" />
+
+## Check it worked
+
+- The confirmation names the contact's number — **Contact 4 recorded**.
+- Her row on **Today's Clinic** moves from **3 of 8** to **4 of 8**, and **Next contact** jumps to the following window.
+- Her **Status** badge leaves **Due** or **Overdue**.
+- On her chart, the visit is on the **Vitals** tab under **Over time**, with the obstetric findings alongside the vitals — see [The pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart).
+- On her [antenatal card](/hospital/maternity/antenatal-card) it is the last row of the series, badged **Latest**.
+
+## Order the booking investigations
+
+At the booking visit the same permission lets you order the antenatal profile in one action instead of six. Open her [antenatal card](/hospital/maternity/antenatal-card) and select **Order antenatal profile**.
+
+The sheet is headed **Antenatal profile** and names her underneath. It lists what your clinic's laboratory catalogue can supply, each with the name it will be ordered under, all ticked:
+
+| Investigation | Why it is in the profile |
+|---|---|
+| **HIV test** | A positive result opens the PMTCT pathway |
+| **Hepatitis B (HBsAg)** | Decides the newborn birth-dose plan |
+| **Syphilis (VDRL/RPR)** | Treatable in pregnancy; untreated it is congenital |
+| **Complete blood count** | The anaemia baseline the iron-folate plan is set against |
+| **Urinalysis** | Asymptomatic bacteriuria, protein and glucose |
+| **Malaria parasite screen** | Read alongside the IPTp-SP schedule |
+
+Untick anything you do not want, then select **Order 6 investigations**. They arrive on the laboratory worklist as **pending**, exactly as they would if you had ordered them one at a time.
+
+<Warning>
+  **It tells you what it cannot order, before and after.** Anything in the profile that your clinic has no matching test for is listed under **Not in your laboratory catalogue**, by name, on the sheet — and again on the confirmation under **Not ordered**. The confirmation never says "profile ordered"; it says how many were ordered and which were not, because a profile that quietly ordered four of six would leave you believing the booking bloods were done. Add the missing tests under **Laboratory → Tests** and order the profile again, or arrange them outside the clinic.
+</Warning>
+
+<Note>
+  **Blood group, rhesus and genotype are recorded, not ordered.** They are fields on her record, not laboratory orders — blood group and rhesus on the pregnancy record when it is opened, genotype on her patient record. The sheet says so under **Recorded, not ordered** so nothing looks forgotten.
+</Note>
+
+Anything already ordered for this pregnancy shows **Already ordered** with the date and starts unticked, so pressing this twice does not draw a second specimen. You can tick it back on — a repeat blood count later in the pregnancy is a real order.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A contact can't be dated in the future.">
+    Set **Contact date** to today or earlier. Recording a visit before it happens would move her schedule on for a contact nobody made.
+  </Accordion>
+
+  <Accordion title="Use the form 120/80">
+    **Blood pressure** takes systolic, a slash, then diastolic — two or three digits each. If you did not take it, leave the field empty.
+  </Accordion>
+
+  <Accordion title="Say why she is being referred">
+    **Refer to a clinician today** is on and **Reason for referral** is blank. Write the reason, or switch the referral off.
+  </Accordion>
+
+  <Accordion title="This pregnancy record is closed, so no further antenatal contacts can be recorded against it.">
+    Somebody closed the record — as delivered, or otherwise ended — while the sheet was open. Close the sheet and reload the board; if the record was closed in error, a new one has to be opened for her.
+  </Accordion>
+
+  <Accordion title="You don't have permission to record antenatal contacts in this clinic.">
+    An owner grants **Record an antenatal contact** in the permissions sheet, under **Maternity**. See [Permissions](/platform/team/permissions). The same permission covers **Order antenatal profile**.
+  </Accordion>
+
+  <Accordion title="None of these investigations are in this clinic's laboratory catalogue, so nothing was ordered.">
+    Your clinic has no test matching any of the ones you ticked, so nothing was created — you have not half-ordered the profile. Add them under **Laboratory → Tests**, then select **Order antenatal profile** again.
+  </Accordion>
+
+  <Accordion title="This pregnancy record is closed, so investigations can no longer be ordered against it.">
+    The record was closed — as delivered, or otherwise ended. **Order antenatal profile** does not appear on a closed record; if you see this, somebody closed it while your sheet was open. Close the sheet and reload her card.
+  </Accordion>
+
+  <Accordion title="That pregnancy record could not be found, or you don't have access to it.">
+    One message covers both, deliberately. Reload **Today's Clinic** and try from a fresh row; if the row is still there and this repeats, [contact support](/platform/help/contact-support).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need to send her through triage as well?">
+    No. The contact records the encounter itself — the vitals you take here are the vitals on her chart. Recording it twice would put the same visit on her record twice.
+  </Accordion>
+
+  <Accordion title="Can I edit a contact after saving it?">
+    Not from this sheet. Record the correction as what it is and tell the clinician who will see her; the visit already saved stays on the record.
+  </Accordion>
+
+  <Accordion title="Where can I see this visit next to the previous ones?">
+    On her [antenatal card](/hospital/maternity/antenatal-card) — select her name on **Today's Clinic**. It lists every contact oldest first, with the gestation she was at each.
+  </Accordion>
+
+  <Accordion title="What happens when I switch the referral on?">
+    It records that she needs to be seen and why, and it puts the visit on the consultation list of the department you chose under **Send her to** — which is how a doctor finds her. It does not book an appointment or send a message.
+
+    Without a department she would reach no list, so the sheet will not record the referral until you pick one.
+
+    The referral stays **open** on her [antenatal card](/hospital/maternity/antenatal-card), marked **Not yet seen**, until somebody records that a clinician saw her. See [Close a referral](/hospital/maternity/close-a-referral).
+  </Accordion>
+
+  <Accordion title="Does anything warn me if a finding looks abnormal?">
+    Not on this sheet. It records what you found without colouring or ranking it. Her [antenatal card](/hospital/maternity/antenatal-card) does name flags where the latest findings meet a threshold, and states beside them that they are shown for information and do not replace your assessment. Nothing is acted on automatically anywhere.
+  </Accordion>
+
+  <Accordion title="Can I change what is in the antenatal profile?">
+    Not per clinic. The profile is the booking set — HIV, hepatitis B, syphilis, a blood count, urinalysis and a malaria parasite screen — and the sheet lets you untick anything you do not want before ordering. What it will not do is claim to have ordered a test your catalogue does not hold.
+  </Accordion>
+
+  <Accordion title="Why is there no pregnancy test in the profile?">
+    Because you are ordering it from an open pregnancy record, so the pregnancy is already established. Ordering a confirmatory test at that point would have you waiting on a result you do not need.
+  </Accordion>
+
+  <Accordion title="Can I record a contact for a woman who is not on the board?">
+    Only from a row on **Today's Clinic**, so she needs an open pregnancy record first — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records). That is what makes the contact countable against a schedule.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="recording an antenatal contact" />
+
+{/* source of truth: components/clinic/maternity/anc-contact-sheet.tsx, db/actions/maternity.ts (recordAncContact), lib/triage/observation-schemas.ts */}

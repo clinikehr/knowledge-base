@@ -1,6 +1,6 @@
 ---
 title: Facility
-description: "Choose which units your hospital runs, and set the observation, shift, waiting and records thresholds that decide when a board flags something."
+description: "Choose which units your hospital runs, and set the schedules, charts and thresholds that decide when a board flags something."
 icon: /images/icons/hospital.svg
 ---
 
@@ -9,9 +9,9 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner, manager or accountant" note="Owner or manager to change anything" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner to change; manager or accountant to read" note="Only the owner can change these settings" />
 
-The **Facility** tab does two jobs. The top half decides which units this hospital runs: "Which departments this hospital runs. These control what appears in navigation." The bottom half carries the timing thresholds that decide when the Nursing Station, the front desk board and the Records desk start flagging things — and those exist nowhere else in the product.
+The **Facility** tab does two jobs. The top half decides which units this hospital runs: "Which departments this hospital runs. These control what appears in navigation." The bottom half carries the schedules, charts and timing thresholds that decide what the antenatal worklist, the labour chart, the Nursing Station, the front desk board and the Records desk measure against — and those exist nowhere else in the product.
 
 <Path steps={['Sidebar', 'Settings', 'Departments settings', 'Facility']} />
 
@@ -23,7 +23,7 @@ The **Facility** tab does two jobs. The top half decides which units this hospit
 
 ## What this tab controls
 
-Eight care-area switches under **Clinical units** and **Operational units**, then up to four threshold blocks. Each switch saves the moment you flip it; each threshold block has its own **Save** button, and appears only while its own care area is on.
+Nine care-area switches under **Clinical units** and **Operational units**, then up to six setting blocks. Each switch saves the moment you flip it; each block below has its own **Save** button, and appears only while its own care area is on.
 
 | Control | What it does | Default |
 | --- | --- | --- |
@@ -31,10 +31,14 @@ Eight care-area switches under **Clinical units** and **Operational units**, the
 | **In-house pharmacy** | "Dispensing, prescriptions and the pharmacy station." | On |
 | **Surgical theatre** | "Theatre scheduling and perioperative records." | **Off** |
 | **Diagnostics** | "Laboratory and radiology ordering, stations and reports." | On |
+| **Maternity** | "Antenatal clinic — pregnancy records, contact schedule and register." | **Off** |
 | **Front desk** | "Check-in board, appointments, registration and contacts." | On |
 | **Records** | "The records officer's queues, documents and patient records." | On |
 | **Insurance** | "Claims, pre-authorisation and the insurance dashboard." | On |
 | **Inventory** | "Stock, purchase orders and consumables. The Store is separate." | On |
+| **Schedule** | Which antenatal contact schedule this clinic runs — **WHO 2016 — eight contacts**, **Focused ANC — four visits** or **This hospital's own schedule**. Owner only. Needs **Maternity** | WHO 2016 — eight contacts |
+| **From (weeks)** · **To (weeks)** · **What it is called** | One row per contact window, on your own schedule only. Up to 20, and at least 1 | Seeded from the schedule on screen |
+| **Chart** | Which labour chart this clinic runs — **WHO Labour Care Guide (2020)** or **Classic partograph (alert and action lines)**. Owner only. Needs **Maternity** | WHO Labour Care Guide (2020) |
 | **Every (minutes)** | How often a ward observation is expected. Needs **In-patient care** | 240 |
 | **Grace (minutes)** | How late an observation may run before the patient is marked overdue | 30 |
 | **Pattern** | The nursing shift boundaries. Two presets, or **Custom shift times…** | Two 12-hour shifts, Day 07:00 · Night 19:00 |
@@ -48,6 +52,12 @@ Eight care-area switches under **Clinical units** and **Operational units**, the
 <Steps>
   <Step title="Turn the areas you run on, and the rest off">
     Flip each switch under **Clinical units** and **Operational units**. Each saves immediately, confirming with "Area enabled" or "Area hidden". Setting up from scratch? [Turn on your care areas](/hospital/get-started/care-areas) covers the sequence.
+  </Step>
+  <Step title="Choose the antenatal contact schedule">
+    Under **Antenatal contact schedule**, pick a **Schedule**. On **This hospital's own schedule**, set each row's **From (weeks)**, **To (weeks)** and **What it is called** — **Add contact** appends one after the last window. The resolved windows are listed beneath before you commit. Select **Save schedule**, and confirm **Change schedule** if the windows move. See [Set up antenatal care](/hospital/get-started/maternity-setup).
+  </Step>
+  <Step title="Choose the labour chart">
+    Under **Partograph**, pick a **Chart**. The **Where they disagree** panel below redraws as you choose, and a red panel names what this particular change costs. Select **Save partograph**, and confirm **Change partograph** if the choice moves. See [Choose your labour chart](/hospital/get-started/maternity-setup).
   </Step>
   <Step title="Set the nursing observation cadence">
     Under **Nursing observations**, enter **Every (minutes)** and **Grace (minutes)**, then select **Save cadence**.
@@ -64,6 +74,14 @@ Eight care-area switches under **Clinical units** and **Operational units**, the
 </Steps>
 
 <Warning>
+  **Changing the antenatal contact schedule applies to every open pregnancy immediately.** Nothing is recalculated and no record changes — the antenatal worklist compares the contacts already recorded against whichever schedule is set when it is opened. So who counts as **Due** or **Overdue** can change the moment you save. The card warns before the save and again in the confirmation, and only asks when the windows actually move.
+</Warning>
+
+<Warning>
+  **Changing the labour chart applies to every labour immediately, including one in progress.** The two systems disagree deliberately — the same observations produce different flags under each — and a chart is measured against whichever system is set at the moment it is opened. Nothing is recalculated and no observation changes, but flags on an open labour can appear or disappear without anyone re-examining the woman.
+</Warning>
+
+<Warning>
   The shift pattern is one definition feeding three surfaces — which handover a shift note is filed under, how the fluid balance chart is split, and what "nothing charted this shift" means on the Nursing Station. Change it mid-week and the boundary moves under staff who are on the ward now, so a patient can look charted or uncharted purely because the boundary moved. Change it at a quiet changeover and tell the ward first.
 </Warning>
 
@@ -72,6 +90,8 @@ Eight care-area switches under **Clinical units** and **Operational units**, the
 | What you changed | What you'll notice |
 | --- | --- |
 | A care area **off** | Three things go together: its navigation group, its settings tab and its analytics report. Nothing is deleted — "existing records stay reachable by direct link" — and turning it back on restores all three. It hides menus for everyone; it is not a permission. |
+| **Schedule** or its windows | [Today's Clinic](/hospital/maternity/todays-clinic) and every [antenatal card](/hospital/maternity/antenatal-card) measure contacts against the new schedule from the moment you save, for women already booked as well as new ones. The **Contacts** column changes its total, **Next contact** moves, and **Due** / **Overdue** are recalculated on every open pregnancy. It does **not** move [Coverage](/hospital/maternity/coverage), whose thresholds are fixed. |
+| **Chart** | Every [labour chart](/hospital/maternity/labour-chart) in the hospital is read against the new system from the moment you save — the badge beside **Cervicograph** changes, alert and action lines appear or disappear, the fetal heart rate band moves, and the classic chart stops assessing anything after full dilatation. No observation is altered, and nothing is migrated. |
 | **Every** / **Grace** | The [Nursing Station](/hospital/inpatient/nursing-station) recalculates when each observation is due, and how long past due before a patient shows as overdue. |
 | **Pattern** | Shift notes file against the new shift, the fluid balance chart re-buckets, and "nothing charted this shift" is measured against the new boundary. Notes already written are **not** re-filed. |
 | **Long wait after** | On the [front desk board](/hospital/front-desk/overview) a patient waiting longer than this turns amber and sorts to the top. It colours a badge and nothing else — it notifies nobody. |
@@ -81,16 +101,24 @@ Each block saves on its own: selecting **Save bands** does not save the cadence 
 
 ## Check it worked
 
-The sidebar lists the groups you left on and nothing for an area you switched off, and the settings rail shows a tab for each area you kept. Open the Nursing Station: the next observation is due at your new interval, and the shift named at the top matches your pattern. Open the front desk board: someone waiting past your threshold is flagged and sorted to the top. Open the records desk: the chase queue counts move to match the new bands.
+The sidebar lists the groups you left on and nothing for an area you switched off, and the settings rail shows a tab for each area you kept. Open **Today's Clinic**: the **Contacts** column counts against the number of contacts in the schedule you chose. Open any labour chart: the badge beside **Cervicograph** names the chart you chose. Open the Nursing Station: the next observation is due at your new interval, and the shift named at the top matches your pattern. Open the front desk board: someone waiting past your threshold is flagged and sorted to the top. Open the records desk: the chase queue counts move to match the new bands.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="I can see the switches but cannot move them">
-    "Only the clinic owner or a manager can change these." An accountant can read **Facility** but not change it.
+    "Only the clinic owner can change these." Managers and accountants can read **Facility** and not change it.
+
+    These settings are the owner's to write. Until August 2026 the switches were live for a manager, who could move one, press save, and be refused — first silently, then with an error. They are now read-only for anyone but the owner, which is what the database has always enforced.
   </Accordion>
   <Accordion title="There is no Nursing shifts block">
-    Observations and shifts appear only while **In-patient care** is on, **Front desk waiting** only while **Front desk** is on, and **Records chase** only while **Records** is on.
+    Observations and shifts appear only while **In-patient care** is on, **Antenatal contact schedule** and **Partograph** only while **Maternity** is on, **Front desk waiting** only while **Front desk** is on, and **Records chase** only while **Records** is on.
+  </Accordion>
+  <Accordion title="Save partograph is greyed out">
+    Only the clinic owner can change it — the card says "Only the clinic owner can change this." A refused save is reported as **Not saved** with the reason.
+  </Accordion>
+  <Accordion title="My own antenatal schedule will not save">
+    The reason is stated in red beneath the rows — a window that ends before it starts, one that overlaps the one above it, a contact with no label, or a schedule with no contacts at all. The last of those is refused outright: "an empty schedule would mark nobody due, which looks exactly like everyone being up to date."
   </Accordion>
   <Accordion title="My custom shift pattern will not save">
     The reason is stated beside the button: "A ward needs at least two shifts — a single shift has no handover", "Every shift needs a name", or "Two shifts start at the same hour — the later one would be unreachable". Fix that and select **Save shifts** again.
@@ -105,4 +133,4 @@ The sidebar lists the groups you left on and nothing for an area you switched of
 
 <StillStuck topic="facility settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts */}
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts */}

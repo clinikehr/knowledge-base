@@ -40,7 +40,13 @@ This is the behaviour worth understanding properly, because it looks like a bug 
 
 In a workspace that requires two-factor, **being signed in is not enough to open patient data**. The session itself has to have passed the second factor. So you can be working normally — dashboard, settings, your own profile — and then be asked for a code the moment you open a clinical screen. Theatre history, for example, refuses with "Two-factor verification is required to view theatre history." Ward observations, the check-in board and the records queues say the same thing in their own words.
 
+Everywhere else the wall reads: **"This needs two-factor authentication. Your clinic requires it for patient records — sign in with your second factor and try again."** It appears on consultations, ward charts and observations, the medication round, laboratory and radiology screens, the till, billing, check-ins and the client record — anywhere a clinical record is read or written.
+
 Enter your current code and the screen opens. Nothing is broken and nothing was lost.
+
+<Note>
+  **It is not a permission problem, and it should never say it is.** You have the access your role gives you; the session simply has not passed its second factor. If a screen tells you that you *do not have permission* when your workspace requires two-factor, treat that as a fault worth reporting — and do not ask an administrator to widen your role to get past it. Adding permissions cannot open a two-factor wall, and it leaves you holding authority you were never meant to have.
+</Note>
 
 <Warning>
   **Signing in with a passkey counts as one factor only.** A passkey is a strong, phishing-resistant replacement for your _password_ — it is not a second factor and it does not satisfy a workspace's two-factor requirement. If you sign in with a passkey in a workspace that requires two-factor, you will still be asked for your authenticator code before any patient data opens. Enrol an authenticator app even if you never type a password again.

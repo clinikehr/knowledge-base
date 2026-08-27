@@ -30,6 +30,7 @@ One card, **General Information**, with a single **Save Changes** button at the 
 | **Clinic Logo** | A square image. The hint says "Used on prescriptions, invoices, and general clinic branding." Uploads and deletes take effect on their own, without **Save Changes** | None |
 | **Clinic Name** | The hospital's name. At least 2 characters | Your name at signup |
 | **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | UTC |
+| **Patient ID prefix** | The letters before the number on every new patient's ID — **CMC**-0134. Two to six letters or numbers. Leave it empty to use the first three characters of your name | Empty (derived from your name) |
 | **Address** | Free text, multi-line | Empty |
 | **Phone Number** | Free text | Empty |
 | **Email Address** | Must be a valid address if filled in | Empty |
@@ -60,8 +61,23 @@ The tab keeps itself current: if a colleague changes something while you have it
 
 ## What changes once you save
 
+## Choosing your patient ID prefix
+
+Every patient gets an ID like **CMC-0134** — a prefix, then a number that counts up. If you leave **Patient ID prefix** empty, the prefix comes from the first three characters of your name, so "City Medical Centre" gives `CIT`. Set it yourself if you would rather it read `CMC`.
+
+<Note>
+  **Existing patients keep the ID they already have.** Changing the prefix affects new patients only — the ID on a patient's card, in your paper notes and on an invoice you have already issued does not move.
+</Note>
+
+**The numbering carries on rather than restarting.** If your last patient was `CIT-0133` and you change the prefix to `CMC`, the next one is `CMC-0134`, not `CMC-0001`. That keeps every ID in your clinic unique, which is what lets the system stop two patients ever sharing one.
+
+Two to six letters or numbers, and it is stored in capitals — typing lowercase is fine, the field converts it.
+
+**As you type, ClinikEHR checks it.** A prefix that is offensive or reserved is refused outright and cannot be saved. If another clinic already uses the one you picked, you get an amber note rather than a refusal — that is allowed, because patient IDs only have to be unique inside your own clinic. It is worth knowing all the same if you exchange records with that clinic, since `CMC-0134` alone would not tell the two of you apart.
+
 | What you changed | What you'll notice |
 | --- | --- |
+| **Patient ID prefix** | The next patient registered gets an ID with the new prefix. Everyone already registered keeps theirs. |
 | **Clinic Name** or **Clinic Logo** | Both start appearing on invoices, clinical documents and prescriptions, on your public booking page and in the patient portal. Anything generated from now on carries the new name and mark. |
 | **Timezone** | Three things at once: the times shown against appointments, which business day a payment is counted in, and how ward medication doses are scheduled. |
 | **Address**, **Phone Number**, **Email Address** | These are the contact details a patient reads on a document or a booking page. |

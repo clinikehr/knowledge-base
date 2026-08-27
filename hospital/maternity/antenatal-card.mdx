@@ -1,0 +1,211 @@
+---
+title: The antenatal card
+description: "Read one pregnancy over time — every contact in sequence, the gestation at each, the flags from the latest visit, and the A4 card she carries."
+icon: "/images/icons/chart-line.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+The worklist answers "who is due today". The chart summarises the pregnancy. The **antenatal card** is the third question, and usually the one that decides something: how this pregnancy has moved over time. A fundal height climbing four centimetres in four weeks, a diastolic drifting up across three visits, a presentation that was breech at 34 weeks and cephalic at 36 — none of that is visible in a single row.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic", "the patient's name"]} />
+
+Select a woman's **name** on **Today's Clinic** to open her card. **Download card** and **Today's Clinic** sit at the top right.
+
+## What you're looking at
+
+The page is headed with her name, and under it **Antenatal card** with her patient number and age.
+
+### The pregnancy, at the top
+
+The gestation in weeks, with a **Trimester** badge, a **Post-dates** badge from 42 weeks, and — once the record is closed — a status badge reading **Delivered**, **Closed** or **Entered in error**. Where the dating will not derive it says **Dating unavailable**.
+
+Beneath it: **Expected delivery** with how it was arrived at, **Booked** with the gestation she booked at, **Gravida / Para**, **Blood group**, and **Last menstrual period**, **Multiple pregnancy** and **PMTCT** — **Enrolled** — where those were recorded. A closed record also shows its **Outcome**.
+
+### Contacts — oldest first
+
+The series runs **oldest first**, deliberately: it is read down a column as a trend, the way its paper ancestor was written one line per visit. The most recent row carries a **Latest** badge so it is still findable at a glance.
+
+| Column | Shows |
+| --- | --- |
+| **Contact** | Its number in the series |
+| **Date** | The date of the visit — with **entered …** underneath only when it was written up on a different day |
+| **Gestation** | How far on she was **at that date** |
+| **BP** · **Pulse** · **Temp** · **Weight** | The vitals taken |
+| **Fundal ht** · **FHR** · **Presentation** · **Urine P / G** | The findings read as a trend |
+
+Anything else recorded at a visit — lie, movements, oedema, pallor, danger signs — sits on a detail line under its row, along with **Referred to a clinician** and the reason where one was given. A finding with no value shows **—**, never a zero.
+
+With nothing recorded yet the section reads **No contacts recorded yet**.
+
+<Note>
+  **Every gestation on the card is worked out from the *current* due date**, including the contacts recorded before it was last changed. That is what re-dating means. Where a due date has been changed, a **Due date was changed** panel states the previous date, the reason and who changed it, and says the same thing in as many words.
+</Note>
+
+### Schedule
+
+A **Schedule** block states where she stands: **Contacts recorded** (**3 of 8** on the eight-contact schedule), **Next contact** with the window it opens from, and **Windows passed with nothing recorded** — naming them, or **None**.
+
+It reads against whichever [contact schedule](/hospital/maternity/overview) your hospital has set, at the moment you open the card — not the one in force when she booked.
+
+It carries its own caveat, and it means it: "The schedule is advisory. A contact that was not recorded is not the same as a contact that did not happen, and nothing on this card acts on it."
+
+### Flags from the most recent contact
+
+Where the latest visit's findings meet a named threshold, an amber **Flags from the most recent contact** panel lists them — each with the values it fired on. **Raised blood pressure**, **Proteinuria**, **Fundal height small for dates**, **Fetal movements reduced**, **Rhesus negative** and others of that kind.
+
+Three things about this panel decide how to read it:
+
+- **It is information, not a decision.** The panel says so: "Shown for information. Nothing here is acted on automatically, and it does not replace your assessment."
+- **An empty panel is not a reassurance.** When nothing fires, the panel is simply absent — there is no green "no risk factors", because a measurement nobody took cannot mean she is well.
+- **It is separate from the booking list.** **Risk factors recorded at booking** is its own panel and is exactly what a person wrote down. Nothing calculated is mixed into it.
+
+<AuditNote action="Opening an antenatal card" />
+
+## Programme doses
+
+The bottom of the card carries a derived **Programme schedule** block and the **Programme doses** ledger under it. See [Programme doses](/hospital/maternity/programme-doses).
+
+## Download the card
+
+**Download card**, at the top right, produces an A4 PDF of this pregnancy — the card a woman carries between visits and to the facility where she delivers.
+
+<Steps>
+  <Step title="Select Download card">
+    The button reads **Preparing…** while the document is being produced.
+  </Step>
+  <Step title="Save the file">
+    It downloads as **Antenatal_Card_** followed by the record's reference. The file is named after the record and never after her, because a filename ends up in a downloads folder, a chat window and a printer queue.
+  </Step>
+</Steps>
+
+### What is on it
+
+The card is produced **from the record on the server**, not printed from this screen — so what it says comes from the pregnancy record itself rather than from whatever the page had loaded.
+
+Under your clinic's letterhead, headed **Antenatal Card**, it carries a strip stating **Produced**, **Gestation on this date** and **Status**, and then:
+
+| Section | Holds |
+| --- | --- |
+| **This Pregnancy** | Expected delivery and how it was arrived at, the gestation, the last menstrual period, when she booked and at what gestation, **Gravida / Para**, blood group, singleton or multiple, and the next contact due as recorded at her last visit. A closed record adds its outcome and the date it ended |
+| **Due Date Was Changed** | Only where one was — the previous date, the new one, its basis and the reason |
+| **Risk Factors Recorded At Booking** | Exactly what a person wrote down. Where none were, the section is **absent** — it never prints "none" |
+| **Antenatal Contacts** | One row per contact, oldest first: **No.**, **Date**, **Gest.**, **BP**, **Pulse**, **Temp**, **Weight**, **Fundal ht**, **FHR** |
+| **Findings Recorded At Each Contact** | Everything that does not fit the table — presentation, lie, the urine dipstick, danger signs, and a referral with its reason — one labelled line per contact |
+
+On screen, a contact you referred also shows whether a clinician has seen her — **Not yet seen** in amber, or **Signed off by** / **Reported as seen by** in green once it is closed. See [Close a referral](/hospital/maternity/close-a-referral). The downloadable card does not carry that line.
+| **Preventive Treatment And Supplements** | IPTp, tetanus-containing vaccine, and iron and folic acid — with the dose, the date given, and whether it was **Given at this clinic** or **Reported from elsewhere**. Those three only |
+| **Last Contact Recorded By** | The clinician who recorded the most recent contact, with their licence details |
+
+A pregnancy with nothing recorded yet still produces a card — the contacts section reads "No antenatal contacts have been recorded against this pregnancy." A contact or a dose marked as recorded in error is not printed — where doses were, the card states how many rather than listing them: "… further entries were recorded in error and are not listed."
+
+<Warning>
+  **Every gestation on the card is stated as at the day it was produced, and will be out of date afterwards** — including the gestation shown against each past contact. The card says so on its own face, prints the production date in the strip, in that sentence and in the footer of every page. An open pregnancy is also stamped **Pregnancy in progress — snapshot taken …** above the record, so nobody reads it as the final account of a completed pregnancy. Work the gestation out again from the expected delivery date on the card.
+</Warning>
+
+<Note>
+  **PMTCT is deliberately left off the card, although the screen above shows it.** The **PMTCT** field is not printed, and neither are **ART** or **Infant nevirapine** doses from the [programme doses](/hospital/maternity/programme-doses) ledger — only IPTp, tetanus and iron-folate reach the paper. This is the one document that physically leaves the building: on screen the reader is her clinician, and on a carried card the reader is anyone she shows it to, so "PMTCT: Enrolled" or a printed ART dose discloses a status by implication just as plainly as the status itself would. Her HIV status and ART regimen are on neither the screen nor the card.
+</Note>
+
+<Note>
+  **Sex is not printed on the card.** Nothing on the document states something that was not recorded, and an assumption about a patient's sex is not a thing to make on her behalf.
+</Note>
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open and read the card | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the card has no check of its own |
+| Record or void a programme dose from it | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
+| Download the card | Anyone who can open the card | Nothing of its own — the document is produced under your own access, so it holds only what you may already read |
+
+Downloading is recorded in the audit log as an export, with your name and the time.
+
+## Check it worked
+
+- The card opens on her name, and the row you recorded this morning is the last one in the series, badged **Latest**.
+- Its **Gestation** matches what the sheet showed you when you recorded it.
+- **Contacts recorded** on the **Schedule** block matches the **Contacts** count on **Today's Clinic**.
+- **Download card** saves a PDF whose **Antenatal Contacts** table has the same number of rows as the series on screen.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The page shows a not-found error">
+    The link points at a pregnancy this hospital does not hold, or one that has been removed from your reach. Go back to **Today's Clinic** and open her from the list.
+  </Accordion>
+
+  <Accordion title="No contacts recorded yet, but I recorded one">
+    Check you recorded it against this pregnancy rather than another woman's row — the contact sheet names her at the top for exactly that reason. A contact marked as entered in error is also kept out of the series.
+  </Accordion>
+
+  <Accordion title="A gestation on an old row is not what we wrote in the notes that day">
+    The due date has since been changed, so the whole series has moved with it. The **Due date was changed** panel says what it was and why.
+  </Accordion>
+
+  <Accordion title="The Gestation column shows a dash">
+    The dating on the record cannot produce a gestational age for that date. Correcting the due date fixes the whole column at once.
+  </Accordion>
+
+  <Accordion title="Not downloaded">
+    The download was refused and the reason is on the toast. "That pregnancy record could not be found, or you do not have access to it." covers both an unreachable record and one this hospital does not hold — they are deliberately one message. Open her from **Today's Clinic** and try again.
+  </Accordion>
+
+  <Accordion title="A dose I recorded is missing from the downloaded card">
+    Only IPTp, tetanus and iron-folate are printed. **ART** and **Infant nevirapine** are left off deliberately — see the note above — and so is a dose recorded as **Other**, because the ledger holds no medicine name for it and an unlabelled row on a carried card invites a guess.
+  </Accordion>
+
+  <Accordion title="The downloaded card has no clinician or licence on it">
+    **Last Contact Recorded By** names whoever recorded the most recent contact. On a pregnancy with no contacts recorded yet there is nobody to name.
+  </Accordion>
+
+  <Accordion title="There is no Flags panel">
+    Nothing recorded at the most recent contact met a threshold — or nothing was recorded that could. It is not a statement that she is well.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I record a contact from the card?">
+    No — contacts are recorded from a row on [Today's Clinic](/hospital/maternity/todays-clinic). The card is where the series is read.
+  </Accordion>
+
+  <Accordion title="Can I open the card for a pregnancy that has been closed?">
+    Yes, if you have its link. It shows the outcome and the closing date alongside the full series. Closed records are not listed on **Today's Clinic**, so there is no way in from there.
+  </Accordion>
+
+  <Accordion title="This pregnancy was closed by mistake. Can I re-open it?">
+    Yes, if it was closed as **Delivered** or **Ended**. Beneath **Outcome** there is **Re-open this record** — it clears the outcome and puts her back on **Today's Clinic**, and the [Antenatal Register](/hospital/maternity/register) stops counting that outcome. Contacts and deliveries already recorded are not changed.
+
+    Two limits. A delivery record still standing against the pregnancy has to be [retracted](/hospital/maternity/retract-a-record) first. And a record marked **Entered in error** cannot be re-opened at all — that path says it was never true, so open a new record for her instead. Re-opening needs the **Close a pregnancy record** permission.
+  </Accordion>
+
+  <Accordion title="Why is the newest contact at the bottom?">
+    Because the card is read as a trend, top to bottom, the way an antenatal card always has been. Reversing it would put the numbers in the order they were typed rather than the order they happened.
+  </Accordion>
+
+  <Accordion title="What does entered … under a date mean?">
+    That visit was written up on a different day from the one it is dated to — a back-dated entry. Rows entered on the day they happened carry no such line.
+  </Accordion>
+
+  <Accordion title="Is the downloaded card a printout of this screen?">
+    No. It is produced from the record itself, on the server, and then downloaded — which is why the two are not identical. The card is laid out for A4 and paper affords fewer columns, so presentation and the urine dipstick move from the table to a labelled line under it; nothing is dropped.
+  </Accordion>
+
+  <Accordion title="Can I download the card for a pregnancy that has been closed?">
+    Yes. A closed record prints its outcome and end date, and carries no **in progress** stamp — for a closed pregnancy the document is the record of what happened. A record marked as entered in error prints stamped **Entered in error — not a valid clinical record**.
+  </Accordion>
+
+  <Accordion title="Is this the same as the Pregnancy tab on the chart?">
+    No. The tab summarises the pregnancy while the patient is in front of you; the card is the whole series over time. See [The pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the antenatal card" />
+
+{/* source of truth: components/clinic/maternity/antenatal-card.tsx, lib/maternity/risk.ts, lib/maternity/anc-schedule.ts, lib/clinical-reports/download-clinical-report.ts, app/u/clinic/maternity/episode/, ClinikEHR-Database download-antenatal-card/card-model.ts */}

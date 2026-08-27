@@ -1,0 +1,254 @@
+---
+title: Programme doses
+description: "Record IPTp, tetanus and iron-folate against a pregnancy, read what the schedule says is due, and correct a dose recorded in error."
+icon: "/images/icons/syringe.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with Record a programme dose" note="Needs the Maternity care area" />
+
+The bottom of a woman's [antenatal card](/hospital/maternity/antenatal-card) carries two blocks: **Programme schedule**, which says what the dating suggests is due, and **Programme doses**, the ledger of what was actually given.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic", "the patient's name"]} />
+
+<TaskHeader
+  before="An open pregnancy record — and, if the dose was given here, either an existing administration to point at or stock to give it from"
+  time="Under a minute"
+  after="A dose on the pregnancy's ledger, counting towards its series"
+/>
+
+## This records a dose; it does not give one
+
+The dialog says it plainly: "This records the dose against the pregnancy. It does not give the drug or draw stock."
+
+A dose given at your hospital is given the normal way — through a screen that draws the stock and records the lot. This ledger then says *which pregnancy, which programme, which position in the series* and points back at that administration. A dose given somewhere else is recorded as reported, with nothing to point at.
+
+There are three ways a dose can have been given here, and all three end at the same place — a record for the ledger to point at:
+
+| The dose was | Give it on | It then appears in |
+| --- | --- | --- |
+| A vaccine, such as tetanus toxoid | The vaccine screen | **Which administration drew the stock** |
+| A drug for an admitted patient | The ward drug chart | The same list |
+| A drug for a woman at clinic — IPTp-SP, iron and folate | **Give it now, from stock**, on this block | The same list, straight away |
+
+<Note>
+  **Give it now, from stock** was added because there was no way to record IPTp-SP or iron and folate as given here at all. They are not vaccines, and the woman receiving them has no bed — so neither of the other two routes fitted her, and the only remaining option said the dose came from another facility, which was not true.
+</Note>
+
+## Read the Programme schedule
+
+Three lines, each with its own state and its own reason in plain words.
+
+| Line | States |
+| --- | --- |
+| **IPTp-SP (malaria preventive treatment)** | **Cannot say** · **Not yet eligible** · **Not due** · **Due** · **Complete** |
+| **Tetanus-toxoid-containing vaccine (TT/Td)** | the same five |
+| **Iron and folic acid** | **Cannot say** · **Not started** · **Supplied** · **Resupply due** |
+
+<Warning>
+  **Iron and folate is supply, not a dose series.** The ledger records what was **issued**, never what was taken — nothing in the product knows whether she swallowed them. The block says so: "Supply is what was recorded as issued, not what was taken. Advisory only." Do not read **Supplied** as adherence.
+</Warning>
+
+**Cannot say** is not the same as up to date. It means the pregnancy has no usable dating, so no schedule can be derived at all — correcting the due date is what fixes it. The whole block is advisory: it is a prompt to a clinician, not a finding.
+
+## Record a dose
+
+<Steps>
+  <Step title="Select Record dose">
+    It sits at the top right of the **Programme doses** block, and is absent if you do not hold the permission.
+  </Step>
+  <Step title="Choose the Programme">
+    **IPTp (malaria prevention)** · **Tetanus toxoid** · **Iron and folate** · **ART** · **Infant nevirapine** · **Other**.
+  </Step>
+  <Step title="Give its position in the series">
+    **Dose number** — "Its position in the series — TT-2, IPTp-3. Leave blank if it isn't known." The field is not offered for **Iron and folate** or **ART**, which are issued rather than numbered.
+  </Step>
+  <Step title="Set the Date given">
+    Today or earlier. A future date is refused.
+  </Step>
+  <Step title="Say where it was given">
+    **Where it was given** offers **Given at this clinic** or **Reported from another facility** — "A dose given here must point at the administration that drew the stock."
+  </Step>
+  <Step title="Point at the administration, if it was given here">
+    **Which administration drew the stock** lists this woman's own records — you choose one, you never type a reference. If she has none yet it reads **No administration recorded for her yet**, and the note below tells you what to do instead.
+
+    A dose **Reported from another facility** is not asked for one, because it drew no stock here, and the form refuses one.
+  </Step>
+  <Step title="Select Record dose">
+    It confirms **Dose recorded** — "It is linked to the administration that drew the stock", or "Recorded as given at another facility."
+  </Step>
+</Steps>
+
+## Give the dose from stock, here
+
+Use this for a drug you are handing to a woman at clinic — IPTp-SP, iron and folate. It draws the dose from your stock against her name, records the lot, and hands the record straight to the ledger form.
+
+<Steps>
+  <Step title="Select Give it now, from stock">
+    It sits under **Which administration drew the stock**, and only when **Given at this clinic** is selected.
+  </Step>
+  <Step title="Choose the Drug and the Dose">
+    **Drug** searches your active medications. **Dose** is how many units leave the shelf — it must be greater than zero.
+  </Step>
+  <Step title="Choose where it comes Taken from">
+    **Taken from** is the storage location the stock leaves. **Lot** defaults to **Earliest expiry first**, which is what you want unless you are deliberately using a particular lot.
+  </Step>
+  <Step title="Add Route, Site and Notes if they apply">
+    All three are optional — **PO**, **IM**, a site, or a note such as directly observed.
+  </Step>
+  <Step title="Select Give the dose">
+    It confirms **Dose given** — "Stock has been drawn and the lot recorded. It is not on the pregnancy's ledger until you select Record dose."
+
+    You are returned to the ledger form with the new record already chosen in **Which administration drew the stock**.
+  </Step>
+  <Step title="Finish with Record dose">
+    Set the **Programme** and **Dose number**, then select **Record dose**.
+  </Step>
+</Steps>
+
+<Warning>
+  **These are two acts, and the first one cannot be undone.** Once **Give the dose** succeeds, the stock is gone and the lot is recorded — whatever happens next. If **Record dose** then fails, the block keeps the record selected and shows a standing notice: "Stock has already been drawn for this dose and the lot recorded. It is **not** on this pregnancy's ledger until you select **Record dose**. Do not give a second dose if this step fails — select **Record dose** again."
+
+  Select **Record dose** again. Do not go back and give a second dose.
+</Warning>
+
+<Note>
+  **This needs stock set up.** If your clinic has no medications or no active storage location in **Inventory**, the step says so plainly — "No medications are set up in this clinic's stock, so a dose can't be given from here" — rather than showing you an empty list. Set the item up under **Inventory**, or record the dose as **Reported from another facility**.
+
+  If the list simply could not be loaded it says that instead — "The stock list could not be loaded, so it isn't possible to say what is available" — with a **Try again**. An empty list and a failed read are never shown as the same thing.
+</Note>
+
+## Correct a dose recorded in error
+
+Nothing here is deleted. A wrong dose is marked as entered in error, keeping the row, its reason and any administration it points at — and freeing its position in the series so the correct dose can be recorded.
+
+<Steps>
+  <Step title="Select Mark in error on the row">
+    The dialog is headed **Mark this dose as entered in error** and names the dose and its date: it "will stop counting towards the series. The record is kept, along with any administration it points at."
+  </Step>
+  <Step title="Answer Why is this wrong?">
+    A reason is required — the button stays disabled until you write one.
+  </Step>
+  <Step title="Select Mark in error">
+    It confirms **Marked as entered in error** — "The record is kept; the dose no longer counts towards the series."
+  </Step>
+</Steps>
+
+The row stays in the ledger, struck through and badged **Entered in error**, and stops counting on the **Programme schedule** block.
+
+<Note>
+  **This is why a struck-through row matters.** A midwife reading the ledger can tell "never given" from "given and retracted" — and that difference is the difference between giving a dose and double-dosing. Deleting the row would erase it.
+</Note>
+
+<AuditNote action="Recording or correcting a programme dose" />
+
+## What the ledger shows
+
+| Column | Shows |
+| --- | --- |
+| **Dose** | The programme and its number — **IPTp 2**, **Tetanus toxoid 3** — with an **Entered in error** badge where one applies |
+| **Given** | The date it was given |
+| **Source** | **Given here** or **Reported elsewhere** |
+
+With nothing recorded it reads **No programme doses recorded for this pregnancy.**
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Read the ledger and the schedule | Anyone who can open the antenatal card | Nothing |
+| Record a dose | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
+| Give a dose from stock, here | The same — it opens from inside **Record dose** | **Record a programme dose** |
+| Mark a dose as entered in error | The same | **Record a programme dose** |
+
+Recording and correcting share one permission on purpose: whoever may assert that a dose happened may assert that it did not.
+
+## Check it worked
+
+- The dose is a row in the ledger with the right date and source.
+- The matching line on **Programme schedule** moves — its count rises, and **Due** becomes **Not due** or **Complete**.
+- A dose you marked in error is struck through, badged, and no longer counted.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Choose the administration that drew the stock, or give the dose from stock here first">
+    **Given at this clinic** requires a real administration behind it — the one that drew the stock and recorded the lot. Choose one from the list, use **Give it now, from stock**, give it on the vaccine screen or the ward drug chart, or record this one as **Reported from another facility**.
+  </Accordion>
+
+  <Accordion title="Not enough stock available.">
+    **Give the dose** could not draw what you asked for from **Taken from**. Check the location and the quantity, or receive stock first.
+  </Accordion>
+
+  <Accordion title="Say who the dose is for — an admitted patient or a patient of this clinic.">
+    The dose reached the store without a patient attached. Close the dialog, reopen the woman's antenatal card and try again.
+  </Accordion>
+
+  <Accordion title="That patient could not be found, or you do not have access to them.">
+    The woman named is not a patient of this clinic, or you are not permitted to see her record. Open the dose from her own antenatal card.
+  </Accordion>
+
+  <Accordion title="A dose given elsewhere drew no stock here">
+    You chose **Reported from another facility** but left an administration reference in the box. Clear it.
+  </Accordion>
+
+  <Accordion title="That dose in the series is already recorded for this pregnancy.">
+    "Mark the existing one as entered in error if it is wrong." Two doses cannot hold the same position in a series.
+  </Accordion>
+
+  <Accordion title="That administration is already recorded against a dose. One administration is one dose.">
+    The reference you pasted is already claimed by another ledger row. Check you copied the right one.
+  </Accordion>
+
+  <Accordion title="That administration was given to a different patient.">
+    "A dose can only be recorded against the woman it was given to." You are on the wrong pregnancy's card, or you copied another patient's reference.
+  </Accordion>
+
+  <Accordion title="A dose can't be dated in the future.">
+    Set **Date given** to today or earlier.
+  </Accordion>
+
+  <Accordion title="This pregnancy record is delivered, so no further doses can be recorded against it.">
+    The record has been closed. Doses can only be added while it is open.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does recording a dose here take it out of stock?">
+    **Record dose** never does. **Give it now, from stock** does — that is the whole difference between the two, and it is why they are separate steps with separate confirmations. The ledger points at a stock movement; it never causes one.
+  </Accordion>
+
+  <Accordion title="I gave the dose but Record dose failed. Should I give it again?">
+    No. The stock has already been drawn and the lot recorded — giving it again would give a second dose and draw a second one. The block keeps the record selected and says so; select **Record dose** again.
+  </Accordion>
+
+  <Accordion title="Why is Give it now, from stock missing?">
+    It appears only when **Given at this clinic** is selected, and only where the pregnancy record could name the woman. If it is absent, give the dose on the vaccine screen or the ward drug chart and choose it from **Which administration drew the stock**.
+  </Accordion>
+
+  <Accordion title="Why is there no Dose number for iron and folate?">
+    Because it is supplied rather than given as a numbered series, and a position in a series would be a false precision. The same applies to ART.
+  </Accordion>
+
+  <Accordion title="Can I record ART or infant nevirapine?">
+    They are in the **Programme** list and can be recorded on the ledger. The **Programme schedule** block derives IPTp, tetanus and iron-folate only, so those two carry no due state — and neither is printed on the [downloadable antenatal card](/hospital/maternity/antenatal-card), which a woman carries to another facility.
+  </Accordion>
+
+  <Accordion title="Does Supplied mean she is taking her iron?">
+    No. It means a supply was issued and recorded. Adherence is not something the product can know, and it never claims to.
+  </Accordion>
+
+  <Accordion title="Can I edit a dose instead of marking it in error?">
+    No. Mark it in error with the reason, then record the correct one — the series position is freed as soon as you do.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="programme doses" />
+
+{/* source of truth: components/clinic/maternity/programme-doses-panel.tsx, lib/maternity/programme-schedule.ts, db/actions/maternity.ts (recordProgrammeDose, voidProgrammeDose) */}

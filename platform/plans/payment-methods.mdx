@@ -28,10 +28,14 @@ You do not choose the provider — it is picked from where your workspace bills 
 
 | What you are paying for | Billed through |
 | --- | --- |
-| Your monthly or yearly subscription | **Dodo** in most of the world, **Paystack** in Nigeria |
+| Your monthly or yearly subscription | **Stripe** when your workspace bills in US dollars, **Paystack** when it bills in naira |
 | A staff seat on Clinic & Hospital | **Stripe** |
 | The no-card free trial | **Stripe** |
 | AI credit packs | **Dodo** |
+
+<Note>
+  This table used to say subscriptions were billed through Dodo in most of the world. That was never what the product did — subscription checkout has always routed by currency to Stripe or Paystack, and Dodo bills credit packs only. Corrected in August 2026.
+</Note>
 
 There is no provider picker anywhere in the product. If you see a provider name you did not expect, that is the routing above doing its job, not an error.
 
@@ -43,9 +47,16 @@ Each workspace card carries a **Billing Information** block with a **Payment met
 
 ## Changing the card
 
-The card details themselves are held by the payment provider, not by ClinikEHR, and there is no card-editing screen in the app. What to do therefore depends on why you are changing it.
+The card details themselves are held by the payment provider, not by ClinikEHR, and there is no card-editing screen in the app. There is, since August 2026, a door to the provider's own one.
 
 <Steps>
+  <Step title="Stripe: use Manage payment method">
+    On the workspace card under **Billing**, the **Billing Information** block shows a **Manage payment method** button when the workspace bills through Stripe. It opens Stripe's own billing page — add a card, make one the default, remove an old one — and returns you here when you close it.
+
+    Only the workspace owner can open it, and that is enforced on the server, not just hidden: the page it opens can change the card, so the link is not something to forward.
+
+    Paystack (naira) has no equivalent screen, so the button does not appear there. Use the steps below.
+  </Step>
   <Step title="If the subscription is already Past Due">
     Fix it from the prompt you are being shown. Anywhere a paid feature is blocked because payment failed, the message reads "Your subscription payment is past due. Please update your payment method to restore your plan's staff capacity." with a **Fix Payment** button, which takes you back through checkout with a fresh card.
   </Step>

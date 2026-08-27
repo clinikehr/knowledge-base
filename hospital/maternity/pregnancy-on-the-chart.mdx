@@ -1,0 +1,139 @@
+---
+title: The pregnancy on the chart
+description: "What a clinician sees when the patient in front of them is pregnant — the gestation stamp, the storyboard card and the Pregnancy tab, in clinic and on the ward."
+icon: "/images/icons/file-heart.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any role that opens a consultation or a ward chart" note="Appears only for a patient with an open pregnancy record" />
+
+When the patient you open has an open pregnancy record, the consultation chart says so in three places without you going looking, and the ward chart in two. When she has not, nothing changes — the chart is exactly as it is for every other patient.
+
+<Path steps={['Sidebar', 'Consultation', 'Open a patient']} />
+
+## The three places it shows
+
+| Where | What it says |
+| --- | --- |
+| The identity line at the top of the chart | Her gestation and expected delivery date, next to her name — **28+3 · EDD 14 Nov** |
+| The storyboard rail on the left | A **Pregnancy** card with the gestation, the expected delivery date, **Gravida / Para** and any risk factors |
+| A **Pregnancy** tab | The pregnancy record summarised — see below |
+
+The three never disagree: they all read the same date, worked out at the same moment. The gestation is calculated when you look at it, so a chart left open overnight recalculates rather than showing yesterday's week.
+
+<Note>
+  **The Pregnancy tab exists only while there is an open pregnancy record.** It is not hidden by a role or a permission, and it has nothing to do with whether the patient is female — it appears because there is a record to show, and disappears when that record is closed.
+</Note>
+
+## What the Pregnancy tab shows
+
+At the top, the gestation in weeks, with a **Trimester** badge — and a **Post-dates** badge from 42 weeks. Where the record's dates cannot produce a gestation it reads **Dating unavailable** rather than going blank.
+
+Under it, the record itself:
+
+| Row | Notes |
+| --- | --- |
+| **Expected delivery** | With how it was arrived at underneath — **from last menstrual period**, **from a dating scan**, **clinically assessed** or **basis not recorded** |
+| **Booked** | When the pregnancy record was opened |
+| **Gravida / Para** | A **—** on either side where the number was not recorded, never a zero |
+| **Blood group** | Marked **Rhesus negative** underneath where that applies |
+| **Multiple pregnancy** | Shown only when it was recorded, with the number of fetuses if that was recorded too |
+
+**Risk factors recorded at booking** appear in their own amber panel below, exactly as somebody wrote them. Nothing is calculated into that list and nothing acts on it — it is shown to you because you are the person who decides what it means.
+
+If the due date has ever been changed, a **Due date was changed** panel states what it was, what it is now, how the new date was arrived at, and the reason given. A re-dating moves every gestation and every contact date that follows from it, so it is never silent.
+
+### The findings from her contacts
+
+Vitals and obstetric findings recorded at an antenatal contact reach the **Vitals** tab like any other observation: they are rows under **Over time**, with the obstetric findings as extra columns beside the blood pressure and pulse.
+
+**Fetal heart rate is flagged** like any other vital: outside 110–160 beats per minute it is marked abnormal and labelled **High** or **Low**. That range is the same at every gestation, so the flowsheet can hold you to it.
+
+**Fundal height, presentation and urine protein are shown as plain values, uncoloured.** That is deliberate, not an omission — fundal height only tracks gestation between roughly 24 and 36 weeks, the flowsheet does not know how many weeks she is, and a screen that cannot know the reference range must not imply one. Fundal height is read for dates on the **Pregnancy** tab, where the gestation is on the same screen.
+
+## And on the ward chart
+
+An admitted patient with an open pregnancy record carries the same thing onto the [inpatient chart](/hospital/inpatient/admissions):
+
+| Where | What it says |
+| --- | --- |
+| The stay line under her name | Her gestation, after the ward, the bed and the day of stay — **Maternity Ward · Bed 4 · Day 3 · 39+1**. The gestation alone here, not the due date |
+| The storyboard rail | The same **Pregnancy** card as the consultation's, with the same fields in the same order |
+
+The card is in the rail, so it shows from large screens up; on a narrower screen the stay line is where the gestation is. Both are worked out once, together, so the header and the rail cannot disagree by a day across a midnight.
+
+There is no **Pregnancy** tab on the ward chart. A **Maternity** tab takes its place, and it carries her labour rather than a summary of the record — see [The Maternity tab on a ward chart](/hospital/maternity/ward-maternity-tab). Before anybody has started a delivery record or charted an observation, that tab's own heading reads **Pregnancy** and it says outright that nothing on the chart says she is in labour.
+
+<Note>
+  **Neither survives a chart opened offline.** The pregnancy is not part of the cached ward chart, so a chart opened without a connection carries no gestation and no card — which is not a statement that she is not pregnant. A chart that was already open when the connection dropped keeps both.
+</Note>
+
+## Check it worked
+
+- Open a woman with an open pregnancy record: her gestation is on the identity line, the **Pregnancy** card is in the left rail, and a **Pregnancy** tab is in the tab strip.
+- Open any other patient: none of the three is there.
+- Open her ward chart if she is admitted: her gestation is the last segment of the stay line, and the **Pregnancy** card is in the rail.
+- A contact you recorded this morning is a row under **Over time** on the **Vitals** tab.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Pregnancy tab for a patient I know is pregnant">
+    There is no open pregnancy record for her. Check [Today's Clinic](/hospital/maternity/todays-clinic) — if she is not on the worklist either, a record has not been opened yet, or the one she had has been closed. Opening one takes a minute: [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+  </Accordion>
+
+  <Accordion title="No open pregnancy record for this patient.">
+    The tab is showing but the record it was opened for has since been closed. Reload the chart.
+  </Accordion>
+
+  <Accordion title="This patient's record could not be resolved, so the pregnancy record cannot be shown.">
+    The chart could not tie this consultation back to the patient's record. Reopen the patient from the patient list rather than from a link, and [contact support](/platform/help/contact-support) if it repeats.
+  </Accordion>
+
+  <Accordion title="The gestation reads Dating unavailable">
+    The dates on the pregnancy record cannot produce a gestational age. Correct it with **Change due date** on her row in **Today's Clinic** — it takes the **Change a confirmed due date** permission, and the correction is recorded with its reason.
+  </Accordion>
+
+  <Accordion title="The gestation on the chart is a day out from what I calculated">
+    Gestation is counted in whole calendar days from the record's due date, so it holds steady for the whole of a day rather than ticking over mid-afternoon. If it is more than a day out, the due date on the record is what to check.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is there no Preterm badge?">
+    Every gestation under 37 weeks is preterm, so the badge would be lit on nearly every antenatal chart from booking onwards — and "preterm" on a twelve-week pregnancy is not even true. The gestation is printed beside it and says everything the badge would. **Post-dates** is the opposite case: a threshold that is easy to miss when reading a number.
+  </Accordion>
+
+  <Accordion title="Why is the Pregnancy card amber and not red?">
+    Red belongs to the allergy band alone. A post-dates pregnancy is urgent, but borrowing the allergy colour would cost that band its meaning.
+  </Accordion>
+
+  <Accordion title="Does opening the Pregnancy tab get recorded?">
+    Yes. Opening it is written to the audit log with your name and the time, like every other look at a clinical record. See [Audit log](/platform/security/audit-log).
+  </Accordion>
+
+  <Accordion title="Can I record a contact from the chart?">
+    No — contacts are recorded from a row on [Today's Clinic](/hospital/maternity/todays-clinic). The chart is where they are read.
+  </Accordion>
+
+  <Accordion title="Where do I see all her contacts together?">
+    On her [antenatal card](/hospital/maternity/antenatal-card) — every contact in sequence with the gestation at each, reached by selecting her name on **Today's Clinic**. The **Vitals** tab shows the same readings mixed in with the rest of her observations.
+  </Accordion>
+
+  <Accordion title="Why does the ward chart show only the gestation and the consultation show the due date too?">
+    Room. The consultation's identity line has space for **28+3 · EDD 14 Nov**; the ward's stay line already carries the ward, the bed and the day of stay, and has to survive a narrow screen at the bedside. The expected delivery date is on the **Pregnancy** card in the rail either way.
+  </Accordion>
+
+  <Accordion title="Does re-dating change gestations already written in old notes?">
+    Notes keep the words you wrote. What changes is the gestation the chart calculates, which now reads as though she had always been dated the new way — which is what re-dating means. The date it replaced, and the reason, stay on the **Pregnancy** tab.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the pregnancy record on a chart" />
+
+{/* source of truth: components/clinic/consultation/chart/tabs/pregnancy-tab.tsx, components/clinic/consultation/chart/consultation-storyboard.tsx, components/clinic/ward-admissions/chart/ward-chart.tsx, components/clinic/ward-admissions/chart/ward-storyboard.tsx, lib/ward/header-labels.ts, lib/maternity/pregnancy-summary.ts, components/clinic/consultation/chart/tabs/vitals-tab.tsx */}

@@ -1,0 +1,326 @@
+---
+title: Postnatal
+description: "Work the WHO postnatal contacts — within 24 hours, day 3, day 7–14 and week 6 — for the mother and for each baby she delivered."
+icon: "/images/icons/baby.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+**Postnatal** is the board for the days after the birth. It lists every woman whose delivery record carries a time of birth, with the four WHO contacts across the top and a row for her and a row for each of her babies.
+
+Nothing puts a woman here except a delivery record with a **Time of birth** on it. No gestation, no ward and no pregnancy status is inferred — the same rule the [Labour Ward](/hospital/maternity/labour-ward) keeps on the other side of the birth.
+
+<Path steps={['Sidebar', 'Maternity', 'Postnatal']} />
+
+## What you're looking at
+
+The heading reads **Postnatal**, and under it: **The WHO postnatal contacts — within 24 hours, day 3, day 7–14 and week 6 — for the mother and for each baby. A baby does not need to be registered as a patient to be examined.**
+
+Above the table sits **Waiting to be registered** — every baby born alive here who does not yet have their own patient record. It is described in full [below](#waiting-to-be-registered).
+
+Then one table, most recent birth first.
+
+| Column | Shows |
+| --- | --- |
+| **Mother and baby** | Her name — select it to open her [antenatal card](/hospital/maternity/antenatal-card) — with her patient number, then **Her own postnatal checks**. Each baby is indented beneath her |
+| **Born** | The time of birth, with **Day 0**, **Day 1**, **Day 2** … underneath. The mother's row counts from the delivery; each baby's row counts from her own birth |
+| **Within 24 hours**, **Day 3**, **Day 7–14**, **Week 6** | One cell per contact, per subject |
+| **Action** | **⋯** on the mother's row, for **Record an extra visit** |
+
+A brand-new board reads **No births in the last 90 days** — "A woman appears here once her delivery record carries a delivery time. Delivery records are written on the Labour Ward."
+
+### The baby rows
+
+Each baby is named by her birth record, not by a patient: **Baby 1 · Female · born 2:05 PM**. Under it sits her outcome — **Live birth**, **Died after birth** or **Stillborn** — and, where she has no chart of her own yet, a **Not registered yet** badge.
+
+<Note>
+  **That badge is context, never a gate.** The first contact is due within 24 hours, and nobody has done the paperwork by then. Postnatal care never waits on registration — see [Babies and birth records](/hospital/maternity/babies) for the registration step itself.
+</Note>
+
+A stillborn baby is still listed, and her cells say where the care went instead: **No postnatal checks are recorded for this baby. Her mother's postnatal care is recorded on her own row above.** The mother's four contacts are offered exactly as they are for every other woman — that is the point of building the board from the delivery rather than from an outcome.
+
+Where a delivery has no birth record written against it yet, the space under her reads **No birth record has been written for this delivery yet, so there is no baby to examine here. Her own checks above are unaffected.**
+
+### What a cell says
+
+| Cell | Means |
+| --- | --- |
+| A date badge | Recorded. An amber **!** beside it means that contact was referred to a clinician |
+| **Record** | Due now — the window is open |
+| **Missed** | The window closed with nothing recorded. Selecting it still records the contact |
+| **Not yet due** | The window has not opened. It is still selectable — an early check is recorded against the slot it belongs to |
+| **Due** | The window is open, but you do not hold **Record a postnatal contact**, so there is nothing to select |
+| **Birth time unusable** | The time on the record cannot be read, so nothing can be worked out. It is said in words rather than left blank |
+
+The windows are counted from the birth, and there is no grace period on top of them: each opens on the day it is named for and closes when the next one opens.
+
+| Contact | Opens | Closes |
+| --- | --- | --- |
+| **Within 24 hours** | The birth | 24 hours later |
+| **Day 3** | Day 3 | Day 7 |
+| **Day 7–14** | Day 7 | Day 15 |
+| **Week 6** | Day 42 | Day 57 |
+
+**The board prompts; it never decides what a contact was.** Which contact a visit is remains your assertion on the form — the sheet says so: "A day 3 check done on day 4 is still the day 3 contact."
+
+Under the table: **Births in the last 90 days. The postnatal schedule closes at week 6; a woman whose birth is older than this is reached from her pregnancy record.** The window is stated so the end of the list never reads as "nobody else".
+
+## Find somebody on this list
+
+A search box and filter buttons sit above the board. They narrow what is drawn; they never change what is recorded.
+
+- **Search** matches on **name** and **patient number**, in any order — typing `bello 0042` finds Amina Bello with number MAT-0042. Case does not matter, and part of a word is enough.
+- **Checks** narrows to families with a **missed** check, one **due now**, or **all checks recorded**.
+- **Who** narrows to **Mother needs a check** or **A baby needs a check**.
+- **Birth** narrows to a live birth, or a stillbirth or neonatal death. There is deliberately no option that removes a bereaved mother from the board — her postnatal follow-up is still hers.
+- Searching **baby 2** finds the mother that baby's checks hang under.
+- **Clear filter** empties one; **Clear all** appears once anything is narrowing the list, with a count of how many things are.
+
+<Note>
+  A list that a search has emptied says so, and tells you how many records it is drawn from. It never reads as an empty board — that is a different statement, and you would have no way to tell the two apart.
+</Note>
+
+## Waiting to be registered
+
+Recording a birth and registering the baby as a patient are two different acts, on purpose: a midwife holding a four-minute-old can write down that a baby was born without first typing a name. **Waiting to be registered** is what makes sure the second act actually happens.
+
+The card sits above the board and reads: **Babies born alive here who do not yet have their own patient record. A baby does not need one to be examined — registering gives them their own chart and puts the mother on it as guardian.**
+
+| Column | Shows |
+| --- | --- |
+| **Baby** | How the birth record names her — **Baby 1 · Female · born 2:05 PM**. Twins are two rows |
+| **Mother** | Her name, with her patient number under it |
+| **Born** | The time of birth |
+| **Waiting** | How long since the birth — **Just born**, **45 min**, **9 hours**, **3 days**. It keeps counting while the page is open |
+| **Action** | **Register**, and **Labour record** |
+
+There is **no time limit on this list**. A birth from four months ago that nobody registered is exactly the row that most needs chasing, so it stays until it is done. Where there are more than the card can show at once it says so: **The 200 most recent are shown. There may be more.**
+
+<Steps>
+  <Step title="Select Register on the baby's row">
+    The same **Register newborn** sheet opens as on the labour record, already naming this baby, her mother and her time of birth — you do not have to find the labour first.
+  </Step>
+  <Step title="Give the baby a name and register her">
+    **First name** is pre-filled with **Baby** and the mother's surname is pre-filled into **Last name**. Nothing else is asked. The full step, including what happens if the mother cannot be linked, is on [Babies and birth records](/hospital/maternity/babies#register-a-live-born-baby-as-a-patient).
+  </Step>
+  <Step title="Watch the row leave the list">
+    Once she has a chart, she is no longer waiting, and the row goes. Her postnatal checks on the board below are unaffected either way.
+  </Step>
+</Steps>
+
+**Labour record** opens the labour she was born in, which is where her Apgars, her birth doses and any correction to the birth record are done.
+
+<Note>
+  **A stillbirth never appears on this list**, and the card says so: "there is no patient record to create, and the birth is kept on the mother's record." She is not a missing registration — there is nothing to register. Her birth is fully recorded, and her mother keeps her own row and her own four contacts on the board below.
+</Note>
+
+When there is nothing outstanding the card says so in words rather than showing a nought: **No births are waiting to be registered.** — "Every baby born alive here has their own patient record."
+
+<Warning>
+  **Registering is never a condition of care.** A baby with no chart of her own is still examined, and her checks are recorded against her birth record on the board below. This list chases the paperwork; it does not hold anything up.
+</Warning>
+
+## Record a contact
+
+<Steps>
+  <Step title="Select the cell">
+    **Record** on a due cell, **Missed** on a closed one, or **⋯** → **Record an extra visit** on the mother's row. The **Postnatal contact** sheet opens with her name under the title.
+  </Step>
+  <Step title="Confirm who the check is of">
+    **Who is this check of?** — **The mother** or **A baby**. It is a live control even when you opened it from a named row, because you must be able to see whose examination you are writing down. "Two examinations, recorded separately. Her check is about her alone."
+
+    Choosing **A baby** adds **Which baby?**, listing the births in order: "A baby does not need to be registered as a patient first — the birth record is how she is identified until she is."
+  </Step>
+  <Step title="Confirm which contact, and when">
+    **Which contact is this?** offers **Within 24 hours**, **Day 3**, **Day 7–14**, **Week 6** and **Extra visit**. **When** is a date *and time* — the first contact is measured in hours, and two contacts on day 0 are ordinary.
+  </Step>
+  <Step title="Record the examination">
+    **The mother** asks **Uterine involution**, **Lochia**, **Perineum**, **Breasts**, the **Edinburgh Postnatal Depression Scale score**, and **Contraception offered** / **Accepted** / **Method**.
+
+    **The baby** asks **Weight** in grams, **Feeding**, **Cord** and **Jaundice**.
+
+    Every one of them defaults to **Not recorded**, which is a real answer. A blank number stays blank rather than becoming a confident zero.
+  </Step>
+  <Step title="Record her vitals">
+    On the mother's check only, **Vitals** asks **Blood pressure**, **Pulse**, **Temperature**, **Respiratory rate**, **Oxygen saturation**, **Weight**, **Height** and **Involution** in centimetres below the umbilicus. The section says what it is for: "Recorded as the encounter, so they reach her doctor's chart. Blood pressure is the reading a postnatal check exists to take."
+
+    They go onto her chart with the contact, in one action — you do not queue her through triage first and you do not write them twice. On her chart the reading appears on the **Vitals** tab under **Over time**, alongside anything else recorded for her, and a clinician can open her record from this visit. To put the visit in front of one, use **Refer to a clinician** below and choose a department.
+
+    A baby's check has no vitals section. Her weight, feeding, cord and jaundice are the examination above.
+  </Step>
+  <Step title="Record danger signs, and refer if you need to">
+    **Danger signs** is a coded list, offered in full on both subjects: "Chosen from the list, so they can be counted. Leaving this empty means nothing was recorded — choose **None found** to say there were none."
+
+    **Refer to a clinician** puts her on a department's consultation list to be seen; without it the findings go to her postnatal record only. It requires a **Reason for referral** and a department under **Send her to** — a referral with no department reaches no list, so the sheet refuses to record one. A baby's contact routes on the **mother**, because it files against her pregnancy. **Examination findings** and **Notes** are free text.
+
+    A referral stays open until it is closed. See [Close a referral](/hospital/maternity/close-a-referral).
+  </Step>
+  <Step title="Select Record contact">
+    It confirms **Day 3 contact recorded** — "It is on her postnatal record", or for a baby, "It is on the baby's postnatal record, filed against her mother's pregnancy."
+  </Step>
+</Steps>
+
+<Warning>
+  **The Edinburgh score is recorded as it was scored, and nothing is done with it.** The field says so: "The total score, recorded as it was scored. It is not interpreted here." No band, no cut-off, no colour and no prompt to refer is derived from it anywhere in the product. If the score means she needs to be seen, use **Refer to a clinician** and say why — that is the only thing that carries the concern forward.
+</Warning>
+
+## Amend or retract a contact
+
+Select a recorded cell — the date badge is a menu.
+
+- **View this contact** opens the whole examination read-only, without opening the form.
+- **Amend this contact** reopens the sheet with everything already recorded filled in, so you correct the one item that was wrong and save. **Who the check is of**, which baby it is about and **which contact it is** are locked while amending — the contact is found by those three, so changing one would leave the original standing and file a second contact. To move a check to a different subject or timing, retract it and record it again.
+- **Her vitals are shown while amending, and are not changed there.** The sheet lists what was taken under **Vitals recorded at this contact** and says so: "These are part of the encounter and are not changed here. If one is wrong, mark this contact as entered in error and record it again." A reading a clinician may already have acted on is corrected by retracting the contact, not by quietly rewriting it.
+- Once a contact has been corrected, reading it shows **Corrected since** with the date and time, beneath **Written down**. A contact that has never been amended shows no such line — it still stands exactly as it was recorded.
+- **Mark as entered in error** opens **Mark this postnatal contact as entered in error**, which names what it is retracting — "Day 3 · the mother's check will stop counting. The record is kept, and the slot is free for the corrected contact." **Why is this wrong?** is required. The button reads **Mark in error**, and it confirms "The record is kept; the contact no longer counts, and the slot is free again."
+
+Nothing here deletes. A retracted contact stays on file with your reason and stops counting, which is what frees the slot for the correct one.
+
+<Warning>
+  **Retracting a mother's contact takes her vitals off the chart with it.** A blood pressure recorded at a contact filed against the wrong woman would otherwise stay on that woman's chart for good, and a clinician reading it would have no way to know. When you mark the contact in error, the reading stops appearing on the chart in the same act — you do not have to go and find it. The record of both is kept.
+</Warning>
+
+<Warning>
+  **"Not recorded" does not mean normal.** A contact lists every item it could hold, and anything left blank at the time reads **Not recorded** in place. The screen says so itself: "Anything marked not recorded was not written down at this contact. It does not mean the finding was normal." An amendment carries the stored findings forward, so an item still reading **Not recorded** afterwards was never written down by anybody — it is not a finding of normal, and it is not something the amendment cleared.
+</Warning>
+
+<Note>
+  **Every contact reaches a chart.** Each one appears in the timeline as a **Postnatal** entry. Open the mother's chart and each check she had is there, newest first, alongside her consultations and her admissions — the timing, the danger signs, whether she was referred, and the whole examination: involution, lochia, the perineum, the breasts, the Edinburgh score. The **blood pressure, pulse, temperature and weight** you record on a mother's check are the encounter itself, so they also appear on her chart's **Vitals** tab like any other reading.
+
+  **A baby's check reaches the mother's chart too, named for the baby** — **Newborn check (baby 2)** — and it reaches that baby's own chart as well once she is registered. It stays on the mother's chart either way, so nothing moves off a chart it was on the day somebody registers the newborn.
+
+  A postnatal contact reads as an **out-patient** entry. It carries no ward stay of its own, and a day-7 visit at home is not part of an admission.
+</Note>
+
+<Warning>
+  **Danger signs are shown in red, on the chart and on the board.** A check that recorded one is marked in the entry so a clinician reading the chart cannot pass over it. A check where you ticked **None** says **No danger signs** — that is a finding, and it reads differently from a check where the question was never answered, which says nothing at all.
+</Warning>
+
+<AuditNote action="Opening the postnatal board and recording a contact" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open **Postnatal** and read it | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the board has no check of its own |
+| Record or amend a postnatal contact | Anyone not yet governed; otherwise only if switched on | **Record a postnatal contact** |
+| Mark a postnatal contact as entered in error | The same | **Record a postnatal contact** |
+| Register a baby from **Waiting to be registered** | Anyone not yet governed; otherwise only if switched on | **Register a newborn as a patient** |
+
+**Registering is gated separately from recording a contact**, because it creates a patient — a permanent identity with a chart of their own. Without that permission the list still shows, with the **Register** button hidden: knowing a baby has no chart yet is not the same as being the person who makes one, and somebody has to be able to tell a colleague who can.
+
+**One permission covers the mother and the baby.** They are the same act by the same midwife at the same bedside, and two switches would let a clinic permit her examination and withhold the newborn's beside her. Correcting a contact rides the same switch for the same reason — whoever may say a contact happened may say it did not, and splitting them leaves a wrong entry standing because the only person on shift cannot retract it.
+
+Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A denied action is recorded in the audit log; an allowed one is not. See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- **Waiting to be registered** lists every baby born alive who has no chart yet, or says **No births are waiting to be registered.**
+- Registering one from that card takes her row off it, and the baby's row on the board below picks up a chart of her own.
+- A woman whose delivery record you gave a **Time of birth** appears at the top, with **Day 0** under **Born**.
+- Her **Within 24 hours** cell reads **Record**, and each baby has her own row and her own cells.
+- After recording, the cell shows the date, and **Day 3** reads **Not yet due** until day 3.
+- A contact you referred carries an amber **!** beside its date. Open it and it reads **Seen by a clinician — Not yet recorded** until somebody records who saw her — see [Close a referral](/hospital/maternity/close-a-referral).
+- Open a mother's recorded contact and it carries a **Vitals** section showing the blood pressure and anything else you took. Open her chart and the same reading is on the **Vitals** tab under **Over time**.
+- Open her chart and the check itself is in the timeline as **Postnatal check**, with the day and any danger signs on the line. Open it and the whole examination is there.
+- Open a registered baby's chart and her own check is there as **Newborn check**, with her weight, feeding, cord and jaundice.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A baby I registered is still on Waiting to be registered">
+    Refresh the page. A row leaves the list the moment the baby has a chart, and the card is read once when the page loads. If she is still there after a refresh, open her **Labour record** — a birth record that reads **This baby has their own patient record.** at the bottom is registered, whatever the list says.
+  </Accordion>
+
+  <Accordion title="A stillborn baby is not on Waiting to be registered">
+    That is intended. There is no patient record to create for her, and the birth is kept on the mother's record. See [Babies and birth records](/hospital/maternity/babies#register-a-live-born-baby-as-a-patient).
+  </Accordion>
+
+  <Accordion title="There is no Register button on the row">
+    You do not hold **Register a newborn as a patient**. The list still shows you who is waiting, so you can pass it to somebody who does. See [Permissions](/platform/team/permissions).
+  </Accordion>
+
+  <Accordion title="A woman who delivered is not on the board">
+    Her delivery record has no **Time of birth** yet — a record without one is a labour in progress, not a birth. Add it on [the labour record](/hospital/maternity/labour-record). She also drops off once the birth is more than 90 days old.
+  </Accordion>
+
+  <Accordion title="There is no baby to examine on this birth record. The mother's postnatal care is recorded on her own contacts.">
+    The birth was recorded as a stillbirth. Her mother's own four contacts are unaffected — choose **The mother**.
+  </Accordion>
+
+  <Accordion title="A postnatal contact can't be recorded in the future.">
+    **When** is ahead of now. Check the time as well as the date.
+  </Accordion>
+
+  <Accordion title="Involution is measured in centimetres, 0 to 30.">
+    That is what an involution measurement can physically be — it is a plausibility bound, not a normal range. A uterus still 12 cm above the symphysis on day 7 is exactly the reading that matters, and it is stored.
+  </Accordion>
+
+  <Accordion title="A mother's contact has no Vitals section on it">
+    Nothing was taken at that contact, or it was recorded before vitals could be. The section only appears when there is an encounter to show, so that a contact never lists seven readings nobody was asked for.
+  </Accordion>
+
+  <Accordion title="An Edinburgh score runs from 0 to 30.">
+    That is the instrument's own range, and the only thing the field refuses. It is a plausibility bound, not a threshold.
+  </Accordion>
+
+  <Accordion title="A weight is recorded in grams, between 100 and 15000.">
+    The baby's weight is in grams, not kilograms — 3400, not 3.4.
+  </Accordion>
+
+  <Accordion title="Say why she is being referred to a clinician.">
+    **Refer to a clinician** is on with no **Reason for referral**. Write the reason, or switch the referral off.
+  </Accordion>
+
+  <Accordion title="That postnatal contact is already recorded for this visit. Amend the existing one, or record this as an extra visit.">
+    Somebody recorded that slot while your sheet was open. Reload and select the cell — it now offers **Amend this contact**.
+  </Accordion>
+
+  <Accordion title="Birth time unusable">
+    The time of birth on that record cannot be read, so no window can be worked out. Correct the time on the birth record — see [Babies and birth records](/hospital/maternity/babies).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a baby need to be registered as a patient first?">
+    No, and that is deliberate. The first contact is due within 24 hours; the birth record is how she is identified until somebody registers her. **Not registered yet** is a note, never a block.
+  </Accordion>
+
+  <Accordion title="Why is registering a separate step at all?">
+    So that recording the birth never waits on the paperwork. A birth is written up in the delivery room; naming a child, and creating a permanent patient identity for them, is a deliberate act somebody has to mean. **Waiting to be registered** is how the second one gets done rather than forgotten.
+  </Accordion>
+
+  <Accordion title="Why does a stillborn baby still have a row?">
+    Because hiding her would make her mother's row look like a mistake. The row says plainly that no checks are recorded for her, and points at the mother's row, where her care is.
+  </Accordion>
+
+  <Accordion title="Twins are on different days — is that right?">
+    Yes. Each baby's schedule is anchored on her own time of birth, and the mother's on the delivery, so a baby born at 23:50 and her mother are hours apart on the 24-hour contact.
+  </Accordion>
+
+  <Accordion title="What is an extra visit for?">
+    Any postnatal visit that is not one of the four. It is exempt from the schedule, always creates a new record, and can happen as often as it happens. It appears on the row as **1 extra visit**.
+  </Accordion>
+
+  <Accordion title="Does recording a postnatal contact close her pregnancy record?">
+    No. Closing the pregnancy record is a separate act with its own permission — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records). A woman whose record is already closed still appears here, with **Pregnancy record closed …** under her name.
+  </Accordion>
+
+  <Accordion title="How do I see what was recorded at a contact?">
+    You cannot, on screen. The cell shows the date and an amber **!** where the contact was referred; the findings themselves are not displayed on any screen today. Anything a colleague needs to act on should also go where they will read it.
+  </Accordion>
+
+  <Accordion title="Do these contacts count towards the coverage figures?">
+    No. [Antenatal Coverage](/hospital/maternity/coverage) reports antenatal contacts, programme doses and the two delivery rates. Nothing postnatal is reported as a rate.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="postnatal contacts" />
+
+{/* source of truth: components/clinic/maternity/pnc-worklist-content.tsx, components/clinic/maternity/unregistered-births-card.tsx, components/clinic/maternity/pnc-worklist-table.tsx, components/clinic/maternity/pnc-contact-sheet.tsx, db/queries/maternity-pnc.ts, db/queries/maternity-labour.ts (getUnregisteredBirths), db/actions/maternity.ts (recordPncContact, markPncContactEnteredInError, registerNewborn), lib/clinic-nav-registry.ts, lib/edition-staff-roles.ts */}

@@ -132,7 +132,7 @@ Role decides whether the bench screens open. Permission decides which half of th
 | Enter screen and confirmation readings | **Own bench**, **Whole lab**, **All sites** | Permission — **Enter results at the bench** |
 | **Finalize Screen Results** and **Report to MRO** | **Whole lab**, **All sites** | Permission — **Verify and authorise results** |
 | Amend a result after sign-out | **All sites** | Permission — **Amend a verified result** |
-| Review the QC behind the run | Anyone who reaches Lab Station | Plan only — **Review QC runs** is not enforced, see [Quality control](/lims/quality/quality-control) |
+| Review the QC behind the run | Anyone who reaches Lab Station | Plan only — there is no QC permission, see [Quality control](/lims/quality/quality-control) |
 | Accession or reject the specimen before it reaches you | Owner, Manager, Doctor | Role — see [Accession an incoming specimen](/lims/lab/accessioning) |
 
 A **Lab Manager** does **not** hold **Verify and authorise results** by default — that comes from the access tier, not the administrative role, because authorising a result is a scientist's act. Someone on **Own bench** may enter readings and nothing else. A **QC Officer** is review-only by design, and a **phlebotomist** never reaches the bench.
@@ -180,6 +180,16 @@ See [Permissions](/platform/team/permissions).
 
   <Accordion title="Everything on the bench is disabled">
     You are at a collection centre. Screening happens at the full lab — see [Collect a specimen and complete the CCF](/lims/dot/collection).
+  </Accordion>
+
+  <Accordion title="This order has no laboratory record, so nothing was saved">
+    The specimen's laboratory record is missing, so there is nowhere to store the readings you just entered. Nothing was saved and nothing was finalized — re-run the lab accession step for this specimen, then enter the values again.
+
+    If it happens a second time on the same order, stop and raise it with your lab director before recording anything further against that specimen. An order that reaches the bench without a laboratory record has skipped a custody step, and that is a question about the specimen, not about the form.
+  </Accordion>
+
+  <Accordion title="This urine specimen has no specimen-validity result recorded">
+    A urine screen is only complete with its SVT readings, so the stage cannot be finalized without them. Re-record the initial screen, completing the **Specimen Validity Testing (SVT)** card. Oral fluid never asks for this — see above.
   </Accordion>
 </AccordionGroup>
 

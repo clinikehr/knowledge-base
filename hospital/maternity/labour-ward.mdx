@@ -1,0 +1,353 @@
+---
+title: Labour Ward
+description: "Work the labour board — who is labouring, how long for, when she was last observed, who is expected, and who is not expected yet."
+icon: "/images/icons/heart-pulse.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+**Labour Ward** is the board you leave open for a shift. It holds three lists, kept deliberately apart: who is labouring here now, who is expected, and every other open pregnancy — because labour can start early, and a woman missing from all three would be invisible.
+
+<Path steps={['Sidebar', 'Maternity', 'Labour Ward']} />
+
+<TaskHeader
+  before="An open pregnancy record for her, and the Record a delivery permission"
+  time="Continuous — this is the screen you leave open"
+  after="A live labour board, with a delivery record open for every woman on it"
+/>
+
+## Nobody arrives here by inference
+
+**Assessing her in labour, or starting her delivery record, is the act of putting her on the board.** There is no ward that moves women across, no sweep at term, and nothing that guesses from a gestation. The board says it in its own words: *"Nobody on this list is in labour until someone starts her delivery record."*
+
+That is why the two lists below **In labour** are context and not claims. A woman on either is not stated to be labouring — she is simply findable.
+
+## What you're looking at
+
+The heading reads **Labour Ward**, and under it: **Women with a delivery record open, and the pregnancies at or past term behind them.** On a hospital with no open pregnancy at all it reads **No open pregnancy records** — "Open one from Today's Clinic. The labour board draws on the same records."
+
+### In labour
+
+Every woman with a live delivery record, longest in labour first. The caption states the rule: *"A woman is here because a delivery record was opened for her, and stays until her pregnancy record is closed."* With nobody on it: **Nobody is on the labour board** — "Nobody is added automatically."
+
+| Column | Shows |
+| --- | --- |
+| **Patient** | Her name — select it for her [antenatal card](/hospital/maternity/antenatal-card) — her patient number, a **Multiple** badge, and an amber risk-factor count |
+| **Gestation** | **28+3**, with **Post-dates** from 42 weeks, or **Dating unavailable** |
+| **In labour for** | Elapsed time since the recorded onset with the time it started under it — or **Born …** once a time of birth is recorded, or **Onset not recorded**. The onset and mode sit underneath once recorded |
+| **Where** | Her bed, or **Bed not recorded**, or **Not admitted**. Any theatre case standing against her is listed under it as a badge — the case number, then its status (**Scheduled**, **In theatre**, **In recovery**, **Completed** or **Cancelled**) |
+| **Last observation** | How long ago, the time, the last dilatation and how many are charted — turning amber past two hours. Never charted reads **Nothing charted** |
+| **Record** | **Assessed on admission**, **Labour in progress**, **Delivered · draft**, **Recorded · unsigned** or **Signed** |
+| **Action** | **Sign record** on an unsigned completed record, and a **⋯** menu with **Labour record**, **Book theatre case** and **Antenatal card** |
+
+<Note>
+  **The Record column describes the paperwork, not the labour.** **Labour in progress** means somebody has not finished typing — it is not a statement that the birth is incomplete. And **Nothing charted** means nothing is known, never that the observations were normal.
+</Note>
+
+<Note>
+  **Assessed on admission** and **Labour in progress** are different facts, not two words for one. The first means a midwife has examined her and her record is open; the second means somebody has started writing the birth up. **Only the second is counted as a delivery** anywhere in the register or on the [coverage figures](/hospital/maternity/coverage) — a woman still labouring is never counted as a birth that happened.
+</Note>
+
+### Expected
+
+Open pregnancies with no delivery record, at or past term — **plus any whose dating cannot be used**, which are shown deliberately rather than dropped, because an unusable due date would otherwise be indistinguishable from an early booking and she would be invisible on the ward that has her. The caption is on the screen: *"Open pregnancies at or past term, plus any whose dating cannot be used. Nobody on this list is in labour until someone starts her delivery record."*
+
+Columns are **Patient**, **Gestation**, **Due date**, and the two actions — **Triage** and **Start delivery record**. With none: "No open pregnancy has reached term, and none is missing a usable due date."
+
+### Not expected yet
+
+Every remaining open pregnancy — before term, with usable dating. The caption states exactly what it is and is not: *"Open pregnancies before term. Nobody here is in labour or due — but labour can start early, and starting her delivery record here is the same act as above."*
+
+**Expected** is deliberately not widened to include them, because it answers a different question: who is due. This list answers "where is she", and it refuses nobody.
+
+- The count beside the heading is **all** of them, not the number on screen.
+- A search box — **Find by name or file number** — reaches anyone.
+- Eight rows show at a time, with **Showing 8 of 34** underneath and "Type a name or file number to find anyone else." Nothing is hidden, only unlisted.
+- With nobody left over: "Every open pregnancy is on one of the lists above." A search matching none: "No open pregnancy before term matches that."
+
+### The board keeps its own time
+
+Gestation, how long she has been labouring and how long since the last observation are all worked out fresh every minute while the page is open. The footer says so: *"Gestation and every elapsed time on this board are recalculated as the clock moves; nothing here is a stored figure."*
+
+## Find somebody on this list
+
+A search box and filter buttons sit above the board. They narrow what is drawn; they never change what is recorded.
+
+- **Search** matches on **name** and **patient number**, in any order — typing `bello 0042` finds Amina Bello with number MAT-0042. Case does not matter, and part of a word is enough.
+- **One search covers all three lists.** You do not have to know which list a woman is on to find her — which is what a search is for.
+- **Gestation** narrows to **Preterm**, **Term**, **Post-dates** or **Dating unavailable**.
+- **Risk** narrows to **Has a risk factor** or **Multiple pregnancy**.
+- **The count beside each heading stays the full count.** A filtered board can never read as an empty ward.
+- **Clear filter** empties one; **Clear all** appears once anything is narrowing the list, with a count of how many things are.
+
+<Note>
+  A list that a search has emptied says so, and tells you how many records it is drawn from. It never reads as an empty ward — that is a different statement, and you would have no way to tell the two apart.
+</Note>
+
+## Put a woman on the board
+
+There are two doors and they are the same permission. **Triage** records the examination you did on admission and opens her record; **Start delivery record** opens the record with nothing written down, for the woman who arrives fully dilated and is not a form to fill in first.
+
+### Triage her in labour
+
+<Steps>
+  <Step title="Find her in Expected, or in Not expected yet">
+    At or past term she is under **Expected**; before term she is under **Not expected yet**, where the search finds her by name or file number. If she is on neither, she has no open pregnancy record — open one from [Today's Clinic](/hospital/maternity/pregnancy-records) first.
+  </Step>
+  <Step title="Select Triage">
+    **Labour assessment** opens as a sheet, headed with her name and the line "The examination on admission — one moment, recorded once. Chart what changes after this on the partograph."
+  </Step>
+  <Step title="Record when and how labour started">
+    **Labour started** takes a date and time — leave it blank if she cannot say, and nothing is worked out from it. **How labour started** offers **Spontaneous**, **Induced** and **Caesarean before labour**, with **Not recorded** as the default.
+  </Step>
+  <Step title="Record her observations and the examination">
+    **Her observations** takes blood pressure, pulse, temperature, respiratory rate and SpO₂. **The examination** takes cervical dilatation, contractions in ten minutes, membranes, presentation and the fetal heart rate, with **Danger signs** as a comma-separated list underneath.
+
+    Every field is optional and every box left alone stays empty — an untouched dilatation box is never stored as "0 cm". Nothing here is scored, flagged or acted on automatically: danger signs are shown to the people reading her chart.
+  </Step>
+  <Step title="Give her a bed, if there is one">
+    **A bed on the labour ward** lists the free beds on a ward set up as a labour ward, with **Do not admit yet** as the default and an **Admission note** underneath. It is optional — the assessment is recorded either way.
+  </Step>
+  <Step title="Select Record assessment">
+    It confirms **Assessment recorded** — "She is on the labour board and admitted to the bed you chose", or "She is on the labour board. Admit her to a bed when one is ready."
+  </Step>
+</Steps>
+
+<Note>
+  **The observations go onto her chart, not just onto this board.** They are recorded as an encounter, so they appear on her clinical chart alongside every other set of observations, and a doctor can open her from the visit. That is also what makes them withdrawable — see [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+</Note>
+
+<Note>
+  **One assessment per labour.** A second attempt is refused with "This labour already has an admission assessment. Chart what has changed on the partograph rather than assessing her again." That is not a limitation — the admission examination is one moment, and everything after it belongs on the [labour chart](/hospital/maternity/labour-chart), which is built to hold a series.
+</Note>
+
+### Or open the record with nothing in it
+
+<Steps>
+  <Step title="Select Start delivery record">
+    It is the same act from either list. Confirm at **Start a delivery record** — "…moves onto the labour board. The record opens as a draft — it does not claim she has delivered, and nothing else about her pregnancy changes." Select **Start record**.
+  </Step>
+  <Step title="She moves to In labour">
+    It confirms **On the labour board** — "A draft delivery record is open. Complete it as the labour progresses." Nothing is filled in yet; the record is opened empty on purpose.
+  </Step>
+</Steps>
+
+## Open her labour record
+
+Select **Labour record** from the **⋯** menu on her row. That page carries the delivery record and the labour chart together — see [The labour record](/hospital/maternity/labour-record).
+
+## Book a theatre case
+
+An emergency caesarean is booked from her row, without leaving the board and without searching for her again on the theatre list.
+
+<Steps>
+  <Step title="Select Book theatre case from the ⋯ menu">
+    Where she already has one, the menu reads **Book another theatre case** instead — booking again is allowed, because a return to theatre after a haemorrhage is a real second case.
+  </Step>
+  <Step title="Read what is already booked">
+    Any case standing against her is named above the form before you fill anything in — case number, operation, status and time — under **She already has a theatre case**, with the line "Booking again creates a second case. It does not cancel or replace the one above."
+
+    Nothing is refused here. What must never happen is a second caesarean booked because the first was invisible.
+  </Step>
+  <Step title="Name the operation">
+    **Operation** is pre-filled with **Emergency caesarean section**. Change it for anything else.
+  </Step>
+  <Step title="Check the urgency">
+    **Urgency** is pre-set to **Emergency** — "Pre-set to emergency. Change it for a planned section." The other choices are **Urgent** and **Elective**. **ASA grade** is optional.
+
+    <Note>
+      **A planned section booked as an emergency corrupts the theatre list and the caesarean audit.** A woman admitted the night before for an elective section is on this board like anyone else, and the default does not know that. Change it.
+    </Note>
+  </Step>
+  <Step title="Pick a theatre and a time">
+    **Theatre** offers your active rooms — "A theatre can be assigned later. A clash is refused when the case is saved." **Start** and **End** are proposed as now and an hour from now; the end must be after the start.
+
+    Where there is nothing to pick, the list is greyed out and says which of two things is true: **"No theatre at this clinic is open for booking"**, or **"The theatre list could not be loaded"**. Either way the case still books, and a theatre is assigned to it later.
+  </Step>
+  <Step title="Add the care team and any notes">
+    **Primary surgeon** and **Anaesthetist** can each stay **Unassigned**. **Pre-operative notes** is free text.
+
+    These two are greyed out with a line under them when there is nobody to pick — **"Nobody at this clinic has a name on file to pick"**, or **"The staff list could not be loaded"**. The case still books; the team is assigned to it later.
+  </Step>
+  <Step title="Select Book case">
+    Where a case already stands the button reads **Book another case**. It confirms by naming the generated case number — **Case … booked** — and adds "It is on the theatre list. Record how she delivered on her delivery record when the birth is done."
+  </Step>
+</Steps>
+
+The case is a real theatre case, not a maternity-shaped copy of one: the number is generated the same way, it appears on the [theatre list](/hospital/theatre/list), it takes the WHO safety checklist, it clashes with another booking on the same theatre, and the same people advance and sign it.
+
+<Note>
+  **Booking the case does not write up the birth.** The delivery record is still where how she delivered is recorded — see [The labour record](/hospital/maternity/labour-record).
+</Note>
+
+The one thing this booking knows that the theatre day board cannot is **which admission** the operation belongs to: it is taken from her delivery record, so the case is tied to the stay she is labouring on. Where she is not admitted the case is still bookable and simply carries no admission.
+
+### The case goes onto her delivery record
+
+Booking from the labour board also writes the case onto her delivery record, so the birth and the operation it happened in are one thing rather than two. The confirmation says which happened: **"It is on the theatre list and on her delivery record."** On the board the case then reads **· on record**, and the booking sheet badges it **On her delivery record**.
+
+This only ever fills a gap. Where her delivery record already points at a case, a second booking is still made and put on the theatre list, but the record is left pointing where it was — the confirmation says **"Her delivery record still points at the case that was already on it."** That is the ordinary result of a return to theatre: a woman taken back for a haemorrhage has two cases, and the one she delivered in is the one her record keeps.
+
+<Warning>
+  **A case that could not be added is still booked.** If the case is made but cannot be put on her delivery record, you get two messages: the booking confirmation, and a separate **Not on her delivery record** saying why, with "The case itself is booked and on the theatre list." Do not book it again — the theatre team already has it. The record can be corrected by retracting the delivery record and recording it again.
+</Warning>
+
+A case booked before anyone opened her delivery record is not added to it, because there is nothing yet to add it to. Book it as normal; the record it belongs to is the one the birth is written up on.
+
+## Sign a completed record
+
+Where a record reads **Recorded · unsigned**, a **Sign record** button appears on the row. Confirm at **Sign the delivery record** — "Signing is your attestation that this is the record of … 's birth. It closes the record to editing — after this, a change is recorded as an amendment."
+
+<Warning>
+  **A signed delivery record can no longer be amended.** The confirmation says so before you sign, and the toast repeats it: "It is now closed to editing. Record an amendment rather than changing it." Complete the record properly first — see [The delivery record](/hospital/maternity/labour-record).
+</Warning>
+
+<AuditNote action="Opening the labour board" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the board and read it | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the board has no check of its own |
+| Triage her in labour | Anyone not yet governed; otherwise only if switched on | **Record a delivery** — the same switch |
+| Start a delivery record | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Admit her to a bed from the assessment | Anyone not yet governed; otherwise only if switched on | **Admit a patient**, under **Inpatient** |
+| Sign a delivery record | Anyone not yet governed; otherwise only if switched on | **Sign a delivery record** |
+| Book a theatre case | Anyone not yet governed; otherwise only if switched on | **Book and reschedule cases** — the same switch the theatre list uses, under **Theatre**, not **Maternity** |
+
+Hiding a button is a convenience — the check runs again when the act is submitted, and a refused attempt is written to the audit log. See [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- She has moved from **Expected** to **In labour**, with **Record** reading **Labour in progress**.
+- **In labour for** starts counting once an onset is recorded on the delivery record.
+- **Last observation** changes from **Nothing charted** as soon as you chart one.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A woman in labour is not on the board">
+    Nobody is added automatically. Find her under **Expected** and select **Start delivery record**. If she is not there either, she has no open pregnancy record.
+  </Accordion>
+
+  <Accordion title="She is not in Expected although she is at term">
+    **Expected** lists open pregnancies only. If her pregnancy record has been closed, or was never opened, she does not appear on the board at all — check [Today's Clinic](/hospital/maternity/todays-clinic).
+  </Accordion>
+
+  <Accordion title="I cannot see her in Not expected yet">
+    Only eight rows show at a time. Type her name or file number into **Find by name or file number** — the count beside the heading is everyone, and the line under the table says how many are not listed.
+  </Accordion>
+
+  <Accordion title="In labour for reads Onset not recorded">
+    No onset time is on her delivery record yet. Open **Labour record** and set **Labour started**.
+  </Accordion>
+
+  <Accordion title="Where reads Not admitted">
+    She has no ward admission linked to the delivery record. That is a real situation — a birth before arrival, or a site not running the inpatient module — but **the labour chart cannot be started without one**.
+  </Accordion>
+
+  <Accordion title="There is no Triage or Start delivery record button">
+    You do not hold **Record a delivery**. An owner grants it in the permissions sheet, under **Maternity**. Both controls ride the same switch.
+  </Accordion>
+
+  <Accordion title="No ward is set up as a labour ward. Set one under Settings → Wards.">
+    The assessment sheet can only offer beds on a ward whose purpose is set to **Labour ward**. It deliberately does not fall back to a ward set to **Maternity** — that would nominate an antenatal ward as a delivery ward because nobody had said otherwise. Set one under [Wards](/hospital/settings/wards). The assessment records either way.
+  </Accordion>
+
+  <Accordion title="Your wards have not been given a type yet…">
+    Your wards exist but none has had its purpose set, so none can be identified as the labour ward. This is a different message from "no ward is set up as a labour ward" on purpose: the first is a setup step you have not done, the second is a fact about how your hospital runs. Set them under [Wards](/hospital/settings/wards).
+  </Accordion>
+
+  <Accordion title="Every bed on the labour ward is taken">
+    There is a labour ward and it is full. Record the assessment now — she goes onto the board regardless — and admit her from the [ward screen](/hospital/inpatient/admissions) when a bed frees up.
+  </Accordion>
+
+  <Accordion title="The assessment was saved. The bed was not.">
+    The examination is recorded and she is on the board; only the admission failed, and the reason is printed under that heading. **Do not record the assessment again** — it is already there, and a second attempt will be refused. Admit her from the [ward screen](/hospital/inpatient/admissions).
+  </Accordion>
+
+  <Accordion title="This labour already has an admission assessment.">
+    Somebody has already examined and admitted her. The admission assessment is one moment and is recorded once; everything after it belongs on the [labour chart](/hospital/maternity/labour-chart).
+  </Accordion>
+
+  <Accordion title="This record still says she is in labour. Record the delivery first…">
+    You are trying to add a baby to a record that has not been moved on from the assessment. Open her [labour record](/hospital/maternity/labour-record), fill in when the birth was and how it was conducted, then add the baby. A baby recorded against a labour still in progress would be left out of the birth and stillbirth figures.
+  </Accordion>
+
+  <Accordion title="Book theatre case is not in the ⋯ menu">
+    You do not hold **Book and reschedule cases**. It lives under **Theatre** in the permissions sheet, not under **Maternity** — booking from here is the same act as booking from the theatre list, so it is the same switch. The **Theatre** care area also has to be on.
+  </Accordion>
+
+  <Accordion title="That theatre is already booked for part of this time. Choose another room or another slot.">
+    Another case holds that theatre across part of your window. Pick a different room, or move the time. The clash is checked when the case is saved rather than when you pick the room, because a check made earlier can be stale by the time the booking lands.
+  </Accordion>
+
+  <Accordion title="That admission belongs to a different patient.">
+    The stay carried in from her delivery record is not hers. Open her [labour record](/hospital/maternity/labour-record) and check the admission on it before booking again.
+  </Accordion>
+
+  <Accordion title="The theatre list could not be loaded / The staff list could not be loaded">
+    Something went wrong reading that list — this is not a clinic with no theatres or no staff, and the booking sheet says so rather than showing you an empty picker. **Book the case anyway.** The case number, the time, the patient and the admission are all recorded correctly; the theatre and the care team are assigned afterwards, from the [theatre list](/hospital/theatre/list). Close the sheet and open it again to retry the read.
+  </Accordion>
+
+  <Accordion title="No theatre at this clinic is open for booking">
+    Every theatre is under maintenance or closed, or none has been added yet. This is a different message from **"The theatre list could not be loaded"** on purpose. Add or reopen a room under **Theatre**, and book the case in the meantime — it does not need a theatre to exist.
+  </Accordion>
+
+  <Accordion title="Labour Ward is missing from the sidebar">
+    It needs the Enterprise plan and the **Maternity** care area, which starts switched off. See [Set up antenatal care](/hospital/get-started/maternity-setup).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="When does a woman leave the board?">
+    When her pregnancy record is closed, or if the delivery record is retracted — see [Retract a delivery or birth record](/hospital/maternity/retract-a-record), after which she returns to **Expected** if she is at or past term. Recording a birth does not remove her: the row shows **Born …** and the record's own state instead.
+  </Accordion>
+
+  <Accordion title="Where does she go after the birth?">
+    She appears on [Postnatal](/hospital/maternity/postnatal) as soon as the delivery record carries a **Time of birth**, with the four WHO contacts and a row for each baby. She stays on this board as well until her pregnancy record is closed.
+  </Accordion>
+
+  <Accordion title="Why is somebody with an unusable due date in Expected?">
+    Deliberately. Dropping her would make an unusable due date look the same as an early booking, and she would be invisible on the ward that has her. The row is labelled **Dating unavailable**.
+  </Accordion>
+
+  <Accordion title="Does the two-hour mark on Last observation mean something is wrong?">
+    No. It is a display convention that makes a long gap conspicuous. It changes no status, refuses nothing, and is not a statement about the labour.
+  </Accordion>
+
+  <Accordion title="Is a woman being assessed counted as a birth?">
+    No, and that is the whole reason **Assessed on admission** is a separate state. Every delivery figure — the number of births, the caesarean rate and the stillbirth rate on [Coverage](/hospital/maternity/coverage) and on the [register](/hospital/maternity/register) — counts a record only once it has been moved on from the assessment. A ward full of women in labour does not move any of them.
+  </Accordion>
+
+  <Accordion title="Do I have to triage her before starting the delivery record?">
+    No. **Start delivery record** is there for exactly the woman who does not arrive in time to be assessed first. Triaging her afterwards attaches the examination to the record that is already open.
+  </Accordion>
+
+  <Accordion title="Can I start a delivery record for someone under term?">
+    Yes. She is under **Not expected yet**, and **Start delivery record** there is the same act as on **Expected** — a preterm labour is admitted to the board exactly like any other.
+  </Accordion>
+
+  <Accordion title="Is the birth itself recorded here?">
+    The delivery record holds how the birth happened; each baby is a birth record of its own, in the **Babies** section of her [labour record](/hospital/maternity/labour-record). See [Babies and birth records](/hospital/maternity/babies).
+  </Accordion>
+
+  <Accordion title="Is a case booked here different from one booked on the theatre list?">
+    No. It is the same record, with a number minted the same way, and the theatre team sees it on their own list without anybody telling them. The only thing this route adds is the admission she is labouring on, which the theatre list has no way to know.
+  </Accordion>
+
+  <Accordion title="Why does it let me book a second case?">
+    Because a second case is sometimes right — a return to theatre after a postpartum haemorrhage is a real operation. What it does instead of refusing is show you what is already booked, before the form, so nobody books a duplicate caesarean because the first one was invisible.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the labour board" />
+
+{/* source of truth: components/clinic/maternity/labour-board-table.tsx, components/clinic/maternity/labour-triage-sheet.tsx, components/clinic/maternity/labour-board-content.tsx, db/queries/maternity-labour.ts, db/queries/maternity-labour-ward.ts */}

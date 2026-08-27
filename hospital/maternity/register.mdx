@@ -1,0 +1,128 @@
+---
+title: Antenatal Register
+description: "Read the register of pregnancies your hospital has closed, with the outcome recorded against each one."
+icon: "/images/icons/book.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+The **Antenatal Register** is the closed half of the module. Once a pregnancy record is closed it leaves [Today's Clinic](/hospital/maternity/todays-clinic) and appears here, with the outcome that was recorded against it.
+
+It is a list of who ended and how — not a coverage report. For rates, see [Antenatal Coverage](/hospital/maternity/coverage), which counts **every** pregnancy booked, open and closed alike.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', 'Antenatal Register']} />
+
+## What you're looking at
+
+The heading reads **Antenatal Register**, and under it: **Pregnancies closed with their outcome. Records entered in error are not listed.**
+
+Below it is one table, most recently closed first, showing the two hundred most recent.
+
+| Column | Shows |
+| --- | --- |
+| **Patient** | Her name, with her patient number underneath |
+| **Booked** | The booking date recorded on the pregnancy record |
+| **Due date** | The expected delivery date the record was carrying when it closed |
+| **Closed** | The date it was closed |
+| **Outcome** | **Live birth**, **Stillbirth**, **Miscarriage**, **Termination**, **Ectopic**, **Transferred** or **Not recorded** — and a **—** where no outcome was recorded at all |
+
+Until a pregnancy has been closed, the register reads **No closed pregnancy records yet** — "A pregnancy appears here once it is closed with its outcome." A new hospital sees that, and so does one whose antenatal patients are all still pregnant. Records are closed from the **⋯** menu on a row in **Today's Clinic** — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+
+<Note>
+  **A record marked as entered in error never appears here.** That statement means the record was never true, so it is kept out of a register somebody reports from — but it is not deleted, and it stays on file as a correction. See [Audit log](/platform/security/audit-log).
+</Note>
+
+<Warning>
+  **This register lists pregnancy records, and retracting a delivery or a birth does not change it.** A pregnancy closed with the outcome **Live birth** keeps that row and that outcome even after the delivery record behind it is marked entered in error — what moves are the figures on [Antenatal Coverage](/hospital/maternity/coverage). Closing a pregnancy record cannot be undone, so a wrong outcome here stays as it is. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+</Warning>
+
+**Select a patient's name to open her antenatal card** — the whole pregnancy record, and the [PMTCT panel](/hospital/maternity/pmtct) at the foot of it. This is the route to a woman whose pregnancy ended more than three months ago, after she has left the [postnatal worklist](/hospital/maternity/postnatal), and it is how a nine-month or eighteen-month infant test is recorded.
+
+The outcome shown here is the one chosen when the record was closed. The closing sheet's wording is a little fuller — **Ectopic pregnancy**, **Transferred to another facility** — and the register abbreviates it to **Ectopic** and **Transferred**. **Unknown** appears here as **Not recorded**.
+
+<AuditNote action="Opening the antenatal register" />
+
+## Find somebody on this list
+
+A search box and filter buttons sit above the register. They narrow what is drawn; they never change what is recorded.
+
+- **Search** matches on **name** and **patient number**, in any order — typing `bello 0042` finds Amina Bello with number MAT-0042. Case does not matter, and part of a word is enough.
+- **Outcome** narrows to any outcome the register records, including **No outcome recorded** — the row somebody auditing the register most needs to find.
+- **Closed as** narrows to **Delivered** or **Ended**.
+- **Risk** narrows to pregnancies that had a risk factor recorded.
+- **Clear filter** empties one; **Clear all** appears once anything is narrowing the list, with a count of how many things are.
+
+<Note>
+  A list that a search has emptied says so, and tells you how many records it is drawn from. It never reads as an empty register — that is a different statement, and you would have no way to tell the two apart.
+</Note>
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open the register and read it | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the register has no check of its own |
+| Close a pregnancy record, which is what puts a row here | Anyone not yet governed; otherwise only if switched on | **Close a pregnancy record** |
+
+See [Permissions](/platform/team/permissions) for how enforcement starts, and [Role navigation](/hospital/settings/role-navigation) for which roles the **Maternity** group opens for.
+
+## Check it worked
+
+- A pregnancy you closed is on the top row, dated today under **Closed**.
+- It has gone from **Today's Clinic**.
+- Its **Outcome** badge says what you recorded.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No closed pregnancy records yet, but we have delivered patients">
+    The register lists pregnancy records that have been **closed**, not women who have delivered. A record stays on **Today's Clinic**, counting weeks, until somebody selects **Close record** on it — which is the usual reason a delivered woman is still on the worklist.
+  </Accordion>
+
+  <Accordion title="A pregnancy I know about is missing">
+    Either it is still open, so it is on **Today's Clinic**, or it was marked as entered in error, which is deliberately never listed here.
+  </Accordion>
+
+  <Accordion title="The Outcome column shows a dash">
+    No outcome was recorded when the record was closed. The dash is honest — nothing is guessed from the dates.
+  </Accordion>
+
+  <Accordion title="An older pregnancy is not on the list">
+    The register shows the two hundred most recently closed records.
+  </Accordion>
+
+  <Accordion title="Maternity is missing from my sidebar">
+    It needs the Enterprise plan and the **Maternity** care area, which starts switched off. See [Set up antenatal care](/hospital/get-started/maternity-setup).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is this a report I can export?">
+    Not from this screen — it is a list you read. It carries no totals, rates or indicators; those are on [Antenatal Coverage](/hospital/maternity/coverage).
+  </Accordion>
+
+  <Accordion title="Can I open a closed pregnancy's full record from here?">
+    Not by selecting a row — the register is a list, not a set of links. Her [antenatal card](/hospital/maternity/antenatal-card) still exists and still shows the whole series, if you have its link.
+  </Accordion>
+
+  <Accordion title="Why does the register show a due date for a pregnancy that has ended?">
+    It is the date the record was carrying when it closed, which is what makes the row readable against the notes written during the pregnancy.
+  </Accordion>
+
+  <Accordion title="Can a closed pregnancy be reopened?">
+    No. A record that was closed stays closed, and a new pregnancy needs a new record. That is why closing one is a permission of its own.
+  </Accordion>
+
+  <Accordion title="Does a woman with two pregnancies appear twice?">
+    Yes — one row per closed pregnancy record, each with its own dates and outcome.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the antenatal register" />
+
+{/* source of truth: components/clinic/maternity/pregnancy-register-table.tsx, db/queries/maternity.ts (getPregnancyRegister) */}

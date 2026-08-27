@@ -1,0 +1,203 @@
+---
+title: Open, re-date and close a pregnancy record
+description: "The three acts that bracket antenatal care — starting a record with its dating, correcting a due date, and closing it with its outcome."
+icon: "/images/icons/file-pen.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Each act has its own permission — see below" note="Needs the Maternity care area" />
+
+A pregnancy record is what makes a woman appear on [Today's Clinic](/hospital/maternity/todays-clinic) and what her contacts are counted against. Three acts govern its life, and each is a separate permission because each has a different reach.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic"]} />
+
+<TaskHeader
+  before="The patient already registered at your hospital, and a last menstrual period or a due date"
+  time="Three minutes to open a record"
+  after="A pregnancy on the antenatal worklist, dated, with its schedule running"
+/>
+
+## Open a pregnancy record
+
+Select **Open a pregnancy record** at the top right of **Today's Clinic**. The button is absent if you do not hold that permission.
+
+<Steps>
+  <Step title="Find the patient">
+    **Patient** searches your whole patient list — type a name or number into **Search patients…**. She must already be registered; this sheet does not create a patient.
+  </Step>
+  <Step title="Date the pregnancy">
+    Enter a **Last menstrual period**, or an **Expected delivery date**, or both. One of the two is required — the sheet says so: "Dating drives every antenatal date that follows."
+
+    - **Last menstrual period** — "The due date is worked out from this."
+    - **Expected delivery date** — "Overrides the one derived from the period."
+    - **Cycle length** — only used when the period is what dates the pregnancy. Anything outside 21–45 days is refused: "A cycle length of 21–45 days. Outside that, enter the due date directly".
+    - **Dating based on** — **Last menstrual period**, **Ultrasound scan**, **Clinical assessment** or **Unknown**. Left alone it is **Worked out from what you entered**.
+  </Step>
+  <Step title="Set the booking date">
+    **Booking date** starts on today and cannot be in the future. Her gestation on that day is kept as a permanent fact — "Her gestation on this day is stored as a fact and never recalculated" — so it still reads correctly if the due date is later corrected.
+  </Step>
+  <Step title="Add the obstetric history you have">
+    **Gravida**, **Para**, **Blood group**, **Rhesus**. All optional, and a box left empty stays empty rather than becoming a zero.
+
+    **Multiple pregnancy** is a switch — "Twins or more." — and switching it on asks for the **Number of babies**, which must be at least two.
+  </Step>
+  <Step title="List the risk factors">
+    **Risk factors** is a comma-separated line: "Separate with commas. Shown on her record as a prompt — never acted on automatically." Write what a clinician needs prompting about — a previous caesarean, anaemia.
+  </Step>
+  <Step title="Select Open record">
+    It confirms **Pregnancy record opened** — "She is on today's antenatal clinic list."
+  </Step>
+</Steps>
+
+<Note>
+  **One open pregnancy per woman at a time.** Trying to open a second returns "This patient already has an open pregnancy record. Close it before opening another."
+</Note>
+
+## Change the due date
+
+Open the **⋯** menu on her row in **Today's Clinic** and choose **Change due date**. It is a separate permission because it moves more than one date.
+
+<Steps>
+  <Step title="Read what it is now">
+    The sheet shows **Currently due** with the date being replaced, so the change is a comparison rather than a guess.
+  </Step>
+  <Step title="Enter the New expected delivery date and what it is Based on">
+    **Based on** starts on **Ultrasound scan**, since a scan is the usual reason a due date moves, but it is a starting point and not an assumption.
+  </Step>
+  <Step title="Say why">
+    **Why is it changing?** is required — "Recorded with the date it replaces. Every gestational age and contact date already worked out from the old date moves with it."
+  </Step>
+  <Step title="Select Change due date">
+    It confirms **Due date changed** — "The previous date, the reason and your name are on the record."
+  </Step>
+</Steps>
+
+<Warning>
+  **Re-dating moves the whole record, including the past.** Every gestation on her [antenatal card](/hospital/maternity/antenatal-card) — at contacts recorded weeks ago — is worked out again from the new date, and every contact window moves with it. That is what re-dating means: it says she was 28+3 then, not 26+1. The date it replaced, your name and your reason stay on the record, and both the card and the chart show them.
+</Warning>
+
+## Close a pregnancy record
+
+Open the **⋯** menu on her row and choose **Close record**. The sheet is headed **Close the pregnancy record** and says up front: "nothing here is deleted — the record stays, with its outcome and who recorded it."
+
+<Steps>
+  <Step title="Say how the record ends">
+    **How does this record end?** offers **Delivered**, **Ended**, and **Entered in error — this record was never true**.
+  </Step>
+  <Step title="Record the outcome">
+    For **Delivered** or **Ended**, choose an **Outcome**: **Live birth**, **Stillbirth**, **Miscarriage**, **Termination**, **Ectopic pregnancy**, **Transferred to another facility** or **Unknown**. It is required.
+  </Step>
+  <Step title="Set the date">
+    **Date the pregnancy ended** starts on today and cannot be in the future. **Notes** is optional.
+  </Step>
+  <Step title="Confirm">
+    Select **Close record**, then confirm: "no further antenatal contacts can be recorded against it, and it moves off today's clinic into the register. If this turns out to be wrong, it can be re-opened from the pregnancy record. The record itself is never deleted."
+  </Step>
+</Steps>
+
+It confirms **Pregnancy record closed** — "It moves off today's clinic and into the register."
+
+### Entered in error is a correction, not an outcome
+
+Choosing **Entered in error — this record was never true** replaces the outcome picker with a plain statement: **This is a correction, not a clinical outcome.** — "Use this when the record should never have existed — opened for the wrong woman, or a pregnancy that was not confirmed. No outcome is recorded. The record stays on file and she can have a new one opened."
+
+The date field becomes **Date this was corrected** and the notes field becomes **Why was it entered in error?**, which is required. The button reads **Mark as entered in error**, and the confirmation **Mark as error**. It confirms **Record marked as entered in error** — "It stays on file as a correction. A new record can now be opened for her."
+
+A record corrected this way never appears in the [Antenatal Register](/hospital/maternity/register). One closed as delivered or ended does.
+
+### Re-opening a record closed by mistake
+
+A record closed as **Delivered** or **Ended** can be re-opened. Open her [antenatal card](/hospital/maternity/antenatal-card); beneath **Outcome** there is **Re-open this record**. The confirmation names the outcome being withdrawn, and the record goes back onto today's clinic with its outcome cleared — so the [Antenatal Register](/hospital/maternity/register) stops counting that outcome. Contacts, deliveries and observations already recorded are not changed, and it can be closed again.
+
+<Warning>
+  **Retract the delivery first.** If a delivery record still stands against the pregnancy, re-opening is refused — an open pregnancy with a birth recorded against it would contradict itself. Mark the delivery as entered in error first, then re-open. See [Retracting a delivery or birth record](/hospital/maternity/retract-a-record).
+</Warning>
+
+<Warning>
+  **Entered in error cannot be re-opened.** That path says the record was never true, so there is nothing to bring back — open a new record for her instead. The corrected record stays on file either way.
+</Warning>
+
+<AuditNote action="Opening, re-dating and closing a pregnancy record" />
+
+## Who can do this
+
+| Act | Permission |
+| --- | --- |
+| Open a pregnancy record | **Open a pregnancy record** |
+| Change the due date | **Change a confirmed due date** |
+| Close a record, or mark it entered in error | **Close a pregnancy record** |
+| Re-open a record closed by mistake | **Close a pregnancy record** |
+
+Re-opening rides the same permission as closing, deliberately: whoever may record that a pregnancy ended may record that it did not. Splitting them would leave a record closed by mistake standing until somebody with a different permission was free.
+
+A control you do not hold the permission for is not shown — the toolbar button is absent, and the **⋯** menu disappears entirely when you hold neither of its two acts. Hiding is a convenience: the check runs again when the act is submitted, and a refused attempt is written to the audit log. Enforcement is opt-in per person; see [Permissions](/platform/team/permissions).
+
+## Check it worked
+
+- She is a row on **Today's Clinic**, with her gestation and a **Next contact** date.
+- After a re-dating, her **Due date** and **Gestation** have both moved, and a **Due date was changed** panel is on her card and her chart.
+- After closing, she is off **Today's Clinic** and on the [Antenatal Register](/hospital/maternity/register) with her outcome.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Enter either a last menstrual period or an expected delivery date">
+    The record cannot be dated from nothing, and every antenatal date follows from the dating. If neither is known, enter the best clinical estimate as the due date and set **Dating based on** to **Clinical assessment**.
+  </Accordion>
+
+  <Accordion title="That last menstrual period and cycle length don't give a usable due date.">
+    "Check them, or enter the due date directly." The commonest cause is a mistyped year on the period.
+  </Accordion>
+
+  <Accordion title="The due date must fall after the last menstrual period">
+    The two dates are the wrong way round. Check which field each went into.
+  </Accordion>
+
+  <Accordion title="This patient already has an open pregnancy record. Close it before opening another.">
+    She is already on **Today's Clinic**. If the existing record is wrong, close it as **Entered in error** and open a new one.
+  </Accordion>
+
+  <Accordion title="That is already the due date on this record.">
+    The new date matches the current one, so there is nothing to change. Close the sheet.
+  </Accordion>
+
+  <Accordion title="This pregnancy record is closed, so its due date can no longer be changed.">
+    Somebody closed it while the sheet was open. Reload **Today's Clinic**.
+  </Accordion>
+
+  <Accordion title="Record the outcome of the pregnancy">
+    **Delivered** and **Ended** both need an outcome. If nothing happened to the pregnancy because the record itself was wrong, use **Entered in error** instead.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I delete a pregnancy record?">
+    No. Nothing in this module deletes. A record that should never have existed is marked **Entered in error**, which keeps it on file and out of the register — that is how somebody reading the record later can tell a mistake from a clinical event.
+  </Accordion>
+
+  <Accordion title="What if I do not know her last menstrual period?">
+    Enter the **Expected delivery date** on its own and set **Dating based on** to what it came from. The record is dated either way; only how it was dated changes.
+  </Accordion>
+
+  <Accordion title="Does the booking date have to be today?">
+    No. Back-date it to the day she actually booked and her booking gestation is recorded correctly. It cannot be in the future.
+  </Accordion>
+
+  <Accordion title="Can a woman have more than one pregnancy record over time?">
+    Yes — one after another. Only one may be open at a time, and each closed one keeps its own dates and outcome.
+  </Accordion>
+
+  <Accordion title="Does closing a record remove her contacts?">
+    No. Every contact stays on her [antenatal card](/hospital/maternity/antenatal-card) and on her chart. Closing stops new ones being added.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a pregnancy record" />
+
+{/* source of truth: components/clinic/maternity/pregnancy-episode-sheet.tsx, components/clinic/maternity/maternity-actions.tsx, db/actions/maternity.ts */}

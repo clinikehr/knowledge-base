@@ -1,0 +1,118 @@
+---
+title: Close a referral
+description: "Record that a clinician saw a woman you referred — either signing it off yourself, or noting which clinician saw her."
+icon: "/images/icons/baby.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+When you record an antenatal or postnatal contact you can switch on **Refer to a clinician** and say why. That marks the visit as needing a clinician — and it stays marked until somebody records that one saw her.
+
+This page is how that gets recorded. Until it is, the referral reads **Not yet seen** wherever it appears.
+
+<Note>
+  A referral list that is never cleared stops being useful. After a few weeks every woman on it looks the same, and the one who genuinely has not been seen is impossible to pick out. Closing referrals is what keeps the list worth reading.
+</Note>
+
+## Where to do it
+
+<Tabs>
+  <Tab title="Antenatal">
+    <Path>Antenatal → Today's Clinic → open her record</Path>
+
+    On her [antenatal card](/hospital/maternity/antenatal-card), the contact you referred shows **Referred to a clinician** with the reason. Directly under it, an open referral offers **Which clinician saw her?**
+  </Tab>
+  <Tab title="Postnatal">
+    <Path>Postnatal → click a recorded contact's date</Path>
+
+    The contact opens showing everything it holds. A referral that is still open shows **Seen by a clinician — Not yet recorded**, with the control underneath.
+  </Tab>
+</Tabs>
+
+## Record who saw her
+
+<Steps>
+  <Step title="Choose the clinician">
+    Pick from the staff list. Your own name is marked **(you)** and is selected for you if you are on the list — you can change it.
+  </Step>
+  <Step title="Read the sentence under the picker">
+    It tells you which of two records you are about to make, and it changes as you change the selection:
+
+    - Choosing **yourself** — *"This is recorded as your own sign-off — that you saw her."*
+    - Choosing **somebody else** — *"This is recorded as your account of who saw her, not as their sign-off."*
+  </Step>
+  <Step title="Press Record the review">
+    The button reads **Recording…** while it saves, then confirms either **Recorded in your name as the clinician who saw her** or **Recorded as your account of which clinician saw her**.
+  </Step>
+</Steps>
+
+## The two kinds of closure, and why they read differently
+
+A clinician's name on a clinical record is normally read as their signature. That is only true when the clinician put it there. So the record keeps the two apart, and every screen that shows the name shows which one it is:
+
+| What was recorded | How it reads afterwards |
+|---|---|
+| The clinician recorded it themself | **Signed off by the clinician** — and on the antenatal card, **Signed off by** their name |
+| Somebody else recorded who saw her | **Clinician reported as having seen her**, and the card adds who recorded it — **Reported as seen by Dr … (recorded by …)** |
+
+You never choose which of the two it is. It follows from who you picked: choose yourself and it is a sign-off, choose anyone else and it is your account of them.
+
+<Note>
+  **Review recorded** is the time the closure was *written down*, not the time the clinician saw her. On a reported closure those can be hours apart, which is why the label does not say "Seen at".
+</Note>
+
+## Who can do it
+
+Signing off a referral **in your own name** needs the **Sign off a referral as the clinician who saw her** permission, in <Path>Settings → Staff → Permissions</Path>.
+
+Recording **which clinician saw her** does not need it. Anyone who can record the contact can record that — so a referral can always be closed, even where the clinician does not use ClinikEHR.
+
+## Check it worked
+
+- The **Not yet seen** line is replaced by who saw her and on what basis.
+- On the antenatal card the referral line turns from amber to green.
+- The control disappears — a referral is closed once, and reopening one is not an act this screen offers.
+
+<AuditNote />
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="This referral has already been closed. Reload to see who recorded it.">
+    Somebody closed it while your screen was open. Reload and you will see their entry.
+  </Accordion>
+
+  <Accordion title="No clinician referral was raised at this contact, so there is nothing to close.">
+    You are on a contact where **Refer to a clinician** was never switched on. A review is only recorded against a referral.
+  </Accordion>
+
+  <Accordion title="This contact was marked as entered in error, so its referral can no longer be closed.">
+    The contact was retracted — see [Retract a record](/hospital/maternity/retract-a-record). A contact that says it never happened cannot carry a review.
+  </Accordion>
+
+  <Accordion title="That clinician is not on this clinic’s staff list.">
+    The person you picked is no longer on this clinic's staff. Pick somebody who is.
+  </Accordion>
+
+  <Accordion title="Nobody at this clinic has a name on file to record as having seen her.">
+    The staff list is empty because no staff member has a first and last name recorded. Add them in <Path>Settings → Staff</Path>.
+  </Accordion>
+
+  <Accordion title="The staff list could not be loaded, so this referral cannot be closed here yet.">
+    A temporary problem reading the staff list. Reload the page. If it keeps happening, the referral is still safely recorded as open — nothing is lost.
+  </Accordion>
+
+  <Accordion title="I closed it against the wrong clinician">
+    There is no undo on this screen. Correct it the way every other mistake in a maternity record is corrected — see [Retract a record](/hospital/maternity/retract-a-record) for what can and cannot be changed after the fact.
+  </Accordion>
+
+  <Accordion title="Does closing a referral do anything else?">
+    No. It records who saw her and on what basis. It books nothing, sends nothing and changes no other part of the record.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="closing a clinician referral" />

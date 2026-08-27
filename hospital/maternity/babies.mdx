@@ -1,0 +1,265 @@
+---
+title: Babies and birth records
+description: "Record each baby born in a labour, amend a birth record, and register a live-born baby as a patient of their own."
+icon: "/images/icons/baby.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with Record a delivery; registering needs its own permission" note="Needs the Maternity care area" />
+
+A **Babies** section sits under the labour chart on [the labour record](/hospital/maternity/labour-record), with a count and one row per baby. **One labour has one delivery record, and each baby is a birth of its own** — so twins are two birth records against the same labour.
+
+<Path steps={['Sidebar', 'Maternity', 'Labour Ward', '⋯', 'Labour record']} />
+
+<TaskHeader
+  before="A delivery record started for the labour"
+  time="A few minutes per baby"
+  after="A birth record for every baby, and a patient record for each one born alive"
+/>
+
+## Record a birth
+
+Select **Record a birth**. The sheet is headed **Record a birth** and names the mother. Every baby already recorded in this labour is listed at the top, so nobody records the second twin believing they are correcting the first.
+
+<Steps>
+  <Step title="Set the birth order">
+    **Birth order** comes first and is never hidden behind a default: "1 for a single baby. Twins are birth 1 and birth 2 of the same labour."
+  </Step>
+  <Step title="Set the time of birth and the outcome">
+    **Time of birth** is "This baby's own moment — twins are minutes apart."
+
+    **Outcome** offers **Live birth**, **Fresh stillbirth**, **Macerated stillbirth** and **Early neonatal death**. It has no default — it is the one thing the record cannot leave out, and a default would make the claim on your behalf. **Sex** offers **Male**, **Female**, **Ambiguous genitalia** and **Indeterminate**.
+  </Step>
+  <Step title="Add the measurements and Apgar">
+    **Birth weight** in grams, **Length** and **Head circumference** in cm; **1 minute**, **5 minutes** and **10 minutes** Apgar out of 10. All optional, and a box left blank stays blank — never a zero. A real score of 0 is stored as 0.
+  </Step>
+  <Step title="Record the immediate care">
+    **Resuscitation** is chosen from a list rather than typed, "so the register can count them" — and is recorded on any outcome, because "resuscitation attempted and stopped is still what happened".
+
+    **Skin to skin** is asked on **every** outcome: "Holding a stillborn baby is bereavement care, and it is care that was given."
+
+    **Breastfeeding started within the hour** is the one question that needs a baby born alive.
+  </Step>
+  <Step title="Add any findings">
+    **Congenital anomalies** — "Recorded as found — nothing here is acted on automatically" — and **Notes**.
+  </Step>
+  <Step title="Select Record birth">
+    It confirms **Birth recorded** and names the position — "Birth 1 of this labour." For a live birth it adds that registering the baby as a patient is a separate step.
+  </Step>
+</Steps>
+
+<Note>
+  **Not recorded is the default on every optional answer**, including **Sex**, **Skin to skin** and each Apgar. Those two questions have three answers, not two, so "no" and "nobody wrote it down" stay apart — which on skin-to-skin is the whole point of the field.
+</Note>
+
+## Amend a birth record
+
+Select **Open** on the baby's row. The sheet is headed **Birth 1**, **Birth 2** and so on, and the button reads **Save changes**.
+
+<Warning>
+  **Birth order is locked when you amend**, and the field says so: "It identifies this baby and can't be changed here." Retyping 2 as 3 would not move this record — it would start a third baby and leave the second one stranded. To fix a mis-numbered baby, open the record that actually holds that position.
+</Warning>
+
+If you try to record a **new** birth at a position this labour already holds, the sheet refuses before saving and names the sibling: "Birth 2 is already recorded in this labour. Open that record to amend it, or give this baby the next position — saving here would overwrite the other baby."
+
+## Register a live-born baby as a patient
+
+A birth record lives on the mother's record. Registering creates the **baby's own chart** and puts the mother on it as guardian.
+
+**You do not have to be inside the birth record to do this.** [Postnatal](/hospital/maternity/postnatal#waiting-to-be-registered) carries a **Waiting to be registered** card listing every baby born alive here who has no chart of their own yet, with a **Register** button on each row and how long each has been waiting. It has no time limit — a birth from months ago stays on it until somebody registers the baby. Registering from there opens the very same sheet described below.
+
+At the bottom of a saved birth record, one of three things is shown — never a greyed-out button:
+
+| The record says | What it means |
+| --- | --- |
+| **Not yet registered as a patient.** | With a **Register newborn** button. "Registering creates the baby's own chart and puts the mother on it as guardian." |
+| **This baby has their own patient record.** | Already registered. Their weight and feeding at each postnatal check are still recorded on [Postnatal](/hospital/maternity/postnatal), against this birth record — registration does not move them to the baby's own chart |
+| **This birth is recorded here, on the mother's record.** | A stillbirth. "There is no patient record to create for this baby." |
+
+<Steps>
+  <Step title="Select Register newborn">
+    The sheet names the birth, the mother and the time of birth.
+  </Step>
+  <Step title="Give the baby a name">
+    **First name** is pre-filled with **Baby** — "'Baby' until the parents have named them". **Last name** takes the mother's surname: it is pre-filled when you open the sheet from **Waiting to be registered**, and empty when you open it from the birth record here, where the surname is not to hand. **Preferred name** is optional: "what the family calls them."
+
+    Nothing else is asked: "The date of birth and the sex come from the birth record — where the sex is ambiguous or not yet determined, the chart's gender is left unset rather than guessed, and the birth record keeps the obstetric answer."
+  </Step>
+  <Step title="Select Register newborn">
+    It confirms **Newborn registered** — "The baby has their own chart, with the mother on it as guardian."
+  </Step>
+</Steps>
+
+<Note>
+  **The guardian link records real answers, not defaults.** The mother is put on the baby's chart as **Parent** and **Primary**, with **Can access records**, **Can schedule appointments**, **Emergency contact** and **Responsible for billing** all set — a four-minute-old cannot settle a bill or consent to anything, so each is stated rather than left to whatever a blank field would become. Everywhere else a guardian added by hand starts on **Not recorded** until somebody chooses. Review it if the family's arrangements differ, particularly **Responsible for billing**. See [Guardians and records access](/hospital/records/guardians).
+</Note>
+
+### If the mother could not be linked
+
+Registration can succeed while the guardian link does not. The sheet then says **Registered — but the mother isn't linked as guardian**, and adds the instruction that matters:
+
+> Don't register this baby again — that would create a second patient record for the same child. Add the mother from the baby's profile instead.
+
+<Warning>
+  **Never register the same baby twice.** A second registration is a second patient record for one child, with their care split across both. If the mother is not linked, add her as a guardian from the baby's own profile — see [Guardians on the chart](/hospital/outpatient/consultation).
+</Warning>
+
+## Birth doses
+
+**Doses** on a baby's row opens **BCG**, **OPV-0** and the **Hepatitis B birth dose** — the three given in the first hours of life. All three are always listed, including any that don't apply, so you can tell "not applicable" from "nobody has looked".
+
+Each one says where it stands:
+
+| It says | It means |
+| --- | --- |
+| **Given** | Recorded — here from your stock, or at another facility |
+| **Not recorded** | No dose on file, and still inside the birth-dose window |
+| **Window passed** | No dose on file, and past the window in which it counts as a birth dose |
+| **Cannot say** | No birth time was recorded, so how long ago cannot be worked out |
+| **Not applicable** | A stillbirth, or a retracted birth record |
+
+**Window passed does not mean too late to give.** The hepatitis B dose is most effective within 24 hours and OPV-0 only counts as the zero-dose for two weeks; past that, the dose is still given, it just belongs on the child's own immunisation record rather than here. BCG has no window at all. The screen says so on each dose rather than leaving you to work it out.
+
+<Note>
+  **These are the birth doses only.** Later doses of the same series — OPV-1 at six weeks and onward — are the childhood immunisation schedule, which is not part of the maternity record.
+</Note>
+
+### Give one from stock
+
+**Give it now, from stock** draws the dose from your inventory and records it against the birth record in one step: pick the vaccine, the location it comes from, and a lot if you don't want the earliest expiry. The confirmation says **Dose given**.
+
+<Warning>
+  **The baby needs a patient record first.** A dose drawn from stock has to be recorded against the person who received it, and until you [register the newborn](#register-a-live-born-baby-as-a-patient) there is no record to name. Recording it against the mother would put in your stock ledger that *she* was given BCG. Until the baby is registered, the panel offers **Record one given elsewhere** only, and says why.
+</Warning>
+
+If the dose is drawn but the birth record can't be updated, you'll see **Dose given, but not recorded on the birth record** — the vaccine has still been given. Don't give it again.
+
+### Record one given elsewhere
+
+**Record one given elsewhere** files a dose given at another facility, with the date. Nothing is drawn from your stock.
+
+### If a dose is wrong
+
+**Mark as entered in error** on a recorded dose takes a reason and keeps the row, and the position is freed so a corrected dose can be recorded. Nothing is deleted.
+
+## Retract a birth record
+
+At the bottom of a saved birth record, **Mark as entered in error** retracts it — for a baby recorded twice, or against the wrong labour. The dialog is headed **Mark birth 1 as entered in error?** and says what it claims: "this says the birth was never recorded here. There is no way to undo it." A reason is required.
+
+<Note>
+  **A registered baby keeps their patient record.** The dialog states it outright: "This baby has their own patient record. It is NOT deleted and their chart is not changed — a child is not a data-entry error. Only this birth record is retracted, and the corrected one can be linked to the same child." Never register the baby again to work around a retraction.
+</Note>
+
+The retracted record stays on file, read-only, under **This birth record is marked as entered in error.** — and it stays in the **Babies** list, badged **Retracted** and left out of the count beside the heading, because the count is what the record claims now. It leaves the live-birth and stillbirth figures on [Antenatal Coverage](/hospital/maternity/coverage) — those totals change. The other babies of the labour, the delivery record and the mother's pregnancy record are untouched, and a postnatal contact recorded against this baby has to be retracted first. The whole sequence is on [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+
+Recording the corrected baby is a new birth record, and the retracted baby's number is free again. The sheet offers the lowest position no standing birth holds, so a retracted birth 2 is offered as **birth 2** rather than pushing the corrected record to 3 and leaving the labour with a baby 1, a baby 3 and no baby 2. Entering it is allowed and explains itself: "Birth 2 was retracted, so this position is free. This is recorded as a new birth; the retracted record stays on file." The withdrawn entry stays listed under the labour's already-recorded births, marked **retracted, this position is free** — so two lines reading "Birth 2" is what a corrected record is supposed to look like.
+
+<AuditNote action="Recording a birth and registering a newborn" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Read the **Babies** section | Anyone who can open the labour record | Nothing |
+| Record or amend a birth | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Register a newborn as a patient | Anyone not yet governed; otherwise only if switched on | **Register a newborn as a patient** |
+| Mark a birth as entered in error | Anyone not yet governed; otherwise only if switched on | **Record a delivery** |
+| Record or give a birth dose | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
+
+Writing up a baby's weight and Apgar is writing up the delivery, so it rides the same permission — and so does retracting a birth, even when the delivery record is signed, because the signature is on the labour and nothing signs a birth record. **Registering** is gated separately because it creates a patient — a permanent identity with a chart of their own.
+
+## Check it worked
+
+- The **Babies** count rises, and the baby appears as **Baby 1** with its outcome.
+- A registered baby's row carries a **Registered** badge.
+- The baby is no longer listed under **Waiting to be registered** on [Postnatal](/hospital/maternity/postnatal#waiting-to-be-registered).
+- The baby has their own patient record, with the mother listed as a guardian on it.
+- After a dose is recorded, the baby's row shows **Birth doses 1/3**, and the dose reads **Given** under **Doses**.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A birth is already recorded at that position in this labour.">
+    "Twins are birth 1 and birth 2 — amend the existing one rather than adding another." Open the existing record, or give this baby the next position.
+  </Accordion>
+
+  <Accordion title="Birth order is 1 for a single baby, and 1 and 2 for twins.">
+    The number entered is not a position in this labour. Count the babies of this birth, not of her pregnancies.
+  </Accordion>
+
+  <Accordion title="A birth can't be recorded in the future.">
+    **Time of birth** is ahead of now. Check the time as well as the date.
+  </Accordion>
+
+  <Accordion title="Early breastfeeding can only be recorded for a baby born alive.">
+    The answer is still set from before the outcome changed. Clear **Breastfeeding started within the hour**, which stays on screen for exactly this reason.
+  </Accordion>
+
+  <Accordion title="Choose the resuscitation measures from the list — free text can't be counted on the register.">
+    **Resuscitation** takes coded options only. Pick the closest ones and put the detail in **Notes**.
+  </Accordion>
+
+  <Accordion title="A stillborn baby isn't registered as a patient.">
+    "The birth is recorded on the mother's record." This is the intended path, not a limitation to work around — the birth is fully recorded either way.
+  </Accordion>
+
+  <Accordion title="A newborn needs a first and last name before they can be registered.">
+    "'Baby' and the mother's surname are enough for now." The name can be changed on the baby's own record once the parents have chosen one.
+  </Accordion>
+
+  <Accordion title="That delivery record is marked as entered in error, so no birth can be recorded against it.">
+    The labour it belongs to was retracted. Record the birth against the correct delivery.
+  </Accordion>
+
+  <Accordion title="This labour record still says she is in labour. Record the delivery first…">
+    The record was opened by an assessment on the [labour ward](/hospital/maternity/labour-ward) and has not been moved on. Open the [delivery record](/hospital/maternity/labour-record), fill in when the birth was and how it was conducted, and save it — then add the baby.
+
+    This is not bookkeeping. A record still reading **Assessed on admission** is counted as a delivery by nothing, so a baby filed against it would be missing from the birth count and from the stillbirth rate on [Coverage](/hospital/maternity/coverage) while sitting in plain sight on her chart.
+  </Accordion>
+
+  <Accordion title="This baby still has a postnatal contact recorded against them.">
+    "Retract that contact first, with its own reason." The contacts are on [Postnatal](/hospital/maternity/postnatal) — a birth record cannot be retracted while a live contact points at it.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do I need a birth record for a stillbirth?">
+    Yes. A stillbirth is a birth record like any other — it takes the same measurements, the same resuscitation and the same skin-to-skin answer. Only the patient record is not created.
+  </Accordion>
+
+  <Accordion title="What is Early neonatal death for?">
+    A baby who was **born alive** and died within the first week. It is not a stillbirth, and that baby may have a patient record — very often they already did.
+  </Accordion>
+
+  <Accordion title="Can I record twins on one form?">
+    No. Each baby is its own birth record with its own time, weight and outcome, because twins are minutes apart and rarely alike.
+  </Accordion>
+
+  <Accordion title="Does recording a birth close the pregnancy?">
+    No. Closing the pregnancy record is a separate act — see [Open, re-date and close a pregnancy record](/hospital/maternity/pregnancy-records).
+  </Accordion>
+
+  <Accordion title="Can I delete a birth record?">
+    No. Nothing in maternity deletes. Amend it if a detail is wrong; if the record should never have existed, mark it **entered in error** — it stays on file with your reason and stops counting. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+  </Accordion>
+
+  <Accordion title="How do I find babies nobody has registered?">
+    **Waiting to be registered**, at the top of [Postnatal](/hospital/maternity/postnatal#waiting-to-be-registered). It lists every baby born alive here with no chart of their own, oldest birth included — there is no cut-off — and you can register each one straight from the row. When there is nothing outstanding it says **No births are waiting to be registered.**
+
+    A stillbirth never appears there, because there is no patient record to create.
+  </Accordion>
+
+  <Accordion title="Where are the baby's postnatal checks recorded?">
+    On [Postnatal](/hospital/maternity/postnatal), against this birth record — she appears there as soon as the delivery record carries a time of birth, whether or not she has been registered as a patient.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a birth record" />
+
+{/* source of truth: components/clinic/maternity/birth-record-form.tsx, components/clinic/maternity/newborn-registration-sheet.tsx, components/clinic/maternity/unregistered-births-card.tsx, components/clinic/maternity/labour-record-view.tsx, db/actions/maternity.ts (recordBirth, registerNewborn) */}

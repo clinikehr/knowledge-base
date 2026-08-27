@@ -1,0 +1,162 @@
+---
+title: Guardians and records access
+description: "Who may read a patient's record on their behalf, how the chart states it, and why some guardians read as not confirmed."
+icon: "/images/icons/user-shield.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any role that opens a patient record" note="Guardians are recorded on a patient whose type is Minor" />
+
+A minor's record can be read, and their appointments booked, by somebody else. ClinikEHR records who that is, what they are allowed to do, and — this is the part worth reading — whether anybody actually answered the question.
+
+<Path steps={['Sidebar', 'Patients', 'Open a patient']} />
+
+<Note>
+  On **Solo & Team** plans the same controls say **client** where this page says **patient** — **Access to this client's records**. Everything else is identical.
+</Note>
+
+## The Guardians card
+
+A **Guardians** card appears wherever a patient is open: on their own record beside their contact details, and in the left-hand rail of the [consultation chart](/hospital/outpatient/consultation) and the [ward chart](/hospital/inpatient/admissions). It is the same card everywhere, reading the same row, so no two screens can describe one guardian differently.
+
+Each line carries the guardian's name (or **Name unavailable** in italics, rather than a blank), a **Primary** badge where one is set, the relationship (or **Relationship not recorded**), and one statement about records access.
+
+A second block headed **Guardian for** lists the people this patient is a guardian *of*. The two are never merged — a mother is the guardian of her baby and not the reverse.
+
+<Note>
+  **An empty card is no card.** With no guardians and no dependents, nothing is rendered at all — the card never claims "none on file", because nobody can tell that apart from a card that was simply never filled in. Where the lookup itself fails it says **Guardian links could not be checked for this patient.**
+</Note>
+
+The card deliberately holds no contact details and no billing. A guardian is a second person, and their phone number and email are not shown on somebody else's chart.
+
+## The five things records access can say
+
+| The card says | What it means |
+| --- | --- |
+| **Can access records** | Somebody answered yes, and it is recorded who and when |
+| **Can access records — not confirmed** | The record says yes, but nothing records anybody having answered |
+| **No records access** | Somebody answered no |
+| **No records access — not confirmed** | The record says no, but nothing records anybody having answered |
+| **Records access not recorded** | Nobody has answered. This is a real state, not a blank |
+
+Only a **confirmed** grant is given any visual weight. An unconfirmed one stays muted and says so in words, so the two are told apart at a glance without a legend. Rest on an unconfirmed line and it explains itself: *"Nothing records anybody answering this — it predates the question being asked."*
+
+<Warning>
+  **A guardian recorded before August 2026 may read as having access nobody granted.** Until then the question had no control on any screen and the record simply assumed yes, so every guardian added before the fix reads **Can access records**. Some of those are real answers a clinician gave; some are not, and nothing distinguishes them. Treat **— not confirmed** as *unanswered*, not as a grant, and confirm it before you act on it at the desk.
+</Warning>
+
+Nothing was rewritten to fix this, deliberately: a sweep would have destroyed the only evidence of what the record actually held, and it would have changed what a chart had already told a clinician about a real person. So the wording states what the row holds and then states, truthfully, that nothing records who said so.
+
+## Confirm an unconfirmed answer
+
+<Steps>
+  <Step title="Open the patient's record for editing">
+    From the patient list, or from the pencil in the left-hand rail of a consultation chart (**Edit patient info**). The **Client Info** tab is where guardians live.
+  </Step>
+  <Step title="Find the guardian under Guardian information">
+    Each guardian is a panel of their own, under a heading that reads **Guardian information** — "Manage parents or legal guardians for this minor."
+  </Step>
+  <Step title="Read what Access to this patient's records says">
+    Three choices: **Not recorded**, **Can access records**, **No records access**.
+  </Step>
+  <Step title="Tick the confirmation, or change the answer">
+    Where the stored answer has never been confirmed, a tick box appears under the choice: *"This was recorded before anyone was asked the question, so the chart shows it as **not confirmed**. Tick to record that it is correct."* Tick it to keep the answer and record that somebody stands behind it.
+
+    If the answer is wrong, change the choice instead. Changing it **is** answering it, so the tick box disappears — there is nothing left to vouch for.
+  </Step>
+  <Step title="Save">
+    The chart drops the **— not confirmed** wording on the next read.
+  </Step>
+</Steps>
+
+<Note>
+  **Saving the record without ticking the box changes nothing about the answer.** That is the point. The sheet rewrites the whole guardian row whenever anything on the patient changes, so if an ordinary save counted as confirming, correcting a phone number would quietly vouch for an access grant nobody had looked at.
+</Note>
+
+## The other things a guardian row records
+
+| Control | Choices | Notes |
+| --- | --- | --- |
+| **Relationship** | **Parent**, **Grandparent**, **Sibling**, **Aunt/Uncle**, **Legal Guardian**, **Foster Parent**, **Step-Parent**, **Other** | Shown on the card |
+| **Access to this patient's records** | **Not recorded** · **Can access records** · **No records access** | Starts on **Not recorded** for a new guardian |
+| **Booking this patient's appointments** | **Not recorded** · **Can schedule appointments** · **Cannot schedule appointments** | Starts on **Not recorded**, for the same reason |
+| **Responsible for billing** | Tick box | Not shown on the chart card — who pays is billing's business |
+| **Emergency contact** | Tick box, **starts ticked** | Who to ring when something goes wrong |
+| **Primary guardian** | One choice across all the guardians | **Clear primary guardian** removes it — "no primary guardian" is expressible |
+
+Two of these behave differently on purpose, and it is worth knowing which:
+
+- **Records access and appointment booking start at "Not recorded".** Both are grants of authority over another person, and there is no safe guess. Yes hands out access nobody asked for; no asserts a refusal nobody made. Unanswered is the only state that is true the moment a guardian is added.
+- **Emergency contact starts ticked.** It grants nobody power over anybody — it records who the desk rings. Its safe side is therefore the opposite: somebody to ring. Untick it for a guardian who must **not** be called.
+
+## A newborn's guardian is created for them
+
+When a baby is [registered as a patient](/hospital/maternity/babies) from a birth record, the mother is added to the new chart as a guardian automatically, as **Parent** and **Primary**, with records access granted, appointment booking granted, emergency contact set and **Responsible for billing** on.
+
+That grant is made by a person doing the registration, so it is a confirmed answer and never reads **— not confirmed**. Review it like any other if the family's arrangements differ — particularly **Responsible for billing**, which puts the mother on the baby's account.
+
+## Check it worked
+
+- Open the patient's chart: the **Guardians** card names the guardian, their relationship and one of the five access statements.
+- A guardian you just confirmed reads **Can access records** with no trailing **— not confirmed**.
+- The tick box is gone from their panel the next time you open it.
+- A patient you made a guardian *of* somebody appears under **Guardian for** on that person's card.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Guardians card on this chart">
+    There are no guardians and no dependents on file, so nothing is drawn — the card never says "none". Add one from the patient's record: on **Client Info**, tick **Client is a minor (Dependent)**, then **Add guardian**.
+  </Accordion>
+
+  <Accordion title="Guardian links could not be checked for this patient.">
+    The lookup did not return an answer. This is not a statement that there are no guardians. Reopen the patient from the patient list rather than from a link, and [contact support](/platform/help/contact-support) if it repeats.
+  </Accordion>
+
+  <Accordion title="A guardian shows as Name unavailable">
+    The link exists but the person it points at could not be resolved. It is shown rather than hidden, because a link nobody can name is something to go and look at.
+  </Accordion>
+
+  <Accordion title="Every guardian in my workspace says — not confirmed">
+    Expected, if they were all added before August 2026. The set is closed and finite: nothing added since can join it. Work through them as you meet them rather than in a batch — each one is a question for whoever knows the family.
+  </Accordion>
+
+  <Accordion title="The tick box will not stay ticked">
+    It clears when you change the access choice, because changing the answer is answering it. Tick the box only when you are keeping the answer that is already there.
+  </Accordion>
+
+  <Accordion title="I cannot find where to edit a guardian">
+    Guardian panels only appear while **Client is a minor (Dependent)** is ticked on **Client Info**. On an adult record there is nothing to show.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does Can access records give the guardian a login?">
+    No. It is a record of what your workspace has decided, for staff to read before they hand anything over. Portal access is granted separately — see [Invite patients to the portal](/portal/setup/invite-patients).
+  </Accordion>
+
+  <Accordion title="Why not just clear the old answers and start again?">
+    Because clearing them would destroy the only record of what the product actually held, and would change what a chart had already told somebody about a real person. Marking them is honest; rewriting them is not.
+  </Accordion>
+
+  <Accordion title="Can a patient have more than one guardian?">
+    Yes, and at most one of them is **Primary**. **Clear primary guardian** leaves none, which is a real answer where no one guardian takes precedence.
+  </Accordion>
+
+  <Accordion title="Why is Responsible for billing not on the chart card?">
+    Who pays does not belong beside a patient's clinical identity. It is on the guardian's panel in the record, and it drives billing.
+  </Accordion>
+
+  <Accordion title="Does confirming an answer change what the guardian can do?">
+    No. It changes what the chart says about the answer — from "this is what the record holds, and nobody is recorded as having said so" to a statement somebody stands behind. The stored answer is untouched.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="guardians and records access" />
+
+{/* source of truth: lib/patients/guardian-access.ts, components/clinic/general/guardian-links-card.tsx, components/clinic/clients-management/edit-client-sheet.tsx, components/clinic/clients-management/new-client-sheet.tsx */}

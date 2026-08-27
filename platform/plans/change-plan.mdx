@@ -1,6 +1,6 @@
 ---
 title: Change your plan
-description: "Upgrade, downgrade, cancel or reactivate a workspace subscription, and understand what you lose when you drop a tier."
+description: "Upgrade, downgrade, switch between monthly and yearly billing, cancel or reactivate a workspace subscription — and what you pay, and when, for each."
 icon: /images/icons/trending-up.svg
 ---
 
@@ -11,7 +11,7 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['all']} plans="All plans" roles="Any staff member can open Dashboard → Subscription; the owner's Billing page is owner-only" />
 
-Moving between plans is a checkout, not a support ticket. Pick a plan card, pay, and the new entitlements apply to everyone in the workspace within moments.
+Moving between plans is not a support ticket. Pick a plan card, read the summary of what you will pay and when, and confirm. If you already pay for a plan, the change is made to the subscription you have — you are never billed for two plans at once.
 
 <Path steps={['Dashboard', 'Subscription', 'Manage Plan']} />
 
@@ -19,34 +19,58 @@ Moving between plans is a checkout, not a support ticket. Pick a plan card, pay,
 
 <TaskHeader before="A payment card — and, for the personal Billing route, ownership of the workspace" time="3 minutes" after="The workspace on its new plan, with the new features live for every member" />
 
-## Upgrade
+## The two kinds of change
+
+Every change is one of two kinds, and the summary you confirm tells you which:
+
+| You are… | When it happens | What you pay |
+| --- | --- | --- |
+| Moving **up** a tier, or switching **monthly → yearly** | **Immediately** | The new price, less credit for the unused part of the period you already paid for. Your billing date resets to today. |
+| Moving **down** a tier, or switching **yearly → monthly** | **At the end of your current period** | Nothing today. You keep everything you paid for until then; no refund is issued for the remainder. |
+
+The credit is worked out to the second on your current billing period. If a Starter plan billed monthly moved to Team billed yearly five days into a thirty-day month, you would be charged the Team annual price less twenty-five thirtieths of what you paid for Starter that month.
+
+## Upgrade, or switch to yearly billing
 
 <Steps>
   <Step title="Open the plan page">
     The heading reads **Choose Your Plan** if you are on Free, or **Manage Your Subscription** if you already pay. Anywhere you hit a cap you also get a **View plans** or **Upgrade** button that lands in the same place.
   </Step>
   <Step title="Choose Monthly or Yearly">
-    The toggle at the top switches between **Monthly** and **Yearly**. Yearly cards show the effective monthly price and the amount billed annually, so compare on the same footing before you decide.
+    The toggle at the top switches between **Monthly** and **Yearly**. Yearly cards show the effective monthly price and the amount billed annually, so compare on the same footing before you decide. The banner at the top tells you which you are on today — **Active · monthly** or **Active · annual**.
   </Step>
   <Step title="Select the plan card">
-    The button reads **Upgrade to Essential**, **Select Team** and so on. Your existing plan is badged **Current Plan** and cannot be selected again.
+    The button says what the change is: **Upgrade to Essential**, **Downgrade to Starter**, **Switch to annual billing**, **Switch to monthly billing**. Your current plan on your current billing period is badged **Current Plan** and cannot be selected again; the same plan on the other billing period can.
   </Step>
-  <Step title="Complete checkout">
-    You get **Redirecting to Payment** — "Setting up secure payment..." — and land on your payment provider's page. Which provider that is depends on where your workspace bills from; see [Payment methods](/platform/plans/payment-methods).
+  <Step title="Read the summary, then confirm">
+    If you already pay for a plan, a summary opens: the new price, the credit for the unused part of your current period, and the line **Charged today**. The button reads **Pay … and switch** with the exact amount. Nothing is charged until you select it, and **Keep current plan** closes the summary with nothing changed.
 
-    Two variants of that message tell you something important:
+    If your card is declined, you get **Payment declined** — "Your card was not charged and your plan is unchanged" — and that is exactly what happened: nothing moved.
 
-    - **Trialing now:** "Setting up your paid subscription. Your trial will end immediately after payment." Your remaining trial days are not added on.
-    - **Trial-eligible:** "Your 7-day free trial will be activated after setting up payment..." You are starting the trial, not being charged today.
+    If your workspace bills through Paystack, the summary instead takes you to a Paystack page to pay the difference; your new plan starts the moment that payment succeeds and you return to **Payment received — your new plan is being applied now.**
   </Step>
-  <Step title="Come back">
-    On success you land on **Payment Successful!** — "Payment successful! Your subscription is now active." — and are returned to your dashboard. If you back out you get **Payment Cancelled**: "Your payment was cancelled. No charges were made to your account."
+  <Step title="Done">
+    You get **Plan changed** and the banner reads **Active Team Plan**, or whichever you chose, with the new **Next billing** date — today's date next month or next year.
   </Step>
 </Steps>
 
-## Downgrade
+<Note>
+  **On Free or on a trial?** There is nothing to change yet, so choosing a paid plan is a checkout instead. You get **Redirecting to Payment** — "Setting up secure payment..." — and land on your payment provider's page; see [Payment methods](/platform/plans/payment-methods). Two variants of that message tell you something important: **Trialing now** — "Setting up your paid subscription. Your trial will end immediately after payment." Your remaining trial days are not added on. **Trial-eligible** — "Your 7-day free trial will be activated after setting up payment..." You are starting the trial, not being charged today. On success you land on **Payment Successful!** and are returned to your dashboard; if you back out you get **Payment Cancelled**: "Your payment was cancelled. No charges were made to your account."
+</Note>
 
-There is no separate downgrade control. Select the lower plan's card and complete checkout the same way.
+## Downgrade, or switch to monthly billing
+
+<Steps>
+  <Step title="Select the lower plan's card">
+    The button reads **Downgrade to Starter** (or **Switch to monthly billing** for the same plan). The summary opens with **Charged today** showing nothing due, and the date the change will take effect — the end of your current period.
+  </Step>
+  <Step title="Select Schedule change">
+    You get **Change scheduled**. The banner at the top now carries an amber line: **Scheduled: Starter · monthly starts on** the date, **You keep your current plan until then.** Every plan card is held until that date passes or you withdraw the change.
+  </Step>
+  <Step title="Change your mind before that date">
+    Select **Withdraw change** on the banner and confirm. Your subscription simply continues as it bills today; nothing was charged for the change, so there is nothing to refund.
+  </Step>
+</Steps>
 
 <Warning>
   **A downgrade takes features away the moment it applies**, and the caps on the lower plan are enforced from then on. Nothing you already created is deleted — but where you are over a cap, the surface stops accepting **new** entries. Over the CRM contact cap, you cannot add a contact. Over the store product cap, you cannot publish another product. Over the published-agent cap, you cannot publish another agent. Existing records stay exactly where they are and stay readable; you simply cannot add to them until you are back under the limit or back on the higher plan.
@@ -82,6 +106,7 @@ Cancelling does not lock you out: "your patient records, clinical notes, and his
 - Inside the workspace, the banner reads **Active Essential Plan**, or whichever plan you chose, with **Next billing** and a date.
 - The feature you upgraded for is now usable rather than showing an upgrade prompt.
 - The charge appears under **Billing** → **Payment History**. See [Your subscription invoices and receipts](/platform/plans/invoices-and-receipts).
+- For a scheduled downgrade, the banner shows the amber **Scheduled:** line with the date, and nothing new appears in **Payment History** until then.
 
 ## If something goes wrong
 
@@ -92,6 +117,18 @@ Cancelling does not lock you out: "your patient records, clinical notes, and his
 
   <Accordion title="I paid but the workspace is still on the old plan">
     Select **Refresh** on the **Billing** page. Confirmation from the payment provider can take a minute. If it has not moved after five, [contact support](/platform/help/contact-support) with the time of the payment.
+  </Accordion>
+
+  <Accordion title="That plan belongs to a different edition of ClinikEHR">
+    You move up and down within your edition's ladder; you never move between editions. See [Plans and what they include](/platform/plans/overview) and [contact support](/platform/help/contact-support) to move a workspace to another edition.
+  </Accordion>
+
+  <Accordion title="A plan change is already scheduled for this subscription">
+    Only one change can wait at a time. Select **Withdraw change** on the banner first, then pick the plan you actually want.
+  </Accordion>
+
+  <Accordion title="This subscription is set to cancel at the end of the period">
+    A cancelling subscription cannot change plan — the change would quietly undo the cancellation. Select **Keep Plan** on the workspace's card first, then change plan.
   </Accordion>
 
   <Accordion title="Trial Not Available — You have already used your free trial for this clinic.">
@@ -113,4 +150,4 @@ Cancelling does not lock you out: "your patient records, clinical notes, and his
 
 <StillStuck />
 
-{/* source of truth: app/subscription/plan/[clinicId]/page.tsx, app/subscription/success/page.tsx, app/subscription/cancel/page.tsx, components/subscription/plan-card.tsx, components/ui/billing-toggle.tsx, components/home/billing/clinic-subscriptions.tsx, components/home/billing/billing-overview.tsx */}
+{/* source of truth: app/subscription/plan/[clinicId]/page.tsx, components/subscription/plan-change-dialog.tsx, app/api/subscription/change-plan/*, app/subscription/success/page.tsx, app/subscription/cancel/page.tsx, components/subscription/plan-card.tsx, components/ui/billing-toggle.tsx, components/home/billing/clinic-subscriptions.tsx, components/home/billing/billing-overview.tsx */}

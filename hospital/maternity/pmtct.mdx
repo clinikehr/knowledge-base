@@ -1,0 +1,141 @@
+---
+title: PMTCT status
+description: "An HIV status, where it came from, the ART regimen and the baby's test results — on one screen, opened deliberately."
+icon: "/images/icons/shield-heart.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone with Record a PMTCT status" note="Needs the Maternity care area" />
+
+The foot of a woman's [antenatal card](/hospital/maternity/antenatal-card) carries **PMTCT** — the pathway for preventing mother-to-child transmission. It holds her HIV status for this pregnancy, where that status came from, whether she is on the pathway, the antiretroviral regimen if one is recorded, and **her baby's test results**.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', "Today's Clinic", "the patient's name"]} />
+
+## It does not open by itself
+
+The card arrives shut. Nothing about the status is loaded until somebody presses **Open PMTCT record**, and the panel says why in its own words:
+
+> Nothing is loaded until you open it, and opening it is recorded against your name.
+
+This is the point of the design, not an obstacle. A status that loaded alongside the rest of the card would make "who looked at this woman's HIV status" unanswerable — every clinician who opened her chart for any reason would look identical to one who came to read it. Opening it is a deliberate act, so the audit trail records a decision rather than a page load.
+
+<Note>
+  **Nobody is prevented from opening it.** The panel is on the chart of the woman it belongs to, and any clinician who can open her antenatal card can open it. What the deliberate press buys is an honest record of who did — not a restriction on who may.
+</Note>
+
+## Where it appears, and where it does not
+
+The panel is on the antenatal card and **nowhere else**. It is not on the antenatal worklist, the register, the pregnancy tab on the chart, or any indicator panel — none of which are hers alone. Every one of those screens names other women at the same time, and a status rendered on a list is read by everybody standing at that screen.
+
+<Warning>
+  **A status never appears on a list.** If you need a colleague to know, tell them — do not expect it to be visible from a worklist, a register row or a ward board. It is on her card, and only on her card.
+</Warning>
+
+This is also why the baby's test results are recorded here rather than on the babies list or on the newborn's own chart. **A baby's result states her mother's status**, so a control for it anywhere shared would put a woman's diagnosis in front of everybody at that screen.
+
+## Record a status
+
+Select **Record status**. The dialog asks two things together, because one is not usable without the other.
+
+**The status** is one of four, and each is a recorded answer rather than a gap:
+
+| Status | What the screen says |
+| --- | --- |
+| Positive | "A positive status is recorded on this pregnancy." |
+| Negative | "A negative status is recorded on this pregnancy." |
+| Not known | "It is recorded that the status is not known — not that testing was refused." |
+| Declined | "She was offered testing and declined. This is a recorded answer, not a missing one." |
+
+**Where it came from** is asked every time, and is the field that stops a status becoming a rumour:
+
+- **From a laboratory result** — "It came from a result on this patient's record, named below." You then choose which result, from her own tests.
+- **Reported from elsewhere** — "It was carried in from another facility or told to a clinician. It is not confirmed by a result on this record."
+- **No test was performed** — "There is no result because testing was declined." This is the only source a declined status can have, and a declined status cannot carry another: "A declined test is recorded as a declined status, and a declined status has no other source."
+
+<Warning>
+  **Reported is not the same fact as tested.** The dialog states it plainly: "A status reported from elsewhere is not the same fact as one a laboratory produced." A status carried in from another facility is worth recording and worth acting on, but it has not been confirmed here — and the record says which of the two it is, permanently.
+</Warning>
+
+Where the woman has no result on her record to link, the laboratory option is unavailable and says so: "No result on this patient's record is available to link, so the laboratory option is unavailable here." Order the test, or record it as reported from elsewhere.
+
+## The regimen
+
+Where an antiretroviral regimen is recorded, it is named together with the date it started — one is not accepted without the other: "Name the regimen as well as the date it started." A regimen with no start date cannot be reasoned about, and a start date with no regimen names nothing.
+
+The panel reads **Enrolled on the PMTCT pathway** or **Not enrolled on the PMTCT pathway**, and where no regimen is recorded it says **No ART regimen recorded** — not a blank.
+
+## The baby's tests
+
+The same panel carries **infant testing** — the last step of the [PMTCT cascade](/hospital/maternity/coverage). Every baby born in this pregnancy is listed, and under each one either her recorded tests or a sentence:
+
+> No test recorded for this baby. That is not a negative result.
+
+A birth recorded as a stillbirth says so instead, and offers nothing to record.
+
+Select **Record infant test** to add one.
+
+**Which baby** is always asked, even when there is only one. Twins are two separate birth records, and a result attached to the wrong twin is a wrong diagnosis for two children at once.
+
+**Which test** matters clinically and the form says why:
+
+| Test | What the screen says |
+| --- | --- |
+| DNA PCR (virological) | "Detects the virus itself. Valid from birth." |
+| Rapid antibody test | "Detects antibodies. Before 18 months these may still be the mother's, so a positive is not the baby's own result." |
+
+**When** records which scheduled point the test fills — at birth, 6 weeks, 9 months, 18 months, or after breastfeeding stopped. A baby can have one recorded test at each of those points; anything extra is recorded as **Unscheduled**.
+
+**The result** is one of four, and the fourth is the one worth reading twice:
+
+| Result | What the screen says |
+| --- | --- |
+| Negative | "A negative result is recorded for this baby." |
+| Positive | "A positive result is recorded for this baby." |
+| Indeterminate | "The test did not give a clear answer. It is a result, and it is not a negative one." |
+| Awaiting result | "The specimen has been taken and sent. Nothing has come back yet — this is not a result." |
+
+<Note>
+  **Record the specimen even before the result comes back.** A dried blood spot sent to a reference laboratory can take weeks. Recording it as **Awaiting result** puts it on the record so the baby is not bled a second time and somebody knows to chase it. It is **not** counted as a tested baby on the Coverage screen until a result is recorded — see [Coverage](/hospital/maternity/coverage).
+</Note>
+
+**Where it came from** works exactly as it does for the mother's status: from a laboratory result on the record, which you then name, or reported from elsewhere. A result returned on paper from a reference laboratory is **reported from elsewhere**, and that is the honest record of it rather than a lesser one.
+
+### Finding her again months later
+
+For the first three months she is on the [postnatal worklist](/hospital/maternity/postnatal). After that, open her from the **[register](/hospital/maternity/register)** — select her name to open her antenatal card, and the PMTCT panel is at the foot of it. This is how you reach a nine-month or eighteen-month test.
+
+### Recording a test long after the birth
+
+The rest of the PMTCT panel closes when the pregnancy record closes. **Infant testing does not.** The pregnancy closes at delivery and this testing runs for the eighteen months after it, so the panel says:
+
+> This pregnancy record is closed, so the status and the pathway can no longer be changed. Infant test results can still be recorded — they are expected long after a pregnancy ends.
+
+### If a result was recorded in error
+
+Select **Mark as entered in error** under the result and give a reason. The record is kept with your reason and stops counting; there is no way to undo it, and a correction is recorded as a new result at the same point.
+
+## What saving does, and what it does not
+
+The confirmation is deliberately narrow: **Status recorded** — "It is on this pregnancy record only."
+
+<Note>
+  **Recording a status here changes nothing else.** It does not order a test, does not enrol her on a programme anywhere else in the product, does not write to her general chart, and does not notify anybody. It records what is known about this pregnancy, on this pregnancy.
+</Note>
+
+## Who can record one
+
+| Act | Who |
+| --- | --- |
+| Open the PMTCT record | Anyone who can open her antenatal card |
+| Record a status or regimen | Anyone not yet governed; otherwise only if switched on — **Record a PMTCT status** |
+| Record or retract a baby's test | The same permission — **Record a PMTCT status** |
+
+Permissions are set per person under [Team permissions](/platform/team/permissions).
+
+<AuditNote action="Opening the PMTCT record, recording a status, and recording a baby's test" />
+
+<StillStuck />

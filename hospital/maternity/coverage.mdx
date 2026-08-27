@@ -1,0 +1,203 @@
+---
+title: Antenatal Coverage
+description: "Read ANC1, ANC4+, ANC8+, IPTp, tetanus, caesarean and stillbirth rates by month booked — every rate with the number behind it."
+icon: "/images/icons/chart-column.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Doctor, Nurse Practitioner, Nurse or Midwife" note="Needs the Maternity care area" />
+
+**Coverage** answers the question a midwifery lead asks at the end of a month: of the women who booked with us, how many were actually seen, how many completed the course of care, and how their births turned out. It reports the last twelve months, by the month each pregnancy was **booked**.
+
+<Path steps={['Sidebar', 'Maternity', 'Antenatal', 'Coverage']} />
+
+## Coverage is not the Register
+
+They count different populations, which is why they are separate screens.
+
+| | Counts | Axis |
+| --- | --- | --- |
+| [Antenatal Register](/hospital/maternity/register) | Pregnancies that have been **closed** | The day each was closed |
+| **Coverage** | **Every pregnancy booked** — open and closed alike | The month each was booked |
+
+A summary band above the Register would state a number that appears to describe the rows beneath it and does not.
+
+## What you're looking at
+
+The heading reads **Antenatal Coverage**, and under it: **Coverage over the last 12 months, by the month each pregnancy was booked, with the delivery outcomes recorded for those same women. Every rate is shown with the number behind it.**
+
+### Across the period
+
+Eight tiles, over the whole twelve months, above a line reading **… booked · … completed · … deliveries recorded**.
+
+| Indicator | Means | Measured over |
+| --- | --- | --- |
+| **ANC1** | "Booked pregnancies with at least one antenatal contact recorded." | of pregnancies booked |
+| **ANC4+** | "Completed pregnancies with four or more antenatal contacts." | of pregnancies completed |
+| **ANC8+** | "Completed pregnancies with eight or more antenatal contacts." | of pregnancies completed |
+| **IPTp-2+** | "Completed pregnancies with two or more doses of IPTp recorded." | of pregnancies completed |
+| **IPTp-3+** | "Completed pregnancies with three or more doses of IPTp recorded." | of pregnancies completed |
+| **TT2+** | "Completed pregnancies with two or more tetanus doses recorded." | of pregnancies completed |
+| **Caesarean rate** | "Caesarean births as a share of the deliveries that record how the baby was born." | of deliveries with a mode recorded |
+| **Stillbirth rate** | "Stillbirths per 1,000 births recorded." | of births recorded |
+
+**ANC1 is the only coverage figure measured over everyone booked.** The other five ask about a *finished* course of care, so a pregnancy still in progress is left out rather than counted as a miss — a woman at 14 weeks with no IPTp is early, not a coverage failure.
+
+### The two delivery rates, and what they are counted over
+
+They are measured over different things from the coverage figures, and from each other — **the caesarean rate is over deliveries, the stillbirth rate is over births**, and one labour can produce two births.
+
+- **A woman still in labour is not a delivery.** A record opened by a labour assessment reads **Assessed on admission** and is counted by none of these figures — not **Deliveries**, not either side of the caesarean rate, not the stillbirth denominator. She joins them when somebody writes the birth up. A ward full of women in labour therefore moves no figure on this page, which is the point: a delivery total that rose with the ward's occupancy would report births that had not happened.
+- **A delivery whose mode has not been filled in is left out of both sides** of the caesarean rate — "it is not a vaginal birth". The **Deliveries** figure sits beside it so you can see the gap: 40 deliveries with a caesarean denominator of 12 means the rate describes 12 of them.
+- **Twins count as two births.** A stillbirth on one twin is one stillbirth in two births, not one in one delivery.
+- **A baby born alive who later died is counted as a birth, never as a stillbirth.** **Early neonatal death** belongs in the denominator and never in the numerator.
+- **The stillbirth rate is per 1,000 births, not a percentage.** The tile reads **4.2 per 1,000**. Reading it as a percentage is wrong by a factor of ten, in the flattering direction.
+
+<Warning>
+  **Below fifty births the stillbirth rate is not printed at all.** The tile shows the counts instead — **1 in 12** — with **Too few births to report as a rate.** underneath and a **Small sample** badge above. Over twelve births, one stillbirth works out at 83 per 1,000, roughly four times the worst national figure in the world, and none works out at 0.0. Neither of those describes a clinic, and this is the one number on the page that a reader will take as a judgement of one.
+</Warning>
+
+<Note>
+  **Every figure on a row describes the women who booked that month — the delivery figures included.** A caesarean recorded in August for a woman booked in January is counted in January. The page says it: **Deliveries and births follow the month the pregnancy was booked, so recent months are still filling.** Bucketing births by the month of the birth would put two different populations on one row.
+</Note>
+
+### The four things that keep the numbers honest
+
+- **A rate never appears without its denominator.** Every tile and every cell prints **n of d** beside the percentage. "33%" over three women is noise, and printing it alone manufactures a confidence the data does not carry.
+- **No data reads as —, never as 0%.** Where there is nothing to measure the cell shows a dash and names what was missing — **no pregnancies to measure**, **no deliveries to measure**, **no births to measure**. A zero would be a claim that nobody was covered, which is a different statement from "nothing has been recorded".
+- **Under ten records, the tile is badged Small sample.** Below that, one record moves the percentage by more than ten points.
+- **A rate is never printed over a sample too small to be one.** The stillbirth rate has a higher floor — fifty births — and below it the counts are shown instead, with **Too few births to report as a rate.** underneath. "1 in 12" is a fact; "83.3 per 1,000" is an extrapolation from one event.
+
+### By month booked
+
+The same eight indicators as a table, newest month first, with **Booked**, **Completed** and **Deliveries** counts beside them. Each cell carries its own **n of d** under the rate, because a rate in one month is not comparable to a rate in another without them.
+
+<Note>
+  **To read a quarter, add the counts — do not average the months.** Averaging a month of two women with a month of two hundred weights them equally and can land outside the real answer. The **Across the period** tiles already do the addition for the full twelve months.
+</Note>
+
+### Not reported
+
+A panel at the bottom names what is deliberately absent, stated as missing rather than shown as 0% — a zero here would read as a result, not as missing data.
+
+**Skilled birth attendance is not shown, and will not be.** The panel says why: "Every delivery recorded here was attended here, so a figure worked out from this data would always be 100% — the question is really about the births a clinic never sees, and it cannot answer that from its own records." The nearest substitute — deliveries with an attendant filled in — would measure paperwork while looking like the real indicator.
+
+### The PMTCT cascade
+
+Below the rates, a **PMTCT cascade** follows the women enrolled on the prevention-of-mother-to-child-transmission pathway through the care this module records:
+
+**Enrolled → on treatment → delivered → baby given prophylaxis → baby tested.**
+
+Five counts, in that order. They are **counts, never percentages**, and deliberately so: a percentage over a handful of women is a number that can identify one of them. Each step is counted only among the women enrolled, so the figures only ever go down — a step larger than the one before it would mean a counting error, not better care.
+
+**On treatment** counts a woman whose treatment is recorded either on her pregnancy record or as a programme dose, because either is a real record of the same fact and a clinic shouldn't appear to be failing a step because of where its staff type.
+
+**Delivered** is the step the two baby figures are really read against. A pregnancy still in progress has no baby to protect or to test, so it is not a gap in the steps below it.
+
+<Note>
+  **A specimen that has been sent is not a tested baby.** **Infant tested** counts babies with a **result** recorded. A sample taken and sent to a laboratory, with nothing back yet, is recorded on the mother's PMTCT record as **Awaiting result** — it is visible to whoever opens that record, and it stops a second heel-prick — but it is not counted here. Counting it would report a baby as diagnosed on the strength of a sample in transit.
+</Note>
+
+No woman's HIV status, treatment or PMTCT enrolment appears here or anywhere else outside her own chart — the cascade is counts only, and the screen carries no patient identifier at all.
+
+### Booked, not yet seen
+
+The last section is the one that can be acted on: **Open pregnancies with no antenatal contact recorded — the women behind the ANC1 figure.** At most twenty-five are listed, with **Patient**, **Booked**, **Due date** and **Contacts**. Select a name to open her [antenatal card](/hospital/maternity/antenatal-card).
+
+With nobody outstanding it reads **Every open pregnancy has been seen**.
+
+<AuditNote action="Opening the coverage indicators" />
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Open Coverage and read it | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the page has no check of its own |
+
+The page names pregnant women in its follow-up list, so opening it is recorded in the audit trail like any other look at a clinical record.
+
+## Check it worked
+
+- **Across the period** shows a **… booked** count matching the pregnancies you have opened in the last year.
+- A woman you recorded a first contact for today drops off **Booked, not yet seen**, and **ANC1** rises by one in her booking month.
+- A month with no bookings shows dashes across its row, not zeros.
+- A delivery record you completed with a **Mode of delivery** raises **Deliveries** in that woman's booking month, and lands in the caesarean denominator.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="No pregnancies booked yet">
+    Nothing has been booked in the last twelve months. The panel says why: "Coverage is reported from the month a pregnancy is booked. Nothing is shown as 0% until there is a pregnancy to measure."
+  </Accordion>
+
+  <Accordion title="ANC4+ shows a dash while ANC1 shows a real figure">
+    ANC4+ is measured over **completed** pregnancies, and none has been closed in that month yet. Its denominator is empty, so it reads as a dash rather than 0%.
+  </Accordion>
+
+  <Accordion title="A month shows a figure I do not believe">
+    Check the **n of d** beneath it. A **Small sample** badge means fewer than ten records, where a single one moves the percentage by more than ten points — or, on the stillbirth rate, fewer than fifty births.
+  </Accordion>
+
+  <Accordion title="Our caesarean rate looks far too low">
+    Check the **Deliveries** count against the caesarean denominator. A delivery whose **Mode of delivery** has not been filled in is left out of both sides of the rate, so a backlog of unfinished delivery records shrinks the denominator rather than dragging the rate down. Finish them on [the labour record](/hospital/maternity/labour-record).
+  </Accordion>
+
+  <Accordion title="The stillbirth tile says 1 in 12 instead of a rate">
+    Fewer than fifty births in that period, so the rate is withheld and the counts are shown instead. It is not a bug — a per-1,000 rate over twelve births is an extrapolation from a single event.
+  </Accordion>
+
+  <Accordion title="Our IPTp coverage looks far too low">
+    It counts doses on the ledger, not doses given. A dose given but never recorded against the pregnancy does not count — see [Programme doses](/hospital/maternity/programme-doses).
+  </Accordion>
+
+  <Accordion title="A woman is on Booked, not yet seen but we did see her">
+    Her visit was not recorded as an antenatal contact against this pregnancy. Open her card and check the series; a contact marked as entered in error is also excluded.
+  </Accordion>
+
+  <Accordion title="The list stops at twenty-five names">
+    That is the cap, stated on the page. Work through those and reload.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I change the reporting period?">
+    No. The page reports the last twelve months, by month booked.
+  </Accordion>
+
+  <Accordion title="Can I export this?">
+    Not from this screen.
+  </Accordion>
+
+  <Accordion title="Does changing the antenatal contact schedule change these numbers?">
+    No. Every indicator counts recorded contacts and doses against fixed thresholds — four, eight, two, three — so they do not move when the schedule does. What the schedule changes is who counts as **Due** or **Overdue** on [Today's Clinic](/hospital/maternity/todays-clinic).
+  </Accordion>
+
+  <Accordion title="Why is ANC8+ so low if we run the eight-contact schedule?">
+    It counts only pregnancies that have been closed, and only those with eight contacts recorded against them. A pregnancy closed part-way through, or one whose later contacts were never entered, counts in the denominator and not the numerator.
+  </Accordion>
+
+  <Accordion title="Does a pregnancy marked as entered in error count?">
+    No. That statement means the record was never true, so it is kept out of the counts as well as out of the Register.
+  </Accordion>
+
+  <Accordion title="What happens to these figures if we retract a delivery or a birth?">
+    They change. A record marked as entered in error leaves **Deliveries**, the **Caesarean rate** and the **Stillbirth rate** — that is the point of retracting it. A record still reading **Assessed on admission** was never in them to leave. What does *not* change is the [Antenatal Register](/hospital/maternity/register), which lists pregnancy records: a pregnancy closed as **Live birth** keeps that row and that outcome. See [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+  </Accordion>
+
+  <Accordion title="Why is skilled birth attendance not reported?">
+    Because every delivery recorded here was, by definition, attended here — so a rate worked out from this data would be 100% whatever the hospital did, and say nothing. The real question is about the births a clinic never sees, which it cannot answer from its own records.
+  </Accordion>
+
+  <Accordion title="Are postnatal contacts reported here?">
+    No. This page reports antenatal contacts, programme doses and the two delivery rates. Postnatal contacts are read on the [Postnatal](/hospital/maternity/postnatal) board, and counted by month on [Maternity Activity](/hospital/maternity/monthly-activity).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="coverage indicators" />
+
+{/* source of truth: components/clinic/maternity/maternity-indicators-content.tsx, components/clinic/maternity/maternity-indicator-panel.tsx, components/clinic/maternity/maternity-no-contact-table.tsx, db/queries/maternity.ts (getMaternityIndicators) */}

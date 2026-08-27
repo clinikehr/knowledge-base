@@ -1,0 +1,132 @@
+---
+title: Maternity Activity
+description: "Read what your maternity unit actually did in a month — contacts, doses, deliveries, births and postnatal care — and export it."
+icon: "/images/icons/table.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member; with Role Navigation on, owners, managers and accountants" note="Needs the Maternity care area" />
+
+**Maternity Activity** is the monthly return: how many women were seen, how many doses were given, how many babies were born and how, and how much postnatal care happened — **in the month it happened**. It is the page to have open when somebody asks you to fill in a monthly form, write a board paper, or say what August looked like.
+
+<Path steps={['Sidebar', 'Executive', 'Analytics', 'Maternity Activity']} />
+
+## This is not Antenatal Coverage, and the two will disagree
+
+They answer different questions, and reading one as the other is the mistake this page exists to prevent.
+
+| | Answers | Which month a birth counts in |
+| --- | --- | --- |
+| [Antenatal Coverage](/hospital/maternity/coverage) | "Of the women who **booked** with us in January, how many completed four contacts? How did their births turn out?" | The month she **booked** |
+| **Maternity Activity** | "How many babies were born here in **August**?" | The month the baby was **born** |
+
+A caesarean performed in August on a woman who booked in January is counted **in January on Coverage** and **in August here**. Both are right. Coverage follows a group of women forward through their pregnancies, which is the only way a completion figure like ANC4+ can mean anything; this page counts events as they happen, which is the only way a monthly return can.
+
+So the two pages will report different numbers for the same month, permanently. Neither is a correction of the other, and neither should be quoted as the other.
+
+<Note>
+  **If you need a rate, read [Antenatal Coverage](/hospital/maternity/coverage).** There is deliberately no caesarean rate or stillbirth rate on this page. Coverage already publishes both, worked out over the women who booked; a second set worked out over the month's events would be different numbers under the same names, and there would be no way to tell from a printout which you were holding. What this page gives you instead is the counts themselves, and a **Share** column beside the delivery breakdown whose total you can see on the same screen.
+</Note>
+
+## Choosing the period
+
+The date picker at the top sets the range. Figures are added up across whole months, so a range that starts mid-month includes that whole month. The furthest back you can go is about twelve months.
+
+## What you're looking at
+
+Three tabs sit under the chart: **Over time**, **Breakdown** and **Summary**.
+
+### Over time
+
+**Deliveries per month** — one point per month in the range. This is the count the module could not report before, so it is the one plotted.
+
+### Breakdown — how the babies were born
+
+Every delivery in the range, split by how the baby was born, with a **Share** column worked out over the total of the rows.
+
+| Row | Means |
+| --- | --- |
+| **Spontaneous vaginal** | A vaginal birth with no instrument |
+| **Assisted - vacuum** | Vacuum extraction |
+| **Assisted - forceps** | Forceps |
+| **Breech** | Recorded as a breech birth |
+| **Caesarean - elective** | A planned caesarean |
+| **Caesarean - emergency** | An emergency caesarean |
+| **Mode not recorded** | A delivery record where nobody has filled in how the baby was born |
+
+**Mode not recorded is a row on purpose.** It is your outstanding paperwork, and hiding it would quietly shrink the denominator every other row is measured against. If it is large, the rest of the breakdown describes fewer births than you think.
+
+When no deliveries were recorded in the range at all, the tab is empty rather than showing six zeroes — "nothing happened" and "none of them were caesareans" are different statements.
+
+### Summary — the monthly return
+
+| Figure | Counts |
+| --- | --- |
+| **Antenatal Contacts** | Every antenatal contact recorded in the month |
+| **First Antenatal Contacts** | Contacts recorded as a woman's **first** of that pregnancy |
+| **Iptp Doses** · **Iptp1 Doses** · **Iptp2 Doses** · **Iptp3 Doses** | IPTp doses given in the month, and the same split by which dose in the course it was |
+| **Tetanus Doses** | Tetanus doses given in the month |
+| **Iron Folate Doses** | Iron-folate supplies recorded in the month |
+| **Deliveries** | Deliveries with a delivery time recorded in the month |
+| **Caesarean Births** | Elective and emergency caesareans together |
+| **Births** | Every baby born — live births, stillbirths and early neonatal deaths |
+| **Live Births** | Babies born alive |
+| **Stillbirths** · **Fresh Stillbirths** · **Macerated Stillbirths** | Stillbirths, and the two kinds separately |
+| **Early Neonatal Deaths** | Babies born alive who died in the first week |
+| **Births Weighed** | Babies with a birth weight recorded |
+| **Low Birth Weight Births** | Babies weighing under 2,500 g |
+| **Postnatal Contacts Mother** · **Postnatal Contacts Baby** | Postnatal contacts in the month, split by who was seen |
+| **Postnatal Within 24H Mother** · **Postnatal Within 24H Baby** | The within-24-hours contact, split the same way |
+
+## The five things to know before you transcribe these
+
+Every one of these changes what a figure means on the form you are copying it onto.
+
+- **A first antenatal contact is not a booking.** A woman booked on 29 January whose first contact is on 2 February is a January booking and a **February** first contact. If your form asks for new bookings, that number is on [Antenatal Coverage](/hospital/maternity/coverage), not here.
+- **Twins count as two births and one delivery.** **Births** counts babies; **Deliveries** counts labours. On a month with twins the two will not match, and that is correct.
+- **A baby born alive who later died is a birth, never a stillbirth.** **Early Neonatal Deaths** is counted separately and is included in **Births** and in **Live Births**.
+- **Low Birth Weight Births counts every baby weighed, whatever the outcome** — a stillborn baby of 1,800 g is included. **Births Weighed** sits beside it so you can see how many babies the figure describes. If your form asks for low birth weight among **live** births only, this is not that number.
+- **A delivery with no delivery time recorded is not counted at all.** A record opened as a labour ends, before anyone has written down when the baby arrived, has no month to belong to. Fill in the time and it appears. See [Record a delivery](/hospital/maternity/labour-record).
+
+<Warning>
+  **Months are counted from midnight UTC, not your local midnight.** A birth at half past midnight local time on the 1st, in a country ahead of UTC, falls in the previous month's figures. Over a whole month this moves at most a birth or two, but it is why a figure here can differ by one from a ward register kept by hand.
+</Warning>
+
+## Exporting it
+
+**Export** downloads the tab you are looking at as a spreadsheet, which is the point of the page — a monthly return exists to be transcribed. The file contains the same aggregate counts you can see: there is no patient name, no patient number and no row for any individual woman anywhere in it.
+
+**HIV and PMTCT figures are not on this page and never will be**, at any level of aggregation, including as a count. The PMTCT cascade is read on the [PMTCT](/hospital/maternity/pmtct) screen, on the chart of the woman it belongs to. A monthly count of one or two on an exported spreadsheet identifies a woman as surely as writing her name would.
+
+**Skilled birth attendance is not reported.** Every birth counted here was attended here, so a figure worked out from it would come to 100% whatever the hospital did.
+
+<AccordionGroup>
+  <Accordion title="Why does August have a different caesarean count here from Antenatal Coverage?">
+    Because Coverage counts a caesarean in the month the woman **booked**, and this page counts it in the month it was **performed**. Both are correct answers to different questions. Use this page for "what did we do in August"; use Coverage for "how did the women we booked in August fare".
+  </Accordion>
+
+  <Accordion title="A record was entered in error. Is it still counted?">
+    No. A record marked as entered in error is excluded here from the moment it is marked — the contact, the dose, the delivery or the birth. So are records belonging to a pregnancy record that was itself marked as entered in error. Nothing is deleted; see [Retract a delivery or birth record](/hospital/maternity/retract-a-record).
+  </Accordion>
+
+  <Accordion title="Do the dose figures include treatment for the mother's own long-term conditions?">
+    No. The dose counts are IPTp, tetanus and iron-folate only. Doses recorded under any other programme are deliberately left out of this page, because it is exported.
+  </Accordion>
+
+  <Accordion title="Why is a delivery still counted when the record is only a draft?">
+    Because the birth happened. A draft record that says when the baby arrived is counted straight away — waiting for the paperwork to be finished would leave August short of its caesareans for as long as theatre took to write them up. A draft with no delivery time is not counted, because there is no month to put it in.
+  </Accordion>
+
+  <Accordion title="Who can open this report?">
+    A hospital on the Enterprise plan with the Maternity care area switched on, under Settings → Facility. With Role Navigation on, the Analytics section is offered to owners, managers and accountants.
+  </Accordion>
+</AccordionGroup>
+
+<AuditNote action="Opening this report, and exporting it," />
+
+<StillStuck topic="the maternity monthly activity report" />
+
+{/* source of truth: lib/analytics/report-catalog.ts (maternity-activity), lib/analytics/maternity-activity-report-contract.ts, lib/analytics/report-table.ts, components/clinic/dashboard/analytics/ */}
