@@ -16,12 +16,12 @@ Stock is not held as a single number per product. It is held per **lot**, each w
 
 ## What FEFO does
 
-When something is sold or dispensed, ClinikEHR picks the lot with the earliest expiry date that has enough on hand at that location. The till and the dispensing sheet both show which lot was used, so the person at the counter can check it against the pack in their hand.
+When something is sold or dispensed, ClinikEHR picks the lot with the earliest expiry date first. A lot with **no expiry date recorded is picked by its age** — the date it was received — so old undated stock sells before newer dated deliveries rather than sitting on the shelf. When stock for one item sits in more than one location, the draw prefers the location holding the soonest-expiring stock. The till and the dispensing sheet both show which lot was used, so the person at the counter can check it against the pack in their hand.
 
-That is the whole mechanism, and it only works on lots that have a date.
+This applies to every draw the same way: POS sales — including sales made offline, which follow the same rules when they sync — prescription dispensing, lab, radiology and service consumption, transfers and reservations.
 
 <Warning>
-  **A lot with no expiry date is invisible to oldest-first picking.** It is not picked early and it is not flagged as expiring — it simply sits there while dated stock is consumed around it, until somebody finds it out of date on the shelf. Turn on **Require expiry date on new lots** under **Settings** › **Inventory** › **Receiving quality** so a delivery cannot be received without one.
+  **An undated lot still cannot be flagged as expiring.** Picking it by age keeps it moving, but the expiry alerts have no date to warn you about — the first anyone learns it expired is finding it on the shelf. Turn on **Require expiry date on new lots** under **Settings** › **Inventory** › **Receiving quality** so a delivery cannot be received without one.
 </Warning>
 
 Leaving that setting off is a decision to accept undated lots. If you must receive one — a repack with no printed date, say — record the date you were given by the supplier rather than leaving the field empty.

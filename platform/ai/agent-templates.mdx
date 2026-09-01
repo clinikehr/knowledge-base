@@ -1,0 +1,106 @@
+---
+title: Agent template gallery
+description: "Every one-select agent template — what it does, what starts it, and which ones run your billing follow-up on their own."
+icon: /images/icons/bot.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Starter and above" />
+
+Every template lands on the canvas fully wired — trigger, steps, safety playbooks and, for many, a starter test suite — and you edit from there. Nothing runs until you [deploy it](/platform/ai/agents), and anything that sends or charges pauses for **human approval** unless you deliberately remove that step.
+
+<Path steps={['Sidebar', 'AI Agents', 'Templates']} />
+
+A template's **trigger** tells you how it lives: **Chat** agents answer when someone talks to them, **Scheduled** ones run on their own clock, **Event** ones fire the moment something happens in your workspace, **Webhook** ones accept signed calls from outside, and **Voice** answers the phone.
+
+## Billing & payments
+
+The set most practices deploy first: money follow-up that happens every day whether anyone remembers or not.
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **Billing assistant** | Chat | Looks up what a patient owes across invoices and appointment balances, presents it for staff approval, then collects — recording a payment or charging a saved card. It summarises balances; it never collects without a human's yes. |
+| **Unpaid balances digest** | Scheduled | Compiles the clinic's outstanding balances daily — unpaid invoices and balances collectible on a saved card — flags which are auto-collectible, and hands staff one worklist instead of thirty tabs. |
+| **Membership payment recovery** | Event | The moment a membership charge fails, emails the member a clear heads-up with the retry date and flags staff — before the plan lapses. |
+| **Payment failure recovery (any source)** | Event | One agent for every failed payment — auto-pay, membership dues, storefront or booking checkout. Emails the patient where there is one and flags staff where there is not. |
+
+**How to use them well:** deploy the **digest** first — it changes nothing and shows you the money sitting still. Add the two **recovery** agents next; they only ever react to failures. Bring in the **assistant** last, once your team is used to approving its drafts — it is the only one of the four that can move money, and it always asks first.
+
+## US insurance & claims
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **Insurance & claims assistant** | Chat | Prepares a draft CMS-1500 claim from a patient's diagnoses and services, presents it for approval, then submits it. Never submits without approval. |
+| **Unbilled insurance worklist** | Scheduled | Finds appointments for insured patients that never became claims, grouped by patient with payer and charge. |
+| **Claim status follow-up** | Scheduled | Checks each submitted claim's status with the payer and alerts staff to denials and rejections. |
+| **Claim denial handler** | Event | The moment a claim comes back denied, alerts staff with the details and opens a task. |
+| **Insurance eligibility verification** | Scheduled | Batch-verifies active coverages against payers and alerts staff to any that came back inactive. |
+
+These spend [insurance credits](/platform/plans/overview#insurance--billing-credits-by-plan) for the checks and claims they run, exactly as if a person had run them.
+
+## Front office & assistants
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **AI Virtual Assistant** | Chat | Day-to-day clinic ops — scheduling, CRM and comms — with tools and human approval for sends. |
+| **Front desk assistant (public)** | Chat, public | Answers visitor questions — hours, location, insurance, providers, services, prices — and helps them book or join the waitlist. De-identified with safe tools, so it can be [published as a public page](/platform/ai/publishing-agents). |
+| **Customer service** | Chat | Classifies each request, routes scheduling to the scheduling tool and answers the rest — escalating billing per its playbook, never promising refunds. |
+| **Inbound triage & routing** | Chat | Classifies an inbound patient message (scheduling / billing / clinical / other) and routes each safely — clinical messages escalate to humans and get no advice. |
+| **Inbound SMS booking** | Chat (SMS) | Patients text to book, reschedule, cancel or confirm; the agent uses the scheduling tools end-to-end and texts back a real confirmation. |
+| **Voice receptionist** | Voice | Answers the phone and books, reschedules or confirms by voice — taking a message and alerting staff for anything clinical. |
+
+## CRM & growth
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **CRM lead capture** | Chat | Turns an inbound message into a qualified CRM contact. |
+| **CRM new-lead auto-response** | Event | Sends a branded welcome, creates a follow-up task, alerts the owner. |
+| **CRM lead nurture** | Scheduled | Finds leads gone quiet and sends a gentle, consent-aware nurture email plus a follow-up task. |
+| **CRM convert to patient** | Chat | Reviews a qualified lead, gets staff approval, then converts them into a clinical patient — a gated crossing of the PHI boundary. |
+| **CRM win-back campaign** | Chat | Drafts a re-engagement campaign for lapsed leads; a manager reviews and sends. |
+| **CRM pipeline hygiene** | Scheduled | Tags and notes stale leads, moves the clearly dead to lost, tasks the team on the promising — no outbound at all. |
+| **Web form → CRM lead (webhook)** | Webhook | Point any website form or Zapier at your signed webhook endpoint; every submission becomes a contact. |
+
+## Documents, intake & scheduling
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **Appointment reminder** | Scheduled | Finds upcoming appointments and drafts friendly, consent-aware reminders. |
+| **Service-based intake documents** | Event | Every booking sends the intake documents matching the booked service — HIPAA + new-patient intake for an initial visit, a follow-up form for a review. |
+| **Outstanding-document chaser** | Scheduled | Nudges patients with unsigned documents — re-sending what never arrived, tasking staff where a nudge is not enough. |
+| **Intake completed handler** | Event | When a patient signs, checks what is still outstanding — and only when they are fully done tells the front desk the chart is ready. |
+| **External intake → triage (webhook)** | Webhook | Receives messages from any external system and routes them like the triage agent — clinical content escalates, no advice. |
+| **API appointment request (webhook)** | Webhook | Lets a partner site or automation POST an appointment request; the agent matches the service and books or tasks. |
+| **Post-visit follow-up & review request** | Scheduled | Reaches patients seen yesterday with a thank-you, general aftercare, and a feedback invitation. |
+
+## Clinical & operations safety nets
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **Patient / client summary** | Chat | Summarises patient context into a clinician-reviewed draft — BAA-covered model, human approval, never auto-filed. |
+| **Critical radiology escalation** | Event | A report with critical findings pages the clinical team immediately and opens a task; routine reports pass through silently. |
+| **Inventory alert responder** | Event | Critical and expiry stock alerts get an owner and a task; routine low-stock batches into a note instead of pinging anyone. |
+
+## The public page, from the visitor's side
+
+When a template like the **Front desk assistant** is [published](/platform/ai/publishing-agents), the page a visitor lands on is a complete product in itself:
+
+- **Your branding** — the title, headline, welcome message, accent colour, theme and logo you set, on your own link (or your own domain).
+- **Suggested prompts** — up to six one-tap questions, so a visitor who does not know what to type still gets somewhere.
+- **Real answers, safe boundaries** — the agent answers from your clinic's public information and can hand the visitor to booking or the waitlist; it holds no patient data, and a symptom question gets a polite deferral to booking, never advice.
+- **An email gate, if you want one** — **Require email to chat** identifies visitors before their first message, and disposable addresses are refused.
+- **Your caps, always** — per-minute and daily per-visitor limits and a monthly run cap keep an open link from becoming an open wallet.
+
+## Related
+
+- [Build an AI agent](/platform/ai/agents) — the canvas the template lands on
+- [Publish a public agent](/platform/ai/publishing-agents) — links, widgets and caps
+- [Agent credits](/platform/ai/credits) — what a run costs
+- [Safety](/platform/ai/safety) — the PHI boundary every template respects
+
+<StillStuck />
+
+{/* source of truth: components/clinic/agents/templates.ts (32 templates, verified 2026-08-31) */}

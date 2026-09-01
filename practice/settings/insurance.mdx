@@ -41,11 +41,32 @@ Three sub-tabs run along the top.
 
 Enrolments cover the transaction types a payer supports — **claim status**, **professional claims**, **eligibility** and **remittance** — and each one moves through **Draft**, **Stedi Processing**, **Action Required**, **Provisioning**, then **Live**, **Rejected** or **Canceled**.
 
+## What you need before you start
+
+Gather this once and every later step becomes form-filling. To bill insurance you need, **for the practice**:
+
+- **Practice name** — exactly as registered with payers.
+- **NPI** — the 10-digit National Provider Identifier (organization NPI for a group, individual NPI for a solo practice).
+- **Tax ID** — your EIN, or SSN for an unincorporated solo practice. **Nine digits, no dashes** — enter `111223333`, not `111-22-3333`.
+- **Taxonomy code** — your specialty code (e.g. `207Q00000X` for family medicine).
+- **Billing address** — where payers send paper correspondence.
+
+And **for each billing provider** (the clinician claims are filed under — CMS-1500 Box 33):
+
+- Their **name as payers have it on file**, **individual NPI** (Box 33a) and **taxonomy code** (Box 33b).
+- A **contact person** payers can reach about enrolments: first and last name (or an organization name), an **email**, and a **10-digit US phone number**. Enrolments cannot be submitted without these — the form tells you exactly which one is missing.
+
+<Tip>
+  **Check the [NPI Registry](https://npiregistry.cms.hhs.gov) first.** It is the free, authoritative CMS record of every provider — search by name or NPI and it returns the NPI itself, the **taxonomy code**, and the **exact name and practice address as registered**. Payers validate against this record, so copy those three from the registry rather than from memory; if the registry itself is out of date (an old address, a maiden name), the provider should correct it at NPPES before enrolling, or the mismatch follows them into every payer's system.
+</Tip>
+
+Mismatches are the main cause of rejected enrolments and claims: the name, NPI and Tax ID you enter must match what the payer's records hold, character for character.
+
 ## Set it up
 
 <Steps>
   <Step title="Fill in your insurance profile">
-    Open **Insurance Profile Settings** and complete your practice's filing details and at least one billing profile. Claims are submitted under this identity, so a wrong value here fails every claim, not one.
+    Open **Insurance Profile Settings** and complete the **Practice information** card — **Practice Name**, **NPI**, **Tax ID or SSN**, **Taxonomy** and **Billing Address**, choosing **Individual** or **Organization** to match how you are registered. Then set the **Default billing provider (Box 33)**: the **Billing provider name**, **NPI (Box 33a)** and **Taxonomy code (Box 33b)** printed in box 33 of every CMS-1500 claim. Claims are submitted under this identity, so a wrong value here fails every claim, not one.
   </Step>
   <Step title="Add your first payer">
     Go to **Payers**, select **Add Payer › Payer search**, and search by name, payer ID or alias. Select the payer and it is added to your practice — a "\{Payer\} added to your clinic" toast confirms it.
@@ -53,8 +74,11 @@ Enrolments cover the transaction types a payer supports — **claim status**, **
   <Step title="Check what that payer supports">
     Open the row menu and select **View Stedi Details**. This tells you which transactions the payer supports and whether enrolment is required for each — a payer marked "No enrollment required" for claim filing needs no further work.
   </Step>
-  <Step title="Enrol your providers">
-    Move to **Provider Enrollment** and create an enrolment for the provider and payer, choosing the transaction types you need. It starts as a **Draft**.
+  <Step title="Register the provider">
+    Move to **Provider Enrollment** and select **Add Provider**. The form arrives **prefilled from your Insurance Profile Settings** — name, NPI, Tax ID and address — so review each value rather than retyping it, then add the **contact email** and **phone**, which the profile does not carry. Payers use that contact to reach you about the enrolment.
+  </Step>
+  <Step title="Enrol the provider with each payer">
+    Create an enrolment for the provider and payer, choosing the transaction types you need. **Which types need enrolment is the payer's decision, not ours** — check **View Stedi Details** on the payer: each transaction is marked either "No enrollment required" (works immediately) or "Enrollment required". Remittance (ERA) almost always requires enrolment even where claims do not — without it, you can file but the payment reports never come back. A new enrolment starts as a **Draft**.
   </Step>
   <Step title="Submit it">
     Submit the draft. It moves to **Stedi Processing** and leaves your hands.
@@ -97,12 +121,18 @@ Open any client's chart and start recording insurance coverage. The payer you ad
   <Accordion title="An enrolment has been stuck on the same status for days">
     Statuses do not refresh on their own. Use the sync action on the enrolment to pull the current state. If it genuinely has not moved, **Action Required** is the status worth re-reading — it usually names a document only you can supply.
   </Accordion>
+  <Accordion title="The enrolment says something is missing, and names it">
+    That message is the fix, not the failure. Submissions are checked before they leave: a missing contact email or phone, a Tax ID that is not exactly nine digits, or an NPI that is not exactly ten are refused **with the field named**, instead of coming back from the clearinghouse as an unreadable rejection. Edit the provider's details, and the draft is kept for you to resubmit.
+  </Accordion>
+  <Accordion title="My requested effective date keeps being ignored">
+    Payers accept an effective date from **today up to six months out**. A date outside that window is dropped rather than rejected, and the enrolment takes effect from its submission date — the closest achievable version of your intent.
+  </Accordion>
   <Accordion title="Removing a payer only deactivated it">
     That is deliberate. A payer with claims against it is deactivated rather than deleted so the claim history stays readable and auditable. Only a payer with no claims is removed outright.
   </Accordion>
 </AccordionGroup>
 
-For building, submitting and chasing the claims themselves, see [Insurance claims](/practice/money/insurance-claims).
+This tab sets up the **practice's** side. Each **client's** coverage is recorded on their own record — by sending them the **Insurance Profile** intake to fill from their card, typing it in with **Add Coverage**, or letting **Discover** search the payer network for them — and verified with an eligibility check before the visit. That flow, and building, submitting and chasing the claims themselves, is covered in [Insurance claims](/practice/money/insurance-claims).
 
 <StillStuck />
 

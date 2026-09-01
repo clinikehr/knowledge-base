@@ -20,21 +20,97 @@ The chart is the one screen that holds everything recorded about a single person
 
 The header carries the name, a client-type badge and a status badge, date of birth and age, email and phone, with **Edit profile** beside it. Under that sits a row of actions — **Intakes**, **Upload**, **Message**, and a **⋯** menu whose **Change status** submenu moves the person between **Active**, **Inactive**, **Prospective** and **Archived**.
 
-Seven tabs run across the chart, opening on **Overview**:
+Nine tabs run across the chart, opening on **Overview**:
 
 | Tab | What is on it |
 | --- | --- |
 | **Overview** | **Balance**, **Invoices**, **Consults** and **Next Appt**; the check-in card; **Current Medications** and **Recent Diagnoses** |
 | **Billing** | Invoices and payments for this person |
-| **Measures** | Recorded measurements over time |
-| **History** | The visit and activity trail |
+| **Notes** | Every clinical note written for this person, and where you write a new one |
 | **Medications** | Prescriptions and e-prescribing — see [Prescribe and e-prescribe](/practice/clinical/prescriptions) |
+| **Vitals** | Observations recorded for this person, with a trend chart |
+| **Measures** | Recorded measurements over time |
 | **Labs** | Test results filed against this person |
+| **History** | The visit and activity trail |
 | **Files** | The health-records vault and shared forms |
 
 A right-hand sidebar stays with you across every tab, in four blocks: **Billing** (**Balance**, **Total Paid**, **Billing Type**, and an **Add Payment** button), **Upcoming** appointments, **Client Info** (**Gender**, **Blood Type**, **Genotype**, **Marital Status**, **Occupation**) and **Contacts**.
 
 On a chart with nothing on it yet, the figures read **0**, **Next Appt** reads **None**, the sidebar shows **No upcoming appointments** and **No contacts on file**, and any field nobody has filled shows an em dash — never a made-up value.
+
+## Write a note without leaving the chart
+
+**Notes** lists every clinical note filed against this person, grouped by the day
+it was written and newest first, with who wrote it, when it was last worked on,
+and whether it is a **Draft** or **Signed & locked**.
+
+Selecting a row opens that note in the **Notes** area — the same place the
+**Overview** tab's activity timeline takes you, so a note is always in one
+place whichever list you found it in.
+
+**New note** starts one on the chart itself. Choose a template from the selector
+at the top of the note — your clinic's own templates appear there under their
+own headings, marked **Custom** — and fill the sections below it. The note is
+saved against this client, so there is no client to choose. Two sub-tabs divide
+the work: **Documentation** for what was observed, and **Diagnosis** for what it
+was concluded to be.
+
+**Your work is saved as you write.** A few seconds after you stop typing the
+note is kept as a draft, and the line beside the buttons says which state it is
+in — **Saving…**, **Unsaved changes**, or **Saved** with the time. Nothing is
+saved for an empty note, and autosave only ever writes a draft.
+
+**Save draft** keeps it editable. **Sign & lock** signs it, and a signed note
+can no longer be edited — a locked note opens read-only and says so, and is
+never touched by autosave. Notes written here are the same notes the Notes area
+holds, so anything started on one opens on the other.
+
+### Export a note as a PDF
+
+**Export PDF** on a row in the list downloads that note. The same button sits
+above a note you have open, once it has been saved.
+
+<Note>
+  The PDF is built from the saved note, not from what is on your screen, so it
+  always carries the signature and credentials recorded against it. Exporting a
+  note you are still typing saves it as a draft first.
+</Note>
+
+Long lists are paged. **Notes**, **History** and **Files** each show 10 entries
+at a time with **Show … per page** under them, and the line beside it tells you
+how many there are in total.
+
+<Note>
+  If a note will not load, the tab says so and offers **Try again** rather than
+  showing an empty list. An empty list means this person has no notes; a message
+  means we could not read them.
+</Note>
+
+## Record vitals
+
+**Vitals** shows every set of observations recorded for this person — blood
+pressure, pulse, temperature, respiratory rate, oxygen saturation, weight,
+height, BMI and blood sugar — newest first, with a trend chart above the table.
+Choose which measurement to plot from the selector.
+
+**Record vitals** opens a panel to enter a set. **Leave anything you did not
+measure empty.** A blank is stored as not taken; it is never recorded as a zero,
+and the table shows an em dash for it. **BMI is calculated** from the height and
+weight you enter rather than typed, so it can never disagree with them.
+
+**Blood sugar is recorded in mmol/L**, decimals included — `7.8` is a normal
+random glucose. If you enter a value that can only be mg/dL (say `140`), the
+form refuses it and shows the conversion — divide by 18 — so the reading goes
+in once, in the right unit. Older readings recorded before the unit was
+standardised display with an explicit **mg/dL** label.
+
+Readings outside the normal range for the measurement are shown in red.
+
+<Note>
+  A gap in the trend line is a measurement nobody took. The line is deliberately
+  broken across it rather than joined, so a missing reading never looks like a
+  steady one.
+</Note>
 
 ## Sticky notes and status notes
 
@@ -138,4 +214,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck />
 
-{/* source of truth: components/clinic/clients-management/client-management-form.tsx, client-profile-sidebar.tsx, patient-notes-dock.tsx, sticky-note-sheet.tsx, update-note-sheet.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/clients-management/client-management-form.tsx, client-profile-sidebar.tsx, patient-notes-dock.tsx, sticky-note-sheet.tsx, update-note-sheet.tsx, notes/client-notes-tab.tsx, notes/client-note-editor.tsx, client-vitals-tab.tsx, lib/clinic-nav-registry.ts */}

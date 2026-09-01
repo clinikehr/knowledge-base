@@ -54,7 +54,25 @@ A brand-new practice sees **No unbilled appointments**, **No claims found** — 
 
 ## Record coverage and check eligibility
 
-On the client's record, add their cover — "Add the client's insurance coverage to enable eligibility checks and claims." Once it is saved, **Verify** runs a check and the coverage card shows an **Eligible** or **Ineligible** badge. **Batch verify** on the Insurance page runs the whole list at once and reports back in about thirty seconds.
+Coverage lives on the client's record: open the client, choose **Edit**, and go to the **Insurance** tab — the **Insurance Coverage** card ("Manage payer coverage and check eligibility"). There are three ways to get a client's coverage in, in order of how little typing they cost you:
+
+<Steps>
+  <Step title="Ask the patient — send the Insurance Profile intake">
+    From the client's record, open **Send intakes** and select **Insurance Profile** under **Questionnaires & intakes**. The patient fills in their carrier, member ID, group number and subscriber details from their own card — the document that actually has the right answers on it. When they submit:
+    - If their carrier matches a payer in your network, **the coverage record is created for you**.
+    - If it cannot be matched confidently, you get a review item, and opening the Insurance tab from it shows the coverage form **prefilled from their answers** — the payer picker is the one field left for you, because matching a carrier name to your payer list is exactly the judgement that needs a human.
+
+    Sending intakes needs the patient's email on file, and granting portal access alongside the send is offered (and needed — a patient who cannot sign in cannot open what you sent).
+  </Step>
+  <Step title="Type it — Add Coverage">
+    Select **Add Coverage** and fill the form yourself from the card in front of you: **Insurance Payer** (picked from your own payer network — add the payer in [Insurance settings](/practice/settings/insurance) first if it is not there), **Member ID** (required), **Group Number**, and the **Subscriber Details** when the patient is not the subscriber. Mark one coverage **Primary** when there are several.
+  </Step>
+  <Step title="Let the network find it — Discover">
+    When the patient does not know their coverage — no card, a confused answer, a minor whose parent holds the policy — select **Discover**. It searches across payers for active coverage in the patient's name ("Searching across payers… This may take up to 2 minutes") and adds what it finds. **No active coverage found for this patient** is also an answer: it means self-pay is the honest conversation. Discovery is a paid check, like eligibility.
+  </Step>
+</Steps>
+
+Once coverage is saved, **Verify** runs an eligibility check and the coverage card shows an **Eligible** or **Ineligible** badge. **Batch verify** on the Insurance page runs the whole list at once and reports back in about thirty seconds.
 
 Check before the appointment, not after: an **Ineligible** badge on the morning of the visit is a conversation about self-pay, and the same badge a fortnight later is unpaid work.
 
@@ -70,12 +88,14 @@ Check before the appointment, not after: an **Ineligible** badge on the morning 
   </Step>
   <Step title="Create them as drafts">
     Select **Create \{n\} claims**. The toast reads "\{n\} claims created as drafts". **Create claim** on a single row opens the prefilled claim form instead, so you can read it before it goes.
+
+    The form arrives filled from what you already recorded. **Rendering Provider (Box 31)** carries the NPI and taxonomy from your [Insurance Profile Settings](/practice/settings/insurance). **Diagnosis Codes (Box 21)** come from the visit the claim bills: codes a clinician chose in the note's own ICD picker land directly, and where only free-text exists the AI suggests ICD-10 codes from the clinical record — marked as suggestions, for you to review. **Service Lines (Box 24)** take their CPT/HCPCS codes and charges from the appointment's services, with the AI proposing codes for uncoded services **and modifiers** (95 for telehealth, 25, 59) for every line. Every field stays editable, and the code fields have a live ICD-10/CPT search — nothing goes to a payer without a person confirming it.
   </Step>
   <Step title="Submit from the Claims tab">
     Open a draft's **Actions** menu and choose **Submit to payer**, or tick several and use **Submit \{n\} to payers**. The confirmation says what it costs: "Each claim is sent to its payer and uses one claim credit."
   </Step>
   <Step title="Follow the status">
-    **Check status** refreshes a submitted claim. **Reopen for correction** turns a rejected or denied claim back into a draft — "Claim reopened as draft — correct it and resubmit".
+    **Check status** refreshes a submitted claim. **Reopen for correction** turns a rejected or denied claim back into a draft — "Claim reopened as draft — correct it and resubmit". Only drafts are editable: fix the codes, member ID or service lines, then submit again. A claim that must be undone after submission is **voided** in ClinikEHR (with a required reason, kept in the audit trail) — voiding here does not void it at the payer, so follow their replacement process too.
   </Step>
 </Steps>
 
@@ -83,7 +103,11 @@ Check before the appointment, not after: an **Ineligible** badge on the morning 
 
 Electronic remittances land on **Payments** by themselves. For anything that arrives another way, **Add insurance payment** opens **Record insurance payment** — "Manually post a payer payment (e.g. a mailed check or a portal EOB) against a claim." Choose the claim, enter the amount, pick the **Method** — **Check**, **EFT / ACH**, **Card** or **Other** — and add a reference.
 
+**A claim raised from an invoice settles that invoice by itself.** When the payer's electronic remittance arrives, the payment posts against the invoice the claim came from, and once the invoice is fully covered its status flips to **Paid** — the front desk never chases a patient for money insurance already sent. A partly paying remittance accumulates; the invoice stays open until covered.
+
 A claim showing **Paid** with nothing reconciled against it is money you have not received yet.
+
+The **Payments** tab lists every electronic remittance as it lands; if the list cannot load it says so rather than pretending nothing arrived. **Analytics** turns the claim history into the numbers a biller watches — total charged and paid, collection rate, denial rate, average turnaround (measured from submission to the payer's actual response, not to today), aging buckets and revenue by payer.
 
 <AuditNote action="Opening a claim" />
 

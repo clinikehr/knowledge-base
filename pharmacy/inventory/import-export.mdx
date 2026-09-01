@@ -47,8 +47,8 @@ That "to update" count is the word "import" hiding an update. Each row is matche
   <Step title="Open the importer">
     Select **Import** on the **Inventory** toolbar.
   </Step>
-  <Step title="Start from the template">
-    Select **Download sample CSV**; a toast confirms **"Sample template downloaded"**. Fill your products into that file rather than inventing column names — the headers are what the importer matches on.
+  <Step title="Start from the template — or your old system's export">
+    Select **Download sample CSV**; a toast confirms **"Sample template downloaded"**. Fill your products into that file — or upload the item list your previous POS produced as it is. Common vendor headers are recognised: **Item Description** becomes the product name, **Department Name** the category (departments also decide the item type — drugs become medications, personal care becomes cosmetics, everything else a supply), **Average Unit Cost** the unit cost, **Regular Price** the sell price, and **UPC** the barcode. When the importer reads a file this way, the preview shows **How we read your columns**, naming every guess it made and every column it did not import — check that panel before importing.
   </Step>
   <Step title="Upload the file">
     Select **Click to upload or drag and drop**. Only `.csv`, `.xlsx` and `.xls` are accepted, up to 5 MB.
@@ -137,6 +137,10 @@ See [Staff permissions](/platform/team/permissions).
 
   <Accordion title="'The file has no data rows below the header.'">
     A header row and nothing under it. Check you have not uploaded the empty template, and that products start on the row directly below the headers with no blank separator row.
+  </Accordion>
+
+  <Accordion title="My file has a quantity column, but no stock arrived">
+    Correct — the catalog import never writes stock, and the **How we read your columns** panel lists the quantity column as not imported. Stock is received, not declared: after importing the catalog, bring quantities in through **Receive stock** or a Stock Count, so every unit lands as a ledger entry that can be audited later.
   </Accordion>
 
   <Accordion title="'No valid rows to import'">

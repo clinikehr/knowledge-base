@@ -7,6 +7,206 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="September 1, 2026" tags={["Pharmacy","Desktop"]} description="Desktop v1.0.8">
+  ## Receipt barcodes print again — and can no longer run off the paper
+
+  Receipts printed from an older desktop app came out with no barcode at the bottom, so a return had to be found by typing the sale number instead of scanning the receipt.
+
+  - **Update the desktop app to v1.0.8** and the scannable barcode is back on every receipt. The desktop app does not update itself — install it from **Settings → Desktop app**.
+  - **The till now tells you** if the version you are on prints receipts without the barcode, instead of leaving you to discover it at a return.
+  - **Longer reference numbers no longer run off the roll.** Invoice, prescription and lab receipts with a long number were printing a barcode wider than the paper, which cut off the ends and made it unscannable — it now always fits.
+  - **Every receipt now carries a real, scannable barcode.** Receipts printed from a browser previously showed a decorative bar pattern that looked like a barcode but scanned as nothing.
+</Update>
+
+<Update label="September 1, 2026" tags={["Platform"]} description="AI agents">
+  ## Assistant replies appear as they are written
+
+  A visitor used to watch a blank typing indicator until the whole reply was ready. Now the answer arrives word by word, and when the assistant needs to look something up first — availability, your services, your booking policy — the page says so while it does.
+
+  - **The first thing on screen arrives in about three seconds**, instead of nothing until the reply was complete.
+  - **The finished reply is still what counts.** Anything the assistant says before looking something up is replaced by the real answer, so the page ends up showing exactly the reply recorded on the Runs page.
+  - **Your limits and credits are unchanged** — a reply that streams is still one message and the same cost.
+  - Works on the public assistant page and the website widget alike. See [Publishing a public assistant](/platform/ai/publishing-agents).
+</Update>
+
+<Update label="August 31, 2026" tags={["Platform"]} description="AI agents">
+  ## Your AI assistants answer in seconds, not a minute
+
+  A public assistant could take close to a minute to reply, and behind-the-scenes automations sat idle before starting their work.
+
+  - **Public chat replies are markedly faster.** The heavy lifting around each reply — safety checks, rate limits, credit checks — now runs all at once instead of one step at a time, and interactive chats use a faster response profile automatically.
+  - **Automations start immediately.** An assistant set to act when an appointment is booked, a claim is denied, a document is signed, or a text message arrives now begins within seconds of the trigger — previously it could wait up to a minute, and in some cases the background runner never picked the work up at all until something else jogged it.
+  - **One busy chat no longer holds up the queue.** A visitor's message used to briefly park other pending automations while it ran; each conversation now takes only its own turn.
+  - New assistants also default to a faster model at the same credit cost. See [Agent templates](/platform/ai/agent-templates).
+</Update>
+
+<Update label="August 31, 2026" tags={["Solo & Team","Billing"]} description="Insurance claims">
+  ## The claim form fills itself in — and a paid claim pays its invoice
+
+  Building a claim meant retyping what the record already knew: the provider's NPI arrived blank, diagnosis codes did not carry over from the visit, the code search returned nothing, and after the payer paid, the original invoice sat "pending" forever.
+
+  - **Rendering Provider (Box 31)** now carries the NPI and taxonomy from your Insurance Profile Settings.
+  - **Diagnosis Codes (Box 21)** come from the visit the claim bills — codes chosen in the note land directly, and the AI suggests ICD-10 codes from the clinical record where only free text exists, always as reviewable suggestions.
+  - **Service Lines (Box 24)** take CPT/HCPCS codes and charges from the appointment's services, with **AI-suggested modifiers** (95, 25, 59) for every line.
+  - **The ICD-10/CPT search works** — same fast, ranked search as everywhere else in the product.
+  - **A claim raised from an invoice settles it when the payer pays** — the electronic remittance posts against the invoice and flips it to Paid once covered.
+  - Editing a reopened claim can no longer duplicate its service lines, and the claim details panel matches the product's other panels. See [Insurance claims](/practice/money/insurance-claims).
+</Update>
+
+<Update label="August 31, 2026" tags={["Platform","Billing"]} description="Plans & credits">
+  ## Checks your plan includes no longer ask for credits
+
+  A clinic whose plan includes unlimited eligibility checks could still be told to top up credits before running one.
+
+  - **Plan entitlements are read reliably now.** The subscription lookup behind every metered action was fragile in two ways — a clinic with an old, replaced subscription record could be billed against the plan it no longer has, and certain account histories made the check fail outright. Both are fixed, on the server and in the app.
+  - **What each plan includes, and what each action costs in credits,** is now written down in one place — see [Plans overview](/platform/plans/overview).
+</Update>
+
+<Update label="August 31, 2026" tags={["Solo & Team"]} description="e-Prescribing">
+  ## Prescriptions carry the address on file — and Sync actually syncs
+
+  A patient's corrected address could fail to reach the prescription: the details sent to the e-prescribing network were only ever transmitted the first time a patient was linked, so pressing **Sync** afterwards reported success while sending nothing — and a patient first linked before their address was recorded had a placeholder address printed on the Rx.
+
+  - **Sync now sends the patient's current details every time.** Fix the profile, press Sync once, and the prescription reflects it.
+  - **A missing address, date of birth or phone now blocks the sync with the exact fields named**, instead of a placeholder being invented onto a legal prescription or an unreadable validation error coming back.
+</Update>
+
+<Update label="August 31, 2026" tags={["Solo & Team","Hospital"]} description="Interface polish">
+  ## Small fixes you will notice
+
+  - **The vitals trend chart follows your theme** — dark mode no longer gets a white tooltip and invisible axis labels on the client record's Vitals tab.
+  - **The service form matches the product's other panels** — same floating layout, safe-area padding on phones, and buttons that never scroll out of reach.
+</Update>
+
+<Update label="August 31, 2026" tags={["Solo & Team","Billing"]} description="Insurance enrolment">
+  ## Provider enrolments submit properly, and the form fills itself in
+
+  Creating a provider enrolment could fail no matter how complete the provider's contact details were, with an error that pointed at the wrong thing — and the Provider Enrollment tab started empty even when the Insurance Profile next to it already held the same details.
+
+  - **Enrolments for newly added providers now go through.** The provider is registered with the clearinghouse automatically as part of submission — the step that silently failed before is handled for you.
+  - **Add Provider prefills from your Insurance Profile Settings** — name, NPI, Tax ID and address carry over for you to review; you add only the contact email and phone. See [Insurance settings](/practice/settings/insurance).
+  - **Problems are named before submission.** A missing contact field, a Tax ID that is not nine digits, or an NPI that is not ten is refused with the exact field named — instead of a clearinghouse rejection that blamed your contact details.
+  - The guide now includes **exactly what to gather from a provider** before you can bill insurance, and which transaction types need enrolment per payer.
+</Update>
+
+<Update label="August 31, 2026" tags={["Hospital","Solo & Team"]} description="All editions">
+  ## Blood sugar speaks one unit, and vitals can be recorded from the chart
+
+  Entering a normal glucose like **7.8** into a vitals form could fail with "invalid values" — and different screens labelled the same reading in different units, one saying mg/dL where another said mmol/L.
+
+  - **Blood sugar is now mmol/L everywhere it is entered** — the triage form, the client record's vitals panel, and the ward's vitals sheets — and decimals are accepted, as a glucose meter actually reads. If you type a value that can only be mg/dL, the form shows the conversion (divide by 18) instead of a bare error, so the reading goes in once, in the right unit.
+  - **Older readings are shown exactly as they were taken.** A value recorded before the unit was standardised displays with an explicit **mg/dL** label rather than being silently relabelled — see [Triage history](/hospital/outpatient/triage-history).
+  - **Record vitals from the consultation chart.** The chart's **Vitals** tab now has a **Record vitals** button, writing the same record the client chart shows — see [The consultation chart](/hospital/outpatient/consultation).
+  - **Admitting from the chart no longer fails on a full sub-ward.** The bed picker marks a sub-ward with nothing free as **Full** and says so when you open it, instead of breaking — see [Admissions](/hospital/inpatient/admissions).
+</Update>
+
+<Update label="August 31, 2026" tags={["Platform"]} description="All editions">
+  ## Check whether ClinikEHR is up, any time, at status.clinikehr.com
+
+  When something feels slow or a page will not load, the first question is always "is it just me?" — and until now the only way to answer it was to contact support. The ClinikEHR status page answers it directly.
+
+  - **[status.clinikehr.com](https://status.clinikehr.com)** shows the live health of the clinical app, sign-in, telehealth, the developer API, the website and the Help Center — checked continuously from outside our own systems, so the page stays up even when we are not.
+  - During an incident or planned maintenance, updates are posted there in plain language as we work — check the status page before writing in, and if the page says all is well but something is wrong for you, [contact support](/platform/help/contact-support) with what you are seeing.
+</Update>
+
+<Update label="August 29, 2026" tags={["Platform","Billing"]} description="All editions">
+  ## Upgrading mid-month charges the difference, not the full price
+
+  A workspace upgrading halfway through a paid month was charged the whole new monthly price instead of the difference, and ended up with two subscriptions running at once — the new one, and the original still billing quietly in the background.
+
+  - **An upgrade is now always a change to the subscription you already have.** The summary shows the new price, the credit for the unused part of the period you have already paid for, and the exact amount **Charged today** — and that is what is taken. Your billing date resets to the day you switch.
+  - **A second subscription can no longer be started for a workspace that is already paying.** Reaching the checkout page for one is refused outright rather than charged, so nobody ends up paying twice for the same workspace.
+  - **A workspace we cannot switch automatically is now told so.** A small number of older workspaces are billed through an arrangement the plan switcher cannot adjust. Instead of quietly sending them to checkout at full price, the change is refused with a note to contact us — we move you across without a double charge.
+
+  If you were charged twice for one workspace, [contact support](/platform/help/contact-support) with the date of the upgrade and we will put it right.
+</Update>
+
+<Update label="August 29, 2026" tags={["Pharmacy","Hospital"]} description="All editions with Inventory">
+  ## Old stock sells first, even when its expiry was never recorded
+
+  A pharmacy reported the till drawing from newly delivered stock while older stock sat until it expired. Stock has always been drawn earliest-expiry-first — the gap was lots with **no expiry date recorded**, which were drawn last. A catalogue migrated from another system is almost entirely undated, so every new dated delivery jumped the whole legacy shelf.
+
+  - **A lot with no expiry date is now drawn by its age** — oldest received first. Fully dated catalogues behave exactly as before; legacy stock drains instead of sitting. The rule applies to every draw: POS sales, prescription dispensing, lab, radiology and service consumption, transfers and reservations. There is deliberately no setting for the order — earliest-expiry-first is not negotiable.
+  - **Multi-room pharmacies stop chasing the newest delivery.** When stock sits in more than one location, the draw now prefers the location holding the soonest-expiring stock, not the fullest one.
+  - **Pin the till to a selling location** (Settings → Inventory → **Where the till sells from**). A pharmacy with a separate back store can pin the POS to the front shop: the till then shows and draws that location's stock only, and a shortfall there is recorded and reconciled instead of quietly pulling from another room. Sales made offline follow the same rules when they sync — they replay through the same sale path.
+</Update>
+
+<Update label="August 29, 2026" tags={["Pharmacy"]} description="Pharmacy edition">
+  ## A scanner count that matched nothing now tells you why
+
+  A pharmacy counting with a CipherLab terminal saw every scan arrive and none of it match — the count sat in limbo. Two causes, both fixed:
+
+  - **The reconcile sheet now diagnoses a barcode-less catalogue.** When almost none of your products carry a barcode, scans have nothing to match, and a list of a thousand unmatched codes explains nothing. The sheet now says it outright — how many of your products have a barcode on file — and points at the item-list import that fills them. Your scans are kept while you do it.
+  - **A slow-configured terminal no longer garbles its upload.** The terminal paces its transmission with a configurable delay, and at slow settings the transfer could be cut mid-record, leaving truncated barcodes that matched nothing. The transfer now waits out the terminal's full pacing range before reading each record.
+</Update>
+
+<Update label="August 28, 2026" tags={["Pharmacy"]} description="Pharmacy and Diagnostics editions">
+  ## Import the item list your old system gave you
+
+  The inventory importer accepted only its own template's column names, so a pharmacy migrating with a vendor export — "Item Description", "Average Unit Cost", "Department Name" — was told to re-key thousands of rows. It now reads those files directly.
+
+  - **Common vendor headers are recognised**: the description becomes the product name, the department becomes the category and decides the item type (drugs → medication, personal care → cosmetic, everything else → supply), the average unit cost and regular price become your cost and sell price, and the UPC becomes the scannable barcode.
+  - **The preview shows every guess.** A new **How we read your columns** panel names which of your columns fed which field — and which were not imported at all. A quantity column is never imported here: stock is received through **Receive stock** or a Stock Count, so it lands as an auditable ledger entry.
+  - **A re-upload updates rather than duplicates.** Products from a recognised vendor file are keyed the same way the POS-report import keys them, so a pharmacy that onboarded earlier and uploads a newer list updates its existing items — filling in barcodes, refreshing prices — instead of importing the whole shelf a second time.
+  - **The opening-stock import reads the same files** for quantities, matching on the same keys.
+</Update>
+
+<Update label="August 28, 2026" tags={["Platform"]} description="All editions">
+  ## Every list in the product pages the same way
+
+  The footer under a list — the **per page** selector, the page numbers and the "showing 1 to 10 of 47" line — had been re-typed nineteen times, once per module, and the copies had drifted apart. Every list now uses the same one, so what you learn on one screen is true on the next.
+
+  - **An empty list no longer offers you a next page.** Thirteen of those copies left the arrows live with nothing to page through, and showed "1 / 0" on a phone.
+  - **Counts are real again.** Consultation, Lab, Pharmacy, Radiology and Triage **History**, and the **Triage** list, showed only "Page 3 of 5" — they had lost their totals after an earlier fix removed a count that was being estimated rather than measured. They show the true "showing 21 to 30 of 47" once more. **Recent invoices** was still estimating; it now counts.
+  - **The page-size selector on Pre-authorizations works.** It was drawn permanently greyed out.
+  - **The choices are the same everywhere** — 10, 20, 30, 40 or 50 per page. Some screens previously offered 5, or 100; those two sizes are gone in favour of one answer across the product.
+</Update>
+
+<Update label="August 28, 2026" tags={["Solo & Team","Hospital","Billing"]} description="All editions">
+  ## Long lists are paged, and a payment link can go to whoever is paying
+
+  - **Notes, History and Files on a client's chart are paged.** Each showed everything ever recorded in one pass — every note, every condition and allergy, every file. They now show 10 at a time with a **per page** control and a count, using the same pager as every other list in the product. The ward chart's **History** and **Media** tabs get this too, since they are the same screens.
+  - **Earlier results are paged** on both the consultation and ward charts. That section is the patient's whole lab and imaging history, and nothing capped it.
+  - **A page that no longer exists sends you back to the first one**, on every one of these lists. Landing past the end showed an empty list, which on a history or a results table reads as "this patient has none".
+  - **Send a payment link to whoever is paying.** The link offered one prefilled box, so sending it to an employer meant overtyping the client's address and there was no way to send it to both. It now offers the same three choices as sending an invoice — the client's email on file, a different email, or both — and takes up to three other addresses. A client with no email on file is told so, instead of leaving you a blank box and a send that fails.
+</Update>
+
+<Update label="August 28, 2026" tags={["Solo & Team","Hospital","Pharmacy"]} description="All editions">
+  ## Notes written on the client chart now save what you wrote
+
+  - **A note saved from the client chart kept nothing you typed.** Saving reported success and stored an empty note, and signing one signed the empty note. Everything written on that tab went the same way. This is fixed, and the note is now stored exactly as the Notes area stores it — so a note written on the chart opens with all of itself anywhere you open it.
+  - **The Diagnosis half is saved with the note**, rather than being dropped on the way out and read back blank.
+  - **Your work is saved as you write.** A few seconds after you stop typing, the note is kept as a draft. The line beside the buttons says **Saving…**, **Unsaved changes**, or **Saved** with the time, so you can see it happen. An empty note is never saved, and a signed note is never touched.
+
+  ## Sheets use the screen you have
+
+  Wide forms opened in a narrow column with about a third of a large monitor in use, and on a phone the title scrolled away with the fields while the save button sat below the fold. **Create client**, **Add a history entry**, **Secure File Upload**, the patient **CSV import** and **export**, and Inventory's **Add item**, **Reports**, **Receive stock**, **Import** and **Export** now open as a floating panel on a desktop and a proper bottom sheet on a phone — with the title fixed at the top, the buttons fixed at the bottom above the home indicator, and only the form scrolling between them.
+</Update>
+
+<Update label="August 28, 2026" tags={["Solo & Team","Hospital"]} description="All editions">
+  ## Your own note templates are back in the picker, and a note exports as a PDF
+
+  - **Your clinic's custom templates appear when you write a note.** The picker on the client chart offered only the standard set — a clinic that had built its own templates saw none of them, with nothing to say they had been left out. They are listed under their own headings now, marked **Custom**, and the one in use is named above the note.
+  - **The template selector sits with the note**, full width at the top of the note's own card and directly above the fields it decides, rather than tucked into the toolbar.
+  - **Export PDF.** Download a note from its row in the list, or from above the note while you have it open. The PDF is built from the saved note, so it always carries the signature and credentials recorded against it — a note you are still typing is saved as a draft first.
+  - **A note opens in the same place from either list.** Selecting a note on the **Notes** tab used to open it on the chart while the **Overview** timeline opened it in the Notes area. Both now go to the Notes area.
+</Update>
+
+<Update label="August 28, 2026" tags={["Solo & Team","Hospital"]} description="All editions">
+  ## Write a note and record vitals without leaving the client chart
+
+  Two things you did for a client meant leaving their chart: notes were written in the Notes area, where you first had to find the client again, and there was nowhere at all to record a set of observations for someone who is not on a ward. Both now sit on the chart itself.
+
+  - **Notes** lists every note filed against this person, newest first, grouped by the day it was written, with who wrote it and whether it is a **Draft** or **Signed & locked**. Selecting a row opens it; **New note** starts one with the client already chosen.
+  - **The editor is the full one**, not a cut-down version — the same templates, the same **Documentation** and **Diagnosis** halves, the same rich text with snippets and AI assist. A note started here opens in the Notes area and the other way round.
+  - **A saved note opens with its diagnosis still on it.** Reopening a note showed an empty **Diagnosis** tab for notes that recorded one, and saving from there wrote the blank back over it.
+  - **A signed note opens read-only and says so**, and AI assist is not offered on one — a locked note is locked.
+  - **Vitals** shows every set of observations for this person with a trend chart above the table, out-of-range readings raised in red, and the same view of what counts as normal that the ward uses.
+  - **Leave anything you did not measure empty.** A blank is stored as not taken and shows as an em dash; it is never recorded as a zero. **BMI is calculated** from the height and weight you enter, so it cannot disagree with them, and a gap in the trend line stays broken rather than joined across a reading nobody took.
+  - **The Vitals tab loaded to an error** for every client, over vitals that were there all along.
+  - **Both Record observations sheets use the width of a large screen** and keep their title and buttons in place while the fields scroll, instead of a narrow column with the save button below the fold on a phone.
+</Update>
+
 <Update label="August 27, 2026" tags={["Pharmacy","Billing"]} description="Pharmacy edition">
   ## Part-payment at the till now actually creates the debt
 
