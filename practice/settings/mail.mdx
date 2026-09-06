@@ -1,0 +1,106 @@
+---
+title: "Mail"
+description: "Create mailboxes, connect a domain you own or take a free @clinikmail.com address, and issue app passwords so a mail app can open a practice mailbox."
+icon: "/images/icons/mail.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owner or manager" note="Mail ships on every plan. Plans differ only in storage and in how many mailboxes and domains you can have." />
+
+This tab is where ClinikMail is set up: the domain your addresses live on, the mailboxes your team reads, and the app passwords that let a phone or desktop mail app open one. Reading and sending happen in [Mail](/practice/work/mail); this tab decides what exists for it to show.
+
+<Path steps={['Sidebar', 'Settings', 'Communications & AI', 'Mail']} />
+
+<TaskHeader
+  before="Nothing — a free address works with no domain at all. A domain you own needs access to its DNS records."
+  time="Two minutes for a free address; ten to twenty for a domain you own, plus DNS propagation"
+  after="A mailbox your team can open in Mail, and optionally in their own mail app"
+/>
+
+## What this tab controls
+
+| Card | Control | What it does |
+| --- | --- | --- |
+| **Storage** | *(figures only)* | Your plan's mail storage — "\{Plan\} plan · \{used\} of \{limit\} used (\{n\}%)". A warning appears from 80%; at 100% **sending pauses and receiving continues**. See [Mail storage](/practice/work/mail-storage). |
+| **Domains** | **Get my free address** | Gives the practice a shared **@clinikmail.com** address. Free, does not use a domain slot, and can sit beside a domain you own. If free addresses are not available yet, the card says so and points you to adding your own domain instead. |
+| | **Add a domain you own** → **Add domain** | Registers a domain such as `mail.yourclinic.com`. It arrives **Pending** with four checks — **MX**, **SPF**, **DKIM**, **DMARC** — each **Pending**, **Verified** or **Failed**. |
+| | **Verify now** | Re-checks the DNS records. MX alone enables receiving; SPF, DKIM and DMARC together enable sending. |
+| | **Remove** | Retires the domain. Its mailboxes stop sending and receiving; stored mail is kept for seven years. |
+| **Mailboxes** | **Create a mailbox** | **Mailbox name**, **Domain**, **Display name (optional)**, **Type** (**Personal — one staff member** or **Shared — a team inbox**) and, for a personal one, **Owner**. |
+| | **Mail-app access (IMAP/SMTP)** | Per mailbox. Lets a mail app open it with an app password. Greyed out while the two-factor exception below is not accepted. |
+| | **App passwords** | Issue and revoke the passwords a mail app signs in with. Each is shown once. |
+| | **Who can open this mailbox** | Shared mailboxes only. **Add to mailbox** and **Remove** decide who reads it. |
+| | **Suspend** | Stops the mailbox sending and receiving. There is no delete — mail is retained for seven years — and a suspended mailbox can be reactivated. |
+| **Mail apps and two-factor** | **Allow mail apps to bypass two-factor** | Only shown when the practice requires two-factor sign-in. **Owner only**, and only from a session that has completed two-factor. Without it, no mailbox can have mail-app access turned on. |
+
+## Set it up
+
+<Steps>
+  <Step title="Choose where your addresses will live">
+    Select **Get my free address** for an **@clinikmail.com** address, or enter a domain you own under **Add a domain you own** and select **Add domain**. You can do both — the same name can exist on each.
+  </Step>
+  <Step title="If you added your own domain, add its DNS records and verify">
+    The domain shows **Not checked yet — add the DNS records at your registrar, then press Verify.** Add the MX, SPF, DKIM and DMARC records at your registrar, wait for them to propagate, then select **Verify now**. The status badge moves from **Pending** to **Receiving only** once MX passes, and to **Sending enabled** once all four pass.
+  </Step>
+  <Step title="Create a mailbox">
+    Under **Create a mailbox**, enter the **Mailbox name** — the part before the @ — choose the **Domain**, and pick a **Type**. A personal mailbox needs an **Owner**; a shared one is opened by the people you add under **Who can open this mailbox**. Select **Create mailbox**. The toast reads "Mailbox created".
+
+    On the free domain the name is checked as you type, because every practice shares that domain and a name can only be taken once.
+  </Step>
+  <Step title="Let a mail app open it (optional)">
+    Turn on **Mail-app access (IMAP/SMTP)** for the mailbox, select **App passwords**, enter a **Device name** and select **Issue app password**. The **App password created** dialog shows the password **once** and the settings the app needs — the username is the full address, the server is `mail.clinikmail.com`, incoming is port 993 and outgoing is port 465, both SSL/TLS. On an iPhone or iPad, open **Set up on iPhone or iPad** on the device itself and it fills every setting in.
+  </Step>
+  <Step title="If the practice requires two-factor sign-in, accept the exception first">
+    The **Mail apps and two-factor** card explains what you are accepting: a mail app signs in with an app password alone, so anyone holding one reads that mailbox without the second factor. Turn on **Allow mail apps to bypass two-factor** and confirm with **Accept the exception**. Until an owner does this, the mail-app switch on every mailbox stays greyed out.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **Mail** (in the sidebar) shows the new mailbox to its owner or members immediately, and stops saying the practice has no mailbox.
+- **A verified domain** starts receiving as soon as MX passes and sending once all four checks pass. Mail sent to an address on a **Pending** domain is not delivered.
+- **Removing a domain** or **suspending a mailbox** stops delivery at once, in both directions. Nothing already stored is deleted — it stays for seven years and is still visible in Mail.
+- **Withdrawing the two-factor exception** turns off mail-app access for every mailbox at the practice at the same moment, and every app password stops working. The confirmation names how many mailboxes that is.
+- **Revoking an app password** stops that one device immediately; other devices keep working.
+- **What is not affected:** campaigns in [Marketing](/practice/work/marketing) send from their own sending identity, set on the **Marketing** tab — a mailbox here does not change what a campaign sends as. Appointment reminders and notifications also do not send from these mailboxes.
+
+## Check it worked
+
+Open **Mail** in the sidebar. The mailbox is listed, and sending yourself a message from another account lands in it within a minute or two. For a mail app, the account syncs without a certificate warning and the message appears there too.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't see this tab">
+    Only owners and managers can configure mail; anyone else sees "Only clinic owners and managers can configure mail." The tab is also absent on the Pharmacy and Diagnostics editions.
+  </Accordion>
+  <Accordion title="Free address on @clinikmail.com says free addresses aren't available yet">
+    The shared domain is not yet switched on for your region. A domain you own works today — add it under **Add a domain you own**.
+  </Accordion>
+  <Accordion title="My domain stays Pending after Verify now">
+    One or more checks show **Failed** or **Pending**. Hover a chip to see which. DNS changes commonly take up to an hour to propagate; confirm the records at your registrar match exactly, then select **Verify now** again. **Receiving only** with SPF, DKIM or DMARC still failing means you can receive but not yet send.
+  </Accordion>
+  <Accordion title="Mail-app access is greyed out on every mailbox">
+    The practice requires two-factor sign-in and the exception has not been accepted. Only the owner can accept it, under **Mail apps and two-factor**.
+  </Accordion>
+  <Accordion title="The two-factor switch says only the clinic owner can accept or withdraw this">
+    You are a manager. Ask the owner to change it — the switch is read-only for everyone else, and the reason is written beneath it rather than after a refused click.
+  </Accordion>
+  <Accordion title="The two-factor switch says to sign in with my second factor first">
+    You are the owner, but this session has not completed two-factor. Sign out, sign in again completing the second step, and return here.
+  </Accordion>
+  <Accordion title="A shared mailbox says No one can open this mailbox">
+    It has no members. Mail sent to it is still received and kept, but nobody sees it until you add someone under **Who can open this mailbox**.
+  </Accordion>
+  <Accordion title="Add domain or Create mailbox is greyed out">
+    You have reached your plan's limit — the note beneath the control names it. Free: 3 mailboxes and 1 domain of your own. Starter: 10 and 2. Essential: 25 and 3. Team and Enterprise: 50 and 10. The free **@clinikmail.com** address never counts toward the domain limit. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/mail-settings.tsx, lib/mail/plan-limits.ts, lib/mail/autoconfig.ts */}

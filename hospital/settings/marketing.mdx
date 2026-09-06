@@ -1,0 +1,105 @@
+---
+title: "Marketing"
+description: "Set the address your campaigns send from, see how much of this month's sending allowance is used, and read the consent rules before you send."
+icon: "/images/icons/megaphone.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner or manager" note="Marketing ships on every plan. Plans differ in monthly sends, active automations, saved templates and whether A/B testing is included." />
+
+Campaigns send from an address you choose, called a **sending identity**. This tab is where you create it, where you can see how much of the month's sending allowance you have used, and where the three consent rules a campaign can run under are spelled out. Writing and sending campaigns happens in [Marketing](/hospital/overview/marketing).
+
+<Path steps={['Sidebar', 'Settings', 'Communications & AI', 'Marketing']} />
+
+<TaskHeader
+  before="A mail domain your hospital owns, verified under Settings → Mail"
+  time="Two minutes"
+  after="A sending identity your campaigns can send from"
+/>
+
+## What this tab controls
+
+| Card | Control | What it does |
+| --- | --- | --- |
+| **Sending identity** | *(the list)* | Each identity shows its display name, its address and a badge — **Verified**, **Pending** or **Failed** — that follows the domain it sits on. |
+| | **Use a ClinikMail address you already have** → **Use this address** | Turns an existing mailbox on a domain you own into a sending identity in one step, keeping the name recipients already know. A mailbox that cannot be used shows **Not available for campaigns** and says why beneath its address. |
+| | **Create a sending identity** | **From address** (the part before the @, such as `news`), **Domain** (only domains you own that have finished verifying are offered) and **Display name** (what recipients see). **Create sending identity** confirms with "Sending identity created". |
+| | **Connect a domain you own** | Shown instead of the form when no eligible domain exists. Takes you to [Mail settings](/hospital/settings/mail) to add and verify one. |
+| | **Edit** | Change the **From address** or **Display name** inline, then **Save** or **Cancel**. Confirms with "Sending identity updated". |
+| | *(remove)* | The bin icon opens **Remove sending identity**. Refused while any campaign still uses it. |
+| **Quota** | *(figures only)* | **Sends this month**, **Active journeys** and **Saved templates**, each as used-of-allowance; **A/B testing** as **Available** or **Not on this plan**; and the billing period the figures cover. |
+| **Consent policy** | *(read-only)* | The three audience classes a campaign can be sent under, and what each requires. Nothing here is a setting — the class is chosen on each campaign. |
+
+## Set it up
+
+<Steps>
+  <Step title="Reuse an address you already have">
+    Under **Use a ClinikMail address you already have**, select **Use this address** beside a mailbox on a domain your hospital owns. The identity appears in the list above, **Verified**, with the mailbox's own display name.
+  </Step>
+  <Step title="Or create a new one">
+    Under **Create a sending identity**, enter a **From address**, choose the **Domain**, enter the **Display name** recipients will see, and select **Create sending identity**.
+  </Step>
+  <Step title="If the form is not there, connect a domain first">
+    Seeing **Connect a domain you own** with a sentence explaining why means no domain is eligible yet. Select it, add and verify a domain under [Mail settings](/hospital/settings/mail), then return here. The free **@clinikmail.com** address never qualifies — it is shared with other hospitals, so one hospital's bulk mail could affect whether everyone else's appointment reminders arrive.
+  </Step>
+  <Step title="Read the consent policy before your first campaign">
+    The **Consent policy** card names the three audience classes. You choose one when you create a campaign, and it cannot be changed after that campaign sends — it is part of the compliance record.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **The campaign composer offers the identity as the address to send from.** A campaign will not send without one, so this is the first thing to set up.
+- **The badge follows the domain.** If the domain later stops being verified, the identity shows **Pending** or **Failed** and campaigns using it wait until the domain verifies again. Nothing needs re-saving — it returns on its own.
+- **Removing an identity is refused while campaigns use it.** The message names the count: "This identity is used by 3 campaigns. Remove it from those campaigns first." Change those campaigns' sending address, then remove it.
+- **The quota figures move as campaigns send.** Unused sends roll into next month, up to your plan's own monthly allowance, and no single campaign can be larger than that allowance.
+- **What is not affected:** the mailboxes and free address under [Mail settings](/hospital/settings/mail) keep working for one-to-one mail exactly as before; appointment reminders and notifications do not send from a sending identity; and nothing on this tab changes which audience class a campaign uses — that is chosen on the campaign.
+
+## What each plan includes
+
+| | Free | Starter | Essential | Team and Enterprise |
+| --- | --- | --- | --- | --- |
+| Sends per month | 500 | 3,000 | 12,000 | 60,000 |
+| Active journeys | 1 | 3 | 10 | Unlimited |
+| Saved templates | 2 | 5 | 15 | Unlimited |
+| A/B testing | — | — | Available | Available |
+
+Contacts are never limited or charged for. The starter templates supplied with the product never count against **Saved templates** — only the ones you save yourself do.
+
+## Check it worked
+
+Open **Marketing** in the sidebar and start a new campaign. The sending identity is offered as the address it sends from, and a test send arrives showing the display name you entered.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't see this tab">
+    Only owners and managers can configure marketing; anyone else sees "Only clinic owners and managers can configure marketing." The tab is also absent on the Pharmacy and Diagnostics editions.
+  </Accordion>
+  <Accordion title="My mailbox shows Not available for campaigns">
+    The sentence beneath the address says why, and there are only two: "Free ClinikMail addresses are shared with other practices, so campaigns cannot be sent from them. Connect a domain your clinic owns in Mail settings to send campaigns as yourself." — or "This domain has not finished DNS verification yet. Finish verifying it in Mail settings." Both point at [Mail settings](/hospital/settings/mail).
+  </Accordion>
+  <Accordion title="I see Connect a domain you own instead of the create form">
+    No domain your hospital owns has finished verifying. Add one, or finish verifying the one you have, under [Mail settings](/hospital/settings/mail), then come back — the form appears as soon as a domain qualifies.
+  </Accordion>
+  <Accordion title="Removing an identity says it is used by campaigns">
+    A scheduled or draft campaign still sends from it. Open those campaigns, choose another sending identity, then remove this one.
+  </Accordion>
+  <Accordion title="Quota says it could not be loaded">
+    The figures did not arrive this time; the identities and consent policy are unaffected. Reload the tab. If it persists, contact support.
+  </Accordion>
+  <Accordion title="A/B testing says Not on this plan">
+    Subject-line testing is included from Essential upwards. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="Sends this month is at the allowance">
+    Campaigns wait until the next billing period, when unused sends from this one roll over. To send now, [change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/marketing-settings.tsx, lib/marketing/plan-limits.ts, db/actions/marketing.ts */}
