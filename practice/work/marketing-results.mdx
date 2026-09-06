@@ -1,0 +1,170 @@
+---
+title: Campaign results
+description: "Read the funnel on the Analytics tab, why opens and clicks are filtered, and what the booked-appointments figure does and does not prove."
+icon: /images/icons/chart-column.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted marketing access" note="Subject-line tests are available on the Essential and Team plans." />
+
+Every campaign you send reports what happened to it: how many people received it, how many opened and clicked, who was not sent it and why, and how many appointments followed. This page explains what each of those numbers counts, and — for the ones that are easy to over-read — what it does not.
+
+<Path steps={['Sidebar', 'Marketing', 'Analytics']} />
+
+## Where the results are
+
+Two places, showing the same data at different sizes:
+
+- **The Analytics tab** of [Marketing](/practice/work/marketing) — **Delivered**, **Opens (filtered)**, **Clicks (filtered)** and **Booked or converted** totalled across every campaign that has results, with a **Campaign report** picker beneath them.
+- **A single campaign's report** — the full funnel, who did not receive it, the links people clicked, and attribution for that campaign alone.
+
+Before your first campaign has sent, the tab says **No campaigns to report on yet** rather than showing four cards of dashes. Nothing is counted before a campaign starts sending.
+
+## The funnel
+
+A campaign report leads with four stages, each shown as a share of the one above it.
+
+| Stage | What it counts |
+| --- | --- |
+| **Sent** | Emails that left us |
+| **Delivered** | Emails the recipient's mail server accepted |
+| **Opened** | Deliveries a person appears to have opened |
+| **Clicked** | Deliveries where a person selected a link |
+
+Two figures sit outside the funnel and matter as much as the ones in it:
+
+- **Who did not receive this** — everyone in the segment who was refused, each shown as **Not sent** with the reason: **Unsubscribed**, **Marked do-not-contact**, **No email address on file**, **Already had the maximum marketing emails this week**, **Previously bounced or complained at your clinic**, and so on. If everybody was eligible, it says **Everyone in the segment was eligible** — and it only says that when the breakdown could actually be worked out.
+- **Unsubscribes** — how many people opted out of this campaign, and what share of deliveries that is.
+
+## Opens and clicks are filtered
+
+The headline **Opens (filtered)** and **Clicks (filtered)** figures exclude activity no person caused.
+
+- **Apple Mail and Gmail load images automatically**, for their users' privacy. That registers as an open on mail nobody read.
+- **Corporate security software follows every link in every email** before it lets the recipient near it. That registers as a click nobody made.
+
+Counting those as engagement is the most normalised exaggeration in email marketing, and it is the number a practice would use to decide what to send next. So the filtered figure is the headline.
+
+The unfiltered totals are one switch away: turn on **Show raw numbers** at the top of the report. The labels change to **Opens (raw)** and **Clicks (raw)** so the two can never be mistaken for each other, and a note above them says plainly that raw figures are always higher than reality and should not be used to decide anything.
+
+### A rate over nothing is not zero
+
+Where a rate cannot be worked out, the report shows **—**, never 0%.
+
+A campaign that has not been delivered to anyone yet does not have a 0% open rate — it has no open rate. Printing 0% would be a statement about the campaign, and a false one. The same rule applies to counts: **—** means not known, **0** means genuinely none.
+
+## Booked appointments
+
+The **Booked or converted** figure is the one most worth reading carefully, because it is the one most likely to be over-read.
+
+**What it counts:** appointments booked by a contact **who clicked a link in that campaign**, in the **30 days after that click**.
+
+Four things follow from that, and all four matter:
+
+- **It updates overnight, not instantly.** A booking taken this afternoon appears against the campaign tomorrow. Booking an appointment is a clinical action, and it is not made to wait on a marketing calculation.
+- **It only counts people whose contact record is linked to a patient record.** If somebody clicks your email and then phones reception, and nobody links that contact to the patient it belongs to, the appointment is not counted. The link has to be recorded — nothing is matched by name or by email address, because guessing at identity in a health record attributes one person's appointment to another person's contact.
+- **One appointment is only ever credited to one campaign** — the last one that person clicked before booking. Two campaigns can never claim the same booking, so your totals across campaigns can never add up to more appointments than your practice actually had.
+- **A click is required.** Receiving the email is not enough, and neither is opening it. Half a practice's list books appointments anyway; crediting a campaign for deliveries would credit it with your ordinary demand.
+
+### What it does not mean
+
+It is **not proof that the campaign caused the booking.** It is a count of bookings that followed a click, inside a deadline. Some of those people were going to book anyway, and the number cannot tell them apart from the ones who booked because of your email.
+
+Treat it as a floor rather than a measurement. It deliberately under-counts: it misses the person who clicked and then phoned, the contact linked to their patient record after the window closed, and everyone who booked without clicking at all. Under-counting is the safe direction, because a practice deciding where to spend money is better served by a number it can trust than by a flattering one. The report says as much on the **Attribution** card: it is a signal, not a claim about cause.
+
+## Subject line tests
+
+<Availability editions={['clinic']} plans="Essential and Team" roles="Staff granted marketing access" />
+
+A subject line test sends two subjects to a slice of your audience, then sends the better one to everybody else. Turn it on with **Test two subject lines** in the **Subject** section of the composer, then fill in **Subject A** and **Subject B**.
+
+How it runs:
+
+<Steps>
+  <Step title="A slice of the audience gets each subject">
+    Everyone else is held back and receives nothing yet.
+  </Step>
+  <Step title="The winner is picked automatically">
+    At the end of the test period, from the open rate or the click rate — a rate, not a raw count, so an uneven split between the two groups cannot decide the result on its own.
+  </Step>
+  <Step title="Everyone still waiting receives the winning subject">
+    Nobody held back is ever sent an undecided version, which would quietly turn them into a third group in the test.
+  </Step>
+</Steps>
+
+The same person always receives the same version, even if a send is interrupted and retried. Nobody is ever sent both.
+
+<Note>
+  **A small test is a hint, not a finding.** When fewer than about 50 people were delivered each version, the report says so in as many words — under that, a difference between two subject lines is usually noise rather than a preference. Read it as a nudge and send again before you change how you write.
+</Note>
+
+## Who can do this
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| View **Analytics** and campaign reports | Staff granted marketing access | Permission |
+| Turn on **Show raw numbers** | Anyone who can view a report | — |
+| Run a subject line test | Staff who can write campaigns, on Essential and Team | Plan and permission |
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- Shortly after a campaign starts sending, **Delivered** on its report begins climbing, and its status chip shows progress.
+- **Opens (filtered)** and **Clicks (filtered)** fill in over the following hours as people read it — they do not all arrive at once.
+- **Booked or converted** stays at its previous value until the following day, then updates.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="My open rate shows — instead of a number">
+    Nothing has been delivered yet, so there is no rate to show. A dash means not known; it will become a number once deliveries land.
+  </Accordion>
+
+  <Accordion title="The raw numbers are much higher than the filtered ones">
+    That is expected, and it is the reason for the two figures. The gap is mail-privacy proxies opening images and security software following links. Decide with the filtered numbers.
+  </Accordion>
+
+  <Accordion title="Booked or converted is 0 and I know people booked">
+    Most often the contact is not linked to a patient record, so the booking cannot be matched to the click. It also only counts people who clicked a link in the email, and it updates overnight rather than immediately.
+  </Accordion>
+
+  <Accordion title="The suppression breakdown says it is not available">
+    The report will not print **Everyone in the segment was eligible** over a breakdown it could not work out — that sentence is a claim, so it is only shown when it can be proved. The rest of the report is unaffected.
+  </Accordion>
+
+  <Accordion title="The Analytics totals look lower than the individual reports add up to">
+    A campaign whose figures could not be read is left out of the totals rather than counted as zero, and the tab says so underneath. Each campaign's own report is still correct.
+  </Accordion>
+
+  <Accordion title="I cannot turn on a subject line test">
+    Subject line testing is included on the Essential and Team plans. On Free and Starter the switch explains that and offers an upgrade — see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is open tracking off for some campaigns?">
+    Whether a patient opened an email about their health is itself sensitive, so open tracking defaults to off for both patient audiences and on for leads. A campaign sent without it reports clicks but not opens. See [Send marketing campaigns](/practice/work/marketing).
+  </Accordion>
+
+  <Accordion title="Do journeys appear in these reports?">
+    Emails sent by an [automated journey](/practice/work/marketing-journeys) are counted the same way, and they share the same weekly sending limit as campaigns.
+  </Accordion>
+
+  <Accordion title="Can I see which individual people opened or clicked?">
+    The report shows counts and the links ranked by clicks, most clicked first. It is built to tell you what to send next, not to profile individual patients.
+  </Accordion>
+
+  <Accordion title="Why is Delivered lower than Sent?">
+    **Sent** means the email left us; **Delivered** means the receiving server accepted it. The gap is bounces and refusals, which are counted separately. See [When a message does not arrive](/practice/work/mail-delivery).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/marketing/report-model.ts, campaign-report.tsx, marketing-content.tsx (Analytics tab), lib/marketing/ab.ts, lib/marketing/plan-limits.ts, and the nightly conversion attribution job in ClinikEHR-Database */}

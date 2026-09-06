@@ -75,6 +75,9 @@ These spend [insurance credits](/platform/plans/overview#insurance--billing-cred
 | **External intake → triage (webhook)** | Webhook | Receives messages from any external system and routes them like the triage agent — clinical content escalates, no advice. |
 | **API appointment request (webhook)** | Webhook | Lets a partner site or automation POST an appointment request; the agent matches the service and books or tasks. |
 | **Post-visit follow-up & review request** | Scheduled | Reaches patients seen yesterday with a thank-you, general aftercare, and a feedback invitation. |
+| **Cancellation slot recovery** | Event | A cancellation becomes a fillable opening: it confirms the slot really is still free, then hands the front desk a task naming the exact date, time and service. It never messages patients — it cannot see who is waiting, and the front desk can. |
+| **No-show recovery** | Event | Reaches out the same day with a warm note and two or three real alternative times. It checks first whether the patient has already rebooked, and says nothing if they have. A repeat pattern is flagged to staff only, never to the patient. |
+| **Recare — invite patients who are due back** | Scheduled | Finds patients due for a routine return, skips anyone already booked, and invites the rest with real appointment times. Describes the visit in general terms only. |
 
 ## Clinical & operations safety nets
 
@@ -83,6 +86,14 @@ These spend [insurance credits](/platform/plans/overview#insurance--billing-cred
 | **Patient / client summary** | Chat | Summarises patient context into a clinician-reviewed draft — BAA-covered model, human approval, never auto-filed. |
 | **Critical radiology escalation** | Event | A report with critical findings pages the clinical team immediately and opens a task; routine reports pass through silently. |
 | **Inventory alert responder** | Event | Critical and expiry stock alerts get an owner and a task; routine low-stock batches into a note instead of pinging anyone. |
+
+## Mail
+
+| Template | Trigger | What it does |
+| --- | --- | --- |
+| **Inbox triage** | Event | The moment mail lands in the Inbox, it reads the conversation, files it with your own labels, raises **Important** on anything that needs a person today, and leaves a draft reply in **Drafts** for the front desk. It never sends, never moves a message, and writes no reply to anything clinical. |
+
+**How to use it well:** create the labels you actually file by first — it uses yours and will not invent one. Give it a week of reading its drafts before you trust them; a draft it wrote is marked **AI-assisted** in the conversation, so you can always tell. See [Read your mail](/practice/work/mail).
 
 ## The public page, from the visitor's side
 
@@ -103,4 +114,4 @@ When a template like the **Front desk assistant** is [published](/platform/ai/pu
 
 <StillStuck />
 
-{/* source of truth: components/clinic/agents/templates.ts (32 templates, verified 2026-08-31) */}
+{/* source of truth: components/clinic/agents/templates.ts (36 templates, verified 2026-09-03) */}

@@ -1,0 +1,205 @@
+---
+title: Send marketing campaigns
+description: "Build a campaign, choose who receives it, and see the results — email marketing built for the consent rules a health practice actually has to follow."
+icon: /images/icons/megaphone.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted marketing access" note="Sends per month, saved templates and active automations differ by plan; contacts never do." />
+
+**Marketing** is where you build and send campaign emails — a newsletter, a recall reminder, a re-engagement email to lapsed clients — to a chosen group of people, with unsubscribe, consent and safe-sending handled for you.
+
+<Path steps={['Sidebar', 'Marketing']} />
+
+<TaskHeader before="At least one saved segment, or a willingness to build one on the fly" time="10–15 minutes for a first campaign" after="A sent (or scheduled) campaign, with results you can check afterward" />
+
+## What you're looking at
+
+Five tabs:
+
+| Tab | What it holds |
+| --- | --- |
+| **Campaigns** | Every campaign you have created, with its status and a quick funnel |
+| **Templates** | Ready-made starter designs, and any you have saved yourself |
+| **Segments** | Saved groups of contacts, with a live count of who currently matches |
+| **Journeys** | Automated email sequences that run on their own once turned on |
+| **Analytics** | Results across your campaigns |
+
+**New campaign** sits at the top of the **Campaigns** tab. Every campaign carries a status: **Draft**, **Scheduled**, **Sending**, **Sent**, **Paused**, **Cancelled** or **Failed** — a paused campaign always names why (for example, a bounce or complaint rate that tripped a safety pause), so **Paused** is never a mystery.
+
+**This page keeps itself up to date.** While a campaign is scheduled, sending or paused, its status and its figures move on their own — including a campaign somebody else started, and a safety pause nobody chose. You do not need to reload to see a send progress, and you will not miss a pause because you were looking at the screen when it happened.
+
+## Understand who you can email
+
+Before anything else, Marketing asks who this campaign is for, because a health practice's marketing rules are not the same as an ordinary business's. There are three audiences, and the product treats them differently on purpose:
+
+| Audience | Who it is | The rule |
+| --- | --- | --- |
+| **Leads and contacts** | People in your CRM who are not clients — enquiries, prospects, your waitlist | Ordinary marketing consent: they opted in, and they can opt out |
+| **Patients — health-care operations** | Your own clients, about the care you provide them — a flu-shot drive, a recall reminder, a new service | Allowed without a signed marketing form; opt-out is always honored |
+| **Patients — authorized marketing** | True marketing to clients — a third-party product, anything you are paid to promote | Requires a signed marketing authorization on file for every recipient before you can send |
+
+Pick the audience when you start a campaign, and it cannot be changed once the campaign has sent — it is part of the record of what you sent and why. Choosing **Patients — authorized marketing** without confirming the authorization blocks sending until you check the box confirming a signed form is on file for everyone in the audience.
+
+Open tracking (whether the product records that someone opened your email) defaults **off** for both patient audiences and **on** for leads — because whether a patient opened an email is itself the kind of thing a health practice should not collect without thinking about it first. Click tracking always stays on for every audience, since a click is something someone chose to do.
+
+No campaign is ever sent to someone who has unsubscribed or asked not to be contacted, regardless of which audience or segment you choose.
+
+## Build a segment
+
+<Steps>
+  <Step title="Open Segments">
+    Select the **Segments** tab, then start a new one.
+  </Step>
+  <Step title="Add conditions">
+    Filter by field, stage, tag, source or owner. As you add and adjust conditions, a live recipient count updates beneath them — it recalculates as you type, and shows a loading shimmer rather than an old number while it does.
+  </Step>
+  <Step title="Save it">
+    Name the segment and save it. It is now reusable across any campaign.
+  </Step>
+</Steps>
+
+If a condition cannot be evaluated by the sending system, you are told so directly rather than being shown a narrower count than what would actually be emailed — a segment that cannot be fully applied will not silently send to more people than the count on screen.
+
+## Set up the address campaigns send from
+
+Campaigns send from an address you choose, called a **sending identity**. Set it up in **Settings → Marketing** before your first campaign — a campaign will not send without one.
+
+<Steps>
+  <Step title="Reuse an address you already have">
+    Any ClinikMail address on a domain your practice owns is offered under **Use a ClinikMail address you already have**. One click turns it into a sending identity, keeping the name your patients already recognise.
+  </Step>
+  <Step title="Or create a new one">
+    Pick a domain, a name in front of the `@` (like `news`), and the display name recipients see. Only domains your practice owns and has finished verifying are offered.
+  </Step>
+</Steps>
+
+<Note>
+  **Free ClinikMail addresses cannot send campaigns.** A free address is shared with other practices, so one practice's bulk mail could affect whether every other practice's appointment reminders reach the inbox. Campaigns therefore need a domain your own practice owns — connect one under **Settings → Mail**, and your free address keeps working for everyday one-to-one mail exactly as before.
+</Note>
+
+If a domain later stops being verified, any sending identity on it stops being available until it is verified again. You do not need to re-save anything — it returns on its own.
+
+## Create and send a campaign
+
+The composer is a checklist. Each section shows a green check once it is complete, or exactly what is missing — and the **Send** action only lights up once every row is green.
+
+<Steps>
+  <Step title="To — choose the audience">
+    Pick a saved segment. The recipient count appears here too, and a campaign is blocked from sending if nobody in the segment can currently be emailed.
+  </Step>
+  <Step title="From — pick your sending address">
+    Choose a sending identity for this practice. If the list is empty, set one up first — see [Set up the address campaigns send from](#set-up-the-address-campaigns-send-from).
+  </Step>
+  <Step title="Subject">
+    Write a subject line, or turn on A/B testing (Essential plan and above) to try two or more subject lines against a portion of the audience before the rest goes out.
+  </Step>
+  <Step title="Content">
+    Add blocks — heading, text, image, button, divider, spacer — or start from a template. A preview shows exactly what will send, on both desktop and mobile.
+  </Step>
+  <Step title="Schedule">
+    Send now, or pick a date and time in the future.
+  </Step>
+  <Step title="Review and send">
+    A review screen states plainly what is about to happen — who receives it, from which address, and roughly when it will finish — before you confirm.
+  </Step>
+</Steps>
+
+Before **Send** unlocks, the checklist also runs a set of pre-send checks: an **Unsubscribe link** present in the email, a **Spam score**, that every **Link** in the email resolves and uses a secure address, that every **Merge tag** (like a first name) will actually fill in for the audience, a required **Test send** to your own address, a check of **Volume vs sending history** (a brand-new practice cannot blast its whole list on day one), and confirmation that **Automatic safety pause** is armed. Every row explains itself and tells you how to fix it if it is not green yet.
+
+## Templates
+
+**Starter templates** are ready to use and never count against your plan — duplicate one and edit it. Your own saved designs sit alongside them, with a running count like **3 of 5 saved**. At your plan's limit, saving offers to replace an existing template rather than leaving you stuck.
+
+## Automations (Journeys)
+
+A journey is a sequence that runs on its own once activated — an email, then a wait, then another email, optionally branching on what a contact does. From the **Journeys** tab you can see each one's live enrollment count, and **Activate** or pause it; a confirmation names exactly what activating it does before it starts. Someone who unsubscribes exits every journey they are in immediately, and a contact in several journeys at once still never receives more than the same overall sending limit applied to campaigns.
+
+## Read your results
+
+**Analytics**, and each campaign's own report, lead with **Opened (filtered)** and **Clicked (filtered)** — filtered out are opens caused by email apps automatically pre-loading images, and clicks from automated security scanners, neither of which reflect a real person. A **Show raw numbers** toggle reveals the unfiltered totals beside them, labeled honestly rather than presented as if they were the same thing. Reports also show unsubscribes, and — because the point of a campaign is what it leads to, not just who opened it — how many recipients went on to book an appointment.
+
+## What each plan includes
+
+| | Free | Starter | Essential | Team |
+| --- | --- | --- | --- | --- |
+| Sends per month | 500 | 3,000 | 12,000 | 60,000 |
+| Active automations | 1 | 3 | 10 | Unlimited |
+| Saved custom templates | 2 | 5 | 15 | Unlimited |
+| A/B subject testing | — | — | ✓ | ✓ |
+| Appointment attribution | Basic | Basic | Full | Full |
+
+Contacts are never limited or charged for on any plan — your list is your client panel, and it should be free to grow. Unused sends roll into next month, up to your plan's own monthly amount, so a quiet month does not cost you the next one.
+
+## Who can do this
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| View campaigns and reports | Staff granted access | Permission |
+| Write and edit campaigns, templates and segments | Staff granted access | Permission |
+| Send a campaign | Owner, manager, or staff explicitly granted it | Permission |
+| Turn an automation on or off | Owner, manager, or staff explicitly granted it | Permission |
+
+Writing a campaign and sending it are deliberately separate permissions — drafting is cheap and reversible, and firing a campaign at your whole client list is not, so the product does not conflate the two.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A sent campaign moves from **Scheduled**/**Sending** to **Sent** in the **Campaigns** list, on its own, without reloading the page.
+- Its report starts filling in with delivered, opened and clicked figures shortly after.
+- A test send you asked for arrives at your own address, rendered exactly as the real campaign will look.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Send stays greyed out">
+    Open the checklist — every red row names what is missing and how to fix it. **Send** never unlocks until all of them are green.
+  </Accordion>
+
+  <Accordion title="My segment shows fewer people than I expected">
+    The count only includes people who can currently be emailed under this audience's consent rules — someone who has unsubscribed or opted out is excluded from every count, everywhere.
+  </Accordion>
+
+  <Accordion title="A campaign is Paused and I didn't pause it">
+    An automatic safety pause tripped — usually a bounce or complaint rate above the safe threshold. The reason is shown on the campaign; review it before resuming.
+  </Accordion>
+
+  <Accordion title="I can't send to patients about a paid product">
+    That needs the **Patients — authorized marketing** audience, which requires confirming a signed authorization is on file for every recipient before it will send.
+  </Accordion>
+
+  <Accordion title="New campaigns are refused for the month">
+    You are at your plan's monthly send limit. Unused sends roll forward once, so check next month, or see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Will a campaign ever reach someone who unsubscribed?">
+    No. The unsubscribe and do-not-contact rules are checked again at the moment of sending, not just when you build the segment — so someone who unsubscribes after you schedule a campaign still will not receive it. [What happens when you press Send](/practice/work/marketing-sending) walks through every check.
+  </Accordion>
+
+  <Accordion title="What's the difference between a campaign and Contacts' old Campaigns tab?">
+    Marketing is the current, built-out campaign system — audience classes, the checklist, templates, journeys and full reporting. It is where new campaigns belong.
+
+    Both now send the same way. **Send** on the Contacts Campaigns tab queues the campaign through Marketing's pipeline, so it gets the same consent checks, the same pacing and the same reporting. The **Test** button that used to sit beside it has been removed: it previewed a wider audience than the campaign would actually reach, which made it worse than no preview. Use the checklist's test send and preflight on the Marketing screen instead.
+  </Accordion>
+
+  <Accordion title="Can I edit the individual steps inside a journey?">
+    Yes. Open the **Journeys** tab and choose **Edit** on a journey, or **New journey** to start one. You can add email, wait and exit steps, reorder them, and write each email in place. Pause a running journey before you change it — people are part-way through it, and moving the steps under them would move them too. See [Automated journeys](/practice/work/marketing-journeys).
+  </Accordion>
+
+  <Accordion title="Does raising my plan change what happens to contacts I already have?">
+    No. Contacts are never limited by plan, on any tier. Plan only changes how many sends, templates and active automations you have available.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/marketing/marketing-content.tsx, checklist-model.ts, audience-class-picker.tsx, segment-builder.tsx, campaign-report.tsx, journey-canvas.tsx, template-library.tsx, lib/marketing/plan-limits.ts, types/marketing.ts */}

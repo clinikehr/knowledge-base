@@ -1,0 +1,126 @@
+---
+title: What happens when you press Send
+description: "How a campaign actually goes out — queued rather than instant, checked person by person as it sends, and paced so a big list cannot hurt your deliverability."
+icon: /images/icons/megaphone.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted send access" note="Composing a campaign and sending one are separate permissions." />
+
+Pressing **Send** does not mail everybody at that instant. Your campaign joins a queue, and a few seconds later it starts going out — a batch at a time, with every recipient re-checked as their own email is about to leave.
+
+<Path steps={['Sidebar', 'Marketing', 'Campaigns']} />
+
+<TaskHeader before="A campaign whose checklist is fully green" time="Under a minute to start; large campaigns finish over hours" after="A campaign moving through Sending to Sent, with a live count you can watch" />
+
+## Why it is queued and not instant
+
+A campaign to three thousand people takes longer than a web page is willing to wait. If sending happened while you watched a spinner, closing the tab — or a dropped connection, or a laptop lid — would abandon it halfway, and nobody could tell you how far it got.
+
+So **Send** hands the campaign to a service that keeps working whether or not you are watching. In practice:
+
+- Sending begins **within about a minute** of pressing Send.
+- The campaign's status moves **Scheduled** → **Sending** → **Sent** on its own, and the figures on the campaign row update as it goes. You do not need to reload.
+- You can close the page, and you can come back later.
+- You can **Pause** a campaign that is part-way through. The people already emailed have been emailed; the rest stop where they are.
+
+You will not see "sent to 412 people" the moment you press the button, because at that moment it is true of nobody. The count on the campaign is the real one, and it climbs.
+
+## Every recipient is checked at the moment their email is sent
+
+This is the part worth understanding, because it is the difference between a marketing tool and a marketing tool you can use in a health practice.
+
+The audience is **not** frozen when you schedule. Each person is checked individually, immediately before their own email goes out, against:
+
+| Check | What it means |
+| --- | --- |
+| **Unsubscribed** | They used an unsubscribe link — at any time, including after you scheduled |
+| **Do not contact** | The contact is marked do-not-contact |
+| **Bounced or complained** | Their address previously bounced or was reported as spam, here or at any practice on ClinikEHR |
+| **Consent for this audience** | The rules for the audience you chose (see [Send marketing campaigns](/practice/work/marketing)) |
+| **How much mail they have had** | Nobody receives more than two marketing emails from you in a week, across every campaign and automation combined |
+
+Someone who unsubscribes at 09:59 does not receive the 10:00 email. That holds even if they were in the audience when you built it.
+
+**Nobody is quietly dropped.** Everyone who was skipped is recorded with the reason, and the campaign's report shows the breakdown — so "1,120 people received this" out of an audience of 1,400 always comes with an account of the other 280. A shorter list with no explanation is exactly what this avoids.
+
+## Pacing, and why a campaign can take hours
+
+Mailbox providers treat a sudden burst from a sender they do not recognise as a warning sign. A campaign that arrives all at once is more likely to land in spam than the same campaign spread out — for everyone at your practice, including your appointment reminders.
+
+So sending is paced, and a large campaign can legitimately run over several hours. The campaign shows when it expects to finish. If it pauses for a limit rather than a problem, it says so and resumes on its own in the next window.
+
+Two things can stop a campaign rather than slow it:
+
+- **A safety pause.** If too many addresses bounce, or too many people mark the campaign as spam, it stops itself and tells you which. Continuing would damage your practice's ability to reach anyone by email.
+- **Your monthly send allowance.** The campaign pauses with an upgrade prompt rather than sending beyond it.
+
+## Importing a list
+
+<Path steps={['Sidebar', 'Contacts', 'Import']} />
+
+An imported list is checked before any of it is added, because a list with a lot of bad addresses in it damages your sending reputation whether or not you meant any harm.
+
+**What the check does:**
+
+- Rejects addresses that are not valid, whose domain cannot receive mail, or that belong to disposable or forwarding services.
+- Notices addresses already in your contacts, and addresses that have previously bounced or complained, and does not add them again.
+- **Refuses the whole file** if more than one address in ten is invalid or undeliverable. A list in that state was not collected from people who asked to hear from you, and importing the rest of it still causes harm.
+
+When rows are skipped you are told how many and why, broken down by reason — never just a smaller number.
+
+**Imported contacts cannot be emailed straight away.** Someone who has not confirmed that they want your email is not yet mailable, even if the file you uploaded had an opt-in column in it. There are two ways forward: ask them to confirm, or, if you can account for how the list was collected, confirm that yourself — in which case the first campaign to that list is limited in size and watched more closely than usual.
+
+If the list is very much larger than the number of people your practice actually knows, the import is capped pending a look. That is a deliberate speed bump, and it is the same one every reputable email service applies.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The campaign says Scheduled and nothing is happening">
+    Give it a minute. If it has not moved after a few minutes, check that the campaign has a verified sending address under **From** — a campaign cannot send from an address that has not finished its DNS setup, and it will say so rather than sending as somebody else.
+  </Accordion>
+
+  <Accordion title="Far fewer people received it than the segment showed">
+    Open the campaign's report. Everyone skipped is listed with a reason — most often an unsubscribe, a previous bounce, or the weekly limit on how much mail one person receives. The numbers always add up to the audience you started with.
+  </Accordion>
+
+  <Accordion title="It says Sent but the count is lower than the audience">
+    That is the same thing as above, and it is the honest number: the ones who were skipped are counted separately rather than folded into the total.
+  </Accordion>
+
+  <Accordion title="Some emails failed rather than being skipped">
+    A failure is different from a skip: the message was attempted and the mail service would not accept it. These are retried for a while and then given up on, and the campaign shows them separately so a bad address does not hide inside a success figure.
+  </Accordion>
+
+  <Accordion title="My import was refused entirely">
+    More than one address in ten was invalid, undeliverable or disposable. The message names how many fell into each category. Clean the file and upload it again — no rows were added, so nothing is half-imported.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I get the email back after pressing Send?">
+    Not once it has left. You can **Pause** a campaign that is still running, which stops everyone who has not been emailed yet — so pausing early does limit how far it goes.
+  </Accordion>
+
+  <Accordion title="Why did a campaign start sending after I closed my laptop?">
+    Because sending does not depend on your browser. That is the point — it also means a big campaign finishes even if you log off.
+  </Accordion>
+
+  <Accordion title="Does an automation count against the weekly limit on emails to one person?">
+    Yes. The limit of two marketing emails per person per week covers campaigns and automations together, so somebody enrolled in three automations still does not get flooded.
+  </Accordion>
+
+  <Accordion title="Can I send a test to myself first?">
+    Yes — send a test from the campaign's checklist before the campaign goes out. It renders with sample details so you see what a recipient sees.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: supabase/functions/marketing-dispatcher, lib/marketing/gate.ts, lib/marketing/rate-gate.ts, lib/marketing/governors.ts, lib/marketing/import-screen.ts, db/actions/marketing.ts, db/actions/crm.ts */}

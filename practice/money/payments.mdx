@@ -95,6 +95,57 @@ The panel states the cost in the same breath: "A 1.9% platform fee will be auto-
   Payment links need a connected payment account under **Settings** → **Online Payments**. A practice collecting through Paystack cannot use Stripe links — the product says so: "This clinic collects payments via Paystack — Stripe payment links are not available." Send your bank details on the invoice instead, via [Payment details](/practice/settings/payment-details).
 </Note>
 
+## What the client sees when they pay
+
+After they finish paying, the page tells them one of three things — and it says only what has actually been confirmed with the card network:
+
+| What they see | What it means |
+| --- | --- |
+| **Payment received** | Confirmed, with the amount shown. The money is on its way to you and the invoice updates. |
+| **This payment has not been taken** | They opened the link but did not complete it. Nothing was charged. |
+| **We could not confirm this payment** | We could not check the payment in that moment. It does **not** mean it failed. |
+
+<Warning>
+  **"We could not confirm this payment" is not a failure.** It means we could not check, so the client is told not to pay again until somebody has looked. If one appears, open the invoice: if the payment arrived it will be there. Ask the client to pay a second time only when you can see the invoice still owes money.
+</Warning>
+
+<Note>
+  **An old link can no longer be mistaken for a new one.** Re-sending a link the client has already used, or opening one twice, used to show **Payment received** whatever had happened — including for an invoice nobody had paid.
+
+  It now checks first, and says which invoice the payment was for. That matters because a payment link the client has already completed will always take them back to a confirmation page: the payment was real, it was just for a different invoice. Naming it is what stops an old receipt reading as a new one.
+
+  Links sent before this change show the amount without an invoice number. Send a fresh link rather than forwarding an old email.
+</Note>
+
+## What you are told, and when
+
+Money moving no longer depends on somebody thinking to check the Billing screen.
+
+| You are notified when | Where |
+| --- | --- |
+| **A payment arrives on its own** — a client pays a link, or a card on file is charged | In-app, as it happens |
+| **An invoice passes its due date** | In-app, once, on the day it happens |
+| **An invoice is still unpaid after the last reminder** | In-app — automatic chasing has stopped and it needs a person |
+
+All three follow your **Billing** notification preference under **Settings** › **Notifications**. Turn that category off and they stop; nothing else changes.
+
+<Note>
+  **Reminders stop after two.** A client who has not paid receives at most two automatic reminders, at least three days apart. After the second, the practice is told and nothing further is sent automatically — the next move is a phone call, not another email.
+</Note>
+
+<Warning>
+  **A payment recorded by hand does not notify anyone.** These notices are for money that arrives without anybody at the practice doing something — there is no point telling you about a payment you just typed in yourself.
+</Warning>
+
+## A link is refused when nothing is owed
+
+You cannot send a payment link for an invoice that is already settled, and you cannot send one for more than it owes. The product refuses it rather than taking the money:
+
+- **"This invoice has already been paid in full, so a payment link cannot be created for it."** — the balance is zero. Check the invoice; the payment is probably already recorded.
+- **"That amount is more than this invoice still owes. Refresh the invoice and try again."** — somebody paid, or the invoice changed, since the screen was opened. Reload it and the correct balance appears.
+
+Both exist to stop a client being charged twice for the same invoice.
+
 To charge a card on file automatically after an appointment rather than asking each time, see [Auto Pay](/practice/settings/auto-pay).
 
 ## Who can do this

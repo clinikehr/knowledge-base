@@ -1,0 +1,117 @@
+---
+title: Email a patient safely
+description: "Send clinical detail to a patient as a secure message they open in the portal, or as ordinary email once they have agreed to it."
+icon: /images/icons/file-lock.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted mail access" note="Secure messages need the client portal switched on for your clinic." />
+
+When you write to a patient, Mail sends the message as a **secure message** by default: the patient gets an email telling them something is waiting, and they read the message itself in their portal. Ordinary email is available too, once the patient has told you they are happy with it.
+
+<Path steps={['Sidebar', 'Mail', 'Compose']} />
+
+<TaskHeader before="A patient with an email address on their record" time="A minute" after="The patient has your message, and it did not travel as plain email" />
+
+## Why there are two ways
+
+Email is not private in transit. Anyone who can reach the mailbox at the other end — a shared family account, an employer's mail system, someone who knows the password — can read what you sent. That is fine for "your appointment is on Tuesday" and not fine for a result.
+
+So Mail gives you two routes, and picks the safer one for you.
+
+| | **Secure message** | **Ordinary email** |
+| --- | --- | --- |
+| What you write goes | into the patient's portal | into the email itself |
+| The patient receives | a short notice and a link | your message |
+| The email contains | no subject, no clinical detail | everything you wrote |
+| Available | whenever you write to a patient | only after you record the patient's consent |
+| Attachments | not yet | yes |
+
+## Send a secure message
+
+<Steps>
+  <Step title="Compose to the patient">
+    Select **Compose** and enter the patient's address. As soon as Mail recognises it as a patient of your clinic, a **How this reaches the patient** panel appears above **Send**.
+  </Step>
+  <Step title="Leave it on Secure message">
+    **Secure message** is selected already and marked **Recommended**. Write the subject and the message exactly as you would in any email — the subject travels with it into the portal.
+  </Step>
+  <Step title="Send it">
+    Select **Send**. The confirmation says **Secure message sending** while the undo window is open, then **Secure message sent**. **Undo** works the same way it does for any message.
+  </Step>
+</Steps>
+
+## What the patient gets
+
+An email from your clinic that says only *You have a secure message from \{your clinic\}*, with a button to open it in their portal. The subject line and the message body are not in that email at all.
+
+They read your message on their secure message thread, the same thread you can see from their record, and they reply there rather than by email.
+
+## Send ordinary email instead
+
+Ordinary email is available only for a patient whose consent you have recorded. Until then, **Ordinary email** is unavailable and the panel says so.
+
+<Steps>
+  <Step title="Explain what it means">
+    Tell the patient that ordinary email is not private in transit, that anyone who can get into their mailbox can read what you send, and that they can change their mind at any time.
+  </Step>
+  <Step title="Record what they told you">
+    In the **How this reaches the patient** panel, select **Record their consent**. Choose how they gave it — **They told me**, **They signed for it**, or **They agreed in the portal** — add a note if there is a form to point to, and tick the confirmation.
+  </Step>
+  <Step title="Choose Ordinary email">
+    **Record consent** closes the dialog and unlocks **Ordinary email** for this patient. Select it, and send.
+  </Step>
+</Steps>
+
+<Warning>
+  **You are recording what the patient told you, and it is stored against your name.** Consent is kept per clinic and per patient, with the date and the person who recorded it. Do not record it on a patient's behalf because it would be convenient.
+</Warning>
+
+Recording consent does not change the default. Every new message to that patient still starts on **Secure message**; ordinary email is a choice you make each time.
+
+## Check it worked
+
+Open **Sent** and find the message. It carries a **Sent as a secure message** banner, and below it the notice the patient actually received. That is deliberate: what Mail stores is what left the building. Your own words are on the patient's secure message thread, which you can open from their record.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="A secure message goes to the patient alone">
+    Mail will not send a secure message that also has a colleague, a lab or a second patient on it: a portal thread belongs to one patient, and a copy in each thread would tell every patient who else was on the message. Remove the other recipients and send to the patient on their own, or send the message as ordinary email if they have consented to that.
+  </Accordion>
+  <Accordion title="Files cannot be sent with a secure message">
+    Attachments do not travel on a secure message yet. Remove them and send the message on its own, or share the file from the patient's record in the portal.
+  </Accordion>
+  <Accordion title="This clinic has no patient portal set up">
+    A secure message needs somewhere for the patient to open it. Ask an owner to set up the client portal, then try again.
+  </Accordion>
+  <Accordion title="More than one patient record uses that address">
+    Two records share the address — often a parent listed on more than one child's record. Mail will not guess which chart the message belongs in. Write to the address you hold on the specific record, or tidy the duplicate records first.
+  </Accordion>
+  <Accordion title="The panel does not appear at all">
+    Mail only shows it when a recipient is a patient of your clinic, matched on the email address held on their record. If the address you are writing to is not the one on file, add it to their record and it will be recognised.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can a patient take their consent back?">
+    Yes, and you should record it when they do. Until then their consent stands.
+  </Accordion>
+  <Accordion title="Does this apply to messages to colleagues?">
+    No. A message to a colleague, a lab or a supplier is ordinary email and the panel does not appear — putting an internal message behind a portal login would be a message they could never open.
+  </Accordion>
+  <Accordion title="Do appointment reminders go through this?">
+    No. Automatic reminders and confirmations are separate and are governed by the patient's own notification settings.
+  </Accordion>
+  <Accordion title="Can I see whether they read it?">
+    You can see that a secure message is waiting on their thread. Mail does not report whether an email was opened — see [When a message does not arrive](/practice/work/mail-delivery).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

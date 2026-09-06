@@ -1,0 +1,314 @@
+---
+title: Read your mail
+description: "Check your practice inbox, search and organize it, and keep drafts — Mail, right inside ClinikEHR."
+icon: /images/icons/mail.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted mail access" note="Every plan includes Mail; the storage and mailbox limits are what differ." />
+
+**Mail** is an inbox built into ClinikEHR — folders, search and keyboard shortcuts — so your practice's mail sits alongside the rest of your work.
+
+<Path steps={['Sidebar', 'Mail']} />
+
+<TaskHeader before="A mailbox set up for you by your practice" time="A minute to get oriented" after="You can read, search and organize your mail" />
+
+<Note>
+  **Mail sends and receives.** Read, search, organize, write and send — and after a message goes out, Mail tells you whether it actually arrived. See [When a message does not arrive](/practice/work/mail-delivery) for what **Sent**, **Delivered** and a bounce each mean.
+</Note>
+
+## What you're looking at
+
+A folder list down the left on a wide screen, and the conversation list filling everything else. Opening a conversation replaces the list rather than squeezing it into a column — **Back** returns you to it. On a narrower screen the folder list is not shown at all; the folder chooser moves into the toolbar above the list.
+
+The folders are **Inbox**, **Sent**, **Drafts** and **Outbox**, with **Spam** and **Trash** tucked behind **More** at the bottom of the list. Below them sits an **Important only** filter — Important is not a sixth folder, it is a flag you can put on any message wherever it lives, the same way starring works elsewhere. Each folder shows an unread count.
+
+Above the conversation list sit a search box, a **Filter** button and a **Compose** button. Each row in the list shows the sender, a snippet of the message, whether it has an attachment, and how long ago it arrived; an unread conversation is bolded.
+
+On a phone the toolbar keeps to a single row so the conversation list gets the screen: **Refresh** moves into the **More mail options** menu (the ⋮ button) rather than sitting on the toolbar, and the folder chooser is narrower. Everything is still there, and the buttons are the same size your thumb expects.
+
+**Mail arrives on its own.** The conversation list updates as messages come in, and so does a conversation you have open — a reply that lands while you are reading appears at the bottom of the thread without you leaving it or pressing anything.
+
+A brand-new mailbox shows **No messages in Inbox yet** in the list, with **New mail sent to this mailbox will appear here.** underneath. A search that matches nothing shows **No messages match this search** instead, and a mailbox that will not load says **We could not load your mail**.
+
+## Read a conversation
+
+<Steps>
+  <Step title="Open a conversation">
+    Select a row in the list, or press **o** (or **Enter**) once it is highlighted. The full thread opens on the right with older messages collapsed — select a collapsed message to expand it.
+  </Step>
+  <Step title="Check who it's from">
+    Above the message body you may see a chip: **External** (from outside your organization), **Name does not match address** (the display name looks like a colleague but the address is not), **First message from this sender**, or **Possible spam** / **Flagged as spam** with the reasons listed underneath. None of these block you from reading or replying — they are context, not a wall.
+  </Step>
+  <Step title="Reply">
+    Press **r** to reply to the sender, or **a** to reply to everyone on the message. The compose panel opens with the recipients already filled in and **Re:** in front of the subject. Send it, or keep it as a draft and come back to it.
+  </Step>
+  <Step title="Check for attachments">
+    An attachment is listed under the message with its filename and size. Every file is checked for viruses before you can open it, so it is marked **Scanning** for a moment; once it passes, select **Download** to save it. A file that does not pass is marked **Blocked** and is never released — see the troubleshooting note below for what each badge means.
+  </Step>
+</Steps>
+
+A message marked **AI-assisted** was drafted or edited by one of your workspace's AI agents. The badge stays with the message for good — it cannot be cleared — so anyone reading the thread later can see what a person wrote and what a machine did.
+
+Remote images in a message are blocked by default — you will see a placeholder with an option to load them for that sender. This is deliberate: loading a remote image can tell the sender you opened their mail, and for a health practice that is worth a deliberate choice rather than an automatic one.
+
+## Write a message
+
+<Steps>
+  <Step title="Select Compose">
+    A panel opens with **To**, **Subject** and a message body.
+  </Step>
+  <Step title="Add recipients">
+    Start typing a name or address. Matches are pulled from your practice's own contacts, clients, staff, vendors and referrers, each labeled **Patient**, **CRM**, **Staff**, **Vendor** or **Referrer** so you know where the match came from. If someone has asked not to be contacted, or has unsubscribed, their chip turns red and a warning appears.
+  </Step>
+  <Step title="Attach a file">
+    Drag a file onto the compose panel, or select **Attach files** — **Attach image** for a picture. A progress bar shows while it uploads, then the file is checked for viruses: it is marked **Scanning** while the check runs and **Ready** once it passes. A picture only shows its thumbnail once it is **Ready**, so the preview itself tells you the file has been checked.
+
+    A file that does not pass is marked **Blocked**, and so is one we could not check at all — an unchecked file is treated exactly like a failed one. Remove it and the message can be sent; a message is never sent with a file that has not passed. Programs, and files that use two extensions to disguise what they are, are refused outright when you attach them.
+
+    The limit is 25 MB per file. Files you attach to a draft you never send are deleted after 30 days.
+  </Step>
+  <Step title="Keep it as a draft">
+    The panel saves as you type: the footer reads **Saving draft…**, then **Draft saved** with the time. Closing it with unsaved changes asks **Save this message as a draft?** and offers **Save as draft**, **Discard** and **Keep editing**.
+  </Step>
+</Steps>
+
+Select **Send** and the message goes to **Outbox** first, where you have a moment to undo it before it leaves.
+
+## Organize your mail
+
+- **Search** the box above the list. It looks at the sender, the subject and the message text of the folder you are in, and the folder shows as a chip under the box so the scope of what you are looking at is always something you can read. To look wider, open **Filter** and set **Search in** to **All mail** — every folder except **Spam** and **Trash**, which are only searched when you are already standing in one of them. Results come back newest first, not by how well they match.
+- **Narrow it further** with **Filter**: **Read state**, **Label**, **Has an attachment**, **Starred**, **Received on or after** and **Received before**. Everything you set appears as a chip under the box. Each chip removes on its own, and **Clear all** drops them together without moving you out of the folder you are in.
+- **Or type it.** `from:alice`, `to:`, `subject:`, `label:`, `has:attachment`, `is:unread`, `is:read`, `is:starred`, `after:2026-09-01` and `before:2026-09-01` all work in the search box, and `"quoted words"` searches for that exact phrase. Typing and clicking are the same thing: a filter you type shows up as a chip, and a filter you click shows up in the box. **Received before** does not include the day you name.
+- If you type something Mail cannot search for — `in:sent`, for example — it says so under the box instead of quietly returning nothing.
+- A search with a great many matches stops after the first 500 messages and tells you the count is a minimum. Add a sender, a date or a folder to see all of them.
+- **Labels** group conversations your own way, independently of folders — a conversation keeps its folder and can carry several labels at once. Select **+** beside **Labels** in the sidebar to create one, give it a name and optionally a colour, and rename or delete it from the same place. To put a label on a conversation, open it and select **Label as**; you can create a new label there too without leaving the message. Labels show against the conversation in the list, and **Label** in **Filter** (or `label:` in the box) narrows to them.
+- Deleting a label removes it from every conversation carrying it, for everyone at your practice. The conversations themselves are untouched.
+- **Outbox** holds mail that has left your hands but not yet left the building. A message you send waits there through the undo window and while it is being delivered, and it stays there if delivery fails — with the reason shown against it. **Sent** means sent: a message only moves there once it has actually gone.
+- **Archive** (**e**) removes a conversation from Inbox without deleting it; **Trash** (**#**) moves it to Trash; **Spam** mail is held the same way.
+- **Archive only applies to the Inbox.** Archiving means "keep it, but take it out of my Inbox", so it is offered on Inbox conversations and declined elsewhere — there is nothing for it to do to something already in Sent, Spam or Trash. If you tick a mixed selection, the Inbox conversations are archived and you are told which ones were not, and why.
+- **Restoring puts a conversation back where it belongs**, not always in the Inbox. Something your practice only ever sent goes back to **Sent**; a conversation you received goes back to **Inbox**.
+- **Your own sent mail cannot be reported as spam**, and neither can a draft be moved into the Inbox. Both would file your practice's own writing as though it had arrived from outside.
+- **Report spam, and tell us about the sender.** Tick one or more conversations anywhere outside Spam and select **Report spam**. They move to Spam, and the address they came from is added to your practice's blocked list — so the next message from that sender goes straight to Spam without asking you again.
+- **Not spam** does the opposite. Tick a conversation in **Spam** and select **Not spam**: it moves to your Inbox, and that sender is added to your safe list so their mail is never filtered again. This is how you rescue a patient or a supplier the filter got wrong, permanently, in one action. It applies to conversations that are actually in **Spam** — a sender is only added to your safe list for a conversation that moved.
+- Both work on the exact **address**, never the whole domain. Marking one message from a `gmail.com` address as spam does not bury every other patient using Gmail.
+- A sender can be on one list or the other, never both — the newer decision replaces the older one. Both lists are shared by everyone at your practice, and only apply to your practice.
+- Deleting is not erasing. Email in a clinic is part of the clinical record, so a deleted message is retained for seven years to meet record-keeping rules — it is out of your way, not destroyed. Emptying Trash cannot shorten that.
+- **Spam** and **Trash** tidy themselves. Anything left in either for 30 days comes out of view on its own and stops counting toward your storage. The 30 days run from the day it was moved there, so something old you trash today still gets the full month. It is not erased — the seven-year retention above applies to it exactly as it does to anything you delete by hand.
+
+## Let an agent triage your inbox
+
+<Availability editions={['clinic']} plans="Starter and above — the same plans that include AI agents" roles="An owner or manager builds it; the drafts land in the shared Drafts folder" />
+
+If your workspace uses [AI agents](/platform/ai/agents), one can work the inbox for you. Install the **Inbox triage** template from <Path steps={['Sidebar', 'AI Agents', 'Templates']} />: it starts the moment mail lands in the Inbox, reads the conversation, files it with **your own labels**, raises **Important** on anything that needs a person today, and leaves a **draft reply in Drafts** for you to read and send.
+
+What it will not do, by design:
+
+- **It never sends.** Every reply it writes is a draft. A person opens it, edits it if they want, and presses **Send**.
+- **It never moves or deletes anything.** No Trash, no Archive, no folder change — not even for mail that looks like spam. A message you never learn arrived is worse than one filed in the wrong place, so it labels and leaves it where you will see it.
+- **It cannot invent labels.** It uses the ones you created. If it wants one you do not have, it says so in its summary rather than adding it.
+- **It writes nothing clinical.** A symptom, a result or a medication question gets a label, an **Important** flag and a nudge to staff — never a draft reply.
+
+Anything an agent wrote is marked **AI-assisted** in the conversation, so you always know before you send it.
+
+<Note>
+  An agent obeys exactly the same rules you do. It is held to the same sending limits, the same blocked-sender list and the same storage cap — and where you would get a warning about sending identifiable client information to an outside address, an agent is refused outright. That check is a judgement call, and an agent does not get to make it.
+</Note>
+
+## Put a conversation on a client's chart
+
+A message from a client is part of their record, not just something in an inbox. Linking a conversation to a client files the whole thread on their chart, where the rest of their care team will find it.
+
+<Steps>
+  <Step title="Open the conversation">
+    Under the subject you will see **Linked clients**. On a conversation nobody has filed yet it reads **This conversation is not on anyone's chart yet.**
+  </Step>
+  <Step title="Select Link to client">
+    Search for the person by name — the same search the rest of ClinikEHR uses. Add a short **Why** if it helps whoever reads it later ("Mother writing about her son's asthma review"). Anyone who can open the chart can read that note.
+  </Step>
+  <Step title="Select Link to chart">
+    The client appears as a chip under the subject, and the conversation appears on their chart under **Mail**.
+  </Step>
+</Steps>
+
+Three things worth knowing before you rely on it:
+
+- **You link the conversation, not the message.** Every reply that arrives afterwards is on the chart too, automatically — you never have to link the same thread twice.
+- **A conversation can be linked to more than one client.** Families share an address, and a message from a parent about two children belongs on both charts. Add each person in turn.
+- **It shows up wherever the chart does.** The **Mail** tab is on the client record, and on the consultation chart for practices using it — the same list, reading the same links.
+- **Unlinking is a correction, not a deletion.** Select the ✕ beside their name and confirm: the conversation stops showing on that chart, the mail itself is untouched, and the record that it was once linked is kept. You can link it again at any time.
+
+Linking puts a client's correspondence in front of everyone who can open their record, so both linking a conversation and reading the chart's **Mail** tab are written to the [audit log](/platform/security/audit-log).
+
+## Keyboard shortcuts
+
+Press **?** anywhere in Mail to see the full list. The ones worth learning first:
+
+| Key | Does |
+| --- | --- |
+| **c** | Compose a new message |
+| **/** | Search mail |
+| **j** / **k** | Next / previous conversation |
+| **o** or **Enter** | Open the highlighted conversation |
+| **r** / **a** | Reply / reply to all |
+| **e** | Archive |
+| **#** | Move to Trash |
+| **s** | Mark important |
+
+Shortcuts are disabled while you are typing in a field, so they never interfere with writing a message.
+
+## Shared mailboxes
+
+A mailbox is either **personal** — one person reads it — or **shared**, which is a single address a group of people all work out of: `frontdesk@`, `billing@`, `referrals@`. An owner or manager creates one in **Settings** → **Communications & AI** → **Mail**, under **Mailboxes**, by setting **Type** to **Shared — a team inbox**.
+
+A shared mailbox is only useful once somebody is on it. Under each shared mailbox is **Who can open this mailbox**, listing everyone who has it. Whoever created the mailbox is added automatically, so it works from the moment it exists.
+
+The list is what grants access, so somebody who is not on it opens **Mail** and sees **You do not have access to a mailbox** — the address exists and is collecting mail, they are simply not one of its readers. Nothing needs creating; they need adding.
+
+<Steps>
+  <Step title="Add someone">
+    Under **Who can open this mailbox**, pick the person in the team chooser and select **Add to mailbox**. Mail already in the mailbox is there for them straight away — they are not limited to what arrives afterwards.
+  </Step>
+  <Step title="Remove someone">
+    Select **Remove** next to their name and confirm. Nothing already delivered is deleted, and you can add them back at any time.
+  </Step>
+</Steps>
+
+Two rules worth knowing before you plan around them:
+
+- **The last person cannot be removed while the mailbox is active.** Mail would keep arriving with nobody able to read it. Add someone else first, or **Suspend** the mailbox if you are retiring the address — after which the last member can be removed.
+- **Leaving your practice takes the mailbox with it.** When someone is removed from your practice, their access to every shared mailbox goes at the same time. If they were the only person on one, that mailbox says **No one can open this mailbox** until you add somebody — worth checking when someone leaves.
+
+Personal mailboxes have no member list: they are read by the person they belong to.
+
+## Storage
+
+Every plan includes mail storage. The mailbox and domain counts alongside it exist to stop abuse, not to sell you more of them.
+
+| | Free | Starter | Essential | Team |
+| --- | --- | --- | --- | --- |
+| Mail storage | 5 GB | 15 GB | 50 GB | 120 GB |
+| Mailboxes | 3 | 10 | 25 | 50 |
+| Custom mail domains | 1 | 2 | 3 | 10 |
+
+A banner appears once you pass 80% of your storage, and again at 90%. At 100%, **sending** pauses until you free space or move up a plan; freeing space takes effect the next time your usage is measured, which happens hourly.
+
+**Receiving never stops** — a client's message never bounces because your mailbox is full, however full it is.
+
+## Who can do this
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| Open Mail and read your own mailbox | Any staff member granted access | Role |
+| Send and reply | Any staff member granted access | Permission |
+| Create mailboxes and issue app passwords | Owner, manager | Permission |
+| Add or remove people on a shared mailbox | Owner, manager | Permission |
+| Add or verify a mail domain | Owner, manager | Permission |
+
+Reading a mailbox and sending from it are kept as separate permissions on purpose — someone can be given access to read without being able to send in your practice's name.
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- A conversation you open shows the message body, and an older message in the thread expands when you select it.
+- A conversation you archive with **e** leaves **Inbox** and still turns up in search.
+- A message you write appears in **Drafts** with the text you wrote.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I selected Send and the message never arrived">
+    Open it in **Sent** and read the status on it: **Sent** means it left us and nothing has come back yet, **Delivered** means their server accepted it, and a bounce says so in as many words. [When a message does not arrive](/practice/work/mail-delivery) covers each one.
+  </Accordion>
+
+  <Accordion title="I can't open or download an attachment">
+    Check the badge next to it. **Blocked — virus found** means the scan failed and the file will not be released to you. **Blocked — could not scan** means we could not check it, and an unchecked file is treated the same way — ask the sender to send it another way. On a message you are **writing**, a file is marked **Scanning** only while its check is running and clears to **Ready** on its own; a message cannot be sent until every file on it is **Ready**. If a file is still **Scanning** long after it uploaded, the check never completed and it will turn **Blocked** — remove it and attach it again.
+  </Accordion>
+
+  <Accordion title="Images in a message aren't showing">
+    Remote images are blocked by default for privacy — select **Always show images from this sender** and the message reloads with them. If a picture is still missing afterwards you will see a small box in its place saying so, rather than a blank space: that image could not be retrieved from the message itself, and loading images will not bring it back. Some senders also use pictures set as page backgrounds, which are never loaded.
+  </Accordion>
+
+  <Accordion title="Our shared inbox says No one can open this mailbox">
+    Nobody is on it. Mail sent to the address is still arriving and is still being kept — it just has no reader yet. An owner or manager fixes it in **Settings** → **Communications & AI** → **Mail**: find the mailbox, and under **Who can open this mailbox** add someone. This most often shows up after the only person on the mailbox left your practice.
+  </Accordion>
+
+  <Accordion title="Mail says You do not have access to a mailbox">
+    The same situation seen from the other side: your practice has a mailbox, and you are not on it. This is not a setup step anybody has missed — creating another mailbox would leave the first one just as unread — so the fix is to be added to the one that exists. An owner or manager does it in **Settings** → **Communications & AI** → **Mail**: find the mailbox, and under **Who can open this mailbox** add you. If you are an owner or manager yourself, **Manage mailbox access** on that screen takes you straight there.
+  </Accordion>
+
+  <Accordion title="I linked the wrong client to a conversation">
+    Open the conversation, select **✕** on their chip under **Linked clients** and confirm. It stops showing on their chart straight away. The record that it was once linked is kept — that is deliberate, because who filed a client's correspondence where is part of the access trail — but nobody browsing the chart sees it any more.
+  </Accordion>
+
+  <Accordion title="A conversation is linked but the chart's Mail tab is empty">
+    Check you are on the right person's chart: a conversation can be linked to several clients, and a family often shares one email address. If the chart is right and the tab is still empty, the link was removed — ask whoever unlinked it, or link it again from the conversation.
+  </Accordion>
+
+  <Accordion title="A recipient's chip is red when I'm composing">
+    They have asked not to be contacted, or they have unsubscribed. The warning exists so you do not write to them without realizing.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I add my ClinikEHR mailbox to my phone's mail app?">
+    An owner or manager issues an app password in **Settings** → **Communications & AI** → **Mail**, and you use that in place of your ordinary password when adding the account to a mail app. The password is shown once, at the moment it is created, and cannot be read back afterwards — if you lose it, revoke it and issue another. Revoking one stops that device within a minute and leaves your other devices alone. The settings the app needs are shown next to the password as it is created — your full address, the server name, and both port numbers — and they are the same for every clinic, so there is nobody to ask. On an iPhone or iPad, use **Set up on iPhone or iPad** on that same screen and open the link on the device itself: it fills in every setting for you, and asks for the password on first connect. Thunderbird and Outlook find the settings on their own once you type your address.
+  </Accordion>
+
+  <Accordion title="We require two-factor sign-in. Can we still use mail apps?">
+    Only if an owner allows it, and the reason is worth reading. A mail app signs in with an app password, and there is no second step it can ask for — that password is the whole credential. So where two-factor sign-in is required, **Mail-app access (IMAP/SMTP)** cannot be turned on for any mailbox until an owner accepts the exception in **Settings** → **Communications & AI** → **Mail**, under **Mail apps and two-factor**.
+
+    Accepting it does not switch mail-app access on by itself — it allows it to be switched on, mailbox by mailbox, and app passwords can still only be issued by someone who has already signed in with their second factor. Withdrawing it turns mail-app access off for every mailbox at once, so any mail app already set up stops syncing straight away and its app password stops working.
+  </Accordion>
+
+  <Accordion title="Does mail to reception+bookings@ reach reception@?">
+    Yes. Anything after a **+** in an address is a tag for you, not part of the mailbox name, so `reception+bookings@yourclinic.com` is delivered to `reception@yourclinic.com`. Give a different tag to each form, supplier or newsletter and you can see at a glance which one an email came through, and filter on it, without creating a mailbox for each.
+
+    The tag is kept on the message exactly as it was sent, so it is still there to search for. It is only ignored when working out which mailbox the message belongs in.
+  </Accordion>
+
+  <Accordion title="What can a mailbox name contain?">
+    The part before the **@** can use letters, numbers, dots, dashes and underscores. It must start and end with a letter or a number, cannot contain two dots, dashes or underscores in a row, needs at least one letter, and is between 3 and 64 characters. A **+** is not allowed in a name you create, because anything after a plus is treated as a tag when mail arrives — see above.
+
+    On the shared **@clinikmail.com** domain a short list of names is reserved and cannot be taken. On a domain you own, none of them are: `admin@yourclinic.com` is yours to create.
+  </Accordion>
+
+  <Accordion title="Can I set up my own domain for mail, like name@myclinic.com?">
+    Yes, and an owner or manager does it in **Settings** → **Communications & AI** → **Mail**. Under **Domains**, enter the domain in **Add a domain you own** and select **Add domain**. It then appears with a check against each DNS record it still needs — add those with whoever manages your domain, then select **Verify now** to re-check them. Once a domain is listed, create addresses on it in the **Mailboxes** section with **Create mailbox**. The **Free address on @clinikmail.com** card in the same section offers a shared address instead, with no DNS to set up: if it is available to you the card shows **Get my free address**, and if it is not, the card says so and there is no button to select — use a domain you own in that case.
+  </Accordion>
+
+  <Accordion title="Can several of us work out of one address?">
+    Yes — create the mailbox with **Type** set to **Shared — a team inbox**, then add people to it under **Who can open this mailbox**. See [Shared mailboxes](#shared-mailboxes) above. Everyone on it sees the same conversations, including mail that arrived before they were added.
+  </Accordion>
+
+  <Accordion title="Does marking a message Important move it anywhere?">
+    No — Important is a flag on top of whatever folder the message is already in, not a separate folder. Use **Important only** in the folder list to filter to it.
+  </Accordion>
+
+  <Accordion title="Why was a message I received flagged as spam?">
+    Select it to see the reasons listed under the flag — things like a first-time sender, a mismatched sending domain, or content that resembles known spam. You can still open and read it. If the filter got it wrong, open **Spam**, tick the conversation and select **Not spam** — it returns to your Inbox and that sender is never filtered again.
+  </Accordion>
+
+  <Accordion title="A message is stuck in Outbox">
+    Outbox holds a message until it has genuinely left, so something sitting there is either still on its way or failed on the way out — the reason is shown against it. This is deliberate: a message that never left should not be sitting in Sent looking delivered.
+  </Accordion>
+
+  <Accordion title="A sender I blocked still reached my Inbox">
+    Check that the message came from the same address, not just the same organization — blocking works on the exact address, so `billing@supplier.com` and `noreply@supplier.com` are two different senders. Mail already delivered before you blocked them stays where it is; blocking changes what happens next, not what already arrived.
+  </Accordion>
+
+  <Accordion title="I marked a sender as safe but their message was still held">
+    A safe sender is never sent to Spam, but a message carrying a **virus** is still quarantined no matter who sent it, and mail that claims to come from your own practice's domain but fails its sender checks is still refused. Those two are security checks rather than spam scoring, and the safe list deliberately does not override them — that is what protects you if a trusted correspondent's own account is broken into.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/mail/mail-content.tsx, mail-thread-list.tsx, mail-reading-pane.tsx, mail-compose-sheet.tsx, mail-folder-rail.tsx, mail-keymap.ts, mail-security.ts, mail-thread-patient-links.tsx, lib/mail/plan-limits.ts, db/actions/mail-patient-links.ts; domain + mailbox setup: components/clinic/dashboard/settings/mail-settings.tsx */}

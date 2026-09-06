@@ -7,6 +7,303 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="September 5, 2026" tags={["Billing"]} description="v9.37.3">
+  ## Insurance claims: the screen now tells the truth about every action
+
+  A pass over the claims list, the claim detail panel, payments, analytics and the insurance settings — checked against the payer network's own reference — fixed a set of quiet defects where a button did something other than what it said, or a figure was shown that had never been read.
+
+  - **Check status with payer** now asks you to confirm and says it uses a credit. It is no longer offered on a claim the payer rejected on acknowledgement, where there is nothing to fetch and the check would still be charged.
+  - **Attach (275)** is offered while a claim is a draft, which is the only time an attachment is actually sent to the payer. A file attached after submission was never leaving the building; the panel now says how to do it properly (**Reopen for correction**, attach, resubmit).
+  - **The response timeline colours are right.** Some acknowledgement codes are rejections and one finalised code is a denial; they were shown in the "accepted" and "paid" colours.
+  - **A batch that fails now says why**, one reason per distinct cause, and offers **Get credits** when credits were the cause. **Get credits** opens the **Subscription** tab it always named, not the dashboard overview.
+  - **Payments**: the **Adjusted** column had summed a field the payer network does not send, so it showed $0.00 on every row. It now reads the real adjustment amounts, and shows "—" where none were recorded — the same for a payment with no amount.
+  - **Payer cards** in Insurance settings now show **Enrollment required** where a payer needs it (this read "N/A" or "Unknown" before), and the payer details show whether a PTAN is required at the payer level, plus each enrollment's type and typical timeframe.
+  - **NPIs are checked as you save** them, in Insurance Profile Settings and billing profiles, using the same check the registry uses — a mistyped digit is caught here instead of coming back as a payer rejection days later.
+  - Opening a claim and downloading its CMS-1500 are now recorded in the audit log like every other clinical read and export.
+
+  See [Insurance claims](/practice/money/insurance-claims) and [Insurance settings](/practice/settings/insurance).
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform","Billing"]} description="v9.37.3">
+  ## Dropdowns open to their full height again
+
+  Every dropdown in ClinikEHR was opening a window one row tall. With no scrollbar drawn, most of them looked simply empty — and because a dropdown holds the page still while it is open, the screen also stopped scrolling and stopped responding to clicks until you pressed Escape. It read as the page freezing.
+
+  - **Dropdowns now open as tall as the space allows** and scroll inside it, wherever the control sits on the page. This affects every dropdown, search box and menu in the product, not one screen.
+  - **Menus opened near the bottom of a long list** no longer run off the screen with their last options out of reach.
+
+  If you were told a screen was "frozen" or a list was "blank", this was why.
+</Update>
+
+<Update label="September 5, 2026" tags={["Billing"]} description="v9.37.3">
+  ## Medicare Advantage enrolments can be named
+
+  **Settings** → **Insurance** → **Provider Enrollment** could not offer **Medicare Advantage** as a transaction type, even though enrolments of that type could reach your dashboard from the clearing house. One that did showed a blank transaction type when you opened it, which looked like a record with nothing attached.
+
+  - **Medicare Advantage** is now selectable when you create an enrolment.
+  - **An enrolment always names its transaction type**, including any type added by the clearing house in future — it shows the underlying code rather than nothing.
+  - **Provider Enrollment sheets** now open at the same size as the rest of the product, with the header and the action buttons fixed while the form scrolls between them.
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform"]} description="v9.37.3">
+  ## Mail sent to a tagged address now arrives
+
+  Anything after a **+** in an address is a tag — `reception+bookings@` is a message for `reception@`, labelled so you can see where it came from. Mail addressed that way was being refused instead of delivered, and the sender got a bounce.
+
+  - **It is delivered now**, to the mailbox before the **+**, with the tag kept on the message so you can still search and filter on it.
+  - **An address someone deliberately created always wins.** If a mailbox or alias is named with the tag in it, that is where the mail goes.
+  - **Nothing else was widened.** Mail to an address that does not exist is still refused, and a suspended mailbox still does not receive.
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform"]} description="v9.37.3">
+  ## Mail actions say what they did, and what they would not do
+
+  Archiving a conversation that was not in the Inbox appeared to work and changed nothing. So did moving a draft into the Inbox, and reporting your practice's own sent mail as spam.
+
+  - **Those actions are now declined, with the reason** — and on a mixed selection the rest still go through. You are told how many moved and why the others did not.
+  - **Restoring puts a conversation back where it belongs.** Something your practice only ever sent returns to **Sent**; a conversation you received returns to **Inbox**.
+  - **Reporting spam only changes a sender's standing for conversations that actually moved**, so a click that did nothing no longer quietly adds someone to a list.
+  - **Mailbox names are checked properly when you create one.** A name starting or ending with a dot, or with two dots in a row, used to be accepted by the form and refused when it was saved, with an error nobody could act on.
+
+  See [Mail](/practice/work/mail).
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform"]} description="v9.37.3">
+  ## Add your mailbox to a phone without phoning anyone
+
+  Setting up a mail app meant asking your practice for a server name and two port numbers, and the answer was the same for every clinic all along. Now the settings are on the screen where you create the app password, and an iPhone can configure itself.
+
+  - **The settings are shown with the password.** Your full address, the server name and both port numbers, at the moment you create an app password — the one moment you need them.
+  - **Set up on iPhone or iPad** installs a profile that fills in every setting. Open it on the device itself. It carries no password, so the device still asks for the one you just created.
+  - **Thunderbird and Outlook** already configured themselves from your address alone, and still do.
+
+  See [Mail](/practice/work/mail).
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform"]} description="v9.37.3">
+  ## The failed-send warning is one line, and you can shrink it
+
+  The red banner over your mail was four lines tall, stood over every folder on every visit, and could not be answered in any way. A warning you cannot acknowledge stops being a warning.
+
+  - **One line now.** How many messages could not be sent, and that they will not be retried. Select **Why** for the reason behind each one.
+  - **Minimise** shrinks it to one line that still names the count and still opens **Outbox** — it never goes away. **Show** brings it back, and so does any change to the failures, so a new one can never arrive already minimised. It applies to your own screen only.
+  - **The red count on Outbox** now appears in the folder chooser on a phone and tablet as well as the folder list on a computer.
+  - **It fits its column again** at both ends: it was overflowing its own pane by a few pixels on small screens, and stretching a single sentence across the full width on large ones.
+
+  See [Bounces, failures and what Mail does about them](/practice/work/mail-delivery).
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform"]} description="v9.37.3">
+  ## Mail no longer tells you to create a mailbox you already have
+
+  Opening **Mail** without being on any mailbox said **You do not have a mailbox yet** and offered **Set up a mailbox** — even when the practice had one, working, collecting mail. Following that button made a second address while the first stayed just as unread.
+
+  A shared mailbox is opened by the people added to it, so a mailbox with nobody on it exists without being reachable. Mail now tells those apart:
+
+  - **You do not have access to a mailbox** — one exists and you are not on it. The action is **Manage mailbox access**, which goes to the mailbox and its member list, and the note for anyone who cannot do it themselves asks an owner or manager to add them rather than to finish a setup that is already finished.
+  - **You do not have a mailbox yet** now means what it says: nobody has created one.
+  - **ClinikMail is not set up yet** is unchanged — no domain has been added.
+
+  See [Shared mailboxes](/practice/work/mail#shared-mailboxes).
+</Update>
+
+<Update label="September 4, 2026" tags={["Pharmacy","Hospital"]} description="v9.37.2">
+  ## Selling to a registered customer no longer blocks an inventory reset
+
+  **Reset inventory** exists so a pharmacy still onboarding can redo a bad catalogue import. It refuses when clinical records reference the stock — a vaccination, a ward administration, an adverse-event report — because wiping the lots behind those would destroy the traceability.
+
+  It was also refusing on ordinary till sales. Serving a customer you have registered by name attaches them to the sale, and that was being read as clinical history. A pharmacy that does the sensible thing and registers its regulars therefore lost the reset permanently, sometimes over a handful of sales against thousands of catalogue items.
+
+  Sales no longer count. A sale records who bought something, not what was administered to whom. Every clinical reason still refuses the reset, unchanged.
+</Update>
+
+<Update label="September 4, 2026" tags={["Pharmacy","Hospital"]} description="v9.37.2">
+  ## Report on any period you like, and export it as accounts
+
+  The pharmacy screens offered four fixed periods — today, last seven days, this month, all time. Anything else, like a single week or last quarter, could not be asked for at all. And the export listed products in one long list, which is not how anyone reads a shop that sells drugs, cosmetics, groceries and drinks out of the same till.
+
+  - **Pick any date range** on the Executive dashboard and on Sales. Both the figures and the export follow the dates you chose, and each screen prints the two dates it is showing so a screenshot says what it covers.
+  - **Export accounts** turns that period into a workbook that reads as books rather than a list: a summary line per category, every product grouped under its category with a subtotal for each, and a grand total. See [the Executive dashboard](/pharmacy/money/executive).
+  - **The Sales page can export again.** It downloads the same workbook for the range on screen, so the two screens cannot produce different books for one period.
+  - **A reconciliation sheet** explains why the category totals and the Revenue figure differ — tax, charges, fees and whole-sale discounts belong to no single product — and ends on a difference that should read 0.00. Where it does not, a sale carries a total its own lines do not add up to, and the sheet says so instead of adjusting it away.
+  - Downloads are now named for the period rather than the day you took them, so two exports on one afternoon no longer collide.
+
+  Products with no category are listed together as **Uncategorised**, last, and never folded into a real category. Setting categories on your inventory items is what shrinks that line.
+</Update>
+
+<Update label="September 4, 2026" tags={["Platform"]} description="v9.37.1">
+  ## Mail stops reloading itself while you are reading
+
+  Opening a conversation could make the whole Mail page reload underneath you a moment later — losing your place in the list and blanking the message you had just opened.
+
+  Nothing was wrong with the mail itself. Marking a conversation as read counts as a change, and every change was telling the page to rebuild itself from scratch — including the parts that had nothing to do with mail. Reading a message was enough to trigger it.
+
+  Mail now updates only what actually changed. New messages, read and unread counts, moves and labels all still appear on their own, as they did — without the page reloading around them.
+</Update>
+
+<Update label="September 4, 2026" tags={["Platform","Billing"]} description="v9.37.1">
+  ## Claims: edit everything, delete a draft, and dates that show the right day
+
+  Editing a claim only ever let you change the header — the diagnoses and service lines, the parts that decide what a payer pays, could not be touched once the claim existed. Editing now opens the same full form used to create one, with everything already filled in.
+
+  - **Delete a draft claim** from the claim's details. Only drafts can be deleted: once a claim has been filed it keeps its record, and the product says so rather than failing quietly.
+  - **Dates no longer read a day early.** A date of service or payment date is a calendar date, not a moment, and it was being shifted by time zone — so a claim showed one day and the payer had another.
+  - **"Not enough claim credits" now means exactly that.** It used to appear for problems credits could not fix, so practices topped up and nothing changed.
+  - **A monthly claim allowance is counted monthly**, including on annual plans, where a month's allowance was previously being spread across the whole year.
+
+  See [Insurance claims](/practice/money/insurance-claims).
+</Update>
+
+<Update label="September 3, 2026" tags={["Platform","Billing"]} description="v9.37.1">
+  ## A payment link no longer says "paid" when nothing has been paid
+
+  A practice sent a client an invoice, and the link to pay it showed the invoice as already settled — before the client had paid a penny. The page that clients land on after paying was showing a success message without ever checking whether any money had moved, so an old or re-opened link looked exactly like a completed payment.
+
+  - The page now **confirms the payment before it says anything**, and shows the amount that was actually charged so one payment cannot be mistaken for another.
+  - When it genuinely cannot check, it says so plainly and tells the client **not to pay again** until somebody has looked — an unclear answer is never rounded up to "paid", and never down to "failed".
+  - **A payment link can no longer be created for an invoice that is already paid in full**, or for more than an invoice still owes. This is what stops a client being charged twice for the same invoice.
+  - Links sent from invoice reminder emails carry the same check.
+
+  See [Record and collect payments](/practice/money/payments).
+</Update>
+
+<Update label="September 8, 2026" tags={["Platform","Solo & Team","Hospital","Billing"]} description="Marketing · Mail">
+  ## Campaigns actually send now — and Mail tells you when something did not
+
+  A campaign you scheduled used to sit on **Scheduled**. Not slowly — permanently. The queue behind it was never being emptied, and nothing said so. That is fixed, and so is a longer list of things the product knew and never told anybody.
+
+  - **Scheduled campaigns send.** Automations you build and set **Active** now enrol people and run. A/B tests genuinely send different subject lines to each group, and pick the winner from what actually happened.
+  - **Marketing results show booked appointments**, not just opens and clicks — with a plain statement of what that number does and does not claim.
+  - **Five starter templates** — welcome, recall, newsletter, announcement and review request — are there to begin from, on every plan.
+  - **"Manage your preferences" no longer unsubscribes you.** It opened a page that immediately opted the person out and told them so. It now shows their preferences and asks.
+  - **A message that could not be sent is impossible to miss.** A red count on **Outbox** kept separate from unread, a banner that names the reason in plain language, and a daily email so a failed message is noticed on a day nobody opens Mail.
+  - **Your storage is honest.** The banner tells you where you stand, sending stops at full — and receiving never does. Incoming mail keeps arriving and nothing is bounced.
+  - **Mail apps see your Sent folder** correctly, showing exactly what your recipient received rather than a reconstruction.
+  - **A practice that requires two-factor sign-in now decides, explicitly, whether mail apps may bypass it** — with the consequence written next to the switch instead of in a manual.
+  - **Contact imports are screened.** A list that looks bought or scraped is refused before it can damage your ability to reach anyone.
+
+  See [Send marketing campaigns](/practice/work/marketing) and [When a message does not arrive](/practice/work/mail-delivery).
+</Update>
+
+<Update label="September 7, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail">
+  ## A message to a patient does not have to be an email
+
+  Ordinary email is readable by every server it passes through. So when you write to a patient, Mail now files what you wrote as a **secure message** in their portal and emails them only a note saying it is there — the clinical content never travels as email at all. It is the default, and you choose it per message.
+
+  - **Direct email to a patient is still possible, and now it is recorded.** It needs the patient's consent, taken with the warning they are supposed to hear, and stored with the date, the method and **who took it**. Consent with nobody's name against it cannot be saved.
+  - **Recording consent does not change the default.** Every message still starts as a secure message; direct is a choice somebody makes each time.
+  - **A secure message goes to one patient on their own.** Sending one to several would either give the others a link they cannot open, or tell each of them who else is a patient at your practice. Mail says so and offers the two ways forward.
+  - **Attachments are not carried on a secure message yet**, and Mail refuses rather than quietly leaving the file behind.
+  - **Your mail app can set itself up.** Type your address into Thunderbird, Outlook or Apple Mail and the server settings arrive on their own — no hostname or port numbers read out over the phone.
+  - **Spam that is genuinely ambiguous gets a second opinion.** Only the small band of messages the filter is unsure about, and only ever to nudge a borderline verdict — it can never bury a message on its own.
+
+  See [Secure messages to patients](/practice/work/mail-secure-messages) and [When a message does not arrive](/practice/work/mail-delivery).
+</Update>
+
+<Update label="September 6, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail">
+  ## Your mail app can open your practice mailbox — and Mail tells you when a message did not arrive
+
+  Two halves of the same promise. A practice mailbox you can only read in one browser tab is not really your mailbox, and a message that says **Sent** while the recipient's server refused it is worse than no status at all.
+
+  - **Add the mailbox to Gmail, Apple Mail or Outlook.** An owner or manager issues an app password in **Settings** → **Communications & AI** → **Mail**, and you use it in place of your ordinary password. Everything you send from a mail app goes through the same checks, the same blocked-sender list and the same limits as a message written in ClinikEHR — including the moment where you can undo it.
+  - **Revoking a password stops that device within a minute**, and leaves every other device you have set up alone.
+  - **Sent and Delivered are now two different words**, because they are two different facts: one says the message left us, the other says the recipient's server accepted it.
+  - **A bounce shows as a bounce.** A permanent one tells you the address needs correcting; a temporary one tells you to wait, and deliberately does not send you hunting for a typo that is not there.
+  - **A message refused because the far end could not accept it securely says so plainly.** Mail never falls back to sending a clinical message unencrypted, and the address is almost always fine.
+  - **You are warned before you write to an address that has asked not to be contacted**, not after — because nothing bounces the second time.
+
+  See [When a message does not arrive](/practice/work/mail-delivery) and [Read your mail](/practice/work/mail).
+</Update>
+
+<Update label="September 5, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail · AI agents">
+  ## An agent can work your inbox — and it still cannot send anything on its own
+
+  The morning inbox is the job nobody schedules and everybody does twice: read it, file it, work out what is urgent, write the four replies that are the same four replies as yesterday. An agent can now do the reading and the filing, and leave the replies in Drafts for you.
+
+  - **Inbox triage starts the moment mail arrives.** It reads the conversation — not just the subject line — files it with the labels you already use, raises **Important** on what needs a person today, and leaves a draft reply where you would have written one.
+  - **It never sends.** Every reply it writes is a draft you open, edit and send yourself. Even where an agent is deliberately given the send step, it refuses unless someone approved that run — and it can only send a draft an agent wrote, never one of yours.
+  - **It never moves or deletes a message.** No Trash, no Archive, no folder change, not even for mail that looks like spam. A message you never learn arrived is worse than one filed in the wrong place.
+  - **It writes nothing clinical.** A symptom, a result or a medication question gets a label, an **Important** flag and a nudge to staff — never a draft reply to the patient.
+  - **You can always tell.** Anything an agent wrote or edited is marked **AI-assisted** in the conversation, permanently — the badge cannot be removed.
+  - **Agents follow your sending rules, and one stricter one.** Blocked senders, sending limits and storage apply exactly as they do to you. Where you would get a *warning* about sending identifiable patient information outside the clinic, an agent is refused outright.
+  - **Mail received** is now a trigger you can build on yourself, alongside **Invoice paid** and the rest.
+
+  See [Read your mail](/practice/work/mail) and [Give an agent tools](/platform/ai/agent-tools).
+</Update>
+
+<Update label="September 4, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail · Marketing">
+  ## Screens that keep themselves up to date
+
+  Two screens in the product were quietly showing you the past. A reply would land and the conversation you were reading would not move; a campaign would go out to three thousand people and the page would keep saying **Scheduled** over an empty report until you reloaded it.
+
+  - **A conversation you have open now updates itself.** A reply that arrives while you are reading appears at the bottom of the thread — no **Back**, no reload. The conversation list already did this; the message you are actually reading now does too.
+  - **Campaigns move on their own.** While a campaign is scheduled, sending or paused, its status and its figures update live — including one somebody else started, and including an automatic safety pause. The report you have open updates with it.
+  - **An automatic pause reaches you while you are looking at it.** A send stopped by a bounce or complaint rate used to be invisible until the next reload, which is exactly the wrong moment to find out.
+  - **Mail fits a phone properly.** The toolbar keeps to one row so the conversation list gets the screen — **Refresh** moved into the **More mail options** (⋮) menu on small screens — and long labels no longer crowd the subject out of a row.
+  - **Email marketing reads better on a phone and a tablet.** Headings start at a size that fits, the tabs are full-size touch targets, and the header lays out side by side from a tablet's width rather than stacking down the page.
+
+  See [Mail](/practice/work/mail) and [Email marketing](/practice/work/marketing).
+</Update>
+
+<Update label="September 3, 2026" tags={["Platform","Solo & Team","Hospital"]} description="AI agents">
+  ## Three new agent templates for the appointments that quietly cost you money
+
+  Cancellations, no-shows and patients who simply drift away are the three gaps most practices never get round to working. Each is now an agent you can install and run as-is.
+
+  - **Cancellation slot recovery** — a cancellation becomes a fillable opening. It checks the slot is still genuinely free before telling anyone, then hands the front desk a task naming the exact gap.
+  - **No-show recovery** — a warm same-day note with real alternative times, and no lecture. It stays silent if the patient has already rebooked, and flags a repeat pattern to staff rather than to the patient.
+  - **Recare** — finds patients due for a routine return, skips anyone already booked, and invites the rest.
+</Update>
+
+<Update label="September 3, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Marketing">
+  ## Campaigns now send from your address — and say so before you send
+
+  Setting up the address campaigns send from asked you to invent a new one, even when your practice already had a ClinikMail address it used every day. If your only address was a free one, the list of domains was simply empty, with nothing on screen explaining why.
+
+  - **Reuse an address you already have.** Any ClinikMail address on a domain your practice owns can become a sending identity in one click, under **Settings → Marketing**.
+  - **The screen now explains itself.** An address that cannot carry campaigns is still listed, with the reason next to it, instead of quietly missing.
+  - **Free ClinikMail addresses cannot send campaigns**, because they are shared with other practices — one practice's bulk mail could otherwise affect whether everyone else's appointment reminders reach the inbox. Your free address keeps working for everyday mail.
+  - **A campaign will not send without a valid sending address.** It stops and tells you which of the four things to fix, rather than going out from an address you did not choose.
+</Update>
+
+<Update label="September 3, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail">
+  ## Reading a message: pictures show, text is readable, and folders open
+
+  - **Pictures in newsletters and statements now appear.** Many messages build their images into the page background, and those were being dropped even after you had chosen to show pictures from that sender. They now appear as soon as you allow the sender — and when they are still blocked, they say **blocked** rather than **not available**, because those mean different things.
+  - **Messages are readable in dark mode.** A message written on a white background is now shown on one, so text that the sender coloured dark is no longer dark-on-dark.
+  - **Switching folder while reading a message works.** Clicking **Sent** — or any folder, label or search — while a conversation was open appeared to do nothing until you pressed **Back**. It now takes you straight there.
+</Update>
+
+<Update label="September 3, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail">
+  ## Email that belongs to a client now lives on their chart
+
+  A message from a client sat in an inbox, separate from the record it was about. Whoever was covering the next day had no way of knowing it existed.
+
+  - **Link a conversation to a client** from the message itself: open it, and under the subject select **Link to client**.
+  - **The chart has a Mail tab.** Everything linked to that person is listed there, and selecting one opens it back in Mail.
+  - **It is on all three charts** — the client record, the consultation chart and the ward chart — reading the same links, so an admitted patient's correspondence is there at the bedside.
+  - **You link the conversation, not the message** — every reply that arrives afterwards is on the chart too, without anyone linking it again.
+  - **A conversation can go on more than one chart.** Families share an email address, and a message from a parent about two children belongs on both.
+  - **Unlinking is a correction, not a deletion.** It stops showing on the chart, the mail is untouched, and it can be linked again.
+  - **Both linking and opening the chart's Mail tab are recorded in the audit log**, because putting correspondence on a chart puts it in front of everyone who can open the record.
+
+  See [Mail](/practice/work/mail), [The client chart](/practice/work/client-chart), [the consultation chart](/hospital/outpatient/consultation) and [the ward chart](/hospital/inpatient/admissions).
+</Update>
+
+<Update label="September 2, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Mail">
+  ## A team inbox your team can actually open
+
+  You could create a shared mailbox — `frontdesk@`, `billing@` — but there was no way to put anyone on it, so mail arrived at an address nobody could read.
+
+  - **Shared mailboxes now have a member list.** Each one shows **Who can open this mailbox** in **Settings** → **Communications & AI** → **Mail**, where an owner or manager adds and removes people.
+  - **A new shared mailbox works straight away** — whoever creates it is on it from the start.
+  - **The last person can't be removed while the mailbox is active**, because mail would keep arriving with nobody able to read it. Add someone else first, or suspend the mailbox to retire the address.
+  - **A mailbox with nobody on it says so**, instead of looking fine while going unread — which is what you will see if the only person on it has left.
+  - **The free @clinikmail.com card no longer offers a button that cannot work.** When free addresses are not available it says so up front, rather than failing after you select it.
+
+  See [Mail](/practice/work/mail).
+</Update>
+
 <Update label="September 1, 2026" tags={["Pharmacy","Desktop"]} description="Desktop v1.0.8">
   ## Receipt barcodes print again — and can no longer run off the paper
 

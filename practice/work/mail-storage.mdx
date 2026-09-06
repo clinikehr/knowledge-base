@@ -1,0 +1,96 @@
+---
+title: Mail storage, and what happens when it fills
+description: "How much mail storage your plan includes, what the warnings mean at 80%, 90% and full — and why incoming mail keeps arriving even when sending has stopped."
+icon: /images/icons/mail.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted mail access" />
+
+Every message and every attachment your practice keeps takes up space, and each plan includes a fixed amount of it. Mail warns you long before the amount runs out, and tells you exactly what stops when it does.
+
+<Path steps={['Sidebar', 'Mail']} />
+
+<TaskHeader before="A storage warning on your Mail screen" time="A few minutes" after="You know what is affected and how to free space" />
+
+## The one thing to know first
+
+<Note>
+  **Incoming mail never stops.** When storage runs out, your practice can no longer *send*. Everything addressed to you still arrives, and nothing is bounced or refused.
+</Note>
+
+This is deliberate. A message from a patient — a referral, a discharge summary, a photograph of an injury — often has nowhere else to go. Refusing it because a mailbox is full would lose clinical information permanently, so Mail does not do that. Sending is the thing that pauses, because a message you cannot send is one you can send later or another way.
+
+## What you see, and when
+
+| Storage used | What Mail shows | What changes |
+| --- | --- | --- |
+| Under 80% | Nothing | Nothing |
+| 80% or more | A banner above your mail | Nothing yet — this is notice |
+| 90% or more | A stronger banner | Nothing yet |
+| Full | A red banner, **sending paused** | You cannot send. Receiving continues. |
+
+The banner shows the amount used, the amount included in your plan, and **when that figure was last measured**. Storage is recalculated on a schedule rather than after every message, so the number is a recent measurement rather than a live one — and Mail says so instead of presenting it as up to the minute. If it has never been measured, the banner says that too, rather than showing a confident **0%**.
+
+## When sending is paused
+
+Two things are true at once, and both matter:
+
+- **You cannot send a new message** until you free space or move to a plan with more storage. The attempt is refused with an explanation rather than silently queued.
+- **Everything addressed to your practice still arrives**, is filed in **Inbox** as usual, and is fully readable. Nobody writing to you sees an error.
+
+Anything already in **Outbox** when sending pauses stays there until you have room again.
+
+## Freeing space
+
+Attachments are almost always the reason a practice runs out — a message is a few kilobytes, a scan is several megabytes.
+
+<Steps>
+  <Step title="Find the conversations with files">
+    In Mail, open the filters and select **Has attachment**. Sort by date and work backwards from the oldest.
+  </Step>
+  <Step title="Delete what you no longer need in Mail">
+    Anything already filed on a client's chart does not need a second copy in a mailbox. Deleting the message in Mail does not touch the chart.
+  </Step>
+  <Step title="Empty Spam and Trash">
+    Both clean themselves out after 30 days, but clearing them by hand releases the space now.
+  </Step>
+</Steps>
+
+<Warning>
+  **Deleted mail stops counting toward your storage immediately, but it is not destroyed.** Health records must be retained for seven years, so a deleted message leaves every view and stops using your allowance — we keep the retention copy at our own cost. That means deleting mail is always safe from a records point of view, and it is why your usage can drop the moment you clear a folder.
+</Warning>
+
+## Getting more room
+
+The amount of mail storage included rises with each plan. Where an upgrade would give you more, the banner names the plan by name. Upgrading takes effect immediately — sending resumes as soon as your usage is inside the new allowance.
+
+## If your practice goes far over
+
+There is a second, much higher line that exists only to stop a runaway sender flooding a mailbox — well beyond merely being full. Past it, incoming mail is **held at the sending server and retried** rather than delivered straight away. It is still not refused: the sending server keeps trying for days, so the mail is recoverable as soon as you free space. Mail says so explicitly if it ever happens.
+
+<AccordionGroup>
+  <Accordion title="Will a patient be told their message bounced?">
+    No. Nothing your practice does with storage causes a bounce. A person writing to you sees the same thing whether you are at 5% or at 100%.
+  </Accordion>
+
+  <Accordion title="Why does the banner say 'measured' with a time on it?">
+    Because it is a measurement, not a live counter. Recalculating after every message would be wasteful, so it runs on a schedule. Showing you when it ran is more honest than showing a figure that looks current and is not.
+  </Accordion>
+
+  <Accordion title="I freed space — why does the banner still show the old figure?">
+    The next recalculation has not run yet. The figure updates within the hour, and sending resumes as soon as it does.
+  </Accordion>
+
+  <Accordion title="Does the client portal count toward this?">
+    No. Secure messages in the client portal are stored separately and do not use your mail allowance.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: lib/mail/plan-limits.ts (mailQuotaPosture, MAIL_PLAN_LIMITS), lib/mail/quota.ts, lib/mail/plan-limits-server.ts (assertMailSendingNotFrozen), components/clinic/mail/mail-storage-banner.tsx */}

@@ -22,13 +22,13 @@ Then, in order down the page:
 
 | Block | What it shows |
 | --- | --- |
-| **Financials · \{range\}** | A range select — **Today**, **7 days**, **1 month**, **3 months**, **6 months**, **All time** — over the headline **Net profit (revenue − cost − expenses − stock loss)** and four cards: **Revenue**, **Cost of goods**, **Expenses**, **Stock loss** |
+| **Financials · \{from\} to \{to\}** | A date-range picker over the headline **Net profit (revenue − cost − expenses − stock loss)** and four cards: **Revenue**, **Cost of goods**, **Expenses**, **Stock loss**. The heading names the two dates it is showing, so a screenshot says what it covers |
 | The tile row | **This week net**, **Discounts today**, **Pending credit** ("Owed by customers"), **Stock at risk** or **Expiring soon**, **Low stock** ("Reorder needed"), **Rewards redeemed** |
 | **By branch** | One row per branch with its sales count and net — multi-branch, **All branches** view only |
-| **Reports** | Its own range select and four tabs, each with **Export Excel** |
+| **Reports** | Its own date-range picker, an **Export accounts** button, and four tabs each with **Export Excel** |
 | **Revenue mix this week** | **Medication \{n\}%** / **Retail \{n\}%** as a split bar |
 
-Each financial card carries a small percentage against the **immediately preceding window of the same length** — last week against the week before, not against a target. Green means the good direction, which for **Cost of goods**, **Expenses** and **Stock loss** is *down*. On **All time** the arrows disappear rather than invent a comparison, and they also hide when the previous window was zero.
+Each financial card carries a small percentage against the **immediately preceding window of the same length** — pick 1–14 March and it compares against 15–28 February, not against a target. Green means the good direction, which for **Cost of goods**, **Expenses** and **Stock loss** is *down*. The arrows hide when the previous window was zero, rather than divide by it.
 
 **Revenue mix this week** appears only once both sides have sold something. A bar reading 100% / 0% says nothing you did not already know, so the product does not draw it.
 
@@ -70,7 +70,7 @@ Exports live here on purpose — there is **no export button on the Sales page**
 
 <Steps>
   <Step title="Set the range on the Reports card">
-    It has its own select, separate from the financials above it, and it starts on **7 days**.
+    It has its own date-range picker, separate from the financials above it, and it opens on the last seven days. Click a start date then an end date; between the two clicks the page reports that single day, so the figures always match the control.
   </Step>
   <Step title="Pick the tab">
     **Top products** ranks products by revenue, with a **Margin** column. **Sales Report** is a bar chart plus a day-by-day table. **Customer Report** ranks customers by spend. **Payment Methods** is a doughnut with the money and share behind each tender.
@@ -79,6 +79,24 @@ Exports live here on purpose — there is **no export button on the Sales page**
     The button reads **Exporting…** while the workbook is built, then downloads. It is built from the same figures the screen is reading, so the file can never disagree with what you are looking at.
   </Step>
 </Steps>
+
+## Export the period as accounts
+
+**Export accounts**, beside the date-range picker, is the one to reach for when you are doing the books rather than skimming a tab. It covers exactly the window you picked and leads with three sheets:
+
+- **Category Summary** — one line per category, with its share of revenue.
+- **Sales by Category** — every product sold, grouped under its category, with a subtotal for each category and a grand total. The category is repeated on every row, so the sheet drops straight into a pivot table.
+- **Reconciliation** — the walk from those category totals to the money the till actually took, ending on a difference that should read **0.00**.
+
+The workbook also carries the **Sales**, **By Day**, **Payment Methods**, **Top Products** and **Net Position** sheets, and the file is named for the period rather than for the day you downloaded it — `pharmacy-accounting-2026-03-01_2026-03-31.xlsx` — so two exports taken the same afternoon do not collide.
+
+<Warning>
+**Categories come from your inventory items, and "Uncategorised" is a real answer.** A product lands there when nobody set a category on its inventory item, or when the catalogue entry is not linked to one. It is listed last no matter how large it is, and never folded into a real category — a total you cannot explain is worth more than a tidy one that is wrong. To shrink it, set categories under [Inventory settings](/pharmacy/settings/inventory).
+</Warning>
+
+<Note>
+**Why the Reconciliation sheet exists.** Category totals add up what the *products* sold for. The **Revenue** figures add up what the *sales* took, which also includes tax, additional charges, flat fees and any whole-sale discount — none of which belong to a single product. The sheet walks from one to the other so the two numbers stop looking like a contradiction. If the difference is not **0.00**, a sale carries a total its own lines do not add up to; the sheet says so rather than quietly adjusting it away.
+</Note>
 
 For anything deeper — dispensing, workload, staff, predictive — use the full report workbench on [Analytics](/pharmacy/money/analytics) rather than stretching these four tabs.
 
@@ -98,7 +116,7 @@ Three separate gates decide what this page shows you, and they fail in different
 | See the **Net profit** headline and the financial cards | Pharmacy Manager | **View the net position** |
 | See the **Margin** column on **Top products** | Pharmacy Manager, Inventory & Purchasing | **View cost prices and margin** |
 | See sales attributed to each cashier by name | Not on this page — it is the **By cashier** scope in [Analytics](/pharmacy/money/analytics) | **View per-cashier takings**, a default for no role or tier |
-| **Export Excel** on any tab | Everyone who can open the page | Role |
+| **Export Excel** on any tab, and **Export accounts** | Everyone who can open the page | Role |
 
 Without **View the net position** the financial block reads **"Financial figures are hidden — needs authorisation from your clinic owner."** Without **View cost prices and margin** the **Margin** column is not drawn. Neither degrades to a zero — a zero would be read as "we made nothing", which is a lie; absent says "not yours to see".
 

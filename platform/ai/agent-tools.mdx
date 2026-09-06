@@ -81,6 +81,27 @@ An **MCP** node lets an agent call a system you already use.
   Identifying details are stripped out of the arguments before anything is sent to a third-party server, so a connected tool sees the question but not the person it is about. That also means an outside tool cannot look someone up by name — design around it rather than trying to defeat it. See [AI safety and patient data](/platform/ai/safety).
 </Note>
 
+## Let an agent work your mailbox
+
+If your workspace uses [Mail](/practice/work/mail), an agent can be given the mailbox as a set of tools: **Search mail**, **Read a mail conversation**, **Brief a mail conversation**, **Classify a mail conversation**, **Draft a reply** and **Send an approved draft**. They appear under **Mail** in the tool picker.
+
+Four things are true of them however you wire the canvas, because they are enforced by the tools themselves rather than by the graph:
+
+- **Classifying files, it does not move.** An agent can apply your labels and raise **Important**. It cannot move a conversation to Trash, Spam or Archive, and it cannot delete one — so nothing an agent decides can make a message disappear before a person sees it.
+- **Drafting never sends.** **Draft a reply** writes into **Drafts**, marked **AI-assisted**, and stops.
+- **Sending needs a person's yes, every run.** **Send an approved draft** refuses unless a **User approval** step earlier in the run was actually approved — removing the approval node from the canvas does not remove the requirement. It can only send a draft an agent wrote; it cannot compose a new message, address a new recipient, or send a draft one of your team wrote themselves.
+- **An agent is held to your clinic's sending rules.** Blocked-sender list, sending limits, storage — all the same. The one place it is treated more strictly than a person: where you would get a *warning* about sending identifiable patient information to an outside address, an agent is refused. That is a judgement call, and an agent has no judgement to exercise and no accountability to carry.
+
+Ready-made: the **Inbox triage** template in the [gallery](/platform/ai/agent-templates). It is deliberately not given the send tool at all — it labels and drafts, and a person sends.
+
+<Note>
+  Whatever an agent can do with the mailbox, it is bounded by what the mailbox itself can do — including whether sending is available to your workspace yet. See the note at the top of [Read your mail](/practice/work/mail).
+</Note>
+
+<Warning>
+  None of the mail tools can be used by an agent [published as a public page](/platform/ai/publishing-agents). An anonymous visitor must never be able to make an agent read your mailbox, so they are not on the list a public agent may hold.
+</Warning>
+
 ## Reusable instructions and regression checks
 
 Two sheets in the canvas top bar are worth knowing about early:
@@ -132,4 +153,4 @@ Your deployed agents can themselves be offered to another system as tools, from 
 
 <StillStuck topic="a tool an agent will not call" />
 
-{/* source of truth: components/clinic/agents/agent-builder.tsx (Inspector, McpManager), node-catalog.ts; components/clinic/dashboard/settings/ai-settings.tsx; components/clinic/agents/mcp-expose-settings.tsx */}
+{/* source of truth: components/clinic/agents/agent-builder.tsx (Inspector, McpManager), node-catalog.ts; lib/agents/mail-agent-tools.ts; components/clinic/dashboard/settings/ai-settings.tsx; components/clinic/agents/mcp-expose-settings.tsx */}

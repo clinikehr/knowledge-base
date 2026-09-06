@@ -1,0 +1,120 @@
+---
+title: When a message does not arrive
+description: "What Sent, Delivered and bounced actually mean, why some addresses stop receiving mail, and what to do about each one."
+icon: /images/icons/mail.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted mail access" />
+
+Mail tells you what happened to every message you send, including the part that happens minutes later — after it has left you and the receiving server has decided what to do with it.
+
+<Path steps={['Sidebar', 'Mail', 'Sent']} />
+
+<TaskHeader before="A message you have sent" time="A minute" after="You know whether it arrived, and what to do if it did not" />
+
+## Sent is not the same as Delivered
+
+These are two different facts and Mail deliberately uses two different words for them.
+
+| What you see | What it means |
+| --- | --- |
+| **Waiting to send** | It is queued. You can still undo it. |
+| **Sending** | It is on its way out. |
+| **Sent** | It left us. Nothing has come back yet about whether it arrived. |
+| **Delivered** | The recipient's mail server accepted it. |
+| **This message could not be delivered** | It bounced permanently. Somebody needs to fix something. |
+| **This message has not been delivered yet** | It bounced temporarily. Usually nobody needs to do anything. |
+| **The recipient marked this as spam** | It arrived, and they reported it. |
+| **Send was undone** | You took it back inside the undo window. It is in Drafts. |
+
+Most messages move from **Sent** to **Delivered** within a few seconds. A message that stays on **Sent** is not a problem in itself — some mail servers simply never say anything back.
+
+<Note>
+  **Delivered means their server accepted it, not that anyone read it.** Mail does not tell you whether a message was opened, and that is on purpose: an open receipt on a message about somebody's health is a disclosure in its own right, so we do not collect one.
+</Note>
+
+## When a message bounces
+
+A bounce is the receiving server refusing the message. There are two kinds and they need completely different things from you.
+
+<AccordionGroup>
+  <Accordion title="This message could not be delivered — a permanent bounce">
+    The address was refused outright, and sending to it again will fail the same way. Almost always this is a wrong address: a typo, an old work address, or a mailbox that has been closed.
+
+    **What to do:** check the address against what the person actually gave you, correct it on their record, and send again. Do not simply resend to the same address — it will bounce again.
+  </Accordion>
+
+  <Accordion title="This message has not been delivered yet — a temporary bounce">
+    The receiving server refused it *for now*. Their mailbox is full, their server was busy, or it refused without saying why. The address is fine.
+
+    **What to do:** wait and send it again later. If it keeps happening over several days, reach the person another way and ask whether their mailbox is working.
+  </Accordion>
+
+  <Accordion title="Their mail server could not accept it over an encrypted connection">
+    This one reads like a bounce and is not about the person at all.
+
+    Mail sends everything encrypted in transit, and it does not fall back to sending in the clear. Some older or badly configured mail servers cannot accept an encrypted connection — so the message is not sent rather than being sent unprotected. Given that a clinic's mail carries health information, that is the trade we make deliberately.
+
+    **What to do:** the address is almost certainly correct, so do not go looking for a typo. Ask the person to raise it with whoever runs their email, or reach them another way — by phone, or through the client portal if they use it.
+  </Accordion>
+</AccordionGroup>
+
+## When an address stops receiving your mail
+
+To protect your practice's ability to reach everyone else, Mail stops sending to an address that has clearly refused you. An address is set aside when:
+
+- **it bounced permanently** — the address does not exist, so continuing to mail it does nothing but damage your reputation with the receiving networks; or
+- **somebody reported a message as spam** — they have told their provider they do not want mail from you.
+
+A set-aside address shows in red on the recipient line when you write to it, with a note that the person asked not to be contacted. The message can still be written; you are being told before you send, not after.
+
+<Warning>
+  **Nothing tells you again later.** Once an address is set aside, a message addressed to it will not produce a new bounce or a new error — there is nothing to bounce, because nothing is sent. The red recipient chip is the only warning you get, so it is worth reading.
+</Warning>
+
+Temporary bounces set an address aside too, but only briefly, and it starts receiving again by itself. Somebody's server having a bad afternoon should not cost them their mail for good.
+
+## When a message cannot be sent at all
+
+A bounce means the message left and was refused. A **failed send** is different: it never left. Mail tried, ran out of attempts, and stopped — so the message is sitting in **Outbox** and nothing will move it without you.
+
+Mail makes this hard to miss, and lets you say you have seen it:
+
+- **A red count on Outbox** in the folder list, separate from the unread number beside it. Unread mail and mail that will never send are different problems, so they never share a badge. On a phone or tablet the count sits on **Outbox** in the folder chooser at the top of the screen.
+- **A red banner above your mail, in every folder** — not only in Outbox. It says how many messages are affected in one line; select **Why** to read the reason for each in plain language: an address that does not exist, a message too large for the recipient, a practice whose outside sending is not switched on yet.
+- **Minimise** on that banner shrinks it to a single line that still says how many messages are affected and still opens **Outbox**. It never goes away — select **Show** to bring the full warning back, and it re-opens on its own the moment anything changes, so a new failure is never minimised in advance. It affects only your own screen, not your colleagues'.
+- **A daily email to the practice owner**, so a failed send is noticed even on a day nobody opens Mail. It is part of your daily digest email and follows the same **Daily digests** preference as the rest.
+
+<Warning>
+  **A failed message was not delivered to anybody.** It is not "sent and waiting" and it is not in **Sent**. Read the reason, fix what it names, and write the message again — resending the same one to the same address fails the same way.
+</Warning>
+
+The same daily email also tells you if messages carrying attachments were refused because the file could not be virus-checked. If that is a fault at our end rather than anything wrong with your files, it says so plainly and we are alerted at the same time — you do not need to report it.
+
+## What this does not cover
+
+- **Marketing campaigns keep their own list.** An unsubscribe from a campaign stops campaign mail, not the ordinary messages a clinician writes. They are separate on purpose, so opting out of a newsletter never quietly stops appointment mail.
+- **The Outbox holds a message until it has genuinely left.** Anything sitting in Outbox has not gone yet — the reason is shown against it. This is why a message that failed is never quietly sitting in Sent looking delivered.
+
+<AccordionGroup>
+  <Accordion title="Can I send to an address that was set aside?">
+    Not from Mail. If somebody has told their provider your mail is spam, sending again is both unwelcome and damaging to your practice's ability to reach everyone else. Ask them to write to you first; a message from them is the signal that they want to hear from you.
+  </Accordion>
+
+  <Accordion title="A message says Sent and the person insists they never got it">
+    Ask them to check their spam or junk folder first — that is where most of these are. If it is not there, their server never told us anything, which usually means it accepted the message and filed it somewhere unexpected. Sending it again rarely helps; phoning does.
+  </Accordion>
+
+  <Accordion title="Everything to one organization bounces at once">
+    That is their mail server rather than any one address. Check whether the bounces say the message could not be accepted over an encrypted connection — if so, their server cannot do encrypted mail, and nothing at your end will change that.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/mail/mail-view-model.ts (deliveryPresentation), mail-reading-pane.tsx (DeliveryStatus), mail-recipient-input.tsx; failed-send surfacing: lib/mail/mail-health.ts (outboundFailureSentence), mail-outbox-alert.tsx, mail-folder-rail.tsx, and the mail-health-digest function; delivery outcomes and suppression classification: supabase/functions/mail-events/normalize.ts */}

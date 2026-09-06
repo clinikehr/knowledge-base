@@ -95,9 +95,45 @@ Check before the appointment, not after: an **Ineligible** badge on the morning 
     Open a draft's **Actions** menu and choose **Submit to payer**, or tick several and use **Submit \{n\} to payers**. The confirmation says what it costs: "Each claim is sent to its payer and uses one claim credit."
   </Step>
   <Step title="Follow the status">
-    **Check status** refreshes a submitted claim. **Reopen for correction** turns a rejected or denied claim back into a draft — "Claim reopened as draft — correct it and resubmit". Only drafts are editable: fix the codes, member ID or service lines, then submit again. A claim that must be undone after submission is **voided** in ClinikEHR (with a required reason, kept in the audit trail) — voiding here does not void it at the payer, so follow their replacement process too.
+    **Check status with payer** asks the payer for the claim's current status. It asks you to confirm first, because each check uses one claim credit, and payers usually need two to three days after submission before they can answer. It is not offered on a claim the payer rejected on acknowledgement — there is nothing to fetch for one of those, so use **Reopen for correction** instead. **Reopen for correction** turns a rejected or denied claim back into a draft — "Claim reopened as draft — correct it and resubmit". Only drafts are editable, and **Edit** reopens the full CMS-1500 form the claim was built in — the same four steps, the same live ICD-10 and CPT search, the same date and modifier fields — filled with what was saved. Correct the diagnoses, the service lines, the payer or the member ID, then submit again. A claim that must be undone after submission is **voided** in ClinikEHR (with a required reason, kept in the audit trail) — voiding here does not void it at the payer, so follow their replacement process too.
   </Step>
 </Steps>
+
+## Telehealth claims
+
+A telehealth visit needs two things to agree, and a payer will deny the claim if they do not.
+
+**Place of service** — set on the claim, under **Claim Settings**:
+
+| Code | Use it when |
+| --- | --- |
+| **10 — Telehealth Provided in Patient's Home** | The client was at home. This is the usual one. |
+| **02 — Telehealth Provided Other than in Patient's Home** | The client was somewhere else — at work, in another facility. |
+
+**A modifier on each service line** — set on the line itself, under **Modifiers**:
+
+| Modifier | Use it when |
+| --- | --- |
+| **95** | Real-time video and audio. The usual one. |
+| **93** | Real-time audio only — a telephone visit. |
+| **FQ** | Audio-only behavioural health, where your payer asks for this instead of 93. |
+| **FR** | A supervising practitioner joined by audio and video. |
+
+<Note>
+  **The place of service is suggested from the appointment.** If the appointment was booked as an online or video visit, the claim starts on **10** rather than **11 — Office**. It is only ever a starting point — change it if the client was not at home.
+</Note>
+
+<Warning>
+  **A telehealth place of service with no telehealth modifier is one of the commonest denials.** If you set place of service 02 or 10 and no service line carries 93, 95, FQ or FR, the claim shows a warning before you file it. It does not stop you — some payers do not want a modifier at all — but check your payer's rule before ignoring it.
+</Warning>
+
+<Note>
+  **If the code you need is not listed, type it.** Both **Place of Service** and **Modifiers** accept anything you enter, so a code your payer asks for is never blocked by our list. An unrecognised place of service is flagged so a typo does not slip through — the claim still sends it exactly as you typed it.
+</Note>
+
+<Note>
+  **GT is not the same as 95 any more.** It has been replaced by 95 for most payers and survives only with some institutional and Medicaid plans. Use 95 unless your payer specifically asks for GT.
+</Note>
 
 ## Reconcile what the payer sends
 
@@ -151,6 +187,10 @@ See [Staff permissions](/platform/team/permissions).
 
   <Accordion title="Not enough claim credits">
     Submission consumes a credit per claim, and the toast names how many you need against how many you hold. The claim is kept as a draft — top up, then submit it from **Claims**. See [Plans](/platform/plans/overview).
+
+    **This message now means what it says.** It used to appear for problems credits could not fix — a plan that does not include electronic claims, or a subscription that did not load — so practices bought credits that changed nothing. Those cases say what is actually wrong instead. If you are told to top up, topping up is genuinely the fix.
+
+    **Your monthly allowance is counted per month.** If you are billed annually, the included claims reset every month on the same day of the month your plan renews — not once a year.
   </Accordion>
 
   <Accordion title="The eligibility check says Ineligible">
@@ -186,7 +226,15 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Can I delete a claim?">
-    Only while it is a draft — "This permanently removes the draft and its service lines." Once a claim has been submitted it is voided, never deleted, so the trail stays intact.
+    Only while it is a draft. Use the delete icon in the claim's detail panel, or **Delete draft** on the row's **Actions** menu; both ask you to confirm first, and the claim goes with its diagnosis codes, its service lines and any attachments prepared for it. The control is not shown on a claim that has left draft. Once a claim has been submitted it is voided, never deleted, so the trail stays intact.
+  </Accordion>
+
+  <Accordion title="Can I attach documents to a claim?">
+    Yes — while it is still a draft. Open the claim and use **Attach (275)** to add a PDF, PNG, JPEG or TIFF of up to 64 MB; it is sent to the payer together with the claim when you submit, so the control is only offered before submission. To add documents to a claim that has already gone, use **Reopen for correction**, attach, and submit again. The payer network keeps an uploaded file for 45 days, so attach close to when you will submit.
+  </Accordion>
+
+  <Accordion title="A claim was refused for credits. Where do I top up?">
+    The message offers **Get credits**, which opens your dashboard on the **Subscription** tab where claim credits are bought. Nothing about the claim is lost — it stays a draft and can be submitted once credits are available.
   </Accordion>
 
   <Accordion title="What does Partial mean on a claim?">

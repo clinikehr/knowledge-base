@@ -1,0 +1,184 @@
+---
+title: Automated journeys
+description: "Set up a sequence of emails that sends itself when a new contact arrives, and understand the rules a journey always obeys."
+icon: /images/icons/sitemap.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Staff granted marketing access" note="How many journeys can be active at once differs by plan. Drafts are never counted." />
+
+A journey is an automation: something happens, and a sequence of emails goes out on its own, without anyone opening [Marketing](/practice/work/marketing) again. A welcome series for new enquiries is the usual first one.
+
+<Path steps={['Sidebar', 'Marketing', 'Journeys']} />
+
+<TaskHeader
+  before="A sending address on a domain your practice owns"
+  time="10 minutes for a first journey"
+  after="An active journey that enrols every new contact from the moment you turn it on"
+/>
+
+## What you're looking at
+
+The **Journeys** tab lists each journey as a card, with its steps beneath it in the order they run, top to bottom.
+
+| On the card | What it tells you |
+| --- | --- |
+| The name, and a status badge | **Draft**, **Active**, **Paused** or **Archived** |
+| **Starts when** | The event that enrols someone |
+| **enrolled** | How many people are part-way through it right now |
+| **Activate** / **Pause** / **Edit** | The actions available to you, if you have permission to manage journeys |
+
+Above the cards sits a line like **2 of 3 journeys active. Drafts are never counted.** A workspace with none yet sees **No journeys yet** and a description of what a journey is for, rather than an empty grid.
+
+## What starts a journey
+
+A journey has one trigger, chosen when you build it. Today the only trigger that fires is **A new contact is added** — a new contact reaching your [Contacts](/practice/work/contacts) list, however it got there.
+
+## Build the sequence
+
+A journey is a list of steps, run top to bottom. There are four kinds.
+
+| Step | What it does |
+| --- | --- |
+| **Send an email** | Sends one email. It carries its own subject and body, written and saved with the step. |
+| **Wait** | Holds the person for a set number of hours or days before the next step. |
+| **Branch** | Splits the sequence in two, and the steps that follow are indented under it. |
+| **Exit** | Ends the journey for that person. |
+
+<Steps>
+  <Step title="Open the Journeys tab">
+    Select **Journeys** in **Marketing**, then start a new journey or select **Edit** on an existing one.
+  </Step>
+  <Step title="Name it and choose the trigger">
+    Give it a name your colleagues will recognise on the card, and set **Starts when** to **A new contact is added**.
+  </Step>
+  <Step title="Add the steps in order">
+    Add **Send an email**, **Wait**, **Branch** and **Exit** steps in the order you want them to run. The timeline redraws as you go, so what you see is the order people will experience.
+  </Step>
+  <Step title="Write each email">
+    Every **Send an email** step has its own subject and body, written in the journey editor and saved with the step. There is no separate campaign to go and find — the email belongs to the step.
+  </Step>
+  <Step title="Save it as a Draft">
+    A journey stays **Draft** until you activate it. A draft enrols nobody and sends nothing, so you can leave one half-written for as long as you like.
+  </Step>
+</Steps>
+
+## Turn it on
+
+<Steps>
+  <Step title="Select Activate">
+    A confirmation names exactly what is about to start: from now on, this journey runs automatically whenever its trigger happens, and every email it sends obeys the same consent and frequency rules as a campaign.
+  </Step>
+  <Step title="Confirm with Activate journey">
+    The status badge changes to **Active** and the journey starts enrolling.
+  </Step>
+</Steps>
+
+Activation is refused if any **Send an email** step has no content written yet, and the message names the step that is missing it. A journey that reaches an empty step cannot send, and finding that out from a contact is worse than finding it out from the button.
+
+<Warning>
+  **Activating starts sending real email to real people.** Every email a journey sends counts against your monthly marketing send allowance in exactly the same way a campaign does. Read the confirmation before you accept it.
+</Warning>
+
+### Enrolment is not retroactive
+
+Activating a journey today does not email the contacts you added last month. Only contacts added from the moment of activation are enrolled.
+
+This is deliberate. A journey that reached back into your history would mail your entire list at once the first time you switched it on — the opposite of what a drip sequence is for, and the fastest way to a wave of complaints. If you want to reach the people already on your list, send a [campaign](/practice/work/marketing) to a segment instead.
+
+## The rules a journey always obeys
+
+These apply to every journey on every plan. None of them is a setting, and none can be switched off.
+
+- **An unsubscribe exits every journey the person is in.** Not at the next step and not at the end of the current branch — they are removed from all of them, within minutes. Someone who has opted out never receives the rest of a sequence.
+- **Two marketing emails in any seven days, across everything.** The limit is counted across all your campaigns and all your journeys together, not per journey. When a journey step meets the limit, it **waits** for a slot and sends afterwards — it does not skip the email. A skipped welcome message is a hole in the middle of the story you thought you were telling.
+- **Someone marked do-not-contact, or who has already unsubscribed, is never enrolled at all.**
+- **Each person receives each journey email once.** A retry after an interruption resumes where it left off rather than starting the sequence again.
+
+## Pause, resume and archive
+
+**Pause** holds the journey. People part-way through stay exactly where they are and carry on from that point when you set it back to **Active** — pausing does not discard anyone's progress, and it does not restart them at step one.
+
+**Archive** ends the journey. It stops enrolling and stops running.
+
+### When a journey pauses itself
+
+If a journey stops because one of its steps is broken — its email no longer exists — the journey shows as **Paused** with the reason on its card. Nobody is silently advanced past the missing email, because that would deliver a sequence with a gap in the middle that nobody could see.
+
+Open the journey, fix or replace that step, and select **Activate** again. Enrolled contacts continue from where they stopped.
+
+## How many journeys you can run
+
+| | Free | Starter | Essential | Team |
+| --- | --- | --- | --- | --- |
+| Active journeys | 1 | 3 | 10 | Unlimited |
+
+Only **Active** journeys count. Drafts and archived journeys are never counted, so you can build and keep as many as you like and choose which ones are running. If you are at the limit, pause one before activating another, or see [Change your plan](/platform/plans/change-plan).
+
+## Who can do this
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| View journeys and their steps | Staff granted marketing access | Permission |
+| Build and edit a journey | Staff granted marketing access | Permission |
+| Activate or pause a journey | Owner, manager, or staff explicitly granted it | Permission |
+
+Building a journey and turning one on are separate permissions, for the same reason that writing a campaign and sending one are: drafting is reversible and switching on an automation that mails people for months is not. See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The journey's badge reads **Active**, and the counter above the list has gone up by one.
+- Add a test contact to your **Contacts** list. Within a few minutes the journey's **enrolled** count includes them.
+- The first email arrives at that contact's address, with the subject you wrote on the first **Send an email** step.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Activate is refused and names a step">
+    That step is a **Send an email** step with no content saved yet. Open the journey, write its subject and body, save, and activate again.
+  </Accordion>
+
+  <Accordion title="I activated it and nobody was enrolled">
+    Enrolment starts at activation and is never backdated — contacts added before you turned it on are not enrolled. Add a contact now and watch the count.
+  </Accordion>
+
+  <Accordion title="Activate is greyed out or missing">
+    Either you do not have permission to activate journeys, or you are already at your plan's limit for active journeys. The counter above the list shows which.
+  </Accordion>
+
+  <Accordion title="A journey is Paused and nobody paused it">
+    A step in it is broken — its email no longer exists. The reason is on the card. Fix that step and activate again.
+  </Accordion>
+
+  <Accordion title="A contact is enrolled but has not received anything">
+    They may be waiting on a **Wait** step, or waiting for a sending slot because they have already had two marketing emails in the last seven days. The email is not lost; it goes out when a slot frees up.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can someone be in more than one journey at a time?">
+    Yes. The two-emails-in-seven-days limit still applies across all of them together, so being in three journeys does not mean three times as much email.
+  </Accordion>
+
+  <Accordion title="Does editing an active journey affect people already in it?">
+    They continue from the step they are on. Changing a step they have already passed does not send it to them again.
+  </Accordion>
+
+  <Accordion title="Does an unsubscribe from a journey also stop appointment emails?">
+    No. Marketing opt-out is separate from the everyday messages your practice sends about someone's care. Opting out of a sequence never quietly stops an appointment reminder.
+  </Accordion>
+
+  <Accordion title="Can a journey start from something other than a new contact?">
+    Not yet. **A new contact is added** is the only trigger that fires today.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/marketing/journey-canvas.tsx, marketing-content.tsx, lib/marketing/journey-engine.ts, lib/marketing/gate.ts, lib/marketing/plan-limits.ts, types/marketing.ts */}
