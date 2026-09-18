@@ -35,7 +35,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 | **Expiry & Waste** | Stock actually written off in the period | — |
 | **Predictive Analysis** | Demand, revenue and stock forecasts | — |
 
-Open one and every report has the same shape, which is the point of one workbench: a period select, scope tabs where the report has them, summary tiles, a chart over time, a breakdown chart, and a data table with **Over time**, **Breakdown** and **Summary** views plus an **Export** button.
+Open one and every report has the same shape, which is the point of one workbench: a date-range picker, scope tabs where the report has them, summary tiles, a chart over time, a breakdown chart, and a data table with **Over time**, **Breakdown** and **Summary** views plus an **Export** button.
 
 **A report with nothing in it says so rather than drawing an empty chart** — "Nothing to tabulate", with "This report returned no rows for \{period\}." underneath. On a new pharmacy that is the normal answer, not a fault.
 
@@ -43,10 +43,12 @@ Open one and every report has the same shape, which is the point of one workbenc
 
 <Steps>
   <Step title="Choose a report from the index">
-    Select its card. The workbench opens on the **Last 30 days**.
+    Select its card. The workbench opens on the last thirty days.
   </Step>
   <Step title="Set the period">
-    The select offers **Last 30 days**, **Last 90 days** and **Last 12 months**. There are three, deliberately — a free-form date range on an aggregate invites comparisons between windows of different lengths.
+    A date-range picker sits on the right. **Pick any window** — click a single day for that day alone, or a start day and an end day for a span of any length. It opens on the last thirty days. Periods longer than twelve months are shortened for you, so a very wide window still returns.
+
+    Pick the window to match the question. A rolling thirty days tells you the current shape; a named month — 1 to 31 August — is what you want when someone asks about August. Comparing two periods means reading the chart over a window that contains both, not switching back and forth: the tiles always total the whole period.
   </Step>
   <Step title="Pick a scope, if the report has tabs">
     **Revenue** splits **Invoices** (what you billed) from **Payments** (what actually arrived). **POS Sales** splits **Takings**, **Transactions** and **By cashier**. A report with one scope shows no tabs at all.
@@ -74,7 +76,7 @@ These two are confused constantly, so read this once.
 
 <Columns cols={2}>
   <Card title="Expiry Risk — the future" icon="/images/icons/triangle-exclamation.svg">
-    A **snapshot**. What is on your shelves right now that will not sell through before it expires. It has **no period select** at all — in its place the header reads **As it stands now**, because a period control that changed nothing would be a lie you could not see. Act on it: discount, transfer, return.
+    A **snapshot**. What is on your shelves right now that will not sell through before it expires. It has **no date picker** at all — in its place the header reads **As it stands now**, because a period control that changed nothing would be a lie you could not see. Act on it: discount, transfer, return.
   </Card>
 
   <Card title="Expiry & Waste — the past" icon="/images/icons/trash-can.svg">
@@ -157,7 +159,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Can I pick my own date range?">
-    No — the periods are **Last 30 days**, **Last 90 days** and **Last 12 months**. Anything longer is shortened, and the footer says so. For a specific window, export the view and filter it in your spreadsheet.
+    Yes. Pick the start day and the end day in the date-range picker and every figure on the report covers exactly that window — a named month, a quarter, or a single day. Anything longer than twelve months is shortened, and the footer says so.
   </Accordion>
 
   <Accordion title="Why do Revenue and POS Sales disagree?">

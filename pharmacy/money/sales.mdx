@@ -18,7 +18,7 @@ import { StillStuck } from '/snippets/support.mdx';
 
 The header reads **Sales Dashboard** — "Track and analyze your pharmacy sales performance" — with a date-range picker and three buttons: **Export**, **Debtors** and **New Sale**. The picker opens on the last thirty days.
 
-Everything below the period select obeys it. Change the period and every tile, chart and table on the page re-reads.
+**Pick any window.** Click a single day to see just that day, or click a start day and an end day for a custom range spanning as many days as you like — the picker is not limited to a fixed length. Every tile, chart and table on the page re-reads for exactly the window shown.
 
 | Tab | What is on it |
 | --- | --- |
@@ -27,10 +27,10 @@ Everything below the period select obeys it. Change the period and every tile, c
 | **Products** | **Product sales** — units, line revenue and margin per product |
 | **Analytics** | **Daily Sales Comparison**, **Revenue Trend** and a **Performance Summary** |
 
-**A brand-new pharmacy** sees the tiles at zero, **No sales found for this period** on the Overview list, **No sales found — Try adjusting your search or filter criteria** on **Recent Sales**, and **No products sold in this period.** on **Products**. Nothing is broken; there is simply nothing yet.
+**A brand-new pharmacy** sees the tiles at zero, **No sales found for this period** on the Overview list, **No sales found — Try adjusting your search or filter criteria** on **Recent Sales**, and **No products sold in this period.** on **Products**. Nothing is broken; there is simply nothing yet — the same empty states appear if you pick a real day that happened to have no sales.
 
 <Note>
-  **There is no export button on this page**, and people hunt for one. Exports live in two other places on purpose: the **Reports** card on the **Executive** dashboard, and every report in [Analytics](/pharmacy/money/analytics), which offers **Export** as CSV or Excel for the view you are looking at.
+  **Export** downloads the accounting workbook — category summary, per-product detail and a reconciliation to the till — for exactly the window shown above it. It is the same workbook the **Executive** dashboard's **Reports** card produces, and [Analytics](/pharmacy/money/analytics) offers further reports (top products, by cashier, payment methods) as CSV or Excel for the view you are looking at there.
 </Note>
 
 ## Read the overview
@@ -103,7 +103,7 @@ Both are set per person by an owner or manager — see [Staff permissions](/plat
 
 ## Check it worked
 
-- Change the period select and every tile, chart and table re-reads together — if one figure looks stuck, it is the period you are reading, not the page.
+- Change the period and every tile, chart and table re-reads together — if one figure looks stuck, it is the period you are reading, not the page.
 - **Total Revenue** for **Today** matches what the till has taken, with refunds already netted out.
 - **Debtors** opens the list of customers with an unsettled balance from a part-paid sale, headed **Total outstanding**.
 
@@ -115,7 +115,7 @@ Both are set per person by an owner or manager — see [Staff permissions](/plat
   </Accordion>
 
   <Accordion title="A sale I know we took is not in the list">
-    Widen the period select — it defaults to a recent window — and set the status filter back to **All Status**. If it still is not there, it was captured offline and has not synced yet; check the till's status button reads **Synced**.
+    Widen the date range — it opens on the last thirty days — and set the status filter back to **All Status**. If it still is not there, it was captured offline and has not synced yet; check the till's status button reads **Synced**.
   </Accordion>
 
   <Accordion title="The Net position card is missing entirely">
@@ -139,8 +139,8 @@ Both are set per person by an owner or manager — see [Staff permissions](/plat
 ## FAQ
 
 <AccordionGroup>
-  <Accordion title="Why is there no export button on Sales?">
-    Because exporting was deliberately moved to the two places built for it: the **Executive** dashboard's **Reports** card, which exports top products, sales, customers and payment methods, and the report workbench in [Analytics](/pharmacy/money/analytics), where every report offers **Export** as CSV or Excel. Keeping one copy of that logic is why the figures agree wherever you take them from.
+  <Accordion title="What does Export on Sales give me?">
+    The same accounting workbook as the **Executive** dashboard's **Reports** card, for exactly the period you have picked here — a category summary, the per-product detail underneath it, and a reconciliation back to the till total. For a plain list of top products, sales, customers or payment methods instead, use the report workbench in [Analytics](/pharmacy/money/analytics), which reads from the same figures so nothing disagrees wherever you take it from.
   </Accordion>
 
   <Accordion title="Do refunds reduce the figures on this page?">

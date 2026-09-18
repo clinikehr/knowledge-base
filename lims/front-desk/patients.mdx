@@ -40,7 +40,7 @@ Two tabs follow: **All Patients** is the register itself, **Analytics** breaks i
 
 **The register's toolbar** has **Search patients...**, a **Patient status** filter (**Active**, **Inactive**, **Prospective**, **Archived**), a **Billing type** filter (**Self pay**, **Insurance**), a **Waitlist** toggle that shows only self-registered requests awaiting a decision, and **Columns**, which lists every column under **Visible Columns**. Each filter shows a count while it is on and offers **Clear filter**; **Clear all** appears once any is set. **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit** are shown by default. **Lab Tests**, **Blood Type**, **Genotype**, **Email**, **Occupation**, **Country**, **Triages** and **Prescriptions** are hidden until you switch them on — turn on **Lab Tests** if you want to see at a glance who your repeat testers are.
 
-**Each row's menu** offers **View details**, **Edit**, **Send Consent**, and on a waitlist row, **Approve request** and **Decline request**.
+**Each row's menu** offers **View details**, **Edit**, **Send to patient**, and on a waitlist row, **Approve request** and **Decline request**. **Send to patient** opens the same three-step sheet the patient's own record uses, so you can send a form, a signature request or a consent document without leaving the register.
 
 **The empty state.** A brand-new lab does not get a blank table. It gets a panel headed "Your patient registry is empty" with a primary button, **Explore with sample patients** — "About 60 seconds · nothing is saved to your clinic" — plus two cards, **Import patients** and **Add your first patient**. A green note underneath makes the promise explicit: "We never auto-create patient records on your behalf." Nothing in this register exists unless a person put it there.
 
@@ -111,7 +111,7 @@ Role is the lever here too. The grantable lab permissions cover results, turnaro
 | **New Patient** and **Import** | Anyone who can open the register | Role → route |
 | **Edit** an existing record | Owner, Manager, Receptionist, Radiologist, Radiology Technician, Doctor, Biller, Employee | Role |
 | **Approve request** / **Decline request** | The same people | Role |
-| **Send Consent** | Anyone who can open the register | Role → route |
+| **Send to patient** | Anyone who can open the register | Role → route |
 | **Edit** as a Lab Scientist, Phlebotomist or Accountant | Nobody — the row opens read-only instead | Role |
 
 A **Lab Scientist** or **Phlebotomist** therefore reads the register, and may add a patient, but cannot correct an existing one — selecting a row opens the record read-only. That is by design: a name corrected at the bench is a name that no longer matches the request form. An **Accountant** is outside the edit list for the same structural reason.

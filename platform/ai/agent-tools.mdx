@@ -102,6 +102,60 @@ Ready-made: the **Inbox triage** template in the [gallery](/platform/ai/agent-te
   None of the mail tools can be used by an agent [published as a public page](/platform/ai/publishing-agents). An anonymous visitor must never be able to make an agent read your mailbox, so they are not on the list a public agent may hold.
 </Warning>
 
+## Let an agent handle appointment reminders
+
+Three scheduling tools work with the reminder settings on a client's record — the same **Upcoming appointments**, **Cancellations** and **Incomplete documents** switches you see under Notifications when you edit a client (see [Add your first client](/practice/get-started/add-clients)).
+
+| Tool | What it does |
+| --- | --- |
+| **Get reminder settings** | Reads whether each switch is on, when the appointment reminder goes — **30 minutes before**, **1 hour before**, **24 hours before**, **2 days before** or **1 week before** — and whether someone actually chose it. |
+| **Change reminder settings** | Switches any of the three on or off and sets the reminder timing, exactly as a team member would on the client record. |
+| **Send appointment reminder** | Sends the patient one reminder for an appointment by email or text, to the contact already on file. |
+
+What holds however you wire the canvas, because the tools enforce it themselves:
+
+- **"Not chosen yet" is not "off".** A switch nobody has ever set is reported as *not chosen yet, defaults apply* — the client is reminded 24 hours before and still gets cancellation and incomplete-document emails. The agent does not mistake an untouched setting for a client who said no.
+- **Changing settings needs a person's yes.** **Change reminder settings** refuses unless a **User approval** step earlier in the run was approved, and changes only what it was asked to. Whatever it sets is recorded as the client's choice, and the change appears in the audit log as made by an AI agent.
+- **Only the five timings exist.** An agent cannot invent "3 days before" — anything else is refused.
+- **A reminder respects the client's settings.** If the client's **Upcoming appointments** switch is off, your clinic's **Email appointment reminders** switch is off, or email notifications are off for that appointment, **Send appointment reminder** refuses and sends nothing.
+- **One reminder per appointment.** If the automatic reminder has already gone — or an agent already sent one — nothing more is sent, even with an approval. The automatic reminder likewise skips a client an agent has already reminded. To tell a client something else, use a message tool instead.
+- **"Not sent" is never reported as sent.** Where messages cannot go out, the tool says so.
+
+None of these three can be used by an agent [published as a public page](/platform/ai/publishing-agents).
+
+## Let an agent manage appointments and the calendar
+
+**Appointments.** **Check availability** and **Book appointment** offer and book only times your booking page would offer — a time inside Out of Office is never offered, and one the agent names without checking is refused. For a visit that already exists:
+
+| Tool | What it does |
+| --- | --- |
+| **Reschedule appointment** | Moves one visit to a time **Check availability** offers. The provider may change to one who is free; the visit's room or equipment is booked again for the new time. |
+| **Cancel appointment** | Cancels one visit. **notify_client** decides whether the client gets your cancellation email, and the agent is told which happened. A refund due under your booking terms is settled as it is when a client cancels in the portal. |
+| **Confirm appointment** | Confirms one scheduled visit. |
+
+Both **Reschedule appointment** and **Cancel appointment** follow your online cancellation rules — the notice window in your client portal settings — because an agent acts for the client. A class booking, or a visit that is completed or in progress, is refused.
+
+**Events, tasks and Out of Office** — for agents your team uses, never for a public agent:
+
+| Tool | What it does |
+| --- | --- |
+| **List calendar** | Appointments, events, tasks and Out of Office for up to 31 days, in your clinic's time zone. Out of Office memos are included only for an agent built by an owner or manager. |
+| **Create event** · **Update event** · **Cancel event** | The same events you create from the calendar: chosen staff or **All staff**, repeats and a reminder. Everyone added is told once, with a calendar invite. |
+| **Create task** · **Update task** · **Complete task** | The same tasks as the calendar: one per person, repeats and a reminder. The notice never says what the task is. |
+| **Create Out of Office** · **Cancel Out of Office** | Blocks booking for the clinic, all staff, chosen staff, or rooms and equipment. |
+
+What holds however you wire the canvas:
+
+- **An agent acts as the person who built it.** It creates what that person could create in this clinic, and an agent whose builder is no longer on the team cannot change the calendar. Blocking colleagues, rooms or the whole clinic, and cancelling Out of Office, need an agent built by an owner or manager.
+- **Cancelling appointments for Out of Office always takes two steps.** The first call changes nothing and returns how many appointments and classes would be cancelled. Only a second call with the same details and the confirmation it was given goes ahead — show those numbers to a person first.
+- **Nothing is done twice.** Each of these tools acts once per run for the same details, and a retried create returns what was already made.
+- **Every date and time is your clinic's.** Results say which time zone they are in.
+- **Messages that cannot go out are reported as not sent.**
+
+<Warning>
+  A [public agent](/platform/ai/publishing-agents) cannot hold any of these calendar tools, and each one refuses a public visitor even if it were added. A public agent may hold **Get away dates**, which says only when the clinic — or a provider the visitor asks about — is away: the dates and times, never why.
+</Warning>
+
 ## Reusable instructions and regression checks
 
 Two sheets in the canvas top bar are worth knowing about early:
@@ -153,4 +207,4 @@ Your deployed agents can themselves be offered to another system as tools, from 
 
 <StillStuck topic="a tool an agent will not call" />
 
-{/* source of truth: components/clinic/agents/agent-builder.tsx (Inspector, McpManager), node-catalog.ts; lib/agents/mail-agent-tools.ts; components/clinic/dashboard/settings/ai-settings.tsx; components/clinic/agents/mcp-expose-settings.tsx */}
+{/* source of truth: components/clinic/agents/agent-builder.tsx (Inspector, McpManager), node-catalog.ts; lib/agents/mail-agent-tools.ts; lib/agents/agent-ui.ts (public-safe tools); agent tool catalogue (calendar tools); components/clinic/dashboard/settings/ai-settings.tsx; components/clinic/agents/mcp-expose-settings.tsx */}

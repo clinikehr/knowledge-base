@@ -34,7 +34,7 @@ This tab does two separate jobs, and mixing them up is the usual confusion. **Co
 | **Default venue** | **In person** or **Online** | In person |
 | **Sync frequency** | **Every 15 minutes** through to **Daily** | Hourly |
 | Auto-sync switch | Pauses or resumes a feed. Repeated failures pause it for you | On |
-| **Blocks booking** / **Info only** | Whether this feed's events make that time unbookable | Info only |
+| **Blocks booking** / **Info only** | Whether this feed's events make that time unbookable | Blocks booking |
 | **Sync now** · **Edit** · **Remove** | Refresh, change settings, disconnect | — |
 | **Reveal URL** / **Copy URL** | Shows the stored address. Owner only | Hidden |
 
@@ -57,13 +57,13 @@ This tab does two separate jobs, and mixing them up is the usual confusion. **Co
     The feed is saved and an initial import runs immediately.
   </Step>
   <Step title="Decide whether it blocks booking">
-    Each feed row carries a button reading **Info only**. Select it to switch to **Blocks booking**.
+    A new feed starts on **Blocks booking**. Select the button on its row to switch it to **Info only** if its events should only be shown, never protect the time.
   </Step>
 </Steps>
 
 ## What changes once you save
 
-A feed set to **Blocks booking** makes its event times unavailable in two places at once: the public booking page stops offering those slots, and the appointment book shows the time as busy, so nobody can book over it. **Info only** shows the same events and changes nothing about availability.
+A feed set to **Blocks booking** makes its event times unavailable everywhere a booking is made: the public booking page and the client portal stop offering those slots, and a booking made from the appointment book, a move to another time or a repeat that lands on one is refused as a clash with that provider's diary (a repeat names the visit that clashes, and nothing in it is booked). **Info only** shows the same events and changes nothing about availability.
 
 A synced event is **not** a ClinikEHR appointment. It has no client, no service and no invoice — open it on the calendar and link it yourself if it was a real encounter.
 
@@ -76,6 +76,16 @@ Connected Accounts run the other way, and that is where the care is needed.
 <Warning>
   Connecting an account copies your ClinikEHR appointments into that outside calendar — **including telehealth visits and their secure join links**. Anyone with access to that calendar, or to the phone it is signed in on, can read them. Set **External calendar privacy** to **Generic — no patient info** unless you have an agreement in place with the calendar provider.
 </Warning>
+
+## Out of Office and your connected calendar
+
+Out of Office and a connected Google or Outlook account work together, in both directions.
+
+- **Out of Office you add in ClinikEHR appears on your calendar.** Each person it covers who has a connected account set to receive clinic appointments gets a busy entry titled **Out of office** — marked as out of office where Google or Outlook supports it. It carries the time only: never the memo or the reason. A repeating Out of Office appears as one entry per occurrence. Changing or deleting it in ClinikEHR changes or removes the entry.
+- **Out of office you set in Google or Outlook comes into ClinikEHR.** A Google out-of-office entry, or an Outlook entry shown as **Out of office**, becomes an Out of Office for you on the clinic calendar and stops clients booking you at that time. It does nothing else: it never cancels appointments, emails anyone, pauses reminders or changes client messaging. It follows your calendar — change or delete it there and ClinikEHR follows at the next sync. To apply your clinic's full Out of Office settings to it, open it on the calendar and select **Adopt**. An adopted Out of Office still follows your calendar's times and is never copied back to it.
+- **Your calendar is not flooded while you are away.** While you are out of office, changes to your appointments are not copied to your connected calendar straight away. Once you are back they are brought up to date in one go, with each appointment in its final state — an appointment booked and cancelled while you were away never appears at all.
+- **Ordinary busy time still protects your diary,** exactly as before: a timed event on a calendar set to **Blocks booking** stops you being booked, and an **Info only** calendar does not.
+- **An all-day "Busy" entry does not block your diary unless you turn that on.** Open **Choose calendars** on the connected account and find **All-day busy entries block my bookings** under the calendar — off by default. A full-day block, holiday or out-of-town marker you keep on your outside calendar as an all-day event has no effect here until you switch it on for that calendar. Turning it on takes effect from the next sync of that calendar (immediately if you select **Sync now**); turning it off unblocks your diary right away. A native "Out of office" entry always blocks, whether this is on or off.
 
 ## Check it worked
 
@@ -105,4 +115,4 @@ The feed row shows a green **Active** badge and "Synced just now", and the event
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/calendar-integrations-settings.tsx, connected-calendars-section.tsx, external-calendar-privacy-card.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/calendar-integrations-settings.tsx, connected-calendars-section.tsx, external-calendar-privacy-card.tsx, choose-calendars-sheet.tsx, db/actions/external-calendars.ts */}

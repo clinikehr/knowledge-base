@@ -1,6 +1,6 @@
 ---
 title: Note templates
-description: "Start a note from a pre-built template, build your practice's own under Custom Templates, and fill the template form in."
+description: "Start a note from a pre-built template, build your practice's own as a note form, and keep using the custom templates you already have."
 icon: /images/icons/clipboard-list.svg
 ---
 
@@ -9,21 +9,21 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans — building your own templates needs Starter or above" roles="Any clinical staff member" />
+<Availability editions={['clinic']} plans="All plans — how many note forms you can build depends on your plan" roles="Any clinical staff member uses a template; building a note form needs permission to manage forms" />
 
-A template is the shape of a whole note: sections, prompts and fields already laid out, so you fill in rather than compose. ClinikEHR ships a library of them, and your practice can build its own.
+A template is the shape of a whole note: sections, prompts and fields already laid out, so you fill in rather than compose. ClinikEHR ships a library of them, and your practice builds its own as **note forms**.
 
 <Path steps={['Sidebar', 'Notes', 'Templates']} />
 
 <TaskHeader
   before="Nothing — the pre-built library is there from day one"
-  time="2 minutes to use one, 10 minutes to build your own"
+  time="2 minutes to use one, 10 minutes to build a note form"
   after="A note written on a proper structure, saved as a draft or signed"
 />
 
 ## What you're looking at
 
-**Templates** is headed **Pre-built templates** — "Simplify documentation with pre-built templates" — and carries a yellow panel you should read once:
+**Templates** opens with a card — **Build your own note template as a form** — carrying **Create a note form** and **Browse templates**. Below it the page is headed **Pre-built templates** — "Simplify documentation with pre-built templates" — and carries a yellow panel you should read once:
 
 > **Legal Disclaimer:** Templates are for reference only. It is your responsibility to customize them and ensure they meet the legal requirements of your state.
 
@@ -39,7 +39,7 @@ Below it, a **Search templates...** box and the library grouped into categories:
 This page has no empty state: the library is fixed, so a brand-new practice sees every category on day one. The only blank view is a search that matched nothing — "No templates found. Try adjusting your search terms."
 
 <Note>
-  **Delete** on a pre-built template replies "Delete functionality is disabled in static mode" and removes nothing. The shipped library is shared and cannot be edited away. If one does not suit how you work, build your own version under **Custom Templates**.
+  **Delete** on a pre-built template replies "Delete functionality is disabled in static mode" and removes nothing. The shipped library is shared and cannot be edited away. If one does not suit how you work, build a note form with the sections you need.
 </Note>
 
 ## Use a template
@@ -66,42 +66,97 @@ This page has no empty state: the library is fixed, so a brand-new practice sees
 
 If you open the form without choosing a template you see **No Template Selected** — "Choose a template to begin documenting your note" — and a **Choose a template...** picker.
 
-## Build your practice's own
+## Build your practice's own: a note form
 
-Select **Custom Templates** in the left rail — "Templates created by your clinic staff" — then **Create Template**. Give it a category and lay out its sections; it is then shared with everyone in the practice, so name it the way a colleague would search for it.
+Your practice's own note templates are built as **note forms**, in the same form builder as your other forms.
 
-Custom template cards offer **Use**, and a **⋮** menu with **Use Template**, **Preview**, **Edit**, **Copy Content** and **Delete** — and here **Delete** really deletes, for everybody. Each card shows **Created by** and its author's name. A category with nothing in it reads "No custom templates in this category yet." with a **Create First Template** button, and empty categories start collapsed.
+<Steps>
+  <Step title="Start one">
+    On **Templates** or **Custom Templates**, select **Create a note form**. A blank note form opens in the form builder. To start from somebody else's, select **Browse templates** instead — the template gallery opens showing note templates only — and choose one. **Browse scored measures** opens the gallery on scored measures such as the PHQ-9 or GAD-7.
+  </Step>
+  <Step title="Add its questions">
+    Lay out the questions the note should ask, exactly as you would build any form — see [Build a form](/practice/forms/build-a-form).
+  </Step>
+  <Step title="Publish it">
+    Select **Publish**. A draft note form is not offered for notes: only a published one appears where you start a note.
+  </Step>
+  <Step title="Write a note on it">
+    Open the client's record, go to **Notes**, select **New note**, then open **Choose a template...**. Your published note forms are listed first, under **Forms**, together with your published scored measures, which are marked **Scored**. Answers save as you go, and **Export PDF** downloads the note with every answer in it.
+  </Step>
+</Steps>
 
-Building custom templates needs the Starter plan. On Free, **Create Template** is greyed out and hovering it shows an upgrade card ending **Upgrade to Starter**; see [Change your plan](/platform/plans/change-plan).
+A note written on a scored measure puts its score on the client's **Measures** once the note is finished — saved as final or signed — exactly as if the client had filled in the form themselves. A draft note puts nothing on the chart. Changing a finished note's answers updates its score.
+
+If the form came from a template whose author asks for credit, the note's heading names it — for example "Based on “PHQ-9” by ClinikEHR." — and so does the exported PDF.
+
+<Note>
+  A note keeps the version of the form it was started on. Publishing changes to the form later never changes a note that was already written.
+</Note>
+
+If your practice has no published note form yet, **Choose a template...** shows **Create a note form** and **Browse templates** under the list, so you can build one from there.
+
+## Custom Templates
+
+Select **Custom Templates** in the left rail. It lists the templates your practice built before note forms, with a card at the top — **Custom templates are now read-only — new note templates are forms**.
+
+Custom templates are **read-only**. You can still **Use** one to write a note, and every note already written on one still opens, signs and exports. You can no longer create a custom template or change one — changing a template's sections would stop the notes already written on it from opening.
+
+Each card offers **Use**, and a **⋮** menu with **Use Template**, **Preview**, **Copy Content** and **Delete**. Each shows **Created by** and its author's name.
+
+### Convert a custom template to a note form
+
+<Steps>
+  <Step title="Convert it">
+    Select **Convert to form** on the card. A new draft note form is created from the template's sections. The template itself, and every note written on it, is left exactly as it was.
+  </Step>
+  <Step title="Check it">
+    The card now reads **Converted — draft**, with **Open** and the form's name. Open it and check the questions — a message after converting names anything the old template could not carry across.
+  </Step>
+  <Step title="Publish it">
+    Publish the form. The card then reads **Note form published** — "Choose it under New note on a client's record."
+  </Step>
+</Steps>
+
+**Delete** asks you to confirm, and removes the template for everybody in the practice. A template that notes were written with cannot be deleted, so those notes keep opening.
 
 ## Who can do this
 
-Plan, not role, is what gates the template library on a solo or team practice.
-
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Use any template | Any staff member | Nothing |
+| Use any template, or a published note form | Any staff member | Nothing |
 | Preview or copy a template's content | Any staff member | Nothing |
-| Create, edit or delete a custom template | Any staff member | Plan — the **New template** button is disabled on Free |
+| Create a note form, or convert a custom template | Anyone who may manage forms | Forms permissions, and your plan's form allowance |
+| Create or change a custom template | Nobody | Fixed — custom templates are read-only |
+| Delete a custom template nobody has written a note with | Any staff member | Nothing |
 | Delete a pre-built template | Nobody | Fixed — the shipped library is read-only |
 
-The invite sheet carries an **Edit note and form templates** toggle. It is stored against the staff member but is **not enforced** here — nothing on this screen reads it, so anyone who can open Notes can change the shared library.
-
-See [Staff permissions](/platform/team/permissions).
+**Create a note form** and **Convert to form** only appear for people who may manage forms. See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-A template you used opens as **Template Notes** with its sections in place, and the finished note appears under **Recent Notes** on the [Notes](/practice/clinical/notes) dashboard against the right client. A template you built is on the **Custom Templates** page for every colleague in the practice, under the category you gave it, with your name under **Created by**.
+A template you used opens as **Template Notes** with its sections in place, and the finished note appears under **Recent Notes** on the [Notes](/practice/clinical/notes) dashboard against the right client. A note form you published is listed under **Forms** when you open **Choose a template...** on a new note on a client's record.
 
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="Create Template is greyed out">
-    Custom templates need the Starter plan or above. Hover the button and the upgrade card appears. The pre-built library stays available on every plan.
+  <Accordion title="There is no Create Template button">
+    Custom templates can no longer be created. Build a note form instead — **Create a note form** on **Templates** or **Custom Templates**.
+  </Accordion>
+
+  <Accordion title="My note form is not in the template picker">
+    It is still a draft. Open it and publish it; only published note forms are offered. Note forms are chosen on a new note on a client's record.
+  </Accordion>
+
+  <Accordion title="Convert to form says there was nothing in the template that could become questions">
+    That template holds written text rather than fields. Keep using it as it is, or build a note form by hand and copy the text across with **Copy Content**.
+  </Accordion>
+
+  <Accordion title="Notes have been written with this template, so it cannot be deleted">
+    Deleting it would leave those notes with nothing to open under. Leave it in place — nobody has to use it for new notes.
   </Accordion>
 
   <Accordion title="Delete functionality is disabled in static mode">
-    You tried to delete a pre-built template. They cannot be removed. Build your own under **Custom Templates** and use that instead.
+    You tried to delete a pre-built template. They cannot be removed. Build a note form with the sections you need and use that instead.
   </Accordion>
 
   <Accordion title="Upload file and Load last note are greyed out">
@@ -111,17 +166,17 @@ A template you used opens as **Template Notes** with its sections in place, and 
   <Accordion title="No previous template notes found">
     Nothing has been written for this client on this template before. It is a genuine "nothing to load", not a fault.
   </Accordion>
-
-  <Accordion title="A colleague cannot see the template I built">
-    Custom templates are shared across the whole practice, so a colleague who cannot see yours is signed in somewhere else. See [Switching workspaces](/platform/account/switching-workspaces).
-  </Accordion>
 </AccordionGroup>
 
 ## FAQ
 
 <AccordionGroup>
   <Accordion title="Can I edit a pre-built template?">
-    Not in place. Use **Copy Content** to lift its text, then build a custom template from it and change what you need.
+    Not in place. Build a note form with the questions you need, or use **Copy Content** to lift the template's text into one.
+  </Accordion>
+
+  <Accordion title="Why can I no longer edit my custom templates?">
+    A note written on a custom template is stored against that template's section names. Changing a section would stop every note already written on it from opening. Convert the template to a note form to keep improving it — a note form keeps each note on the version it was written against.
   </Accordion>
 
   <Accordion title="What is the difference between a template and a snippet?">
@@ -129,7 +184,7 @@ A template you used opens as **Template Notes** with its sections in place, and 
   </Accordion>
 
   <Accordion title="Do templates change notes that were already written?">
-    No. A note keeps the content it was saved with. Editing a template only affects notes started after the change.
+    No. A note keeps the content it was saved with, and a note written on a note form keeps the version of the form it was started on.
   </Accordion>
 
   <Accordion title="Where does a template note end up?">
@@ -143,4 +198,4 @@ A template you used opens as **Template Notes** with its sections in place, and 
 
 <StillStuck />
 
-{/* source of truth: components/clinic/notes/default-template/templates-content.tsx, custom-template/custom-templates-content.tsx, new-notes/template-notes-form.tsx */}
+{/* source of truth: components/clinic/notes/default-template/templates-content.tsx, custom-template/custom-templates-content.tsx, general/note-forms-entry.tsx, new-notes/template-notes-form.tsx, clients-management/notes/client-note-editor.tsx */}

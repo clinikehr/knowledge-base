@@ -41,6 +41,8 @@ The card sits on the chart's **Overview** tab and has two states:
   </Step>
   <Step title="Attach the appointment, if there is one">
     Choose it under **Appointment (optional)** — the field only appears when the client has appointments. Leave it on **No appointment** for a walk-in.
+
+    Once one is chosen, the sheet shows that appointment's **Forms & documents** list, with anything **Required before visit** at the top. To send them something for this visit, select **Send to patient** there — see [Send from an appointment](/practice/clinical/documents#send-from-an-appointment).
   </Step>
   <Step title="Say what the visit is for">
     **Visit items — services, labs, custom** has two pickers, **+ Add service** and **+ Add lab test**, and a free-text box ("Custom item…") with its own **Add** button. Add as many as the visit needs.
@@ -79,6 +81,40 @@ Checked somebody out by mistake, or cancelled the wrong visit? Choose **Check ba
 </Note>
 
 This works for a visit that was **checked out** and for one that was **cancelled**. If two people press it at once, nothing breaks — a visit that is already on the board simply stays there.
+
+## When you or the practice are out of office
+
+If the practice, or the clinician the client is here to see, is marked out of office at the moment you check someone in, the check-in stops and asks first. The message names who is away and when they are back — for example **Dana Rivera is out of office** "until Sep 22, 12:00 PM (America/New_York). Check this patient in anyway?" — and offers **Check in anyway**.
+
+- The clinician checked is the one on the chosen appointment, then the one under **Assign to**. A block for the whole practice is checked first.
+- The time checked is the time under **Check-in time**, in the practice's time zone — not the appointment's booked time.
+- Any staff member can confirm. Nothing is saved until you do.
+- A visit checked in this way carries a **During Out of Office** badge on the card, in the visit sheet and on the chart's **History**.
+- **Check back in** asks the same question when the visit is returned to the board during a block, and offers **Reopen anyway**.
+- **Edit**, **Check out** and **Cancel check-in** never ask.
+
+The client is at the desk, so nothing that normally happens at check-in is held back: the visit record can still be downloaded or emailed, and any automations your practice runs on check-in still run.
+
+## Your patient has arrived
+
+Checking someone in tells the right clinician right away — an in-app notification and, if they haven't turned it off, an email. It never names the client or says why they're here: just an arrival time and a link to open the check-in board.
+
+It goes to:
+
+- the clinician on the appointment this visit is for, if there is one;
+- the client's primary provider on their care team, in force right now — this is what still fires for a walk-in with no appointment, or one with nobody assigned;
+- whoever is covering either of them right now, if a coverage delegation is active.
+
+Whoever recorded the check-in never gets their own notice, and a colleague who has never signed in is skipped. Reopening a visit with **Check back in** does not send it again — it's the same arrival, not a new one.
+
+<Note>
+  This runs even when the check-in itself needed **Check in anyway** during an Out of Office block — the automations tied to a check-in are never held back by Out of Office.
+</Note>
+
+Two switches decide who actually gets an email (the in-app bell always shows it to whoever it's for):
+
+- **Settings → Notifications → Patient** — your practice's switch for this category. Off, and nobody at the practice gets the email.
+- **Their own avatar → Profile and Settings → Notifications → Product & account emails** — each person's own switch (see [Choose which emails you get](/platform/account/notifications)). Off, and that person alone stops getting emailed, without changing anyone else's.
 
 ## Issue the visit record
 
@@ -132,6 +168,10 @@ See [Staff permissions](/platform/team/permissions).
     That field only renders when the client has appointments on file. Without one, record the visit as a walk-in — the reason or a visit item is enough.
   </Accordion>
 
+  <Accordion title="Check in asks whether to check in anyway">
+    The practice, or the clinician the visit is with, is marked out of office at the check-in time. The message says who and until when. Select **Check in anyway** if the visit is going ahead — it is marked **During Out of Office** — or change **Check-in time** or **Assign to** if the wrong one was chosen.
+  </Accordion>
+
   <Accordion title="Checked out by mistake">
     Check them back in. There is no confirmation on check-out precisely because it is reversible this way.
   </Accordion>
@@ -167,4 +207,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck />
 
-{/* source of truth: components/clinic/clients-management/patient-checkin-sheet.tsx, client-management-form.tsx, db/actions/check-ins.ts */}
+{/* source of truth: components/clinic/clients-management/patient-checkin-sheet.tsx, client-management-form.tsx, db/actions/check-ins.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify */}

@@ -32,11 +32,15 @@ Changing a service or a working pattern is therefore the same edit wherever you 
 
 The calendar's top row carries **Today**, back and forward arrows, the month, a **Live** or **Syncing** connection pill, the view switcher — **Day**, **Week**, **Month**, plus **Providers** and **Resources** swimlanes — and a colour control offering **Color by Status** and **Color by Service**.
 
-The row beneath it holds **Search patients, services...**, **More filters** with a count badge, **Refresh**, **Current Schedule** and **Create**.
+The row beneath it holds **Search patients, services, out of office...**, **More filters** with a count badge, **Refresh**, **Current Schedule** and **Create**.
 
-**More filters** opens **Calendar Filters** — "Refine your view by status, service, or staff." — with sections for **Appointment Status**, **Urgency Level**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**, and **Reset all filters** at the bottom.
+**More filters** opens **Calendar Filters** — "Refine your view by status, service, or staff." — with sections for **Appointment Status**, **Urgency Level**, **Out of Office**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**, and **Reset all filters** at the bottom.
 
 A booking carries one of seven statuses, which is what **Color by Status** colours: **Scheduled**, **Confirmed**, **In Progress**, **Completed**, **Cancelled**, **No Show** and **Rescheduled**.
+
+Opening a booking shows how it is paid under **Payment method** — for example **Card**, **Pay later** for an online booking to be paid at the visit, or **Membership** for a visit a membership covers. A booking made with an option or add-ons keeps its services as booked when you edit it; to change them, cancel it and book again.
+
+When you change the services on a booking, its price and length come from your services — a fee you type that differs is kept as the price for that booking — and the end time moves to match. A booking that has already been paid keeps its services. Changing how a booking repeats re-plans the later visits at that booking's price in one go: if one of the new dates clashes with another appointment, you're told which date and nothing in the series changes.
 
 A brand-new practice sees the empty hour grid, not a message — the calendar always renders the day. The swimlanes do explain themselves: **Resources** reads "No rooms or equipment yet. Add them in Appointment Settings → Resources."
 
@@ -44,17 +48,34 @@ A brand-new practice sees the empty hour grid, not a message — the calendar al
   Only **Overview**, **Services**, **Booking Page** and **Settings** are part of the workspace today. Anything else you reach by editing the address bar is unreleased.
 </Note>
 
+### Events and tasks
+
+- **Event** and **Task** each have their own date and time, in the clinic's time zone — shown under the fields.
+- **Assign staff** (events) and **Assigned to** (tasks) let you pick **All staff** or search for people by name. **All staff** includes everyone on the team when you save.
+- Each person added to an event gets an email with a calendar invite and a notice in the app. Each person given a task gets their own copy to complete, and an email that says a task was assigned and when it is due — never what it is or who it is about.
+- **Reminder** sends each person an email before the start or due time: at the time, 15 or 30 minutes, 1 hour or 1 day before.
+- **Repeats** adds it every day, week, month or year, ending after 1 to 50 times or on a date — the same as repeating appointments. People are told once, not once per date.
+- These emails follow your clinic's email and **Appointment** notification settings, and each person's own email setting.
+
+To block time so clients cannot book it, use the **Out of office** tab — see [Add Out of Office](/practice/work/out-of-office).
+
+### Out of Office on the calendar
+
+Out of Office time shows as a grey, striped band behind the calendar, labelled **Out of office**, with its note where there is room. A block for the whole clinic or all staff covers the full day column. A block for one person covers part of the column in **Day** and **Week**, and only that person's lane in **Providers**. A block for a room or piece of equipment shades that item's lane in **Resources**. All-day blocks also appear in the **All day** row, and **Month** marks each day that has one. Select the label to open the block.
+
+Appointments inside a block stay on the calendar, with a grey outline and an icon so you can see they clash. **More filters** has a **Show Out of Office blocks** switch to hide the bands, and search finds a block by its name or note. Blocks show in your own time zone, the same as appointments.
+
 ## Book an appointment
 
 <Steps>
   <Step title="Select a slot, or select Create">
-    Selecting an empty slot opens the sheet with that time already filled in. **Create** opens the same sheet — titled **Initial Entry** — with no time imposed, which is what you want when the client is standing in front of you. Its three tabs are **Appointment**, **Event** and **Task**.
+    Selecting an empty slot opens the sheet with that time already filled in. **Create** opens the same sheet — titled **Initial Entry** — with no time imposed, which is what you want when the client is standing in front of you. Its four tabs are **Appointment**, **Event**, **Task** and **Out of office**.
   </Step>
   <Step title="Choose who it is for">
     Leave the type on **Individual or couple**, or choose **Group** for a group session — that needs the Essential plan, and the gate reads **Upgrade for group sessions**. Then find the person with **Search Client**; **Create client** beside it registers somebody who is not on file yet.
   </Step>
   <Step title="Pick the services and the provider">
-    Add one or more under **Services**. Under **Select Provider**, choose a staff member or leave it on **Any available provider** and let the slot decide.
+    Add one or more under **Services**. A service with options shows an **Option** list, and one with add-ons shows **Add-ons** to tick; the summary adds them to the **Visit Time** and **Appointment Total**. Under **Select Provider**, choose a staff member or leave it on **Any available provider** and let the slot decide — a provider's own price for the service is used when you choose them.
   </Step>
   <Step title="Set the time and place">
     Set the start, end and **Duration** under **Schedule**. Choose **Location**: **Physical Office**, which asks for an address or room number, or **Video Office**, which generates its own joining link.
@@ -63,6 +84,8 @@ A brand-new practice sees the empty hour grid, not a message — the calendar al
     The toast reads **Appointment created successfully** and the booking appears on the calendar. Confirmation and reminder emails go out from your notification settings — you do not send them by hand.
   </Step>
 </Steps>
+
+Ticking **Recurring** books every visit of the repeat at once, or none of them. If one date can't be booked — the provider already has a booking then, a room or piece of equipment the service needs is taken, or a provider you chose isn't working that day — nothing is booked, and the sheet stays open with a notice naming that date. Change the time, the provider or the repeat and book again.
 
 Booking one for the first time, field by field, is walked through in [Schedule your first appointment](/practice/get-started/first-appointment).
 
@@ -154,6 +177,10 @@ See [Staff permissions](/platform/team/permissions).
 
   <Accordion title="What is the difference between Cancelled and No Show?">
     **Cancelled** means the appointment was called off. **No Show** means it stood and the client did not arrive. Keep them apart: they are the two numbers you will want when you review a month.
+  </Accordion>
+
+  <Accordion title="What does the email about a due task say?">
+    When a task falls due, the person it is assigned to — or, with nobody assigned, whoever created it or your clinic's email address — gets an email that says only that a task is due and when — never what the task is or who it is about, because an email subject shows on lock screens and shared inboxes. **Open task** in that email opens the task on the calendar after they sign in.
   </Accordion>
 
   <Accordion title="Why does an online booking say Unassigned?">

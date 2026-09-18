@@ -1,0 +1,361 @@
+---
+title: "Restrict a client to assigned staff"
+description: "Choose which team members can see a client, and what everyone else sees instead."
+icon: /images/icons/user-lock.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Clinic owner or manager to change; anyone who can open the client to view" />
+
+Some clients should only be seen by the people looking after them. Turn on **Restrict to assigned staff** and only the clinic owner and the team members you assign see that client's name, contact details and record. Everyone else sees **Secured patient** followed by a number.
+
+<Path steps={['Sidebar', 'Clients', 'Open a client', 'Edit profile', 'Security']} />
+
+<TaskHeader before="A client record, and the team members you want to assign" time="Under a minute" after="A client only the owner and assigned staff can identify" />
+
+## Who sees a restricted client
+
+| Person | Sees the client's name and record | Can change the Security settings |
+| --- | --- | --- |
+| Clinic owner | Yes, always | Yes |
+| Manager who is assigned | Yes | Yes |
+| Manager who is not assigned | No — sees **Secured patient** and a number | Yes |
+| Any other team member who is assigned | Yes | No |
+| Any other team member who is not assigned | No — sees **Secured patient** and a number | No |
+| The client, in their portal | Yes — their own portal is not affected | — |
+
+Restriction is off for every client until someone turns it on. It is available on every plan.
+
+## Assign staff and restrict the client
+
+<Steps>
+  <Step title="Open the Security tab">
+    Open the client from **Clients**, select **Edit profile**, then select the **Security** tab.
+  </Step>
+  <Step title="Choose the assigned staff">
+    Under **Assigned staff**, choose the team members who should keep access, then select **Save assigned staff**. Any team member can be assigned.
+  </Step>
+  <Step title="Turn on the restriction">
+    Switch on **Restrict to assigned staff**. The confirmation lists who will lose access — including you, if you are a manager who is not assigned. Select **Restrict record**.
+  </Step>
+</Steps>
+
+Assign staff before you restrict. If you restrict first as a manager who is not assigned, the client turns into a secured label on your own screen straight away — you can still open **Security settings** to finish.
+
+## What changes once it's on
+
+- **The client list** shows **Secured patient** and the client's number instead of their name to everyone who is not allowed to see them. Searching by the client's name, phone or email does not find them; searching for "Secured patient" does.
+- **Opening the client** shows the secured label and a **Security settings** button — no profile, contact details or record.
+- **The secured number is permanent.** The first time a client is restricted they get the next number for your clinic. It never changes, is never given to anybody else, and stays with the client if you remove the restriction and turn it on again later.
+- **Every change is recorded** in the audit log: turning the restriction on or off, each team member assigned or removed, and every use of emergency access. So is an attempt to change the settings or end emergency access by someone who is not allowed to. The owner and managers see all of it for one client in the [access report](#access-report).
+- **The calendar and schedules** still show the appointment — its time, service, status, provider and price — as **Secured patient** and a number, with no contact details, notes or visit address. It can still be moved, or marked arrived, completed or cancelled. Saving a change never replaces the appointment's notes, which the person saving could not see.
+- **Search** — the header search and every client picker, including the one on a new appointment, a sale or an invoice — never finds the client by name, phone, email or record number. Searching for "Secured patient" and the number does. A couple's shared name shows the secured label in place of the restricted partner.
+- **Record numbers are hidden** wherever the client shows as **Secured patient**.
+- **Billing** keeps working. Invoices, payments, pending balances, membership payments, sales, debtors and unbilled insurance appointments keep every amount, date and status, and show **Secured patient** and a number instead of the client. A downloaded invoice or account statement shows the secured label too, and a superbill cannot be created.
+- **Sending an invoice or statement** goes only to the client's email on file. The client's copy is addressed to them by name; you cannot add another address, and you are not shown theirs.
+- **Check-ins** show **Secured patient** and a number on the front desk board, without the visit reason or notes, and a downloaded visit record shows the secured label.
+
+{/* Screens that show the secured label are being extended in waves 23–24 (plan: docs/Patients/ASSIGNED_CLIENTS_PLAN.md). Add each one to the list above as it ships; never list one that has not. */}
+
+## Book a restricted client
+
+Anyone who can book appointments can book a restricted client. The provider you choose needs to be able to see the client, so:
+
+- **If the provider is already assigned** (or is the clinic owner), the booking goes ahead as usual.
+- **If the provider is not assigned**, **Book appointment** asks **Give this provider access?** first. Select **Book and give access** to book and add the provider to the client's assigned staff, or **Cancel** to choose someone else. Nothing is booked until you confirm. Changing the provider on an existing appointment asks the same question, with **Save and give access**.
+- **You need to name a provider.** "Any available provider" is not offered for a restricted client: you'll see **This client is restricted to assigned staff. Choose a provider for this appointment.**
+
+The provider stays assigned after the visit, so they can open the notes they wrote. The owner or a manager can remove them on the **Security** tab, and every provider added this way is recorded in the audit log.
+
+**When the client books.** A booking the client makes on your online booking page, in their portal, or through your booking assistant adds the provider they booked with to the client's assigned staff, and records it in the audit log. If the booking is not completed — the time is taken, or a payment does not go through — nothing is added.
+
+**Adding the client to a class, or repeating a visit,** with a teacher or provider who is not assigned is refused with a message asking the owner or a manager to assign them on the **Security** tab first.
+
+## What else is protected
+
+Everything below applies to a team member who is not allowed to see the client. The clinic owner and assigned staff see and work with the client exactly as before.
+
+- **Clinical records.** Consultations, triage, lab tests and results, imaging orders and reports, prescriptions and dispensing, clinical and dictated notes, sticky and status notes, forms the client filled in, documents, files and signature requests, measures, problem list and history, ward admissions, vitals, nursing notes, drug charts and care plans, maternity and theatre records, drug-test orders, insurance claims and pre-authorizations, and secure messages. None of them appear, and opening a link to one shows **This record could not be found, or you do not have access to it.** They also cannot add a new record for the client.
+- **Queues and history lists** leave the client out: consultation, triage, lab, imaging and pharmacy queues and history, the nursing worklist, discharges, the records queues, form invitations and pre-screen reviews.
+- **Boards keep the space and hide the person.** A bed stays shown as occupied and a class place as taken, with **Secured patient** and a number instead of the name, diagnosis or notes.
+- **Downloads** of clinical notes, lab, imaging and employer reports, and signed documents give the same "could not be found" answer.
+- **Exports** leave out the client's records and details when the person who asked for the export is not allowed to see them. Billing exports keep the row, so totals still add up, and show the secured label instead of the client.
+- **AI agents never see a restricted client**, whoever set the agent up: an agent acts as if the client does not exist, and AI lab reports leave the client's results out.
+- **Emails to the clinic** name the client as **Secured patient** and a number. A refill reminder or a note mention includes the details only for people allowed to see the client. The clinic's copy of tomorrow's appointment reminder and the payment received or failed notice name no client at all, for every client: they say when, what and how much, and you open the calendar or billing after signing in for the rest.
+- **Files, recordings and attachments** the client uploaded or that belong to their visits — documents, call and dictation recordings, secure message attachments, imaging, and files a signer uploaded — cannot be opened or listed. Call chat, claim and pre-authorization letters and documents, reminder message logs and AI search results stay out of reach too.
+- **Writing into the client's chart** is refused everywhere, not only on the forms: adding a note, vitals, a result, a prescription, a claim or a signature request for the client, marking their form answers or resolving their pre-screen gives **This record could not be found, or you do not have access to it.**
+- **The triage patient list** leaves the client out, since a triage cannot be started for them.
+- **The audit log** shows **Secured patient** and a number instead of the client's name to a manager who is not assigned, and searching the log by that client's name finds nothing. Who did what, and when, stays visible.
+- **The store and customer history** keep the order and the amounts but show **Secured patient** and a number instead of the buyer's name, email, phone and addresses. A customer's purchase history keeps the monthly spend but not the products bought.
+- **Choosing a client for a membership, an add-on or a package** lists the client as **Secured patient** and a number, so billing still works.
+- **Converting a lead into a client** never links the lead to a restricted client you cannot see, even when the email or phone matches. You'll see **This record could not be found, or you do not have access to it.** — ask the owner or an assigned team member to convert it.
+- **A second client on a visit** (a couple or a group) who is restricted does not become visible to the visit's provider when you add them. The provider sees the secured label, and the visit shows in the client's access report as flagged so the owner or a manager can assign the provider if they should have access. When the client books the visit themselves, the provider is added to their assigned staff, as for the main client.
+- **Mail** does not suggest the client's address when you type a recipient.
+- **Reports** leave the client out of the patient journey figures. Counts that name no one stay the same.
+- **Outside calendars** you sync to show the general appointment title, never the client's name.
+- **Medicine safety checks** that need the client's allergies and medicines say the check could not run, rather than showing a clean result, when the person dispensing is not allowed to see the client.
+
+## Emergency access
+
+A team member who is not assigned can still open a restricted client when they need the record to provide care — for example, the client arrives unwell and the assigned provider is away. This is sometimes called "break the glass".
+
+<Steps>
+  <Step title="Open the secured client">
+    Open the **Secured patient** entry from **Clients**, the calendar or search.
+  </Step>
+  <Step title="Request emergency access">
+    Select **Request emergency access**. Type why you need the record (at least 10 characters), choose **How long** — 1, 4, 12 or 24 hours — and select **Open with emergency access**.
+  </Step>
+  <Step title="Work with the record">
+    The client's name, contact details and record open for you straight away, and stay open until the time you chose.
+  </Step>
+</Steps>
+
+- **The clinic owner and the client's assigned staff are told** at once, with an in-app notification **Emergency access was used for a secured client**. It does not name the client, you, or your reason — they open the report to see it.
+- **Your reason is kept** in the client's access report and the clinic's emergency access report, with the time and the length you chose.
+- **Asking again while your access is still open extends it** instead of starting a second one. The button reads **Extend emergency access**, your new reason is added to the report beside the first, and access runs to the later of the two end times. No single request can last more than 24 hours.
+- **The owner never needs it**, and neither does anyone assigned: the button only appears for a team member who cannot already see the client. Managers who are not assigned use it like anyone else.
+- **Access ends on its own** at the time you chose. The owner or a manager can end it earlier — see below.
+- AI agents are not given access by it: an agent still acts as if the client does not exist.
+
+## Access report
+
+The owner and managers see an **Access report** on the client's **Security** tab:
+
+- **Currently assigned** — who is assigned, since when, and who assigned them.
+- **Emergency access** — every time it was used for this client: who, when, their reason, how long, any extensions, and who ended it. A live grant shows **Active** and an **End access** button. Select it, then **End access** in the confirmation, and that team member stops seeing the client straight away; the grant and its reason stay in the report, and they are told their access was ended.
+- **Recent access events** — assignment and emergency access changes, refused attempts to change the settings or end access, and visits booked with a provider who is not assigned, marked **Refused or flagged**.
+
+For the whole clinic, open **Audit Log** and select **Emergency access**. The report lists every grant in the dates you choose — the team member, the client's secured label, the reason, how long, whether it is still active, and who ended it early — a page at a time. It never shows the client's name.
+
+## Access log
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner, and the client's current primary provider" />
+
+Below the access report, the client's **Security** tab shows an **Access log** — every time the record was opened, downloaded or printed, and every use of emergency access, newest first. Each row shows what happened, who did it, and when.
+
+Only the clinic owner and the client's current primary provider (set under [Care team](#care-team) below) see this log. A manager who is not the primary provider does not — the access report above already covers assignment and emergency-access changes for managers; the access log is for the clinician actually treating the client.
+
+## Disclosure accounting
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
+
+The **Disclosure accounting** section on the same tab lists disclosures of this client's record to someone outside your clinic:
+
+- **Exports and prints** — a clinical report, invoice or other document downloaded or printed as a PDF.
+- **Emails** — a signed document or payment notice emailed to the client or another recipient outside your clinic.
+- **Shares** — a signed document sent to someone who is neither the client nor a member of your clinic (an employer, insurer, or a witness on a form, for example).
+
+Select **Export CSV** to save the list for your own records. The export itself is recorded in the HIPAA audit log.
+
+Emergency access has its own report above rather than appearing twice.
+
+## Unusual access alerts
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner" />
+
+The clinic owner gets an in-app notification when access to a restricted client looks unusual:
+
+- **Many secured records opened quickly** — one team member opens several restricted clients' records in a short time.
+- **Access outside business hours** — a restricted client's record is opened outside your clinic's normal hours (Monday to Friday, 9am to 5pm, unless your clinic has different hours on file — set them on **Settings → General → Business hours**).
+- **Repeated emergency access** — one team member uses emergency access several times in a short period.
+
+Each notification gives counts and a link to the audit log — never a client or team member's name. Open the link to see who, using the access you already have.
+
+### Access alert settings
+
+The owner or a manager can change how sensitive these alerts are on **Settings → Security → Access alerts**: how many secured records opened, and within how many minutes, before the "many records opened" alert fires; how many times, and within how many days, before the "repeated emergency access" alert fires; how many times a client may ask to restrict their own record from the portal before it asks them to wait (see [Privacy requests](#privacy-requests) below); and which categories are hidden from a guardian/proxy portal view by default for a client who has not had this set individually (see [Proxy access limits](#proxy-access-limits) below). Until changed, the defaults are 5 records within 60 minutes, 3 emergency accesses within 30 days, 5 privacy requests within 7 days, and every category hidden. Alerts still always go to the clinic owner.
+
+## Periodic access review
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
+
+Every quarter, if your clinic has restricted clients, the owner sees a reminder to confirm their assignments are still correct. It appears as a card at the top of **Audit Log** and as an in-app notification.
+
+For each restricted client still needing review, select **Confirm assignments** if the current team is correct, or **Needs change** if it should be updated — then make the change on that client's **Security** tab. A review from an earlier quarter that is still open counts as overdue and stays on the list until it is confirmed.
+
+## Privacy requests
+
+<Availability editions={['clinic']} plans="All plans" roles="Any client, from their own portal; clinic owner or manager to review" />
+
+A client can ask, from their own portal, for your clinic to restrict who can see their record — with an optional note about why. It shows up two places:
+
+- **A small queue on Audit Log**, under **Privacy requests** — every open request across your whole clinic, newest first.
+- **On that client's own Security tab**, if they have an open request.
+
+Select **Approve** to restrict the record the same way [Restrict to assigned staff](#assign-staff-and-restrict-the-client) does — choosing who to assign in the same step, or leaving it empty and assigning staff on the Security tab later — or **Decline**, with an optional note the client will see either way. A client can have only one open request at a time; if you decline, they can ask again later.
+
+## Proxy access limits
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
+
+When a parent or guardian reaches a dependant's portal record through a shared contact email — common for a child too young to have their own email on file — some categories of sensitive record stay hidden from that guardian by default, even though the dependant sees them fine on their own login: behavioural health, substance use, reproductive health, HIV status, and other sensitive records. This covers the dependant's documents, consultations and files.
+
+A shared contact email is what makes someone a guardian here. A client whose own email is on their record is not treated as a proxy on their own login, so their own sensitive records are never hidden from them.
+
+On the dependant's **Security** tab, under **Proxy access limits**, select a category to toggle it between **Hidden** and **Visible** for that guardian. Every category starts hidden until you change it for that specific client — unless the owner or a manager has narrowed the clinic-wide starting point on **Settings → Security → Access alerts**, which every client who has not had this set individually then follows.
+
+## Care team
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager to change any role; a client's primary provider may also add or remove non-primary roles; every team member can view" />
+
+Beyond who can simply *see* a client, you can tag *what each person on the team does* for them — their care team.
+
+### Roles
+
+On a client's **Security** tab, under **Care team**, each team member can carry one role for that client:
+
+| Role | For |
+| --- | --- |
+| Primary provider | The one clinician mainly responsible for this client. Exactly one per client. |
+| Specialist | A clinician brought in for a specific need. |
+| Care coordinator | Coordinates the client's care across providers. |
+| Nurse | Nursing care for this client. |
+| Billing | Handles this client's billing and payments. |
+
+A client can have only **one Primary provider** at a time — assigning a new one is a [transfer of care](#transfer-of-care), not a two-click change. To add any other role, choose a team member and a role under **Care team** and select **Add**. To remove one, select the small **×** beside their name, then **Remove** in the confirmation.
+
+A client's current primary provider can also add or remove the *other* roles (Specialist, Care coordinator, Nurse, Billing) without being a manager — but not reassign who is primary; that always goes through transfer of care, below.
+
+### Time-limited roles (locum cover)
+
+Any role, including Primary provider, can carry an **end date** — useful for a locum covering while the usual provider is away, or a role that only applies for a referral episode. When you add a role, set an optional end date; leave it blank for an ordinary, open-ended role. A role with an end date shows **until `<date>`** on the badge, and stops applying automatically once that date passes.
+
+Two Primary providers may hold the role for the same client only if their dates don't overlap — a locum's window (for example, 10–24 September) can sit before or after another provider's, but not on top of it. If you try to set a primary provider whose dates clash with someone already primary, you'll see **This client already has a primary provider for that time window** — choose different dates, or use [transfer of care](#transfer-of-care) to hand off permanently instead.
+
+### My Patients
+
+**Sidebar → My Patients** is each provider's own worklist: every client they're assigned to — whether through a care team role or under **Assigned staff** on the client's **Security** tab — plus any clients they're covering for a colleague (see below). A client you hold a role on shows that role; a client you're assigned to without a role shows **Assigned**. An assignment with an end date drops off the list once that date passes. For each client it shows their next upcoming visit, open tasks assigned to you for that client, forms sent to the client that are overdue, and lab or imaging results completed in the last week.
+
+### Covering for a colleague
+
+Going on vacation or taking on-call? On **My Patients → Coverage**, select **Hand off coverage**, choose who is being covered, who is covering, and a date range (up to 90 days), then select **Hand off coverage** to confirm. For that whole window, the covering colleague sees every client the covered provider is assigned to — marked **Covering for `<name>`** on their My Patients list — and it ends on its own at the date you chose. To end it early, select **Revoke** beside the coverage entry.
+
+The covering colleague is notified when coverage starts. Coverage never names a client in that notice — only whose patients, and for how long.
+
+### Transfer of care
+
+To hand a role on one client to a colleague permanently — not just cover for a while — go to **My Patients → Transfers**, select **Request transfer**, choose the client, the role being handed off, who receives it, and write a handoff note for them. The receiving provider gets a notification and must **Accept** it before anything changes — nobody's role moves until they do. They can also **Decline**, optionally with a reason, and you can **Cancel request** while it's still pending. The handoff note is visible only to the two providers involved and to the owner and managers.
+
+## VIP / confidential clients
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager to change; anyone who can open the client to view" />
+
+For a client who needs extra discretion — a well-known person, a staff member's own family, anyone the clinic wants to handle with particular care — turn on **VIP / confidential** on the client's **Security** tab.
+
+- **Turning it on also restricts the client** to assigned staff, the same as [Restrict to assigned staff](#assign-staff-and-restrict-the-client) above — you don't need to turn both on separately.
+- **The clinic owner is alerted on every emergency access** to a VIP client, in addition to the usual notice to assigned staff — so a VIP client's record being opened under emergency access always reaches the owner, even on a clinic where the owner doesn't otherwise hold a day-to-day staff role.
+- **Turning VIP off does not remove the restriction.** If you also want the client visible to everyone again, switch off **Restrict to assigned staff** separately.
+- A **VIP** badge shows next to the client's secured label, visible only to people who can already see the client.
+
+## Sensitive records
+
+<Availability editions={['clinic']} plans="Essential and up" roles="The person who recorded it, the client's care team, or clinic owner/manager to mark or view; every other team member sees only that a sensitive record exists" />
+
+Some individual records need to stay closed even to staff who can otherwise open the client's record — behavioural health, substance use, reproductive health, HIV status, and similar.
+
+You can mark these:
+
+| Record | Where to mark it |
+|---|---|
+| A note | The notes list — select the lock icon beside it |
+| A quick note, or a new note from a template | Choose a **Sensitivity** on the note form before saving |
+| A signed document | Open the document — the lock icon sits beside **Download PDF** |
+| A consultation | Open the consultation — the lock icon sits with the other chart actions |
+| A history entry | **Add a history entry** or **Correct this entry** — choose a **Sensitivity** |
+| An uploaded file | Choose a **Sensitivity** in **Secure File Upload** before uploading |
+| A ward round note, nursing note or set of vitals | Choose a **Sensitivity** on the form in the patient's ward chart |
+
+In each case choose a category and select **Save**. On a form that creates the
+record, the sensitivity is applied as soon as it saves — if that does not go
+through you are told so explicitly, rather than being shown a plain "Saved".
+
+- **Only the person who recorded it, the client's care team, and the clinic owner or a manager can open a sensitive record.** This applies even when the client themself is not restricted — sensitivity is a separate lock from the client-level restriction above.
+- **Everyone else sees "Sensitive note"** in the list, with no title, no content and no author name — the row is there so counts and dates still add up, but it can't be opened.
+- **Choose "Not sensitive"** in the same place to remove the mark.
+- **A consultation or document you mark also follows the client's [Proxy access limits](#proxy-access-limits)** — see below.
+
+## Restrict by department
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
+
+Instead of — or alongside — naming individual people, you can restrict a client to everyone in one or more departments. On the client's **Security** tab, under **Department scope**, choose the departments and select **Save department scope**. Anyone whose own team profile is set to one of those departments can then see the client, in addition to anyone assigned by name. Set a team member's department from **Settings → Staff**: open their actions menu and select **Set Department**.
+
+Like named assignments, department scope only matters once **Restrict to assigned staff** is switched on above.
+
+## Remove the restriction
+
+<Steps>
+  <Step title="Open Security">
+    Open the client (or the **Secured patient** entry) and go to **Security**.
+  </Step>
+  <Step title="Switch it off">
+    Switch off **Restrict to assigned staff** and select **Remove restriction**. Everyone who can open client records sees the client again. Their secured number stays reserved.
+  </Step>
+</Steps>
+
+## Check it worked
+
+Ask a team member who is not assigned to search for the client by name. They should find nothing, and the list should show **Secured patient** with the client's number instead.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="&quot;Give this provider access?&quot; appears when I book">
+    The client is restricted and the provider you chose is not assigned. Select **Book and give access** to add them, or choose an assigned provider instead.
+  </Accordion>
+  <Accordion title="&quot;You can send this invoice only to the client's email on file&quot;">
+    You can't see this client, so the invoice can only go to the address the clinic has for them. Ask the owner or an assigned team member to send it anywhere else.
+  </Accordion>
+  <Accordion title="&quot;This client is restricted to assigned staff and the teacher is not assigned&quot;">
+    You tried to add a restricted client to a class whose teacher is not assigned to them. Ask the owner or a manager to assign the teacher on the client's **Security** tab, then add the client again.
+  </Accordion>
+  <Accordion title="A file, recording or document won't open for a client">
+    If the client is restricted and you are not assigned, files that belong to them cannot be opened or listed. Ask the owner or an assigned team member.
+  </Accordion>
+  <Accordion title="The switch is greyed out">
+    Only the clinic owner or a manager can change who can see a client. Everyone else can see the tab but not change it.
+  </Accordion>
+  <Accordion title="I don't see Request emergency access">
+    The button only appears when you are on the clinic's team and cannot already see the client. If you are the owner or assigned, you already have access. If you just used emergency access, the record is open — the button to extend it is on the client's **Security** tab.
+  </Accordion>
+  <Accordion title="&quot;Give a reason of at least 10 characters&quot;">
+    Emergency access needs a reason. Say briefly why you need the record now, then try again.
+  </Accordion>
+  <Accordion title="&quot;You can already see this client, so emergency access was not needed&quot;">
+    You are the owner, assigned, or someone removed the restriction. Close the dialog and open the client as usual.
+  </Accordion>
+  <Accordion title="&quot;Only the clinic owner or a manager can end emergency access&quot;">
+    Ending someone's emergency access early, and seeing the access reports, are for the owner and managers.
+  </Accordion>
+  <Accordion title="I restricted a client and now I can't see them">
+    You are a manager who is not assigned, which is how restriction works. Open the **Secured patient** entry, select **Security settings**, and either assign yourself or remove the restriction.
+  </Accordion>
+  <Accordion title="&quot;Only the clinic owner or a manager can change who can see this record&quot;">
+    Your role in this clinic is not owner or manager. Ask one of them to make the change.
+  </Accordion>
+  <Accordion title="&quot;This needs two-factor authentication&quot;">
+    Your clinic requires two-factor sign-in for client records. Sign in with your second factor and try again.
+  </Accordion>
+  <Accordion title="&quot;Reassigning the primary provider goes through Transfer of care&quot;">
+    A client's primary provider can add or remove other care team roles, but changing who is primary always needs the receiving provider's acceptance. Go to **My Patients → Transfers** and request the transfer instead.
+  </Accordion>
+  <Accordion title="&quot;This client already has a primary provider for that time window&quot;">
+    Only one team member can be Primary provider for a client for any given date range. If you're covering as a locum, choose dates that don't overlap the current primary provider's — or use [transfer of care](#transfer-of-care) to hand it off permanently instead.
+  </Accordion>
+  <Accordion title="Care team, My Patients, Coverage, Transfers, VIP, sensitive notes or department scope isn't there">
+    These are available on the Essential plan and up. Basic restriction (assigning who can see a client) stays on every plan.
+  </Accordion>
+  <Accordion title="A note shows &quot;Sensitive note&quot; and I can't open it">
+    You're not the author, on this client's care team, or the clinic owner/manager. Ask one of them to open it, or to add you to the client's care team if you need ongoing access.
+  </Accordion>
+  <Accordion title="I marked a note sensitive by mistake">
+    Select the lock icon beside the note again and choose **Not sensitive**, then **Save**.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

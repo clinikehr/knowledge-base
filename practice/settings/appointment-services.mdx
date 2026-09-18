@@ -33,9 +33,9 @@ The card is headed **Appointment Services** — "Manage services available for a
 | Row menu | **View**, **Edit** and **Delete** | — |
 | Pagination | Page size and page controls under the table | — |
 
-The form itself is grouped into cards. **Basic Information** holds **Service Name** and **Category** (both required), plus **Sub-category (Optional)**, **Procedure Code (Optional)** — "Tag this service with a CPT or HCPCS code for billing & reporting" — and **Description (Optional)**. **Pricing & Duration** holds **Price**, labelled with your own currency, and **Duration (minutes)**. **Venue & Settings** holds **Available Venues**, the **Active Service** switch ("Enable/disable this service for booking") and **Requires Preparation**, which reveals a **Preparation Instructions** box. **Providers**, **Required Resources** and **Product Used** decide who can deliver it, which room or equipment it occupies, and what stock it consumes.
+The form itself is grouped into cards. **Basic Information** holds **Service Name** and **Category** (both required), plus **Sub-category (Optional)**, **Procedure Code (Optional)** — "Tag this service with a CPT or HCPCS code for billing & reporting" — and **Description (Optional)**. **Pricing & Duration** holds **Price**, labelled with your own currency, and **Duration (minutes)**. **Venue & Settings** holds **Available Venues**, the **Active Service** switch ("Enable/disable this service for booking") and **Requires Preparation**, which reveals a **Preparation Instructions** box. **Providers**, **Required Resources** and **Product Used** decide who can deliver it, which room or equipment it occupies, and what stock it consumes. **Usual time until the next visit** — a number of **days** or **weeks** — is how long clients usually wait before booking this service again; leave it empty for none. **Repeat bookings** lets clients book the service as a repeating series from your booking page — see [Repeat bookings](#repeat-bookings) below.
 
-There is deliberately **no colour, deposit or buffer field** on this form. Deposits belong to the booking page's own payment settings, not to the service.
+Four more cards shape how the service is booked: **Options & Add-ons**, **Timing**, **Online Booking** and **Provider Pricing** — see [Options, add-ons and timing](#options-add-ons-and-timing) below. Only the clinic owner or a manager can save them. There is still **no colour field** on this form. Deposits, paying in full when booking, and cancellation and missed appointment fees are set per service in **Deposits & cancellation fees** — see [Deposits and cancellation fees](#deposits-and-cancellation-fees) below.
 
 For a field-by-field walkthrough of the form, including the specialty starter sets, see [Add the services you offer](/practice/get-started/services).
 
@@ -74,9 +74,88 @@ An **active** service becomes available in three places at once:
 
 Changing a service's price, duration or venues affects **future** bookings only. An appointment already booked keeps what it was booked with.
 
+**Usual time until the next visit** does nothing on its own. With **Rebooking reminders** on in [Notifications](/practice/settings/notifications), a client whose last completed visit for this service was that long ago — and who has nothing booked since — is emailed once with a link to book it again, and sees a **Book your next visit** card in their client portal. Visits whose gap passed more than a week before you set it are not reminded.
+
 <Warning>
   **Delete** permanently removes a service. The product blocks it where the service is in use — "If this service is being used by any appointments, you will not be able to delete it. Consider deactivating it instead" — but an unused service is gone for good, along with its configuration. Turn **Active Service** off instead unless you are certain.
 </Warning>
+
+## Repeat bookings
+
+Turn on **Repeat bookings** to let clients book this service as a repeating series from your [booking page](/practice/work/booking-page#repeat-visits). Then tick the gaps they may choose under **Clients can repeat** — from **Every week** to **Every 12 weeks** — and pick **Most visits in one series** (between 2 and 26; the first visit counts as one). A switched-on setting needs at least one gap and a maximum before the service saves.
+
+Repeat bookings are available on plans that include recurring appointments (**Team** and **Enterprise**). On any other plan the setting is kept but clients are not offered a repeat. When a client books several services in one visit, a repeat is offered only if every one of those services allows it, with the gaps they all share and the smallest maximum.
+
+## Group class
+
+Turn on **Group class** to run this service as a class: clients book a place in a scheduled session instead of a one-to-one appointment. Enter **Places per session**, optionally **Minimum people**, and choose **Waitlist when full** and **Hold an offered place for (hours)**. Sessions are scheduled in **Appointments** → **Classes**. Group classes need the **Essential** plan or above. See [Run group classes](/practice/work/group-classes).
+
+## Deposits and cancellation fees
+
+The **Deposits & cancellation fees** card sets what booking this service on your [booking page](/practice/work/booking-page#deposits-cancellations-and-missed-visits) or in the client portal asks of a client. It needs the **Essential** plan or above and a connected Stripe account; until then the controls are shown switched off with the reason. It is not available yet for practices that bill in Naira.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Pay in full when booking** | The client pays the whole price of the service (and the add-ons chosen with it) to book | Off |
+| **Deposit** | **Fixed amount** or **Percent of the price**, paid when booking and taken off the bill. A percent is of the service and its add-ons; a fixed deposit does not change with add-ons | None |
+| **Cancellation window** | How long before the visit a client may cancel and have their payment refunded: **No window**, 12 hours, 1, 2 or 3 days | No window |
+| **Late cancellation fee** | **Fixed amount** or **Percent of the price**, for a cancellation inside the window. Needs a window | None |
+| **Missed appointment fee** | **Fixed amount** or **Percent of the price**, for a visit marked as a no-show | None |
+
+Only the owner or a manager can change it. It is saved with the service, and it applies to bookings made after you save — a booking keeps the terms the client agreed to. Write the policy clients read in the booking page designer, under **Settings → Booking policy**.
+
+**Visits you book yourself.** A visit booked from the calendar never asks the client to agree and never takes a deposit. It follows the service's cancellation window and fees only when that client has already agreed to the same policy when booking online — then a late cancellation or a missed visit gives you a fee to review, exactly as for an online booking. If the client has not agreed, or your policy has changed since they did, no fee is raised for that visit.
+
+**Cancellation windows use your practice's time zone.** The window, a service's minimum notice and reminders are measured in the **Timezone** under [General](/practice/settings/general). The booking page designer's **Clinic Timezone** is used only while General still shows its starting value, New York, and the designer names a different zone.
+
+**When a visit is cancelled, its invoice closes.** An invoice with nothing paid is cancelled. When something was paid and kept — a deposit kept under your policy, for example — the invoice keeps only that amount as paid and the rest is written off, so nobody is chased for a visit that did not happen. A refund made afterwards takes it off the invoice. Put the visit back on the diary and the invoice reopens at its original total. An invoice that also carries other charges or a discount code is left open, and you get a notice to review it.
+
+## Options, add-ons and timing
+
+| Card | Control | What it does | Default |
+| --- | --- | --- | --- |
+| **Options & Add-ons** | **Add-on only** | The service is offered only under a service that lists it, and is never booked on its own | Off |
+| | **Add option** | Versions of the service, each with its own **Option name**, **Minutes** and **Price** — for example Short (30 min) and Long (60 min). When a service has options, one is always chosen when booking, and its length and price are used instead of the service's own | None |
+| | **Add an add-on** | Lists a service marked **Add-on only** under this one. Leave its **Extra minutes** or **Price** empty to use the add-on's own | None |
+| **Timing** | **Buffer after (minutes)** | Clean-up or turnover time the provider needs after the visit. A visit of several services uses the longest buffer once, after the visit | 0 |
+| | **Processing time** | The client stays but the provider is free for part of the service — **Starts after (minutes)** and **Lasts (minutes)**. It must end before the service ends | Off |
+| **Online Booking** | **Who can book online** | **Everyone**, **New clients only**, **Existing clients only** or **Not bookable online**. Booking from the calendar is not affected | Everyone |
+| | **Minimum notice** | The soonest a client can book it online | No minimum |
+| | **Book up to (days ahead)** | The furthest ahead a client can book it online. Empty uses the booking page's own limit | Empty |
+| **Provider Pricing** | **Add provider pricing** | A provider's own price or length for this service (or one of its options). It applies when that provider is chosen for the booking | None |
+
+<Steps>
+  <Step title="Create the add-ons first">
+    An add-on is a service of its own. Add it, turn on **Add-on only**, give it a price and duration, and save.
+  </Step>
+  <Step title="Open the main service">
+    Under **Options & Add-ons**, select **Add option** for each version you offer, and pick each extra from **Add an add-on**.
+  </Step>
+  <Step title="Set the timing">
+    Enter **Buffer after (minutes)** if the provider needs time after the visit, and turn on **Processing time** if they are free while something develops.
+  </Step>
+  <Step title="Save">
+    Select **Update Service**. If an option or a timing value is not valid, nothing is saved and the message says which value to fix.
+  </Step>
+</Steps>
+
+When staff book the service, the sheet shows an **Option** list and **Add-ons** ticks under it. The summary lists each add-on on its own line and shows the **Visit Time** and **Appointment Total** with everything added. The appointment keeps the option, the add-ons and their prices as they were booked, so a later price change never rewrites it — invoices list the option beside the service name and each add-on as its own line.
+
+If someone at the desk changes a service's **Fee** on the booking sheet, that price is used and the standard price is kept beside it on the appointment. The visit's length always comes from the service, its option, its add-ons and the chosen provider — not from what is typed.
+
+An appointment booked with an option or add-ons keeps its services as booked when you edit it. To change them, cancel it and book again.
+
+### On your booking page
+
+A service on your [booking page](/practice/work/booking-page) offers its options and add-ons to clients the same way: they choose an option, tick add-ons, and see the total time and price before picking a time. **Online Booking** decides who sees it and how soon or how far ahead it can be booked. Offered times leave room for **Buffer after (minutes)**, and a provider's **Processing time** can be booked for another short visit.
+
+### Moving an appointment
+
+When you change an appointment's date, time or provider, the new time is checked before it is saved. If it does not fit, nothing moves and you see why:
+
+- "The provider is already booked then, including the time set aside after another visit." — another visit, or the buffer after one, is in the way. A visit's own processing time is free for other bookings.
+- "That time is outside the provider's working hours."
+- "The chosen provider does not offer every service on this visit."
 
 ## Check it worked
 
@@ -96,6 +175,15 @@ Start booking an appointment. The service should appear in the picker with the r
   </Accordion>
   <Accordion title="Booking the service says no provider is configured">
     Under **Providers**, you have restricted the service to specific staff and none of them is available. Leaving every provider unticked offers it with any available provider, which is what most services want.
+  </Accordion>
+  <Accordion title="Service saved, but its options were not">
+    Only the clinic owner or a manager can change **Options & Add-ons**, **Timing**, **Online Booking** and **Provider Pricing**. Ask one of them to save the service again.
+  </Accordion>
+  <Accordion title="An appointment will not move to the time I picked">
+    The message says why: the provider is already booked (including the buffer after another visit), the time is outside their working hours, or they do not offer every service on the visit. Pick another time or provider.
+  </Accordion>
+  <Accordion title="I cannot pick a service on its own when booking">
+    It is marked **Add-on only**. Tick it under the service that lists it instead, or turn **Add-on only** off if it should be booked by itself.
   </Accordion>
   <Accordion title="I cannot delete a service">
     It is attached to at least one appointment. That is a guard, not a fault — deleting it would leave those appointments pointing at nothing. Deactivate it instead.

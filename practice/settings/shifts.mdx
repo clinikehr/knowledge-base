@@ -1,0 +1,72 @@
+---
+title: Shifts
+description: "Build a rota, create reusable shift types and repeating patterns, and manage swap and cover requests."
+icon: /images/icons/calendar-days.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Team and above" roles="Everyone can view; managing the rota needs owner, manager, or a granted Shifts permission" note="Requesting cover on your own shift needs no permission at all" />
+
+This is where your staff rota lives: who is working, when, and what happens when someone needs cover. It sits inside Settings rather than its own page, next to **Staff & Teams**.
+
+<Path steps={['Settings', 'Team', 'Shifts']} />
+
+## What this tab controls
+
+| Section | What it does | Who sees it |
+| --- | --- | --- |
+| **Rota** | The week or month grid, by person or by department. Click a slot to assign a shift, or a shift to edit it. On a phone this becomes a day-by-day list instead of a squeezed grid. | Everyone (edit needs a permission — see below) |
+| **Shift types** | Reusable templates like "Day 7:00 AM – 7:00 PM", including overnight shifts. Repeating patterns generate real shifts from a template on a schedule you set (e.g. every Monday, Wednesday and Friday). | Managing needs a permission |
+| **Cover & swaps** | Requests to swap or cover a shift: a colleague accepts, then a manager approves before the shift actually changes hands. | Everyone with a stake in the request; approving needs a permission |
+| **Coverage rules** | A minimum headcount for a department or role during a time window — the rota flags any window that falls short, and highlights a person booked onto two overlapping shifts. | Managing needs a permission |
+
+A staff member who cannot manage the rota sees a simple **My shifts** view instead: their own upcoming shifts, a **Request swap or cover** button on each, and the requests they are part of.
+
+<Availability editions={['clinic']} plans="Team and above" roles="Owner, manager, or a role granted the Shifts permission" note="Grant the permission from Staff & Teams → a person's Permissions" />
+
+## Assign a shift
+
+<Steps>
+  <Step title="Open the Rota tab">
+    Choose **Week** or **Month**, and **By person** or **By department**. Use the arrows to move between periods.
+  </Step>
+  <Step title="Select a slot or a shift type">
+    Click an empty slot for that day and person, or **New shift** to pick anyone. Choosing a shift type fills in the hours for you; you can still adjust them.
+  </Step>
+  <Step title="Assign and save">
+    Pick who it belongs to — or leave it **Open (unassigned)** for someone to claim later — and save. The shift appears on the rota immediately, and the person gets a notification.
+  </Step>
+</Steps>
+
+## Build a repeating pattern
+
+Instead of assigning the same shift week after week, create a shift type once, then a pattern that says which days it repeats on and how far into the future to generate it. The tab shows how many shifts a pattern will add before you confirm. Running it again later only adds what's missing — it never duplicates a shift already on the rota.
+
+**Copy week** duplicates a whole week's rota to another week in one step, for the whole team or one person.
+
+## Request and approve cover
+
+<Steps>
+  <Step title="Ask for cover">
+    From your own shift, or a colleague's if you manage the rota, select **Request swap or cover** and add a reason.
+  </Step>
+  <Step title="A colleague accepts">
+    Anyone the request was sent to — or anyone at all, for an open request — can accept it from **Cover & swaps**. Accepting does not move the shift yet.
+  </Step>
+  <Step title="A manager approves">
+    Only once a manager approves does the shift actually reassign. Approving or declining notifies both people.
+  </Step>
+</Steps>
+
+<Note>
+  **A shift adds time on top of your normal working hours — it never removes any.** Your weekly working hours (set under Booking Settings) stay the default; a scheduled shift simply adds bookable time on its date. If your clinic never uses shifts, nothing about booking changes.
+</Note>
+
+<Warning>
+  **Cancelling a shift removes it from the rota permanently**, along with any open swap or cover request for it. This cannot be undone — assign a replacement shift afterward if the work still needs covering.
+</Warning>
+
+<StillStuck />

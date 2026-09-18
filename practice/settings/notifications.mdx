@@ -29,7 +29,7 @@ Every switch saves on its own, straight away. There is no **Save** button.
 | --- | --- | --- |
 | **Email notifications** | "Master switch for all clinic emails. Turn off to pause non-essential email." | On |
 | **Appointment** | "New bookings, cancellations, and reminders" | On |
-| **Patient** | "New patient registrations and updates" | On |
+| **Patient** | "New patient registrations and updates" — also gates the provider-arrival email when someone is checked in | On |
 | **Staff** | "Staff invitations accepted and role changes" | On |
 | **Billing** | "Payment received, invoices, and overdue alerts" | On |
 | **Subscription** | "Plan changes, trial expiry, and payment status" | On |
@@ -38,6 +38,8 @@ Every switch saves on its own, straight away. There is no **Save** button.
 | **System** | "System updates and maintenance notices" | On, **and cannot be switched off** |
 | **Achievement emails** | "Milestone badges, tier-ups, and your clinic's trophy case" | On |
 | **Daily operational digests** | "Morning owner summaries for inventory, pharmacy, and lab" | On |
+
+The **Document** switch also covers forms: a notification when someone mentions you in a comment on a form, the **Every response** notification, the **Daily digest** email that team members can choose for a form they build, and the **Prescreen follow-up** notification a screening form raises for a team. Turning it off stops all four for everyone in your practice.
 
 The **System** switch is drawn but disabled, and the line under the card says why: "System notifications cannot be disabled as they contain important updates about your clinic." The category list also adapts to your edition, so you only see categories your practice can produce.
 
@@ -81,6 +83,23 @@ There is no save — each switch takes effect as you flip it, and the confirmati
 
 So a client complaining about reminders is fixed on their record, not here; an owner tired of milestone emails turns off **Achievement emails** here.
 
+## Rebooking reminders
+
+A second card on this tab, **Rebooking reminders**, is about your **clients**, not your practice. With **Suggest the next visit** on, a client whose usual time until their next visit has come round — and who has nothing booked with you since — gets one email suggesting they book that service again, with a button that opens your booking page with the service already chosen. The same suggestion appears as a **Book your next visit** card in their client portal.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Suggest the next visit** | Turns rebooking emails and the portal card on or off for the whole practice | Off |
+
+- **Only the clinic owner can change it.** Anyone else sees the switch, and the line under it says so.
+- **Nothing is sent until a service has a usual gap.** Set **Usual time until the next visit** on each service in [Appointment services](/practice/settings/appointment-services). A service without one never sends a rebooking email.
+- **One email per visit, at most.** It goes out the day the gap is reached (or within a week of it). If the client books anything in the meantime — or has already been back — nothing is sent.
+- **The email says as little as possible.** It names the service and your practice, and nothing about the client or the visit.
+- **Clients stay in control.** A client whose record has appointment emails turned off gets no rebooking email, and every email carries **Stop these reminders**. Using it stops rebooking emails and the portal card from your practice for that client; their appointment confirmations and reminders carry on.
+- **Your booking page must be published** and the service bookable online by existing clients, because the button takes them there.
+
+Turning the switch on does not send anything for old visits: only visits whose gap is reached from now on (or in the last week) are suggested.
+
 ## Check it worked
 
 Flip a switch and watch for the confirmation — "Notifications muted" or "Notifications enabled", naming the category. Reload the tab; the switch should hold its new position. Then trigger something in that category (book a test appointment, say) and confirm nothing arrives in the practice inbox and nothing appears under the bell.
@@ -99,6 +118,9 @@ Flip a switch and watch for the confirmation — "Notifications muted" or "Notif
   </Accordion>
   <Accordion title='"Failed to update preferences"'>
     The switch snaps back to where it was and nothing was saved. Check your connection and flip it again.
+  </Accordion>
+  <Accordion title="Rebooking reminders are on but no client got one">
+    Check three things. The service needs a **Usual time until the next visit**; the client's last visit must be **Completed**, with nothing booked since; and your booking page must be published. A client whose record has appointment emails turned off, or who used **Stop these reminders**, is skipped.
   </Accordion>
   <Accordion title="A colleague still gets emails I muted">
     Muting here stops practice-directed email. Email addressed to them as a person — account and security notices, marketing — is governed by their own [account notifications](/platform/account/notifications).

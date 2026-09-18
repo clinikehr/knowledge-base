@@ -1,6 +1,6 @@
 ---
 title: Send and track documents
-description: "Send a consent form or agreement for signature, follow its status, and resend or cancel it from the hospital's document ledger."
+description: "Send a consent form or agreement for signature, follow its status on eSignatures, and resend or download it."
 icon: /images/icons/file-signature.svg
 ---
 
@@ -9,46 +9,39 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans — sending and templates are blocked on Free" roles="Owners, managers, doctors, nurses and receptionists" note="Needs the Records care area on Enterprise; Solo and Team list Documents flat" />
+<Availability editions={['clinic']} plans="All plans — sending and templates are blocked on Free" roles="Owners, managers, doctors, nurses and receptionists" note="Needs the Records care area on Enterprise; Solo and Team list Forms flat" />
 
-**Documents** is your hospital's full document ledger: everything sent out for signature, what it is doing now, and the templates it is built from. Where [Records](/hospital/records/overview) shows only what needs a person today, this shows all of it.
+**eSignatures** is your hospital's full signature ledger: everything sent out for signature and what it is doing now, newest first, in one list. Where [Records](/hospital/records/overview) shows only what needs a person today, this shows all of it.
 
-<Path steps={['Sidebar', 'Records', 'Documents']} />
+It is a tab of [Forms](/hospital/records/forms). It used to be two places — a **Signed documents** tab, and before that a **Documents** entry in the sidebar. Both are part of **eSignatures** now, the links patients hold still work, and old links to either open this tab.
+
+<Path steps={['Sidebar', 'Records', 'Forms', 'eSignatures']} />
 
 <TaskHeader before="An active document template, and a patient with an email address on file" time="Under a minute per document" after="A document sent, tracked by status, and filed to the patient's record once signed" />
 
 ## What you're looking at
 
-The heading reads **Clinic Documents** — "Manage and send documents for clinic signatures". A period filter offering **Today**, **Last 7 Days**, **This Month** and **All Time** sits beside a **Send Document** button, which opens **Create Document**.
+Each row is marked with what it is: **Signature request** — prepared with the signing builder, and selecting it opens its tracking page (see [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature)) — or **Document**, a consent form or agreement sent from one of your templates with the earlier signing links.
 
-Four tabs:
+Every row has the same status pill:
 
-| Tab | What it holds |
+| Status | What it means for a document |
 | --- | --- |
-| **Overview** | **Total Documents** and the rest of the period's counts |
-| **Documents** | The ledger itself |
-| **Analytics** | How signing is going over the period |
-| **Templates** | The templates every document is built from |
-
-Each document has one of six statuses:
-
-| Status | What it means |
-| --- | --- |
-| **Pending** | Sent, not yet opened |
-| **Viewed** | The patient has opened it but not signed |
-| **Signed** | Done — the signed copy is on their record |
-| **Expired** | The link ran out before they signed |
+| **Sent** | Sent, not yet opened |
+| **In progress** | The patient has opened it but not signed |
+| **Completed** | Signed — the signed copy is on their record |
 | **Declined** | The patient refused to sign |
-| **Cancelled** | You withdrew it |
+| **Voided** | You withdrew it |
+| **Expired** | The link ran out before they signed |
 
-**Empty state.** A hospital that has sent nothing shows **No documents found** with "Send your first document to get started".
+**Empty state.** A hospital that has sent nothing shows "Nothing has been sent for signature yet." with **Send a document for signature**.
 
 ## Before you start
 
 Two prerequisites, and both stop you dead rather than failing quietly:
 
-- **An active template must exist.** Without one you get "No active document templates found. Please create a template first." Build one on the **Templates** tab.
-- **The patient must have an email address on file.** The chart warns "⚠️ This patient does not have an email address. Please update their profile before sending documents.", and sending is refused with "Selected patient does not have an email address".
+- **An active template must exist.** Templates are kept in **Settings → Patient Experience → Sharable Documents**.
+- **For a document from one of your templates, the patient must have an email address on file.** The chart warns "⚠️ This patient does not have an email address. Please update their profile before sending documents.", and sending is refused with "Selected patient does not have an email address". A form or a signature request can still reach a patient with no address — through their portal, or in person on this device.
 
 ## Send a document for signature
 
@@ -56,90 +49,82 @@ Two prerequisites, and both stop you dead rather than failing quietly:
   <Step title="Find the patient">
     Open [Patient records](/hospital/records/patient-records), find the person, and open the row's **⋯** menu.
   </Step>
-  <Step title="Select Send Consent">
-    The **Send Document for Signature** dialog opens — "Send a document to \{patient\} for review and signature" — and shows the patient's name and the email it will go to. Check that address before going further.
+  <Step title="Select Send to patient">
+    The **Send intakes** sheet opens — the same one the patient's own record uses — on its first step, with the patient's name and the address it will go to. Check that address before going further.
   </Step>
-  <Step title="Choose the template">
-    **Document Template \*** is required. The picker lists your active templates with their descriptions.
+  <Step title="Choose what to send">
+    One list, in groups: **Packs**, **Forms** (published forms that go to a patient or by private link) and **Signable documents** (ready to send, with a signer and at least one field) when your hospital has any, then **Consent documents**, **Clinical outcomes & measures**, **Questionnaires & intakes**, and **Clinical templates** when you have your own. Tick as many as you need. The templates you tick go in one email together; each form and each document to sign arrives as its own invitation. Anything the patient already has open is marked, so the same consent does not go out twice. A signature request that someone else signs as well — a witness, a clinician — asks on the next step who signs each part: **A specific staff member**, **A named person outside the clinic**, or **The appointment's provider** when you started from an appointment.
   </Step>
   <Step title="Add context">
-    **Additional Notes (Optional)** — "Add any additional notes or instructions for the patient..." — is where you say why they are being asked to sign. A consent form arriving with no explanation is a consent form that does not get signed.
+    **Continue to email** takes you to **Compose email**, where the subject and message are yours to change. Say why they are being asked to sign: a consent form arriving with no explanation is a consent form that does not get signed.
   </Step>
   <Step title="Send">
-    The patient gets an email with their own link, and the document appears in the ledger at **Pending**.
+    **Review & confirm**, then send. The patient gets one email with their own links, and each document appears on **eSignatures** at **Sent**. The confirmation names what went and what did not — an item that was skipped, and why, is said rather than counted as sent.
   </Step>
 </Steps>
 
 ## Follow it up
 
-Each row's **⋯** menu offers **View Details** always, and two actions that appear only when they make sense:
+On **eSignatures**, a **Document** row's **⋯** menu offers:
 
 <Steps>
-  <Step title="Resend an expired document">
-    **Resend Document** appears only on a document at **Expired**, and gives the patient a fresh link. This is what an **Expiring soon** or **Link expired** row on the [records desk](/hospital/records/overview) is asking for.
+  <Step title="View">
+    What was sent, when, and where it has got to.
   </Step>
-  <Step title="Cancel one still in play">
-    **Cancel Document** appears only while a document is **Pending** or **Viewed**. It asks **Cancel Document?** and lets you back out with **Keep Document**.
+  <Step title="Resend">
+    The document opens with the patient and its content filled in; check them and select **Send Document**. It goes out again as a new document with its own link, and the earlier link keeps working until it expires or is revoked from the patient's record.
   </Step>
-  <Step title="Read the detail">
-    **View Details** shows what was sent, when, and where it has got to.
+  <Step title="Download">
+    A PDF of the document, marked as not yet signed when it is not. Not offered on a cancelled document.
   </Step>
 </Steps>
 
-<Warning>
-  **Cancelling kills the patient's signing link for good.** The dialog says so — "This will cancel the document and the patient will no longer be able to sign it. This action cannot be undone." They cannot reopen it and there is no undo; you must send a fresh one. If you are only chasing a slow signer, leave the document alone and ring them.
-</Warning>
+<Note>
+  **A template your hospital has converted to a form is sent as that form.** Once a template has been converted with **Convert to form** and the form published, it can no longer be sent as a document — not from **Resend**, the **Send intakes** sheet, an assistant or an appointment default — and you are told which form replaces it. Templates that have not been converted keep sending as before.
+</Note>
 
 <AuditNote action="Sending, opening or cancelling a document" />
 
 ## Who can do this
 
-**Role** decides whether the ledger opens: owners, managers, doctors, nurses and receptionists pass, and anyone else is told they do not have permission. **Documents** needs the **Records** care area in **Settings → Facility**, and on Enterprise an owner controls which roles see the **Records** group under **Settings → Role Navigation**.
+**Role** decides whether the ledger opens: owners, managers, doctors, nurses and receptionists pass, and anyone else is told they do not have permission. **Forms** needs the **Records** care area in **Settings → Facility**, and on Enterprise an owner controls which roles see the **Records** group under **Settings → Role Navigation**.
 
-Nothing inside is governed by an individual permission — the document permissions in the staff sheet are recorded against a person but no screen reads them, so what actually decides each action is the role list above and your plan:
+Inside, what each person may do is decided by the Forms permissions in their staff permissions, plus your plan:
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Open the ledger and read it | Owners, managers, doctors, nurses, receptionists | Role — a fixed list on this page |
-| **Send Consent** / **Send Document** | The same people | Plan — the controls are inert on Free |
-| **Resend Document** | The same people | Plan — as above |
-| **Cancel Document** | The same people | Plan — as above |
-| Create or edit a template | The same people | Plan — as above |
+| Open the ledger and read it | Owners, managers, doctors, nurses, receptionists | Role, and the **View forms** permission |
+| **Send to patient** | The same people | The **Create and edit forms** permission, and your plan — the controls are inert on Free |
+| Send, remind, correct or void a signature request | The same people | The **Send documents for signature** permission |
+| **Resend** a document | The same people | Role, and your plan |
+| **Download** | The same people | Role |
+| Prepare a document for signature, or create or edit a template | The same people | The **Create and edit forms** permission, and your plan |
 
-Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before it starts applying. A **denied action is recorded**; an allowed one is not. Hiding **Documents** from a role is a convenience, not a security boundary.
+Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before it starts applying. A **denied action is recorded**; an allowed one is not. Hiding **Forms** from a role is a convenience, not a security boundary.
 
 ## Check it worked
 
-- The document is in the ledger against the right patient, at **Pending**.
-- When the patient opens it the status becomes **Viewed**; when they sign it becomes **Signed** and the signed copy is on their chart.
-- A resent document has a fresh **Sent** time and is no longer **Expired**.
-- **Total Documents** on **Overview** counts it for the period you have chosen.
+- The document is on **eSignatures**, marked **Document**, at **Sent**.
+- When the patient opens it the status becomes **In progress**; when they sign it becomes **Completed** and the signed copy is on their chart.
+- A resent document is a new row at the top of the list.
 
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="No active document templates found">
-    Nothing can be sent without one. Create a template on the **Templates** tab, make sure it is active, then send again.
+  <Accordion title="Converted to the form — send the form instead">
+    That template has been converted to a published form, so it is no longer sent as a document. Send the form instead. An appointment default still naming the template sends nothing until an owner or manager chooses **Use this form here** in **Settings → Patient Experience → Sharable Documents**.
   </Accordion>
 
   <Accordion title="The patient does not have an email address">
-    Documents are delivered by email. Add the address to their record, then send — see [Patient records](/hospital/records/patient-records).
-  </Accordion>
-
-  <Accordion title="Resend Document is not in the menu">
-    It appears only on an **Expired** document. One still **Pending** does not need resending — the original link still works.
-  </Accordion>
-
-  <Accordion title="I cannot cancel a document">
-    **Cancel Document** appears only while a document is **Pending** or **Viewed**. Once it is signed, declined or expired there is nothing left to withdraw.
+    Documents from your templates are delivered by email. Add the address to their record, then send — see [Patient records](/hospital/records/patient-records). A form or a signature request can instead go **Portal only — no email** when the patient has portal access, or be completed **In person, on this device**.
   </Accordion>
 
   <Accordion title="The patient says they never got the email">
-    Ask them to check spam first. If it is genuinely missing, confirm the address on their record, cancel the outstanding document and send a new one. A patient with portal access can also open it from the portal without the email.
+    Ask them to check spam first. If it is genuinely missing, confirm the address on their record, revoke access to the outstanding document from their record and send a new one. A patient with portal access can also open it from the portal without the email.
   </Accordion>
 
-  <Accordion title="The ledger looks empty but I sent documents last month">
-    Check the period filter. It defaults to a recent window; set it to **All Time**.
+  <Accordion title="The list looks shorter than I expected">
+    **eSignatures** shows ten rows a page, newest first. Use the page controls under the list, or show more rows per page.
   </Accordion>
 </AccordionGroup>
 
@@ -147,9 +132,7 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
 
 <AccordionGroup>
   <Accordion title="Can I upload a file I already have and send that for signature?">
-    Not yet. An **Upload Document** entry used to appear in this menu and it never did what its name said — choosing it opened the ordinary Send form rather than asking for a file. It has been removed, because a control that quietly does something else is worse than one that is absent.
-
-    Build the document from a template with **Create Document** instead. If you need a signature on a file that came from outside the product, send it to the patient through [secure messaging](/portal/patients/messages) and keep the signed copy on their record.
+    Yes. On **eSignatures**, select **Send a document for signature**, then **Upload a new document** — see [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
   </Accordion>
 
   <Accordion title="Where does a signed copy go?">
@@ -171,4 +154,4 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/documents/document-dashboard-content.tsx, .../document-table.tsx, .../document-form.tsx, components/clinic/patients-management/send-document-dialog.tsx */}
+{/* source of truth: components/clinic/forms/envelopes/envelopes-list.tsx, components/clinic/forms/documents/legacy-document-panel.tsx, .../document-form.tsx, components/clinic/patients-management/send-document-dialog.tsx */}

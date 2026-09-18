@@ -1,0 +1,112 @@
+---
+title: Forms
+description: "Build intake, consent and screening forms once and share them by link across the hospital's departments, then read what came back."
+icon: /images/icons/clipboard-list.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans — the Free plan publishes up to 15 forms" roles="Owner, manager, or any staff member given forms permissions" note="Needs the Records care area on Enterprise; Solo and Team list Forms flat" />
+
+**Forms** is where every questionnaire, consent form and checklist your hospital builds lives. One form is built once and used by whichever department needs it — an outpatient screening questionnaire, a theatre consent, a pre-admission history — and answered from a link, by someone who needs no account.
+
+<Path steps={['Sidebar', 'Records', 'Forms']} />
+
+## Where it sits
+
+On Enterprise, **Forms** is inside the **Records** care area, beside [Send and track documents](/hospital/records/documents). Turn the Records care area off and the whole group goes with it. Solo and team practices list **Forms** flat in the sidebar instead, which is why the click path in the shared guides below is one step shorter than yours.
+
+Three tabs sit under the heading:
+
+| Tab | What it holds |
+| --- | --- |
+| **Forms** | Everything built with the form builder |
+| **eSignatures** | Everything sent for signature, newest first, in one list: signature requests — who has signed, who it is waiting on, and when signing closes — and consent documents sent from your saved templates, marked **Document**. Start one with **Send a document for signature** — see [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature) and [Send and track documents](/hospital/records/documents) |
+
+<Note>
+  **Forms and documents sent for signature are not the same thing, and the difference matters.** A form is answered by anyone who has the link and does not identify itself; a document is sent to one named patient for their signature and files itself to their record. Use a document when you need a signature attached to a person. Use a form when you need answers from many people.
+</Note>
+
+## What a hospital uses it for
+
+| | |
+| --- | --- |
+| **Outpatient** | Pre-visit screening, symptom questionnaires, PROMs sent by link before a clinic appointment |
+| **Theatre** | Pre-operative checklists and consent wording gathered before the list is drawn up |
+| **Inpatient** | Pre-admission history so a ward is not taking it at the bedside |
+| **Maternity** | Antenatal intake questions that are the same at every contact |
+| **Whole hospital** | Staff-facing checklists, audits and incident reporting — a form does not have to be for a patient |
+
+## Building and sharing one
+
+The builder, the settings and the sharing link behave identically in every edition, so those guides are shared rather than repeated here. Only the click path above differs.
+
+<Cards>
+  <Card title="Build a form" href="/practice/forms/build-a-form" icon="/images/icons/square-pen.svg">
+    Write the questions, change how it looks, and preview it as a respondent will meet it.
+  </Card>
+  <Card title="Publish and share it" href="/practice/forms/publish-a-form" icon="/images/icons/link.svg">
+    Put it live at its link, close it again, and see what came back.
+  </Card>
+  <Card title="Send it to someone" href="/practice/forms/send-a-form" icon="/images/icons/mail.svg">
+    Give each person their own link so their answers land on their chart, and chase whoever forgets.
+  </Card>
+  <Card title="Read and export responses" href="/practice/forms/read-responses" icon="/images/icons/table.svg">
+    The summary, one question at a time, one person at a time — and the answers as a spreadsheet.
+  </Card>
+  <Card title="Form settings" href="/practice/forms/form-settings" icon="/images/icons/sliders.svg">
+    Collect email addresses, limit responses, set the confirmation wording and the bot check.
+  </Card>
+</Cards>
+
+## Who can do what
+
+Reaching the page is not permission to act. A staff member sees **Forms** if their role may open it, but building, publishing and reading answers are separate permissions your owner or manager grants in <Path>Settings → Staff → Permissions</Path>:
+
+| Permission | What it allows |
+| --- | --- |
+| **View forms** | Open the hospital's forms and see how they are built. Publishes nothing |
+| **Create and edit forms** | Build forms and change their questions, logic and settings. Editing does not publish |
+| **Publish and close forms** | Put a form live at its link and take it down again |
+| **View form responses** | Open what people answered, one response at a time |
+| **Adjust quiz marks** | Change the mark a question earned after reading the answer, with a reason. The automatic mark is kept beside it |
+| **Fill in staff forms** | Open and complete a form set to **Staff only** — a checklist, an audit, an incident report |
+| **Export form responses** | Download every answer a form collected as a spreadsheet. The file leaves the hospital, so this is granted separately from reading answers |
+| **Send documents for signature** | Send a document out for signature, remind a recipient, correct who is signing, and void a request |
+| **Share templates with other clinics** | Send one of your forms to the community template gallery, and take it back out again |
+
+<AuditNote />
+
+## Check it worked
+
+Open **Forms** from the sidebar under **Records**. You should see the **Forms** and **eSignatures** tabs, a **New form** button, and — under **Recent forms** — a **Search forms** box beside the filters. If **Records** is not in your sidebar at all, the care area is switched off for your hospital — an owner or manager turns it on in **Settings → Facility** — see [Care areas](/hospital/get-started/care-areas).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Forms is not in my sidebar">
+    On Enterprise it lives inside the **Records** care area. If that care area is off, nothing inside it appears. An owner or manager turns it on in **Settings → Facility** — see [Care areas](/hospital/get-started/care-areas).
+  </Accordion>
+
+  <Accordion title="I can see Forms but everything is greyed out">
+    You have **View forms** but not **Create and edit forms**. Your owner or manager grants the rest in <Path>Settings → Staff → Permissions</Path>.
+  </Accordion>
+
+  <Accordion title="I cannot see who answered">
+    Reading answers is its own permission — **View form responses** — and every response opened is recorded in the hospital's audit log.
+  </Accordion>
+
+  <Accordion title="I need a signature from one named patient">
+    That is a document, not a form. [Send and track documents](/hospital/records/documents) covers it.
+  </Accordion>
+
+  <Accordion title="The eSignatures tab is empty">
+    Nothing has been sent for signature yet. Select **Send a document for signature** to prepare one — see [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: lib/edition.ts (EDITION_MODULES, EDITION_ROUTE_ALIASES, EDITION_ROLE_MODULES), lib/edition-staff-roles.ts (forms.* slugs), components/clinic/forms/ */}

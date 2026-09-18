@@ -9,11 +9,11 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Starter and above — sharing outcome measures needs Essential" roles="Any staff member with access to Documents" note="These screens say Patient where the rest of your practice says Client. It is the same person." />
+<Availability editions={['clinic']} plans="Starter and above — sharing outcome measures needs Essential" roles="Any staff member with access to Forms" note="These screens say Patient where the rest of your practice says Client. It is the same person." />
 
 Send a consent form, an intake pack or an agreement to a client by email, watch its status change as they open and sign it, and keep the signed copy on their record. Nothing is printed and nothing comes back by post.
 
-<Path steps={['Sidebar', 'Documents']} />
+<Path steps={['Sidebar', 'Forms', 'eSignatures']} />
 
 <TaskHeader
   before="An active document template, and a client with an email address on file"
@@ -23,77 +23,121 @@ Send a consent form, an intake pack or an agreement to a client by email, watch 
 
 ## What you're looking at
 
-**Clinic Documents** — "Manage and send documents for clinic signatures" — has four tabs: **Overview**, **Documents**, **Analytics** and **Templates**. Across the top sit four counters — **Total Documents**, **Pending**, **Signed** and **Viewed** — a period filter offering **Today**, **Last 7 Days**, **This Month** and **All Time**, and a **Send Document** button, which opens **Create Document**.
+**eSignatures** is a tab of **Forms**, and it is where everything you have ever sent out for signature lives, newest first, in one list. It used to be two places — a **Signed documents** tab, and before that a **Documents** page of its own. Both are part of **eSignatures** now, the links your clients hold still work, and old links to either open this tab.
 
-The **Documents** tab adds a **Status** filter and a **Search documents...** box. A practice that has sent nothing sees "No documents found — Send your first document to get started", and **Templates** reads "No Templates Yet".
+Each row is marked with what it is:
 
-| Status | What it means |
-| --- | --- |
-| **Pending** | Sent, not yet opened |
-| **Viewed** | The client has opened it but not signed |
-| **Signed** | Done — the signed copy is on their record |
-| **Expired** | The link ran out before they signed |
-| **Declined** | The client refused to sign |
-| **Cancelled** | You withdrew it |
+- **Signature request** — a document prepared with the signing builder. Selecting the row opens its tracking page. See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+- **Document** — a consent form, intake or agreement sent from one of your templates with the earlier signing links. Its **⋯** menu offers **View**, **Resend** and **Download**.
 
-## Send one document
+Every row carries the same status pill:
 
-<Steps>
-  <Step title="Make sure a template exists">
-    Everything you send is built from a template. Build one on the **Templates** tab first — the **Create Document Template** form asks for a **Template Name**, a **Document Type**, the **Document Content** and whether it **Requires Witness**.
-  </Step>
-  <Step title="Open the send form">
-    Select **Send Document**. The page is headed **Send Document to Patient**.
-  </Step>
-  <Step title="Choose the client">
-    Under **Patient Details**, use **Select Patient** ("Search for a patient..."). Somebody with no email address triggers a warning: "This patient does not have an email address. Please update their profile before sending documents."
-  </Step>
-  <Step title="Choose what to send">
-    **Select Template** — "Choose a template or create a custom document" — has four sub-tabs: **Saved**, **Intake**, **Measures** and **Custom**. Then fill in **Document Details**: **Document Title**, **Document Type**, the content, and **Internal Notes (Optional)**, which the client never sees.
-  </Step>
-  <Step title="Send it">
-    Select **Send Document**. You get a **Document Sent!** confirmation, the client gets an email with their own link, and the document appears in your **Documents** list at **Pending**.
-  </Step>
-</Steps>
+| Status | For a signature request | For a document |
+| --- | --- | --- |
+| **Sent** | Sent for signature, nobody has opened it | Sent, not yet opened |
+| **In progress** | Somebody has acted on it | The client has opened it but not signed |
+| **Completed** | Everybody has signed | Signed — the signed copy is on their record |
+| **Declined** | A recipient declined | The client refused to sign |
+| **Voided** | Cancelled by your practice | You cancelled it |
+| **Expired** | The deadline passed first | The link ran out before they signed |
+
+A practice that has sent nothing sees "Nothing has been sent for signature yet." and the **Send a document for signature** button.
+
+## Send a document for signature
+
+Select **Send a document for signature**. The sheet lists the documents you have prepared — select **Send** beside one to choose who signs it — and offers **Upload a new document** to prepare another. See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+
+To send one of your consent, intake or measure templates to a client, use **Intakes** on their chart (below). **Send a document for signature** never starts a document from a template.
+
+### Resend a document
+
+On a **Document** row, select **⋯** → **Resend**. The document opens with the client and its content already filled in; check them and select **Send Document**. It goes out again as a new document with its own 30-day link, and appears at the top of the list. The earlier link keeps working until it expires or you revoke access to it from the client's chart.
+
+<Note>
+  **A template you have converted to a form is sent as that form.** Once you have used **Convert to form** on a template and published the form, the template can no longer be sent as a document — from **Resend**, from the **Intakes** sheet, from an assistant or from an appointment default. You are told which form replaces it: "“Consent for Treatment” has been converted to the form “Consent for Treatment”. Send the form instead — the old document can no longer be sent." A template that has not been converted keeps sending as before.
+</Note>
 
 ## Send an intake pack from the client's chart
 
 For a new client it is usually faster to send everything at once. Open their chart and select **Intakes** in the header. The **Send intakes** sheet walks through three steps — the client, **Compose email**, then **Review & send**.
 
-Step one groups the library into **Consent documents** and **Clinical outcomes & measures**; tick what you want. An empty consent list reads "No consent templates found", and the measures section needs the Essential plan. Move on with **Continue to email**, write the **Email subject** and **Email message**, then **Review & confirm** and **Send documents**.
+Step one groups the library into **Forms**, **Signable documents**, **Consent documents**, **Clinical outcomes & measures**, **Questionnaires & intakes** and, when you have any, **Clinical templates**; tick what you want. If your practice has saved packs in **Settings → Patient Experience → Sharable Documents**, **Packs** comes first: select a pack's **Add all** and everything in it that can go to this client is ticked at once, with **Required before visit** already set where the pack asks for it. Anything the pack cannot send now — a form that is not published, or a document that is not ready to send — is named in the message rather than left out quietly. Nothing is sent until you finish the sheet. **Forms** lists your published forms that go to a patient or by private link — a public form or a staff-only form is not listed — and is only shown when you have some — a form is not a document to sign, so ticking one sends that person their own form link instead. An empty consent list reads "No consent templates found", and the measures section needs the Essential plan.
 
-The review step states the deadline plainly: documents stay signable **for 30 days**, and every interaction is logged.
+**Signable documents** lists your signature request templates that are ready to send — the document has finished preparing, with at least one signer and one field placed on it — and any of them can be ticked. One that is still being prepared is not listed until it is ready, the same rule **Sharable Documents** uses. A template that only this client signs goes straight to them. A template that needs someone else to sign as well — a witness, a second signer, a clinician — asks you who on the next step, under **Who signs each part** (see below). A template with no part for the client to sign says so: "Has no part for the client to sign — add a signer to it in Signable documents."
+
+Anything this client already has and has not finished says so under its name: "Already sent and still open — remind them from their chart instead." It is not sent a second time if you tick it — use **Send a reminder** on their chart.
+
+If the client has **no email address on file**, a consent document or measure cannot be ticked, and says why: "This goes by email only, and this person has no email address on file. Add one to their chart to send it." Forms and signature requests can still be sent — see **How** below.
+
+Move on with **Continue to email**. Under **For each item**, every ticked item has its own settings:
+
+- **How** — **Email a link**, or, for a form, one of three more:
+  - **Portal only — no email** puts it in the client's portal to-do list instead. It only appears when the client has portal access or you are giving it to them in this sheet.
+  - **In person, on this device** creates their form without emailing it. After you select **Send documents** the sheet stays open with **Open on this device** beside the form — select it and hand them the screen.
+  - **Print a blank copy** downloads the published form to print. Nothing is sent and nothing is tracked, so it never shows as outstanding.
+
+  A signature request can go by **Email a link**, **Portal only — no email** (it waits in the client's portal to-do list and they sign it there; offered only when they have portal access or you are giving it to them in this sheet), or **In person, on this device** — the client signs on this device, after you confirm who they are. A signature request cannot be printed from the sheet, because a signature on paper cannot be added back to the request; to collect one on paper, print the document yourself and upload the signed copy to the client's files.
+
+  When the client has no email address, **Email a link** is not offered and the item says so: "No email address on file, so this can only be completed without one."
+- **Who signs each part** — for a signature request with more than one part. The client's part is chosen for you. For every other part choose **A specific staff member**, **A named person outside the clinic** (their name and email address) or, when you opened the sheet from an appointment, **The appointment's provider**. A witness also says whose signature they witness. Each of them is emailed their own link when it is their turn. Until every part has someone, the sheet names what is missing and does not move on to the review. **In person, on this device** needs the client to sign first — if another part signs before them, send it by email or to the portal instead.
+- **Complete by (optional)** — the date you are asking them to finish by. For a signature request, the link stays open at least until that date.
+- **Reminders** — for a signature request sent by email: **Send the usual reminders**, or **Don’t send reminders** if you would rather chase them yourself. The review shows "No reminders" beside it.
+- **Required before visit** — only when you opened the sheet from an appointment, and only for a form or a signature request. It puts the item at the top of that appointment's **Forms & documents** list and on the check-in sheet until it comes back. It is not offered for **Print a blank copy**, which leaves nothing to come back.
+
+### Send from an appointment
+
+On an appointment's **Forms & documents** list — in the appointment's details, or on the check-in sheet once an appointment is chosen — select **Send to patient**. The same sheet opens for that appointment's client, and what you send is tied to that appointment, so it appears on its list with how it is going. The button does not appear for an appointment with no client record.
+
+When the client is at the desk and a signature request on that list is still open, its **⋯** menu offers **Sign in person**. You are asked first — "The link already sent to this patient will stop working, and they will sign on this device instead." — and then the signing page opens on this device, where you confirm who they are before they sign.
+
+Then write the **Email subject** and **Email message**, and select **Review & confirm**. The review lists every item with how it will go and, where you set one, its complete-by date — for example "Email a link · Complete by 20 September 2026" — so you can check each one before you select **Send documents**.
+
+The review step shows how long each item stays open before you send, and every interaction is logged.
+
+### When part of it does not go
+
+You are told **what actually went**, not what you selected. "Sent 1 of 3 items" means one went, and the reasons for the other two stay on screen with the remedy for each:
+
+- **No email address on file** — add one to their chart, or hand them the form in person.
+- **They already hold a live link to this** — use **Remind** or **Resend** on their chart rather than sending a second one. Two links to the same form give you two answers and no way to tell which is current.
+- **That form has stopped accepting answers** — reopen it or extend its deadline first.
+
+If nothing went at all, your selection stays exactly as you left it so you can fix the cause and send again.
 
 ## Track what happens next
 
-Each row's **Actions** menu offers **View Details** always, plus two that only appear when they make sense: **Resend Document** on an expired document, and **Cancel Document** on one still **Pending** or **Viewed**.
+On **eSignatures**, a **Document** row's **⋯** menu offers **View** (what was sent and where it has got to), **Resend** and **Download** (a PDF of the document, marked as not yet signed when it is not). **Download** is not offered on a cancelled document.
+
+**Signed by** on a signed document — in **View** and in the downloaded PDF — is the name the person signing typed, which is not always the client: a parent or guardian signs under their own name, and then **Sent to** shows who the document was sent to. A document signed before September 2026 whose typed name was never kept shows "Name not recorded" in the PDF a client downloads.
+
+On the client's chart, a document row offers **View details**, **Revoke access** while it is still waiting, and **View access log** — the full access record for that document: every time it was opened, by whom, and from where. It is kept for seven years and is a different thing from the timeline on **View details**, which shows only when the document was sent, opened and completed.
 
 <Warning>
-  **Cancelling kills the client's signing link for good.** The dialog says so — "This will cancel the document and the patient will no longer be able to sign it. This action cannot be undone." Back out with **Keep Document** if you are only chasing a slow signer; ring them instead.
+  **Revoking access kills the client's signing link for good.** There is no undo — the client cannot reopen it, and you must send a fresh one. If you are only chasing a slow signer, leave the document alone and ring them.
 </Warning>
 
 ## Documents on the client's chart
 
-The **Files** tab of a chart holds two things. **Health Records** is a vault for files you hold about the person — an empty one reads "Vault is empty", **Select files to upload** adds to it, and each file's menu can download it, move it or **Move to Trash**.
+The **Documents & forms** tab of a chart holds two things. **Health Records** is a vault for files you hold about the person — an empty one reads "Vault is empty", **Select files to upload** adds to it, and each file's menu can download it, move it or **Move to Trash**.
 
-Below that sits the shared-forms list. Until something has been sent it reads "No shared forms", with **Send documents to sign** as a second route into the same intake sheet. Clients with portal access can also open and sign from there — see [Documents to sign](/portal/patients/documents).
+Below that, **Sent & Shared** is one list of everything this person has been sent — forms, consent documents and signature requests together, in one set of words. Until something has been sent it offers **Send documents to sign** as a second route into the same intake sheet. Under each item's name is its date: **Due** and the **Complete by** date you chose for a form or a signature request, **Overdue** in amber once that date has passed and it is still waiting, or **Link expires** for a consent document. The same date shows on an appointment's forms checklist. Each row carries its own actions; see [Everything one person has been sent](/practice/forms/send-a-form#everything-one-person-has-been-sent). Clients with portal access can also open and sign from there — see [Documents to sign](/portal/patients/documents).
 
 ## Who can do this
 
-Role decides whether **Documents** opens. Permission decides whose documents you may see and whether you may send at all.
+Role decides whether **Forms** opens. Permission decides whose documents you may see and whether you may send at all.
 
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Open **Documents** and read the counters | Any staff member with access | Role |
+| Open **Forms → eSignatures** and read the list | Any staff member with access | Role |
 | See documents belonging to colleagues' clients | Owner, manager | Permission — **View all documents** |
 | Send a document or intake pack | Owner, manager, scheduler | Permission — **Share documents with clients** |
 | Create or edit a template | Owner, manager | Permission — **Edit note and form templates** |
-| Cancel or resend a sent document | Owner, manager | Permission — **Share documents with clients** |
+| Resend a sent document, or revoke its access | Owner, manager | Permission — **Share documents with clients** |
 
 Two behaviours surprise people:
 
 - **Enforcement is opt-in, per person.** A colleague never saved in the permissions sheet is unrestricted; the sheet warns **"Saving starts enforcing"**.
-- **A denied action is recorded; an allowed one is not.** Hiding **Documents** from a sidebar is a convenience, not a security boundary.
+- **A denied action is recorded; an allowed one is not.** Hiding **Forms** from a sidebar is a convenience, not a security boundary.
 
 See [Staff permissions](/platform/team/permissions).
 
@@ -101,13 +145,13 @@ See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-The document is in the **Documents** list against the right client at **Pending**. When they open it the status becomes **Viewed**, and once they sign it becomes **Signed** and the signed copy is on their chart's **Files** tab. The **Overview** and **Analytics** tabs count the same documents over whichever period you have chosen.
+The document is on **eSignatures**, marked **Document**, at **Sent**. When they open it the status becomes **In progress**, and once they sign it becomes **Completed** and the signed copy is on their chart's **Documents & forms** tab.
 
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="No active document templates found. Please create a template first.">
-    Nothing can be sent without a template. Create one on the **Templates** tab, make sure it is active, then send again.
+  <Accordion title="Converted to the form — send the form instead">
+    You have converted that template to a form and published it, so the template is no longer sent as a document. On the **Intakes** sheet it is shown as converted and cannot be ticked; tick the form in the **Forms** group instead. An appointment default that still names the template sends nothing until you choose **Use this form here** in **Settings → Patient Experience → Sharable Documents**.
   </Accordion>
 
   <Accordion title="This patient does not have an email address">
@@ -119,15 +163,15 @@ The document is in the **Documents** list against the right client at **Pending*
   </Accordion>
 
   <Accordion title="The document expired before they signed">
-    Use **Actions** → **Resend Document**. It is offered only on expired documents and gives the client a fresh 30-day link.
+    On **eSignatures**, use **⋯** → **Resend** on the document, or **Resend portal link** on the client's chart. Either gives the client a fresh 30-day link.
   </Accordion>
 
   <Accordion title="The client says they never got the email">
-    Ask them to check spam first. If it is genuinely missing, confirm the address on their chart, cancel the outstanding document and send a new one. A client with portal access can open it there without the email — see [Turn on the client portal](/portal/setup/features).
+    Ask them to check spam first. If it is genuinely missing, confirm the address on their chart, revoke access to the outstanding document and send a new one. A client with portal access can open it there without the email — see [Turn on the client portal](/portal/setup/features).
   </Accordion>
 
-  <Accordion title="Cancel Document is not in the menu">
-    It only appears while a document is **Pending** or **Viewed**. Once it is signed, declined, expired or already cancelled there is nothing to withdraw.
+  <Accordion title="Revoke access is not in the menu">
+    It only appears on the client's chart while a document is still waiting to be signed. Once it is signed, declined, expired or already cancelled there is nothing to withdraw.
   </Accordion>
 </AccordionGroup>
 
@@ -135,11 +179,11 @@ The document is in the **Documents** list against the right client at **Pending*
 
 <AccordionGroup>
   <Accordion title="How long does a client have to sign?">
-    30 days from sending. After that the document goes **Expired** and needs resending, which issues a fresh link.
+    It depends on what you sent, and the review step shows it for each item before you send. A document from your templates stays signable for 30 days; after that it shows **Expired** and needs resending, which issues a fresh link. A form or a document sent for signature stays open for the time set on it.
   </Accordion>
 
   <Accordion title="Can I send several documents at once?">
-    Yes — use **Intakes** from the client's chart and tick everything in one pass. The **Send Document** button sends one at a time.
+    Yes — use **Intakes** from the client's chart and tick everything in one pass.
   </Accordion>
 
   <Accordion title="Does the client need a portal account?">
@@ -147,14 +191,14 @@ The document is in the **Documents** list against the right client at **Pending*
   </Accordion>
 
   <Accordion title="Can I edit a document after sending it?">
-    No. Cancel it and send a corrected one — the client's link dies with the cancellation, so tell them another is coming.
+    No. Revoke access to it and send a corrected one — the client's link dies with it, so tell them another is coming.
   </Accordion>
 
   <Accordion title="Where does the signed copy live?">
-    On the client's chart, under the **Files** tab, alongside anything you have uploaded about them yourself.
+    On the client's chart, under the **Documents & forms** tab, alongside anything you have uploaded about them yourself.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/documents/ (document-dashboard-content.tsx, document-table.tsx, document-form.tsx), components/clinic/clients-management/share-client-docs.tsx, client-files-tab.tsx */}
+{/* source of truth: components/clinic/forms/envelopes/envelopes-list.tsx, components/clinic/forms/documents/ (legacy-document-panel.tsx, document-form.tsx), components/clinic/clients-management/share-client-docs.tsx, client-files-tab.tsx */}

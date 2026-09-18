@@ -16,6 +16,17 @@ Every template lands on the canvas fully wired — trigger, steps, safety playbo
 
 A template's **trigger** tells you how it lives: **Chat** agents answer when someone talks to them, **Scheduled** ones run on their own clock, **Event** ones fire the moment something happens in your workspace, **Webhook** ones accept signed calls from outside, and **Voice** answers the phone.
 
+## How templates tell your team
+
+When a template needs a person, it does two things, and neither one names the patient:
+
+- **An alert** worded from a fixed reason — for example **Billing question needs a person** or **Clinical question for the care team**. It may add a short note with a count, such as "3 claims need review", but never a name, contact detail, date, record or claim number, or health detail, because the whole team sees it. See [Notices from your AI agents](/platform/settings/notifications#notices-from-your-ai-agents).
+- **A task** that says what needs doing. When the work is about a patient, the task is linked to that patient's record and appears on the calendar for its due date — open the task, then the linked patient, for the details. When it is about a lead, it lands in the CRM against that contact. When it is about nobody in particular — a slot that opened, a stock alert — it is a task for the team.
+
+If somebody who is not yet a patient texts, calls or writes in, the task has no link; the conversation itself is on the agent's **Runs** page. A task or note that would identify someone is refused and the agent is asked to try again without it. The check catches what the agent already knows about the person and anything shaped like a contact detail, date or number; it cannot recognise every way of describing someone.
+
+Agents you installed before this change keep the instructions they were installed with. To pick up the new wording, install the template again, or edit the agent's steps to match.
+
 ## Billing & payments
 
 The set most practices deploy first: money follow-up that happens every day whether anyone remembers or not.
@@ -23,7 +34,7 @@ The set most practices deploy first: money follow-up that happens every day whet
 | Template | Trigger | What it does |
 | --- | --- | --- |
 | **Billing assistant** | Chat | Looks up what a patient owes across invoices and appointment balances, presents it for staff approval, then collects — recording a payment or charging a saved card. It summarises balances; it never collects without a human's yes. |
-| **Unpaid balances digest** | Scheduled | Compiles the clinic's outstanding balances daily — unpaid invoices and balances collectible on a saved card — flags which are auto-collectible, and hands staff one worklist instead of thirty tabs. |
+| **Unpaid balances digest** | Scheduled | Compiles the clinic's outstanding balances daily — unpaid invoices and balances collectible on a saved card — flags which are auto-collectible, tells staff how many need attention, and opens a follow-up task on the record of each of the biggest or oldest. |
 | **Membership payment recovery** | Event | The moment a membership charge fails, emails the member a clear heads-up with the retry date and flags staff — before the plan lapses. |
 | **Payment failure recovery (any source)** | Event | One agent for every failed payment — auto-pay, membership dues, storefront or booking checkout. Emails the patient where there is one and flags staff where there is not. |
 
@@ -34,10 +45,10 @@ The set most practices deploy first: money follow-up that happens every day whet
 | Template | Trigger | What it does |
 | --- | --- | --- |
 | **Insurance & claims assistant** | Chat | Prepares a draft CMS-1500 claim from a patient's diagnoses and services, presents it for approval, then submits it. Never submits without approval. |
-| **Unbilled insurance worklist** | Scheduled | Finds appointments for insured patients that never became claims, grouped by patient with payer and charge. |
-| **Claim status follow-up** | Scheduled | Checks each submitted claim's status with the payer and alerts staff to denials and rejections. |
-| **Claim denial handler** | Event | The moment a claim comes back denied, alerts staff with the details and opens a task. |
-| **Insurance eligibility verification** | Scheduled | Batch-verifies active coverages against payers and alerts staff to any that came back inactive. |
+| **Unbilled insurance worklist** | Scheduled | Finds appointments for insured patients that never became claims, tells staff how many are waiting, and opens a task on each patient's record to file them. |
+| **Claim status follow-up** | Scheduled | Checks each submitted claim's status with the payer, tells staff how many came back denied or rejected, and opens a task on each of those patients' records. |
+| **Claim denial handler** | Event | The moment a claim comes back denied, alerts staff that a billing question needs a person and opens a task on the patient's record. Neither the alert nor the task carries the claim number, payer or reason — open the patient's claims for those. |
+| **Insurance eligibility verification** | Scheduled | Batch-verifies active coverages against payers, tells staff how many came back inactive, and opens a task on each of those patients' records to re-verify. |
 
 These spend [insurance credits](/platform/plans/overview#insurance--billing-credits-by-plan) for the checks and claims they run, exactly as if a person had run them.
 
@@ -84,7 +95,7 @@ These spend [insurance credits](/platform/plans/overview#insurance--billing-cred
 | Template | Trigger | What it does |
 | --- | --- | --- |
 | **Patient / client summary** | Chat | Summarises patient context into a clinician-reviewed draft — BAA-covered model, human approval, never auto-filed. |
-| **Critical radiology escalation** | Event | A report with critical findings pages the clinical team immediately and opens a task; routine reports pass through silently. |
+| **Critical radiology escalation** | Event | A report with critical findings alerts the clinical team immediately and opens a high-priority task on the patient's record; routine reports pass through silently. The alert never restates a finding — the clinician opens the report. |
 | **Inventory alert responder** | Event | Critical and expiry stock alerts get an owner and a task; routine low-stock batches into a note instead of pinging anyone. |
 
 ## Mail
@@ -114,4 +125,4 @@ When a template like the **Front desk assistant** is [published](/platform/ai/pu
 
 <StillStuck />
 
-{/* source of truth: components/clinic/agents/templates.ts (36 templates, verified 2026-09-03) */}
+{/* source of truth: components/clinic/agents/templates.ts (36 templates, verified 2026-09-03; alerts and tasks re-verified 2026-09-14) */}

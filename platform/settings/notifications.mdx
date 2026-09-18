@@ -30,7 +30,7 @@ The card is headed **Notification Preferences** — "Choose which in-app and ema
 | Switch | Covers |
 | --- | --- |
 | **Appointment** | New bookings, cancellations, and reminders |
-| **Patient** | New patient registrations and updates |
+| **Patient** | New patient registrations and updates, and the provider-arrival email when someone is checked in |
 | **Staff** | Staff invitations accepted and role changes |
 | **Billing** | Payment received, invoices, and overdue alerts |
 | **Subscription** | Plan changes, trial expiry, and payment status |
@@ -70,6 +70,65 @@ This is the part worth reading twice. There are four preference stores, and each
 | What a **patient or customer** receives | That person's own record, on their notification preferences |
 
 So: an owner who is still getting mail after muting a category here is probably receiving it as a _person_, not as the workspace — that one is in [your account settings](/platform/account/notifications). And a patient still getting appointment reminders is set on their own record, not here.
+
+## What a notice tells you — and what it leaves out
+
+Notices in the bell and in the daily summary email are seen by everyone on your team, so they never name a patient or repeat what a patient wrote. They say what happened — "A client sent a secure message. Open it to read.", "A new client was registered.", "A recipient signed “Consent for treatment”." — and selecting one opens the place where you can see who it was.
+
+- **A new message from a client** opens **Secure Messages** straight into that conversation. If you cannot open that client's messages, you see "Could not open the conversation" instead.
+- **A new client, a registration request or an upload** opens your client list.
+- **A signed or declined document** opens the signing request, which shows who signed.
+
+Notices raised before this change are shown the same way, so an older notice no longer displays a name either.
+
+## Who sees which notice
+
+A notice is either for the whole team or for one person.
+
+| Notice | Who sees it in the bell |
+| --- | --- |
+| Workspace events — a booking, a payment, a signed document, a new client message, a registration, a badge | Everyone on your team |
+| Something addressed to you — **A form was shared with you**, a mention in a form comment, form responses assigned to you to review, a new response on a form you chose to follow, the welcome notice when you create a workspace | **Only you** |
+
+A notice addressed to one person is not shown to anyone else — **owners and managers included** — and only that person can mark it read. So a colleague clearing their own bell never clears yours, and an owner does not see the form a manager was asked to review. The owner's daily summary email follows the same rule: it lists workspace notices and the owner's own, never one addressed to a colleague.
+
+A notice for the whole team has one read mark, shared by everyone. When anyone on your team selects it in the bell or selects **Mark all read**, it shows as read for the whole team — including people who have not seen it yet. A notice addressed to you is marked read only by you.
+
+### The email about a new client message
+
+When a client writes through the portal, the email your practice receives is headed **New patient message** (or **Reminder: unread patient message** after 30 minutes). It does not say who wrote or quote what they said — that email can land in a shared inbox or on a lock screen. Select **Open conversation** to read the message; you need to be signed in, and you need to be allowed to see that client's messages.
+
+### Notices from your AI agents
+
+An agent that alerts your team picks a reason — for example **Callback requested** or **Clinical question for the care team** — and the notice's wording comes from that reason. It can add a short note, but a note containing a name, an email address, a phone number, a date or a record number is refused rather than sent. The check catches what the agent already knows about the person and anything shaped like a contact detail or a number; it cannot recognise every way of describing someone, which is why the note is short and the notice links to the record instead.
+
+## Reminders during Out of Office
+
+When you add an **Out of Office** block, its **Pause automated reminders** section decides which reminders wait until you're back. Every category is paused unless you switch it off:
+
+| Category | What waits |
+| --- | --- |
+| Appointment reminders | Reminders for appointments that fall **inside** the block. A client whose appointment is outside it still gets their reminder. |
+| Form and document reminders | Reminders to finish a form or sign a document |
+| Invoice and payment reminders | Reminders about unpaid invoices |
+| Task reminders | Task reminders for the person who is away |
+| Event reminders | Event reminders for the people who are away |
+| Medication refill reminders | Refill reminders to the prescriber |
+| Form and intake sends | Forms and intake packs sent automatically, for example when a visit is booked |
+
+<Warning>
+**Medication refill reminders are paused too.** Patients won't be reminded to refill their medication until you're back. Switch this off if anyone may run out during this time.
+</Warning>
+
+A block for the whole clinic or all staff pauses every reminder in a category. A block for one person pauses only the reminders that belong to that person, and a block for a room or piece of equipment pauses only those tied to it.
+
+Patient check-in is never paused. Documents a patient fills in at check-in, and the notice that tells a provider their patient has arrived, still go straight away.
+
+### When you're back
+
+Nothing is lost and nothing is sent twice. Shortly after the block ends — or as soon as you end it early or delete it — each paused message goes out on its own, a few minutes apart for anyone with more than one, between 8 AM and 8 PM in your clinic's time zone. A refill reminder whose day has already passed still goes, because a late reminder is still useful.
+
+A paused message is skipped instead when it no longer matters: the appointment was cancelled or has already started, the invoice was paid, the form was answered, or the task was completed.
 
 ## Transactional email is never affected
 

@@ -1,0 +1,281 @@
+---
+title: Send a form
+description: "Send a published form to patients or any email address, see who has answered, and chase the people who have not."
+icon: /images/icons/mail.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans" roles="Owner, manager, or staff with the Create and edit forms permission" />
+
+Copying a form's link into your own email works, but it tells you nothing afterwards. Sending the form from here gives every person their own link, files their answers against the right patient automatically, and chases anyone who forgets.
+
+<Path steps={['Sidebar', 'Forms', 'your form', 'Invites', 'Send this form']} />
+
+<TaskHeader
+  before="A published form"
+  time="A minute"
+  after="One invite per person, and a list showing what each of them did"
+/>
+
+## Send it
+
+<Steps>
+  <Step title="Open the Invites tab">
+    It is beside **Responses** in the builder. You can also select **Share** and then **Send to patients or an email address**.
+  </Step>
+  <Step title="Choose who it is for">
+    Search your patients by name, or type any email address and select the plus. Add as many people as you need, up to 50 at a time.
+
+    Choosing a **patient** is what makes their answers arrive attached to their chart. An email address on its own still works, but nothing links the answers to a record.
+  </Step>
+  <Step title="Pick how each person gets it">
+    Every person has their own choice, because the right answer differs from one to the next:
+
+    - **Email invite** — they get a message with their own link. This is the default whenever there is an address to send to.
+    - **Patient portal only** — no email; the form appears in their to-do list when they sign in. Available for a patient on your records, on a form whose visibility is set to **Patients**.
+    - **In person, on this device** — creates their link without emailing it. After you select **Send**, the sheet stays open with **Open the form on this device** beside their name; select it and hand them the tablet. For a patient on your records, the answers you already hold — their email, phone number or date of birth, where the form asks — are filled in for them to check.
+
+    If a choice is not available, the reason is written beside it — most often "This patient has no email address on file."
+  </Step>
+  <Step title="Add a note, if you want one">
+    Whatever you type appears in the email above the button. It is plain text, so a link in it is not clickable.
+  </Step>
+  <Step title="Select Send">
+    You get a confirmation naming how many went. If anybody was skipped, the sheet stays open with the reason beside their name.
+  </Step>
+</Steps>
+
+Each link works for one person, and stops working after 30 days or when the form closes — whichever comes first. If the form has a deadline, the email asks them to answer by that date, and so does every reminder; a scheduled form with no deadline names its close date instead.
+
+The invite email carries your form's colour and logo from **Design**, so it is recognisably from your practice.
+
+If some of the form's questions are set to fill in from the patient record, a patient you choose from your records gets those answers already filled in, with a note asking them to check. Somebody sent the form by email address alone gets a blank form. See [Build a form](/practice/forms/build-a-form).
+
+## Sending while the clinic is out of office
+
+If an **Out of Office** block for the whole clinic is running (or one for the person whose visit the form is for), sending a form or a signature request by email asks first: "The clinic is out of office until *date*. Send now, or send it when you're back?"
+
+- **Send now** sends it straight away, as usual.
+- **Send when I'm back** saves it and sends it shortly after the block ends, between 8 AM and 8 PM in your clinic's time zone. Nothing is sent if the form is answered or the link is cancelled in the meantime.
+
+Handing a form over in person or putting it in the client portal never asks. Forms and intake packs sent automatically, for example when a visit is booked, wait until the block ends unless **Form and intake sends** is switched off in the block's **Pause automated reminders** section.
+
+## See what happened
+
+The **Invites** tab lists everybody the form went to:
+
+| It says | It means |
+|---|---|
+| **Sent** | The invite went out. Nobody has opened it yet. |
+| **Opened** | They followed the link but have not started answering. |
+| **In progress** | They started and have not finished. |
+| **Completed** | Their answers are in. |
+| **Expired** | The link ran out before they answered. |
+| **Cancelled** | Somebody at the practice closed the link. |
+
+**Next reminder** tells you when we would chase them, so you know whether to do it yourself.
+
+If the form is set to close on a date sooner than the invite would have lasted, the link closes with the form, and the row says so: "This link closes on …, when the form stops collecting." Move the form's close date later and the link gets its own expiry back.
+
+When a patient you sent the form to finishes it, you get a notification — **A form you sent was completed** — that opens the form's responses. It names nobody and no form. If nobody sent it (it went automatically with an appointment), or the person who sent it has left the practice, everyone gets it instead. It follows the **Document** switch in your notification settings.
+
+A long list is split into pages, with **Show** at the bottom choosing how many people appear on each. On a phone each person is a card, with their status, when the invite went and the three actions below. The tab shows the 200 most recent people the form was sent to.
+
+## Chase, replace, or close a link
+
+Three actions sit on each row, and two of them are not the same thing:
+
+- **Remind** sends them a reminder with a fresh link to the same form. Use it when somebody has simply forgotten — the link they already have in their inbox still works too, and whichever they use, they can answer only once.
+- **Resend** replaces the link. The one they already have stops working straight away. Use it when the first one went to the wrong address, or into a mailbox they cannot reach.
+- **Cancel** closes the link. Anything already submitted is kept.
+
+We remind people ourselves too: the first chase goes out two days after the invite, a second three days after that, and then we stop. Nobody is chased with a link that has already expired.
+
+If the same person is waiting on more than one thing from you — another form, or a document to sign — the reminder arrives as one email listing everything they still have to do, not one email each. Each item keeps its own timing, so something that is not due a reminder yet is not included. When reminders go out, your practice inbox gets one short summary of how many people were reminded and about how many forms and documents, as long as **Document** notifications are switched on in your notification settings. It names nobody and no form — open your client list to see who is still outstanding.
+
+<AuditNote action="Sending invites, and cancelling one," />
+
+## Everything one person has been sent
+
+The **Invites** tab is one form's list. When you want the other view — everything
+*this patient* has been sent, whatever it was — open their profile and select
+**Sent & Shared**.
+
+<Path steps={['Sidebar', 'Clients', 'the person', 'Sent & Shared']} />
+
+One list, in one set of words, covering all three things a practice sends
+somebody:
+
+| What it is | Where it came from |
+|---|---|
+| **Form** | A form invite, from the **Invites** tab or automatically with an appointment |
+| **Document** | A consent or intake document sent for signing |
+| **For signature** | A signature request the person is a signer on |
+
+Each row shows the same states as the Invites tab, when it last moved, and how
+it was sent. Nothing on it is a link you can copy — opening an item goes through
+the record itself, which is what keeps the read on your practice's audit trail.
+
+The actions on a row depend on what it is:
+
+- **A form** can be reminded, resent with a new link, or cancelled — exactly as
+  on the Invites tab, and meaning exactly the same things. While it is still
+  waiting, **Complete in person** opens the same form on this device for the
+  person to fill in now: you are asked first, and once they submit it there the
+  link they were sent will not take another answer. Once they have answered,
+  **Open the response** takes you to their answers on the form's **Responses**
+  tab, and opening it is recorded in your practice's audit log.
+- **A document** can be opened for its details, and its access revoked. A
+  document whose link has run out can be resent.
+- **A signature request** opens its tracking page, and a signer who has not
+  finished can be reminded. Voiding one is done on that page, because it needs
+  a reason that becomes part of the record.
+
+Anything already finished, declined or closed offers none of these — there is
+nothing left to chase, and nobody should be emailed a link to a record the
+practice has deliberately closed.
+
+## Give a signature request more time
+
+A signature request has two dates, and they do different jobs:
+
+- **The last day to sign** is when the links stop working.
+- **The finish-by date** is the date you ask people to finish by. Nothing stops
+  working on it — it is printed on the reminders, so a signer knows what you
+  are waiting for. It can never be later than the last day to sign.
+
+Set a finish-by date when you send, with **Ask signers to finish by
+(optional)**. Tick **Use this signing window next time this document is sent**
+and the next request from that template starts with the same number of days.
+Once one is set, the tracking page says **Signers are asked to finish by** and
+the date.
+
+When somebody needs longer, open the request's tracking page and select
+**Extend**. **Give more time to sign** asks for:
+
+- **New last day to sign** — later than the current one, and no more than a
+  year away.
+- **Why** — **The signer asked for more time**, **Waiting for their
+  appointment**, **The clinic needs more time**, or **Another reason**. It is
+  recorded with the request.
+- **Ask them to finish by (optional)** — a new finish-by date.
+
+Extending keeps everybody's link as it is; nobody has to be sent a new one.
+Whoever it is currently waiting on gets a short email saying they have more
+time, with no link in it. The confirmation tells you how many people were
+emailed, or that nobody was — for example when document emails are switched
+off. A request that has already expired, been completed or been voided cannot
+be extended; send a new one.
+
+<AuditNote action="Extending a signature request, and setting its finish-by date," />
+
+## What the signer sees
+
+The signing page carries your clinic's name and logo, so the person knows who
+is asking before they read anything.
+
+Somebody who opens a request from an emailed link first passes a quick check
+that they are a person and not an automated program. Usually it takes a moment
+and nothing to click. It is always on for signing links and cannot be switched
+off; it is not shown to somebody signing in person on your device, signing as a
+member of your team, or coming from the patient portal. If the check does not
+pass, the page says so and offers **Try again**, and the link still works.
+
+**Finish on another device** emails the signer a link to their own address, so
+somebody who opened the request on a phone can finish at a desk. Everything
+they have filled in is kept. As the page warns them, opening the new link ends
+the session on the first device.
+
+Before anyone signs, the page shows **Electronic records and signatures** — the
+statement they agree to so their electronic signature counts. The wording
+depends on your clinic's **Country** (**Settings → General**): the United
+States, the United Kingdom, the countries of the European Union, Nigeria and
+Ghana each add a sentence naming that country's or region's electronic-signature
+law, and every other country gets the general statement. While no country is
+set, your billing currency (**Settings → Billing**) decides instead — US
+dollars, euros, pounds sterling, naira and cedis pick those same statements —
+so if you bill in a currency that is not your own country's, set your country.
+Each version of the text has a version number. The page shows it, it is
+recorded when the person agrees, and the signing certificate prints it with the
+law it refers to and which setting chose it — your country, or your currency
+because no country was set. The certificate also names your clinic,
+and carries your clinic's logo at the top when you have one. A document made
+from a template in the template gallery whose author asks for credit also
+lists the template and its author, under **Template**. Adding or changing
+the logo never changes anything the certificate proves about the signing.
+
+A practice with the [document seal](/practice/forms/document-seal) also gets a
+**digital signature** in its own legal name across the whole finished file,
+added when everyone has signed and the certificate is attached. Open the copy in
+a PDF reader such as Adobe Acrobat and its signature panel shows it as signed by
+your organisation and whether the file has changed since then. It is your
+organisation's seal on the finished document, not the personal digital signature
+of anyone who signed; the certificate of completion is still the record of who
+did what, and lists it as **Digital signature**. Without the document seal, the
+finished copy carries no digital signature and keeps the standard proof — its
+fingerprint, the certificate of completion and the verification page, which
+works the same way either way: a copy that matches shows as a match.
+
+<Warning>
+  **This wording is a starting point, not legal advice.** Have your own lawyer
+  check it covers what you use electronic signatures for. The statement is
+  worded the same for every clinic in that country, and your country setting —
+  or your currency, while no country is set — decides which one your patients
+  see.
+</Warning>
+
+<Warning>
+  **Revoking access and cancelling an invite both kill the link immediately**,
+  and anything the person had started but not submitted is lost with it.
+  Anything already submitted is kept. Both are recorded in your audit log.
+</Warning>
+
+## Check it worked
+
+The person appears on the **Invites** tab as **Sent**. When they answer, the same row becomes **Completed** and their response appears on the **Responses** tab — filed against their chart if you chose them as a patient.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Send is greyed out, or the tab says the form is not published">
+    An invite to an unpublished form is a link that greets somebody with a closed page, so it is refused. Publish the form first — see [Publish a form](/practice/forms/publish-a-form).
+  </Accordion>
+
+  <Accordion title="This patient has no email address on file">
+    Add one to their chart, or choose **Patient portal only** or **In person, on this device** instead. We would rather tell you now than send nothing and let you think they ignored it.
+  </Accordion>
+
+  <Accordion title="That person already has an open invite to this form">
+    They are already holding a live link, so a second one is not created — two links to the same form give you two answers and no way to tell which is current. Use **Remind** or **Resend** on the row they already have.
+  </Accordion>
+
+  <Accordion title="This form is not accepting answers right now">
+    The form is closed, past its closing date, or has reached the responses your plan includes. Reopen it, or see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Nothing was emailed">
+    Your practice has document emails switched off. The invite was still created, so the link works — but no message went out. Turn document notifications back on in **Settings**, or hand the person their link in person.
+  </Accordion>
+
+  <Accordion title="The Invites tab asks for two-factor authentication">
+    Your practice requires it before anybody can see who a form went to. Sign in again with your second factor.
+  </Accordion>
+
+  <Accordion title="Sent & Shared says it could not be loaded">
+    That is not the same as "nothing was sent" and we will not show it as though it were. Either your practice requires two-factor authentication before anybody can see what a patient was sent, or you do not have the permission to. Sign in again with your second factor, or ask an owner.
+  </Accordion>
+
+  <Accordion title="A row on Sent & Shared has no actions">
+    It is finished, declined, or already closed. There is nothing to chase, and a reminder would either nag somebody for work they have done or hand a live link back to somebody whose access was deliberately closed.
+  </Accordion>
+
+  <Accordion title="That address is a disposable or forwarding address">
+    We do not send patient forms to throwaway mailboxes. Ask the person for an address they will still have next month.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

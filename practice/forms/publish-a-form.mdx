@@ -1,0 +1,131 @@
+---
+title: Publish a form
+description: "Freeze a finished form as a version, republish it after an edit, and close or reopen it from the forms list."
+icon: /images/icons/circle-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans — the Free plan publishes up to 15 forms, cannot publish a signature question, and a form on it collects one file" roles="Owner, manager, or staff with the Publish and close forms permission" />
+
+Publishing freezes the form as it stands. Everything you do afterwards happens on a working copy, and the frozen version stays exactly as it was until you publish again.
+
+<Path steps={['Sidebar', 'Forms', 'your form', 'Publish']} />
+
+<TaskHeader
+  before="A draft with a title and at least one question"
+  time="Under a minute"
+  after="A frozen version of the form, and a Published badge on the forms list"
+/>
+
+## Publish it
+
+<Steps>
+  <Step title="Finish the questions">
+    Publishing does not check your wording for you, so read the form through in **Preview** first. See [Build a form](/practice/forms/build-a-form).
+  </Step>
+  <Step title="Select Publish">
+    The button is in the top right of the builder. On a plan with a published-form allowance, a form that is not published yet shows how many you have used beside it — for example **Publish · 14 of 15**. A form that is already published does not take another place, so it just says **Publish**. A confirmation appears — **Publish this form** the first time, **Publish these changes** afterwards.
+  </Step>
+  <Step title="Read what it says before you confirm">
+    On a first publish it reads "The form is frozen as version 1 and can start collecting responses." On a later one, "A new version is frozen and becomes the one respondents see. Responses already collected are unaffected."
+
+    If something is unfinished — no title, a question with no wording, a choice question with no options — the confirmation says so and offers to publish anyway: "You can publish anyway, but respondents will see it as it is."
+  </Step>
+  <Step title="Confirm with Publish">
+    You get a **Published** confirmation — "This version is now the one respondents see." The badge beside the form's name changes to **Published**, on the builder and on the forms list.
+  </Step>
+</Steps>
+
+Your latest edit is stored first, so the version that is frozen is the one you can see on screen and never the one from a moment ago. If that last save fails, the publish stops with "Publish stopped — the latest changes could not be saved, so there was nothing safe to publish." Fix what the save state is complaining about and press **Publish** again.
+
+## Publish again after an edit
+
+A published form stays editable. Your changes go to the working copy, the published version carries on unchanged, and publishing again freezes a new one.
+
+**The button tells you which of those you are looking at.** On a form that is live and matches what is on screen it reads **Published** and sits quiet. The moment you change anything it becomes **Publish changes** — your edit is saved, but the people opening your link are still seeing the previous version until you press it. On a form that has never gone live it reads **Publish**.
+
+You can press it in any of those states. If nothing has actually changed since last time, no new version is made and you get **Already published** instead. That is deliberate: a version is a distinct definition of the form, not a record of a button press.
+
+What a version holds is the **questions**. The form's own settings are not frozen with them — a change on the **Settings** tab takes effect as soon as it saves, published or not. See [Form settings](/practice/forms/form-settings).
+
+## Close and reopen
+
+Open the form's three-dot menu on the forms list and select **Close**, or use **Close now** under **Settings → Collection**. Either way you are asked to confirm, and the confirmation names what happens — how many invitations are still open, and that anybody part-way through has 30 minutes to finish. Select **Close form** and a message confirms it — "This form is no longer accepting responses" — and the same menu entry then reads **Reopen**.
+
+**Closing or reopening a scheduled form takes it off its schedule.** The confirmation says so first, and its button reads **Take off schedule and close** (or **Take off schedule and open**). The dates stay filled in but stop applying until you put the form back on a schedule in **Settings → Collection**.
+
+The badge on the card becomes **Closed**, and hovering it says why.
+
+Closing a form frees its place against your plan's published-form allowance. Reopening it takes a place again, so if you have used your allowance in the meantime, **Reopen** is refused until you close or archive another form.
+
+Anybody who follows a closed form's link sees your closed message on a page carrying the form's logo and colour — or, if you set **Or send visitors to this page instead** under **Settings → Confirmation**, is taken to that page. See [Form settings](/practice/forms/form-settings).
+
+<AuditNote action="Publishing a form, and closing or reopening one," />
+
+## Fill in a staff-only form
+
+A form set to **Staff only** under **Who can open this form** has no public link. Your team fills it in inside ClinikEHR — an audit, a handover, an incident report.
+
+<Steps>
+  <Step title="Publish it">
+    Publish the form as usual. A draft cannot be filled in.
+  </Step>
+  <Step title="Open it from the forms list">
+    Open the form's three-dot menu and select **Fill in**.
+  </Step>
+  <Step title="Answer and submit">
+    Answer the questions and select **Submit**. **Response saved** confirms it. **Open responses** takes you to it, and **Fill in another** starts a clean form.
+  </Step>
+</Steps>
+
+Each response is recorded under the name of the person who filled it in. Filling one in needs the **Fill in staff forms** permission.
+
+<AuditNote action="Filling in a staff-only form" />
+
+## Check it worked
+
+The form is badged **Published** on the forms list, and on the Free plan the count under the **Forms** heading has gone up by one. Reopen the builder: the badge beside the name says **Published**, and the form is still editable.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Your plan includes 15 published forms">
+    The Free plan holds 15 published forms at a time that can be opened from a link — set to **Anyone with the link** or **Public**. While all 15 places are in use you cannot publish another form, reopen a closed one, or change a published form's **Who can open this form** to either of those. **Close** or **Archive** a form you have finished with and its place is free straight away. Or see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="Signature questions are available on paid plans. Remove it, or upgrade to publish this form.">
+    A **Signature** question can be built on any plan but cannot be published on the Free plan. Delete it, change it to another type, or upgrade. A form published while you were on a paid plan is not torn down if you downgrade — the block applies the next time you publish.
+  </Accordion>
+
+  <Accordion title="On your plan a form can collect 1 file">
+    On the Free plan a published form can collect one file: one **File upload** question, set to accept a single file. The **Questions** tab says so above your questions as soon as the form could take more, so you can fix it before you publish. Delete extra file questions or set the one you keep to accept one file, then publish again — or upgrade to collect more. A form published while you were on a paid plan stays published and keeps collecting answers, but from the day your practice moves to Free each response can attach only one file: somebody trying to attach a second is told the form can take one file.
+  </Accordion>
+
+  <Accordion title="Is a refusal like this recorded?">
+    Yes. Each time your plan stops something — publishing past the allowance, a signature question, a file question — your practice's audit log gets a **Plan Limit** entry naming which limit it was. It records the limit, never the form's content.
+  </Accordion>
+
+  <Accordion title="Publish stopped">
+    The last edit could not be saved, so there was nothing safe to freeze. Look at the save state in the top bar and the red banner under the tabs, fix what it names, then publish again.
+  </Accordion>
+
+  <Accordion title="Publish is greyed out">
+    Publishing needs the **Publish and close forms** permission, which is separate from being allowed to edit. Ask an owner — see [Staff permissions](/platform/team/permissions). It is also disabled on an archived form.
+  </Accordion>
+
+  <Accordion title="Already published, but I definitely changed something">
+    The change was to something that is not part of the form's definition — a star, or a folder. Those are yours and your practice's, not part of what a respondent sees, so they do not make a new version.
+  </Accordion>
+
+  <Accordion title="I published a version I did not mean to">
+    Correct the form and publish again. The new version becomes the live one, and the earlier versions are kept rather than overwritten.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/forms/editor/form-editor.tsx, components/clinic/forms/form-card.tsx, db/actions/forms.ts (publishFormAction, setFormCollectionAction), lib/forms/plan-limits.ts */}

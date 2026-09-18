@@ -1,0 +1,193 @@
+---
+title: Sell packages, gift cards and promo codes
+description: "Sell prepaid courses of sessions and gift cards, use them at checkout on an invoice, and take promo codes off a bill."
+icon: /images/icons/gift.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above" roles="Owners and managers create packages and promo codes; staff with the right permission sell and redeem" note="Selling in the clinic needs no payment account. Selling in the patient portal needs a connected payout account." />
+
+A **package** is a block of sessions a patient pays for once and uses over time — six physiotherapy sessions, a course of facials. A **gift card** is a code worth an amount of money that anyone holding it can spend on a visit. A **promo code** takes a percentage or a fixed amount off an invoice. All three live on the **Memberships** page, and all three are used at checkout on an invoice — or by the patient when they book online.
+
+<Path steps={['Sidebar', 'Memberships', 'Packages · Gift cards · Promo codes']} />
+
+<TaskHeader
+  before="At least one service in your service list, and the Essential plan or above"
+  time="Five minutes for your first package"
+  after="A package on sale, a patient with sessions to use, and a session redeemed on their invoice"
+/>
+
+## Create a package
+
+<Steps>
+  <Step title="Open the Packages tab">
+    On **Memberships**, select **Packages**, then **New package**.
+  </Step>
+  <Step title="Name it and price it">
+    Enter a **Name** and a **Price** (in your currency). **Valid for (days)** is optional: the clock starts when the package is paid for, and an empty field means it never expires.
+  </Step>
+  <Step title="Choose the services and how many sessions">
+    For each service, choose it from the list and enter the number of sessions. Select **Add a service** to include another. A package can cover several services, each with its own count.
+  </Step>
+  <Step title="Decide where it is sold">
+    Leave **Available to sell** on. Turn on **Offer in the client portal** if patients may buy it online (see [Sell online](#sell-online)). Select **Create package**.
+  </Step>
+</Steps>
+
+Editing a package later changes only future sales. A patient who already bought it keeps exactly the services, sessions and price they paid for. To stop selling a package, select **Switch off** — patients who own it keep their sessions.
+
+## Sell a package to a patient
+
+<Steps>
+  <Step title="Open the patient's Billing tab">
+    Open the patient, select **Billing**, and in **Packages & gift cards** select **Sell**, then **Sell a package**. You can also sell from **Memberships → Packages → Sell a package** and choose the patient there.
+  </Step>
+  <Step title="Choose the package">
+    The sheet lists every active package with its price, and shows the sessions it includes.
+  </Step>
+  <Step title="Record how it is being paid">
+    Choose **Paid now** and pick how the patient paid — **Cash**, **Card (terminal)**, **Bank transfer**, **Mobile money** or **Other** — or **Collect later** to leave the invoice open and take payment the way you usually do.
+
+    With **Collect later**, the sessions unlock the moment the invoice is paid in full. Turn on **Let them use it before paying** if you are happy for the patient to start straight away.
+  </Step>
+  <Step title="Sell">
+    Select **Sell for** and the price. A sale is always an ordinary invoice for the patient, so it appears in their billing history and on your reports like any other.
+  </Step>
+</Steps>
+
+<Warning>
+  Selling records money owed and, with **Paid now**, money received. Pressing **Sell** twice in the same sheet does not sell twice — but closing the sheet and selling again does. Check the patient's **Packages & gift cards** list before selling a second time.
+</Warning>
+
+## Use a session at checkout
+
+<Steps>
+  <Step title="Open the visit's invoice">
+    On the patient's **Billing** tab, open the invoice's **Manage** menu and select **Packages, gift cards & promo**.
+  </Step>
+  <Step title="Choose the package">
+    Every line for a service the patient has sessions for shows **Use a session**. If more than one package covers it, choose which one — each shows how many are left.
+  </Step>
+  <Step title="Use the session">
+    Select **Use a session**. The line changes to **Covered** with the package name, its price drops to zero, and the invoice total is recalculated — including its discount and tax.
+  </Step>
+</Steps>
+
+One session covers one line. A line already covered cannot be covered again, and a package with nothing left for that service is not offered.
+
+To reverse it, select **Give session back** on the covered line. The session returns to the package and the line goes back to its full price. Cancelling an appointment gives back any sessions used on that visit's invoice automatically.
+
+A covered line, and a promo code's discount line, are shown read-only when you edit the invoice. Undo them from **Packages, gift cards & promo** first if you need to change them.
+
+## Sell a gift card
+
+<Steps>
+  <Step title="Start the sale">
+    From the patient's **Billing** tab select **Sell → Sell a gift card**, or use **Memberships → Gift cards → Sell a gift card**. The patient you choose is the buyer — the invoice is raised to them.
+  </Step>
+  <Step title="Enter the value and who it is for">
+    Enter the **Value** within your limits — the field shows your currency — and, if you like, **Recipient name (optional)**, **Recipient email (optional)** and **Message (optional)**.
+  </Step>
+  <Step title="Take payment and hand over the code">
+    With **Paid now**, the code appears as soon as you save. Select **Copy code** or, if you entered a recipient email, **Email to recipient**. With **Collect later**, the card stays inactive until its invoice is paid; then open **Manage → Show code** on the gift card.
+  </Step>
+</Steps>
+
+<Warning>
+  The code is shown once. ClinikEHR does not keep a readable copy, so it cannot be shown again — only replaced. **Replace code** stops the old code working immediately.
+</Warning>
+
+## Take a gift card at checkout
+
+On the invoice, open **Packages, gift cards & promo**, enter the **Code** and select **Check balance**. Enter an amount, or leave it empty to use as much as the invoice needs, then select **Apply gift card**. The payment is recorded against the invoice and taken off the card's balance. A card can be used across several visits until its balance runs out; it can never go below zero.
+
+If you void that payment, the amount goes back on the card.
+
+## Apply a promo code
+
+<Steps>
+  <Step title="Create the code">
+    On **Memberships → Promo codes** select **New promo code**. Enter the **Code**, choose **Percentage off** or **Amount off**, and choose whether it applies to **Everything on the invoice** or **Chosen services only**. **Total uses (optional)**, **Uses per client (optional)**, **Starts (optional)** and **Ends (optional)** limit when and how often it works.
+  </Step>
+  <Step title="Apply it at checkout">
+    On the invoice, open **Packages, gift cards & promo**, enter the code and select **Apply**. The discount is added to the invoice as its own line.
+  </Step>
+</Steps>
+
+One promo code per invoice. Select **Remove** to take it off again.
+
+## Used when a patient books online
+
+Your public booking page and the patient portal take all three when a patient books, so nobody has to wait until the visit.
+
+- **Promo code** — a field with **Apply**, shown on the booking page only while you have at least one active promo code.
+- **Gift card** — a field with **Apply**, shown on the booking page only while you have at least one active gift card.
+- **Use a session from your package** — a tick, with each package and how many sessions are left. On the booking page it is offered only to a returning patient who confirmed their email with the code we send; a new or unconfirmed visitor is never told that a package exists. In the portal it is offered to the signed-in patient.
+
+Before paying, the patient sees what each one did — **Visit**, **Covered by your package**, **Promo code** and the code, **Gift card ending** and its last four characters — and what is due now or left to pay at the clinic. The pay button shows the amount after them. When nothing is left to pay now, the booking is made without a payment step. The confirmation lists what was used.
+
+How the amounts are worked out:
+
+1. A package session covers its service first.
+2. The promo code comes off what is left.
+3. A deposit or prepay you set for the service is taken on the price after the session and the code.
+4. The gift card pays toward the visit, and the patient's card pays whatever of the amount due now is still left.
+
+A code, gift card or package session can't be used online on repeat visits (the page says **Book one visit to use them**), or together with a membership price. If one of them changes after the patient paid but before the booking is made — the code reached its limit, the gift card was spent elsewhere — the booking is not made and the payment is refunded automatically.
+
+A code that can't be used always gets the same answer — "That promo code can’t be used for this booking." or "That gift card code can’t be used. Check the code, or ask the clinic about its balance." — and after too many wrong tries the page says "Too many codes were tried. Please wait a few minutes and try again."
+
+On the visit's invoice you see exactly what happened: the package line at zero, covered by the package; a negative **Promo code** line; and a gift card payment. A visit paid in full by a package session shows **Package session** as its payment method, and one paid by a gift card shows **Gift card**.
+
+### When an online booking is cancelled
+
+If the visit is cancelled before its start time, the promo code's use is given back, the gift card amount goes back onto the gift card — it is never refunded to a bank card — and the package session returns to the package. A missed visit, or a cancellation recorded after the start time, keeps them; you can still undo them from **Packages, gift cards & promo**. A card payment on a cancelled visit follows your usual refund rules.
+
+## Sell online
+
+On **Memberships → Gift cards**, the **Settings** card holds **Sell gift cards in the client portal** and **Sell packages in the client portal**, plus the smallest and largest gift card and how long gift cards are valid for. Online sales need a connected payout account (see [Online payments](/hospital/settings/online-payments)); patients pay on your own secure checkout, and what they bought becomes usable once the payment is confirmed. See [Packages and gift cards in the portal](/portal/patients/packages-and-gift-cards).
+
+<Note>
+  Some places set minimum lifetimes for gift cards. Check the rules where your hospital operates before setting **Valid for (days)**.
+</Note>
+
+## Check it worked
+
+- The patient's **Billing** tab shows the package under **Packages & gift cards** with "\{n\} of \{total\} left" for each service.
+- After using a session, reopen the patient: the count is one lower, and **History** lists the session as **Used**.
+- The invoice shows the line as covered, at zero, and its total is lower.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Sell button, or it is greyed out">
+    Packages and gift cards need the Essential plan or above. If the plan is right, you may not have the **Sell packages** or **Sell gift cards** permission — ask an owner or manager. See [Permissions](/platform/team/permissions).
+  </Accordion>
+  <Accordion title="Use a session is not offered on a line">
+    The patient has no active package with sessions left for that service, the package has expired or not been paid for yet, or the line was added as a custom item rather than from your services list.
+  </Accordion>
+  <Accordion title="“There are no sessions left on this package for that service”">
+    Someone used the last session a moment before you. Check **History** on the package.
+  </Accordion>
+  <Accordion title="“No active gift card matches that code”">
+    Check the code for typos. A gift card that has not been paid for yet, or a code that was replaced, will not match. After many wrong attempts, lookups pause for a few minutes.
+  </Accordion>
+  <Accordion title="“More has already been paid on this invoice than it would then total”">
+    Covering a line or applying a promo code would take the total below what has already been paid. Void a payment first, then try again.
+  </Accordion>
+  <Accordion title="The promo code or gift card field is not on my booking page">
+    Each field appears only while you have at least one active promo code, or at least one active gift card. They are also not offered when a patient chooses repeat visits.
+  </Accordion>
+  <Accordion title="A patient says their package session was not offered online">
+    On the booking page, sessions are offered only after the patient chooses to book as a returning patient and confirms their email with the code. The package must be active, not expired, and have a session left for a service they chose.
+  </Accordion>
+  <Accordion title="A patient wants a refund on a package">
+    An owner, manager or accountant can open the package's **Manage** menu and select **Cancel package**. That removes the sessions left; it does not move money. Refund or void the sale payment separately.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

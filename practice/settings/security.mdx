@@ -28,10 +28,25 @@ One switch, with a long reach. **Security Settings** — "Manage your clinic's s
 | **Require Two-Factor Authentication** | "Require all staff members to set up two-factor authentication for their accounts. When enabled, every staff member is prompted to set up an authenticator app on their next sign-in before they can access any clinic data." Owner only — everyone else sees it disabled | Off |
 | **Save Changes** | Applies it. Only shown to the owner. Confirms with "Security settings updated successfully" | — |
 
-That is the whole tab. Two things people expect to find here are elsewhere:
+Two things people expect to find here are elsewhere:
 
 - **Passkeys** — the fingerprint or face sign-in on your own device — are set up per person, on their own account, not for the practice. See [Account security](/platform/account/security).
 - **Security alerts** — the live list of emergency access grants, recovery-code use and two-factor resets — appear on the **Staff & Teams** tab, beside the people they concern. They show only when there is something to show, and only to owners and managers.
+
+## Access alerts
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Owner or manager" />
+
+A second card, **Access alerts**, below Security Settings. It sets how sensitive the **Unusual access alerts** on restricted clients are (see [Unusual access alerts](/practice/work/client-security#unusual-access-alerts)) — every secured client record still gets checked, this only changes when a check turns into a notification to the owner.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Records opened / Within (minutes)** | How many distinct secured records one team member has to open, and inside how many minutes, before the "many secured records opened" alert fires. 1–100 records, 1–1440 minutes | 5 records within 60 minutes |
+| **Times granted / Within (days)** | How many times emergency access has to be granted to one team member, and inside how many days, before the "repeated emergency access" alert fires. 1–100 times, 1–365 days | 3 times within 30 days |
+| **Requests / Within (days)** | How many times one client may ask, from their own portal, to restrict their own record before the portal asks them to wait. 1–50 requests, 1–90 days | 5 requests within 7 days |
+| **Default hidden categories for a guardian/proxy portal view** | Which sensitive document categories (behavioural health, substance use, reproductive health, HIV status, other) start hidden from a guardian or family member who reaches a client's portal record through a shared contact email. Applies to any client who has not had this set individually on their own Security tab, under **Proxy access limits** — that always wins over this clinic-wide default | Every category hidden |
+
+On a plan below Essential, the card shows an **Upgrade** button instead and nothing can be changed — the alerts themselves still run on the built-in defaults above. Below Essential, or for anyone who is not the owner or a manager, the fields are read-only or the card does not offer changes at all.
 
 ## Set it up
 
@@ -93,4 +108,4 @@ Sign out and back in yourself. You should be asked to set up an authenticator ap
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, security-alerts-card.tsx (rendered on Staff & Teams) */}
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, access-alert-settings.tsx, security-alerts-card.tsx (rendered on Staff & Teams) */}

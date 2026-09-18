@@ -19,15 +19,17 @@ Takings are not profit. **Expenses** is where you record what running the pharma
 
 ## What you're looking at
 
-The header reads **Expenses** — "Net position and running costs" — with one button, **Add Expense**.
+The header reads **Expenses** — "Net position and running costs" — with a date-range picker and two buttons, **Export** and **Add Expense**.
 
 | Part of the screen | What it holds |
 | --- | --- |
-| **Net position · \{range\}** | Five tiles — **Revenue**, **Cost of goods**, **Expenses**, **Stock loss** and **Net** — with a range select alongside the title |
-| **Expenses by category · this month** | A bar per category, inside the same card. It appears only once a category has money in it |
-| **Recent expenses** | This month's costs, newest first: a category badge, the description, the date, the amount and a delete control |
+| **Net position · \{period\}** | Five tiles — **Revenue**, **Cost of goods**, **Expenses**, **Stock loss** and **Net** |
+| **Expenses by category · \{period\}** | A bar per category, inside the same card. It appears only once a category has money in it |
+| **Expenses · \{period\}** | The costs in that period, newest first: a category badge, the description, the date, the amount and a delete control |
 
-The range select offers **Today**, **7 days**, **1 month**, **3 months**, **6 months** and **All time**, and opens on **1 month**. It moves the **Net position** tiles only — the category bars and the list below stay on the current month.
+**Pick any window.** Click a single day to see just that day, or click a start day and an end day for a custom range spanning as many days as you like. The picker opens on the last thirty days, the same window the [sales dashboard](/pharmacy/money/sales) opens on, so the two screens can be read side by side.
+
+**Everything on the page obeys it.** The tiles, the category bars and the list all cover the period named in their headings — which is why each card says the period out loud rather than leaving you to remember it.
 
 **A pharmacy that has recorded nothing sees "No expenses recorded yet."**, no category bars at all, and a **Net position** card whose **Expenses** tile reads zero while the other four are populated from your sales and stock. That is the state this page exists to get you out of.
 
@@ -103,9 +105,23 @@ See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- The expense heads the **Recent expenses** list with its category badge, description and date.
+- The expense heads the **Expenses** list with its category badge, description and date — provided its **Date** falls inside the period you are looking at.
 - The **Expenses** tile rises by the amount, and **Net** falls by the same.
-- **Expenses by category · this month** picks it up if the date falls in this month.
+- **Expenses by category** picks it up.
+
+## Take the figures away
+
+**Export** offers three files, each covering exactly the period on screen.
+
+| Choice | What you get |
+| --- | --- |
+| **CSV — expense list** | The rows in the list: date, category, description and amount. Opens in Excel, Numbers or Sheets |
+| **Excel (.xlsx) — by category** | A workbook totalling spend per category, with a share of the total |
+| **Excel (.xlsx) — day by day** | A workbook of spend per day across the period |
+
+Each workbook opens on an **Overview** sheet, and every sheet carries the pharmacy's name, the period and the currency at the top — so a tab forwarded to a bookkeeper still says what it is. The filename carries the period too, which is what stops two exports taken the same afternoon from colliding in your downloads folder.
+
+The two Excel files are built from the same figures as the **Expenses** report in [Reports](/pharmacy/money/analytics), so the two can never disagree.
 
 ## Where expenses show up elsewhere
 
@@ -135,8 +151,8 @@ See [Staff permissions](/platform/team/permissions).
     It uses the **Date** on the sheet, not the day you typed it. Delete it and re-add it with the right date.
   </Accordion>
 
-  <Accordion title="I changed the range but the list did not change">
-    Expected. The range select moves the **Net position** tiles only. **Expenses by category** and **Recent expenses** are always this month.
+  <Accordion title="I added an expense and it is not in the list">
+    Check its **Date** against the period in the card heading. The list shows the period you picked, so an expense dated outside it is recorded correctly and simply not in view — widen the range, or pick the day it is dated.
   </Accordion>
 
   <Accordion title="There is no Expenses entry in my sidebar">
@@ -170,4 +186,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck topic="expenses" />
 
-{/* source of truth: components/clinic/dashboard/pharmacy-station/expenses/ (expenses-content.tsx, expense-form-sheet.tsx), db/queries/expenses.ts, db/actions/expenses.ts, types/expenses.ts (EXPENSE_CATEGORIES), lib/pharmacy-range.ts, lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES) */}
+{/* source of truth: components/clinic/dashboard/pharmacy-station/expenses/ (expenses-content.tsx, expense-form-sheet.tsx), db/queries/expenses.ts, db/actions/expenses.ts, types/expenses.ts (EXPENSE_CATEGORIES), lib/date-range-window.ts, lib/pharmacy-range.ts, lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES) */}

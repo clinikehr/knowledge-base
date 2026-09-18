@@ -1,6 +1,6 @@
 ---
 title: Import and export your catalogue
-description: "Bulk-load products from a spreadsheet, export your catalogue to Excel or CSV, and understand why neither one moves stock."
+description: "Bulk-load products from a spreadsheet, optionally with opening stock and expiry dates, and export your catalogue to Excel or CSV."
 icon: /images/icons/file-spreadsheet.svg
 ---
 
@@ -11,7 +11,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['pharmacy']} plans="All plans" roles="Anyone who can open Inventory" />
 
-Import loads products into your catalogue from a spreadsheet. Export takes your catalogue back out as Excel or CSV. Both sit on the **Inventory** toolbar, and neither one touches the quantity on your shelves.
+Import loads products into your catalogue from a spreadsheet — and, when your file has the optional stock columns, receives their opening stock with its expiry date and lot. Export takes your catalogue back out as Excel or CSV and never carries quantities. Both sit on the **Inventory** toolbar.
 
 <Path steps={['Sidebar', 'Inventory', 'Import']} />
 
@@ -20,12 +20,12 @@ Import loads products into your catalogue from a spreadsheet. Export takes your 
 ## The two rules that explain everything else
 
 <Note>
-  **Import creates catalogue rows only.** The sheet says so itself: "Each row creates one catalog item — stock is added afterwards through Receive". A row becomes a product, never a quantity on a shelf.
+  **Import brings stock in only when you ask it to, in words that can only mean that.** The sheet says: "To receive stock at the same time, fill the optional opening_stock, stock_location and expiry_date columns." A row without an **opening_stock** value becomes a product and nothing else, and a column called "qty" or "on hand" from another system is never read as stock.
 
   **Export deliberately leaves on-hand quantities out** — "Stock on hand is not included — quantities are managed through Receive and Dispense, so re-importing this file never overwrites your live stock."
 </Note>
 
-Your stock levels live in ClinikEHR and nowhere else. A spreadsheet is a way to load a catalogue and a way to read one, never a way to set what you hold. Quantities arrive through **Receive**, or in bulk through the separate **Opening stock** button — see [Stock control](/pharmacy/inventory/index).
+Your stock levels live in ClinikEHR and nowhere else. Stock from an import is *received* — it becomes a lot with its expiry date and a ledger entry, exactly as if you had used **Receive** — and a file can never overwrite what you already hold. Everyday deliveries still come in through **Receive**, or in bulk through the separate **Opening stock** button — see [Stock control](/pharmacy/inventory/index).
 
 ## What you're looking at
 
@@ -33,7 +33,7 @@ Neither is a page — each opens a sheet over the screen you are on.
 
 **Import** opens **Bulk-import items**, badged **Catalog Import**. Under **Start from the template** sits **Download sample CSV** — "Download the sample CSV to see the required headers, expected formats, and two example rows." Below it, **Upload your file** is a **Click to upload or drag and drop** target, constrained to "**.csv, .xlsx or .xls — max 5MB, up to 1000 rows**". While it reads, the sheet says **Reading spreadsheet…**; afterwards **Replace file** swaps the upload.
 
-The **Preview** is the part worth slowing down for. Three badges count what it found — **\{n\} new**, **\{n\} to update** and **\{n\} need fixing** — and every row is labelled either **new** or "updates existing · matched on upc" (or `sku`). A row that changes nothing says so: "No changes — this row matches what is already stored." A **Field reference** below lists all 27 columns with their hints, and required ones carry a star.
+The **Preview** is the part worth slowing down for. Three badges count what it found — **\{n\} new**, **\{n\} to update** and **\{n\} need fixing** — and every row is labelled either **new** or "updates existing · matched on upc" (or `sku`). A row that changes nothing says so: "No changes — this row matches what is already stored." A **Field reference** below lists all 27 catalogue columns with their hints — required ones carry a star — followed by the four optional stock columns. When your file carries opening stock, each preview row shows it, for example "Opening stock 40 → Main Pharmacy · expires 2027-03-31 · lot B24-0192".
 
 That "to update" count is the word "import" hiding an update. Each row is matched against your catalogue on its **barcode first, then its SKU**. A match updates that product and leaves untouched any column your sheet omits; no match creates a new product. So a corrected price list is a legitimate re-import rather than a duplicate-maker — provided your barcodes and SKUs are right. Where they are missing or wrong, the same product arrives twice under two names.
 
@@ -61,8 +61,28 @@ That "to update" count is the word "import" hiding an update. Each row is matche
   </Step>
 </Steps>
 
+## Bring opening stock and expiry dates in with the import
+
+Add these four columns to the right of the catalogue columns (the sample CSV already has them, empty):
+
+| Column | What to put in it |
+| --- | --- |
+| `opening_stock` | The quantity to receive now. Leave it blank for a product with nothing on the shelf. |
+| `stock_location` | The location's name exactly as it appears under **Locations**. You can leave it blank only if you have a single location. |
+| `expiry_date` | **YYYY-MM-DD**, for example 2027-06-30. **2027-06** means the end of June 2027, the way many packs print it. Month names work too (31 Mar 2027). |
+| `lot_number` | Optional — the batch printed on the pack. |
+
+What the importer checks before anything is written:
+
+- **An expiry date is needed** for stock of any product with **Track lot & expiry** on (the default). Set `requires_lot` to `false` for things that do not expire.
+- **A date written all in numbers, like 03/04/2027, is refused** — it is the 3rd of April in one country and the 4th of March in another, and a wrong guess ages your stock by a month. Write it as YYYY-MM-DD.
+- **A date that has already passed is refused**, as is a location name that does not exist.
+- **A row that fails any stock check is not imported at all**, so you never end up with the product but not its stock.
+
+After the import, the result shows **Opening stock received for \{n\} items**. Importing the **same file again** updates the products but never receives the same opening stock twice.
+
 <Tip>
-  Upload a sales report exported from an old till system and the importer recognises it — "POS report recognised and converted" — strips duplicate and subtotal rows, and numbers repeated price variants "#2" for you to rename. It still imports no quantities.
+  Upload a sales report exported from an old till system and the importer recognises it — "POS report recognised and converted" — strips duplicate and subtotal rows, and numbers repeated price variants "#2" for you to rename. It never reads that report's quantities as stock — use **Opening stock** for those.
 </Tip>
 
 ## Export your catalogue
@@ -116,7 +136,7 @@ See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-- **After an import:** the new products appear on the **Catalog** tab and are searchable at the till. Their on-hand quantity is zero until you receive stock — that is correct, not a failed import.
+- **After an import:** the new products appear on the **Catalog** tab and are searchable at the till. Products imported without `opening_stock` show zero on hand until you receive stock — that is correct, not a failed import. Products imported with it show that stock on the **Stock** tab, in its lot, with its expiry date.
 - The **Created** and **Updated** tiles match what the preview promised.
 - **After an export:** the file opens, the row count matches your catalogue, and the columns match the **Columns included** list.
 
@@ -140,7 +160,19 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="My file has a quantity column, but no stock arrived">
-    Correct — the catalog import never writes stock, and the **How we read your columns** panel lists the quantity column as not imported. Stock is received, not declared: after importing the catalog, bring quantities in through **Receive stock** or a Stock Count, so every unit lands as a ledger entry that can be audited later.
+    The importer only reads a column called `opening_stock` as stock, and the **How we read your columns** panel lists any other quantity column as not imported. Rename your column to `opening_stock`, add `stock_location` and `expiry_date`, and upload again — or bring quantities in through **Opening stock** or a Stock Count.
+  </Accordion>
+
+  <Accordion title="'expiry_date … is not a date we can read safely'">
+    The date is written all in numbers with the day and month in an order that cannot be told apart. Write it as YYYY-MM-DD (2027-03-31) or with the month's name (31 Mar 2027). If your spreadsheet keeps changing it back, format the column as **Text** before typing.
+  </Accordion>
+
+  <Accordion title="'expiry_date is needed for opening stock of an item tracked by lot / expiry'">
+    The row has an `opening_stock` value but no expiry date, and the product tracks lots and expiry. Add the date, or set `requires_lot` to `false` if the product genuinely has no expiry.
+  </Accordion>
+
+  <Accordion title="'Stock not received …' after the products imported">
+    The product saved but its stock could not be received — for example, your clinic requires expiry dates on new lots, or a hazardous product was sent to a location that is not hazardous-rated. **Download failed rows with error column** gives you just those rows to fix and re-upload; the products will simply update.
   </Accordion>
 
   <Accordion title="'No valid rows to import'">
@@ -160,11 +192,11 @@ See [Staff permissions](/platform/team/permissions).
 
 <AccordionGroup>
   <Accordion title="Can I import stock levels as well as products?">
-    Not through **Import** — there is no quantity column in the file at all, by design. For quantities in bulk, use the **Opening stock** button on the same toolbar, which opens **Opening stock from file**. For everyday arrivals, use **Receive**. That separation is what stops a stale spreadsheet from silently overwriting the shelf.
+    Opening stock, yes — fill the `opening_stock`, `stock_location` and `expiry_date` columns and each product's stock is received into a lot with that expiry date. It is received once: it can never overwrite or top up what you already hold, which is what stops a stale spreadsheet from changing the shelf. For stock of products already in your catalogue, **Opening stock** on the same toolbar works too, and everyday arrivals go through **Receive**.
   </Accordion>
 
   <Accordion title="What happens if I import the same file twice?">
-    Nothing bad, as long as your barcodes or SKUs are filled in: the second run matches every row and updates it, leaving the products as they are. Rows with no code to match on are the ones that duplicate.
+    Nothing bad, as long as your barcodes or SKUs are filled in: the second run matches every row and updates it, leaving the products as they are, and any opening stock in the file is not received a second time. Rows with no code to match on are the ones that duplicate.
   </Accordion>
 
   <Accordion title="Will re-importing an export wipe my stock?">
@@ -182,4 +214,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck topic="an import or export" />
 
-{/* source of truth: components/inventory/inventory-import-sheet.tsx, inventory-export-sheet.tsx, stock-prefill-sheet.tsx, lib/inventory-csv.ts (INVENTORY_CSV_FIELDS), lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS, ADMIN_ROLE_SLUG_DEFAULTS) */}
+{/* source of truth: components/inventory/inventory-import-sheet.tsx, lib/inventory/opening-stock.ts (stock columns + expiry rules), inventory-export-sheet.tsx, stock-prefill-sheet.tsx, lib/inventory-csv.ts (INVENTORY_CSV_FIELDS), lib/edition-staff-roles.ts (PHARMACY_PERMISSIONS, ADMIN_ROLE_SLUG_DEFAULTS) */}

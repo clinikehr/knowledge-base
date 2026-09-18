@@ -29,7 +29,7 @@ Next to those is the view control — **Day**, **Week**, **Month**, plus two swi
   All three gear items — **Services**, **Booking Page** and **Availability** — leave the calendar and open a settings tab. A diagnostic centre gets the appointment book but **not** the public booking-page designer; that surface is clinical-edition only, so **Booking Page** is of limited use to a lab.
 </Note>
 
-**The second row** is the working row: **Search patients, services...**, **More filters** (with a badge counting how many are active), **Refresh**, **Current Schedule** (**Schedule** on a phone) and **Create**.
+**The second row** is the working row: **Search patients, services, out of office...**, **More filters** (with a badge counting how many are active), **Refresh**, **Current Schedule** (**Schedule** on a phone) and **Create**.
 
 **Statuses.** Every appointment carries one, set from the appointment's own dropdown.
 
@@ -44,6 +44,23 @@ Next to those is the view control — **Day**, **Week**, **Month**, plus two swi
 
 **The empty state.** A new lab sees an empty grid with today outlined, and nothing else. There is nothing to switch on here — the calendar is live from the first day. What you may not have yet is anything to book *into*, which is what **Services** and **Availability** on the gear menu are for.
 
+### Events and tasks
+
+- **Event** and **Task** each have their own date and time, in the clinic's time zone — shown under the fields.
+- **Assign staff** (events) and **Assigned to** (tasks) let you pick **All staff** or search for people by name. **All staff** includes everyone on the team when you save.
+- Each person added to an event gets an email with a calendar invite and a notice in the app. Each person given a task gets their own copy to complete, and an email that says a task was assigned and when it is due — never what it is or who it is about.
+- **Reminder** sends each person an email before the start or due time: at the time, 15 or 30 minutes, 1 hour or 1 day before.
+- **Repeats** adds it every day, week, month or year, ending after 1 to 50 times or on a date — the same as repeating appointments. People are told once, not once per date.
+- These emails follow your clinic's email and **Appointment** notification settings, and each person's own email setting.
+
+To block time so clients cannot book it, use the **Out of office** tab — see [Add Out of Office](/lims/front-desk/out-of-office).
+
+### Out of Office on the calendar
+
+Out of Office time shows as a grey, striped band behind the calendar, labelled **Out of office**, with its note where there is room. A block for the whole clinic or all staff covers the full day column. A block for one person covers part of the column in **Day** and **Week**, and only that person's lane in **Providers**. A block for a room or piece of equipment shades that item's lane in **Resources**. All-day blocks also appear in the **All day** row, and **Month** marks each day that has one. Select the label to open the block.
+
+Appointments inside a block stay on the calendar, with a grey outline and an icon so you can see they clash. **More filters** has a **Show Out of Office blocks** switch to hide the bands, and search finds a block by its name or note. Blocks show in your own time zone, the same as appointments.
+
 ## Book a slot
 
 <Steps>
@@ -51,7 +68,7 @@ Next to those is the view control — **Day**, **Week**, **Month**, plus two swi
     Select **Create**, or select the empty slot you want on the grid — starting from the grid pre-fills the date and time you selected. The sheet is titled **Initial Entry**.
   </Step>
   <Step title="Stay on the Appointment tab">
-    The sheet has three tabs: **Appointment** · **Event** · **Task**. **Event** is for anything that occupies the diary without a patient — a maintenance visit, a training block. **Task** is a to-do with a due date, not a slot.
+    The sheet has four tabs: **Appointment** · **Event** · **Task** · **Out of office**. **Event** is for anything that occupies the diary without a patient — a maintenance visit, a training block. **Task** is a to-do with a due date, not a slot.
   </Step>
   <Step title="Choose the patient and the service">
     Pick the patient the sample will belong to, and the service they are booked for — the venepuncture, the swab collection, the scan. If the patient has no record, register them first; see [Patients](/lims/front-desk/patients).
@@ -68,10 +85,10 @@ Next to those is the view control — **Day**, **Week**, **Month**, plus two swi
 
 <Steps>
   <Step title="Search by name or service">
-    Enter a name or a service into **Search patients, services...**. This narrows the calendar itself rather than opening a separate result list.
+    Enter a name, a service or an Out of Office note into **Search patients, services, out of office...**. This narrows the calendar itself rather than opening a separate result list.
   </Step>
   <Step title="Filter">
-    Select **More filters** to open **Calendar Filters** — "Refine your view by status, service, or staff." The sections are **Appointment Status**, **Urgency Level**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**. **Reset all filters** at the foot clears everything at once.
+    Select **More filters** to open **Calendar Filters** — "Refine your view by status, service, or staff." The sections are **Appointment Status**, **Urgency Level**, **Out of Office**, **Event Types**, **Task Status**, **Task Priority**, **Venue Type**, **Services** and **Staff Members**. **Reset all filters** at the foot clears everything at once.
   </Step>
   <Step title="Switch the view to the question you are asking">
     **Day** for the desk, **Week** for planning, **Month** for capacity. Use **Providers** when you need to know which phlebotomist is free, and **Resources** when the constraint is the room, the chair or the scanner rather than the person.
@@ -155,7 +172,7 @@ See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="What is the difference between an Event and a Task?">
-    An **Event** occupies time on the calendar but has no patient — analyser servicing, a delivery window, a training block. A **Task** is a piece of work with a due date and a priority; it does not hold a slot.
+    An **Event** occupies time on the calendar but has no patient — analyser servicing, a delivery window, a training block. A **Task** is a piece of work with a due date and a priority; it does not hold a slot. When a task falls due, the person it is assigned to — or, with nobody assigned, whoever created it or your clinic's email address — gets an email that says only that a task is due and when — never what the task is or who it is about. **Open task** in that email opens the task on the calendar after they sign in.
   </Accordion>
 
   <Accordion title="Can I take walk-ins without booking them?">

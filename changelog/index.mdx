@@ -7,17 +7,1068 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="September 18, 2026" tags={["Solo & Team","Hospital"]} description="Restricted clients">
+  ## Proxy access limits now do what the switches say
+
+  A parent or guardian who reaches a dependant's portal through a shared contact email is meant to be kept away from the categories you mark on the dependant's **Security** tab. Those switches saved and read back correctly, but nothing was being held back — there was no way to mark a record as belonging to one of those categories in the first place, so there was never anything for the limits to act on.
+
+  You can now mark a **document**, a **consultation** or a **history entry** sensitive, the same way you already could a note, and the limits apply to documents, consultations and files.
+
+  One related fix worth knowing about: a client opening their **own** portal record is no longer treated as a guardian. Only a genuinely shared contact email counts, so a client's own sensitive records are never hidden from them.
+
+  ## You can see which records are marked
+
+  The client, patient, consultation and imaging lists now show **Restricted** beside a client who is limited to assigned staff, and **Sensitive** beside a record that is marked. The category itself is never shown in a list — that is the point of marking it. See [Restrict a client to assigned staff](/practice/work/client-security).
+
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="Restricted clients">
+  ## My Patients shows the names of the clients you are responsible for
+
+  A client restricted to assigned staff was named **Secured patient** and a number on the assigned provider's own **My Patients** worklist — and on the transfer-of-care screens, where you hand that client to a colleague. Both are lists of people you are entitled to see, so both were showing you a numbered label for clients whose charts you can open in one click, with no way to tell them apart.
+
+  They now read the client's name, for the owner, for assigned staff and for a colleague covering for them. The secured label is unchanged everywhere it belongs: a team member who is not assigned still never sees the name, and still does not receive these rows at all.
+
+  **My Patients** now marks a restricted client **Restricted**, so you can still tell that the record is one — it changes what happens when you book a colleague who is not assigned to them. See [Restrict a client to assigned staff](/practice/work/client-security).
+
+  ## Sensitive records reach more of the chart
+
+  Marking is no longer limited to notes and documents. A consultation, a history entry, an uploaded file, and a ward round note, nursing note or set of vitals can each carry the same lock, so a colleague who is not on the client's care team cannot open them.
+
+  Two fixes worth knowing about if you already use this. Choosing **Not sensitive** on a record that was marked now actually clears it — it used to report success and leave the mark in place. And opening the sensitivity dialog on a note no longer changes its category: it used to show "Other sensitive" whatever the note was actually marked as, and saving would overwrite the real category.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Forms">
+  ## The Publish button now tells you whether your edits are live
+
+  A published form stays editable, and your changes go to a working copy — the people opening your link keep seeing the previous version until you publish again. That has always been how it works, and the button gave no sign of it: it read **Publish** whether the live version matched what you were looking at or was six edits behind.
+
+  It now says which. **Published** means live and up to date. **Publish changes** means your edit is saved but not yet live. **Publish** means it has never gone live. See [Publish a form](/practice/forms/publish-a-form).
+
+  ## Opening a form is immediate
+
+  Clicking a form used to leave you on the previous screen with nothing happening while it loaded. The editor's layout now appears at once and fills in.
+
+  ## The forms home fits more on screen
+
+  - A template in **Start a new form** shows a preview of the form it will create, the same way your own forms do — it used to be a generic file icon. The tiles are smaller, so they take less of the screen than the forms below them.
+  - **Recent forms** shows two cards per row on a phone instead of one, with the text sized to match.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Calendar + Shifts">
+  ## A new event, task or out-of-office block shows up straight away
+
+  Creating an **Event**, a **Task** or an **Out of Office** block told you it had saved, and then the calendar behind it sat unchanged until you reloaded the page. Appointments usually beat you to it; the other three usually did not. All four now appear the moment they are saved, and so do edits, status changes and deletions. See [Appointments](/practice/work/appointments).
+
+  ## Shift times are the clinic's time, written the way the rest of the product writes times
+
+  - A rota now reads **7:00 AM – 7:00 PM** rather than **07:00–19:00**, matching the calendar, the check-in card and everywhere else a time appears.
+  - Every shift time is the **clinic's** time. Read from another time zone, the rota and **My Shifts** could previously disagree with each other by an hour, and neither was necessarily the clinic's own clock. A rota says when someone has to be at the building, so that is the time it shows.
+  - An overnight shift now says **(next day)**, instead of appearing to end before it began.
+  - **Today** on the rota, and the date a new shift opens on, are the clinic's today — they used to be the reader's.
+
+  ## Your rota on the calendar
+
+  Filter the calendar to one or more people and their shifts appear alongside their appointments, so a provider's day reads in one place. Leave the filter off and the calendar is unchanged — an unfiltered month would otherwise fill with everyone's shifts. A shift that needs cover leads its day and is marked. See [Shifts](/practice/settings/shifts).
+
+  ## Setting a time is easier on a phone
+
+  The **Starts** and **Ends** fields on Events and Out of Office no longer overflow on a narrow screen, and picking a time is now hours, minutes and AM/PM — it used to open a 24-hour field inside a control that showed 12-hour everywhere else.
+</Update>
+
+<Update label="September 17, 2026" tags={["Pharmacy","Hospital","Solo & Team","Platform"]} description="Reports + Expenses">
+  ## Pick the exact period you want on every report — and export it
+
+  Reports, Expenses and the lab's Analytics screen each offered three fixed periods: 30 days, 90 days, a year. None of them could answer "how did August go", which is usually the question. All three now have the same date-range picker the pharmacy Sales dashboard uses — click one day for that day alone, or a start and an end day for any span you like.
+
+  - **Expenses** (Pharmacy): the whole page follows the period now. The tiles moved with the old dropdown but the category bars and the expense list did not — they were always the current calendar month, so picking "7 days" showed seven days of totals above a month of rows. Each card names its period out loud. See [Expenses](/pharmacy/money/expenses).
+  - **Expenses** also gains **Export**: the expense list as CSV, and the spend by category or day by day as Excel.
+  - **Analytics** (every edition): any window on any report, and the export covers exactly what you picked. See [Reports](/pharmacy/money/analytics).
+  - **Lab Analytics** (Diagnostics): a picker, and an **Export** where there was none — day by day, by test, by referrer, payment mix or the summary, as CSV or Excel. See [Lab analytics](/lims/business/lab-analytics).
+  - **Excel exports now read as reports.** Every workbook opens on an Overview sheet, and each sheet carries your clinic's name, the period and the currency at the top — so a tab forwarded to a bookkeeper still says what it is. Totals appear under the columns where a total means something, and not under percentages.
+  - A period ending today also used to lose today on the **Data export** screen, and choosing a single day there exported everything up to the present instead. Both fixed.
+
+  ## Forms Settings has a home of its own
+
+  The design new forms start from was a card at the bottom of **Settings → General**, which is not where anyone looked for it. It is now its own page, **Forms Settings**, under **Patient Experience** beside Sharable Documents and Signed Documents. Nothing about your forms changes. See [Branding](/platform/settings/branding).
+
+  ## Held carts open like every other panel
+
+  The **Held carts** sheet at the till was a narrow column; it now opens as the same floating panel the rest of the product uses, with the cart count staying in view while the list scrolls.
+</Update>
+
+<Update label="September 17, 2026" tags={["Pharmacy","Solo & Team","Hospital"]} description="Inventory + Sales">
+  ## Expiry dates when you add stock with a product, and a Sales picker that shows the day you pick
+
+  Stock added together with a new product could not be given an expiry date, so it never showed up in expiry alerts or oldest-first picking. It can now, from both the **Add item** sheet and the **Import** file. See [Import and export your catalogue](/pharmacy/inventory/import-export) and [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+
+  - **Add item**: next to **Opening stock (optional)** and **Into location** you now enter an **Expiry date** and a **Lot / batch number (optional)**. An item tracked by lot / expiry will not save stock without the date.
+  - **Import**: add the optional `opening_stock`, `stock_location`, `expiry_date` and `lot_number` columns to receive stock as you import. Dates that could be read two ways (03/04/2027) are refused rather than guessed, and importing the same file twice never receives its stock twice.
+  - **Locations**: a location you add now appears in the list straight away.
+  - **Receive stock — new voucher**: line fields use smaller type, and **Cost price** and **Sale price** show a seven-figure amount in full on a desktop.
+  - **Inventory** fits the screen with one scroll area instead of two.
+  - **Sales**: pick a single day or any custom range, and every tile, chart and table — **Recent Sales**, **Products** and **Export** included — covers exactly that period. A single day used to show no sales at all, and a range always dropped the sales made on its last day, so a period ending today never counted today. See [Sales](/pharmacy/money/sales).
+  - **Executive → Reports** (**Top products**, **Sales Report**, **Customer Report** and **Payment Methods**) counts that same full period, so it agrees with the Sales page and the workbook you export from either.
+  - The **Debtors** panel now opens like the rest of the product's side panels.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="Team plan and above">
+  ## Plan your staff rota inside ClinikEHR
+
+  Who was working when lived in a spreadsheet or a group chat, and bookings had no idea. **Settings → Team → Shifts** is now a real rota. See [Shifts](/practice/settings/shifts) and, for hospitals, [Shifts](/hospital/settings/shifts).
+
+  - Build the week or month by person or by department, with reusable shift types (overnight included) and repeating patterns.
+  - Swap and cover requests: a colleague accepts, a manager approves, and only then does the shift change hands.
+  - Coverage rules flag a window that is short-staffed, and a person booked onto two overlapping shifts.
+  - A shift on a day with no regular hours opens that time for booking; Out of Office still wins.
+  - Shifts show on the provider calendar and in **My Schedule**, and a shift caught by Out of Office is marked **Needs cover**.
+  - Owners and managers manage the rota; anyone else needs the new **Shifts** permission. Everyone sees their own shifts.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Check-in + Calendar">
+  ## Checking a patient in now tells the right clinician right away
+
+  Nothing used to say a patient had arrived — the front desk knew, and the clinician found out when they next looked. Checking someone in now sends an in-app notice and an email to the appointment's provider, the patient's primary provider, and anyone covering either of them right now — with no patient name or reason in the message, just an arrival time and a link to the check-in board. See [Check a client in and out](/practice/work/check-in) and [Work the front desk board](/hospital/front-desk/overview).
+
+  - On for everyone by default — controlled by your workspace's **Patient** notification category and each person's own **Product & account emails** switch (see [Choose which emails you get](/platform/account/notifications)).
+  - Still runs during an Out of Office block, same as every other check-in automation.
+
+  ## A connected calendar's all-day "Busy" can now block your bookings
+
+  A timed busy entry on a connected Google or Outlook calendar already blocked new bookings; a full-day "Busy" entry never did. Each connected calendar now has its own **All-day busy entries block my bookings** switch (off by default) under **Choose calendars**, so a day you've marked out on your own calendar can hold your diary here too, without changing anything for a calendar you'd rather just see. See [Calendar integrations](/practice/settings/calendar-integrations).
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="Out of Office">
+  ## Choose when a form or document goes out while you're away
+
+  During Out of Office, sending a form, document or signature request by hand went out straight away, and intake documents sent automatically at booking were never held.
+
+  - Sending a form, a document or a signature request, or resending one, now asks **Send when you're back** (already selected) or **Send now**. **Send intakes** asks once for everything you picked — see [Out of Office](/practice/work/out-of-office).
+  - Held sends go out automatically when your out-of-office time ends, within sending hours, with the subject and message you wrote.
+  - Intake documents sent automatically when a client books are held the same way.
+  - Public forms and web inquiry forms show a notice with the day you're back, or say they're closed if you chose to close online forms — see [Form settings](/practice/forms/form-settings).
+</Update>
+
+<Update label="September 17, 2026" tags={["Hospital"]} description="Departments">
+  ## Departments now show their sub-units and rates without an extra click, and a delete never silently takes records with it
+
+  **Settings → Departments** had the same hidden-children problem as Ward Management: sub-units and consultation rates stayed out of view until you were about to add another one. They're now visible as soon as you expand a department or sub-unit's row, each with a live count ("3 sub-units · 7 rates").
+
+  - Deleting a department, sub-unit or rate now asks for confirmation and names what would go with it. A department with staff assigned or a patient record pointing at it, or a rate already used in a patient payment, is refused rather than silently orphaning that reference.
+  - See [Departments](/hospital/settings/departments).
+</Update>
+
+<Update label="September 17, 2026" tags={["Hospital"]} description="Ward Management">
+  ## Wards now show their sub-wards and beds without an extra click, and every level can be edited
+
+  **Settings → Ward Management** used to hide a ward's sub-wards until you chose **Add Sub-ward** from its menu, and a sub-ward's bed spaces the same way — so a clinic with wards already set up saw nothing under them until it looked like it was about to add another one. Sub-wards and bed spaces are now visible as soon as you expand a ward or sub-ward's row, each showing a live count ("3 sub-wards · 18 beds · 5 occupied").
+
+  - **Edit** now works on a sub-ward and a bed space, not only a ward — including a sub-ward's **Location** and a bed space's **Number**, which had nowhere to be set before.
+  - Deleting a ward, sub-ward or bed space now asks for confirmation and names what would go with it; a bed space that's occupied or has an active admission can't be deleted until the patient is discharged.
+  - See [Ward management](/hospital/settings/wards).
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Calendar">
+  ## Events and tasks keep their time, reach the people you assign, and Out of Office stops bookings
+
+  Events and tasks created from the calendar could show at the wrong hour or on the wrong day, **All staff** assigned nobody, and nobody was told. Events and tasks are rebuilt, and **Out of Office** is new.
+
+  - Events and tasks are saved in your clinic's time zone, and an all-day event stays on its day wherever it is viewed. Items you created before this update show exactly as they did — see [Appointments](/practice/work/appointments).
+  - Assign an event or task to one person, several people or **All staff**. Each person gets a notice in ClinikEHR and an email with a calendar invite, and each gets their own copy of a task.
+  - Events and tasks can repeat, and can send a reminder before they start or fall due. A task has its own due date, with or without a time.
+  - The new **Out of Office** tab blocks a person, a room or piece of equipment, all staff or the whole clinic. Clients cannot book in that time on your booking page or in the client portal, and they see those days as unavailable — see [Out of Office](/practice/work/out-of-office).
+  - Before you save, see how many appointments and classes fall in the time. You choose whether to cancel them and whether clients are emailed.
+  - While you are away, automated reminders and form sends wait and go out after you're back, within sending hours. Client messages get an away reply, or can be paused. Check-ins still work after you confirm — see [Reminders during Out of Office](/platform/settings/notifications) and [Check-in](/practice/work/check-in).
+  - An Out of Office appears on the calendar, and on a connected Google or Outlook calendar as busy. An out-of-office entry in your connected calendar blocks bookings in ClinikEHR too — see [Calendar integrations](/practice/settings/calendar-integrations).
+  - AI agents can list your calendar and create events, tasks and Out of Office. Cancelling appointments through an agent always needs a second confirmation — see [Agent tools](/platform/ai/agent-tools).
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="Owner or manager">
+  ## Your Patient ID prefix now saves
+
+  Setting a **Patient ID prefix** in **Settings → General** showed "updated successfully" but was never stored, so the field was empty when you came back and new patients kept the prefix taken from your name. It now saves, and new patients get IDs with your prefix — see [General settings](/hospital/settings/general).
+
+  - Existing patients keep their current IDs, and numbering carries on from where it is.
+  - Saving a form's design as your clinic default for new forms was affected the same way, and now saves too.
+  - If your prefix ever fails to save, the screen now says so instead of confirming it.
+  - Managers can now change the **Patient ID prefix** too, with **Save patient ID prefix**; the rest of the card stays with the owner.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="ClinikForms">
+  ## See when each sent item is due, and find clients by name reliably
+
+  A signature request's **Complete by** date never appeared on the client's chart, and searching for a client while booking could say "No patients found" for someone who exists.
+
+  - **Sent & Shared** on a client's chart, and an appointment's forms checklist, now show each item's **Due** date, **Overdue** once it has passed, or **Link expires** for a consent document — see [Documents](/practice/clinical/documents).
+  - Searching for a client in the calendar finds names typed with a double space, and a search that could not run now says so with **Try again** instead of showing no results.
+  - Sending documents to clients follows your plan everywhere, as the Help Center describes: Starter and above to send, Essential and above for scored outcome measures.
+  - The add and edit buttons on a client's profile panel are now named for screen readers and easier to tap.
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Documents and client portal">
+  ## Signed documents name who signed, and patient uploads are virus-checked
+
+  A parent or guardian signing for a client used to be recorded under the client's name, and a patient reopening a link they had already signed was told it had expired. Both are fixed, and files patients send through the portal are now checked before you can open them.
+
+  - **Signed by** on a signed document is now the name the signer typed, with **Sent to** beside it when they differ — see [Send a document for signature](/practice/clinical/documents).
+  - Reopening a signing link now says what happened: already signed, declined, withdrawn by the clinic, or expired — see [Documents to sign](/portal/patients/documents#links-that-no-longer-work).
+  - A blank or dot-sized signature is no longer accepted; the signer is asked to sign again.
+  - Files a patient uploads from the portal appear in their record once they pass a virus check, and the "Client uploaded a document" alert arrives then. A file that fails the check never reaches you — see [Send a document to your clinic](/portal/patients/documents#send-a-document-to-your-clinic).
+</Update>
+
+<Update label="September 17, 2026" tags={["Solo & Team","Hospital"]} description="Care team">
+  ## My Patients lists every client you're assigned to, and the Security tab stays open while you work
+
+  A client assigned to someone under **Assigned staff** never appeared on that person's **My Patients** list, and every change on a client's **Security** tab closed the edit sheet. Both are fixed.
+
+  - **My Patients** now lists clients you're assigned to on the **Security** tab as well as those you hold a care team role on. A client without a role shows **Assigned**, and an assignment with an end date leaves the list once it ends — see [My Patients](/practice/work/client-security#my-patients).
+  - Covering for a colleague now lists every client of theirs you can open, not only the ones they hold a role on.
+  - Saving assigned staff, restricting a client or changing any other Security setting keeps the edit sheet open on the **Security** tab, and your unsaved changes on other tabs are kept.
+</Update>
+
+<Update label="September 16, 2026" tags={["Solo & Team","Hospital"]} description="ClinikForms">
+  ## Appointment defaults no longer disappear, and both send screens offer the same documents
+
+  A default whose form or document stopped being sendable used to vanish from **Sharable Documents** and was quietly dropped the next time anyone saved. It now stays on the card, with the reason.
+
+  - **Sharable Documents** lists these under **No longer available**. Remove one on purpose, or publish the form again to bring it back — see [Sharable documents](/practice/settings/sharable-docs#when-a-default-is-no-longer-available).
+  - A document limited to a service that has since been deleted is no longer saved as going with every service. **Applies to** names the missing service and lets you remove it.
+  - **Send intakes** on a client now offers the same forms and signable documents as **Sharable Documents**: published forms that go to a patient or by private link, and signable documents that are ready to send. Nothing is listed that would be refused after you select **Send documents** — see [Documents](/practice/clinical/documents).
+  - **Complete by** now starts from tomorrow on your own calendar, rather than being a day off in the evening.
+</Update>
+
+<Update label="September 16, 2026" tags={["Solo & Team","Hospital"]} description="Owner or manager">
+  ## Set your own opening hours, and how sensitive the access alerts are
+
+  Two settings that used to be fixed for every clinic are now yours to set. Nothing changes until you change them — every clinic keeps the same behaviour it has today.
+
+  - **Settings → General → Business hours** — set which days you are open and the start and end time for each. The "opened outside business hours" alert now compares against your real hours instead of a standard week.
+  - **Settings → Security → Access alerts** — on the Essential plan and up, adjust how many secured records opened, and how quickly, is worth an alert; how often emergency access can be used before it is flagged; how many privacy requests a client can send from the portal before being asked to wait; and which categories of document stay hidden by default when a family member manages a client's portal access.
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 15, 2026" tags={["Platform"]} description="ClinikForms">
+  ## Weekly response exports now tell you they're ready
+
+  If you set a form to export its responses every week, the "your export is ready" notice now reaches you. Before, the export was made but its notice never appeared.
+</Update>
+
+<Update label="September 15, 2026" tags={["Solo & Team","Hospital","Billing"]} description="Essential plan and up">
+  ## Disclosure accounting now includes emailed documents and payment notices
+
+  A client's **Disclosure accounting** on the **Security** tab now also lists signed documents and payment notices emailed to them, with the date and what was sent. Emails that were never actually delivered are not counted.
+
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 15, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and up">
+  ## Patients can ask for privacy and see who has looked at their record
+
+  Clients now have their own privacy controls in the client portal, and your team decides on their requests from the **Security** tab.
+
+  - In the portal, a client can **ask the clinic to restrict their record**. The owner or a manager approves or declines it, and the client sees the answer.
+  - A client can see **who has looked at their record** as a role and a date, for example "A nurse viewed your record on 3 Sep". Staff names are never shown.
+  - **Proxy limits** keep chosen categories of sensitive documents out of view when a family member manages a client's portal access.
+  - Open requests appear on the client's **Security** tab and in a queue under **Audit Log**.
+  - See [Privacy and security in the portal](/portal/patients/privacy-and-security).
+</Update>
+
+<Update label="September 15, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and up">
+  ## See who has looked at a client's record, and what left your clinic
+
+  Every client now carries an accountability trail on their **Security** tab, and the clinic gets a review queue under **Audit Log**.
+
+  - **Access log** shows every time the client's record was opened, downloaded or printed, for the owner and the client's primary provider.
+  - **Disclosure accounting** lists reports exported or printed and signed documents shared outside your clinic, with a CSV download.
+  - **Unusual access alerts** tell the owner when a team member opens many secured records quickly, opens one outside business hours, or uses emergency access repeatedly.
+  - **Quarterly access review** reminds the owner each quarter to confirm every restricted client's assigned staff.
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 15, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and up">
+  ## Sensitive notes and documents now stay protected everywhere they're listed
+
+  A note or document marked sensitive now shows as **Sensitive note** or **Sensitive document**, never its real title or content, on every list it appears in.
+
+  - The Notes module, the client **Documents** tab, the appointment checklist and the Records queue all respect sensitivity.
+  - Hospital and Enterprise clinics now have **My Patients** in the sidebar.
+  - Assign a team member to a department from **Settings → Staff**, for department-based client access.
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and up">
+  ## Extra protection for a client's most sensitive information
+
+  Beyond restricting a whole client record, you can now protect individual notes and mark a client VIP, with the owner always in the loop.
+
+  - **Mark a note sensitive** (behavioural health, substance use, reproductive health, HIV, or other). Only the author, that client's care team and the clinic owner can open it, even on a client who isn't otherwise restricted.
+  - **VIP / confidential clients** are restricted automatically, and the owner is told every time emergency access is used on one.
+  - **Restrict a client to a department**, instead of or as well as naming people.
+  - **Give a care team role an end date** for a locum or a time-limited referral. Two providers can now be primary for the same client one after the other without clashing.
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and up">
+  ## Know who's on a client's care team, and hand it off when you need to
+
+  Assigned staff now carry a role — Primary provider, Specialist, Care coordinator, Nurse or Billing — shown on the client's **Security** tab, with exactly one primary provider per client.
+
+  - A new **My Patients** page lists everyone assigned to you, with their next visit, open tasks, overdue forms and recent results.
+  - **Covering for a colleague?** Hand over their whole panel for a date range. It ends on its own, or can be ended early.
+  - **Transferring a client to another provider** sends a request with a note for context, and nothing changes until they accept it.
+  - See [Restrict a client to assigned staff](/practice/work/client-security).
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital","Billing"]} description="Booking and payments">
+  ## A repeat-visit booking with a deposit now confirms after the deposit is applied
+
+  - Booking a repeat visit schedule under your deposit policy no longer emails the confirmation before the deposit is credited — it now shows what was actually due and paid, the same fix already shipped for a single visit.
+
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="Notifications">
+  ## A few more notices dropped a name or a quoted reason
+
+  - Reminder emails to patients no longer name the form or document in the subject line — only in the message once it's opened.
+  - A cancelled or rescheduled online booking no longer names the client or quotes their typed reason in your team's notice; open the appointment to see it.
+  - A signature request that expired unsigned now notifies the person who sent it, not the whole team.
+
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital"]} description="Every plan">
+  ## Emergency access for secured clients, and a full access report
+
+  A secured client's record can now be opened by any team member who needs it to provide care right now, even if they are not assigned. Open the **Secured patient** entry, select **Request emergency access**, say why, and choose how long (1, 4, 12 or 24 hours). The record opens immediately, and the clinic owner and the client's assigned staff are told at once.
+
+  - Asking again while access is still open extends it instead of starting a second one.
+  - The owner and managers can end anyone's emergency access early from the client's **Security** tab.
+  - A new **Access report** on the Security tab shows who is currently assigned, every use of emergency access with the reason and how long, and recent refused access attempts.
+  - A clinic-wide **Emergency access** report under **Audit Log** lists every grant in a date range, a page at a time.
+  - See [Emergency access](/practice/work/client-security#emergency-access).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="Every plan">
+  ## Restrict a client to the staff looking after them
+
+  Some clients should only be seen by the people caring for them. You can now turn on **Restrict to assigned staff** for any client or patient: the clinic owner and the team members you assign see them as before, and everyone else sees **Secured patient** and a permanent number instead — on every screen, download, export, email and AI tool.
+
+  - **Choose who can see a client** on the new **Security** tab. Only the owner or a manager can change it, and every change is recorded in the audit log. [Restrict a client to assigned staff](/practice/work/client-security)
+  - **The front desk keeps working.** Appointments, check-ins, invoices, payments, sales and memberships still show the time, service, status and amounts, with the secured label in place of the client.
+  - **Clinical records stay closed.** Notes, results, prescriptions, imaging, ward charts, forms, documents, signature requests, messages, files and recordings of a restricted client cannot be opened, listed, searched or written to by someone who is not allowed to see them — they get "This record could not be found, or you do not have access to it."
+  - **Booking asks first.** Booking a restricted client with a provider who is not assigned asks you to give that provider access. When the client books online or in their portal, the provider they chose is added for them.
+  - **Your inbox names no one.** The clinic's copy of tomorrow's appointment reminder and payment notices now say when, what and how much — never the client's name — for every client.
+  - **The audit log, reports and AI agents follow the same rule**, and managers see a restricted client's name only when they are assigned.
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform","Solo & Team"]} description="ClinikForms">
+  ## Quieter emails, clearer dates, and results that match your filters
+
+  - The daily "Still outstanding" email gives counts only, and form invitations no longer name the form in the subject line.
+  - Patients see the due date and when their link expires as two separate lines; the Invites tab says when a link closes early.
+  - You get a notification when a patient finishes a form you sent.
+  - Sharable Documents won't accept a default that can't be sent, and the audit log records why a booking went out without one.
+  - Prescreening and quiz results follow your filters; the review queue and waiting list page past 100; the pass mark is drawn on the chart; the Responses tab shows when a form reaches its plan's response limit.
+  - The mobile menu is available while editing a form. See [Read responses](/practice/forms/read-responses).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="ClinikForms">
+  ## Submitted answers stay exactly as they were sent
+
+  A response is a clinical record, so nobody on your team can change or remove what a patient submitted — only the patient's own edit, where you allow it. A few rough edges on the public form are fixed at the same time.
+
+  - A patient whose answer needed correcting can fix it and send again on the same invite link, instead of being told the form could not be found.
+  - Sending the same answers twice no longer fails; the second copy is kept and set aside for review.
+  - **Remind** sends a fresh link, and the one the patient already has keeps working. See [Send a form](/practice/forms/send-a-form).
+  - On a timed quiz sent as an invite, opening the link again does not restart the clock. See [Build a form](/practice/forms/build-a-form).
+  - A file that is not really the photo or PDF it claims to be is refused when it is uploaded.
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform","Solo & Team","Hospital"]} description="eSignatures">
+  ## Signed documents are sealed only when everyone has really signed
+
+  - A document is sealed only once every signer has actually signed, and a sealed document can no longer be changed.
+  - Only people with **Export form responses** can download a signed copy or certificate, and every download is recorded.
+  - The staff member confirming an in-person signer needs **Send documents for signature**, and two-factor sign-in where your practice requires it.
+  - A missing clinician licence is now noted on the certificate, and your practice now receives its "document signed" and "fully signed" notices. See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="ClinikForms">
+  ## Form answers only go where your practice says they can
+
+  Automations could email a form's answers to any address. Now:
+
+  - Answers leave your practice's inbox only when someone allowed to manage forms confirms it, and the check runs again each time the rule fires. See [Automation](/practice/forms/automation).
+  - Only people who can manage forms can add or change a rule.
+  - Pharmacy and Diagnostics Business plans can now send webhooks.
+  - New forms, including ones made from templates, start from your saved clinic design.
+  - A document titled like "chart audit" can no longer be scored as a clinical measure, and a measure that couldn't be added to the chart says so when you sign the note.
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform","Pharmacy","Billing"]} description="Forms">
+  ## Plan limits that match what you can actually do
+
+  - Closing a form now frees its place in the Free plan's 15 published forms; reopening it, or making a published form public, needs a free place. See [Publish a form](/practice/forms/publish-a-form).
+  - The document seal tab says when ordering has not opened yet, instead of offering a payment. See [Document seal](/practice/forms/document-seal).
+  - Pharmacy and Diagnostics plans no longer show a texted signing-code allowance they do not include, and owners are told at 80% and 100% of their texted codes. See [Storage and envelope packs](/practice/forms/usage-and-packs).
+  - A refunded pack comes off your allowance straight away, and the Buy more dialog says a pack adds nothing after a move to a plan without that allowance.
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital"]} description="Appointment emails">
+  ## Cancelling or rescheduling no longer sends a booking confirmation
+
+  - Cancelling or rescheduling a visit no longer also sends the client a booking confirmation email.
+  - A deposit refunded automatically after the fact no longer tells your team that the client cancelled.
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital","Billing"]} description="Booking and payments">
+  ## Online bookings show the right price, and the portal follows your booking policy
+
+  - Booking confirmation emails show the price after a promo code, gift card or package session, and what was already paid.
+  - Clients booking from the portal see your booking policy, agree to it and pay any deposit before the visit is booked. See [Book and manage appointments](/portal/patients/appointments).
+  - A payment taken at the desk is never refunded to a client's card when they cancel online.
+  - Cancelling a class gives your team one notice for the session. Classes no longer offer a provider choice or a repeat booking. See [Group classes](/practice/work/group-classes).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="Tasks">
+  ## Task reminders keep the details inside ClinikEHR
+
+  The email sent when a task fell due repeated what the task said — sometimes a note about a patient. It now says only that a task is due and when.
+
+  - Select **Open task** in the email to see it on the calendar after signing in.
+  - In clinics that require two-factor sign-in, tasks now need it too, like patient records.
+  - See [Appointments](/practice/work/appointments).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="AI agents">
+  ## Agent templates now hand work to your team without naming patients
+
+  Templates that alert your team now say why they need a person, and put the follow-up on a task linked to the patient's record, so nothing is lost when the patient isn't in your CRM.
+
+  - Alerts are worded from a reason and never carry a name, number or health detail. See [How templates tell your team](/platform/ai/agent-templates#how-templates-tell-your-team).
+  - Tasks about a patient appear on the calendar, linked to their record.
+  - Agents installed earlier keep their instructions; install the template again to pick up the new wording.
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital"]} description="Essential plan and above">
+  ## Run group classes with a waitlist
+
+  Some services are taught to a group, but a booking could only hold one client per time. Now any service can be a class:
+
+  - Set the number of places, then schedule one session or a weekly timetable under **Appointments → Classes**.
+  - Clients book a place on your booking page or in their portal; a full class takes a waitlist, and when someone cancels the next person is offered the place and it is held for them.
+  - Mark attendance, move people and cancel a session from the roster — cancelling refunds deposits and online payments.
+  - See [Group classes](/practice/work/group-classes).
+</Update>
+
+<Update label="September 14, 2026" tags={["Platform"]} description="Notifications">
+  ## Notices meant for you are now only yours
+
+  A notice addressed to one person — a form shared with you, a mention, responses assigned to you — could be seen and cleared by everyone on the team. It now appears only in that person's bell, owners included.
+
+  - The email about a new client message no longer names the client or quotes their words. See [Who sees which notice](/platform/settings/notifications#who-sees-which-notice).
+  - AI agents alert your team with a reason instead of free text, and refuse notes that identify anyone.
+  - The welcome notice for a new workspace now arrives.
+</Update>
+
+<Update label="September 14, 2026" tags={["Solo & Team","Hospital","Billing"]} description="Packages, gift cards and promo codes">
+  ## Clients can use a promo code, a gift card or a package session when they book online
+
+  Packages, gift cards and promo codes could only be used at the desk. Now clients can use them while they book:
+
+  - The booking page and the portal's **Book an appointment** sheet have **Promo code** and **Gift card** fields with **Apply**, and a client who confirmed their email sees **Use a session from your package**. The amount to pay shows what is left after them. See [Used when a client books online](/practice/money/packages-and-gift-cards#used-when-a-client-books-online) and [Promo codes, gift cards and package sessions](/practice/work/booking-page#promo-codes-gift-cards-and-package-sessions).
+  - A deposit is worked out on the price after a package session and a promo code; a gift card pays toward the visit and the card pays what is still due.
+  - A visit covered in full shows **Package session** or **Gift card** as its payment method, and its invoice shows the covered line, the promo code and the gift card payment.
+  - Cancel before the visit and the promo code can be used again, the gift card amount goes back onto the gift card, and the session goes back to the package.
+  - Patients book with them in the portal too. See [Book and manage appointments](/portal/patients/appointments).
+</Update>
+
+<Update label="September 13, 2026" tags={["Hospital"]} description="Inpatient wards">
+  ## The attending clinician on a ward chart saves
+
+  Choosing or clearing the attending clinician for an admitted patient on their ward chart could end in **Not changed**, whoever tried. It now saves and shows **Attending recorded** or **Attending cleared**. A patient who has been discharged still keeps the attending they had. See [Admissions](/hospital/inpatient/admissions).
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Hospital"]} description="Forms and signatures">
+  ## Safer documents, reminders you choose per default, and clearer screening follow-up
+
+  - Documents patients sign now show only ordinary formatting — nothing else in a template can run on the signing page.
+  - Each form or signature request on **Sharable Documents** can have **Standard reminders**, **More reminders** or **No reminders**. See [Sharable Documents](/practice/settings/sharable-docs).
+  - A screening result can **Notify a team**, and **Summary** shows **Which rule set the outcome**. Each response shows whether the person joined the waiting list, agreed to be contacted or booked. See [Read responses](/practice/forms/read-responses).
+  - Bookings paid online now link back to the screening result that led to them.
+  - Texted signing codes follow each plan's monthly allowance (50 on Essential, 500 on Team), shown on **Forms**.
+  - Free plans see Signable documents on the card with an upgrade panel, and the form editor says when a Free form could collect more than one file.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Solo & Team","Hospital"]} description="eSignatures">
+  ## Start a consent from one another clinic has already prepared — or share yours
+
+  Preparing a consent or agreement for signature meant starting from your own file every time, and the gallery's **Signable documents** filter never had anything in it. Now:
+
+  - **Start from the registry** on **Send a document for signature** lists documents other clinics have shared, with their pages, recipients and fields to look over first. **Use this document** makes your own copy to change and send.
+  - **Publish to registry** in the signing builder's **Actions** shares one of yours (Team and Enterprise). A ClinikEHR reviewer reads every page first, and a document that names your clinic or looks like it carries a person's details is refused with the page named.
+  - A document you started from the gallery tells you when a newer version is shared, and the author's credit is printed on the certificate of completion.
+  - A document still being checked for viruses now opens by itself once the check finishes, instead of waiting for you to upload it again.
+
+  See [Share a document for signature with other clinics](/practice/forms/share-a-document-for-signature).
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms & eSignatures">
+  ## Send any document for signature from a client's chart — with everyone who signs it named in one place
+
+  Documents that needed a witness or a clinician's signature could not be sent from a client's chart, and a signed form on the chart could not be opened from there. Now:
+
+  - **Who signs each part** names a staff member, a named person or the appointment's provider for every part the client doesn't sign. See [Documents](/practice/clinical/documents).
+  - Documents for signature can go **Portal only — no email**, so a client without an email address can sign from their portal to-do list.
+  - Signature requests sent from the chart now appear in the client's **Sent & Shared** list and in their portal.
+  - On **Sent & Shared**, an unanswered form offers **Complete in person** on this device, and an answered one offers **Open the response**.
+  - Opening a form in person from an appointment's list now keeps it on that appointment instead of creating a second copy.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Solo & Team","Hospital"]} description="eSignatures">
+  ## Signers can attach files and photos, and your clinic stamp goes on the document
+
+  - Ask a signer for a file or a photo — an insurance card, a referral letter — right on the document. Every file is checked for safety before it is attached.
+  - Owners and managers on Essential and above can add a clinic stamp, placed where you choose on the document.
+  - Files from signers are on the envelope page, where you can open or download them.
+  - Signing in person on this device now works for every owner and manager.
+
+  See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform"]} description="Starter plan and above">
+  ## Your forms in your fonts, with light and dark, header images and a place in search
+
+  Forms can now use a heading and body font (including two faces made for long forms), a text size, light or dark mode, secondary and accent colours, and an uploaded header image or pattern. Logos and header images are uploaded rather than pasted. Public forms that are still taking responses can appear in search with your description and a branded preview card; forms shared by link never do. See [Build a form](/practice/forms/build-a-form).
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform"]} description="Forms">
+  ## Forms show their real state, and screening forms follow up
+
+  - The Forms list shows why a form isn't collecting — at plan limit, opens soon, paused — and asks before closing a scheduled form. See [Publish a form](/practice/forms/publish-a-form).
+  - A full form can stay on its page saying it's full. See [Form settings](/practice/forms/form-settings).
+  - Split a form at a question, fold sections away, drag whole sections; reorder grid rows and columns and use a grid for ranking. See [Build a form](/practice/forms/build-a-form).
+  - Screening forms: a waiting list, CRM follow-up only when the person agrees, outcomes over time, and bookings linked to their result. See [Read responses](/practice/forms/read-responses).
+  - Quizzes: best, latest or average attempt, a score chart, pass rate over time, average time and attempts.
+  - Completion rate is now measured from visits; weekly exports wait in the app, nothing emailed; people can change answers on forms with files or signatures.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Hospital","Solo & Team"]} description="Forms & eSignatures">
+  ## Send the right things once, sign at the desk, and download what you signed
+
+  - The send sheet marks anything already sent and still open, and patients with no email get only the ways that work. See [Documents](/practice/clinical/documents).
+  - A document for signature can be signed in person on this device, from the send sheet or with **Sign in person** at check-in.
+  - Choose **Don't send reminders** for any item you send.
+  - A role on a signable appointment document can be a named person outside the clinic, and a full form shows **At response limit**.
+  - You are told once when a signable document is skipped at booking because a role has nobody to fill it.
+  - Patients can **Download** documents they signed from **To do → Completed**.
+  - **File it** on the records desk now opens the patient's **Documents & forms** tab.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform"]} description="Forms and signatures">
+  ## Forms ask who is answering, show their deadline, and signatures can be protected by a code
+
+  - A form set to collect email addresses or take one response per person now asks for an address on its link, and a second response from the same address is refused. See [Form settings](/practice/forms/form-settings).
+  - A form's deadline is shown on the form, in invitations and in every reminder; invitations stop when a scheduled form closes.
+  - Folders can be created, renamed and deleted from the Forms home.
+  - A document can be sent with an access code you give the signer, or with a code texted to their phone (Essential and above, with a text-message number set up). See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+  - Form events can start an AI agent.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Form packs, saved response reports, and clearer plan limits
+
+  Send a whole set of forms in one go, keep the response views you use most, and see exactly where your plan stops.
+
+  - **Packs**: save a set of forms with their timing, add a pack to your default documents, or add a pack when sending to a client. See [Usage and packs](/practice/forms/usage-and-packs).
+  - **Saved reports** on Starter and above: save the filters and view on the Responses tab and reopen them in one click. See [Read responses](/practice/forms/read-responses).
+  - **Publish** now shows how many published forms your plan allows.
+  - Template updates now list which questions changed.
+  - Scored measures can be used as note templates, and a finished note records the score.
+  - Certificates of completion and note PDFs credit the template's author.
+  - People signing from a link complete a quick bot check.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform"]} description="Forms">
+  ## Closed forms can send visitors to your own page, and Book buttons open the right service
+
+  A closed form's link can now take people to a page you choose, and a screening form's **Book** button can open your booking page with the right service already chosen.
+
+  - **Or send visitors to this page instead** under **Settings → Confirmation** — see [Form settings](/practice/forms/form-settings).
+  - **Which service to open** on a screening form's **Offer them an appointment** step — see [Read responses](/practice/forms/read-responses).
+  - **Completion rate** on **Summary** now says "Not measured yet" instead of a figure that could not be right.
+  - **Send a reminder** on an appointment's forms checklist now works for documents out for signature, and is no longer offered on older documents that cannot receive one.
+  - Busy public forms no longer turn away visitors because other people opened them at the same time.
+</Update>
+
+<Update label="September 13, 2026" tags={["Platform","Solo & Team","Hospital"]} description="ClinikForms">
+  ## Signed documents is now part of eSignatures
+
+  Everything you sent for signature is in one list, and your links still work.
+
+  - Signature requests and documents sent from your templates sit together on **Forms → eSignatures**, each marked **Signature request** or **Document**, with the same statuses. See [Send a document for signature](/practice/clinical/documents).
+  - **Send a document for signature** lets you pick a prepared document or upload a new one. See [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+  - A template you have converted to a published form is now sent as that form, and you are told which one.
+  - On Records, owners and managers see how many documents still use the old signing links and which appointment defaults still send an old template. See [Records](/hospital/records/overview).
+  - The client chart's **Files** tab is now **Documents & forms**.
+  - The ClinikEHR template library is in the template gallery, scored measures included.
+  - Fixed: a document prepared for signature always showed "still being prepared" and could not have fields placed.
+</Update>
+
+<Update label="September 12, 2026" tags={["Solo & Team","Hospital"]} description="Client reminders">
+  ## Appointment reminders arrive when each client chose — from 30 minutes to 1 week before
+
+  A client's reminder timing and their **Cancellations** switch now do what they say. Reminders go once, at the chosen time, in your clinic's time zone.
+
+  - New timings: **30 minutes before** and **1 hour before**, alongside 24 hours, 2 days and 1 week. See [Add clients](/practice/get-started/add-clients).
+  - Switching **Cancellations** off means that client gets no cancellation email.
+  - Clients whose settings nobody changed keep getting a reminder 24 hours before, and cancellation emails.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms · Patient portal">
+  ## Reminders that respect a client's choice, and forms patients can fill in again
+
+  A client's **Incomplete documents** switch now decides whether they are reminded about unfinished forms and documents — and every client who never touched it keeps getting reminders.
+
+  - Switch **Incomplete documents** off on a client and they are no longer reminded; it starts on. See [Add clients](/practice/get-started/add-clients).
+  - A **Patients only** form that takes more than one answer stays on the patient's **Available forms** list and shows when they last filled it in. See [See what is waiting on you](/portal/patients/to-do).
+  - The **CUDOS** in your document library now has its published 18 questions and scores out of 72, and the **DES-II** uses its published wording. Earlier documents are unchanged. See [Scored measures](/practice/forms/scored-measures).
+  - On a plan without locations, a **Location** question no longer asks to share one.
+  - The template gallery can be filtered by kind, and **Browse templates** in Notes opens note templates. Forms made from a template that must be credited now show the credit. See [Forms](/practice/forms).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform"]} description="Forms">
+  ## Talk about a form with your team, and choose how you hear about responses
+
+  Building a form with colleagues meant discussing it somewhere else. Now the conversation sits on the form.
+
+  - **Comments** on the whole form or on one question, with mentions, **Resolve** and **Show resolved** — never seen by the people who fill it in. See [Build a form](/practice/forms/build-a-form).
+  - **Notify me about new responses**: **Every response**, a **Daily digest** email, or **None**, chosen per form.
+  - A **Question bank** button on the builder's rail opens your saved questions directly.
+  - The arrows on the **Measures** tab now show whether a change is better for that questionnaire — a rising SWLS score is green. See [Scored measures](/practice/forms/scored-measures).
+  - Scores on the **Measures** tab now need two-factor sign-in wherever your practice requires it, like the rest of the chart.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform"]} description="Forms — sharing needs the Team plan">
+  ## Save questions once, and add them to any form
+
+  Practices write the same blocks of questions into form after form. Now you can keep them and reuse them.
+
+  - Save questions from any form to your **Question bank**, then add them to another form in one step — see [Build a form](/practice/forms/build-a-form).
+  - Add question groups other clinics have shared from the **Community** tab; each is checked by a ClinikEHR reviewer.
+  - Share your own saved questions as a question group through the same review as a shared form — see [Forms](/practice/forms).
+  - Sharing a template you retired, or one that was sent back, now returns the same template to review instead of failing or creating a copy.
+</Update>
+
+<Update label="September 11, 2026" tags={["Solo & Team","Hospital"]} description="Notes">
+  ## Your own note templates are now forms — and notes written on them export as PDFs
+
+  Notes written on a note form can now be downloaded as a PDF from a client's record, with every answer in it. New note templates are built as note forms, which keep each note on the version it was written against.
+
+  - **Create a note form** and **Browse templates** now appear on Notes → Templates, on Custom Templates, and in the template picker when you have none — see [Note templates](/practice/clinical/note-templates).
+  - Custom templates stay available for writing notes but are now read-only, and **Convert to form** turns one into a draft note form — publish it to use it.
+  - **Export PDF** works on every note on a client's record.
+  - The Scored Measures export now includes the rule version, score value, subscales, screen result and the reason a response was not scored.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms · Patient portal">
+  ## One reminder instead of three, and forms your patients can open themselves
+
+  Someone with a form to fill in and a document to sign used to get a separate reminder for each, sometimes minutes apart. Now they get one email listing everything they still have to do.
+
+  - Automatic reminders for forms, documents and signature requests arrive as one email per person. Each item keeps its own timing — see [Send a form](/practice/forms/send-a-form).
+  - When reminders go out, your practice inbox gets one short summary of who was reminded, if **Document** notifications are on.
+  - A form set to **Patients only** now appears in your patients' portal under **Available forms**, so they can fill it in without being sent it — see [Form settings](/practice/forms/form-settings) and [See what is waiting on you](/portal/patients/to-do).
+</Update>
+
+<Update label="September 11, 2026" tags={["Solo & Team","Hospital"]} description="Forms and scored measures">
+  ## Clinical questionnaires now score the way their authors publish them — and a Location question asks the device
+
+  Seven questionnaires were scored with arithmetic that did not match the published instruments: a DASH could read over 100, a PEG was a sum rather than an average, and a DASS-21 was one total instead of three scores. They are now scored as published, and nothing already on a chart has changed.
+
+  - **DASH, CUDOS, DES-II, PEG, DASS-21, ASRS and SWLS** use their published scoring. Older scores keep the rule they were made under and are headed **Scored under the previous rule**, so two scales never share one line. See [Scored measures](/practice/forms/scored-measures).
+  - A **DASS-21** shows Depression, Anxiety and Stress as three charts, each out of 42. An **ASRS** shows a **Positive screen** or a negative one.
+  - A response that cannot be scored as the questionnaire is published is listed under **Recorded but not scored**, with the reason.
+  - A **Location** question now shows **Share my location** and **Don’t share**; nothing is asked until the respondent chooses, and there is no box to type a place into. An exact location is kept for 90 days, then only to within about 10 kilometres. See [Build a form](/practice/forms/build-a-form).
+</Update>
+
+<Update label="September 11, 2026" tags={["Pharmacy","Platform"]} description="Forms · Pharmacy and Diagnostics editions">
+  ## Forms for pharmacies and labs, signing statements by country, and a floating form button
+
+  Pharmacies and diagnostic labs can now build and send forms, and every clinic can choose the country its signing statement follows.
+
+  - **Forms** is in the Pharmacy and Diagnostics sidebars. Team members whose permissions you had already set keep every Forms permission, so nobody lost access. See [Forms](/practice/forms) and the staff pages for [pharmacies](/pharmacy/settings/staff) and [labs](/lims/settings/staff).
+  - **Settings → General** has a new **Country** field. It decides which electronic signature statement people agree to before signing, and the signing certificate now says which setting chose it. See [Send a form](/practice/forms/send-a-form).
+  - When you embed a form on your website you can choose a **Floating button** with its own position, text and colour. See [Form settings](/practice/forms/form-settings).
+  - If a paid plan's payment is overdue, Forms now says it is using Free plan limits, confirms nothing was deleted, and links straight to billing.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms and appointments">
+  ## Forms go out before or after the visit, and the desk can send from the appointment
+
+  A form set to go a number of hours before an appointment, or after it, now actually goes. From an appointment you can send someone what they need for that visit and mark it required.
+
+  - **A set time before the appointment** and **After the appointment** now send the form within about 15 minutes of that moment, once per appointment. See [Sharable documents](/practice/settings/sharable-docs).
+  - **Send to patient** on an appointment's **Forms & Documents** list and on the check-in sheet, with **Required before visit** for each item. See [Send from an appointment](/practice/clinical/documents#send-from-an-appointment).
+  - Forms can also go **In person, on this device** or as **Print a blank copy**.
+  - Searching for a patient when sending a form, or when linking an email to a client, finds them again.
+</Update>
+
+<Update label="September 11, 2026" tags={["Solo & Team","Hospital"]} description="Forms · template gallery">
+  ## Update a template you shared, without taking it out of the gallery
+
+  Sending a shared template to the gallery again used to go nowhere: the update could never be approved, so clinics kept the old version indefinitely. Now it is reviewed like any contribution.
+
+  - The version already in the gallery stays there while the update is checked, and **Your contributions** shows **Update in review**.
+  - If the update is sent back, the published version is unchanged and the reason appears under the template.
+  - Once approved, clinics that use the template get the new version, and forms already made from an earlier one are left alone. See [Forms](/practice/forms).
+</Update>
+
+<Update label="September 11, 2026" tags={["Solo & Team","Hospital"]} description="Forms">
+  ## Forms tell people what to fix before they move on
+
+  An answer in the wrong format — a membership number with letters in it, a date earlier than allowed — was only caught when somebody pressed Submit, sometimes several sections later. Forms now check each section as it is filled in.
+
+  - **Next** and **Submit** stay on the section until its answers meet your rules, show the message you wrote, and move straight to the first question that needs attention.
+  - New guide: [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature) — upload a document, choose who signs it, place the fields and send it.
+  - The [forms permissions table](/hospital/records/forms) now covers exporting responses, sending documents for signature and sharing templates with other clinics.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Signatures">
+  ## Signature requests can go out with every appointment
+
+  A consent that has to be signed before a visit no longer depends on someone remembering to send it.
+
+  - **Signable documents** on the Sharable Documents card: choose who signs each role — the patient, the appointment's provider or a named colleague — and the request goes out when the appointment is booked, once per appointment. See [Sharable documents](/practice/settings/sharable-docs).
+  - A newly uploaded document starts with a Patient signer, and you can add or change who signs before placing fields.
+  - Sending a signature request, or giving someone more time, now tells you how many people were emailed and who signs in the room.
+  - The signing certificate carries your clinic's logo.
+  - In the template gallery, scored questionnaires keep their scoring, and a template can suggest how long to collect for. See [Forms](/practice/forms).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team"]} description="Forms">
+  ## Quizzes from any form, forms on your own domain, and a design every new form starts from
+
+  Turning a form into a quiz depended on a setting that was only offered once the quiz already existed. Now any question can start one, and several other gaps are closed along the way.
+
+  - **Mark this question** in a question's menu turns the form into a quiz. See [Build a form](/practice/forms/build-a-form).
+  - **In person, on this device** now gives you **Open the form on this device**, with the details you already hold filled in. See [Send a form](/practice/forms/send-a-form).
+  - Share forms from your own domain. See [Custom domain](/platform/settings/custom-domain).
+  - Set the look new forms start from in **Settings → General → Forms design default**. See [Branding](/platform/settings/branding).
+  - The Free plan includes 2 automations per form. See [Automation](/practice/forms/automation).
+  - Your plan includes storage for files attached to forms, with a notice at 80% and when it is full. See [Form settings](/practice/forms/form-settings).
+  - Error messages are easier to read in both light and dark mode.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Forms that do the sums, fill themselves in, and work for everyone
+
+  Patients were retyping details the clinic already had, and staff had no way to fill in their own internal forms.
+
+  - **Calculation questions** work out a total or a BMI from other answers as the respondent types. See [Build a form](/practice/forms/build-a-form).
+  - **Details already on the patient's record are filled in** when you send a form to that patient, and they are asked to check them.
+  - **Staff only forms** are filled in by your team with **Fill in** on the Forms page. See [Publish a form](/practice/forms/publish-a-form).
+  - **Adjust mark** lets a reviewer change a quiz mark with a reason, and the original mark is always kept. See [Read and export responses](/practice/forms/read-responses).
+  - **Offer a copy of their answers** by email to respondents who ask for one. See [Form settings](/practice/forms/form-settings).
+  - **Layout** and **Header image** in **Design**, and your colour and logo on invitations and on a closed form's page.
+  - Shuffled quizzes keep one order per attempt, and a form now tells people exactly which questions still need an answer.
+  - When a form asks for an exact location, it now says the location is kept for 90 days and then removed.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Signatures and the patient portal">
+  ## Everything on a patient's to-do list opens from the portal, and a signature request can be given more time
+
+  Patients could see forms and signature requests in their portal to-do list but had to find the clinic's email to open them, and a signature request running late could only be voided and sent again.
+
+  - **Forms and signature requests open straight from To do** in the patient portal. See [See what is waiting on you](/portal/patients/to-do).
+  - **Extend** gives a signature request a new last day without new links. See [Give a signature request more time](/practice/forms/send-a-form#give-a-signature-request-more-time).
+  - Ask signers to finish by a date, and remember a document's signing window for next time.
+  - Signers can choose **Finish on another device**, and the signing page shows your clinic's name and logo. See [What the signer sees](/practice/forms/send-a-form#what-the-signer-sees).
+  - The electronic-signature statement names the relevant law, and the certificate records which version was agreed.
+  - **Send to patient** now includes single-signer documents, with a delivery method and a complete-by date for each item. See [Send an intake pack](/practice/clinical/documents#send-an-intake-pack-from-the-clients-chart).
+  - The Records signature chase shows when each patient last opened what they were sent. See [Records overview](/hospital/records/overview#signature-chase--remind-or-re-send).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Security and compliance">
+  ## Find a change in the audit log by what was touched
+
+  Answering "who changed our appointment documents?" meant reading the whole audit log. Now it is one filter.
+
+  - **All resources** narrows the audit log to one kind of record or screen, grouped by area, and the choice stays in the page address. See [The audit log](/platform/security/audit-log).
+  - **Saving your Sharable Documents is recorded** once per save that changes something. See [Sharable documents](/practice/settings/sharable-docs).
+  - **A document that cannot be found now says so** when you save the Sharable Documents card, instead of saying the action is not allowed.
+  - **An exact location shared on a form is kept for 90 days**, then removed automatically. See [Form settings](/practice/forms/form-settings).
+  - **Scored questionnaires are matched to the right instrument.** An AUDIT-C screen is no longer scored as the full AUDIT.
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Narrow down, compare and work through form responses — and share the results
+
+  Reading responses meant scrolling through everything and acting on one at a time. Now the answers you need are a filter away, and a whole set can be dealt with at once.
+
+  - **Filters for every view** — date range, how the response arrived, screening outcome and reviewer. They stay in the page address, so a link opens the same responses.
+  - **Compare groups** splits every chart by the answer to one question.
+  - **Where responses came from** shows countries and regions. Places with fewer than five responses are not listed.
+  - **Work on many responses at once**: flag them, assign a reviewer, move them to trash (nothing is deleted, and they can be restored), or export just the ones you ticked. Choose which columns you see.
+  - **One response at a time** now shows its history, a drawn signature, and **Previous** and **Next** through your filtered list. Each response has a short reference that stays the same whatever you filter.
+  - **Attachments open again** from an individual response.
+  - **Share results on a public page** — counts only, once at least five people have answered, with small counts hidden and nothing anybody typed.
+
+  See [Read and export responses](/practice/forms/read-responses).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Reuse questions, go back to an earlier draft, and share a form with your team
+
+  Building a form meant retyping questions you had already written, and one wrong delete could not be undone.
+
+  - **Import questions** copies questions from another of your forms, with their answer keys. Anything that only made sense in the other form is listed rather than silently dropped.
+  - **Version history** keeps earlier versions of a draft whenever questions are added, removed or reordered, shows what changed, and restores one. Your current draft is kept first, and respondents see nothing until you publish.
+  - **Share with your team** lets a colleague edit one form without changing their role, and **Shared with me** finds forms shared with you.
+  - **Print blank form** downloads the published form on your letterhead, to fill in by hand.
+  - **Starter templates from ClinikEHR** — a new patient intake and others — are on the Forms page.
+  - **Delete forever** lets the clinic owner remove an archived form that nobody has answered and nothing uses. Archived forms are never deleted automatically.
+  - **Duplicating a quiz, or a form with conditional questions, now copies its marking and its conditions correctly.**
+
+  See [Build a form](/practice/forms/build-a-form) and [Forms](/practice/forms).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## You are told when a form pauses itself
+
+  A form that receives an unusual burst of submissions stops collecting, so a flood of automated answers cannot bury real ones. Until now nobody was told — the first a practice heard of it was a patient saying the link had stopped working.
+
+  - **Your practice now gets a notification** naming the form that paused and how many submissions arrived, with a link straight to its settings. It cannot be switched off in notification preferences, because a form that has stopped collecting is not something to miss.
+  - **One burst, one notification.** However many submissions arrive at once, you are told once.
+  - **Recording where a response came from is on the Essential plan and above**, as the plan comparison has always said. On Free and Starter both location switches are off and say why, and no location is kept with responses.
+  - **A response somebody started and never sent no longer keeps an approximate location** when the form's **Record an approximate location** switch is off.
+
+  See [Form settings](/practice/forms/form-settings).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Appointments">
+  ## The front desk can finally see what an appointment is still waiting for
+
+  A clinic could mark a consent **Required before visit** in Sharable Documents, and then no screen anywhere showed it. The switch wrote a setting nobody could read, so the person at the desk — the one who could actually do something about it while the patient was standing there — had no idea anything was outstanding.
+
+  - **Every appointment now carries a Forms & Documents list**: what your defaults produced for it and where each one has got to — sent, opened, in progress, completed, declined — with anything **Required before visit** at the top.
+  - **The same list is on the check-in sheet.** Choose the appointment and you can chase, resend or cancel an item without leaving it.
+  - **Complete in person** opens a still-outstanding form on the desk's own screen, so the person can finish it there rather than being asked to go home and check their email.
+  - **A row that cannot be tracked says so.** Older document templates are not tied to the appointment they were sent with, so the list says "Not tracked" rather than pretending to know whether it came back.
+
+  See [Sharable documents](/practice/settings/sharable-docs).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Sharable documents">
+  ## Turn an old questionnaire into a form, without losing the old one
+
+  Questionnaires built in the older document system cannot be tracked against an appointment and cannot be answered comfortably on a phone. Rebuilding one by hand meant retyping every question.
+
+  - **Convert to form** on any Sharable Documents row builds a draft form from that template's questions. The template itself is untouched, and the default keeps sending exactly what it sent before.
+  - **Anything that could not be carried across is named** — a question type with no equivalent, a section too long to fit — so you can check it before publishing rather than after.
+  - **Use this form here** switches the default over once the form is published. Everything already signed stays exactly where it is.
+
+  See [Sharable documents](/practice/settings/sharable-docs).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Sending to a patient">
+  ## Send anything to a patient from wherever you already are
+
+  Sending used to depend on which screen you happened to be on. From the patients register you could only send one saved consent template — forms were not offered at all — and from the nursing station you could not send anything without leaving the ward board.
+
+  - **The patients register's row menu now reads Send to patient** and opens the same three-step sheet the client's own record uses: forms, signature requests and consent documents in one list, several at a time, in one email.
+  - **The nursing station's charting sheet can send too**, from its footer, so a consent no longer means walking away from the bedside.
+  - **Anything the patient already has open is marked**, so the same consent does not go out twice from two different screens.
+  - **The confirmation says what actually went.** An item that was skipped — no email on file, a form that has closed — is named with its reason instead of being counted as sent.
+
+  See [Send a form](/practice/forms/send-a-form) and [Patients](/hospital/front-desk/patients).
+</Update>
+
+<Update label="September 11, 2026" tags={["Hospital","Platform"]} description="Records">
+  ## Fixed: the records desk said "All clear" while forms were still outstanding
+
+  **Records → Signature chase** counted documents only. A clinic that had moved its consents to forms saw an empty queue and four zeroes while people had answered nothing — and a zero gets trusted.
+
+  - **The queue now counts forms and signature requests** as well as documents, and the tiles above it count all three.
+  - **Each row says what it is waiting on**, because a form is chased differently from a signature request.
+  - **An assistant asked to send a clinic's default documents now sends its default forms too.** They were being dropped silently, with nothing recorded to say so.
+
+  See [Records overview](/hospital/records/overview).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform"]} description="Patient portal">
+  ## Patients can see everything their clinic is waiting for, in one place
+
+  The portal only ever counted documents waiting for a signature. If a clinic had sent a form instead, nothing in the portal said so — the dashboard cheerfully read "0 documents need signature" to somebody with three forms outstanding.
+
+  - **A new To do page** lists every form and document still waiting on a patient, across every clinic they are registered with, with the most urgent first.
+  - **Items attached to a visit are grouped under that appointment**, with its date and time shown in the clinic's local time and labelled as such.
+  - **The dashboard card counts all of it**, not just documents, and opens the new page.
+  - **What has already been finished** — completed, declined, expired or withdrawn — is listed underneath.
+  - **A list that fails to load says so** instead of showing an empty one, because "nothing to do" and "we could not check" are not the same message.
+
+  See [See what is waiting on you](/portal/patients/to-do).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Measures">
+  ## Fixed: two measures charted against the wrong scale, and a severity that never lit up
+
+  On a client's **Measures** tab, the **ASRS** and **CUDOS** graphs were drawn against a scale of 30 with no severity guide lines. Both instruments score up to 72, so a high score ran off the top of a chart that otherwise looked completely normal.
+
+  - **ASRS and CUDOS now plot against their own scale**, with the same severity guide lines every other measure has.
+  - **Depression severity reads correctly at the top of the scale.** A **PHQ-9** in the moderately severe range was not highlighted in the severity key and its point on the graph had no colour. Both now match the rest of the scale.
+  - **The severity key wording matches what is recorded**, so the band a client is currently in is highlighted on every measure, not most of them.
+
+  Scores already recorded are unchanged — this affects how they are drawn, not what they are.
+
+  See [Clients](/practice/work/clients).
+</Update>
+
 <Update label="September 10, 2026" tags={["Pharmacy","Hospital"]} description="Inventory">
   ## Fixed: large catalogues were only half-loading
 
   A pharmacy with several thousand products found that the **Voucher** sheet could not see many of them. **Select item** did not list them and the barcode scanner reported them as missing, even though the products were in the catalogue and on the shelf.
 
-  Only the first 1,000 products were reaching the screen, in alphabetical order. Everything after that was invisible — on a 5,723-product catalogue that was most of the shop, and it affected the **Voucher**, **Purchase order**, **Stock movement**, **Par levels** and **Dispense** sheets alike, because they all read the same list.
+  Only the first 1,000 products were reaching the screen, in alphabetical order. Everything after that was invisible to every item picker and to the scanner — on a 5,723-product catalogue that was most of the shop, and it affected the **Voucher**, **Purchase order**, **Stock movement**, **Par levels** and **Dispense** sheets alike, because they all read the same list.
 
   - **The whole catalogue now loads**, however large it is. Lot and stock lists are loaded the same way, so they cannot run into the same ceiling as a shop grows.
+  - **You can search by barcode in Inventory.** Typing or scanning a code into the inventory search bar now finds the product. It previously searched only the name, category and SKU — not the barcode itself — so a scan matched nothing, even though the same scan worked at the till.
   - **If a list ever cannot be loaded in full, the page says so** rather than showing you part of your stock as though it were all of it.
 
   See [Inventory](/pharmacy/inventory).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Time a quiz, and decide how much of the marking people see
+
+  - **A time limit, in minutes.** Counted from the moment the form is opened and checked when the answers arrive — closing the tab does not stop the clock, and neither does anything else in the browser. A few seconds of grace covers a slow connection, so nobody who finished in time is told they did not. The respondent sees a countdown while they work.
+  - **How much of the marking they see** — their score only, which ones they got wrong, the right answers as well, or everything including your explanations. It is a separate choice from *when* they see it, so you can release a score immediately and still keep the answers back.
+  - **Options in a different order for each person.** The switch has always been in the form's data and never did anything; it does now. It is per question, and separate from **Shuffle questions**, which deals the questions rather than the choices.
+
+  See [Build a form](/practice/forms/build-a-form#mark-a-quiz).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Mark the answers a list of accepted answers could not
+
+  Four things a quiz could not say, now on the **Answer key** card.
+
+  - **Accept anything matching a pattern**, for answers that are a shape rather than a list — a reference number, a postcode. An answer counts if it is in your list *or* matches the pattern.
+  - **A grid can have a different answer in each row.** Until now one correct column had to be right for every row, which is fine for a rating grid and no use at all for a grid asking different questions down the side.
+  - **Spaces must match too**, for the rare answer whose spacing is part of it. It is off by default: normally extra spaces are ignored, because somebody who typed two spaces between two words gave you the right answer.
+  - **Explain each option** — a line on each choice saying why it is right or wrong. These appear only where the form already shows the answers, since one explanation gives the others away.
+
+  See [Build a form](/practice/forms/build-a-form#mark-a-quiz).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## A queue for the screening answers a form cannot decide
+
+  A screening form decides on its own whether somebody qualifies. When its rules cannot tell, it says **Needs review** — and until now that verdict sat in the responses list with nothing to do about it.
+
+  - **A Review tab on Forms**, showing what is waiting and how many. It appears only when something is there.
+  - **Decide with a reason.** **Eligible** or **Not eligible**, recorded with your name and the time, and a note saying why. The note stays with the response and is not written to your audit log — it is clinical detail, not a record of what you did.
+  - **Your decision is recorded beside the form's, never over it.** The form's own outcome still says Needs review afterwards. "The rules said eligible" and "the rules said review and a clinician decided eligible" are different facts, and the record keeps both.
+  - **Two people cannot both decide the same one.** The second is told somebody has already decided it, and by refreshing sees their decision.
+  - **The queue shows no answers.** It names the form and what the form's author said about why it needs a look. To read what somebody wrote, open the response.
+
+  See [Read and export responses](/practice/forms/read-responses).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Send a form from the client's chart, and be told what actually went
+
+  Until now the chart's **Send intakes** sheet could send a consent and could not send a form — so getting a form to the person whose chart you were looking at meant leaving it, finding the form, and sending from there.
+
+  - **Forms are in the sheet.** Step one now has a **Forms** group alongside consents and measures, listing your published, patient-facing forms. Tick a form and a consent together and both go in one send.
+  - **The confirmation tells the truth.** It used to say "Sent 3 documents" whenever the send succeeded, whatever had actually happened. It now says "Sent 1 of 3 items" when that is what happened, and names why the others did not go — no email address on file, or they already hold a live link to that form.
+  - **A refusal leaves your selection alone.** If nothing went, everything you ticked is still ticked, with the reason beside it.
+  - **The same thing is not sent twice by accident.** If somebody already holds a live link to a form or consent, ticking it again is refused with that reason rather than quietly creating a second link.
+  - **The access log is reachable.** Every document keeps a seven-year record of every time it was opened, by whom and from where. Nothing in the product could show it. A document row on the chart now offers **View access log**.
+
+  See [Send a form](/practice/forms/send-a-form) and [Documents](/practice/clinical/documents).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## One list of everything a patient has been sent
+
+  A person's profile used to show only the documents you had sent them for signing. Forms and signature requests were somewhere else entirely, so "have we actually sent them that?" was a question with two places to look and two possible answers.
+
+  - **Sent & Shared is now one list.** Forms, documents and signature requests together, in one set of words — Sent, Opened, In progress, Completed, Expired, Cancelled — so two screens can no longer disagree about whether something went out.
+  - **You can act on a row where you are looking at it.** Remind, resend with a new link, cancel an invite, revoke a document's access, or open a signature request's tracking page.
+  - **Nothing finished offers a reminder.** Somebody who has already signed is not nagged, and somebody whose access you closed is not handed the link back.
+  - **A list that cannot be loaded says so.** If your practice requires two-factor authentication before anybody can see what a patient was sent, you are told that — not shown an empty list that reads as "nothing was ever sent".
+
+  See [Send a form](/practice/forms/send-a-form).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Take your answers out, and decide when a form collects
+
+  Two things forms could not do: hand you the answers as a file, and open or close on a schedule.
+
+  - **Export what you collected.** On a form's **Responses** tab, **Export** gives you a spreadsheet — one row per response, or one row per answer for anything you are analysing properly. CSV on every plan; Excel from Starter.
+  - **A form can open and close on its own.** Set when it opens, a deadline, and when it closes, and decide whether a late answer is still accepted. **Close now**, **Extend deadline** and **Reopen** are there when you want to decide by hand.
+  - **You are told what closing will do.** "Close now — 3 invites are still open; their links will show the closed message" — the numbers are real, counted before you confirm.
+  - **A form can go out with an appointment.** Add one to your practice's **Sharable documents**, and whoever books gets it automatically — once, however many times the booking is edited.
+
+  See [Form settings](/practice/forms/form-settings) and [Send a form](/practice/forms/send-a-form).
+</Update>
+
+<Update label="September 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Send a form to a patient, and see who answered
+
+  Until now the only way to get a form to somebody was to copy its link into your own email. That works, and then tells you nothing: you cannot see who opened it, the answers do not attach to anyone's chart, and chasing people is a job you do by hand.
+
+  - **Each person gets their own link.** Open a published form's new **Invites** tab, pick patients by name or type any address, and send. Answers from a patient you picked arrive filed against their chart.
+  - **Choose how each person gets it.** Email, the patient portal, or a link created without emailing so you can hand somebody a tablet at the desk. If a choice will not work — most often because there is no email address on the chart — you are told beside their name before you send, not after.
+  - **See what happened.** The **Invites** tab shows Sent, Opened, In progress, Completed, Expired or Cancelled for every person, and when the next reminder is due.
+  - **Chase, replace or close a link.** **Remind** sends the same link again; **Resend** replaces it, so a link that went to the wrong address stops working; **Cancel** closes it. We also chase automatically — twice, then we stop, and never with a link that has expired.
+  - **Search moved to where the list is.** **Search forms** now sits under **Recent forms** with the filters, directly above the results it narrows, instead of above the tabs beside two lists it never filtered.
+
+  See [Send a form](/practice/forms/send-a-form).
+</Update>
+
+<Update label="September 9, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Documents is now Forms
+
+  Everything you sent for signature is under **Forms → Signed documents**. Your links still work.
+
+  - **One place instead of two.** Building a form and sending a document for signature were separate screens with separate lists. **Forms** now holds both — **Forms** for what you build, **Signed documents** for what you have sent.
+  - **Nothing was moved off your records.** Every document you have ever sent is on the **Signed documents** tab, with the same statuses, the same counters and the same templates.
+  - **Old links keep working.** A bookmark, or a link in an old email to your team, opens the tab it always did.
+
+  See [Forms](/practice/forms/index) and [Send a document for signature](/practice/clinical/documents).
+</Update>
+
+<Update label="September 9, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms">
+  ## Your forms can now act on a response, not just record it
+
+  The Automation tab could hold rules and could not run them, and said so. It runs them now, and five things it could only describe are things it can do.
+
+  - **Email a copy of the answers to the person who filled the form in** — with your own subject and message. It only sends when the form collected an email address, and a patient who has asked not to be emailed directly is skipped.
+  - **Email your practice when a response arrives**, to your own address or one you name. It obeys the email switch and the category you chose in **Settings → Notifications**, the same ones that govern the notification bell.
+  - **Send the respondent a follow-up form** — how a pre-screening becomes a consent and a consent becomes an intake. One invitation per response, so nobody gets two links to the same thing.
+  - **Attach the response to a patient's chart** when the address on it matches exactly one of your patients. Two patients sharing an inbox means nothing is linked, on purpose.
+  - **Send a signed webhook** to another system, on **Team and above**, with your own signing secret and automatic retries.
+
+  Every run is recorded on the response — including the ones that were skipped, and why — so a follow-up that did not arrive is something you can look up rather than guess at. On a clinical or research form, any rule that would carry the answers themselves out of the record asks you to confirm that first.
+
+  See [Form automation](/practice/forms/automation).
+</Update>
+
+<Update label="September 8, 2026" tags={["Platform"]} description="ClinikMail">
+  ## Conversations open fast, and the To field finds your people
+
+  Four fixes to ClinikMail, all about waiting:
+
+  - **Opening a conversation** could take long enough to show "We could not open this conversation". Conversations now open promptly, with their messages, delivery status and **Linked clients** all in place. See [Mail](/practice/work/mail).
+  - **The Linked clients section** used to lag behind the rest of the conversation. It is now there as soon as the conversation is.
+  - **Mail is quicker throughout** — folders, conversations and message text all open with less waiting.
+  - **The To field** in a new message said **Searching contacts…** and found nobody. Everyone already on file — clients, staff, vendors and referrers with an email address — is now in the contact directory, and suggestions appear as you type. See [Mail](/practice/work/mail).
+
+  ## Sent mail shows its subject again
+
+  A message you wrote in ClinikMail could appear in **Sent**, **Outbox** and **Drafts** as **(no subject)** even though the message itself had one — the conversation kept the subject from the moment the draft was first saved, which was usually before you had typed it. A conversation now follows the subject you give it while you are writing, and every conversation that was filed without one has been given the subject of its first message. See [Mail](/practice/work/mail).
 </Update>
 
 <Update label="September 6, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="v10.0.0">

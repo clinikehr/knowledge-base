@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Owner-only to change anything" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Owner-only to change, except Patient ID prefix, which a manager can also change" />
 
 **General Settings** is the hospital's identity: "Your clinic's basic information and regional preferences." It is a short tab with a long reach — the name and logo here appear on documents patients keep, and the timezone decides what time everything in the product happens.
 
@@ -23,13 +23,14 @@ import { StillStuck } from '/snippets/support.mdx';
 
 ## What this tab controls
 
-One card, **General Information**, with a single **Save Changes** button at the bottom. Every field on it is owner-only — a manager or accountant sees them filled in and disabled.
+One card, **General Information**, with a single **Save Changes** button at the bottom. Every field on it is owner-only, with one exception: a manager can also change **Patient ID prefix**, and sees a **Save patient ID prefix** button for it. An accountant sees every field filled in and disabled.
 
 | Control | What it does | Default |
 | --- | --- | --- |
 | **Clinic Logo** | A square image. The hint says "Used on prescriptions, invoices, and general clinic branding." Uploads and deletes take effect on their own, without **Save Changes** | None |
 | **Clinic Name** | The hospital's name. At least 2 characters | Your name at signup |
 | **Timezone** | A searchable list of every timezone. "Used for scheduling and appointment reminders." | UTC |
+| **Country** | Where your hospital operates, from a searchable list. It decides which electronic signature statement people agree to before signing a document you send. While it is empty, your billing currency decides instead. | Not set |
 | **Patient ID prefix** | The letters before the number on every new patient's ID — **CMC**-0134. Two to six letters or numbers. Leave it empty to use the first three characters of your name | Empty (derived from your name) |
 | **Address** | Free text, multi-line | Empty |
 | **Phone Number** | Free text | Empty |
@@ -38,6 +39,14 @@ One card, **General Information**, with a single **Save Changes** button at the 
 | **Clinic Description** | "This description may be shown on your public booking page." | Empty |
 
 The tab keeps itself current: if a colleague changes something while you have it open, the fields update in front of you.
+
+## Business hours
+
+<Availability editions={['clinic']} plans="All plans" roles="Owner or manager" />
+
+Below General Information, a separate **Business hours** card sets what your hospital considers a normal working day, one switch and a start/end time per weekday, shown in the timezone set above. A day left switched off counts as closed.
+
+This is what the **Unusual access alerts** out-of-hours check on the **Security** tab (see [Access log, disclosure accounting and reviews](/hospital/front-desk/patient-security#access-log-disclosure-accounting-and-reviews)) compares an access against. A day with no hours set at all counts as closed too, so a hospital that has never opened this card gets flagged more often, not less — not fewer alerts, until you set your real hours here.
 
 ## Set it up
 
@@ -80,6 +89,7 @@ Two to six letters or numbers, and it is stored in capitals — typing lowercase
 | **Patient ID prefix** | The next patient registered gets an ID with the new prefix. Everyone already registered keeps theirs. |
 | **Clinic Name** or **Clinic Logo** | Both start appearing on invoices, clinical documents and prescriptions, on your public booking page and in the patient portal. Anything generated from now on carries the new name and mark. |
 | **Timezone** | Three things at once: the times shown against appointments, which business day a payment is counted in, and how ward medication doses are scheduled. |
+| **Country** | The statement shown before someone signs a document electronically, and the line on the signing certificate that says which setting chose it. Documents already signed keep the statement they were signed under. |
 | **Address**, **Phone Number**, **Email Address** | These are the contact details a patient reads on a document or a booking page. |
 | **Website** | Shown where the hospital is presented publicly. It must be a full URL — the form refuses "Please enter a valid URL." otherwise. |
 | **Clinic Description** | May be shown on your public booking page. |
@@ -96,7 +106,7 @@ Reload the tab; the fields should hold what you entered. Then generate one invoi
 
 <AccordionGroup>
   <Accordion title="Everything is filled in but I cannot type in any of it">
-    This tab is owner-only. Managers and accountants can read it; the fields render disabled and the **Save Changes** button is not shown at all.
+    This tab is owner-only. Managers and accountants can read it; the fields render disabled and the **Save Changes** button is not shown. A manager can still change **Patient ID prefix** and save it with **Save patient ID prefix**.
   </Accordion>
   <Accordion title='"Please enter a valid URL."'>
     **Website** needs the full address including the scheme — `https://www.example.com`, not `www.example.com`. Leave it empty if you would rather not have one.
@@ -117,4 +127,4 @@ Reload the tab; the fields should hold what you entered. Then generate one invoi
 
 <StillStuck topic="general settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, lib/timezones.ts */}
+{/* source of truth: components/clinic/dashboard/settings/general-settings.tsx, components/clinic/dashboard/settings/business-hours-settings.tsx, lib/timezones.ts */}

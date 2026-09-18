@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans — signing, snippets, custom templates and the AI writing tools need a paid plan" roles="Any staff member" note="No care area needed — Clinic Notes is in every plan's sidebar" />
+<Availability editions={['clinic']} plans="All plans — signing, snippets and the AI writing tools need a paid plan" roles="Any staff member" note="No care area needed — Clinic Notes is in every plan's sidebar" />
 
 **Clinic Notes** is the hospital's standalone documentation surface: a note about a patient written *without* going through a department queue. Use it for a ward review, a handover, a discharge summary or anything else that is clinical writing rather than an outpatient encounter. Documentation that belongs to an outpatient visit goes on the [consultation](/hospital/outpatient/consultation) chart instead.
 
@@ -90,7 +90,8 @@ Three tools, and they are different things:
 | Sign and lock a note | Anyone who can open a note | Plan — signing is blocked on Free. No permission governs it here; the signing permission belongs to [Consultation](/hospital/outpatient/consultation) |
 | Countersign someone else's note | Supervisors | **Countersign a colleague's note** |
 | Unlock a signed note | Whoever may sign | Same rule as signing |
-| Create and edit shared templates | Anyone who can open the page | Plan — creating custom templates and snippets is blocked on Free |
+| Build a shared note template | Anyone who may manage forms | Forms permissions — new templates are note forms, and existing custom templates are read-only |
+| Create and edit snippets | Anyone who can open the page | Plan — creating snippets is blocked on Free |
 
 Two behaviours worth knowing. Permission enforcement is **opt-in per person**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** — so nothing changes for existing staff until they are saved once. And a denied action is recorded in the audit log while an allowed one is not, so hiding **Clinic Notes** in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary. See [Permissions](/platform/team/permissions).
 
@@ -139,7 +140,7 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person**: s
   </Accordion>
 
   <Accordion title="What is the difference between Templates and Custom Templates?">
-    **Templates** are the ones supplied with the product. **Custom Templates** are the ones your hospital writes, so a department can standardise its own documentation. Both appear in the same picker when you start a note.
+    **Templates** are the ones supplied with the product. **Custom Templates** are the ones your hospital wrote before note forms: they still appear in the picker when you start a note, but they are read-only. A department that wants to standardise its own documentation now builds a **note form** — select **Create a note form** on either page. See [Note templates](/practice/clinical/note-templates).
   </Accordion>
 
   <Accordion title="Can two people write the same note?">
@@ -157,4 +158,4 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person**: s
 
 <StillStuck topic="clinic notes" />
 
-{/* source of truth: components/clinic/notes/ (general/notes-sidebar.tsx, notes-content-dashboard.tsx, new-notes/blank-notes-form.tsx, new-notes/sign-and-lock-sheet.tsx), lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/notes/ (notes-content-dashboard.tsx, new-notes/blank-notes-form.tsx, new-notes/sign-and-lock-sheet.tsx), lib/clinic-nav-registry.ts */}

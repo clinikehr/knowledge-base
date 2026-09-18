@@ -45,8 +45,14 @@ Above the tabs sit **Preview**, **Save Changes** and **Publish** / **Unpublish**
 | **Payment Methods** | Card, Cash, Bank Transfer, Insurance | None |
 | **Require Upfront Payment** | "Require payment before appointment" | Off |
 | **Payment Provider** | Stripe or Paystack, whichever your currency uses | Auto-detected |
-| **Deposit Percentage** | "0 = full amount, 1-99 = partial deposit" | 0 |
 | **Payment Instructions** · **Refund Policy** | Text shown to the patient | Blank |
+| **Card on file** | **Off**, **Optional** or **Required** — whether clients save a card while they book. Only selectable when a Stripe account is connected and ready; not offered to hospitals that bill in Naira | Off |
+
+With **Require Upfront Payment** on, patients pay the full fee when booking. There is no deposit setting here: to take a deposit instead, or to charge for late cancellations and missed visits, set it on each service — see [Deposits and cancellation fees](/hospital/settings/appointment-services#deposits-and-cancellation-fees).
+
+### Booking policy
+
+The **Booking policy** card holds your cancellation and deposit policy in your own words. Patients read it, with each service's rules, and tick **I have read and agree to this booking policy** before they book a service that takes a deposit, is paid in full when booking, or has a cancellation or missed appointment fee. Select **Save policy** to save it — separately from **Save Changes** — and each change starts a new version. Only the owner or a manager can change it.
 
 ## Set it up
 
@@ -58,7 +64,7 @@ Above the tabs sit **Preview**, **Save Changes** and **Publish** / **Unpublish**
     On **Content**, say who the page is for and what happens after a booking. Keep it short; a booking page is read standing up.
   </Step>
   <Step title="Choose the services">
-    On **Services**, search your catalogue and add the ones patients may book themselves. The badge shows how many are on the page, and **Services on Your Booking Page** lists them — "These services will be displayed on your public booking page." Flag one as **Featured** if it should lead.
+    On **Services**, search your catalogue and add the ones patients may book themselves. The badge shows how many are on the page, and **Services on Your Booking Page** lists them — "These services will be displayed on your public booking page." Flag one as **Featured** if it should lead. To let a patient book more than one service in the same appointment, turn on **Clients can book several services in one visit** in the **Several services in one visit** card at the top and choose **Most services in one booking**; it saves straight away.
   </Step>
   <Step title="Set the questions">
     On **Forms**, decide what a patient must answer while booking. Ask for what the clinic genuinely needs at the desk and no more.
@@ -67,7 +73,10 @@ Above the tabs sit **Preview**, **Save Changes** and **Publish** / **Unpublish**
     On **Settings**, switch **Allow Online Booking** on, confirm the **Clinic Timezone**, and set **Advance Booking Days** to how far ahead you want the diary opened.
   </Step>
   <Step title="Decide about money">
-    Turn on **Accept Payments** only if you want to collect at booking. Then choose **Payment Methods**, and use **Require Upfront Payment** with a **Deposit Percentage** if you want a deposit rather than the full fee.
+    Turn on **Accept Payments** only if you want to collect at booking. Then choose **Payment Methods**, and use **Require Upfront Payment** to take the full fee at booking. For a deposit rather than the full fee, set it on the service and write your **Booking policy**.
+  </Step>
+  <Step title="Decide about a card on file">
+    In **Card on file**, choose **Optional** or **Required** if the hospital keeps a card for patients who book online. The card goes on the patient's record, where **Edit client** and Auto Pay use it; nobody is charged when it is saved. It is saved only for a new patient or one who confirmed their email with a code — never onto an existing record matched by a typed email alone.
   </Step>
   <Step title="Save, then Publish">
     Select **Save Changes** — "Your booking page has been successfully updated" — then **Publish**. The badge flips from **Draft** to **Live**.
@@ -85,9 +94,19 @@ Saving and publishing are two different actions, and both are needed.
 
 **Opening hours are not on this tab.** Times come from schedules in [Booking settings](/hospital/settings/booking-settings), minus existing bookings and any blocking calendar events. That is precisely why a page can be published, correct and still show a patient no available times — the page is fine and the schedule is missing.
 
-Once payment is on, **Require Upfront Payment** changes the booking flow: the patient pays before the appointment is created, at the deposit percentage you set. Money lands in the account connected in [Online payments](/hospital/settings/online-payments) — if it is not connected, this tab shows "Stripe not connected" (or "Paystack not connected") with a link back there rather than a provider picker.
+Once payment is on, **Require Upfront Payment** changes the booking flow: the patient pays before the appointment is created — the full fee, or the deposit a service sets — and a booking that tries to skip the payment is refused, on the booking page and in the client portal. Money lands in the hospital's own account connected in [Online payments](/hospital/settings/online-payments), chosen by your billing currency — never anywhere else. If it is not connected and ready, this tab shows "Stripe not connected" (or "Paystack not connected") with a link back there rather than a provider picker, and patients book without paying until it is.
+
+Every booking is checked again when it is made: the page must be published, **Allow Online Booking** on, the service still added on **Services**, the time still free, and the date within **Advance Booking Days**. A patient who has already paid is not refused for a window that closed while they paid.
+
+A service with a **deposit**, **Pay in full when booking** or a cancellation or missed appointment fee changes what the patient sees before booking: what is paid now, the rules, your **Booking policy**, and **I have read and agree to this booking policy**, which they must tick — on the booking page and when booking from the patient portal alike. The deposit shows as paid on the appointment's invoice. A patient who cancels in time is refunded automatically. A late cancellation or a no-show is never charged automatically: the appointment shows the fee to review, and an owner, manager or accountant chooses **Charge** (with the amount), which charges the patient's card on file after a confirmation, or **Waive fee**.
+
+With **Several services in one visit** on, a patient can tick extra services under **Add to this visit**. The visit is one appointment with one provider who offers every chosen service; the times and prices are added together, and only start times long enough for the whole visit are offered. The diary, invoice, emails and portal show every service, for example **Ultrasound + Consultation**.
+
+Options and add-ons set on a service are offered on the page: the patient chooses an option before times appear, ticks add-ons, and sees the total time and price — for example **Facial — Long + Add-on: Mask**. **Not bookable online** and **Add-on only** services are not listed; **New clients only** services are refused for a patient who confirmed their email as an **Existing client**; **Existing clients only** services ask the patient to confirm with the email code first. Offered times respect each service's **Minimum notice**, **Book up to (days ahead)** and **Buffer after (minutes)**, and the same limits are checked again when the patient books.
 
 A booking made here creates a real appointment in the hospital diary, so the front desk sees it alongside everything booked by phone.
+
+Patients can also use a promo code, a gift card or a session from their package on the booking page and in the patient portal. The **Promo code** and **Gift card** fields appear only while you have an active promo code or gift card, and **Use a session from your package** only for a patient who confirmed their email with the code. See [Used when a patient books online](/hospital/revenue/packages-and-gift-cards#used-when-a-patient-books-online).
 
 ## Check it worked
 

@@ -37,6 +37,21 @@ Two things people expect here and will not find:
 - **Passkeys are not managed on this tab.** A passkey belongs to a person, not to the hospital, so each individual adds and removes their own under their account security page — see [Two-factor authentication](/platform/security/mfa).
 - **Security alerts are on the Staff tab.** The **Security alerts** card — "Two-factor bypass events — emergency access, recovery-code use, and resets" — sits with **Staff & Teams**, alongside the people it concerns. See [Staff and roles](/hospital/settings/staff).
 
+## Access alerts
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Owner or manager" />
+
+A second card on this tab, **Access alerts**, sets how sensitive the **Unusual access alerts** on restricted patients are — see [Access log, disclosure accounting and reviews](/hospital/front-desk/patient-security#access-log-disclosure-accounting-and-reviews). Every secured patient record still gets checked; this only changes when a check turns into a notification to the owner.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Records opened / Within (minutes)** | How many distinct secured records one staff member has to open, and inside how many minutes, before the "many secured records opened" alert fires. 1–100 records, 1–1440 minutes | 5 records within 60 minutes |
+| **Times granted / Within (days)** | How many times emergency access has to be granted to one staff member, and inside how many days, before the "repeated emergency access" alert fires. 1–100 times, 1–365 days | 3 times within 30 days |
+| **Requests / Within (days)** | How many times one patient may ask, from their own portal, to restrict their own record before the portal asks them to wait. 1–50 requests, 1–90 days | 5 requests within 7 days |
+| **Default hidden categories for a guardian/proxy portal view** | Which sensitive document categories start hidden from a guardian reaching a patient's portal record through a shared contact email, for any patient who has not had this set individually — see [Proxy access limits](/practice/work/client-security#proxy-access-limits) | Every category hidden |
+
+Below Essential, the card shows an **Upgrade** button and nothing here can be changed — the alerts still run on the built-in defaults above.
+
 ## Set it up
 
 <Steps>
@@ -97,4 +112,4 @@ Sign out and back in as a staff member who has not yet enrolled. You should be s
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, components/clinic/dashboard/settings/security-alerts-card.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/security-settings.tsx, components/clinic/dashboard/settings/access-alert-settings.tsx, components/clinic/dashboard/settings/security-alerts-card.tsx */}

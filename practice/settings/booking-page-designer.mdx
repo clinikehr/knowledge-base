@@ -27,9 +27,9 @@ Your booking page is the public web page a client lands on to book with you. Thi
 | --- | --- |
 | **Design** | Template, colours, fonts, and the **Page Settings** card holding **Page Slug** — "This will be part of your booking page URL", checked live for format and for clashes with other workspaces. Also a **Custom domain** card so the page can be served from an address like `book.yourclinic.com` — Team and Enterprise only |
 | **Content** | The headline, description, images and sections a visitor reads |
-| **Services** | **Services Management** — "Select services from your clinic to display on the booking page". Each card carries **Add to Page**, which becomes **Added to Page**, and **Make Featured**. A badge counts "\{n\} services on page" |
+| **Services** | **Services Management** — "Select services from your clinic to display on the booking page". Each card carries **Add to Page**, which becomes **Added to Page**, and **Make Featured**. A badge counts "\{n\} services on page". The **Several services in one visit** card sits at the top |
 | **Forms** | Which intake questions a client answers while booking |
-| **Settings** | The two cards below |
+| **Settings** | The three cards below |
 
 The **Settings** tab's **Booking Settings** card — "Configure how appointments can be booked through your page":
 
@@ -48,9 +48,20 @@ And the **Payment Settings** card — "Configure payment options and policies fo
 | **Payment Methods** | Card, cash, bank transfer, insurance | Card |
 | **Require Upfront Payment** | "Require payment before appointment" | Off |
 | **Payment Provider** | Which connected provider takes the money. Only offers one that matches your currency | Detected for you |
-| **Deposit Percentage** | "0 = full amount, 1-99 = partial deposit" | 0 |
 | **Payment Instructions** | Free text shown to clients about payment | Empty |
 | **Refund Policy** | Your cancellation and refund wording | Empty |
+
+With **Require Upfront Payment** on, clients pay the full price when booking. There is no deposit setting on this card: to take a deposit instead, or to charge for late cancellations and missed visits, set it on each service — see [Deposits and cancellation fees](/practice/settings/appointment-services#deposits-and-cancellation-fees).
+
+And the **Booking policy** card — your cancellation and deposit policy in your own words. Clients read it, with each service's rules, and tick **I have read and agree to this booking policy** before they book a service that takes a deposit, is paid in full when booking, or has a cancellation or missed appointment fee. Select **Save policy** to save it; it is saved on its own, not with the page design, and each change starts a new version so you can tell which wording a client agreed to. Only the owner or a manager can change it.
+
+And the **Card on file** card — "Ask clients to save a card while they book, new and returning":
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Card on file** | **Off**, **Optional** or **Required** — whether clients save a card while they book. Only selectable when a Stripe account is connected and ready; not offered to practices that bill in Naira | Off |
+
+A card saved on the booking page goes on the client's record — the same place **Edit client** shows cards and Auto Pay charges them. Nobody is charged when they save it. A card is saved only for a new client, or for a returning client who confirmed their email with a code: when someone types the email of an existing client without confirming it, the booking goes on that client's record for you to check, but the card is not saved to it, and your new-booking notice says so. If your practice has no ready Stripe account, the three choices stay locked to **Off** and the card tells you why, with a link to Online Payments.
 
 ## Set it up
 
@@ -61,6 +72,9 @@ And the **Payment Settings** card — "Configure payment options and policies fo
   <Step title="Add the services you sell">
     On **Services**, select **Add to Page** on each service you want bookable. The button changes to **Added to Page**. Use **Make Featured** on the one or two you want at the top.
   </Step>
+  <Step title="Decide whether clients can book several services at once">
+    On **Services**, in **Several services in one visit**, turn on **Clients can book several services in one visit** and choose **Most services in one booking** (2 to 10). It saves as soon as you change it. Leave it off if every visit is one service.
+  </Step>
   <Step title="Write the page">
     On **Content**, set the headline and description a visitor reads first. Watch the preview beside you; switch it to mobile, because most clients arrive on a phone.
   </Step>
@@ -68,7 +82,10 @@ And the **Payment Settings** card — "Configure payment options and policies fo
     On **Settings**, confirm **Allow Online Booking** is on, set **Clinic Timezone** to where you actually work, and set **Advance Booking Days**. Write a **Booking Confirmation Message** so people know what happens next.
   </Step>
   <Step title="Decide about payment">
-    Leave **Accept Payments** off if you take money at the desk. To charge at booking, turn it on, turn on **Require Upfront Payment**, choose the **Payment Provider**, and set a **Deposit Percentage** — 0 charges the full amount.
+    Leave **Accept Payments** off if you take money at the desk. To charge at booking, turn it on, turn on **Require Upfront Payment**, and choose the **Payment Provider**. To take a deposit rather than the full price, set it on the service, and write your **Booking policy**.
+  </Step>
+  <Step title="Decide about a card on file">
+    On **Settings**, in **Card on file**, choose **Optional** to let clients save a card while they book, or **Required** to make it a condition of booking online. Leave it **Off** if you do not keep cards.
   </Step>
   <Step title="Save, then publish">
     **Save** stores your work without changing what the public sees. **Publish** makes the page live; the button then reads **Unpublish**.
@@ -79,13 +96,19 @@ And the **Payment Settings** card — "Configure payment options and policies fo
 
 **Publish** is what puts the page on the internet. Until you select it, your page address returns a not-found error to anyone who visits — saving alone changes nothing publicly. Selecting **Unpublish** takes it straight back down; existing appointments are untouched.
 
-Two things must both be true before any booking is possible: **Allow Online Booking** must be on, **and** at least one service must have been added on the **Services** tab. A published page with no services shows a client nothing they can pick.
+Three things must all be true before any booking is possible: the page is published, **Allow Online Booking** is on, **and** the service has been added on the **Services** tab. A published page with no services shows a client nothing they can pick. These are checked again every time a client books, so a booking for a service you have taken off the page, or made after you turn online booking off, is refused — even from a page a client left open.
 
 **Opening hours are not on this tab.** A published page with services can still show no times, because times come from [Booking settings](/practice/settings/booking-settings). That split is the single most common surprise here.
 
-Turning on **Require Upfront Payment** changes the booking flow itself: the client is sent to a payment step before the appointment is created, and an unpaid attempt does not reach your diary. This needs a payment provider connected first — if none is, the card shows "Stripe not connected" (or "Paystack not connected" on a Nigerian-currency practice) with a link to Online Payments, and no provider can be selected.
+Turning on **Require Upfront Payment** changes the booking flow itself: the client is sent to a payment step before the appointment is created, and a booking that tries to skip the payment is refused. The payment always goes to your own connected Stripe account — or your Paystack account if you bill in Naira — decided by your billing currency. This needs that account connected and ready first — if it is not, the card shows "Stripe not connected" (or "Paystack not connected" on a Nigerian-currency practice) with a link to Online Payments, no provider can be selected, and clients book without paying until it is ready. The same rule applies to clients booking from their client portal.
 
-**Advance Booking Days** trims the far end of the calendar; **Deposit Percentage** changes the amount charged, not the price of the service. Neither re-prices anything already booked.
+**Card on file** adds a step after the booking questions. With **Optional**, a client can add a card or skip; with **Required**, the booking is refused until a card is saved — or, for a returning client who confirmed their email, until they choose the card already on their record. The card is typed into the payment provider's own secure fields. If your Stripe account is disconnected later, the page stops asking for a card rather than refusing everyone.
+
+**Several services in one visit** adds an **Add to this visit** list beside the calendar. A client who ticks more than one service books one appointment: the times are added together, only start times long enough for the whole visit are offered, the prices are added together, and one provider who offers every chosen service is booked. If no provider offers them all, no times are shown for that combination. The appointment lists every service — in your diary, on the invoice, and in the confirmation and reminder emails. See [Booking several services](/practice/work/booking-page#booking-several-services-in-one-visit).
+
+**Advance Booking Days** trims the far end of the calendar, and a booking for a date past it is refused. It applies to the date the client picks; the later visits of a repeating booking follow that service's own booking horizon. It does not change anything already booked.
+
+**Booking policy** changes only what clients read and agree to from now on. A booking keeps the wording and the amounts the client agreed to.
 
 ## Check it worked
 
@@ -103,8 +126,14 @@ Open your page address in a private browser window — as a visitor, not as your
   <Accordion title="The page loads but there is nothing to book">
     No services have been added to the page. On **Services**, select **Add to Page** on at least one, then save.
   </Accordion>
+  <Accordion title="A client picked two services and saw no times">
+    No single provider offers both services, or no stretch of free time is long enough for the whole visit. Check which providers offer each service in [Appointment services](/practice/settings/appointment-services), or ask the client to book the services as separate visits.
+  </Accordion>
   <Accordion title="I can't choose a payment provider">
     Nothing is connected for your currency yet. Connect one under Online Payments first — the card links straight there. Until then, leave **Require Upfront Payment** off and take payment at the desk.
+  </Accordion>
+  <Accordion title="Card on file is greyed out">
+    The choices unlock once a Stripe account is connected and ready to take charges, under Online Payments. Practices that bill in Naira take payments through Paystack, which cannot save a card without charging it, so card on file is not offered to them yet.
   </Accordion>
   <Accordion title="The Custom domain card says I need to upgrade">
     Serving the page from your own web address is a Team and Enterprise feature. On Solo plans the page stays on its ClinikEHR address, which works exactly the same. See [Change your plan](/platform/plans/change-plan).

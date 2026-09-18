@@ -1,0 +1,147 @@
+---
+title: "Restrict a patient to assigned staff"
+description: "Choose which staff members can see a patient, and what the rest of the hospital sees instead."
+icon: /images/icons/user-lock.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Hospital owner or manager to change; anyone who can open the patient to view" note="No extra plan needed — Solo and Team restrict clients the same way" />
+
+Turn on **Restrict to assigned staff** for a patient and only the owner and the staff members you assign see that patient's name, contact details and record. Everyone else sees **Secured patient** followed by a number.
+
+<Path steps={['Sidebar', 'Front Desk', 'Patients', 'Open a patient', 'Security']} />
+
+<TaskHeader before="A patient record, and the staff members you want to assign" time="Under a minute" after="A patient only the owner and assigned staff can identify" />
+
+## Who sees a restricted patient
+
+| Person | Sees the patient's name and record | Can change the Security settings |
+| --- | --- | --- |
+| Owner | Yes, always | Yes |
+| Manager who is assigned | Yes | Yes |
+| Manager who is not assigned | No — sees **Secured patient** and a number | Yes |
+| Any other staff member who is assigned | Yes | No |
+| Any other staff member who is not assigned | No — sees **Secured patient** and a number | No |
+| The patient, in their portal | Yes — their own portal is not affected | — |
+
+Restriction is off for every patient until someone turns it on.
+
+## Assign staff and restrict the patient
+
+<Steps>
+  <Step title="Open the Security tab">
+    Open the patient from **Patients** and select the **Security** tab under the patient's details.
+  </Step>
+  <Step title="Choose the assigned staff">
+    Under **Assigned staff**, choose who should keep access, then select **Save assigned staff**.
+  </Step>
+  <Step title="Turn on the restriction">
+    Switch on **Restrict to assigned staff**, read who will lose access, and select **Restrict record**.
+  </Step>
+</Steps>
+
+## What changes once it's on
+
+- **The patients list** shows **Secured patient** and the patient's number to everyone who is not allowed to see them, and a search by name, phone or email does not find them.
+- **Opening the patient** shows the secured label and the **Security** settings only.
+- **The number is permanent** — never changed, never reused, kept if the restriction is removed.
+- **Every change is recorded** in the audit log, including every use of emergency access.
+- **The calendar, schedules and check-in board** show the visit — time, service, status and provider — as **Secured patient** and a number, without contact details, notes or address. Staff can still move it or change its status.
+- **Search and patient pickers** never find the patient by name, phone, email or record number; searching for "Secured patient" and the number does. Record numbers are hidden.
+- **Billing** keeps every amount and shows the secured label: invoices, payments, pending balances, sales and debtors. A downloaded invoice or statement shows the label, a superbill cannot be created, and an invoice or statement can be sent only to the patient's email on file.
+- **Booking with a provider who is not assigned** asks **Give this provider access?** first — select **Book and give access** to book and add them. A provider must be chosen; "any available provider" is not offered. The full walkthrough is in [Book a restricted client](/practice/work/client-security#book-a-restricted-client).
+
+{/* Screens that show the secured label are being extended in waves 23–24 (plan: docs/Patients/ASSIGNED_CLIENTS_PLAN.md). Add each one here as it ships. */}
+
+## What else is protected
+
+For a staff member who is not allowed to see the patient (the owner and assigned staff are unaffected):
+
+- **Clinical records** — consultations, triage, lab and imaging, prescriptions and dispensing, notes, documents and signature requests, ward admissions, vitals, nursing notes, drug charts, care plans, maternity and theatre records, drug-test orders, claims and pre-authorizations, and secure messages — do not appear, and a link to one shows **This record could not be found, or you do not have access to it.**
+- **Station queues, history lists, the nursing worklist and discharges** leave the patient out.
+- **Bed boards keep the bed occupied** and show **Secured patient** and a number instead of the name, diagnosis or notes.
+- **Files, recordings, imaging and signer uploads** that belong to the patient cannot be opened or listed, and nothing can be written into the patient's chart — a note, vitals, a result, a prescription or a claim gives **This record could not be found, or you do not have access to it.**
+- **The triage patient list** leaves the patient out, and **the audit log** shows **Secured patient** and a number to a manager who is not assigned.
+- **The hospital's copy of tomorrow's appointment reminder and payment notices** name no patient at all, for every patient.
+- **A booking the patient makes online or in their portal** adds the provider they booked with to the patient's assigned staff, recorded in the audit log.
+- **Downloads, exports, AI agents and AI reports, clinic emails and synced outside calendars** follow the same rule. The full list is in [Restrict a client to assigned staff](/practice/work/client-security#what-else-is-protected).
+
+
+## Care team
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Hospital owner or manager to change any role; a patient's primary provider may also add or remove non-primary roles; every staff member can view" />
+
+On a patient's **Security** tab, under **Care team**, tag each staff member's role for that patient — **Primary provider** (exactly one), **Specialist**, **Care coordinator**, **Nurse** or **Billing**. A role can carry an optional end date for a locum or time-limited cover; a locum primary provider's dates must not overlap another primary provider's. Each staff member also gets **My Patients**, a worklist of everyone they're assigned to with upcoming visits, open tasks, overdue forms and new results, plus covering for a colleague and transfer-of-care requests. The full walkthrough is in [Restrict a client to assigned staff → Care team](/practice/work/client-security#care-team).
+
+## VIP patients, sensitive notes and department scope
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Hospital owner or manager to change VIP and department scope; the author, care team or owner/manager for sensitive notes" />
+
+- **VIP / confidential** — on the patient's **Security** tab, turning this on also restricts the patient to assigned staff, and alerts the owner on every emergency access to that patient.
+- **Sensitive notes and documents** — mark an individual note as sensitive (behavioural health, substance use, reproductive health, HIV status, or other) from the notes list. Only the author, the patient's care team, and the owner/manager can open it — everyone else sees **Sensitive note**, with no content. This applies even to a patient who is not otherwise restricted.
+- **Department scope** — restrict a patient to staff of one or more departments instead of, or as well as, naming people.
+
+The full walkthrough for all three is in [Restrict a client to assigned staff](/practice/work/client-security#vip--confidential-clients).
+
+## Emergency access
+
+A staff member who is not assigned can open a restricted patient when they need the record to provide care. Open the **Secured patient** entry, select **Request emergency access**, type why (at least 10 characters), choose **How long** — 1, 4, 12 or 24 hours — and select **Open with emergency access**. The record opens straight away until that time.
+
+- **The owner and the patient's assigned staff are told** at once with **Emergency access was used for a secured client**. The notification names no patient, no staff member and no reason.
+- **Asking again while access is open extends it** (**Extend emergency access**) — the new reason is added beside the first, and no request lasts more than 24 hours.
+- **The owner and assigned staff never see the button**; managers who are not assigned use it like everyone else. AI agents are not given access by it.
+
+## Access report
+
+The owner and managers see an **Access report** on the patient's **Security** tab: **Currently assigned**, every use of **Emergency access** with the reason, length and who ended it — with **End access** on an active grant — and **Recent access events**, with refused attempts and flagged bookings marked **Refused or flagged**. For the whole hospital, open **Audit Log** and select **Emergency access** to list every grant in a date range, page by page, by secured label only. The full details are in [Emergency access](/practice/work/client-security#emergency-access).
+
+## Access log, disclosure accounting and reviews
+
+<Availability editions={['clinic']} plans="Essential and up" roles="Access log: hospital owner and the patient's primary provider. Disclosure accounting and access reviews: hospital owner or manager" />
+
+- **Access log** — below the access report, every time the patient's record was opened, downloaded or printed, and every use of emergency access. Only the owner and the patient's current primary provider see it.
+- **Disclosure accounting** — reports exported or printed, documents or payment notices emailed, and signed documents shared with someone outside the hospital, for that patient. Select **Export CSV** to save the list.
+- **Unusual access alerts** — the owner gets a notification when a staff member opens many secured patients quickly, opens one outside normal hours, or uses emergency access repeatedly. The notice gives counts and a link, never a name. The owner or a manager changes how sensitive these alerts are, and the hospital's own business hours, on **Settings → Security → Access alerts** and **Settings → General → Business hours** — see [Access alert settings](/practice/work/client-security#access-alert-settings).
+- **Quarterly access review** — a reminder on **Audit Log** each quarter to confirm every restricted patient's assignments are still correct, with **Confirm assignments** or **Needs change** for each one.
+
+The full details are in [Restrict a client to assigned staff](/practice/work/client-security#access-log).
+
+To remove it, switch off **Restrict to assigned staff** and select **Remove restriction**. The patient's number stays reserved. The full walkthrough, with the same rules, is in [Restrict a client to assigned staff](/practice/work/client-security).
+
+## Privacy requests and proxy access limits
+
+<Availability editions={['clinic']} plans="Privacy requests: all plans. Proxy access limits: Essential and up" roles="Hospital owner or manager" />
+
+A patient can ask, from their own portal, for the hospital to restrict who can see their record — reviewed the same way as a clinic ([Privacy requests](/practice/work/client-security#privacy-requests)), with a small queue on **Audit Log** and on the patient's own **Security** tab.
+
+For a dependant reached by a guardian through a shared contact email, some sensitive document categories (behavioural health, substance use, reproductive health, HIV status, other) stay hidden from that guardian by default — narrow this on the dependant's **Security** tab, under **Proxy access limits**, or change the hospital-wide starting point every patient without an individual setting follows, on **Settings → Security → Access alerts**. Full details in [Proxy access limits](/practice/work/client-security#proxy-access-limits).
+
+## Check it worked
+
+Ask a staff member who is not assigned to search for the patient by name. They should find nothing, and the list should show **Secured patient** with a number.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The switch is greyed out">
+    Only the owner or a manager can change who can see a patient.
+  </Accordion>
+  <Accordion title="I don't see Request emergency access">
+    It only appears for a staff member who cannot already see the patient. The owner and assigned staff already have access.
+  </Accordion>
+  <Accordion title="&quot;Only the clinic owner or a manager can end emergency access&quot;">
+    Ending emergency access early, and the access reports, are for the owner and managers.
+  </Accordion>
+  <Accordion title="I restricted a patient and now I can't open them">
+    You are a manager who is not assigned. Open the **Secured patient** entry and use the **Security** settings there to assign yourself or remove the restriction.
+  </Accordion>
+  <Accordion title="&quot;This needs two-factor authentication&quot;">
+    Your hospital requires two-factor sign-in for patient records. Sign in with your second factor and try again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

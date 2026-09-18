@@ -1,0 +1,224 @@
+---
+title: Form settings
+description: "The Settings tab of a form — how it identifies respondents, what it says when they finish, and what it records about the connection."
+icon: /images/icons/sliders.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans" roles="Owner, manager, or staff with the Create and edit forms permission" />
+
+Each form carries its own settings. They are part of the form, not a practice-wide preference, so two forms can behave differently.
+
+<Path steps={['Sidebar', 'Forms', 'your form', 'Settings']} />
+
+## What this tab controls
+
+Seven groups: **Marking**, **General**, **Confirmation**, **Collection**, **Access and tracking**, **Clinical measure** and **Danger zone**. **Clinical measure** is explained in [Scored measures](/practice/forms/scored-measures). Every control saves on its own — there is no **Save** button on this tab, and the save state in the top bar tells you when it landed. **Collection** is the exception: a change to the window is an act you confirm, because it changes what a person following your link meets.
+
+### General
+
+| Control | The product's own wording | Default |
+| --- | --- | --- |
+| **Collect email addresses** | "Someone opening a link is asked for their email address before they can submit (an email question in the form counts). Invited people are not asked again." | Off |
+| **Offer respondents a copy of their answers** | "Adds an “Email me a copy” box when the form has an email question. Files, signatures, locations and questions you leave out are not included." | Off |
+| **Limit to one response per person** | "On a link, each person gives an email address and a second response from the same address is refused. Invites count one per person invited." | Off |
+| **Allow editing after submitting** | "The confirmation gives a link back to the answers." On a form that collects a file or a signature, those are kept as they were sent — somebody changing their answers cannot replace a file or sign again | Off |
+| **Show a progress bar** | "Only appears on a form with more than one section." | On |
+| **Shuffle question order** | "Each respondent sees the questions in a different order." | Off |
+
+**How a link knows who is answering.** With **Collect email addresses** or **Limit to one response per person** on, somebody who opens the form's link is asked for **Your email address** at the top of the form, unless the form already has an email question — then that question is the one they answer. The form cannot be sent without an address, and a temporary inbox is not accepted. The address is kept with their answers. Somebody you sent the form to by invite is never asked: the invite already says who they are.
+
+**One response per person means one per email address.** Nobody is sent a code to prove the address is theirs, so a person determined to answer twice can type a second address. When you need to be sure who answered, send the form by invite instead — see [Send a form](/practice/forms/send-a-form). Someone who tries a second time with the same address is told a response has already been recorded for it, and to contact your practice if something needs to change.
+
+**A copy goes out only when the respondent ticks the box**, and only to the address they typed into the form's first email question. It carries no score. After they submit, the confirmation says whether the copy was sent. To keep a particular answer out of copies, see [Build a form](/practice/forms/build-a-form).
+
+### Confirmation
+
+| Control | What it holds | Default |
+| --- | --- | --- |
+| **What the respondent sees after submitting** | Your own thank-you wording. Left empty, it reads "Thanks — your response has been recorded." | Empty |
+| **What it says once it stops accepting responses** | The message on a form that is closed. Left empty, it reads "This form is no longer accepting responses." | Empty |
+| **Or send visitors to this page instead** | A page of your own that a closed form's link opens instead of the message — for example your clinic's contact page. It must be a full address starting with `https://`; anything else is not saved and the box says so. A form embedded on another website always shows the message | Empty |
+| **Stop after this many responses** | A number of your own. Empty means no limit of your own — it does not mean zero | Empty |
+
+### Collection
+
+When the form collects, and what happens to a late answer.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Opens** | Before this, the link says when the form opens instead of showing it | Not set |
+| **Deadline** | The last moment an answer is on time. Shown at the top of the form ("Please respond by …", in the respondent's own time zone), in invitations and in reminders | Not set |
+| **Closes** | After this the link shows your closed message | Not set |
+| **Responses that arrive after the deadline** | **Refuse them — the deadline is the close**, **Accept them, marked as late**, or **Accept them, no mark** | Accept them, marked as late |
+| **Hard close** | Off, somebody part-way through has 30 minutes to finish after you close it. On, they lose their answers | Off |
+| **Keep collecting past my own limit** | Your own response limit stops the form by default; turn this on to keep collecting and mark the extras. Your plan's cap is not overridable | Off |
+| **When it is full, keep it on its page and say so** | At your own limit or your plan's, the link shows your closed message by default — or goes to your own page, if you set one. Turn this on and the form keeps its title and description on its page, and in an embed, with a note that it is full | Off |
+| **Keep collecting through a burst of submissions** | An unusual burst pauses collection by default, and your practice gets a notification naming the form that stopped | Off |
+
+**Close**, **Reopen**, **Schedule** and **Extend deadline** each ask you to confirm, and the confirmation names the effect rather than describing it in general — "Close now — 3 invites are still open; their links will show the closed message". The numbers are counted before you are asked.
+
+Reopening a form that closed on its deadline asks whether the deadline moves too, because otherwise it closes again on the next submission.
+
+**Close now** and **Open for responses** on a scheduled form take it off its schedule. The confirmation says so first, and the button reads **Take off schedule and close** or **Take off schedule and open**.
+
+The badge at the top of **Collection** shows the form's real state, including **At plan limit** and **Paused · unusual traffic**, which depend on your plan and on recent traffic rather than on the dates you set.
+
+**Invitations follow the close date.** On a scheduled form, an invitation's link stops working when the form closes, even if it was sent with a longer life. Move **Closes** later, or switch the form back to open-until-you-close-it, and those links get their own expiry back. With no deadline set, an invitation and its reminders name the close date as the day to answer by.
+
+### Access and tracking
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Who can open this form** | **Anyone with the link**, **Public**, **Patients only**, or **Staff only**. A **Patients only** form has no public link; it is listed in your patients' portal under **Available forms**, and anyone you send it to can open it from their invitation. A **Staff only** form has no public link; your team fills it in from the forms list — see [Publish a form](/practice/forms/publish-a-form) | Anyone with the link |
+| **Allowed embed domains** | The websites allowed to show this form inside a page of their own, one per line. A page that is not on the list is shown a refusal instead of the form | Empty |
+| **Require a bot check** | Puts a short challenge in front of the form so automated traffic cannot submit it. It is always on for a **Public** or **Patients only** form; you can turn it off only for **Anyone with the link** | On |
+| **Record the sender’s IP address** | "Kept with the response for the audit trail. Never shown to the respondent." | On |
+| **Record an approximate location** | "Country and region, worked out from the connection, not the device." Essential plan and above | Off |
+| **Ask for an exact location** | Shows the respondent your reason and a **Share my location** button. Their browser asks their permission and they can refuse — the form works the same either way. The exact location is kept for 90 days, then removed; any country and region recorded stay. Essential plan and above | Off |
+
+<Note>
+  **Patients only** offers the form to every patient of your practice who signs in to the patient portal, while the form is open. With **One response per person** on, it leaves a patient's list once they have answered it. With it off, the form stays on their list after they answer — showing when they last did — so they can fill it in again, up to any limit on attempts you set. To ask one person rather than everyone, send it to them — see [Send a form](/practice/forms/send-a-form).
+</Note>
+
+**Marking** appears on this tab once a form has questions worth marks, and carries the pass mark, when marks are released and how much of the marking the respondent sees. **Logic** and **Automation** are tabs of their own, and **Design** is the paint button in the top bar. For what happens on its own when a response arrives, see [Form automation](/practice/forms/automation).
+
+### Marking
+
+Appears once the form has questions carrying marks. It holds the pass mark, when marks are released, how much of the marking the respondent sees, the time limit, and **Attempts allowed**.
+
+**Attempts allowed** is how many times one person may answer. Every attempt is kept as its own response — a later one never replaces an earlier one, and nothing is deleted.
+
+**When somebody takes it more than once, count** decides which attempt stands for that person in the results: **Their latest attempt** (the default), **Their best attempt**, or **The average of their attempts**. It changes the score spread and the pass rate on **Summary**, not the responses themselves.
+
+Two things switch it off, and the tab says so where you set it:
+
+- **Limit to one response per person** in General is stricter and wins outright.
+- A form that does not know who is answering cannot count anybody. Turn on **Collect email addresses** — somebody opening the link is then asked for their address — or send the form by invite. We will not identify people by their connection to enforce a limit.
+
+### Danger zone
+
+Last on the tab, and it holds one action.
+
+**Archive** stops the link opening and takes the form out of the list. **Responses already collected are kept** and stay exportable, and **Restore** brings the form back as a draft.
+
+Answers are never deleted. They are clinical records and are held for seven years. The clinic owner can remove an archived form that nobody has answered and nothing uses — no invites, no uploaded files, no notes, not sent with appointments — with **Delete forever** in its three-dot menu on the **Forms** page. A form with any of those stays archived, and you are told why. See [Delete a form for good](/practice/forms#delete-a-form-for-good).
+
+### While the clinic is out of office
+
+An **Out of Office** block for the whole clinic has an **Online forms during this time** setting that applies to every public form and web inquiry form:
+
+- **Keep accepting responses** (the default) keeps forms open and shows a notice at the top, for example: "The clinic is away and back on Mon, Oct 12. You can still send this form, and it will be reviewed when they are back. If this is urgent or an emergency, call the clinic or your local emergency number."
+- **Close online forms** stops new responses until the block ends. Opening a form shows **This form is closed while the clinic is away**, with the day you are back. Someone already filling one in when the block starts sees "This form stopped accepting responses while the clinic is away", with the day you are back and the urgent-care line, and keeps what they typed.
+
+The notice shows only the date you're back. It never shows the block's name, note or who created it. A block for one person or one room doesn't affect online forms.
+
+## Set it up
+
+<Steps>
+  <Step title="Open the Settings tab">
+    From the forms list, open the form, then select **Settings** in the tab strip.
+  </Step>
+  <Step title="Decide how respondents are identified">
+    In **General**, turn on **Collect email addresses** if you need to know who answered, and **Limit to one response per person** if one answer each is the rule. **Allow editing after submitting** lets someone come back and correct what they sent.
+  </Step>
+  <Step title="Write the two messages">
+    Under **Confirmation**, put your own wording in **What the respondent sees after submitting** — a next step is more use than "thank you". Then write **What it says once it stops accepting responses**, which is what a late arrival reads.
+  </Step>
+  <Step title="Set your own cap, if you want one">
+    **Stop after this many responses** takes a whole number. Clear the box to remove your cap.
+  </Step>
+  <Step title="Check what is recorded">
+    Leave **Require a bot check** on unless you have a reason not to — on a **Public** or **Patients only** form it cannot be turned off. **Record the sender’s IP address** is on and **Record an approximate location** is off — turn the second on only if where an answer came from actually matters to you. Both location settings are on the Essential plan and above.
+  </Step>
+  <Step title="Decide whether to ask for an exact location">
+    Leave **Ask for an exact location** off unless you genuinely need it. If you turn it on, write **Why you are asking** — nothing is asked until you do. Respondents see your reason and a button on the last page, above **Send**; their browser asks their permission, and refusing changes nothing about the form. An exact location is kept with the response for 90 days and then removed automatically.
+  </Step>
+  <Step title="Put the form on your own website, if you want to">
+    Add each website's address to **Allowed embed domains**, one per line — `*.example.com` covers subdomains but not `example.com` itself. Then select **Share** in the top bar and choose how it appears — **In the page**, or **Floating button** with its **Position**, **Button text** and **Button colour** — and copy the snippet under **Embed on your website** into your site. An in-page form appears where you paste the snippet; a floating button appears in the corner you chose on every page that carries it. The snippet grows the form to fit as people answer it. If your website will not run scripts, open **If your website will not run scripts** for a plain version — that one is a fixed height, so set it tall enough that the **Send** button is never cut off.
+
+    Embedding is on the Team plan and above.
+  </Step>
+  <Step title="Watch the save state">
+    The top bar goes **Saving…** and then **Saved**. If it says **Not saved**, the reason is beside it and in a banner under the tabs.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **These settings belong to the form, not the practice.** Changing them on one form changes nothing on another, and nothing in [Notifications](/practice/settings/notifications) or any other practice setting.
+- **They apply the moment they save, on a published form as well as a draft.** The questions are frozen into a version when you publish; these settings are not, so you do not have to publish again to change one. See [Publish a form](/practice/forms/publish-a-form) for what publishing does freeze.
+- **Show a progress bar** is the one you can see straight away: open **Preview** on a form with more than one section and the bar is there or not.
+- **Stop after this many responses** is your own cap and is separate from your plan's. On the Free plan, a form also stops at 100 responses — see [Change your plan](/platform/plans/change-plan).
+- **Nothing here changes who on your team can open the form.** That is role and permission — see [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+Leave the tab and come back to it. Every switch is where you left it, the two message boxes hold your wording, and the top bar reads **Saved**. Open **Preview** on a form with more than one section to see the progress bar setting take effect.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="A respondent is told a response has already been recorded for their email address">
+    **Limit to one response per person** is on, and a response with that address is already in. If they need to change an answer, turn on **Allow editing after submitting** so future respondents get a link back to theirs — or, for this person, correct it together with them. If two people genuinely share an address, send each of them the form by invite.
+  </Accordion>
+
+  <Accordion title="The link asks for an email address I did not add">
+    **Collect email addresses** or **Limit to one response per person** is on, and the form has no email question of its own. Add an email question if you want the address asked as part of the form, or turn both off if you do not need to know who answered.
+  </Accordion>
+
+  <Accordion title="Every control is greyed out">
+    Either you have read-only access to this form — the banner reads "You can look at this form but not change it" — or the form is archived, which cannot be edited at all. Changing settings needs the **Create and edit forms** permission.
+  </Accordion>
+
+  <Accordion title="Not saved, with a message under the tabs">
+    A settings change is saved with the rest of the form, so a problem anywhere in the form stops it. The banner names the first problem. Fix it on the **Questions** tab and the state returns to **Saved**.
+  </Accordion>
+
+  <Accordion title="I cleared Stop after this many responses and want to be sure">
+    An empty box means no cap of your own, not a cap of zero. It cannot be set to zero.
+  </Accordion>
+
+  <Accordion title="I wrote a confirmation message but the default one still shows">
+    Check the save state first — an unsaved box has not reached the form yet. An empty **What the respondent sees after submitting** falls back to "Thanks — your response has been recorded.", and an empty closed message falls back to "This form is no longer accepting responses."
+  </Accordion>
+
+  <Accordion title="I cannot find logic, marking or design">
+    **Logic** and **Automation** are tabs of their own in the tab strip. **Design** is the paint button in the top bar. **Marking** is a group on this tab, and it appears once the form has questions carrying marks.
+  </Accordion>
+
+  <Accordion title="The two location switches are off and greyed out">
+    Recording where a response came from — approximately or exactly — is on the Essential plan and above, and the line under each switch says which plan your practice is on. A form that had either switch on before a plan change keeps the setting, but no location is recorded with its responses until the plan includes it again. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A form stopped collecting on its own">
+    It received an unusual burst of submissions in a short time, so it paused itself rather than keep accepting them. Your practice gets a notification naming the form. Look through the latest responses first — a burst is often automated — then open the form's **Settings** and select **Reopen**. If the burst was genuine, turn on **Keep collecting through a burst of submissions** for that form.
+  </Accordion>
+
+  <Accordion title="A form says it cannot accept files right now">
+    Your clinic has used its storage for files attached to forms and signature requests. The allowance is **1 GB** on Free, **10 GB** on Starter, **50 GB** on Essential and **250 GB** on Team; Enterprise has no limit. You get a notification when 80% is used and again when it is full. The person filling in the form is only told the form cannot take files right now and to contact you — never anything about your plan. Upgrading raises the allowance at once, and an owner or manager can instead buy a storage pack from the **Forms** page, which adds more for a month without changing the plan. See [Storage and envelope packs](/practice/forms/usage-and-packs) and [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="I turned on Ask for an exact location and nobody is being asked">
+    Write **Why you are asking**. Nothing is asked until you do — respondents read your sentence in the moment they decide whether to share, so it is the whole request as far as they are concerned, and a request with no reason is one nobody can agree to.
+  </Accordion>
+
+  <Accordion title="A respondent says they were never asked for their location">
+    Their browser may not be able to answer. A page opened inside another app, or one not served over a secure connection, has no location to give, and the request is hidden rather than shown as a button that cannot work. If they refused once, their browser remembers — only they can change that, in their own browser settings.
+  </Accordion>
+
+  <Accordion title="My embedded form shows a refusal instead of the questions">
+    The website is not on the form's **Allowed embed domains** list. Add its address here, exactly as it appears in the browser's address bar, and reload the page. An empty list means the form cannot be embedded anywhere, which is the setting's starting point on purpose.
+  </Accordion>
+
+  <Accordion title="The embedded form has its own scrollbar and I cannot see Send">
+    You are using the plain version, which is a fixed height. Either raise its height, or use the snippet **Share** offers first — that one grows the form to fit as people answer it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/forms/editor/settings-tab.tsx, lib/forms/schema.ts (formSettingsSchema), lib/forms/plan-limits.ts */}

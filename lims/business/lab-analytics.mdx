@@ -11,7 +11,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['lims']} plans="Business Lab and above" roles="Owner, Manager and management roles granted “View turnaround-time analytics”. Bench roles are not offered it." />
 
-This is the lab's own trading dashboard: how much work came in over the last month or six, what mix it was, and which tests and referrers actually earned the money. The page says so itself — "Trends and mix across drug testing, lab and imaging. Revenue = collected on orders created in the range."
+This is the lab's own trading dashboard: how much work came in over the last month or six, what mix it was, and which tests and referrers actually earned the money. The page says so itself — "Trends and mix across drug testing, lab and imaging. Revenue = collected on orders created in" the period you picked.
 
 <Path steps={['Sidebar', 'Lab Analytics']} />
 
@@ -42,7 +42,7 @@ That single definition is behind almost every "two people quote different revenu
 
 ## What you're looking at
 
-A range select sits beside the heading and offers **Last 30 days**, **Last 90 days** and **Last 180 days**. Everything below follows it.
+A date-range picker sits beside the heading, with an **Export** button next to it. **Pick any window** — click a single day to see just that day, or a start day and an end day for a custom range of any length. It opens on the last thirty days. Everything below follows it, and the line under the heading names the period you picked.
 
 | Tile | Reads |
 | --- | --- |
@@ -61,7 +61,7 @@ Then four cards. **Collected revenue by day** and **Orders by day** are daily ba
 
 <Steps>
   <Step title="Pick the range deliberately">
-    **Last 30 days** shows you this month's shape; **Last 180 days** shows you a trend. Comparing two months means reading the daily chart, not switching ranges — the tiles always total the whole range.
+    A month shows you this screen's shape; six months shows you a trend. Because the window is yours to set, you can ask for a specific month — 1 to 31 August — rather than a rolling count of days back from today. Comparing two months still means reading the daily chart rather than switching windows: the tiles always total the whole period.
   </Step>
   <Step title="Read Orders against Collected revenue">
     Rising orders with flat revenue means either your mix has shifted to cheaper tests, or work is being invoiced and not collected. **Avg collected per order** tells you which.
@@ -101,10 +101,28 @@ See [Permissions](/platform/team/permissions) and [Roles](/platform/team/roles).
 
 ## Check it worked
 
-- The range select shows the period you chose, and the daily charts start and end on the dates you expect.
+- The picker shows the period you chose, and the daily charts start and end on the dates you expect.
 - **Collected revenue** agrees with the totals on [Payments](/lims/business/payments) for the same orders.
 - **Orders** is at least as large as the count on the owner summary for a day inside the range.
 - **Revenue by referring doctor** lists the practices you know are sending you work.
+
+## Take the figures away
+
+**Export** offers each part of the page as a file, in two formats, for exactly the window on screen.
+
+| Slice | What is in it |
+| --- | --- |
+| **Day by day** | A row per day: drug testing, lab and imaging counts, and revenue |
+| **By test** | A row per test: orders and revenue |
+| **By referrer** | A row per referrer: orders and revenue |
+| **Payment mix** | A row per payment status: orders, collected and billed |
+| **Summary** | Orders, revenue and the patient counts |
+
+Only the slices that have something in them are offered — a lab with no attributed referrals is not given an empty referrer file.
+
+**CSV** opens in Excel, Numbers or Sheets. **Excel (.xlsx)** is a workbook that opens on an **Overview** sheet, and every sheet carries the lab's name, the period and the currency at the top — so a tab forwarded to an accountant still says what it is. Both carry the period in the filename.
+
+The two formats are built from the same figures, so a CSV and a workbook of the same window always agree.
 
 ## Common issues
 

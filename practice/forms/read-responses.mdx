@@ -1,0 +1,357 @@
+---
+title: Read and export responses
+description: "Open what people answered, narrow it down, work through it with your team, and take the answers out as a spreadsheet."
+icon: /images/icons/table.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans — CSV on every plan; Excel, filtering by an answer, Compare groups, saved reports and acting on several responses at once from Starter" roles="Owner, manager, or staff with the View form responses permission; exporting needs Export form responses as well, and sharing results publicly needs permission to publish the form" />
+
+The **Responses** tab holds three views of the same answers: a summary of everyone, a question at a time, and one person at a time. Filters narrow all three at once. When you need the answers outside ClinikEHR, **Export** gives you a spreadsheet.
+
+<Path steps={['Sidebar', 'Forms', 'your form', 'Responses']} />
+
+<TaskHeader
+  before="A published form with at least one response"
+  time="A minute"
+  after="A spreadsheet in your downloads, or the answers on screen"
+/>
+
+## The three views
+
+- **Summary** — counts and charts across everyone who answered. It shows no individual answers, so opening it is not opening anybody's record.
+- **Question** — one question at a time, with every answer to it underneath.
+- **Individual** — the list of responses, and one person's whole response when you open it.
+
+Opening an individual response is recorded in your practice's audit log, because it is a clinical record being read. Looking at the summary is not.
+
+<Warning>
+  **When a form reaches the response limit on your plan, the Responses tab says so** above the views, with the limit and how to raise it. The form stops collecting new responses at that point; every response it already has stays here, and upgrading lets it collect again at once.
+</Warning>
+
+Across the top of **Summary** sit four numbers: **Responses**, **Completion rate**, **Average time to answer** and **Flagged**. **Completion rate** is the share of visits to the form that ended in a response, and the line under it says what it counted — for example "12 of 40 visits ended in a response". A visit is one person opening the form in one browser tab; opening it again in the same tab is the same visit.
+
+**Completion rate** shows "—" in two cases, and says which:
+
+- **Not measured yet** — nobody has opened this version of the form since visits began to be counted. Forms published earlier start counting from the next person who opens them.
+- **Not measured while a filter is on** — a filter narrows the responses but cannot narrow the people who opened the form, so there is no honest share to show.
+
+A **Location** question's card counts how many people shared a location and why the others did not, and how many areas hold five or more shared locations. It never shows a place on a map or a coordinate, and smaller areas are not counted, so nobody can be picked out.
+
+Each response is named by a short reference, such as "Response 3F9A1C2B". The reference belongs to the response, so it stays the same whatever you filter, sort or page through — safe to quote to a colleague.
+
+## Narrow down what you are looking at
+
+The filters sit above all three views, and they apply to all three at once — and to an export. On **Summary** that includes **Prescreening outcomes** and **How this quiz behaved**: every number on the page is about the same responses, for the version named at the top.
+
+| Filter | What it keeps |
+| --- | --- |
+| **Any date** | Responses that arrived between two days, counted in your practice's own time zone |
+| **Any source** | How the response arrived — for example the form's link, an invite, or the patient portal |
+| **Any outcome** | On a screening form only: **Eligible**, **Not eligible**, **Needs review**, or **No outcome** |
+| **Any reviewer** | Responses assigned to one person on your team |
+
+On the **Question** view, a question with fixed choices has a **See who answered** button under each choice (Starter and above). It takes you to **Individual** with only those responses listed, and says so above the list; remove it with the cross beside it.
+
+The filters are part of the page address. Reload, use the back button, or send the address to a colleague who has access, and it opens on the same responses.
+
+When nothing matches, the list says **No responses match these filters.** — that is different from a form nobody has answered yet.
+
+## Save a view as a report
+
+A view you come back to — this month's **Needs review** responses, or everyone who answered **Yes** to one question — can be kept under a name. **Saved reports** is next to the filters on every view. Available on the Starter plan and above.
+
+<Steps>
+  <Step title="Set the view up">
+    Choose the view, the filters and, on **Summary**, any **Compare groups** split.
+  </Step>
+  <Step title="Select Saved reports, then Save this view…">
+    Give it a name and select **Save report**. A form keeps up to 50.
+  </Step>
+  <Step title="Open it again">
+    Select **Saved reports** and choose the name. The page opens on exactly that view, for anyone on your team who can see this form's responses.
+  </Step>
+</Steps>
+
+A saved report keeps the view, not the answers: responses that arrive later appear in it. The bin beside a name deletes the report — only the saved view goes, and that works on any plan, so a practice that changes plan can still tidy up.
+
+## Compare groups
+
+On **Summary**, **Compare groups** (Starter and above) splits every chart by the answer to one question — for example, how people who chose each clinic location answered everything else.
+
+<Steps>
+  <Step title="Choose a question under Compare groups">
+    Only questions with between two and six fixed choices are offered, because each group needs a colour of its own that cannot be confused with another.
+  </Step>
+  <Step title="Read the split charts">
+    Each question with fixed choices becomes a stacked bar per answer, with a table of the same numbers beneath it. People who skipped the question you split by are their own group, **No answer**.
+  </Step>
+  <Step title="Go back to one chart per question">
+    Choose **Don’t split**.
+  </Step>
+</Steps>
+
+If a question can no longer be used to split — it changed in a newer version, for example — **Summary** shows the results without the split and tells you the split was not applied.
+
+## Where responses came from
+
+A form that records the approximate location of each connection shows **Where responses came from** on **Summary**: the countries and regions responses were sent from, as a share of the responses that carried a location.
+
+**A country or region with fewer than five responses is not listed**, and a line under the table says how many were left out. On a small form, a single response from a small town is enough to identify somebody. No map is drawn, and an exact location a patient chose to share is never plotted here.
+
+## Work on several responses at once
+
+On **Individual**, tick the responses you want — or tick the box in the header to choose every response on the page — and a bar appears above the list. Acting on more than one response at a time is on the Starter plan and above; on the Free plan the bar says so, and you can still flag, assign or move to trash one response at a time from the response itself.
+
+| Action | What it does |
+| --- | --- |
+| **Flag** | Takes the responses out of the results, as if the bot checks had set them aside |
+| **Restore to results** | Puts flagged responses back into the results |
+| **Assign** | Gives the responses to one person on your team to review. They get a notification |
+| **Unassign** | Removes the reviewer |
+| **Move to trash** | Takes the responses out of every count, chart and export on this form |
+| **Restore from trash** | On the **Trash** tab: puts them back exactly as they were |
+| **Export selected** | Exports only the responses you ticked |
+
+You can act on up to 500 responses at a time. The message afterwards counts what actually changed, and says separately how many were already in that state — so ticking ten responses when three were already flagged tells you seven were flagged, not ten.
+
+<AuditNote action="Flagging, moving to trash, restoring and assigning responses," />
+
+### Trash
+
+**Move to trash** is for a response that should not be in this form's results — a test you sent yourself, or a duplicate. Nothing is deleted: the response keeps its answers and its history on the **Trash** tab, and **Restore from trash** returns it exactly as it was.
+
+This is about individual responses. Archiving a whole form is a different action, on the form itself.
+
+### Choose the columns
+
+**Columns** chooses what the list shows beside each response: **Received**, **Source**, **Score**, **Outcome** and **Reviewer**. Your choice is remembered for you on this form; it does not change anybody else's view.
+
+## One response at a time
+
+Opening a response shows every question in the order it was asked, with **—** for a question somebody did not answer.
+
+- **Previous** and **Next** move through the responses in your current filters, in the same order as the list.
+- **History** lists what happened to the response — when it was started, each page moved through, when it was submitted — and what your team did to it afterwards.
+- **A drawn signature** shows as **Show signature**. The image appears when you select it, and viewing it is recorded in your practice's audit log, the same as opening an attachment.
+- **Reviewer** shows who the response is assigned to, if anybody.
+- **Marks** show beside each question on a form that carries them, as the marks earned out of the marks it is worth.
+- **Adjust mark** changes the mark a question earned — for an answer the key did not expect but that is right. You write a reason before you can save. The question then shows **Adjusted**, with what it changed from and to, when, and your reason, and the score reads **Adjusted after review**. **Return this question to its automatic mark** puts the original back, and is recorded the same way. Adjusting needs the **Adjust quiz marks** permission.
+- **A form that shuffles its questions** lists them in the order this respondent saw them, and says so.
+- **On a screening form**, what the result led to shows under the details: **Joined the waiting list** (with where they are on it and since when), **Agreed to be contacted** (and whether a CRM contact was added) and **Booked from the result**. Only what happened is shown — nothing appears when none of these did.
+
+The mark the form worked out is never overwritten: an adjusted mark is kept beside it, and every change is recorded in your practice's audit log.
+
+A response in trash says so at the top, with **Restore** beside it.
+
+## Share results on a public page
+
+You can publish a page of a form's results — for a staff survey or a community poll, say — that anybody with the link can read without signing in.
+
+<Steps>
+  <Step title="Open Summary">
+    The card is at the bottom: **Share these results on a public page**.
+  </Step>
+  <Step title="Turn it on, and confirm">
+    Select **Share results**. Only somebody who can publish the form can change this.
+  </Step>
+  <Step title="Share the address">
+    The card shows where the page is. It is the form's own link, followed by `/summary`.
+  </Step>
+</Steps>
+
+What the page shows, and what it never shows:
+
+- **Only questions with fixed choices, scales and grids.** Nothing anybody typed, no numbers, no dates, no names, no email addresses, and no locations.
+- **Nothing at all until at least five valid responses have arrived.** Before then, the page says it is waiting for more.
+- **Any count under five reads Fewer than 5.** Where hiding one small count would let somebody work it out from the total, another count is hidden with it.
+- Flagged responses and responses in trash are not counted.
+
+The page is only reachable while the form is published and open to anyone with its link. It is not offered to search engines unless the form itself is public. Turning the switch off takes the page down straight away.
+
+<AuditNote action="Turning the public results page on or off," />
+
+## See what happened to the form
+
+The **Activity** tab is the form's own history: every time somebody opened it, moved through it or submitted, and everything your team did to it — published, changed a setting, exported. Filter it to **People answering**, **Your team**, or leave it on everything.
+
+It tells you *how* each answer arrived — from the public link, from an invite, or from the patient portal — but never *who* an anonymous respondent was, and never where they were. Opening this tab is not recorded in your audit log, because it shows what happened rather than what anybody wrote.
+
+## Screening forms: what to do with a "Needs review"
+
+A screening form can decide on its own whether somebody qualifies — **Eligible**, **Not eligible**, or **Needs review** when its rules cannot tell. The ones it cannot decide gather in a **Review** tab on **Forms**, which appears only when something is waiting and shows how many.
+
+<Path steps={['Sidebar', 'Forms', 'Review']} />
+
+Each row names the form, when the answer arrived, and whatever the form's author wrote about why it needs a look. It does not show anybody's answers — to read those, open the response.
+
+A long queue is split into pages. **Show** at the foot of the list sets how many rows a page holds, and the line beside it says how many are waiting in all — the number on the **Review** tab counts every one of them, not only the page you are on.
+
+**Eligible** and **Not eligible** each record your decision with your name and the time, and you can say why. That note stays with the response; it is not written to your practice's audit log, because it is clinical detail rather than a record of what you did.
+
+<Note>
+  **Your decision is recorded beside the form's, not over it.** The form's own outcome still says **Needs review** afterwards — that is deliberate. "The rules said eligible" and "the rules said review and a clinician decided eligible" are different facts, and the record keeps both.
+</Note>
+
+Counts and filters elsewhere show your decision, not the form's, so a queue you have worked through reads as done.
+
+On **Summary**, **Prescreening outcomes** shows the counts for the version named at the top of **Summary** and the filters you have on and, under **Outcomes over time**, the same outcomes week by week. **Which rule set the outcome** counts the responses each of your **Logic** rules decided, most first, so you can see which rule does most of the sorting — a rule you have since deleted is counted as **A rule no longer in this form**. It counts the rule the answers met, so a result a colleague changed on review still counts under its rule. When people booked through the **Book** button on their result, a line says how many.
+
+## The waiting list
+
+When a screening outcome's next step is **Tell them they are on a waiting list**, everyone who reaches it is added to the **Waiting list** tab on **Forms** — the tab appears only when somebody is waiting.
+
+<Path steps={['Sidebar', 'Forms', 'Waiting list']} />
+
+The list is oldest first and shows the form and when each person joined, never their answers. A long list is split into pages — **Show** sets how many a page holds — and the number beside each person is their place on the whole list, counting the pages before. **In CRM** means they agreed to be contacted and have a CRM contact; **Booked** means they booked through their result.
+
+- **Offer a place** records that you offered one, with your name, the time and an optional note. Nothing is sent to them from here.
+- **Take off the list** asks you to confirm, and keeps their response.
+- **Put back on the list** is on the **Place offered** and **Taken off the list** views.
+
+## Follow up in CRM, with permission
+
+On the **Logic** tab, **What the practice does** can add a person to your CRM contacts with a follow-up task for an outcome. Choose the questions that hold **Their name**, **Their email** and **Their phone**.
+
+The form then shows **The practice may contact me about my result** above **Submit**, unticked. Only when somebody ticks it is a contact made — with their name, contact details and their result, never their answers. Nobody who leaves it unticked is added.
+
+## Tell a team about a result
+
+**What the practice does** can instead **Notify a team**. Choose **Front desk**, **Clinical team** or **Managers** under **Which team**. When a response reaches that outcome, a notification titled **Prescreen follow-up** with the team's name appears in your practice's notifications, linking to the form's responses. It names the form and the team — never the person or their answers.
+
+The notification is for everyone who can see your practice's notifications; the team's name says who should pick it up. It follows your **Document** notification setting, is raised once when the response is first submitted, and never for a response held back as suspected automated traffic.
+
+## Bookings from a result
+
+When an outcome offers an appointment, the **Book** button carries a one-time reference, so the booking records which screening result it came from — including a booking paid for online, which is linked once the payment is confirmed.
+
+### What a screening form offers next
+
+On the form's **Logic** tab, **What each answer tells them** holds the message for each outcome and what to offer next. Choose **Offer them an appointment** and, when your clinic has a booking page, **Which service to open** lists the services on it. Pick one and the respondent's **Book** button opens your booking page with that service already chosen; leave it on **Let them choose** and they start from the full list. If a service you chose is later removed from your booking page, the box says so and the button opens the full list.
+
+## How this quiz behaved
+
+A form that carries marks gets an extra panel on **Summary**, above the per-question charts. It is not there on a form without marks.
+
+| Column | What it means |
+| --- | --- |
+| **Answered** | How many answers to that question could be marked at all |
+| **Got it right** | The share of people who did. **High means the question was easy** — the wording beside the number says which |
+| **Tells them apart** | How differently the strongest and weakest respondents did on it |
+
+**A negative number under "Tells them apart" is worth looking at.** It means the people who scored best overall did *worse* on that question, which usually means the answer key for it is wrong. The panel says so beside the number.
+
+Both of those columns stay blank until enough people have answered — ten and twenty respectively. A figure worked out from three people would look definite and mean nothing, so it is not shown at all.
+
+A form with no pass mark has no pass rate, and the panel says that rather than showing 0%.
+
+Above the question table the panel also shows:
+
+- **How people scored** — how many people reached each score, with the pass mark drawn across the chart as a dashed line: bars on or past the line reached it. A pass mark set as a percentage is drawn at that share of the most a response could score. The pass mark is also named above the chart. When somebody took the quiz more than once, they count once, with the attempt set in **Settings → Marking** (their latest by default). The question figures still count every attempt.
+- **Pass rate over time** — how many passed and did not pass each week.
+- **Average time** — how long an attempt took, from opening the form to sending it. "—" when nothing was timed.
+- **Attempts** — how many attempts there were, and **Attempts per person** when anybody tried more than once.
+
+Where somebody has adjusted a mark, the panel counts the adjusted mark, not the automatic one.
+
+## Export the answers
+
+<Steps>
+  <Step title="Select Export">
+    It is on the **Responses** tab. If it is greyed out you do not have the **Export form responses** permission — see [Staff permissions](/platform/team/permissions).
+  </Step>
+  <Step title="Choose the shape">
+    **One row per response** is what most people want: a column for each question, a row for each person.
+
+    **One row per answer** gives you a row for every question a person answered. It is longer and less readable, and it is the shape you want if you are analysing the data properly — it survives questions being added or removed between versions, where columns do not.
+  </Step>
+  <Step title="Choose the file">
+    **CSV** opens anywhere and is on every plan. **Excel (.xlsx)** keeps numbers as numbers and dates as dates, and is available from Starter up.
+  </Step>
+  <Step title="Choose which responses">
+    All of them, only the valid ones, or only the ones flagged for review. **The filters on the Responses tab apply to this file.** If you ticked responses and chose **Export selected**, the file holds exactly those.
+  </Step>
+  <Step title="Select Start export and wait">
+    Larger exports are prepared in the background. The list on the same sheet shows each one and its progress, and the file appears there to download when it is ready. Files are kept for 24 hours.
+  </Step>
+</Steps>
+
+### Export every week
+
+Under **Every week** on the same sheet, choose a day and a time and select **Export every week**. The same file — the shape, responses and format chosen above — is built every week in your clinic's time zone. You get a notification in the app when it is ready, and it waits on this sheet for 24 hours like any export. **Nothing is emailed.**
+
+Each week your permission, your role and your plan are checked again; if one has changed, that week is skipped and the sheet says why. Weekly exports need the Starter plan or above. **Stop** ends it. A weekly export is yours alone — colleagues set up their own.
+
+<AuditNote action="Requesting an export, downloading one, and each weekly export," />
+
+Responses in trash are never exported.
+
+## What the file contains
+
+A column for every question on the published form, in the order they appear, plus when the response arrived and whether it was flagged. An answer somebody did not give is an **empty cell** — never a zero, which would read as an answer.
+
+If the form changed between versions, a response given to an older version still exports: any question it never saw is simply empty.
+
+**A file upload** appears as the filename, not the file. Download the file itself from the individual response.
+
+## Check it worked
+
+The export appears in the list on the sheet with a **Ready** state and a file size, and downloads when you select it. Open it: the first row is your questions, and the number of rows below matches the count on the **Individual** view for the filters and set you chose.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Export is greyed out">
+    Exporting is its own permission, separate from reading responses — somebody can be allowed to open one person's answers and not to take the whole set out of the building. Ask an owner for **Export form responses**.
+  </Accordion>
+
+  <Accordion title="Excel (.xlsx) is disabled">
+    Excel exports are on Starter and above; CSV is on every plan and holds the same answers. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A question is missing from Compare groups">
+    Only questions with between two and six fixed choices can split the results. A free-text question, a scale, or a question with seven or more choices is not offered.
+  </Accordion>
+
+  <Accordion title="A place I expected is not under Where responses came from">
+    Countries and regions with fewer than five responses are left out so nobody can be identified, and the line under the table says how many. Responses sent before the form started recording locations have no place at all.
+  </Accordion>
+
+  <Accordion title="The public results page says there are not enough responses yet">
+    The page appears once at least five valid responses have arrived. Flagged responses and responses in trash do not count towards the five.
+  </Accordion>
+
+  <Accordion title="The public results page cannot be found">
+    The form has to be published and open to anyone with its link, and the switch on **Summary** has to be on. If the form was closed to the public or archived, the page goes with it.
+  </Accordion>
+
+  <Accordion title="Show signature says the signature could not be shown">
+    A signature is shown only once it has passed the same safety check as any other upload. If the check is still running, try again in a minute.
+  </Accordion>
+
+  <Accordion title="A bulk action says nothing changed">
+    Every response you ticked was already in that state — already flagged, already in trash, or already with that reviewer. Nothing was changed, and nothing was recorded.
+  </Accordion>
+
+  <Accordion title="A cell starts with an apostrophe">
+    That is deliberate, and only happens on an answer that begins with `=`, `+`, `-` or `@`. A spreadsheet treats those as the start of a formula and would try to run it when you open the file. The apostrophe makes the spreadsheet show the text exactly as the person typed it. Delete it if you need the raw character.
+  </Accordion>
+
+  <Accordion title="The export is still preparing">
+    Large sets are built in the background so your screen is not blocked. The list refreshes on its own. If it stays on the same step for more than a few minutes, request it again — a stalled job does not block a new one.
+  </Accordion>
+
+  <Accordion title="The file is not in the list any more">
+    Exports are kept for 24 hours and then removed, because they hold patient answers in a file with no access control of its own. Request a fresh one.
+  </Accordion>
+
+  <Accordion title="A question I removed is still a column">
+    Every question anyone actually answered gets a column, including one you have since deleted — otherwise their answer would vanish from the file. Use **One row per answer** if you want only what each person really saw.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

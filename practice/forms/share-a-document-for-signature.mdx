@@ -1,0 +1,149 @@
+---
+title: "Share a document for signature with other clinics"
+description: "Start a consent or agreement from one another clinic has shared, or share one of your own after a ClinikEHR reviewer reads it."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="Starting from a shared document on any plan; sharing your own on Team and Enterprise" roles="Owner, manager, or staff with the Create and edit forms permission to start from one; the Share templates with other clinics permission to share one" />
+
+Clinics share documents for signature in the template gallery — a consent, an agreement, a policy — with the recipients and fields already placed. Start from one and it becomes your own document to change and send. Share one of yours and, once a ClinikEHR reviewer has read every page, other clinics can start from it too.
+
+<Path steps={['Sidebar', 'Forms', 'eSignatures', 'Send a document for signature', 'Start from the registry']} />
+
+<TaskHeader
+  before="Nothing — or, to share one, a document that is ready to send"
+  time="A couple of minutes, plus a short safety check"
+  after="A copy in your clinic you can change and send, or your document waiting for review"
+/>
+
+## Start from a shared document
+
+<Steps>
+  <Step title="Open the list">
+    On the **eSignatures** tab, select **Send a document for signature**, then **Start from the registry**. The documents other clinics have shared are listed with who shared them. **Search shared documents** narrows the list by name.
+  </Step>
+  <Step title="Look it over">
+    Select a document to see its pages with each field outlined, who signs it, and the wording of every field.
+  </Step>
+  <Step title="Use it">
+    Select **Use this document**. A copy is made in your clinic and opens in the signing builder.
+  </Step>
+  <Step title="Wait for the safety check">
+    Every file your clinic holds is checked for viruses before it can be opened, and your copy is too. While that runs the builder says **This document is being checked for viruses and prepared** and opens the document by itself when it is ready — usually within a minute. If it is still waiting after a few minutes, select **Check again**.
+  </Step>
+  <Step title="Make it yours">
+    Rename recipients, move or add fields, then send it as you would any document — see [Prepare a document for signature](/practice/forms/prepare-a-document-for-signature).
+  </Step>
+</Steps>
+
+You can also start from one in the template gallery: choose **Signable documents** in the kind filter, then **Use template** on a tile.
+
+A shared document that asks you to credit its author prints that credit on the certificate of completion of every signed copy — for example "Based on “Consent for treatment” by City Clinic".
+
+## Share one of your documents
+
+<Steps>
+  <Step title="Open it">
+    Open the document in the signing builder. It must be ready to send, with its fields saved.
+  </Step>
+  <Step title="Choose Publish to registry">
+    Select **Actions**, then **Publish to registry**. If you have changes on the page that are not saved yet, the item reads **Save your fields to share this document** — select **Save** first.
+  </Step>
+  <Step title="Describe it">
+    Give it a **Registry name** (lower-case letters, numbers and hyphens), say **What is it for?**, and choose a **Category**, a **Licence** and any **Tags**. When you share it again later, **What changed (for an update)** is shown to clinics already using an earlier version.
+  </Step>
+  <Step title="Send it for review">
+    Select **Send for review**. It appears under **Your contributions** in the template gallery as **In review**.
+  </Step>
+</Steps>
+
+What is shared: the pages, who signs, and where each field sits. What is not: any answer your team filled in ahead of time, your clinic's stamp, and the details hidden inside the file, such as who created it and any comments left on its pages.
+
+### What is refused
+
+Before it is sent for review, every page and every field is read. A document is refused, with the page or field named, when it contains:
+
+- your clinic's name, email address, phone number, website or street address;
+- a person's details — a name after "Patient:" or a title such as "Dr", an email address, a phone number, a record number or a specific date.
+
+Take the wording out of the file, upload it again, place the fields, and share that document instead. A logo, a signature image or a scanned page cannot be read this way, which is why a reviewer reads every page as well.
+
+## How review works
+
+A ClinikEHR reviewer reads every page and every field before a document appears in the gallery. They either publish it or send it back with a reason, which appears under the document in **Your contributions**. Nothing reaches another clinic without that review, and a document is published only once its file has passed the safety check.
+
+Sharing a document that is already in the gallery sends an update. Clinics keep getting the published version until the reviewer approves the new one, and **Your contributions** shows **Update in review**.
+
+## When a newer version is shared
+
+When you open a document you started from the gallery and its author has published a newer version, the builder says **A newer version … is available** and lists what changed — pages, recipients and fields — with the author's notes. Your document never changes by itself. Select **Start a copy of the new version** to make a new document from it, or **Not now**. If the author withdraws it from the gallery, the builder says so and your document keeps working.
+
+## Who can do this
+
+| Action | Who by default | Governing permission |
+|---|---|---|
+| **Start from the registry** | Owner, manager, staff | **Create and edit forms** |
+| **Publish to registry** | Owner, manager | **Share templates with other clinics** |
+| See the list of shared documents | Anyone who can open Forms | **View forms** |
+
+Permissions only restrict a staff member once someone saves their permissions. A refused action is recorded in the audit log; an allowed one is not.
+
+## Check it worked
+
+- **Started from one** — the document is on the **eSignatures** tab under **Send a document for signature**, with its recipients and fields, and opens in the builder once checked.
+- **Shared one** — **Your contributions** in the template gallery shows it **In review**, then **Published** once approved.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="It says the document cannot be shared yet, and names a page">
+    That page contains your clinic's details or what looks like a person's. Remove the wording from the file, upload it again and share the new document.
+  </Accordion>
+
+  <Accordion title="It says the document is still being prepared">
+    Only a document that is ready to send can be shared. Open it and wait for the safety check to finish, then try again.
+  </Accordion>
+
+  <Accordion title="Publish to registry is not in Actions">
+    You need the **Share templates with other clinics** permission. Sharing is available on the Team and Enterprise plans.
+  </Accordion>
+
+  <Accordion title="My copy is still being checked">
+    The check usually takes under a minute. Leave the page open and it opens the document by itself, or select **Check again**. A copy that fails the check cannot be opened; start from the shared document again.
+  </Accordion>
+
+  <Accordion title="It says my clinic has used all of its file storage">
+    A copy counts towards your clinic's storage. See [Usage and add-on packs](/practice/forms/usage-and-packs) to add more.
+  </Accordion>
+
+  <Accordion title="Your document was submitted but its file could not be copied">
+    Share it again. The submission that is missing its file cannot be published.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does changing my copy change the shared document?">
+    No. Your copy is yours, and nothing you change is shared back.
+  </Accordion>
+
+  <Accordion title="Can other clinics see who signed my copies?">
+    No. Only the blank document is shared — never an envelope, a recipient or a signature.
+  </Accordion>
+
+  <Accordion title="Can I take a shared document back out of the gallery?">
+    Yes. In **Your contributions**, retire it. Clinics that already made a copy keep theirs.
+  </Accordion>
+
+  <Accordion title="Is a patient's name on the page ever shared?">
+    A page that looks like it carries a person's details is refused before review, and a reviewer reads every page. Share a blank document, not one that has been filled in.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

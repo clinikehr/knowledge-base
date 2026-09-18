@@ -1,0 +1,455 @@
+---
+title: Build a form
+description: "Write questions in the form builder, choose how each one is answered, group them into sections, and check the result in Preview."
+icon: /images/icons/square-pen.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans — signature questions need a paid plan" roles="Owner, manager, or staff with the Create and edit forms permission" />
+
+Write the questions, choose how each one is answered, and see what a respondent would see. Your work saves as you go — there is no **Save** button.
+
+<Path steps={['Sidebar', 'Forms', 'Blank form']} />
+
+<TaskHeader
+  before="Nothing — a blank form is enough to start"
+  time="5 to 15 minutes for a short form"
+  after="A draft with its questions written, ready to publish"
+/>
+
+## What you're looking at
+
+Along the top sit the form's name, a star, the save state, **Undo**, **Redo**, **Design**, **Copy link**, **Comments**, **Share**, **Preview**, **Publish** and a three-dot **More actions** menu. Under them are the tabs: **Questions**, **Logic**, **Automation**, **Invites**, **Responses**, **Activity** and **Settings**. A badge beside the name says whether the form is **Draft**, **Published**, **Closed** or **Archived**.
+
+**Copy link** puts the form's public address on your clipboard without opening anything. You can use it on a draft — the message tells you the link will not open for anybody until the form is published, so you can paste it into an email you are still writing.
+
+**More actions** holds **Duplicate**, **Version history**, **Share with your team**, **Print blank form**, **Publish to registry** and **Archive**. **Duplicate** takes you straight to the copy. To move a form into a folder, use its three-dot menu on the forms list instead.
+
+The **Questions** tab opens with a header card — the form's title and a **Form description** — followed by one card per question. Select a card to open it; the open one is marked by a bar down its left edge and shows its full controls.
+
+On a computer, a rail floats to the right of the questions. On a phone or tablet the same buttons sit in a bar along the bottom: **Add question**, **Add title and description**, **Add image**, **Add video**, **Add section**, **Import questions** and **Question bank**. **Question bank** opens **Import questions** straight on your saved questions.
+
+## Write the questions
+
+<Steps>
+  <Step title="Name the form">
+    Type over **Untitled form** in the header card, or in the box at the top of the screen — they are the same name. Add a **Form description** underneath if the form needs an explanation before the first question.
+  </Step>
+  <Step title="Add a question">
+    Select **Add question**. A new card opens below the one you had selected, so questions land where you are looking rather than at the bottom of a long form.
+  </Step>
+  <Step title="Write the wording">
+    Type into the **Question** box. Leave it empty for now if you want — the builder lets you, and warns you before you publish instead of blocking you mid-sentence.
+  </Step>
+  <Step title="Choose how it is answered">
+    Use the question-type picker beside the wording. The types are grouped:
+
+    | Group | Types |
+    | --- | --- |
+    | **Text** | **Short answer**, **Paragraph**, **Email**, **Phone**, **Number**, **Link** |
+    | **Choice** | **Multiple choice**, **Checkboxes**, **Dropdown**, **Multi-select** |
+    | **Scale** | **Linear scale**, **Rating** |
+    | **Grid** | **Multiple-choice grid**, **Checkbox grid** |
+    | **Date and time** | **Date**, **Time**, **Date and time**, **Date range** |
+    | **Capture** | **File upload**, **Signature**, **Location** |
+    | **Calculated** | **Calculation** |
+    | **Display only** | **Title and description**, **Image**, **Video** |
+
+    Changing the type discards the options and any marking on that question, so pick it before you write out a long list.
+  </Step>
+  <Step title="Fill in the options">
+    On a choice question, type into each option row and select **Add option** for another. **add “Other”** adds a row a respondent types into themselves, rather than a label they pick.
+
+    A question keeps at least one option — the remove button is disabled on the last one, with "A question needs at least one option" as its tooltip.
+  </Step>
+  <Step title="Say whether an answer is compulsory">
+    Flip **Required** in the open card's footer. A required question carries a red asterisk after its wording once the card is closed again.
+
+    If somebody selects **Next** with a required question on the page still empty, the form lists the questions that need an answer and takes them to the first one.
+  </Step>
+</Steps>
+
+## Work something out from the answers
+
+A **Calculation** question shows a number worked out from other answers — a BMI, a total score, a number of days. Nobody types into it.
+
+<Steps>
+  <Step title="Add the question">
+    Choose **Calculation** in the question-type picker. It is the only type in the **Calculated** group.
+  </Step>
+  <Step title="Write the sum">
+    Build it in the **Calculation** box. **Insert a question** adds one of the form's number, scale or rating questions, or a choice question whose options carry marks. **Insert a function** adds **min**, **max**, **sum**, **avg**, **round**, **abs**, **floor**, **ceil** or **sqrt**. Type the rest yourself: numbers, brackets, and + − × ÷.
+  </Step>
+  <Step title="Choose how it is shown">
+    Set **Decimal places**, and add a **Unit (optional)** such as kg/m².
+  </Step>
+</Steps>
+
+- The number updates on the form as the respondent answers, and is worked out again when the answers arrive, so what is kept is never simply what the page showed.
+- If an answer it needs is missing, or the sum cannot be worked out — dividing by zero, for example — it stays blank rather than showing 0.
+- It has no **Required** switch, because nobody can type into it. **Logic** rules can use it like any other number.
+- A calculation that depends on itself, directly or through another calculation, is flagged in the builder and left blank on the form.
+
+## Fill answers in from the patient record
+
+A short answer, paragraph, email, phone or date question can arrive already answered for a patient you send the form to. Open the question's three-dot menu, select **Fill in from the patient record**, and choose the field under it. Only fields that fit that kind of question are listed — a date question can take a date of birth, not a phone number.
+
+It fills in when you send the form to a patient chosen from your records. The patient sees a note saying some answers came from their record, and can change any of them before they submit. A form opened from a plain link is never filled in.
+
+<AuditNote action="Filling in a form from a patient's record" />
+
+## Ask where somebody is
+
+A **Location** question asks the respondent's device where it is. Nothing is asked until they choose to share.
+
+- The respondent sees **Share my location** and **Don’t share**, with a sentence saying you will see the place with their answers. Pressing **Share my location** makes their browser ask their permission, and the place is added only if they allow it.
+- **Don’t share**, a refusal, and a device that cannot tell where it is are all answers, and the response says which one. A required **Location** question never stops somebody submitting.
+- There is no box to type a place into. A place somebody types cannot be checked, so it is not accepted as a location.
+- An exact location is kept for 90 days. After that, only the area it was in — to within about 10 kilometres — is kept, in the response and in exports.
+- Recording a location needs the Essential plan or above. On a plan without it, the respondent is not asked at all: the question reads **Location isn’t collected for this form**, nothing is shared, and the response reads **Not shared — locations are not included on this practice’s plan**. A required **Location** question still lets them submit.
+- When a team member fills in a form at the practice, their device is not the respondent's, so the question offers **Continue without a location** instead.
+
+A location typed into a **Location** question before it asked the device stays as it was, shown as **Typed by the respondent**.
+
+## Keep an answer out of a respondent's copy
+
+When a form offers respondents a copy of their answers — see [Form settings](/practice/forms/form-settings) — select **Leave out of the respondent’s copy** in a question's three-dot menu to keep that one answer out of it. Files, signatures and locations are never included, so the option is not offered on those.
+
+## Rearrange, copy and remove
+
+The open card's footer carries **Move up**, **Move down**, **Duplicate question** and **Delete question**. On a computer you can also drag a card by the handle above it.
+
+**More options** adds the two extras a question can carry: **Add description** puts a line of explanation under the wording, and **Add help text** puts one under the answer box. Both toggle back off from the same menu.
+
+Some moves are refused. If a later question depends on an earlier answer, dragging the earlier one below it would break that link, so the builder stops the move and says which rule it would break rather than quietly dropping it.
+
+**A grid's rows and columns** each have **Move up** and **Move down** beside them. Moving one keeps every answer and answer key attached to it. On a one-choice grid, **Each column can be chosen in only one row** turns it into a ranking — for example, putting treatments in order of preference: the form refuses the same column in two rows, and says "Each choice can be used in only one row".
+
+## Import questions from another form
+
+Reuse questions you have already written instead of typing them again.
+
+<Steps>
+  <Step title="Choose where they go">
+    Select the question you want them to follow. With nothing selected they go to the end of the last section.
+  </Step>
+  <Step title="Select Import questions">
+    It is the last button on the rail, or in the bar along the bottom on a phone.
+  </Step>
+  <Step title="Pick the form and the questions">
+    Choose a form under **Import from**, then tick the questions you want. **Select section** ticks a whole section at once.
+  </Step>
+  <Step title="Select Import">
+    The questions are added as new questions of this form — changing them later changes nothing in the form they came from. Their answer keys and marks come with them.
+  </Step>
+</Steps>
+
+Anything that only made sense in the other form is left behind, and the panel lists each one before you close it: a question that appeared only after an answer you did not import now always shows, a rule that jumped between sections stays in the form it belongs to, and a question linked to a chart field this form already fills loses that link. **Undo** removes the whole import while you are still on the page.
+
+The panel has three tabs: **Your forms**, **Question bank** and **Community**. The steps above use **Your forms**.
+
+## Save questions to reuse them
+
+Keep the questions you write into form after form — a smoking history, a medication list, a consent paragraph with its tick-boxes — and add them to any form in one step.
+
+<Steps>
+  <Step title="Open the question bank">
+    Select **Import questions**, then the **Question bank** tab.
+  </Step>
+  <Step title="Select Save questions from this form">
+    Every question in the form you have open is listed, section by section.
+  </Step>
+  <Step title="Tick the questions and name them">
+    Rules between the questions you tick come with them. Type a **Name** such as "Smoking history" and, if it helps, say **What is it for?**
+  </Step>
+  <Step title="Save them">
+    The button counts what you ticked — for example **Save 2 questions**.
+  </Step>
+</Steps>
+
+To use them in a form, select the question you want them to follow, open **Import questions** → **Question bank**, find them with **Search saved questions** and select **Add to form**. They arrive as new questions of that form: changing them there changes nothing in your question bank, and selecting **Delete** on a saved entry changes no form that already has its questions.
+
+Saved questions belong to your practice. Anyone who can create and edit forms can save, add and delete them.
+
+## Add questions other clinics shared
+
+The **Community** tab lists question groups other clinics have shared. A ClinikEHR reviewer checks every group before it appears there. Select **Add to form** to put a group's questions into the form you have open.
+
+**Already in this form** names each shared group you added and the clinic that shared it. Groups are shared on the condition that you credit that clinic.
+
+To share your own saved questions, select **Share** beside them on the **Question bank** tab. They go through the same review as a shared form — see [Forms](/practice/forms). Sharing with other clinics needs the Team or Enterprise plan.
+
+## Break a long form into sections
+
+Select a question, then **Add section**: every question after the one you selected moves into a new section directly below. With no question selected, a new empty section goes at the end. Each section gets its own title and description, and carries its position above them — **Section 1 of 3** — so you can keep your place in a long form. Sections have their own **Move up**, **Move down** and **Delete section** controls, and an empty one reads "No questions in this section yet."
+
+- **Drag a whole section** by the handle at the left of its header. With a keyboard, move to the handle, press Space, use the arrow keys, and press Space again.
+- **Collapse** folds a section's questions away while you work further down; the header then says how many are folded. It changes nothing a respondent sees.
+- A move or a split that would send somebody back to a section they have already answered is refused, and the builder says which rule is in the way.
+
+<Warning>
+  **Deleting a section deletes its questions.** The confirmation names how many will go, and any rule that reads one of them goes with them. There is no undelete after you leave the builder — but **Undo** in the top bar reverses it while you are still on the page.
+</Warning>
+
+## Show a picture or a video
+
+**Add image** and **Add video** put something on the form for the respondent to look at. Neither is answered and neither is marked — they sit between questions the way a **Title and description** card does.
+
+Open the card and you get two ways to fill it:
+
+<Steps>
+  <Step title="Upload a file">
+    Select **Upload an image** or **Upload a video**. An image can be up to 15 MB and a video up to 100 MB, and they must be ordinary picture or video files — PNG, JPEG, WebP, GIF or AVIF for a picture, MP4 or WebM for a video. Anything else is refused with the reason on the card.
+  </Step>
+  <Step title="Or paste a link">
+    Paste a **YouTube** or **Vimeo** link into a video card, or a link ending in `.png`, `.jpg`, `.webp`, `.gif` or `.avif` into an image card, then select **Add link**. Links must start with `https://`.
+  </Step>
+  <Step title="Describe the picture">
+    An image card has a **Describe the image** box. Write what the picture shows — it is what somebody using a screen reader hears in its place, and what appears if the picture cannot load.
+  </Step>
+  <Step title="Add a preview image for an uploaded video">
+    An uploaded video can carry a still. Select **Add a preview image** and choose a picture; it is what a respondent sees before they press play.
+  </Step>
+</Steps>
+
+**Replace** swaps what is there and **Remove** empties the card. A card with nothing in it says **No image yet** or **No video yet** when it is closed, so it is easy to spot before you publish.
+
+<Note>
+  **A video never starts loading until the respondent asks for it.** They see a still with a play button, and the video loads when they press it. A form with several videos on it opens as quickly as one with none, and can be filled in while the pictures are still arriving.
+</Note>
+
+## Mark a quiz
+
+Open a question's **More options** menu and choose **Mark this question**. The form becomes a quiz, and every question that can be marked gains an **Answer key** card: the marks it is worth, what counts as correct, and what to say when somebody gets it right or wrong. Turn **Mark this question** on in each card you want marked. To stop marking the whole form, set **Settings → Marking** back to **Not marked**.
+
+What "correct" means depends on the question:
+
+- **Choice questions** take the correct option, or a correct set. **Partial credit** decides how a half-right set scores: **All or nothing**, **Proportional** (correct choices minus incorrect ones, so ticking everything earns nothing), or **Points per option**, where each option carries its own marks and negative marks are allowed. A question can never go below 0 or above the marks it is worth.
+- **Numbers, scales and ratings** take a value or a range.
+- **Everything else** takes a list of accepted answers. **Capitals must match** is off by default, and so is **Spaces must match too** — normally extra spaces are ignored, because somebody who typed two spaces between two words gave you the right answer.
+- **Or accept anything matching a pattern**, when the answers are a shape rather than a list — a reference number, a postcode. An answer is correct if it is in the list *or* matches the pattern.
+- **A grid** takes one correct column for every row. When different rows have different answers, set them one at a time under **A different answer per row**. A row left on **Not marked** is not scored at all — it does not count as correct.
+- **Explain each option** adds a line saying why each choice is right or wrong.
+
+<Warning>
+  **A per-option explanation is the answer key written out.** "B is wrong because the dose is per kilogram" tells the reader what A is — so these are shown only where the form already shows the answers. A form that withholds its marks withholds these too.
+</Warning>
+
+<Note>
+  **Points alone do not mark anything.** A question with marks and no answer key is left for a person to mark, and the card says so. That is deliberate — scoring it zero would quietly fail everybody who answered it.
+</Note>
+
+**Settings → Marking** also decides what happens around the marks:
+
+- **When the respondent sees their score** — as soon as they submit, once somebody has reviewed it, or never.
+- **How much of the marking they see** — their score only, which ones they got wrong, the right answers as well, or everything including your explanations. Each step gives more of the answer key away, so a quiz you intend to reuse should stay near the top of that list.
+- **Time limit**, in minutes. It is counted from the moment the form is opened and checked when the answers arrive — not by a timer in the browser, so closing the tab does not stop the clock. A few seconds of grace is allowed for a slow connection. The respondent sees a countdown while they work. On a form you [send as an invite](/practice/forms/send-a-form), opening the link again later does not restart the clock. A public link cannot tell one person's second visit from somebody new, so each visit there is timed on its own — send a strictly timed quiz as invites. If the time an attempt started cannot be confirmed, the respondent is asked to reload the form and start again.
+
+A choice question can also **show its options in a different order for each person** — the switch is under the options themselves. That is separate from **Shuffle questions** in settings, which deals the questions on the page.
+
+## Go back to an earlier version
+
+The builder keeps earlier versions of your draft automatically — one each time you add, remove or reorder questions, at most one every ten minutes, and the 50 most recent.
+
+<Steps>
+  <Step title="Open Version history">
+    **More actions** → **Version history**. Each entry says when it was kept, who was editing, and how many sections and questions it had.
+  </Step>
+  <Step title="Look at what changed">
+    Select an entry. **Since this version** lists the questions added, removed, moved or changed to another type since then.
+  </Step>
+  <Step title="Select Restore this version">
+    Confirm, and the draft goes back to that version. Your draft as it stood a moment before is kept in the list first, marked **Before a restore**, so you can change your mind.
+  </Step>
+</Steps>
+
+<Note>
+  **Restoring changes the draft only.** A published form keeps showing respondents the version you last published until you publish again, and responses are never affected.
+</Note>
+
+## Share with your team
+
+**More actions** → **Share with your team** lets a colleague work on this form without changing their role.
+
+| Choice | What they can do |
+| --- | --- |
+| **Can edit** | Change this form's questions, logic and settings, even if their role does not normally let them edit forms |
+| **Can view** | See it under **Shared with me** on the forms list |
+
+Choose a team member, choose **Can edit** or **Can view**, and select **Share** — they get a notification. Change the choice beside a name, or select **Remove**, at any time. Publishing, reading responses and exporting still follow each person's own role.
+
+### Get told about new responses
+
+At the bottom of **Share with your team**, **Notify me about new responses** is your own choice for this form — nobody else's changes when you pick:
+
+| Choice | What you get |
+| --- | --- |
+| **Every response** | A notification in ClinikEHR each time somebody submits this form |
+| **Daily digest** | One email on weekday mornings with how many responses each of your forms received, and a link to each form's responses |
+| **None** | Nothing about this form's responses |
+
+The choice saves as soon as you select it. Neither the notification nor the email ever shows what anybody answered — open the form's **Responses** tab to read that.
+
+You only receive them while you can still open the form and read its responses; if your role changes, they stop on their own. If your role does not let you read responses, the section says so instead of offering a choice. Your practice's **Document** notification switch, and your own **Product & account emails** switch, can turn them off too.
+
+## Comment on a form
+
+Select **Comments** at the top of the form to talk about it with your team. Comments are only ever seen by your team — never by the people who fill in the form.
+
+<Steps>
+  <Step title="Choose what the comment is about">
+    Under **About**, keep **The whole form** or pick one question. On an open question card you can also select the comment button, which starts on that question.
+  </Step>
+  <Step title="Write it">
+    Type into **Comment**. To bring someone in, choose them under **Mention people** — they get a notification. Someone whose role does not let them open forms is told they were mentioned, but not which form.
+  </Step>
+  <Step title="Post it">
+    Select **Comment**. A closed question card with open comments shows how many.
+  </Step>
+</Steps>
+
+You can **Edit** or **Delete** your own comments; deleting asks you to confirm, because it removes the comment for everyone. Anyone who can edit the form can **Resolve** a comment once it has been dealt with, or **Reopen** it. Resolved comments are hidden until you turn on **Show resolved**.
+
+A comment stays with its question if you move the question. If you delete the question, its comments stay too, marked **On a deleted question**, so the conversation about why it went is not lost.
+
+## Print a blank copy
+
+**More actions** → **Print blank form** downloads a PDF of the form with empty boxes and lines, on your practice's letterhead, for somebody to fill in by hand. It prints the version respondents see — the one you last published — so a form that has never been published cannot be printed yet. Questions that only appear after certain answers are all printed, with a note at the top saying some may not apply.
+
+## Check it before anyone sees it
+
+Select **Preview**. The form opens in a panel exactly as a respondent would meet it, headed "This is a preview. Nothing you type here is recorded." Close the panel and carry on editing.
+
+## Change how it looks
+
+Select **Design**. The panel puts the controls beside a live preview, so every change shows on the
+form itself rather than on a swatch. At the top, **Copy from booking page** takes your booking page's colours and font, **Reset to clinic default** goes back to your practice's saved design, and **Save as clinic default** makes this form's design the starting point for new forms (forms you have already published keep theirs).
+
+| Control | What it does |
+| --- | --- |
+| **Colour** | The colour of the submit button and the bar above the title. A colour a respondent could not read the button label against is refused — the form keeps the last one that worked. |
+| **Page colours** | The background the form sits on and the colour the questions are written in. Leave both blank to follow the respondent's own light or dark setting. |
+| **Logo** | Select **Upload logo** and choose a PNG, JPEG or WebP picture up to 5 MB. **Position** puts it on the left, in the centre, or hides it; **Tagline** is one line under it, and is also what a screen reader says in place of the logo. |
+| **Layout** | **Header**, **Question cards**, **Buttons** and **Spacing**: how the title card is laid out, how question cards and buttons are drawn, and how much room there is between them. |
+| **Show "Powered by ClinikEHR"** | Whether the line appears at the foot of the public form. |
+
+### Full design
+
+These controls sit under **Full design**:
+
+| Control | What it does |
+| --- | --- |
+| **More colours** | **Secondary Color** draws the progress bar and the line beside each section title. **Accent Color** marks the answer a respondent has chosen and the outline around the question they are on. A colour that would be hard to see on the page is refused — on a light page, a dark page, or both when the form follows the visitor's setting. |
+| **Font** | The typeface for everything the respondent reads. The same faces as the booking page, plus **Literata** and **Source Serif**, two faces made for reading long forms. |
+| **Heading font** | A different face for the form's title and section titles, or **Same as the font**. |
+| **Text size** | **Compact**, **Regular** or **Large**. Answer boxes never get smaller than a phone needs to type into them without zooming. |
+| **Light or dark** | **Light**, **Dark**, or **Follow the visitor's setting**. Both are designed looks, not one flipped into the other. **Dark** uses its own colours, so clear **Page colours** before choosing it. |
+| **Header image** | Select **Upload image** for a wide picture across the top of the form. It is shown as a 3:1 strip; tap the part of the picture that must always stay in view. With no picture, **Or a pattern** offers dots, a grid, diagonal lines or waves in your form's colour. |
+| **Search description** | What a search result says under the form's title. See [Appear in search](#appear-in-search). |
+
+The fonts are part of ClinikEHR itself, so a respondent sees the face you chose on any phone or computer, and opening your form never asks another company for anything. The same design carries onto the page someone sees after they send the form and onto the page shown when the form is closed or full.
+
+The font in your practice's saved design — the one **Save as clinic default** keeps — is also the font of the documents people sign with you: the details filled in on the signed copy, and the certificate of completion attached to it. A document completed before you saved a design, or while your plan did not include the full design, keeps the standard font.
+
+<Note>
+  **Full design** is part of the Starter plan and above. On the Free plan you set the colour, the
+  logo, the page colours and the layout; the rest of the panel is locked with a **See plans** link,
+  and the preview shows the form as your respondents will see it.
+
+  If a form used the full design and your practice moves to Free — or a payment is overdue — your
+  forms show the standard font, size and look straight away. Nothing is deleted: move back to a
+  paid plan and the design you chose returns.
+
+  On the Free, Starter and Essential plans the **Powered by ClinikEHR** line stays on every form you
+  publish and the switch is locked on. Turning it off is part of the Team plan.
+</Note>
+
+<Tip>
+  A logo or header image that was added before uploads existed, by pasting its address, was not
+  appearing on the public form. The panel now says it has been cleared: upload the picture again.
+</Tip>
+
+## Appear in search
+
+A form can appear in search engines and show a proper preview card when its link is shared — but only when all three of these are true:
+
+1. **Who can open this form** (on the **Settings** tab) is **Public** — not **Anyone with the link**, and not a form only for patients or staff;
+2. it is published and still taking responses;
+3. it is opened at its own address, not embedded in another website.
+
+When they are, the form's page tells search engines its title, its description and your practice's name, and a shared link shows a card with your colour, your logo and the form's title. The description is the **Search description** from **Design** if you wrote one (Starter plan and above), or otherwise the description under the form's title. On your own forms domain, the address on that domain is the one search engines are given.
+
+A form set to **Anyone with the link** never appears in search, and its shared-link card shows no title and no practice name, so a preview in a chat app cannot reveal what the form is or whose it is. When a public form closes or fills up, it stops being offered to search engines.
+
+## Your work saves itself
+
+The save state sits beside **Undo** in the top bar and says one of four things:
+
+| It says | What it means |
+| --- | --- |
+| **Unsaved changes** | You have typed something that has not gone yet |
+| **Saving…** | On its way |
+| **Saved** | Stored |
+| **Not saved** | It was refused, with the reason beside it and in a red banner under the tabs |
+
+**Not saved** is the one to act on. Your changes stay on the page. The form does not keep resending the same refused change: it tries again when you edit something, or when you select **Try again** in the red banner. Leave the page with unsaved changes and your browser will warn you first.
+
+## Check it worked
+
+Go back to **Forms** and open the form again. Your questions, their types, their options and their **Required** switches are all as you left them. If something is missing, it was in the two seconds before you closed the tab — check the save state before leaving next time.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Not saved — with a message under the tabs">
+    Something in the form cannot be stored as written. The red banner names the first problem: a missing option, an option with no label, or a question whose wording is empty. Fix that one and the state returns to **Saved**. If the message says the connection dropped, select **Try again** once you are back online.
+  </Accordion>
+
+  <Accordion title="That move would break a rule">
+    You tried to move a question or section past something that depends on it. Move the other one instead, or remove the dependency first.
+  </Accordion>
+
+  <Accordion title="A question needs at least one option">
+    The last option on a choice question cannot be removed. Add its replacement first, then remove the one you did not want.
+  </Accordion>
+
+  <Accordion title="That file is a document, not an image or a video">
+    The file is not the kind of file its name says it is — usually a drawing saved as SVG, or a web page saved from a browser, renamed to `.png`. Open it in a picture editor and export it as a PNG or a JPEG, then try again.
+  </Accordion>
+
+  <Accordion title="That file is too large">
+    The message names both sizes: what you chose and what is allowed. An image can be 15 MB and a video 100 MB. Export the picture at a smaller size, or put a long video on YouTube or Vimeo and paste the link instead.
+  </Accordion>
+
+  <Accordion title="Ctrl+Z inside a box only undoes my typing">
+    That is deliberate. While the cursor is in a text box your browser's own undo applies, which is finer-grained. Click outside the box first, then **Undo** — or Ctrl+Z — steps back through the form itself.
+  </Accordion>
+
+  <Accordion title="Everything is greyed out and there is a banner at the top">
+    Either you have read-only access ("You can look at this form but not change it"), or the form is archived. An archived form cannot be edited. To carry on with it, go back to the forms list, filter by **Archived**, and **Duplicate** it — the copy is a normal draft.
+  </Accordion>
+
+  <Accordion title="The rail is not on my screen">
+    Below tablet width the rail becomes a bar along the bottom of the screen with the same buttons.
+  </Accordion>
+
+  <Accordion title="Some parts did not come across when I imported">
+    The panel names each one. A question that depended on an answer you did not import now always shows — import that question too, or add the condition again. A rule that moved between sections or ended the form stays in the form it came from.
+  </Accordion>
+
+  <Accordion title="Version history is empty">
+    A version is kept the first time you add, remove or reorder questions. Changing wording alone does not keep one.
+  </Accordion>
+
+  <Accordion title="Print blank form is greyed out">
+    The form has never been published. Publish it first — the blank copy is always the published version.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/forms/editor/ (form-editor.tsx, questions-tab.tsx, question-card.tsx, question-body.tsx, add-item-rail.tsx, item-type-picker.tsx, design-tab.tsx), lib/forms/item-types.ts, lib/forms/plan-limits.ts, lib/forms/design-gate.ts, lib/forms/font-registry.ts, lib/forms/indexable.ts, app/f/[publicKey]/page.tsx */}

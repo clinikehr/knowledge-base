@@ -86,6 +86,35 @@ Select **Check out** on the row — it is only there while the person is still i
 
 Select **View**, or anywhere on the row, to reopen the visit sheet, where **Edit**, **Download PDF**, **Email patient** and **Cancel check-in** also live.
 
+## When the hospital or a clinician is out of office
+
+If the hospital, or the clinician a patient is here to see, is marked out of office when you check them in, the check-in stops and asks first. The message names who is away and when they are back — for example "The clinic is out of office until Sep 23, 12:00 AM (America/New_York). Check this patient in anyway?" — and offers **Check in anyway**.
+
+- A block for the whole hospital or all staff is checked first, then the clinician on the appointment, then the one the visit is assigned to.
+- The time checked is the arrival time on the visit, in the hospital's time zone.
+- Anyone who can use the board can confirm, and nothing is saved until they do.
+- The visit shows a **During Out of Office** badge next to the patient's name on the board, in the visit sheet and on the patient's history.
+- Returning a visit to the board with **Check back in** during a block asks the same way (**Reopen anyway**). **Check out**, **Edit** and **Cancel check-in** never ask.
+
+The patient is physically present, so nothing that happens at check-in is paused: the visit record can be downloaded or emailed, and check-in automations still run.
+
+## Your patient has arrived
+
+Checking someone in tells the right clinician right away — an in-app notification, and an email unless they've turned it off. It never names the patient or says why they're here: just an arrival time and a link back to this board.
+
+It goes to:
+
+- the clinician on the appointment this visit is for, if there is one;
+- the patient's primary provider on their care team, in force right now — this is what still fires for a walk-in, or a visit with no clinician assigned;
+- whoever is covering either of them right now, if a coverage delegation is active.
+
+Whoever recorded the check-in never gets their own notice, and a colleague who has never signed in is skipped. **Check back in** does not send it again — it's the same arrival, not a new one, and this still runs during an Out of Office block ("check-in automations still run", above).
+
+Two switches decide who gets the email (the in-app bell always shows it to whoever it's for):
+
+- **Settings → Notifications → Patient** — the hospital's switch for this category. Off, and nobody here gets the email.
+- **Their own avatar → Profile and Settings → Notifications → Product & account emails** — each person's own switch (see [Choose which emails you get](/platform/account/notifications)). Off, and only that person stops getting emailed.
+
 ## Set the long-wait threshold
 
 The board prints the current figure under the table: "A visit is flagged as a long wait after \{n\} minutes. Change this in **Settings → Facility**." Set it under **Front desk waiting** → **Long wait after (minutes)**, between 5 minutes and 8 hours; it starts at 30. See [Facility settings](/hospital/settings/facility).
@@ -166,4 +195,4 @@ The board also sits behind your two-factor rule. If your hospital requires it an
 
 <StillStuck topic="the front desk board" />
 
-{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, lib/front-desk/waiting-time.ts, components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, lib/front-desk/waiting-time.ts, components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify */}

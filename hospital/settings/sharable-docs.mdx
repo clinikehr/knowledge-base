@@ -1,6 +1,6 @@
 ---
 title: "Sharable documents"
-description: "Choose which consent forms, intakes and questionnaires go out automatically when an appointment is created."
+description: "Choose which consent forms, intakes, questionnaires and signature requests go out automatically when an appointment is created."
 icon: "/images/icons/file-signature.svg"
 ---
 
@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Only the owner can save · scored measures need Essential and above" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Only the owner can save · scored measures need Essential and above · signature requests need Starter and above" />
 
 Paperwork that has to be signed before a visit should not depend on someone remembering to send it. This tab picks the templates the hospital sends every time, so they go out with the appointment rather than being chased at the door.
 
@@ -25,10 +25,12 @@ Paperwork that has to be signed before a visit should not depend on someone reme
 
 The card is headed **Sharable Documents**: "Select which documents are automatically sent to clients during appointments. Toggle **Auto-send** on individual documents to automate delivery at appointment time."
 
-Templates are grouped into four categories, each showing how many are available and how many you have selected.
+Templates are grouped into categories, each showing how many are available and how many you have selected. A category with nothing in it is not shown.
 
 | Category | What it holds | Gate |
 | --- | --- | --- |
+| **Forms** | "Your published forms, sent as an invite bound to the booking". A form that has reached its response limit shows **At response limit** on its row and is not sent at booking until it can collect answers again | All plans |
+| **Signable documents** | "Documents signed electronically, sent as a signature request with the booking" — see [Send a document for signature](#send-a-document-for-signature) | Starter and above |
 | **Consent Documents** | "Clinic-created consent & policy forms" | All plans |
 | **Questionnaires & Intakes** | "Pre-built patient intake forms" | All plans |
 | **Clinical Outcomes & Measures** | "Validated scored measurement tools" | Essential and above |
@@ -75,6 +77,103 @@ Removing a document from the list stops it going out on future appointments. It 
 
 Turning an underlying template inactive removes it from this list too — which is the tidier way to retire a form than unpicking it here.
 
+Each save that changes the list is recorded once in the [audit log](/platform/security/audit-log), under **Appointment Default Documents**: who saved it, and how many documents were added, removed or changed. A save that changes nothing records nothing, and the entry never includes a document's title. When a booking goes out without one of the selected documents — it was not due, could not be sent, or the selection could not be checked — that is recorded too, with the reason and never the title.
+
+Every appointment now carries a **Forms & documents** list showing what these defaults produced for it and how each one is going — sent, opened, in progress, completed, declined — with anything marked **Required before visit** at the top. The same list appears on the check-in sheet once an appointment is chosen, where a form that is still open can be finished on the desk's own screen with **Complete in person**.
+
+## When it goes, and whether the visit waits for it
+
+A selected row carries one more button beside **Applies to** and **Auto-send on booking**: it shows when the item goes (**At booking**, for example) and opens **When it is sent**, which holds these controls.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **When it is sent** | Whether it goes when the appointment is booked, a set number of hours before it, or after the visit | When the appointment is booked |
+| **Required before the visit** | Marks it as something that has to come back before the person is seen | Off |
+| **Reminders** | Forms and signature requests only, inside **When it is sent**: **Standard reminders** uses the form's or document's own reminder settings, **More reminders** sends the first after a day and then every two days up to four, **No reminders** never chases this one. Applies to what is sent from now on | **Standard reminders** |
+
+**Required before the visit** does not block anything and does not send a second copy. It puts the item at the top of the appointment's **Forms & documents** list and on the check-in sheet, so whoever is at the desk can see what is still outstanding while the person is standing there. See **What changes once you save** above.
+
+## Send a document for signature
+
+A signable document appears under **Signable documents** once it is ready to send: it has at least one recipient and at least one field placed on it. Selecting it sends a signature request with each appointment, tied to that appointment.
+
+<Steps>
+  <Step title="Select the document">
+    The row gains **Roles**, **Applies to**, **At booking** and **Auto-send on booking**. A role called Patient is filled in for you.
+  </Step>
+  <Step title="Select Roles and choose who fills each one">
+    For every role on the document, choose **The patient**, **The appointment's provider**, **A specific staff member** — and then which staff member — or **A named person outside the clinic**, such as an interpreter or a guardian, and then their full name and email address. That person is sent the request at that address for every appointment this document goes out with. **Roles** counts how many are filled and stays amber while any is empty.
+  </Step>
+  <Step title="Turn on Auto-send on booking and select Save Defaults">
+    If a role is still empty, nothing is saved and the message names the role and the document.
+  </Step>
+</Steps>
+
+A signature request behaves differently from the other rows in a few ways:
+
+- **It goes out when the appointment is booked, and only then.** "Signature requests go out when the appointment is booked." The time cannot be changed; **Required before the visit** can.
+- **It is sent once per appointment.** Changing or re-confirming the booking does not send a second request.
+- **Everyone it is emailed to needs an email address on file.** If the patient or the chosen staff member has none, the request is not sent, and the appointment's **Forms & documents** list says why.
+- **It counts toward your plan's signature requests for the month.** Once they are used up, the request is not sent and the list says so.
+- **It has no Convert to form.** A signature request is already tracked against its appointment, from sent through signed.
+
+## Move a document to a form
+
+A form is the newer thing: it can be filled in on a phone, it records each answer separately, and it can be tracked against the appointment it belongs to. Older templates cannot be — the desk can see that one was sent, but not whether it came back.
+
+Every row that is not already a form carries **Convert to form**.
+
+<Steps>
+  <Step title="Select Convert to form">
+    A new form is built from the template's questions and saved as a **draft**. Nothing else changes: the template is untouched and this default keeps sending exactly what it sent before.
+  </Step>
+  <Step title="Read what the message tells you">
+    If anything could not be carried across — a question type the old template had no equivalent for, a section that was too long and had to be split — it is named. Open the form and check those before you go further.
+  </Step>
+  <Step title="Publish the form">
+    Open it from the **Open "…"** link on the row and publish it. Until then the row reads "Publish the form to switch this default over."
+  </Step>
+  <Step title="Select Use this form here">
+    The default now sends the form instead of the old document. The old template is still in your library and anything already signed stays exactly where it is.
+  </Step>
+</Steps>
+
+<Warning>
+  **Convert to form** works on templates that hold questions. A template that is a written document — a policy or a consent to read and sign — has nothing to turn into questions, and you will be told so rather than given an empty form. Send those as documents.
+</Warning>
+
+## Packs: send the same set every time
+
+A pack is a named set of the forms and documents you send together — for example "New patient": the intake form, the consent to treatment and a PHQ-9 — with when each one goes and whether the visit waits for it.
+
+<Steps>
+  <Step title="Save a selection as a pack">
+    Tick the documents, set **When it is sent** and **Required before the visit** on each, then select **Packs** at the top of the card and **Save selection as a pack…**. Give it a name and select **Save pack**.
+  </Step>
+  <Step title="Add a pack">
+    Select **Packs** and choose the pack's name. Everything in it is ticked with its own timing — nothing is saved until you select **Save Defaults**. Anything the pack could not add is named: a form that is no longer published, a document not ready to send, or a template you have since converted to a form.
+  </Step>
+  <Step title="Delete a pack">
+    The bin beside the pack's name. The forms and documents in it, and your saved defaults, stay exactly as they are.
+  </Step>
+</Steps>
+
+The same packs appear under **Packs** when you send documents to one client, where one click chooses everything in the pack that can go to them.
+
+**Who can keep packs.** Anyone allowed to manage forms — a manager, for example — can tick documents and save or delete a pack, because a pack changes nothing a client is sent. Only the owner can select **Save Defaults**, turn on **Auto-send on booking**, choose who fills each role, or switch a default over to a converted form; for everyone else those controls stay locked and the amber bar says "Only clinic owners can change default documents. You can still tick documents and keep them as a pack from Packs."
+
+On the Team and Enterprise plans the share button beside a pack sends it to the template gallery for review. A shared pack can only contain templates that are already in the gallery — a form made from a gallery template, or one you shared yourself; signable documents and older templates stay in your own packs. A practice that uses a shared pack from the gallery gets a draft of each form in it and the pack itself, ready for them to review and publish.
+
+## When a default is no longer available
+
+A default stays saved even if its form is later unpublished, archived or made staff-only, its signable document is deleted or stops being ready, or its template is removed. Nothing is sent for it when an appointment is booked. Instead of disappearing from the card, it is listed at the top under **No longer available**, with the reason.
+
+- **Remove** strikes it through and says "Removed when you press Save Defaults." Select **Save Defaults** and it is gone. **Keep** undoes that.
+- If you do nothing, saving any other change keeps it exactly as it was, so a default is never removed as a side effect.
+- To bring it back into use, publish the form again or finish preparing the document. It then returns to its section, still selected.
+
+If a document is limited to a service that is no longer in your service list, **Applies to** says so — "1 service this applies to is no longer in your service list." — and offers **Remove it**.
+
 ## Check it worked
 
 Create a test appointment for a patient you can safely email. The selected documents with **Auto-send** on should be attached to it, and the patient should receive the request. Open the appointment and confirm the documents are listed against it; then sign one from the patient's side and check it appears on their record.
@@ -82,6 +181,41 @@ Create a test appointment for a patient you can safely email. The selected docum
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="Save Defaults says a document is limited to services that no longer exist">
+    "A document limited to services that no longer exist cannot be saved." A service it was scoped to has been deleted, and saving it would otherwise send it with every service. Open **Applies to** on that row, choose its services again (or **All services** if that is what you mean), and save again.
+  </Accordion>
+  <Accordion title="A default is listed under No longer available">
+    Its form, signable document or template can no longer be sent, so nothing goes out for it at booking. The row names the reason. Publish the form or finish the document to bring it back, or select **Remove** and then **Save Defaults**.
+  </Accordion>
+  <Accordion title="A signature request did not go out with an appointment">
+    Open the appointment and look at its **Forms & documents** list — the row says why. The usual reasons: a role on the document has nobody chosen to fill it, the patient or the chosen staff member has no email address, the document is no longer ready to send, or your plan has no signature requests left this month.
+
+    When the reason is a role with nobody to fill it, your clinic is also told once in its notifications — "A document for signature is not going out with appointments" — with a link back to this card.
+  </Accordion>
+  <Accordion title="Save Defaults says a form is not open for responses, or is not meant for patients">
+    A new default has to be something a booking can actually send. A form must be published — not a draft, archived, or closed with no schedule to reopen it — and set to go to a patient or by private link. Publish or reopen the form, or change who it is for, then save again. A default you already had stays on the card if its form later closes, listed under **No longer available**; the booking skips it, and the audit log says why.
+  </Accordion>
+  <Accordion title="Save Defaults says a signable document is not ready">
+    Only a signable document with its recipients and fields in place can be added as a new default. Finish preparing it, or remove the row, and save again.
+  </Accordion>
+  <Accordion title="Save Defaults says signature requests are not included in this clinic's plan">
+    Signature requests start on the Starter plan, so a hospital on Free cannot add a signable document as an appointment default. Remove the row and save, or upgrade — see [Change your plan](/platform/plans/change-plan). A default saved while on a paid plan stays on the card after a move to Free, but nothing is sent with it until the plan includes signature requests again.
+  </Accordion>
+  <Accordion title="There is no Signable documents category">
+    It only appears once you have a signable document that is ready to send — one with at least one recipient and at least one field placed on it. On the Free plan it always appears, faded behind an upgrade panel: "Upgrade to the Starter plan or higher to send documents for signature automatically when an appointment is booked."
+  </Accordion>
+  <Accordion title="Save Defaults says to choose who fills a role">
+    A signature request with an empty role would never be sent. Select **Roles** on the row it names and choose somebody for each one.
+  </Accordion>
+  <Accordion title="Convert to form said there was nothing to turn into questions">
+    That template is a written document rather than a set of fields. Keep sending it as a document, or build the form by hand and select it from the **Forms** section.
+  </Accordion>
+  <Accordion title="Use this form here is not offered">
+    The row reads "Publish the form to switch this default over." A default can only send a form that is published and set to go to a patient or by private link. Open the form, publish it, and come back.
+  </Accordion>
+  <Accordion title="The appointment says a document is not tracked">
+    Older templates are not tied to the appointment they were sent with, so the checklist can say it went out but not whether it came back. **Convert to form** is what makes that visible.
+  </Accordion>
   <Accordion title="A category is empty">
     There are no active templates of that kind yet. Create one, then select **Refresh** — this tab only ever lists what already exists.
   </Accordion>

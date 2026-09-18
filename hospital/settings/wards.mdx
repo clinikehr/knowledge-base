@@ -23,26 +23,27 @@ import { StillStuck } from '/snippets/support.mdx';
 
 ## What this tab controls
 
-Three levels, three stacked cards. A ward holds sub-wards; a sub-ward holds beds. The second and third cards appear only once you select a row above them.
+Three levels in one expandable list: every ward is listed with a summary ("3 sub-wards · 18 beds · 5 occupied") **without opening anything** — select a ward's row to expand it and see its sub-wards, and a sub-ward's row to see its bed spaces. Nothing is hidden behind an Add button.
 
 | Control | What it does | Default |
 | --- | --- | --- |
-| **Add Ward** | Opens **Add New Ward**. Owner-only | — |
-| **Ward Name** | At least 2 characters | — |
+| **Add Ward** | Opens **Add new ward**. Owner-only | — |
+| **Ward name** | At least 2 characters | — |
 | **Description** · **Location** | Free text, both optional | Empty |
 | **What this ward is for** | One of **General**, **Labour ward**, **Maternity**, **Neonatal**, **Paediatric**, **Intensive care**, **Isolation**, **Surgical** or **Other** | Not set |
 | **Status** | **Open** or **Closed** | Open |
-| **Add Sub-ward** | Opens **Add New Sub-ward** inside the selected ward | — |
-| **Sub-ward Name** · **Description** | Name at least 2 characters | — |
+| **Add sub-ward** | Opens **Add new sub-ward** inside the expanded ward | — |
+| **Sub-ward name** · **Description** | Name at least 2 characters | — |
 | **Type** | **Single**, **General**, **Double**, **Room**, **VIP**, **Suite** or **Penthouse** | General |
-| **Capacity** | "Maximum number of beds in this sub-ward". Minimum 1 | 1 |
-| **Add Bed Space** | Opens **Add New Bed Space** inside the selected sub-ward | — |
-| **Bed Space Number** | The number staff will quote. Required | — |
-| **Bed Space Name** | At least 2 characters | — |
+| **Capacity** | The planned number of beds. Minimum 1 | 1 |
+| **Location** | Free text, optional — where in the building this sub-ward is | Empty |
+| **Add bed space** | Opens **Add new bed space** inside the expanded sub-ward | — |
+| **Bed space number** | The number staff will quote. Required | — |
+| **Bed space name** | Free text, optional | Empty |
 | **Type** | **Cot**, **Bed** or **Bunk** | Bed |
-| **Status** | **Available**, **Occupied**, **Reserved** or **Under Maintenance** | Available |
+| **Status** | **Available**, **Occupied**, **Reserved** or **Under maintenance** | Available |
 
-The sub-ward table also shows **Occupancy** — a bar and a count of occupied against capacity — which is read from the beds themselves, not typed in.
+Every ward and sub-ward row also shows **Occupancy** — a bar and a count of occupied against the real bed spaces underneath it, never the typed **Capacity**. Edit and delete are available for all three levels from each row's **⋮** menu; a delete always names what it would take with it, and the server refuses to delete a ward or sub-ward that still has children, or a bed space that is occupied or has an active admission.
 
 ## Set it up
 
@@ -51,21 +52,21 @@ The sub-ward table also shows **Occupancy** — a bar and a count of occupied ag
     The tab needs the **In-patient care** area, which is on by default. If **Ward Management** is missing from the rail, turn the area on in [Facility](/hospital/settings/facility).
   </Step>
   <Step title="Add a ward">
-    Select **Add Ward**, enter the **Ward Name**, and add a location if it helps staff find it. Set **What this ward is for** if you know it — you can always come back. Leave **Status** on **Open**. You get "Ward added successfully".
+    Select **Add Ward**, enter the **Ward name**, and add a **Location** if it helps staff find it. Set **What this ward is for** if you know it — you can always come back. Leave **Status** on **Open**. You get "Ward added".
   </Step>
-  <Step title="Select the ward and add sub-wards">
-    Select the ward's actions menu and choose **Add Sub-ward**, or open the ward and use the **Add Sub-ward** button on the card that appears. Set the **Type** and the **Capacity** — the capacity is what the occupancy bar measures against, so make it the real bed count.
+  <Step title="Expand the ward and add sub-wards">
+    Select the new ward's row to expand it — it starts with "No sub-wards yet" and an inline **Add sub-ward** link, or use **Add sub-ward** from its **⋮** menu. Set the **Type**, the **Capacity** and a **Location** if the sub-ward has its own wing or corridor.
   </Step>
   <Step title="Add the bed spaces">
-    Select the sub-ward, then **Add Bed Space**. Give each bed its **Bed Space Number** and **Bed Space Name**, choose **Cot**, **Bed** or **Bunk**, and leave **Status** on **Available**. Add one row per physical bed — this is the list the ward screen draws.
+    Expand the sub-ward, then **Add bed space**. Give each bed its **Bed space number** (required) and an optional **Bed space name**, choose **Cot**, **Bed** or **Bunk**, and leave **Status** on **Available**. Add one row per physical bed — this is the list the ward screen draws.
   </Step>
   <Step title="Check the occupancy line">
-    Back on the sub-ward table, the occupancy bar should read 0 out of your capacity. If the count of beds you added does not match the capacity you set, one of the two is wrong.
+    Back on the expanded sub-ward, the occupancy bar should read 0 out of however many bed spaces you just added — it counts the bed rows themselves, not the **Capacity** you typed.
   </Step>
 </Steps>
 
 <Warning>
-  Deleting a ward or sub-ward is permanent and takes what is underneath it. Delete a sub-ward and its bed spaces go with it, along with the numbering staff quote to each other on handover. A ward that is temporarily out of use should be set to **Closed** instead, and a bed under repair to **Under Maintenance**.
+  Deleting a ward or sub-ward is permanent and only works once the level below it is empty — the confirmation names what's still underneath if it isn't, and the delete is refused rather than cascading. Delete every bed space first, then the sub-ward, then the ward. A bed space that is occupied, or carries an active admission, cannot be deleted at all until the patient is discharged. A ward that is temporarily out of use should be set to **Closed** instead, and a bed under repair to **Under maintenance**.
 </Warning>
 
 ## What a ward is for
@@ -108,14 +109,14 @@ Open **Wards** from the sidebar and choose your new ward, then a sub-ward. The b
   <Accordion title="I added beds but the grid is empty">
     Check the beds went into the sub-ward that is selected on the ward screen. Beds belong to a sub-ward, so beds added under a different one will not appear.
   </Accordion>
-  <Accordion title="There is no Add Ward button">
-    Adding, editing and deleting are owner-only. A manager or accountant sees the tables and nothing else.
+  <Accordion title="There is no Add Ward button, or no ⋮ menu on a row">
+    Adding, editing and deleting are owner-only. A manager or accountant sees the wards, sub-wards and bed spaces expand and read, with no actions menu.
   </Accordion>
-  <Accordion title='"Database permission issue detected"'>
-    The ward could not be created and the dialog closes with your entries kept. Contact your administrator, or ask an owner to create the ward for you, then try again.
+  <Accordion title="A ward, sub-ward or bed space won't delete">
+    The confirmation dialog names why: a ward or sub-ward with anything still underneath it is refused rather than cascading, and a bed space that is occupied or carries an active admission is refused until the patient is discharged. Clear what the message names, then delete again.
   </Accordion>
   <Accordion title="The occupancy bar disagrees with the beds I can see">
-    The bar compares occupied beds with the **Capacity** you typed on the sub-ward, which is independent of how many bed rows exist. Set the capacity to the real number of beds.
+    The bar counts the actual bed space rows underneath a sub-ward or ward, never the **Capacity** you typed. If they disagree, the bed spaces you've added are the true count — add or remove rows to match, rather than editing Capacity.
   </Accordion>
 </AccordionGroup>
 

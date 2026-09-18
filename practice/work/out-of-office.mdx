@@ -1,0 +1,116 @@
+---
+title: Add Out of Office
+description: "Block time for a person, a room, all staff or the whole clinic so clients cannot book it."
+icon: /images/icons/calendar-days.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All paid plans — repeats need a plan with recurring bookings" roles="Any staff member with access to Appointment" />
+
+Use Out of Office when someone is on leave, a room is being serviced, or the clinic is closed.
+
+<Path steps={['Sidebar', 'Appointment', 'Create', 'Out of office']} />
+
+<TaskHeader before="Access to the calendar. Cancelling appointments needs an owner or manager" time="About two minutes" after="A block on the calendar that clients cannot book into" />
+
+## What Out of Office does
+
+An Out of Office block marks time when a person, a room or piece of equipment, all staff or the whole clinic is unavailable. While it is in place:
+
+- **Clients cannot book it.** The booking page, the client portal and the booking assistant do not offer those times, and a booking sent anyway is refused. Group class sessions taught in that time, or held in that room, are not offered either, and nobody can join their waitlist.
+- **Staff are warned, not stopped.** If you book an appointment, schedule a class or move a visit into a blocked time or room, you are asked **Book anyway?** first.
+- **The block always wins over working hours.** Changing someone's weekly hours never reopens a blocked day.
+- **Sending forms and documents asks first.** When you send a form, a document or a signature request to a client, or resend one, you choose **Send when you're back** (already selected) or **Send now** for anything urgent. **Send intakes** asks once for everything you picked. A held send goes out automatically when the time ends, within sending hours. Intake documents sent automatically when a client books are held the same way, keeping any subject and message.
+
+## Add an Out of Office
+
+<Steps>
+  <Step title="Open the sheet">
+    Select **Create** on the calendar, or an empty slot, then the **Out of office** tab.
+  </Step>
+  <Step title="Choose when">
+    Leave **All day** on and pick the first and last day, or turn it off and pick a start and end time. Times are in the clinic's time zone, shown under the fields.
+  </Step>
+  <Step title="Choose who or what">
+    In **Who or what is out of office**, choose **Whole clinic**, **All staff**, one or more staff members, or rooms and equipment. **Whole clinic** covers everyone and every room. **All staff** covers every staff member but leaves rooms bookable. Only an owner or manager can add Out of Office for other people, rooms or the clinic; anyone can add it for themselves.
+  </Step>
+  <Step title="Add a memo">
+    The **Memo** is for staff. Clients never see it, and it is never included in an email.
+  </Step>
+  <Step title="Decide what happens to existing bookings">
+    **Already booked in this time** counts the appointments, classes and waitlist entries the block covers. Turn on **Cancel appointments and classes in this time** to cancel them (owners and managers only). Tick **Email clients whose appointments are cancelled** if they should receive the usual cancellation email. With it off, cancelled clients are not emailed, so contact them yourself. Cancelling never refunds deposits or payments automatically; settle those from each visit.
+  </Step>
+  <Step title="Choose who to tell">
+    **Notify staff** emails the people the block covers, with a calendar invite. For a room or equipment block, it emails the staff whose visits are affected.
+
+    Notify contacts: choose one saved CRM segment. We show how many contacts it reaches before you save. Contacts who opted out, unsubscribed, bounced or complained, or who are now clients, are skipped. Each email gives the away dates in your clinic's time zone, an urgent-care line and an unsubscribe link. It never includes your memo.
+  </Step>
+  <Step title="Set messages, forms and reminders">
+    **Client messages during this time**: **Allow, with away notice and automatic reply** (the default) or **Pause messaging**. Staff-scoped blocks affect client messages only in conversations assigned to that staff member; clinic-wide blocks affect every conversation.
+
+    **Online forms during this time**: **Keep accepting responses, with an away notice** (the default) or **Close online forms**. Only a whole-clinic or all-staff block can close them.
+
+    **Pause automated reminders** lists each kind of reminder, all paused by default. Held messages send shortly after you're back, within sending hours, and are skipped if they no longer apply — for example, the appointment was cancelled or the invoice was paid. **Medication refill reminders** are paused by default too: Patients won't be reminded to refill their medication until you're back. Turn this off if anyone may run out during this time.
+  </Step>
+  <Step title="Repeat it if you need to">
+    Tick **Repeats** to add it every day, week, month or year, ending after 1 to 50 times or on a date. Every occurrence is added, or none is.
+  </Step>
+  <Step title="Save">
+    Select **Add out of office**. If cancelling is on and something is booked, you confirm the counts first.
+  </Step>
+</Steps>
+
+## Change or remove it
+
+Select the block's label on the calendar. The details show who it applies to, when (in the clinic's time zone), its repeat, the memo and who added it. **Edit Mode** changes the time or memo. Deleting a repeating block asks whether to delete only this one or every one in the repeat. Deleting a block does not restore appointments it cancelled.
+
+An Out of Office that came from a connected Google or Outlook calendar shows **From Google Calendar/Outlook**, and its times follow that calendar. To apply your clinic's full Out of Office settings to it, open it on the calendar and select **Adopt**. An adopted Out of Office still follows your calendar's times and is never copied back to it.
+
+## Working hours
+
+**Availability** schedules and **Business hours** list upcoming Out of Office beside the hours. If you change a weekday that has a block, you see: "Out of Office on (the date) still applies — no bookings will be offered then."
+
+## Check it worked
+
+- The block shows on the calendar as a grey, striped band labelled **Out of office**.
+- The booking page offers no times inside it for the people or rooms it covers.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The cancel switch is greyed out">
+    Only an owner or manager can cancel appointments. Ask one to add the block, or add it without cancelling.
+  </Accordion>
+  <Accordion title="&quot;Only an owner or manager can add Out of Office for other people, rooms or the whole clinic.&quot;">
+    Staff can add Out of Office for themselves only. Choose just your own name, or ask an owner or manager.
+  </Accordion>
+  <Accordion title="Online forms can't be closed">
+    Closing online forms applies to the whole clinic. Choose **Whole clinic** or **All staff**.
+  </Accordion>
+  <Accordion title="A client still has an appointment in the block">
+    Existing bookings stay unless you turned on cancelling. The appointment shows with a grey outline so you can deal with it.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do clients see why we're away?">
+    No. Clients see only that times are unavailable. The memo is never shown to them or put in an email.
+  </Accordion>
+  <Accordion title="Can I still book someone in during a block?">
+    Yes. Staff are asked to confirm, then the booking goes ahead. Clients cannot.
+  </Accordion>
+  <Accordion title="What does a cancelled client receive?">
+    With **Email clients whose appointments are cancelled** on, the usual cancellation email with a link to book a new time. With it off, nothing.
+  </Accordion>
+  <Accordion title="Are refunds made automatically?">
+    No. Cancellations work the same as cancelling from the calendar: deposits and payments are settled from each visit.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

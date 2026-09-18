@@ -19,15 +19,15 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 ## What you're looking at
 
-The heading is **Records**. Two buttons sit beside it: **Open Documents**, the way out to the full ledger, and **Refresh**.
+The heading is **Records**. A **Refresh** button sits beside it.
 
 Four tiles run across the top:
 
 | Tile | Counts |
 | --- | --- |
 | **Conflicts to review** | Intake answers waiting on a decision |
-| **Needs chasing** | Documents that want a reminder |
-| **Expiring or expired** | Documents whose link needs re-sending |
+| **Needs chasing** | Anything sent to a patient that wants a reminder |
+| **Expiring or expired** | Anything whose link needs re-sending |
 | **Unfiled files** | Uploads with no folder |
 
 Below them, two shortcuts — **Send for signature** and **New patient** — then the three queues as tabs, each carrying its own count: **Conflicts (n)**, **Signature chase (n)** and **Unfiled (n)**.
@@ -55,7 +55,15 @@ Empty state: **All clear** — "No intake answers are waiting for a decision."
 
 ## Signature chase — remind, or re-send
 
-Documents sent for signature and not yet signed appear here, with **Patient**, **Document**, **Sent**, **Reminders** and **Status**.
+Everything you have sent a patient and not yet had back appears here, with **Patient**, **Waiting on**, **Sent**, **Last opened**, **Reminders** and **Status**.
+
+**Last opened** is the most recent time the patient opened that item — "today", "3 days ago", or **Not opened** if they never have. It separates a patient who has not seen the request from one who looked and stopped, which is the difference between "did the email arrive?" and "is something on the page stopping them?". It shows a dash when that time could not be looked up just now; a dash never means "not opened". On a narrow screen the column is hidden.
+
+The **Waiting on** column names the item, and tags it when it is not a document: a **form** is waiting on an answer, an **envelope** is waiting on a signature in a signature request. That matters because the remedy is different — a form is chased through the form's own invite list, a signature request through its tracking page, and a document through **Forms → eSignatures**.
+
+Only people who are on a patient's record appear here. A form or a signature request sent to a contact or to a bare email address is tracked on the form or the signature request itself, not on this desk.
+
+This desk uses the same list as the patient's **Documents & forms** tab, so an item never shows one state here and another on the chart. An item whose link has run out leaves this desk straight away, and the patient's record shows it as **Expired** — there is nothing left to chase on a link that no longer opens. Send it again from the patient's record.
 
 **Status** is the column that tells you what to do, and it has five values:
 
@@ -71,13 +79,22 @@ Documents sent for signature and not yet signed appear here, with **Patient**, *
   **An expired link needs re-sending, not another reminder.** A reminder points at a link that no longer works, so the patient gets a nudge to a dead end and you get another row in the queue. Read the status before you act.
 </Note>
 
-This tab tells you what each document needs; you act on it in [Documents](/hospital/records/documents), where **Resend Document** lives. The footer states your hospital's thresholds — how many days before a document is flagged as not opened, how many before no response, and how close to the deadline counts as expiring. Change them in **Settings → Facility** — see [Facility settings](/hospital/settings/facility).
+This tab tells you what each row needs; for a document you act on it on **Forms → eSignatures**, where **Resend** lives — see [Send and track documents](/hospital/records/documents). The footer states your hospital's thresholds — how many days before a document is flagged as not opened, how many before no response, and how close to the deadline counts as expiring. Change them in **Settings → Facility** — see [Facility settings](/hospital/settings/facility).
 
-Empty state: **All clear** — "No documents are waiting on a signature."
+Empty state: **All clear** — "Nothing is waiting on a response or a signature."
+
+## Old document signing links — owners and managers
+
+Owners and managers see a notice above the queues while anything still depends on the earlier document signing links:
+
+- how many documents sent with those links are still waiting, and the date the last of those links stops working;
+- how many appointment defaults still send an old document template, with their names.
+
+**Convert these defaults** opens **Settings → Patient Experience → Sharable Documents**, where each old template has **Convert to form** and then **Use this form here**. **See what is still waiting** opens **Forms → eSignatures**. The notice disappears when both counts reach zero, and each owner and manager gets one notification saying so. Other staff do not see it.
 
 ## Unfiled — give every file a folder
 
-Uploads that arrived without a home. Each row shows the **Patient**, the **File**, how long ago it was **Uploaded**, and a **File it** button that opens that patient's files tab so you can put it where it belongs.
+Uploads that arrived without a home. Each row shows the **Patient**, the **File**, how long ago it was **Uploaded**, and a **File it** button that opens that patient's record on its **Documents & forms** tab so you can put it where it belongs.
 
 Empty state: **All clear** — "Every uploaded file has a folder."
 
@@ -127,7 +144,7 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
   </Accordion>
 
   <Accordion title="I cannot find a specific document here">
-    Records only shows what is outstanding. Use **Open Documents** for the full ledger.
+    Records only shows what is outstanding. Use **Send for signature**, which opens **Forms → eSignatures**, for the full list.
   </Accordion>
 
   <Accordion title="The tiles all read a dash">

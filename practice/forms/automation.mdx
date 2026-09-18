@@ -1,0 +1,206 @@
+---
+title: Form automation
+description: "The Automation tab of a form — what happens on its own when someone submits a response."
+icon: /images/icons/arrows-repeat.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="All plans — up to 2 automations per form on Free. Sending a webhook needs Team or above" roles="Owner, manager, or staff with the Create and edit forms permission" />
+
+An automation is one rule on one form: **when a response arrives and these things are true, do this.** You can have up to twenty on a form, and each does exactly one thing, so a rule is easy to read and easy to switch off.
+
+<Path steps={['Sidebar', 'Forms', 'your form', 'Automation']} />
+
+## When a rule runs
+
+Automations run **once**, the moment a response is first submitted.
+
+- Correcting an answer afterwards does **not** run them again. If someone edits their response, nothing is sent a second time.
+- A response held back as suspected spam never runs them at all. It is still recorded, and if you restore it the automations do not fire retrospectively.
+- Every run is recorded on the response itself, including the ones that were skipped and the reason why. Open the response and look at its activity if a follow-up did not arrive.
+
+## What a rule can do
+
+<AccordionGroup>
+  <Accordion title="Notify the clinic">
+    Puts a notice in the notification bell for everyone at the practice. You choose the category — **Documents**, **Patients** or **Staff** — and write the headline and message yourself.
+
+    A practice that has switched that category off in **Settings → Notifications** will not see it, and it will not appear in the email digest either.
+  </Accordion>
+
+  <Accordion title="Email the clinic">
+    Sends an email to your practice's own address, or to another address you name. You choose the same category as above, and it obeys the same switches: if **email notifications** are off, or that category is off, nothing is sent and the run is recorded as skipped.
+
+    You can include the answers in the email. They are off by default, because the response itself is where they live. Answers are only ever emailed to your practice's own address, to the address of someone on your team, or to another address that someone allowed to manage forms has confirmed — and that person must still have that permission when the rule runs. See [The answers themselves](#the-answers-themselves).
+  </Accordion>
+
+  <Accordion title="Email a copy of the answers to the respondent">
+    Sends the person who filled the form a copy of what they sent, with your own subject and message above it.
+
+    It only sends when the form collected an email address. If the respondent is one of your patients and has asked not to be emailed directly, they are skipped and the run is recorded as skipped.
+  </Accordion>
+
+  <Accordion title="Send the respondent a follow-up form">
+    Emails the respondent a link to another of your published forms — how a pre-screening becomes a consent, and a consent becomes an intake.
+
+    Only published forms that are currently accepting responses can be chosen, and only one invitation is ever sent per response, so a rule cannot send the same person two links to the same thing. You can set how many days the link stays valid.
+  </Accordion>
+
+  <Accordion title="Attach the response to the patient chart">
+    Links the response to a patient's chart when the email address on the response matches **exactly one** patient of your practice.
+
+    It does not copy answers into chart fields — a clinician still reads the response. If nobody matches, or if two patients share that address, nothing is linked and the run is recorded as skipped. That is deliberate: households share an inbox, and a wrong chart is worse than no link.
+  </Accordion>
+
+  <Accordion title="Tag the matched contact">
+    Adds tags to the contact in your CRM whose email matches the respondent's. When no contact matches, nothing is created and the run is recorded as skipped.
+  </Accordion>
+
+  <Accordion title="Open a follow-up task">
+    Opens a task on the matched contact, with a due date and a priority, assigned to that contact's owner.
+  </Accordion>
+
+  <Accordion title="Send the respondent a document for signature">
+    Sends the respondent one of your signable documents as a signature request — how a completed intake becomes a signed consent.
+
+    Only a document that has finished being checked, and that the respondent is the only person to sign, can be chosen; a document that needs a witness or a second signer has a place this rule cannot fill. It goes to the email address on the response, once per response, so correcting an answer never sends a second request. Signature requests are not included in the Free plan: on Free the run is recorded as skipped, with the plan as the reason.
+  </Accordion>
+
+  <Accordion title="Set a field on the matched contact">
+    Sets one of your own contact fields on the CRM contact whose email matches the respondent's — for example **Preferred clinic**. A field with set choices offers only those choices. When no contact matches, nothing is created and the run is recorded as skipped.
+  </Accordion>
+
+  <Accordion title="Send a webhook">
+    Posts the response to an address you give, so another system can react to it. **Team plan and above.** See [Webhooks](#webhooks) below.
+  </Accordion>
+</AccordionGroup>
+
+## Conditions
+
+A rule with no conditions runs on **every** submission — which is the commonest thing people want.
+
+Add conditions and they read exactly like the sentences on the **Logic** tab: everything inside a group must be true, and any one group being true is enough. On a form that produces one, you can also write a condition about the **prescreening outcome** or the **score**.
+
+<Note>
+  A condition about the score or the outcome is only offered on a form that produces one. If you change the form so it no longer marks answers, a rule that reads the score stops matching, and the tab says the source is gone rather than showing you an empty box.
+</Note>
+
+## The answers themselves
+
+Answers can include health information on any kind of form — an intake questionnaire built as a survey carries as much as a clinical one. So on **every** form, a rule that would carry the answers somewhere other than your practice's own inbox asks you to confirm it first, with a tick box on the rule:
+
+- a copy emailed to the respondent;
+- an email to an address you typed into **Send to**;
+- a webhook to another system.
+
+An email to your practice's own address does not ask.
+
+Until you tick it, the rule is saved, marked as unfinished, and **does nothing**. Turning the answers off clears the requirement instead: the rule can still say a response arrived without carrying what was in it.
+
+When the rule runs, it checks again before anything is sent:
+
+- An email to an address you typed goes ahead with answers only if the address is your practice's own or belongs to someone on your team — or, for any other address, if the person who confirmed it can still manage forms. If they have since lost that permission, or left, the run is recorded as skipped and nothing is sent until someone who may manage forms confirms the rule again.
+- A webhook with answers follows the same rule.
+- For a client whose record is restricted to the team members assigned to them, answers are only emailed to one of those team members. Your practice's shared inbox, another address and webhooks receive nothing for that client, and the run is recorded as skipped.
+
+Only people who may manage forms can add, change or delete a rule.
+
+## Webhooks
+
+<Availability editions={['clinic', 'pharmacy', 'lims']} plans="Team and above" roles="Owner or manager" />
+
+A webhook posts the response to an address you control. It carries the response, the form and the automation as identifiers, plus the outcome or score if the form produces one. The answers themselves are only included if you tick the box and confirm it.
+
+**We sign every request.** Each carries an `X-Clinik-Signature` header:
+
+```
+X-Clinik-Signature: t=<the send time, in seconds>,v1=<HMAC-SHA256 of "<t>.<body>">
+```
+
+The key is your practice's signing secret, on the **Webhook signing secret** panel at the foot of the Automation tab. Select **Show signing secret** to reveal it. **Reject anything whose timestamp is more than five minutes old** — that is what stops an old request being replayed at you.
+
+<Steps>
+  <Step title="Give an https address">
+    The address must be `https://` on a public host. A plain `http://` address, an address on your own local network, and one carrying a username and password are all refused, and the tab says so as you type.
+  </Step>
+  <Step title="Copy your signing secret">
+    Open the **Webhook signing secret** panel, select **Show signing secret**, and copy it into your receiving system.
+  </Step>
+  <Step title="Verify, then accept">
+    Check the signature and the timestamp before you act on the contents. Answer with any 2xx status.
+  </Step>
+</Steps>
+
+<Warning>
+  **Rotating the secret takes effect immediately.** The next webhook is signed with the new one, and anything still checking the old one rejects every delivery until you update it. Rotate when a secret has leaked; otherwise leave it alone.
+</Warning>
+
+### When a delivery fails
+
+A delivery that is refused with a 4xx is not retried — that status means the far side will never accept it. A timeout, a 408, a 429 or a 5xx is retried six times over about a day, spaced further apart each time, and then given up on.
+
+Every attempt is recorded on the response, so a webhook that has been failing since Tuesday is visible rather than silently piling up.
+
+## Set it up
+
+<Steps>
+  <Step title="Open the Automation tab">
+    From the forms list, open the form, then select **Automation** in the tab strip.
+  </Step>
+  <Step title="Add a rule">
+    Select **Add automation**. It is created straight away, switched on, with no conditions — so it would run on every submission.
+  </Step>
+  <Step title="Name it">
+    Put something in **Name** that says what it is for. The list shows it, and so does the record of what ran.
+  </Step>
+  <Step title="Narrow it, if you need to">
+    Under **When a response is submitted**, select **Add a condition**. Leave it empty to run on every submission.
+  </Step>
+  <Step title="Choose what it does">
+    Under **Then**, pick the action and fill in its fields. If something is missing — no subject, no tags, no address — the rule says so in red and does nothing until you finish it.
+  </Step>
+  <Step title="Save">
+    Select **Save automation**. **Unsaved changes** beside the button means it has not landed yet. The **On** switch is separate and takes effect the moment you use it, so you can stop a rule without finishing an edit.
+  </Step>
+</Steps>
+
+## Start an AI agent from a form
+
+A rule on this tab does one thing. For a workflow with several steps — read the answers, decide, then book, message or open a task — build an AI agent and choose one of the **Forms** triggers on its **Start** node: **Form response submitted**, **Screening form result**, **Quiz scored**, **Form stopped accepting responses**, **Form paused for unusual traffic** or **Form invitation expired unanswered**. See [AI agents](/practice/ops/ai-agents).
+
+## Troubleshooting
+
+<AccordionGroup>
+  <Accordion title="A rule ran but nothing arrived">
+    Open the response and read its activity. Each run is recorded with its result, and a skipped run says why — no email address on the response, a muted notification category, no matching patient or contact, your plan not including that action, answers headed to an address nobody allowed to manage forms has confirmed, or a client whose record is restricted.
+  </Accordion>
+
+  <Accordion title="The email to the practice never comes">
+    Check **Settings → Notifications**. Both the master email switch and the category you chose on the rule have to be on. If either is off, the run is recorded as skipped rather than failed.
+  </Accordion>
+
+  <Accordion title="The follow-up form was not sent">
+    The form you chose has to be published and still accepting responses. If it has been closed or archived since you wrote the rule, the run is recorded as skipped, and the picker will no longer offer it.
+  </Accordion>
+
+  <Accordion title="Nothing was attached to the chart">
+    The email address on the response has to match exactly one patient of your practice. No match and two matches both mean nothing is linked — the second on purpose, because guessing between two people who share an inbox would put someone's answers in the wrong record.
+  </Accordion>
+
+  <Accordion title="Add automation is greyed out">
+    On the Free plan a form can have **2** automations, and the line under the button says so. Delete one to add another, or upgrade — every paid plan has no plan limit (a form can hold up to 20 automations on any plan). If your clinic moves to Free with more than two on a form, nothing is deleted: the first two, in the order they are listed, keep running, and the rest wait until the plan includes them again.
+  </Accordion>
+
+  <Accordion title="The webhook option says Team and above">
+    Sending a webhook needs the Team plan or higher. You can write the rule, but it will not be saved until your plan includes it.
+  </Accordion>
+
+  <Accordion title="My receiver rejects the signature">
+    Sign the exact bytes you received, not a re-encoded copy: the signed value is the timestamp, a full stop, then the raw request body. Compare against the `v1=` part, and check the `t=` part is recent.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

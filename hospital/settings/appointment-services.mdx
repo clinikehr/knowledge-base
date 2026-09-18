@@ -42,8 +42,39 @@ Selecting **Add Service** opens the full form, with a live **Service Preview** b
 | **Providers** | Which clinicians may deliver it. "Leave all unchecked to offer it with any available provider." | No |
 | **Required Resources** | Rooms or equipment the service occupies. "Each is reserved automatically and can never be double-booked." | No |
 | **Product Used** | Inventory consumed per appointment, reserved at booking and deducted on completion | No |
+| **Usual time until the next visit** | A number of days or weeks. When **Rebooking reminders** is on in [Notifications](/hospital/settings/notifications), a patient whose last visit for this service was that long ago, with nothing booked since, is reminded once to book again. Empty means no reminder | No |
+| **Repeat bookings** | Lets patients book the service as a repeating series from the booking page: tick the gaps under **Clients can repeat** (**Every week** to **Every 12 weeks**) and choose **Most visits in one series** (2–26, the first visit included). Offered on plans that include recurring appointments (**Team** and **Enterprise**) | Off |
 
-There is no colour, no deposit and no buffer field on this form — deposits are set per booking page, and gaps come from the schedule.
+Four more cards shape how the service is booked — only the owner or a manager can save them:
+
+| Card | What it does | Default |
+| --- | --- | --- |
+| **Options & Add-ons** | **Add-on only** keeps a service off the booking list so it is only ever added under another service. **Add option** creates versions with their own **Minutes** and **Price** (Short / Long); when a service has options one is always chosen, and its length and price replace the service's own. **Add an add-on** lists an **Add-on only** service under this one, with its own **Extra minutes** and **Price** or the add-on's own when left empty | None |
+| **Timing** | **Buffer after (minutes)** — time the clinician needs after the visit; a visit of several services uses the longest buffer once. **Processing time** — **Starts after (minutes)** and **Lasts (minutes)**, when the patient stays but the clinician is free; it must end before the service ends | 0 · Off |
+| **Online Booking** | **Who can book online** (**Everyone**, **New clients only**, **Existing clients only**, **Not bookable online**), **Minimum notice** and **Book up to (days ahead)**. Booking from the calendar is not affected | Everyone · No minimum · Booking page limit |
+| **Provider Pricing** | A clinician's own price or length for this service or one of its options, used when that clinician is chosen | None |
+
+There is still no colour field on this form. Deposits, paying in full when booking, and cancellation and missed appointment fees are set per service in **Deposits & cancellation fees** — see [Deposits and cancellation fees](#deposits-and-cancellation-fees).
+
+## Deposits and cancellation fees
+
+The **Deposits & cancellation fees** card sets what booking this service on your [booking page](/hospital/settings/booking-page-designer#booking-policy) or in the patient portal asks of a patient. It needs the **Essential** plan or above and a connected Stripe account; until then the controls are shown switched off with the reason. It is not available yet for hospitals that bill in Naira.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Pay in full when booking** | The patient pays the whole price of the service (and the add-ons chosen with it) to book | Off |
+| **Deposit** | **Fixed amount** or **Percent of the price**, paid when booking and taken off the bill. A percent is of the service and its add-ons; a fixed deposit does not change with add-ons | None |
+| **Cancellation window** | How long before the visit a patient may cancel and have their payment refunded: **No window**, 12 hours, 1, 2 or 3 days | No window |
+| **Late cancellation fee** | **Fixed amount** or **Percent of the price**, for a cancellation inside the window. Needs a window | None |
+| **Missed appointment fee** | **Fixed amount** or **Percent of the price**, for a visit marked as a no-show | None |
+
+Only the owner or a manager can change it. It is saved with the service, and it applies to bookings made after you save — a booking keeps the terms the patient agreed to. Write the policy patients read in the booking page designer, under **Settings → Booking policy**.
+
+**Visits staff book.** A visit booked from the calendar never asks the patient to agree and never takes a deposit. It follows the service's cancellation window and fees only when that patient has already agreed to the same policy when booking online — then a late cancellation or a missed visit gives you a fee to review. Otherwise no fee is raised for that visit.
+
+**Cancellation windows use the hospital's time zone** under **General**. The booking page designer's **Clinic Timezone** is used only while General still shows its starting value, New York, and the designer names a different zone.
+
+**When a visit is cancelled, its invoice closes.** Nothing paid: the invoice is cancelled. Something kept, such as a deposit: the invoice keeps only that amount and the rest is written off. A later refund comes off the invoice, and restoring the visit reopens the invoice at its original total. An invoice with other charges or a discount code is left open for review.
 
 ## Set it up
 
@@ -85,6 +116,12 @@ Turning **Active Service** off removes it from all three surfaces immediately. A
 
 Editing a price changes new bookings and new invoice lines only. An invoice already raised keeps the amount it was raised with.
 
+With options or add-ons, the appointment sheet shows an **Option** list and **Add-ons** ticks under the service, and its summary adds each add-on as its own line with the **Visit Time** and **Appointment Total**. The appointment keeps the option, the add-ons and their prices as booked; the invoice names the option beside the service and lists each add-on on its own line. A **Fee** changed at the desk is used, with the standard price kept beside it on the appointment. The visit's length always comes from the service, its option, its add-ons and the chosen clinician. An appointment booked with options or add-ons keeps its services when edited — cancel and book again to change them.
+
+On the booking page, patients see the same options and add-ons, and **Online Booking** decides who can book the service online and when. Offered times leave room for the buffer, and a clinician's processing time can take another short visit. Moving an appointment to a time where the clinician is already booked — including the buffer after another visit — is refused with the reason, and nothing moves.
+
+A **Usual time until the next visit** only matters when **Rebooking reminders** is on in [Notifications](/hospital/settings/notifications). Changing it affects visits whose gap is reached from then on; it never sends for visits long past.
+
 ## Check it worked
 
 The new service appears in the list with an **Active** badge, its price in your currency and its duration. Open the appointment sheet and confirm it is selectable and pulls through the right length. If patients should book it themselves, open the [Booking page designer](/hospital/settings/booking-page-designer) and check it is on the page.
@@ -97,6 +134,9 @@ The new service appears in the list with an **Active** badge, its price in your 
   </Accordion>
   <Accordion title="The service is active but patients cannot book it">
     Being active makes it bookable internally. It also has to be added to the booking page in the **Services** tab of the [Booking page designer](/hospital/settings/booking-page-designer).
+  </Accordion>
+  <Accordion title="Service saved, but its options were not">
+    Only the owner or a manager can change **Options & Add-ons**, **Timing**, **Online Booking** and **Provider Pricing**. Ask one of them to save the service again.
   </Accordion>
   <Accordion title="Delete is refused">
     The service is attached to appointments. Turn **Active Service** off instead — it disappears from every picker and keeps its history.
