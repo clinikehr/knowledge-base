@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Only the owner can connect an account" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner or manager" note="Owner or manager can connect, switch the default, deactivate or reactivate an account. Other roles see it read-only, with no account numbers." />
 
 This is where the hospital connects the account that **receives money from patients** — card payments on invoices, deposits taken at booking, memberships and Auto Pay. It is not how the hospital pays ClinikEHR; that is the subscription, under [Change your plan](/platform/plans/change-plan).
 
@@ -27,11 +27,11 @@ This is where the hospital connects the account that **receives money from patie
 
 | Control | What it does | Notes |
 | --- | --- | --- |
-| **Connect Stripe Account** | Sends you to Stripe to create or link the account that receives payments | Owner only. "Only clinic owners can connect a Stripe account." |
+| **Connect Stripe Account** | Sends you to Stripe to create or link the account that receives payments | Owner or manager. "Only the clinic owner or a manager can connect a payment account." |
 | **Account ID** · **Onboarding** · **Charges** | Three status tiles once connected — the account reference, whether Stripe's checks are **Complete**, and whether charging is **Enabled** | Read-only |
 | **Continue setup** | Returns you to Stripe when onboarding is unfinished | Appears with "Onboarding incomplete — your clinic cannot charge patients yet." |
-| **Open Stripe Dashboard** | Opens the connected account at Stripe | Owner only |
-| **Connect Bank Account** (Paystack) | Opens the Nigerian onboarding form | Owner only |
+| **Open Stripe Dashboard** | Opens the connected account at Stripe | Owner or manager |
+| **Connect Bank Account** (Paystack) | Opens the Nigerian onboarding form | Owner or manager |
 | **Business Name (optional)** | "Used to identify your account on Paystack. Defaults to your account name." | Optional |
 | **Bank** | Searchable picker of Nigerian banks | Required |
 | **Account Number** | "Enter 10-digit NUBAN". The account holder's name is looked up and shown back as **Account verified** | Required |
@@ -73,6 +73,17 @@ The two providers are not interchangeable per transaction. A Stripe payment link
 
 Card details are held by the provider, never by ClinikEHR — the Stripe card says so: "Card data is stored securely by Stripe and never touches ClinikEHR servers."
 
+## Multiple accounts, a default, and switching between them
+
+You can connect **up to 3 Stripe accounts and 3 Paystack accounts** (active and deactivated ones both count toward that limit — it exists to stop payouts being redirected by cycling through accounts). Exactly one account per provider is the **default**, and every new charge, payment link, membership sale and Auto Pay attempt uses it.
+
+- **The first account you connect becomes the default automatically.** Connecting a second or third never silently takes over payouts — it starts inactive-as-default (still usable once verified, just not the one new money goes to) until you choose **Make default**.
+- **Make default** is disabled with a tooltip until the account can actually accept charges (Stripe: onboarding complete and charges enabled; Paystack: onboarding complete).
+- **Deactivate never deletes.** Before you confirm, the dialog shows exactly what is still tied to the account — active memberships still billing on it, and saved cards on it — so nothing is a surprise. If you deactivate the current default, you are asked which of your other active accounts should take over; with none available, the tab shows as not connected until you reactivate or connect one.
+- **Reactivate** brings a deactivated account back, but it does **not** become the default by itself — choose **Make default** separately if you want that.
+- **Nothing already running moves when the default changes.** A membership sold on an older account keeps billing there, and a refund always goes back through the account that took the original payment — never the new default.
+- **A card saved on an account that is no longer the default** is shown as "saved on a previous payment account" and is never charged again automatically. The None's card is re-saved the next time they check out, pay through the portal, or pay a payment link — or you can send a payment link, or collect the card again at their next visit. Billing can see which None have a card that needs re-saving.
+
 ## Check it worked
 
 The card shows **● Active** (Stripe) or **● Connected** (Paystack), with **Onboarding: Complete** and **Charges: Enabled**. Then raise a small test invoice and issue a payment link — it should generate rather than refuse. Finally open **Auto Pay**: its controls should now render instead of the "Connect Stripe" notice.
@@ -81,10 +92,10 @@ The card shows **● Active** (Stripe) or **● Connected** (Paystack), with **O
 
 <AccordionGroup>
   <Accordion title="An Unlock Stripe Connect panel covers the card">
-    Card processing starts on the paid plans: "Processing card-on-file payments is a premium feature available on our Starter, Essential and Team plans." See [Change your plan](/platform/plans/change-plan).
+    That panel is for **Auto Pay** (auto-charging a saved card), which is a separate, higher-tier feature from connecting the account itself: "Processing card-on-file payments is a premium feature available on our Essential and Team plans." Connecting Stripe or Paystack to take payments is available on every plan, including Free. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
   <Accordion title="I see the card but the Connect button is missing">
-    "Only clinic owners can connect a Stripe account." Managers and accountants can read the status but not start the connection.
+    "Only the clinic owner or a manager can connect a payment account." Any other role can read the status but not start the connection.
   </Accordion>
   <Accordion title="Onboarding says Incomplete and we cannot charge">
     The provider still wants something — usually an identity document or a bank detail. Select **Continue setup** to return to Stripe and finish it. Charges stay disabled until it clears.
@@ -97,6 +108,12 @@ The card shows **● Active** (Stripe) or **● Connected** (Paystack), with **O
   </Accordion>
   <Accordion title="We are on Paystack but a colleague asked for a Stripe link">
     Not possible on one workspace: "This clinic collects payments via Paystack — Stripe payment links are not available." Send the Paystack link, or a bank transfer from [Payment details](/hospital/settings/payment-details).
+  </Accordion>
+  <Accordion title="I deactivated the account new payments were using, and now nothing is connected">
+    That was the default and no other active account existed to take over. Reactivate the one you deactivated, or connect a new one, then select **Make default**. Anything already billing on the old account (a membership, for instance) kept going the whole time — deactivating never cancels what is already running.
+  </Accordion>
+  <Accordion title="A returning patient's saved card did not get charged">
+    Check which account it was saved on. A card saved on an account that is no longer the default shows "saved on a previous payment account" and is skipped on purpose, never silently — the patient needs to save a new card at checkout, through the portal, or on a payment link you send.
   </Accordion>
 </AccordionGroup>
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Starter and above" roles="Any staff member" note="Blocked on the Free plan — the upgrade prompt names Starter." />
+<Availability editions={['clinic']} plans="All plans — Free is manual entry, pay-per-use; Essential and above add AI-assisted claims and eligibility" roles="Any staff member" />
 
 Insurance in a solo or team practice is electronic end to end: you add the payers you bill, enrol your providers with them, check a client's cover before the visit, and turn appointments you have not billed yet into real claims that are transmitted, tracked and reconciled.
 
@@ -89,7 +89,7 @@ Check before the appointment, not after: an **Ineligible** badge on the morning 
   <Step title="Create them as drafts">
     Select **Create \{n\} claims**. The toast reads "\{n\} claims created as drafts". **Create claim** on a single row opens the prefilled claim form instead, so you can read it before it goes.
 
-    The form arrives filled from what you already recorded. **Rendering Provider (Box 31)** carries the NPI and taxonomy from your [Insurance Profile Settings](/practice/settings/insurance). **Diagnosis Codes (Box 21)** come from the visit the claim bills: codes a clinician chose in the note's own ICD picker land directly, and where only free-text exists the AI suggests ICD-10 codes from the clinical record — marked as suggestions, for you to review. **Service Lines (Box 24)** take their CPT/HCPCS codes and charges from the appointment's services, with the AI proposing codes for uncoded services **and modifiers** (95 for telehealth, 25, 59) for every line. Every field stays editable, and the code fields have a live ICD-10/CPT search that shows codes as soon as it opens and the description of any code that arrived from the visit — nothing goes to a payer without a person confirming it. If the visit has no clinical notes to draw on, the form says so — "No clinical notes found for this visit" — and Box 21 is yours to fill; the suggestions work the same whether you opened the form from **Unbilled appointments** or from the client's **Billing** tab.
+    The form arrives filled from what you already recorded. **Rendering Provider (Box 31)** takes its name from whoever the visit was actually billed to on the invoice, when that is known and only one clinician is involved — otherwise the field is left for you to choose. Its **NPI and taxonomy** come from that clinician's own **Billing Profile** in [Insurance Profile Settings](/practice/settings/insurance) when one exists for them (preferring one scoped to this claim's payer over a general one), and only fall back to your practice-wide defaults when no such profile exists — never guessed, and never left silently blank when a profile could have supplied it. If a claim bills more than one clinician across its service lines, the claim-level field stays blank for you to review and each line carries its own clinician's NPI where one could be resolved. **Diagnosis Codes (Box 21)** come from the visit the claim bills: codes a clinician chose in the note's own ICD picker land directly, and where only free-text exists the AI suggests ICD-10 codes from the clinical record — marked as suggestions, for you to review. **Service Lines (Box 24)** take their CPT/HCPCS codes and charges from the appointment's services, with the AI proposing codes for uncoded services **and modifiers** (95 for telehealth, 25, 59) for every line. When the visit happened at one of your [Locations](/practice/settings/locations) that has a Facility NPI set, **Box 32** (service facility) and the **Place of Service** are seeded from that site instead of your billing provider's own address. Every field stays editable, and the code fields have a live ICD-10/CPT search that shows codes as soon as it opens and the description of any code that arrived from the visit — nothing goes to a payer without a person confirming it. If the visit has no clinical notes to draw on, the form says so — "No clinical notes found for this visit" — and Box 21 is yours to fill; the suggestions work the same whether you opened the form from **Unbilled appointments** or from the client's **Billing** tab.
   </Step>
   <Step title="Submit from the Claims tab">
     Open a draft's **Actions** menu and choose **Submit to payer**, or tick several and use **Submit \{n\} to payers**. The confirmation says what it costs: "Each claim is sent to its payer and uses one claim credit."
@@ -153,10 +153,10 @@ Plan, not role, is what decides this screen. There is no role→route layer on a
 
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Open **Insurance** and read every tab | Any staff member | Plan — Starter or above |
+| Open **Insurance** and read every tab | Any staff member | Any plan |
 | Create claims from unbilled appointments | Any staff member | Plan |
 | Submit or void a claim | Any staff member | Plan — and enough claim credits |
-| Run an eligibility check, single or **Batch verify** | Any staff member | Plan — blocked entirely on Free |
+| Run an eligibility check, single or **Batch verify** | Any staff member | Plan — pay-per-use on Free, included allowances from Essential |
 | Record an insurance payment | Any staff member | Plan |
 | Add, deactivate or remove a payer | Owner, manager, accountant | Role — it lives in Settings |
 
@@ -201,9 +201,6 @@ See [Staff permissions](/platform/team/permissions).
     A payer with claims against it is deactivated rather than deleted: "This payer has existing claims and will be deactivated (not deleted)." That keeps your claim history readable. It stops appearing on new claims either way.
   </Accordion>
 
-  <Accordion title="Insurance Claims Limit Reached">
-    The Free plan blocks claim creation, eligibility checks and payment recording alike; the prompt reads **Upgrade to Starter**. If the plan is right and you still cannot open the page, it is your role — see [Permissions](/platform/team/permissions).
-  </Accordion>
 
   <Accordion title="Nothing appears under Unbilled appointments">
     Only completed appointments that have insurance coverage and no claim are listed. Close off the appointment first, and check the client has cover recorded — see [Appointments](/practice/work/appointments).
@@ -244,4 +241,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck topic="a claim" />
 
-{/* source of truth: components/clinic/insurance-management/insurance-content.tsx, unbilled-tab.tsx, claims-tab.tsx, payments-tab.tsx, analytics-tab.tsx, components/clinic/dashboard/settings/insurance-settings.tsx */}
+{/* source of truth: components/clinic/insurance-management/insurance-content.tsx, unbilled-tab.tsx, claims-tab.tsx, payments-tab.tsx, analytics-tab.tsx, create-claim-sheet.tsx, components/clinic/dashboard/settings/insurance-settings.tsx, lib/insurance/claim-provider-roles.ts */}

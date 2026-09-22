@@ -40,11 +40,13 @@ Six stat cards run across the top:
 | **Triages** | Triage records taken | "Last 30 days" |
 | **Top Blood Type** | "Most common" across your population | All time |
 
-Two tabs follow. **All Patients** is the list. **Analytics** breaks your population down under **Gender Distribution**, **Age Distribution**, **Country Distribution** and **Chronic Conditions** — plain counted lists rather than charts, useful when a service line is arguing for a clinic and needs to know who actually attends.
+Two tabs follow. **All Patients** is the list. **Analytics** charts your population: a bar chart of **new registrations over time** (filterable by date range), a status breakdown (**Active**, **Inactive**, **Waitlist**, **New (30d)**, **Returning**), an **age distribution** pie chart alongside an **Adult vs minor** count, a **gender distribution** pie chart, **admissions status** (**Admitted**, **Discharged**, **Not admitted**) and **clinical activity** for the last 90 days (**Consultations**, **Lab tests**, **Prescriptions**). Every figure is clinic-wide, across your whole patient population — not filtered to records any one person can open. A figure with nothing to count reads as a dash, never a zero.
 
-The page header carries **Refresh**, **Import**, **Export** and **New Patient**. The filters are not up there: **Patient status** (**Active**, **Inactive**, **Prospective**, **Archived**), **Billing type** (**Self pay**, **Insurance**), **Waitlist** and **Columns** all sit on the table itself, beside the search box. Each filter carries a count while it is on and a **Clear filter** entry; **Clear all** appears once any is set. **Columns** opens a **Visible Columns** list.
+The page header carries **Refresh**, **Import**, **Export** and **New Patient**. The filters are not up there: **Patient status** (**Active**, **Inactive**, **Prospective**, **Archived**), **Billing type** (**Self pay**, **Insurance**), **Waitlist**, **Location** and **Columns** all sit on the table itself, beside the search box. Each filter carries a count while it is on and a **Clear filter** entry; **Clear all** appears once any is set. **Columns** opens a **Visible Columns** list.
 
-The table shows **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit** by default. **Blood Type**, **Occupation**, **Country**, **Email**, **Genotype**, **Triages**, **Lab Tests** and **Prescriptions** are available under **Columns**. Every heading sorts.
+The table shows **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit** by default. **Blood Type**, **Occupation**, **Country**, **Email**, **Genotype**, **Triages**, **Lab Tests**, **Prescriptions** and **Location** are available under **Columns**. Every heading sorts.
+
+The **Location** filter and column only appear once your plan allows more than one site (**Team** or **Enterprise** — see [Locations](/practice/settings/locations)) and you actually have two or more active ones; with one site, or on a plan capped at one, there is nothing to filter or show and both stay hidden.
 
 The row **⋯** menu offers **View details**, **Edit** for staff who may edit, and **Send to patient** — plus **Approve request** and **Decline request** on a waitlist row.
 
@@ -63,6 +65,12 @@ Inside the sample tour everything is badged **Sample mode**, with the amber line
   <Step title="Get the name and date of birth right">
     Take the time at the counter. Every clinician after you searches on them, and a mistyped name is how one person ends up with two charts.
   </Step>
+  <Step title="Choose Adult or Minor">
+    **Patient type** has no default: pick **Adult** or **Minor**. Entering the date of birth fills it in for you (under 18 suggests **Minor**), and you can change it — for example for an emancipated minor. If the type and the date of birth disagree, the form says so before you save.
+  </Step>
+  <Step title="Set a primary location (Team and Enterprise, two or more sites)">
+    A **Primary location** picker appears once your plan allows more than one site and you have two or more active ones — see [Locations](/practice/settings/locations). It pre-fills to the site you're currently working from and records which site this patient is usually seen at. It's informational only: the patient can still be seen and treated at any of your locations, and leaving it blank is fine.
+  </Step>
   <Step title="Save">
     The patient appears in **All Patients** and is immediately available to triage, appointments and admissions.
   </Step>
@@ -70,7 +78,7 @@ Inside the sample tour everything is badged **Sample mode**, with the amber line
 
 ## Find and open a record
 
-Search with **Search patients...**, then select the row to open it, or use the **⋯** menu. **View details** opens the record; **Edit** changes it; **Send to patient** opens the same three-step sheet the patient's own record uses — forms, signature requests and consent documents in one list, with what the patient already has open marked so you do not send it twice. Below a wide screen the table becomes cards showing the phone, gender, age, blood type and last consultation, with an **Admitted** badge where it applies.
+Search with **Search patients...**, then select the row to open it, or use the **⋯** menu. **View details** opens the record; **Edit** changes it; **Send to patient** opens the same three-step sheet the patient's own record uses — forms, signature requests and consent documents in one list, with what the patient already has open marked so you do not send it twice. In the **Category** column, a warning icon beside **Adult** or **Minor** means the date of birth disagrees with the type; open the record and correct whichever is wrong. Below a wide screen the table becomes cards showing the phone, gender, age, blood type and last consultation, with an **Admitted** badge where it applies.
 
 ## Work the self-registration waitlist
 
@@ -174,10 +182,10 @@ If your hospital restricts sections by role, a role without this page sees "You 
   </Accordion>
 
   <Accordion title="Do the Analytics figures include waitlist requests?">
-    No. Analytics counts registered patients. Someone on the waitlist is not a patient until you approve them.
+    **Total** does — the same total the top **Total Patients** card shows — and **Analytics** breaks it out further with its own **Waitlist** figure so you can see how many of that total are still pending. **Active**, **Inactive** and the other status figures reflect a patient's actual status once you have decided it, same as everywhere else on this page.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="patient records" />
 
-{/* source of truth: app/u/clinic/patients-management/, components/clinic/patients-management/ (patient-management-dashboard.tsx, enhanced-patients-table.tsx, table-columns.ts), components/clinic/clients-management/patients-empty-state.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: app/u/clinic/patients-management/, components/clinic/patients-management/ (patient-management-dashboard.tsx, patient-population-analytics.tsx, enhanced-patients-table.tsx, table-columns.ts), components/clinic/clients-management/patients-empty-state.tsx, lib/clinic-nav-registry.ts */}

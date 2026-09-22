@@ -19,11 +19,11 @@ Each edition has its own ladder, and you move up and down within it. You never m
 
 | Edition | Plan ladder, cheapest to richest |
 | --- | --- |
-| Clinic & Hospital | Free → Starter → Essential → Team → Enterprise |
+| Clinic & Hospital | Free → Essential → Team → Enterprise |
 | Pharmacy | Starter → Professional → Business → Enterprise |
 | Diagnostics | Starter Lab → Professional Lab → Business Lab → Enterprise |
 
-Only Clinic & Hospital has a **Free** plan. Pharmacy starts at **Starter** and Diagnostics at **Starter Lab**.
+Only Clinic & Hospital has a **Free** plan. Pharmacy starts at **Starter** and Diagnostics at **Starter Lab**. Clinic & Hospital no longer sells a Starter plan — a small number of clinics who bought it before it was retired keep it; see [Legacy plans](/platform/plans/legacy-plans).
 
 The names are not interchangeable between ladders. A Diagnostics plan is called **Professional Lab**, not "Professional", and Clinic & Hospital has no Professional or Business tier at all — so a feature described as needing "Essential" is describing the clinic ladder and has no equivalent rung in the other two.
 
@@ -51,11 +51,22 @@ AI agents are a **Clinic & Hospital** feature — a pharmacy or diagnostics work
 | Plan | Monthly agent credits |
 | --- | --- |
 | Free | 50 |
-| Starter | 1,000 |
 | Essential | 2,500 |
 | Team | 5,000 |
 
 Refill packs are bought separately and never expire. See [AI credits](/platform/plans/credits).
+
+## Locations by plan
+
+Multi-site is a **Clinic & Hospital** feature — one active location is included on every plan; **Team** lifts that to unlimited and adds the Revenue by location report:
+
+| Plan | Active locations | Revenue by location |
+| --- | --- | --- |
+| Free | 1 | No |
+| Essential (including the 30-day trial) | 1 | No |
+| Team | Unlimited | Yes |
+
+Downgrading from Team never deactivates or deletes a location — only adding or reactivating one past the new limit is refused. See [Locations](/practice/settings/locations).
 
 ## Insurance & billing credits by plan
 
@@ -65,40 +76,60 @@ Separate from AI credits, US insurance work is **charged per use in billing cred
 
 | Plan | Eligibility checks | Electronic claims |
 | --- | --- | --- |
-| Free / Trial | Not available | Not available |
-| Starter | Pay per use | Pay per use |
+| Free | Pay per use | Pay per use |
 | Essential | Pay per use | **35 included**, then pay per use |
 | Team | **Unlimited — included** | **50 included**, then pay per use |
 | Enterprise | Unlimited — included | Unlimited — included |
 
+Free's manual insurance claims, CMS-1500 forms and eligibility checks are billed at a flat **25 credits ($0.25) per eligibility check** and **50 credits ($0.50) per electronic claim** — no included allowance. There are no claims-AI tools on Free; claims are entered and submitted by hand.
+
 **Per-use cost in credits, where not included:**
 
-| Action | Starter | Essential | Team |
+| Action | Free | Essential | Team |
 | --- | --- | --- | --- |
-| Eligibility check | 20 | 20 | included |
-| Electronic claim | 40 | 35 | 25 |
-| Insurance discovery | 95 | 95 | 80 |
-| Claim status check | 25 | 25 | 20 |
-| CMS-1500 PDF | 10 | 10 | 10 |
-| Payment report (ERA), per claim paid | 20 | 20 | 20 |
-| Coordination-of-benefits check | 95 | 95 | 85 |
-| Claim attachment | 95 | 95 | 85 |
-| eLab request | 600 | 600 | 600 |
+| Eligibility check | 25 | 20 | included |
+| Electronic claim | 50 | 35 | 25 |
+| Insurance discovery | — | 95 | 80 |
+| Claim status check | — | 25 | 20 |
+| CMS-1500 PDF | included in the claim | 10 | 10 |
+| Payment report (ERA), per claim paid | — | 20 | 20 |
+| Coordination-of-benefits check | — | 95 | 85 |
+| Claim attachment | — | 95 | 85 |
+| eLab request | — | 600 | 600 |
+
+Insurance discovery, claim-status checks, payment reports, coordination-of-benefits checks, claim attachments and eLab requests are Essential-and-above tools — Free's insurance work is limited to entering and submitting a claim by hand and checking eligibility. A workspace still on the legacy Starter plan keeps Starter's own rates; see [Legacy plans](/platform/plans/legacy-plans).
 
 Two rules worth knowing: **a failed action is not charged** — usage is recorded only after the check or claim succeeds — and **the same record is never billed twice**: retrying something that already went through does not spend a second set of credits. e-Prescribing is not metered at all; it is covered by its monthly add-on.
 
-## The free trial
+## Try Essential — the paid trial
 
-A workspace that is on Free and has never trialled gets 7 days of full access, and it takes **no card**.
+Clinic & Hospital no longer offers a no-card free trial. New workspaces start on **Free**, with no time limit and no wall — see [What Free includes](#what-free-includes) below.
 
-There are two ways in, and both are normal:
+If you want to try a paid plan first, **Try Essential** costs **\$29.90 (or ₦29,900)** and gives you **30 days of Essential**, after which it converts automatically to the full Essential price (\$99.90/mo, or ₦129,900/mo) unless you cancel. A card is required to start it. One trial per workspace — a workspace that has already had a paid subscription, or already used this trial, is not offered it again.
 
-- **From the plan page.** The **Try ClinikEHR Free for 7 Days** section offers **Start 7-Day Free Trial**. You get "Your 7-day free trial has started! Let's finish setup..."
-- **From the first-run page.** Many new workspaces land on "Let's get your clinic set up" — "You've got full access for 7 days — no card needed." — with a single **Start for free** button, **No credit card required**, and **Or compare plans** underneath if you would rather pick a paid plan now.
+<Warning>
+  Cancelling during the 30 days does not refund the \$29.90/₦29,900 trial fee, and access continues until day 30. After that, the workspace moves to Free.
+</Warning>
 
-One trial per workspace. If it has already been used you get **Trial Already Used** — "This clinic has already used its free trial period." — and the plan comparison instead.
+Add-ons — **AI Note Taker**, **ePrescribe**, **ePrescribe PDMP** and **eLabs Access** — aren't purchasable on Free or while a trial is running. Each add-on's card on your billing screen shows **Requires Paid Plan** on Free, or **Available After Trial** with the date your trial ends while one is running, in place of **Add Feature**; it opens once the trial converts to a paid subscription, or once you start a paid plan directly.
 
-When the 7 days end, a Clinic & Hospital workspace moves to Free. Your records, notes and history stay fully accessible; the premium features stop.
+See [Change your plan](/platform/plans/change-plan) to start or cancel a trial.
+
+## What Free includes
+
+Free is not a trial — it has no time limit. It now carries most of what a small clinic needs to take payments and bill insurance, without a subscription:
+
+- Online payments (a processing fee applies), superbills and Good Faith Estimates, and automated invoicing
+- Manual insurance claims, CMS-1500/HCFA forms and eligibility checks, billed pay-per-use — see the credits table above
+- ICD-10 code autocomplete
+- **10 paperless intakes/consents a month** and **5 telehealth links a month**
+- Appointment reminders by email
+- CSV data export
+- ClinikForms signature questions, Excel export and saved response reports (within Free's existing 10 published forms / 100 responses per form / 1 GB storage)
+- An online store for up to **100 physical products**, hosted and carrying "Powered by ClinikEHR" branding
+- A customizable CRM contact form
+
+Free still holds its own limits — **1 staff seat**, **50 clients** — and stays on community support. Data import, custom notes templates, eSignatures, add-ons and the paid communications and AI-agent tiers all start at Essential; see the plan comparison for the full list.
 
 ## The rule that surprises people
 
@@ -131,6 +162,10 @@ Each workspace you own gets a card showing its plan, its status, its **Current P
 
   <Card title="Who can see and do what" icon="/images/icons/user-lock.svg" href="/start/roles-and-access">
     The four gates — edition, plan, role and permission — and which one is hiding your feature.
+  </Card>
+
+  <Card title="Legacy plans" icon="/images/icons/clock-rotate-left.svg" href="/platform/plans/legacy-plans">
+    What a clinic still on Starter, or on an older Essential or Team price, keeps.
   </Card>
 </Columns>
 

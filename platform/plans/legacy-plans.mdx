@@ -1,0 +1,94 @@
+---
+title: Legacy plans
+description: "What a Clinic & Hospital workspace still on the retired Starter plan, or on an older Essential or Team price, keeps — and what happens if it leaves."
+icon: /images/icons/clock-rotate-left.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['clinic']} plans="Starter (retired from sale), and any workspace still on an older Essential or Team price" roles="Owner" />
+
+A **legacy plan** is one you can no longer buy — either because the plan itself has been retired, or because your plan is still sold but at a price ClinikEHR no longer offers to new customers. If your workspace is on one, this page explains what you keep, and what changes the moment you leave it.
+
+<Path steps={['Dashboard', 'Subscription']} />
+
+## Starter is retired
+
+Clinic & Hospital no longer sells a **Starter** plan. New workspaces choose between **Free**, **Essential** and **Team**; Starter no longer appears as an option on the plan page. See [Plans and what they include](/platform/plans/overview) for the current ladder.
+
+<Note>
+  This is Clinic & Hospital only. The **Pharmacy** and **Diagnostics** editions have their own, unrelated **Starter** and **Starter Lab** plans, and those are unaffected — they are still on sale.
+</Note>
+
+A workspace that bought Starter before it was retired keeps it. Nothing changes on its own:
+
+- **Your price stays your price.** You continue to be billed exactly what your subscription already charges, monthly or yearly, for as long as you keep paying it.
+- **Your seat cap stays Starter's own cap**, not Essential's or Team's. See [Staff seats](/platform/plans/seats) for what that cap is and how an extra seat on it is charged.
+- **Your feature set stays what Starter always included** — the plan comparison you signed up under, not a moving target. A change made later to what Essential or Team include does not retroactively apply to Starter.
+- **Your per-use billing-credit rates stay Starter's own rates** — see the insurance and billing credits table in [Plans and what they include](/platform/plans/overview#insurance--billing-credits-by-plan).
+
+## Once you leave Starter, you cannot go back
+
+<Warning>
+  Cancelling, downgrading or upgrading away from Starter is a one-way door. Once a workspace has left Starter — for any reason, including a lapsed or cancelled subscription — it cannot resubscribe to Starter. The only plans on offer from then on are **Free**, **Essential**, **Team** and **Enterprise**.
+</Warning>
+
+This is why the plan page marks a Starter workspace's own card **Legacy plan** rather than letting you reselect it after moving away — Starter is not held open as a fallback. If you are considering a change and want to keep Starter's terms, the only way to keep them is to keep the subscription active.
+
+## Moving to a current plan
+
+Selecting any other plan from a Starter workspace works exactly like an ordinary [plan change](/platform/plans/change-plan) — upgrading is immediate and prorated, downgrading (to Free) takes effect at the end of your current billing period. The moment the change applies, you are on that plan's **current** price and terms, not a legacy one:
+
+- Moving to **Essential** or **Team** bills you their current price, with their current included-seats-then-overage model — see [Staff seats](/platform/plans/seats).
+- Moving to **Free** drops you to Free's limits and feature set — see [What Free includes](/platform/plans/overview#what-free-includes).
+
+## Older Essential or Team pricing
+
+Separately from Starter, a workspace that subscribed to **Essential** or **Team** before a price change can stay on the price it originally signed up for, even though the plan itself is still sold. Its card shows its own current charge, which may be lower than the price quoted on the plan page today.
+
+The same one-way rule applies: **changing plan moves you onto the current price for whatever you select**, including reselecting the same plan name at a different billing interval. There is no way to move an older price onto a new billing period or a different plan.
+
+## Check your own terms
+
+<Path steps={['Personal home', 'Billing', 'Plan Subscriptions']} />
+
+Your workspace's card is the source of truth for what you actually pay and what cap you are on — this page describes the policy, not your specific numbers. If your card's price or seat cap does not match what you expect, [contact support](/platform/help/contact-support) rather than assuming a mistake.
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I add seats on my legacy Starter plan?">
+    Yes, up to Starter's own cap, at Starter's own extra-seat rate. Past that cap, adding another seat needs a plan change, and a plan change is what ends Starter — see the warning above.
+  </Accordion>
+
+  <Accordion title="I'm on Starter and want Essential's features without losing my Starter price. Can I do that?">
+    No. A plan's features and its price are the same package — Starter's terms only apply to Starter. Moving to Essential gets Essential's features at Essential's current price.
+  </Accordion>
+
+  <Accordion title="My subscription lapsed by accident — do I lose Starter?">
+    A lapsed or **Past Due** subscription is treated as Free while it is unpaid, but reactivating it before it is formally cancelled restores Starter and its terms. See [Change your plan](/platform/plans/change-plan) for reactivating versus starting over.
+  </Accordion>
+
+  <Accordion title="Why does the plan page show my Starter card differently from Essential and Team?">
+    It is badged **Legacy plan** rather than offered as a selectable option, because Starter cannot be bought again once left. Essential and Team remain ordinary, selectable cards.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Plans and what they include" icon="/images/icons/table.svg" href="/platform/plans/overview">
+    The current Free, Essential, Team and Enterprise ladder.
+  </Card>
+
+  <Card title="Change your plan" icon="/images/icons/arrow-up-right-dots.svg" href="/platform/plans/change-plan">
+    Upgrade, downgrade, cancel and reactivate.
+  </Card>
+
+  <Card title="Staff seats" icon="/images/icons/users.svg" href="/platform/plans/seats">
+    Included seats, caps and per-seat pricing on the current plans.
+  </Card>
+</Columns>
+
+{/* source of truth: lib/edition.ts (EDITION_PLAN_TIERS), lib/subscription-features.ts, app/subscription/plan/[clinicId]/page.tsx */}

@@ -48,6 +48,17 @@ Everything else is presentation. Online booking works only when both of these ar
 
 A page with neither loads for the visitor and offers them nothing to book. The page must also be published. All three are checked again whenever a client books — as is the time, against your hours and diary — so a page left open in a browser cannot book a service you have since taken off it, a time you have closed, or a date past **Advance Booking Days**.
 
+## Choosing a location
+
+<Availability editions={['clinic']} plans="Team (shown only once you have more than one active location)" />
+
+If your practice has more than one active location, a visitor is asked to **choose a location** before they see the service list. Picking a site narrows everything that follows to it: only the services that site offers, only the providers who work there, and only that site's own open times. The confirmation page and confirmation email name the site and its address.
+
+The step is skipped — the page behaves exactly as a single-site practice — when:
+- your practice has only one active location,
+- the link already names one (a `?location=` link you shared for that specific site), or
+- your plan doesn't include more than one location (see [Locations](/practice/settings/locations)).
+
 ## Add the services
 
 The **Services** tab is headed **Services Management** — "Select services from your clinic to display on the booking page". Each service card carries one button: **Add to Page**, which becomes a disabled **Added to Page** once it is on. There is no visibility switch, and nothing is on the page until you add it.
@@ -141,6 +152,26 @@ Connect the provider first under **Settings → Online Payments**. Until you do,
 ### After a client books
 
 The screen that says **You are scheduled** has **Confirm** and **Cancel booking** buttons for that appointment, so a client can manage the booking straight away as well as from their email. The buttons only work for the booking just made. The confirm and cancel pages show the price the visit was booked at, not today's price. Once a visit has been completed, marked as a no-show or started, its links can no longer confirm or cancel it — the client is asked to contact you.
+
+**Your own cancellation policy is what the client reads.** The cancel page shows the real window and fee from the service they booked, together with the wording you wrote under **Settings → Booking policy** in the designer. If you have not set a policy on that service, it says so plainly rather than showing a figure.
+
+### Letting clients move their own appointment
+
+A client opening their cancel link can be offered **Reschedule instead**, which takes them to a page showing your live availability so they can pick a new time themselves. They keep the same appointment — it moves, rather than being cancelled and rebooked, so nothing is refunded, re-charged or lost.
+
+You control this in the booking page designer, under **Cancel & reschedule links**:
+
+- **Allow online cancellation** — clients can cancel from the link in their emails.
+- **Allow online rescheduling** — clients can move the appointment themselves. Turn it off and the button never appears; they are asked to contact you instead.
+
+Two limits apply, and a client is always told the real number:
+
+- **A notice period.** A client trying to move a visit too close to its time is refused and asked to call you. They are **not** charged a late cancellation fee for trying, and the appointment is **not** cancelled — it stays exactly as it was. The notice period is the **Reschedule notice** under Settings → Client portal.
+- **How many times.** **Self-service reschedule limit** (also under Settings → Client portal) caps how many times one appointment can be moved online — **2** by default. After that the client is asked to contact you, which is there to stop one visit being shuffled around your diary indefinitely.
+
+<Note>
+  Clients signed in to their client portal have had this for longer, and it is the same behaviour, the same limits and the same availability — the booking link simply gives it to clients who never signed in.
+</Note>
 
 **A client who cancels a visit they paid for in full** without a deposit or cancellation policy on the service is not refunded automatically: you get a notice to refund the payment or keep it under your policy, and the client is told the clinic has their payment to refund.
 

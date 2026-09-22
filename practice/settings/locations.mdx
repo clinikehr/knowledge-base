@@ -1,0 +1,164 @@
+---
+title: "Locations"
+description: "Add the sites or branches your practice operates from, so invoices and appointments can be attributed to one and revenue can be broken down by site."
+icon: /images/icons/map.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans (a second active location needs Team or Enterprise)" roles="Any staff member can view the list; only an owner or manager can add, rename, deactivate or set the default location" />
+
+Every practice starts with one location, named **"Main"**, so nothing here needs setting up before it works. Free and Essential (including the 30-day Essential trial) keep one active location; **Team** and **Enterprise** lift that to as many as you operate from, and unlock the **Revenue by location** report. Add each site here — you can then pick a location on an invoice or when booking an appointment.
+
+<Path steps={['Sidebar', 'Settings', 'Locations']} />
+
+<TaskHeader
+  before="A practice with more than one premises, tracked as one undifferentiated total"
+  time="A minute per site"
+  after="A location list you can attribute invoices and appointments to"
+/>
+
+## What this tab controls
+
+| Control | What it does |
+| --- | --- |
+| **Add location** | Opens a panel for a **Name** (required) and everything below (all optional). Owner/manager only. Refused past your plan's limit — see **Locations by plan** below |
+| **Edit** | Change any field on a location |
+| **Make default** | Sets which location a new appointment, invoice, shift or sale is attributed to when nothing more specific picks one — see **The default location** below |
+| **Deactivate** | Stops the location being offered when booking a new appointment or raising a new invoice. It does **not** delete anything. Refused on the current default until you make a different location the default first |
+| **Reactivate** | Brings a deactivated location back into the picker. Refused past your plan's limit, same as adding a new one |
+
+## Locations by plan
+
+| Plan | Active locations | Revenue by location |
+| --- | --- | --- |
+| Free | 1 | No |
+| Essential (including the 30-day trial) | 1 | No |
+| Team | Unlimited | Yes |
+| Enterprise | Unlimited | Yes |
+
+Downgrading from Team or Enterprise never deactivates or deletes anything — every location that was active stays active, and its history stays exactly as it was. Two things happen instead:
+
+- **Adding or reactivating a site past your new limit is refused** — the panel opens an upgrade prompt ("Your plan includes 1 location. Deactivate one, or upgrade to Team for unlimited locations and the Revenue by location report.") instead of saving.
+- **If you're still over your new limit** (you had more than one active site and downgraded), the tab shows a standing banner — "Your plan includes 1 location. Your other locations are kept, but multi-location features are paused until you upgrade." — and multi-location features pause across the product (the working-location switcher, a staff member's home location, and any per-site pricing or scoping) until you deactivate down to your limit or upgrade back. Nothing is lost: re-upgrading brings everything back exactly as it was.
+
+## The default location
+
+One active location is always the **default** — marked with a star badge in the list. It is where a new appointment, invoice, shift or sale is recorded when nothing more specific applies (see **Pick it going forward** below for the full order). A brand-new practice's "Main" location starts as the default automatically.
+
+An owner or manager can change it any time with **Make default**. You cannot deactivate the current default — choose a different one as the default first, then deactivate the one you're closing.
+
+## The fields, and where each one shows up
+
+A location is more than a name — every field you fill in appears somewhere else in the product, not just here.
+
+| Field | Where it shows up |
+| --- | --- |
+| **Address** (line 1, line 2, city, state/region, postal code, country) | Printed on that site's invoice PDF letterhead and in appointment confirmation / status emails, in place of your clinic's own address, for a visit or invoice raised at this site. Leave it blank and the clinic's own address (Settings → General) is used instead. |
+| **Phone**, **Email** | Same two places as the address — the invoice letterhead and the confirmation/status emails for this site. |
+| **Timezone** | Only needed when a site is genuinely in a different timezone than the rest of your clinic. When set, it takes priority over your clinic's own timezone (Settings → General) for that site's appointment **confirmation and status-change emails** (patient, clinic and clinic-owner copies all show the same time) **and for the reminder that goes out before the visit** — everyone reads the same time for that appointment, in the site's own timezone. The **calendar view itself still shows times in your clinic's own timezone**, regardless of a site's setting — leave this blank for a site in the same timezone as the rest of your clinic. |
+| **Facility NPI**, **Place of Service** | *(United States clinics only)* — the National Provider Identifier and CMS Place of Service code this site implies for an insurance claim raised for a visit here. |
+
+A "free-text address" field is also offered for a site whose address you would rather type as one block; it is only shown on invoices and confirmations when none of the address lines above are filled in.
+
+## US claims: Facility NPI and Place of Service
+
+<Availability plans="All plans" roles="Owner or manager; shown only for a clinic in the United States" />
+
+This section only appears for a clinic in the United States (set by your country in Settings → General, or inferred from a USD clinic that has not set one). It is not shown to any other clinic — there is nothing for it to do outside US claims.
+
+- **Facility NPI** is a 10-digit National Provider Identifier. It is checked the same way NPPES itself checks one — a mistyped digit is caught immediately, before you save, rather than days later as a rejected claim.
+- **Place of Service** is the two-digit CMS code (e.g. **11** Office, **02**/**10** Telehealth, **21** Inpatient Hospital) this site implies. Choose from the full CMS list, the same one used elsewhere in Insurance Claims.
+
+Both are optional, and both only ever fill in a BLANK field. When you start a claim from an appointment or invoice raised at this site, its Facility NPI and Place of Service seed the claim automatically — a biller can still change either before submitting, and anything already typed is never touched.
+
+## Set it up
+
+<Steps>
+  <Step title="Open Locations">
+    Go to **Settings → Locations**.
+  </Step>
+  <Step title="Add a site">
+    Select **Add location**, name it something staff will recognise ("Downtown Branch", "West Clinic"), and fill in whichever of the address, contact, timezone or (US clinics) claims fields apply — all are optional except the name.
+  </Step>
+  <Step title="Pick it going forward">
+    Once you have **two or more active locations**, a **Location** field appears when you raise an invoice or book an appointment, already filled in with a sensible guess — pick a different one if the visit is actually happening somewhere else. With only one active location the field stays hidden, and everything is recorded against it automatically.
+
+    Leaving the field blank on a new record never leaves it unattributed. The guess, in order: for an appointment, the clinician's scheduled **shift** at a site, if they have one covering that time; otherwise **where the person creating the record is currently working** (see **Working location** below); and if neither applies, the clinic's **default location**. An invoice raised automatically for an appointment always takes that appointment's own location.
+  </Step>
+</Steps>
+
+## Working location — for the day, not just for you
+
+<Availability editions={['clinic']} plans="Team (shown only once you have more than one active location)" roles="Any staff member sets their own; only an owner or manager sets someone else's home location" />
+
+Two more settings decide "where am I working right now," in order:
+
+1. **Working location** — a switcher in the top bar, next to your notifications. Pick a location and everything you create for the rest of the clinic's day defaults there. It resets at the start of the next day, so nobody has to remember to switch it back.
+2. **Home location** — set once by an owner or manager, per team member, in **Settings → Staff** (the **⋯** menu → **Set Home Location**). This is where that person is filled in by default on days they haven't switched.
+
+Both only ever apply when a record's location is left blank, and neither is offered at all unless your practice has more than one active location.
+
+## Services and schedules at each site
+
+<Availability editions={['clinic']} plans="Team (shown only once you have more than one active location)" roles="Owner or manager sets which locations offer a service and its schedule; any staff member sees the result when booking" />
+
+Once you have two or more active locations, a few more things become site-specific:
+
+- **Which services a site offers.** On a service's page (Settings → Services), a **Locations** section lets you choose a subset of your sites — leave every site checked (or none at all, which means the same thing) to keep offering it everywhere. You can also set a different price for the service at one site than another; leave the price blank at a site to charge that service's normal price there.
+- **A provider's weekly hours and shifts.** The weekly availability and shift screens gain a **Location** field, so a provider working different sites on different days can have hours that only apply at the site they're actually at.
+- **The public booking page.** A visitor is asked to **choose a location** before choosing a service, when your booking page has more than one to offer — see [Booking Page](/practice/work/booking-page) for what they see.
+
+Everything above is invisible with one active location, and turning it off (by deactivating a location back down to one, or downgrading from Team) never deletes a service's site list or a provider's site-specific hours — it just stops being asked about, exactly like every other Team-only control on this page.
+
+## Deactivating, not deleting
+
+There is no delete button, deliberately. **Deactivate** removes a site from the picker on a *new* invoice or appointment while keeping every past record — and the figures in Financial Reports — exactly as they were. A closed branch's history stays attributable to it, which is the whole point of tracking locations in the first place.
+
+## Financial Reports — Revenue by location
+
+<Availability plans="Team" />
+
+On **Team**, the **Revenue by location** report on the [Financial Reports](/practice/money/financial-reports) page groups billed revenue by site. An invoice with no location picked — from before you set this up, for example, or created before you upgraded — is grouped as **"Unassigned"** rather than dropped, so the report still totals to everything you billed.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I don't see an Add location button">
+    Only an owner or manager can add, rename or deactivate a location. Everyone else can still see the list and pick a location on an invoice or appointment.
+  </Accordion>
+  <Accordion title="A location I deactivated is still on old invoices">
+    That's expected — deactivating only removes it from the picker for *new* records. Every invoice and appointment that already named it keeps reporting against it.
+  </Accordion>
+  <Accordion title="I added a location but the Location field doesn't appear on bookings">
+    The field only appears once **two or more** locations are **Active**. Check that the one you added — and at least one other — show **Active** in the list, then reopen the booking or invoice.
+  </Accordion>
+  <Accordion title="The list says your locations could not be loaded">
+    Something interrupted loading the list. Select **Try again**. It never shows an empty list in place of an error, so if you see "No locations yet", there genuinely are none.
+  </Accordion>
+  <Accordion title="Saving a location says it already exists">
+    Two locations in the same practice can't share a name (capitalisation doesn't matter). Pick a different name, or edit the existing one instead.
+  </Accordion>
+  <Accordion title="Adding a location says my plan includes 1 location">
+    You're on Free, Essential, or the Essential trial, and you already have one active location. Deactivate it before adding another, or upgrade to Team or Enterprise for unlimited locations.
+  </Accordion>
+  <Accordion title="Deactivate says to choose another default first">
+    You're trying to deactivate the current **default** location. Use **Make default** on a different active location, then deactivate the one you're closing.
+  </Accordion>
+  <Accordion title="I don't see a working-location switcher in the top bar">
+    It only appears once your practice has more than one **active** location. With one, there's nothing to switch between and every record is attributed to it automatically.
+  </Accordion>
+  <Accordion title="A service doesn't show up on the booking page at one of my sites">
+    Check that service's **Locations** section (Settings → Services → open the service): if any site is checked there, the service is offered ONLY at those sites. Add the missing site, or clear every checkbox to offer it everywhere again.
+  </Accordion>
+  <Accordion title="I don't see a Location field on the weekly hours or shift screens">
+    Same rule as everywhere else on this page — it only appears with two or more active locations, and only on Team or Enterprise.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/clinic-locations-settings.tsx, db/actions/clinic-locations.ts, db/actions/staff-locations.ts, components/clinic/general/working-location-switcher.tsx, components/clinic/dashboard/settings/staff-settings.tsx, lib/locations/location-precedence.ts, lib/locations/location-allowance.ts, lib/locations/multi-site.ts, lib/patients/primary-location.ts, lib/locations/service-location-availability.ts, components/clinic/appointment/services/service-location-pricing-sheet.tsx, components/clinic/shifts/shift-assign-sheet.tsx */}

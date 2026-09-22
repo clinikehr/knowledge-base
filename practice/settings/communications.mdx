@@ -1,6 +1,6 @@
 ---
 title: "Communications"
-description: "Turn on the text, voice, fax and email channels your practice reaches clients over, and set the address messages are sent from."
+description: "Get your practice a number, watch your credit balance, and turn on the channels you reach clients over."
 icon: "/images/icons/comments.svg"
 ---
 
@@ -9,83 +9,92 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" />
+<Availability editions={['clinic']} plans="Essential and above" roles="Owner or manager" />
 
-A channel is simply a way of reaching someone — a text message, a phone call, a fax, an email. This tab lists the ones your practice has arranged with a provider and switches them on, so reminders and automated messages have somewhere to go.
+Communications is where your practice gets a dedicated number, watches its message credit balance, and turns on the channels you use to reach clients — texts, calls, fax and email. You never type in a provider's numbers or connection details here: the platform buys and registers your number for you, and the database — not this form — is what proves a number belongs to your practice.
 
 <Path steps={['Sidebar', 'Settings', 'Communications & AI', 'Communications']} />
 
 <TaskHeader
-  before="Numbers and connection details from your messaging provider, and a verified sending address"
-  time="10 minutes"
-  after="Reminders and notifications going out over the channels you chose"
+  before="A paid plan (Essential and above)"
+  time="5 minutes"
+  after="A number your practice can text and call from, and the channels you use turned on"
 />
 
 ## What this tab controls
 
 | Card | Control | What it does |
 | --- | --- | --- |
-| **Enabled channels** | **SMS**, **WhatsApp**, **Fax**, **Voice**, **Email** | One switch each. "Turn on only the channels you've provisioned" |
-| **Messaging & voice (Telnyx)** | **SMS from (E.164)** | The number texts are sent from, in full international form — `+15551234567` |
-| | **SMS messaging profile ID** | The identifier your provider gave you for text messaging |
-| | **WhatsApp from** | The number WhatsApp messages come from |
-| | **Fax from (E.164)** and **Fax connection ID** | The fax number and its connection |
-| | **Voice number (E.164)** and **Voice connection ID** | The number calls are placed from and its connection |
+| **Your number** | **Get a number** | Opens checkout for a dedicated number ($15/month plus a one-time $25 registration fee). The number appears once payment is confirmed |
+| | **Release number** | Stops the monthly charge and releases the number. Reminders fall back to email until you get a new one |
+| **Fax Inbox** | **Open Fax Inbox** | Faxes your practice has received, waiting to be filed into a client's documents |
+| **Communication credits** | Balance, this month's usage | One shared balance for texts, calls and fax pages |
+| | **Buy a pack** | A one-time top-up, billed to your card on file |
+| | **Auto top-up** | Automatically buys a pack when your balance runs out. Off by default |
+| **Channels** | **SMS**, **Voice**, **Email** switches | Turn each on or off for your practice |
+| | **Fax** | Always available once your practice has a fax-capable number — sent from any signed document, no switch needed |
+| | **WhatsApp** | Not available yet |
 | **Email** | **Send from (verified address)** | The address email is sent from, e.g. `clinic@yourdomain.com` |
 | | **Reply-to (optional)** | Where replies land if that is a different address, e.g. `frontdesk@yourdomain.com` |
-| | **Send from your own mailbox** → **Google** / **Outlook** | Marked **Rolling out**. The **Connect** buttons are not active yet |
-| Header | **Save changes** | Saves the whole tab. Confirms with "Communication settings saved" |
-
-The E.164 form asked for in several fields just means the number written with its country code and a leading plus, no spaces or brackets.
+| | **Send from your own mailbox** → **Google** / **Outlook** | Not available yet. The **Connect** buttons are visible but inactive |
 
 ## Set it up
 
 <Steps>
-  <Step title="Gather your provider details">
-    Open your messaging provider's dashboard and note the numbers and connection identifiers for each service you pay for. You cannot invent these — a channel with no working number behind it will not send.
+  <Step title="Get a number">
+    In **Your number**, select **Get a number**. You are taken to checkout for the recurring number fee plus a one-time registration fee. Once payment is confirmed, you land back on this tab and the number appears.
   </Step>
-  <Step title="Fill in the numbers you have">
-    In **Messaging & voice**, complete only the rows you actually use. Leave the rest empty rather than guessing.
+  <Step title="Turn on the channels you use">
+    In **Channels**, switch on **SMS**, **Voice** and/or **Email**. Fax needs no switch — see [Faxing](#faxing-a-document) below.
   </Step>
   <Step title="Set your sending address">
-    In **Email**, enter your **Send from (verified address)** — an address on your own domain that your provider has verified. Add a **Reply-to** if replies should reach a different inbox, such as your front desk.
+    In **Email**, enter your **Send from (verified address)** — an address on your own domain that has been verified. Add a **Reply-to** if replies should reach a different inbox, such as your front desk.
   </Step>
-  <Step title="Switch on the channels you are ready to use">
-    In **Enabled channels**, turn on only what you filled in above.
-  </Step>
-  <Step title="Select Save changes">
-    You should see "Communication settings saved".
+  <Step title="Watch your credit balance">
+    Texts, calls and fax pages all draw from one balance in **Communication credits**. Buy a pack, or turn on **Auto top-up** so you never run dry mid-month.
   </Step>
 </Steps>
 
+## Faxing a document
+
+Fax is not a switch you turn on — it is gated by having a number and by the **Send Fax** permission (owners and managers always have it; anyone else needs it granted in Settings → Team → Permissions). To send a fax, open any signed document — a clinical note, a lab or radiology report, an invoice, or a signed patient document — and choose **Send by fax**. You'll see the page count and credit cost before you confirm.
+
+Faxes your practice **receives** land in the **Fax Inbox**, reachable from this tab or from the sidebar. Nothing is matched to a client automatically — a fax tells you who sent it, never who it's about — so a person reviews each one, opens it to see what it says, and either files it into a client's documents or marks it junk. An unfiled fax is removed automatically 30 days after it arrives, and the inbox flags anything close to that date.
+
 ## What changes once you save
 
-Enabling a channel opens a route. Reminders, confirmations and automated messages that were written to use text or email start actually going out over it, from the number and address you set here. Until you enable one, anything that depends on it **stays silent rather than failing** — no error appears, the message simply never leaves. That is worth knowing, because a practice can run for weeks assuming reminders are going out.
+Turning on a channel means anything already written to use it — reminders, confirmations, automated messages — starts actually going out over it, from the number and address on this tab. Until a channel is on, whatever depends on it **stays silent rather than failing**: no error appears, the message simply never leaves.
 
-Setting **Send from (verified address)** means your messages arrive from your own address rather than a generic one, which is the difference between an email that looks like your practice and one that looks like a system. **Reply-to** decides where a client's reply lands — set it to a mailbox somebody actually reads.
-
-Switching a channel off stops future sends immediately. It does not recall anything already sent, and it does not change any client's own contact preferences — a client who has opted out of reminders stays opted out whatever you enable here.
-
-Two limits to expect. Outbound messages are disabled outside the live product, so a test workspace will not send. And **Send from your own mailbox** is still rolling out: the **Google** and **Outlook** buttons are visible but not yet selectable, and "Until mailbox sending is enabled, agents send from the verified address above."
+Getting a number is a real, recurring charge from the moment checkout confirms — releasing it stops that charge immediately. Running out of communication credits does not fail silently either: sends fall back to email so nothing is ever lost, just delivered a different way.
 
 ## Check it worked
 
-Save, leave the tab, and come back — the switches and fields you set should have persisted. Then trigger something real that uses the channel: book a test appointment for yourself and confirm the confirmation arrives at the right address or number, sent from the address you configured.
+**Getting a number:** after checkout, return to this tab — you should see your number listed as "Registered and active" (a fresh number briefly shows a provisioning status first).
+
+**A channel:** save, leave the tab, and come back — the switches you set should have persisted. Then trigger something real: book a test appointment for yourself and confirm the confirmation arrives at the right address or number.
+
+**Fax:** send a document to a real fax number you control, or check the Fax Inbox after asking someone to fax your practice's number.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="An upgrade panel covers the whole tab">
-    Communications starts on the Starter plan: "Connect SMS, WhatsApp, fax, voice and email so your AI agents can reach patients. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
+    Communications starts on the Essential plan: "Get a number for texts and calls, and let your clinic send appointment reminders and messages. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
   </Accordion>
   <Accordion title="A message says only clinic owners and managers can configure communications">
     An accountant can reach settings but not this tab's controls. Ask an owner or manager to make the change.
   </Accordion>
-  <Accordion title="I turned on SMS and nothing sends">
-    Check the number in **SMS from (E.164)** — it must be a real number you have with your provider, written with its country code and a leading plus. A switch on its own does not create a number.
+  <Accordion title="Get a number does nothing, or names a payment problem">
+    Select it again — it should open a payment page for the number's monthly fee and one-time registration fee. If it says numbers aren't available for your practice's currency yet, that currency isn't priced yet (today: US and Canada only) — reminders still send by email in the meantime.
+  </Accordion>
+  <Accordion title="I turned on SMS or Voice and nothing sends">
+    Confirm your practice has a number in **Your number** — a channel switch with no number behind it has nowhere to send from.
+  </Accordion>
+  <Accordion title="The Fax Inbox is empty">
+    That's expected until someone actually faxes your practice's number — nothing is seeded or simulated. Once a fax arrives, it appears here for filing.
   </Accordion>
   <Accordion title="The Connect buttons under my own mailbox do nothing">
-    They are marked **Rolling out** and are not active yet. Email is sent from your **Send from (verified address)** in the meantime.
+    Google and Outlook mailbox sending is not available yet. Email sends from your **Send from (verified address)** in the meantime.
   </Accordion>
   <Accordion title="Emails arrive but replies go nowhere useful">
     Set **Reply-to (optional)** to a monitored inbox. Without it, replies go back to the verified sending address.
@@ -97,4 +106,4 @@ Save, leave the tab, and come back — the switches and fields you set should ha
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx, db/actions/agents.ts */}
+{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx, db/actions/comms.ts, db/actions/fax.ts */}

@@ -33,7 +33,7 @@ This is where availability comes from. Every time a slot is offered — at the f
 | **Special Dates** (Dates) | "Manage holidays, off-days, and special operating hours", with **Add Special Date** |
 | **Communication** (Comms) | Confirmation settings, reminder settings and message templates |
 
-A schedule is the unit of work here: a day, a time range, a slot length, a maximum number of bookings, a venue and optionally a named staff member. A hospital normally has several — one per clinic session, per provider or per venue.
+A schedule is the unit of work here: a day, a time range, a slot length, a maximum number of bookings, a venue and optionally a named staff member. A hospital normally has several — one per clinic session, per provider or per venue. Select anywhere on a row — in any of the five tabs — to open it for editing. Times are shown and entered in 12-hour clock with AM/PM throughout.
 
 ## Set it up
 
@@ -72,6 +72,8 @@ A saved schedule is live immediately, and it flows one way:
 
 What does **not** change: appointments already booked. Shortening a schedule does not cancel or move anything already in the diary — it only stops new bookings landing there. Check the calendar for anything now outside hours and move it deliberately.
 
+**A named provider's schedule replaces the shared one for them on that day — the two never fight over the same time.** Giving a provider their own session on a day the hospital-wide schedule also covers is not a conflict; their own hours are simply what's offered for them, and the shared schedule keeps covering everyone else. A conflict warning only appears when two schedules would genuinely double-book the SAME provider (or two shared schedules) at an overlapping time. The database also refuses a genuine overlap or an exact duplicate outright, even from two people saving at once.
+
 Changing a **Slot Duration** re-cuts future slots; it does not resize existing appointments.
 
 ## Check it worked
@@ -103,4 +105,4 @@ Open the appointment sheet, pick a service and a provider, and step through the 
 
 <StillStuck />
 
-{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, lib/settings-tabs.ts */}
+{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, appointment-schedule-form.tsx, lib/settings-tabs.ts, lib/appointment/availability-conflict.ts */}

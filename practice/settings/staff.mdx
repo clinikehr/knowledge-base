@@ -25,17 +25,17 @@ This is where your team lives: who is in the practice, who has been invited and 
 
 | Control | What it does | Who sees it |
 | --- | --- | --- |
-| **Staff Members** | Everyone currently in the practice: **Name** (the practice owner carries an **Owner** badge), **Email**, **Specialty** and **Last active**. | Everyone who can open Settings |
+| **Staff Members** | Everyone currently in the practice: **Name** (the practice owner carries an **Owner** badge), **Email**, **Specialty**, **Clinical Specialty**, and **Last active**. | Everyone who can open Settings |
 | **Invite Staff** | Opens the five-step invite wizard. | Owner only |
 | Seat counter, under the button | Reads "3 of 5 seats used" plus the per-seat price, or "3 staff · unlimited seats" on an uncapped plan. | Owner only |
-| Row **Actions** menu | **Change Specialty** · **Permissions** (where your practice has permission-governed modules) · **Require MFA on sign-in** · **Remove MFA requirement** · **Reset two-factor** · **Grant emergency access** · **Remove Staff**. The owner's own row has no menu. | Owner only |
+| Row **Actions** menu | **Change Specialty** · **Set Clinical Specialty** · **Permissions** (where your practice has permission-governed modules) · **Require MFA on sign-in** · **Remove MFA requirement** · **Reset two-factor** · **Grant emergency access** · **Remove Staff**. The owner's own row has no menu. | Owner only |
 | **Pending Invitations** | Invitations sent and not yet accepted, with **Sent** and **Expires** dates and a cancel button. | Everyone; cancel is owner only |
 | **Pending Seat Payments** | "Staff invites awaiting seat payment via Stripe Checkout. Use Retry to generate a new payment link or Cancel to discard." Appears only when there is one. | Owner only |
 
 A security alerts card sits above the lists and flags anything unusual about sign-ins.
 
 <Warning>
-  **Seats are billed on this edition.** Your plan sets a *maximum* number of seats, not an allowance included in the price — every billable seat is charged monthly from the first one, at the rate shown next to the seat counter. **Starter** allows at most 2 seats and **Essential** at most 5; **Team** and **Enterprise** are uncapped but still charged per seat. Three roles are free and count towards nothing: **supervisor**, **biller** and **scheduler**. The wizard's final step shows the exact monthly change before you send.
+  **Seats are billed on this edition.** **Essential** includes 3 seats and **Team** includes 5, in the base price; every billable seat beyond that is charged monthly, at the rate shown next to the seat counter. **Essential** caps at 5 seats total; **Team** and **Enterprise** are uncapped but still charge for every seat past what is included. Three roles are free and count towards nothing: **supervisor**, **biller** and **scheduler**. The wizard's final step shows the exact monthly change before you send.
 </Warning>
 
 ## Invite someone
@@ -66,6 +66,16 @@ A security alerts card sits above the lists and flags anything unusual about sig
 Open their row's **Actions** menu. **Change Specialty** swaps their role; **Permissions**, where your practice has permission-governed modules, opens a per-person sheet.
 
 Enforcement in that sheet is **opt-in per person**: it warns **Saving starts enforcing** — someone never saved there is unrestricted, and no permission checks apply to them at all. Capabilities added later arrive switched **off** and badged **New**, and stay denied until you save that person again. Full detail: [Permissions](/platform/team/permissions).
+
+## Set a Clinical Specialty
+
+**Clinical Specialty is different from Specialty.** **Specialty** (the column and the **Change Specialty** action) is what a colleague signed in AS — the role that decides their permissions and which pages they can open. **Clinical Specialty** is what they PRACTICE — Family Medicine, Dermatology, and so on — and never changes what they can do in ClinikEHR.
+
+Select **Set Clinical Specialty** from a colleague's **Actions** menu to choose one **Primary specialty** and any number of **Additional specialties**, searched from a standard clinical list or a specialty your own practice has added. The primary specialty:
+
+- appears on the **Clinical Specialty** column and on that clinician's signature line on notes and reports
+- can fill in the specialty code an insurance claim needs, when nothing more specific was entered on the claim itself
+- can be used to filter the provider list when booking an appointment
 
 ## What changes once you save
 

@@ -1,0 +1,77 @@
+---
+title: Financial reports
+description: "Revenue, outstanding balances, payments and tax — ten reports you can filter by date and export as a spreadsheet or a PDF."
+icon: /images/icons/chart-line.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Team and above" roles="Any staff member can open the page; the figures themselves need View net position (owners and managers hold it by default)" />
+
+**Financial Reports** is where you go for the money picture across a date range you choose, rather than one invoice or one payment at a time — revenue, who owes you, what came in, and how much tax you collected.
+
+<Path steps={['Sidebar', 'Financial Reports']} />
+
+<TaskHeader
+  before="A question like 'what did we collect last month?'"
+  time="A minute"
+  after="A filtered report, on screen, exported as CSV or PDF"
+/>
+
+## What you're looking at
+
+At the top, a report picker and a date range — every tile and every row on the page updates together when you change either one, so what you're looking at is always for the period the two controls say. An **Export** button gives you the same report as a CSV (opens in Excel or Sheets) or a PDF (for printing or sending on).
+
+## The ten reports
+
+| Report | Answers |
+| --- | --- |
+| **Revenue by period** | Invoiced and collected, day by day |
+| **Revenue by service** | Which services bring in the most, by billed line |
+| **Revenue by location** | Which of your sites earns what, for practices with more than one premises |
+| **Revenue by provider** | Billed revenue, grouped by the clinician who saw the patient |
+| **A/R aging** | What's owed, bucketed by how overdue it is: current, 1–30, 31–60, 61–90, 90+ days |
+| **Outstanding invoices** | Every unpaid or overdue invoice, with its balance |
+| **Payments & refunds** | Every payment and every void/refund recorded, with the net |
+| **Tax summary** | Tax collected on invoices, by day |
+| **Provider productivity** | Lines billed and revenue billed, by the clinician who did the work |
+| **Collections by staff** | Appointments completed and revenue collected, by the staff member who took the payment |
+
+<Note>
+  **A/R aging and Outstanding Invoices are "as of" the END of your date range, not a count of what was invoiced during it.** They answer "what is currently owed", which is the normal way to read an aging report — picking last month doesn't mean only last month's invoices show up if an older one is still unpaid.
+</Note>
+
+<Note>
+  **"Revenue by provider" and "Provider productivity" both show who did the clinical work, not who took the payment** — and both read the same attribution, just laid out differently (one as billed revenue per clinician, the other with a lines-billed count alongside it). Each billed line can be attributed to a clinician — from the invoice, or when a payment is recorded — and lines from a consultation, a prescription, a lab test, a ward stay, or an ordered procedure are attributed automatically from that record. A line nobody has attributed and nothing can attribute automatically shows up as **"Unattributed"** rather than being left out, so both reports always add up to your total revenue.
+
+  **"Collections by staff"** is a different question: appointments completed and payments collected, by the staff member who took the payment at the desk. That is who banked the money, not necessarily who saw the patient — useful for cash-handling and front-desk accountability, but don't read it as clinical productivity.
+</Note>
+
+<Note>
+  **"Revenue by location" needs more than one site to be useful.** Every practice starts with one location named "Main"; add more from **Settings → Locations** and pick a location when you raise an invoice. An invoice raised before you set this up, or with no location picked, shows up as **"Unassigned"** rather than being left out — the report always adds up to your total revenue. Closing a location later doesn't erase its past invoices: it still keeps its own row in this report.
+</Note>
+
+## Attributing a line to the clinician who saw the patient
+
+When you add a line to an invoice, or record a payment against one, you can set its **Rendering provider** — the clinician who saw the patient for that line. It's optional, and you can leave it as **Unattributed**; setting it later (from the invoice, or from **Record payment**) fills it in without disturbing anything already set.
+
+Opening an invoice to view or edit shows each line's **Rendering provider**, and saving an edit keeps it unless you change it. If **Record payment** can't save the provider you picked, the payment is still recorded and you'll see a warning, so you can set it on the invoice instead.
+
+A consultation, prescription, lab test, ward stay or ordered procedure line is attributed automatically to whoever recorded that piece of clinical work, even if nobody set a Rendering provider by hand — so most billed lines already show a name. A line for a general service or a custom charge has no clinical record to draw from, so it stays **Unattributed** until someone sets it explicitly.
+
+## If the page shows no figures
+
+If you can open **Financial Reports** but every tile and table reads **"—"**, you're missing the **View net position** permission — the same one that gates the net-position card on Expenses. Ask an owner or manager to grant it from **Staff & Teams** → your permissions.
+
+<Note>
+  **A dash is not a zero.** "—" means the figure was withheld from you; a real "0" (no revenue this period, nothing overdue) always prints as 0. They mean different things — don't read one as the other.
+</Note>
+
+## Exporting
+
+**CSV** downloads instantly and matches exactly what the table shows. **PDF** is generated on the server as a formatted, printable document — useful for sharing a report with someone who doesn't have a login. Both exports are logged to your **Audit Log**, same as any other export from the platform.
+
+<StillStuck />

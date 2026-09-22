@@ -65,6 +65,10 @@ A quiet day, or a hospital that has not ordered anything yet, reads **No recent 
 
 Reference ranges come from the test definition, not from this form. A test defined without ranges shows none here and prints none on the report, for every patient.
 
+Each test also shows what it bills — the panel's own price from your [Lab station](/hospital/diagnostics/lab-station) catalogue, or, when only specific parameters were requested and every one of those has its own price set, the sum of just those. An item with no price set yet shows **"No price set"** rather than a $0, and the card totals every test at the top. None of this appears for a clinic marked **free** in Settings — no prices, no total, nothing to collect.
+
+Each test also offers **Download Requisition** — a server-generated PDF of what was ordered (the test, its parameters, the clinical information from the visit, and the requesting clinician's name and licence). It is explicitly marked **"Requisition only — no results are recorded on this document"**, so it can never be mistaken for a completed report; the completed report itself downloads from the same row once the test moves to **Completed** (see [Lab reports](/hospital/diagnostics/lab-reports)).
+
 ## Sign-out is the step that matters
 
 Entering numbers and *releasing* them are two different acts. A test is only a result other clinicians will act on once it moves to **Completed** — that is the clinical authority step, and it is why **Conduct Lab Test** and **Update Lab Test** are restricted to lab scientists while everyone else gets **View Lab Results**.
@@ -138,6 +142,10 @@ Enforcement of the per-person permissions is **opt-in**: someone never saved in 
     It is built for today's work. Use [Lab reports](/hospital/diagnostics/lab-reports) with its period filter, or **Lab Test History**, to look back.
   </Accordion>
 
+  <Accordion title="What does Lab Test History show?">
+    Two tabs. **By Patient** (the default) groups every test into one row per patient — how many, their last test date, and the most recent status — with a search box and a date-range filter; leave the range blank to see a patient's whole history, or narrow it to a specific period. Selecting a patient opens their tests for that range as cards (test name, result, status). **All Records** is the original one-row-per-test table, for finding a single request fast.
+  </Accordion>
+
   <Accordion title="Who sees that I opened a patient's results?">
     Owners and managers, under [Audit log](/platform/security/audit-log). Every read of clinical data is recorded with your name and the time.
   </Accordion>
@@ -145,4 +153,4 @@ Enforcement of the per-person permissions is **opt-in**: someone never saved in 
 
 <StillStuck topic="a lab request or result" />
 
-{/* source of truth: components/clinic/lab/, app/u/clinic/lab/[clinicId]/page.tsx, lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/lab/, app/u/clinic/lab/[clinicId]/page.tsx, app/u/clinic/lab/history/[clinicId]/page.tsx, components/clinic/general/ (patient-history-group-panel.tsx, patient-history-drilldown-sheet.tsx, patient-history-record-cards.tsx), db/actions/lab-history-grouped.ts, lib/clinic-nav-registry.ts */}

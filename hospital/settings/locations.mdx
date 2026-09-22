@@ -1,0 +1,112 @@
+---
+title: "Locations"
+description: "Add the sites or branches the hospital operates from, so invoices and appointments can be attributed to one and revenue can be broken down by site."
+icon: /images/icons/map.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans (a second active location needs Team)" roles="Any staff member can view the list; only an owner or manager can add, rename, deactivate or set the default location" />
+
+Every hospital starts with one location, named **"Main"**, so nothing here needs setting up before it works. Free and Essential (including the 30-day Essential trial) keep one active location; **Team** lifts that to as many as the hospital operates from, and unlocks the **Revenue by location** report. Add each site here — you can then pick a location on an invoice or when booking an appointment.
+
+<Path steps={['Sidebar', 'Settings', 'Locations']} />
+
+<TaskHeader
+  before="A hospital with more than one premises, tracked as one undifferentiated total"
+  time="A minute per site"
+  after="A location list you can attribute invoices and appointments to"
+/>
+
+<Note>
+  This is **not** the same as [Departments](/hospital/settings/departments). Departments are service structures inside one building (Internal Medicine, Gastroenterology). Locations are separate physical premises — a downtown clinic and a suburban clinic are two locations, each of which can have its own departments.
+</Note>
+
+## What this tab controls
+
+| Control | What it does |
+| --- | --- |
+| **Add location** | Opens a panel for a **Name** (required) and an **Address** (optional). Owner/manager only. Refused past your plan's limit — see **Locations by plan** below |
+| **Edit** | Rename a location or change its address |
+| **Make default** | Sets which location a new appointment, invoice, shift or sale is attributed to when nothing more specific picks one — see **The default location** below |
+| **Deactivate** | Stops the location being offered when booking a new appointment or raising a new invoice. It does **not** delete anything. Refused on the current default until you make a different location the default first |
+| **Reactivate** | Brings a deactivated location back into the picker. Refused past your plan's limit, same as adding a new one |
+
+## Locations by plan
+
+| Plan | Active locations | Revenue by location |
+| --- | --- | --- |
+| Free | 1 | No |
+| Essential (including the 30-day trial) | 1 | No |
+| Team | Unlimited | Yes |
+
+Downgrading from Team never deactivates or deletes anything — every location that was active stays active, and its history stays exactly as it was. The tab shows a banner ("Your plan includes 1 location; 3 are active. Deactivate extras or upgrade") and refuses to **add** or **reactivate** a location past your plan's limit until you deactivate one or upgrade back to Team.
+
+## The default location
+
+One active location is always the **default** — marked with a star badge in the list. It is where a new appointment, invoice, shift or sale is recorded when nothing more specific applies. A brand-new hospital's "Main" location starts as the default automatically. An owner or manager can change it any time with **Make default**; you cannot deactivate the current default without choosing a different one first.
+
+## Set it up
+
+<Steps>
+  <Step title="Open Locations">
+    Go to **Settings → Locations**.
+  </Step>
+  <Step title="Add a site">
+    Select **Add location**, name it something staff will recognise ("Downtown Campus", "West Wing Annex"), and add an address if you want one recorded.
+  </Step>
+  <Step title="Pick it going forward">
+    A **Site** field now appears when booking an appointment, and a **Location** field appears when raising an invoice, already filled in with a sensible guess — pick a different one if the visit is actually happening somewhere else. Leaving it blank never leaves a record unattributed: for an appointment, the clinician's scheduled shift at a site if they have one covering that time, otherwise where the person creating the record is currently working (see **Working location** below), and failing that the default location. An invoice raised automatically for an appointment always takes that appointment's own location.
+  </Step>
+</Steps>
+
+## Working location — for the day, not just for you
+
+<Availability editions={['clinic']} plans="Team (shown only once you have more than one active location)" roles="Any staff member sets their own; only an owner or manager sets someone else's home location" />
+
+Two more settings decide "where am I working right now," in order:
+
+1. **Working location** — a switcher in the top bar, next to your notifications. Pick a location and everything you create for the rest of the day defaults there; it resets the next day.
+2. **Home location** — set once by an owner or manager, per team member, in **Settings → Staff** (the **⋯** menu → **Set Home Location**). This is where that person is filled in by default on days they haven't switched.
+
+Neither is offered unless the hospital has more than one active location.
+
+## Deactivating, not deleting
+
+There is no delete button, deliberately. **Deactivate** removes a site from the picker on a *new* invoice or appointment while keeping every past record — and the figures in Financial Reports — exactly as they were. A closed premises's history stays attributable to it, which is the whole point of tracking locations in the first place.
+
+## Financial Reports — Revenue by location
+
+<Availability plans="Team" />
+
+On **Team**, the **Revenue by location** report on the [Financial Reports](/hospital/revenue/financial-reports) page groups billed revenue by site. An invoice with no location picked — from before this was set up, for example, or created before upgrading — is grouped as **"Unassigned"** rather than dropped, so the report still totals to everything billed.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I don't see an Add location button">
+    Only an owner or manager can add, rename or deactivate a location. Everyone else can still see the list and pick a location on an invoice or appointment.
+  </Accordion>
+  <Accordion title="A location I deactivated is still on old invoices">
+    That's expected — deactivating only removes it from the picker for *new* records. Every invoice and appointment that already named it keeps reporting against it.
+  </Accordion>
+  <Accordion title="Saving a location says it already exists">
+    Two locations in the same hospital can't share a name (capitalisation doesn't matter). Pick a different name, or edit the existing one instead.
+  </Accordion>
+  <Accordion title="Adding a location says my plan includes 1 location">
+    You're on Free, Essential, or the Essential trial, and there's already one active location. Deactivate it before adding another, or upgrade to Team for unlimited locations.
+  </Accordion>
+  <Accordion title="Deactivate says to choose another default first">
+    That location is the current **default**. Use **Make default** on a different active location, then deactivate the one you're closing.
+  </Accordion>
+  <Accordion title="I don't see a working-location switcher in the top bar">
+    It only appears once the hospital has more than one **active** location.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/clinic-locations-settings.tsx, db/actions/clinic-locations.ts, db/actions/staff-locations.ts, components/clinic/general/working-location-switcher.tsx, components/clinic/dashboard/settings/staff-settings.tsx, lib/locations/location-precedence.ts, lib/locations/location-allowance.ts */}

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['lims']} roles="Owner, manager or accountant" note="Only an owner can connect an account" />
+<Availability editions={['lims']} roles="Owner or manager" note="Owner or manager can connect, switch the default, deactivate or reactivate an account. Other roles see it read-only, with no account numbers." />
 
 This tab connects the account that money from your patients and referring clinics lands in. It is entirely separate from how you pay ClinikEHR for the software.
 
@@ -30,7 +30,7 @@ This tab connects the account that money from your patients and referring clinic
 | **Stripe Connect** (non-Naira) | "Connect your Stripe account to save patient cards and charge them after visits. ClinikEHR collects a **1.9%** platform fee on each transaction." | Nothing here — you are handed to Stripe to complete their onboarding |
 | **Paystack Connect** (Naira) | "Connect your bank account to receive appointment payments directly. ClinikEHR collects a **1.9%** platform fee on each transaction." | **Business Name (optional)**, **Bank** and **Account Number** |
 
-Only the owner can connect. Everyone else sees the card with the button replaced by "Only clinic owners can connect a bank account." (or "…a Stripe account.").
+The clinic owner or a manager can connect. Everyone else sees the accounts read-only, with no account numbers, and the button replaced by "Only the clinic owner or a manager can connect a payment account."
 
 ## Connect Paystack (Naira)
 
@@ -87,6 +87,17 @@ What does **not** change: **nothing about the bench.** Accessioning, result entr
   Read the wording carefully: **Connect Bank Account** means "the account my patients' and referrers' money arrives in", not "the card I pay my ClinikEHR subscription with". For the latter, see [Payment methods](/platform/plans/payment-methods).
 </Note>
 
+## Multiple accounts, a default, and switching between them
+
+You can connect **up to 3 Stripe accounts and 3 Paystack accounts** (active and deactivated ones both count toward that limit — it exists to stop payouts being redirected by cycling through accounts). Exactly one account per provider is the **default**, and every new charge, payment link, membership sale and Auto Pay attempt uses it.
+
+- **The first account you connect becomes the default automatically.** Connecting a second or third never silently takes over payouts — it starts inactive-as-default (still usable once verified, just not the one new money goes to) until you choose **Make default**.
+- **Make default** is disabled with a tooltip until the account can actually accept charges (Stripe: onboarding complete and charges enabled; Paystack: onboarding complete).
+- **Deactivate never deletes.** Before you confirm, the dialog shows exactly what is still tied to the account — active memberships still billing on it, and saved cards on it — so nothing is a surprise. If you deactivate the current default, you are asked which of your other active accounts should take over; with none available, the tab shows as not connected until you reactivate or connect one.
+- **Reactivate** brings a deactivated account back, but it does **not** become the default by itself — choose **Make default** separately if you want that.
+- **Nothing already running moves when the default changes.** A membership sold on an older account keeps billing there, and a refund always goes back through the account that took the original payment — never the new default.
+- **A card saved on an account that is no longer the default** is shown as "saved on a previous payment account" and is never charged again automatically. The None's card is re-saved the next time they check out, pay through the portal, or pay a payment link — or you can send a payment link, or collect the card again at their next visit. Billing can see which None have a card that needs re-saving.
+
 ## Check it worked
 
 The header badge should read **● Connected** (Paystack) or **● Active** (Stripe). On Stripe, both **Onboarding: Complete** and **Charges: Enabled** must show — one without the other means you cannot take money yet. Then send yourself a small invoice, pay it, and confirm it settles.
@@ -98,7 +109,7 @@ The header badge should read **● Connected** (Paystack) or **● Active** (Str
     The currency decides it. Change **Currency** on [Billing and plans](/lims/settings/billing) — Naira gives Paystack, anything else gives Stripe.
   </Accordion>
   <Accordion title="The Connect button is missing">
-    Only the owner can connect. Non-owners see "Only clinic owners can connect a bank account." instead.
+    The clinic owner or a manager can connect. Anyone else sees "Only the clinic owner or a manager can connect a payment account." instead.
   </Accordion>
   <Accordion title="Connect Bank Account stays greyed out">
     It needs a bank selected and a verified account name. If the name never resolves, the digits or the bank are wrong — the errors are "Could not verify account" and "Failed to verify account".
@@ -111,6 +122,12 @@ The header badge should read **● Connected** (Paystack) or **● Active** (Str
   </Accordion>
   <Accordion title="I was sent back with Session expired">
     "Your Stripe onboarding session expired. Please start again." Nothing was lost — select **Connect Stripe Account** again.
+  </Accordion>
+  <Accordion title="I deactivated the account new payments were using, and now nothing is connected">
+    That was the default and no other active account existed to take over. Reactivate the one you deactivated, or connect a new one, then select **Make default**. Anything already billing on the old account (a membership, for instance) kept going the whole time — deactivating never cancels what is already running.
+  </Accordion>
+  <Accordion title="A returning patient's saved card did not get charged">
+    Check which account it was saved on. A card saved on an account that is no longer the default shows "saved on a previous payment account" and is skipped on purpose, never silently — the patient needs to save a new card at checkout, through the portal, or on a payment link you send.
   </Accordion>
 </AccordionGroup>
 

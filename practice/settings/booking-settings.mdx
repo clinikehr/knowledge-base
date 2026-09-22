@@ -33,7 +33,7 @@ Five sub-tabs. On a phone they shorten to **Hours**, **Rules**, **Rooms**, **Dat
 | **Special Dates** — "Manage holidays, off-days, and special operating hours" | One row per date: **Type** (holiday, off day, special hours), **Hours**, **Available**, and whether it applies to the **Whole clinic** or one person | Empty |
 | **Communication** | A read-only summary of confirmation and reminder behaviour, plus the wording of the two automated messages | Confirmations and reminders on |
 
-**Staff** left blank on a schedule means **All Staff** — the block applies to everyone.
+**Staff** left blank on a schedule means **All Staff** — the block applies to everyone. Select anywhere on a row — in **Availability**, **Booking Rules**, **Resources** or **Special Dates** — to open it for editing; you no longer need to find a small pencil icon. Times are shown and entered in 12-hour clock with AM/PM everywhere on this tab.
 
 ## Set it up
 
@@ -65,6 +65,8 @@ Slots are computed, not stored. Every time the public booking page or the intern
 - **A resource requirement makes the room the constraint.** If both rooms are taken at 10am, 10am is not offered even though the provider is free.
 - **Out of Office always wins over hours.** A time inside an Out of Office block on the calendar — for the whole clinic, one provider, or a room or device a service needs — is never offered to clients, even if a schedule here covers it. Your booking page and the client portal show a fully blocked day as unavailable and a partly blocked day with the times that are left.
 - **Existing appointments are never moved.** Shortening your hours does not cancel anything already in the diary; it only stops new bookings landing there.
+- **A named provider's hours REPLACE the All Staff hours for them, on that day — they never fight over the same time.** Giving Dr. Smith her own 9am–12pm on a day the clinic default is 9am–5pm is not a conflict: her own hours are simply what's offered for her, and the All Staff row keeps covering everyone else. You'll only see a conflict warning when two rows would genuinely double-book the SAME person (or both are All Staff) at an overlapping time — two different providers, or one specific provider next to the All Staff default, never trigger one.
+- **The database refuses a genuine overlap or an exact duplicate outright**, even if two people save at the same moment or a page is resubmitted after a network hiccup — you'll see a clear message naming the clash rather than a second, silent copy of the same hours.
 
 Nothing here publishes a page. Whether visitors can reach your booking page at all is set in the [booking page designer](/practice/settings/booking-page-designer).
 
@@ -87,6 +89,9 @@ Open [Appointments](/practice/work/appointments) and start a new booking. The ti
   <Accordion title="I deleted a schedule and want it back">
     Deleting is permanent — "This will permanently delete this availability schedule. Future appointments may be affected." Appointments already booked stay in the diary; add the schedule again to restore the slots.
   </Accordion>
+  <Accordion title="It says my new hours overlap an existing schedule, but I don't think they do">
+    A real conflict only exists between two schedules for the exact same provider (or two All Staff rows) on the same day, at genuinely overlapping times — a schedule ending at 12pm and one starting at 12pm do not conflict. If you're adding a specific provider's hours on top of the All Staff default, that is expected and never flagged — the provider's own row simply takes over for them.
+  </Accordion>
   <Accordion title="The Communication tab has nothing I can change">
     That sub-tab is a summary of current confirmation and reminder behaviour, not a set of controls. The channels those messages travel on are configured in [Communications](/practice/settings/communications).
   </Accordion>
@@ -94,4 +99,4 @@ Open [Appointments](/practice/work/appointments) and start a new booking. The ti
 
 <StillStuck />
 
-{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, provider-booking-policy.tsx, resource-manager.tsx */}
+{/* source of truth: components/clinic/appointment/settings/appointment-settings.tsx, appointment-schedule-form.tsx, provider-booking-policy.tsx, resource-manager.tsx, lib/appointment/availability-conflict.ts */}

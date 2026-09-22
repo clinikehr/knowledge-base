@@ -89,6 +89,8 @@ A role without the rights to move a study sees a single disabled item reading **
   </Step>
 </Steps>
 
+**Download PDF** produces the server-generated report — letterhead, patient details, findings, impression and the reporting radiologist's name and licence — the same document [Radiology reports](/hospital/diagnostics/radiology-reports) downloads from the station. It is available once the study has been saved, before and after it is completed.
+
 <Warning>
   An unreleased report is preliminary and must never leave the building looking final. If a ward needs an urgent read before you can complete it, speak to them directly — do not print or send the draft.
 </Warning>
@@ -166,8 +168,12 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
   <Accordion title="Is there deeper documentation on imaging requests?">
     Yes — the Diagnostics edition runs the same screens. See [Imaging requests](/lims/imaging/requests).
   </Accordion>
+
+  <Accordion title="What does Radiology History show?">
+    Two tabs. **By Patient** (the default) groups every order into one row per patient — how many, their last order date, and the most recent report status — with a search box and a date-range filter; leave the range blank to see a patient's whole history. Selecting a patient opens their orders for that range as cards (study, modality, findings, impression, report status). **All Records** is the original one-row-per-order table.
+  </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="an imaging request" />
 
-{/* source of truth: components/clinic/radiology/, app/u/clinic/radiology/[clinicId]/page.tsx */}
+{/* source of truth: components/clinic/radiology/, app/u/clinic/radiology/[clinicId]/page.tsx, app/u/clinic/radiology/history/[clinicId]/page.tsx, components/clinic/general/ (patient-history-group-panel.tsx, patient-history-drilldown-sheet.tsx, patient-history-record-cards.tsx), db/actions/radiology-history-grouped.ts */}

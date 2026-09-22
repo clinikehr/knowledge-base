@@ -1,6 +1,6 @@
 ---
 title: "Communications"
-description: "Turn on the text, voice, fax and email channels the hospital's AI agents use, and send email from your own mailbox."
+description: "Get the hospital a number, watch the message credit balance, and turn on the channels agents and staff reach patients over."
 icon: "/images/icons/comments.svg"
 ---
 
@@ -9,97 +9,103 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Starter and above" roles="Owner or manager" />
+<Availability editions={['clinic']} plans="Essential and above" roles="Owner or manager" />
 
-Agents can only reach a patient through a channel the hospital has actually provisioned. This tab is where you declare those channels and the numbers and addresses behind them.
+Communications is where the hospital gets a dedicated number, watches its message credit balance, and turns on the channels agents and staff reach patients over — texts, calls, fax and email. Nobody types a provider's numbers or connection details here: the platform buys and registers the number, and the database — not this form — is what proves a number belongs to this hospital.
 
 <Path steps={['Sidebar', 'Settings', 'Communications & AI', 'Communications']} />
 
 <TaskHeader
-  before="Provisioned numbers or a verified sending address for whichever channels you want"
-  time="10 minutes"
-  after="Agents able to reach patients by the channels you enabled"
+  before="A paid plan (Essential and above)"
+  time="5 minutes"
+  after="A number the hospital can text and call from, and the channels you use turned on"
 />
 
 ## What this tab controls
 
-The page is headed **Communications** — "Channels your AI agents use to reach patients — text, voice, fax, and email."
-
-| Control | What it does | Default |
+| Card | Control | What it does |
 | --- | --- | --- |
-| **Enabled channels** | Five switches: **SMS**, **WhatsApp**, **Fax**, **Voice**, **Email**. "Turn on only the channels you've provisioned. Outbound is disabled outside production." | All off |
-| **SMS from (E.164)** · **SMS messaging profile ID** | The number texts are sent from, in `+15551234567` form, and its profile | Blank |
-| **WhatsApp from** | The WhatsApp number | Blank |
-| **Fax from (E.164)** · **Fax connection ID** | The fax number and its connection | Blank |
-| **Voice number (E.164)** · **Voice connection ID** | The number calls are placed from, and its connection | Blank |
-| **Send from (verified address)** | The address agents send email from, e.g. `clinic@yourdomain.com` | Blank |
-| **Reply-to (optional)** | Where replies should go instead, e.g. `frontdesk@yourdomain.com` | Blank |
-| **Send from your own mailbox** | Connect **Google** or **Outlook** so replies land in your inbox and messages send from your own address. Marked **Rolling out** | Not connected |
-| **Save changes** | Writes everything on the page | — |
-
-The messaging and voice fields sit under **Messaging & voice (Telnyx)**: "The clinic's Telnyx numbers and connections for SMS, WhatsApp, fax, and voice."
+| **Your number** | **Get a number** | Opens checkout for a dedicated number ($15/month plus a one-time $25 registration fee). The number appears once payment is confirmed |
+| | **Release number** | Stops the monthly charge and releases the number. Reminders fall back to email until you get a new one |
+| **Fax Inbox** | **Open Fax Inbox** | Faxes the hospital has received, waiting to be filed into a patient's documents |
+| **Communication credits** | Balance, this month's usage | One shared balance for texts, calls and fax pages |
+| | **Buy a pack** | A one-time top-up, billed to the card on file |
+| | **Auto top-up** | Automatically buys a pack when the balance runs out. Off by default |
+| **Channels** | **SMS**, **Voice**, **Email** switches | Turn each on or off |
+| | **Fax** | Always available once the hospital has a fax-capable number — sent from any signed document, no switch needed |
+| | **WhatsApp** | Not available yet |
+| **Email** | **Send from (verified address)** | The address agent email is sent from, e.g. `clinic@yourdomain.com` |
+| | **Reply-to (optional)** | Where replies land if that is a different address, e.g. `frontdesk@yourdomain.com` |
+| | **Send from your own mailbox** → **Google** / **Outlook** | Not available yet. The **Connect** buttons are visible but inactive |
 
 ## Set it up
 
 <Steps>
-  <Step title="Provision the numbers first">
-    A switch here does not buy you a number. Get the numbers and connections in place with your telephony provider before you turn anything on — a channel enabled without its details simply fails to send.
+  <Step title="Get a number">
+    In **Your number**, select **Get a number**. You're taken to checkout for the recurring number fee plus a one-time registration fee. Once payment is confirmed, you land back on this tab and the number appears.
   </Step>
-  <Step title="Fill in the numbers">
-    Enter each number in full international form, starting with `+` and the country code. The connection and profile identifiers come from the same provider account as the number.
+  <Step title="Turn on the channels you use">
+    In **Channels**, switch on **SMS**, **Voice** and/or **Email**. Fax needs no switch — see [Faxing](#faxing-a-document) below.
   </Step>
-  <Step title="Set the email addresses">
+  <Step title="Set the email address">
     Put a verified hospital address in **Send from**. Use **Reply-to** when replies should reach a monitored inbox rather than the sending address — a front-desk mailbox rather than a no-reply.
   </Step>
-  <Step title="Turn on only what you have">
-    Switch on each channel you have actually provisioned, and leave the rest off. An enabled channel with no number is a silent failure waiting to happen.
-  </Step>
-  <Step title="Save">
-    Select **Save changes**. It confirms with "Communication settings saved".
-  </Step>
-  <Step title="Connect a mailbox, when it reaches you">
-    Under **Send from your own mailbox**, connect **Google** or **Outlook** so agent email sends from your own address and replies land in your inbox. The **Connect** buttons are inactive until the feature reaches your workspace — the card is badged **Rolling out**.
+  <Step title="Watch the credit balance">
+    Texts, calls and fax pages all draw from one balance in **Communication credits**. Buy a pack, or turn on **Auto top-up** so it never runs dry mid-month.
   </Step>
 </Steps>
 
+## Faxing a document
+
+Fax is not a switch — it is gated by having a number and by the **Send Fax** permission (owners and managers always have it; anyone else needs it granted in Settings → Team → Permissions). To send one, open any signed document — a clinical note, a lab or radiology report, an invoice, or a signed patient document — and choose **Send by fax**. You'll see the page count and credit cost before confirming.
+
+Faxes the hospital **receives** land in the **Fax Inbox**, reachable from this tab or from the sidebar. Nothing is matched to a patient automatically — a fax tells you who sent it, never who it's about — so a person reviews each one, opens it to see what it says, and either files it into a patient's documents or marks it junk. An unfiled fax is removed automatically 30 days after it arrives, and the inbox flags anything close to that date.
+
 ## What changes once you save
 
-- **Agents can use the channels you enabled**, and only those. A published agent whose step sends a text simply cannot when SMS is off.
-- **Messages carry the numbers and addresses on this page.** Patients see the number you entered — so put the hospital's public number here, not a personal mobile.
-- **Replies follow Reply-to** when you set one; otherwise they go to the sending address.
-- **Until mailbox sending is enabled, agents send from the verified address above**, whatever mailbox you connect later.
+Turning on a channel means an agent step or automated message that already sends over it starts actually reaching patients — from the number and address on this tab. Until a channel is on, whatever depends on it **stays silent rather than failing**: no error appears, the message simply never leaves. A published agent whose step sends a text simply cannot when SMS is off.
 
-Two things worth knowing. This tab governs **agent** communication, not the hospital's ordinary notification emails — appointment reminders, invoice notices and staff alerts follow their own preference switches, not these switches. And patient contact preferences still apply on top: a channel being enabled here never overrides a patient who has opted out.
+Two things worth knowing. This tab governs communications the hospital sends — including agents — not the hospital's own internal notification emails; appointment reminders, invoice notices and staff alerts follow their own preference switches, not these. And patient contact preferences still apply on top: a channel being enabled here never overrides a patient who has opted out.
 
-Turning a channel off stops future sends immediately; nothing already delivered is recalled.
+Getting a number is a real, recurring charge from the moment checkout confirms — releasing it stops that charge immediately. Running out of communication credits does not fail silently either: sends fall back to email so nothing is ever lost, just delivered a different way.
 
 ## Check it worked
 
-Save, then reload the tab — your numbers and addresses should still be there and the channel switches should be as you left them. Run one agent that sends on a channel you enabled, to a colleague rather than a patient, and confirm it arrives from the number or address you entered.
+**Getting a number:** after checkout, return to this tab — the number should read "Registered and active" (a fresh number briefly shows a provisioning status first).
+
+**A channel:** save, reload the tab — the switches should be as you left them. Run one agent or automated message on a channel you enabled, to a colleague rather than a patient, and confirm it arrives from the number or address you configured.
+
+**Fax:** send a document to a real fax number you control, or check the Fax Inbox after asking someone to fax the hospital's number.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="An upgrade panel covers the whole tab">
-    "Connect SMS, WhatsApp, fax, voice and email so your AI agents can reach patients. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
+    "Get a number for texts and calls, and let your clinic send appointment reminders and messages. Available on any paid plan." See [Change your plan](/platform/plans/change-plan).
   </Accordion>
   <Accordion title="Only clinic owners and managers can configure communications">
     Accountants can open settings but not this tab's controls.
   </Accordion>
+  <Accordion title="Get a number does nothing, or names a payment problem">
+    Select it again — it should open a payment page for the number's monthly fee and one-time registration fee. If it says numbers aren't available for the hospital's currency yet, that currency isn't priced yet (today: US and Canada only) — reminders still send by email in the meantime.
+  </Accordion>
   <Accordion title="A channel is on but nothing sends">
-    The number or connection for that channel is missing or wrong. Check the value is in full international form, starting `+`, and that the connection identifier matches the same provider account.
+    Confirm the hospital has a number in **Your number** — a channel switch with no number behind it has nowhere to send from.
+  </Accordion>
+  <Accordion title="The Fax Inbox is empty">
+    That's expected until someone actually faxes the hospital's number — nothing is seeded or simulated. Once a fax arrives, it appears here for filing.
   </Accordion>
   <Accordion title="Replies are going to a mailbox nobody reads">
     Set **Reply-to** to a monitored address. It overrides the sending address for replies only.
   </Accordion>
   <Accordion title="The Connect buttons for Google and Outlook do nothing">
-    That card is badged **Rolling out** and is not active for every workspace yet. Until then agents send from the verified address above.
+    Mailbox sending is not available yet. Agents send from the verified address above in the meantime.
   </Accordion>
   <Accordion title="Reminders still go out after I turned Email off">
-    Ordinary hospital notifications are governed by the notification preferences, not by these agent channels. Change them there.
+    Ordinary hospital notifications are governed by the notification preferences, not by these channels. Change them there.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/communications-settings.tsx, db/actions/comms.ts, db/actions/fax.ts */}

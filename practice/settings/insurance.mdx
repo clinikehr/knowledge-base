@@ -30,6 +30,7 @@ Three sub-tabs run along the top.
 | Control | What it does | Default |
 | --- | --- | --- |
 | **Insurance Profile Settings** | Your practice's own filing identity, and the billing profiles claims are submitted under. Add, edit or delete a profile here | Empty |
+| **Add Billing Profile** | An override for a specific clinician, payer or location — see "Billing profiles" below | None |
 | **Payers** | The insurance companies you bill — "Manage insurance payer filing and enrollment details" | Empty |
 | **Add Payer › Payer search** | Opens the search sheet: "Search by payer name, ID, or alias (e.g. Aetna, Blue Cross, 62308)…". Selecting a result adds it to your practice | — |
 | **Search payers you've added** | Filters the list you already have, by name, payer ID or alias | Empty |
@@ -62,11 +63,34 @@ And **for each billing provider** (the clinician claims are filed under — CMS-
 
 Mismatches are the main cause of rejected enrolments and claims: the name, NPI and Tax ID you enter must match what the payer's records hold, character for character.
 
+## Billing profiles — when one identity isn't enough
+
+Your practice-wide defaults (above) cover a solo practitioner, or a group that bills every claim under the same identity. A group with more than one clinician usually needs more: **each clinician's own individual NPI has to reach Box 24J (the rendering provider) on the claims they personally saw the patient for** — not the practice's Type 2 NPI. That is what **Add Billing Profile** is for.
+
+A billing profile is an override, scoped by up to three things:
+
+- **Clinician** — leave as **All Clinicians** for an override that applies practice-wide, or pick one so it only ever applies to claims rendered by that person.
+- **Payer** — leave as **All Payers**, or pick one so the override only applies to claims billed to that specific insurance company (a practice that bills Medicare under a different arrangement than commercial payers uses this).
+- **Location** — only shown once your practice has more than one site under **Settings → Locations**. Leave as **All Locations**, or pick one so the override only applies to visits at that address.
+
+For each profile you also choose:
+
+- **Provider type** — **Individual** (a Type 1 NPI — a specific clinician) or **Organization** (a Type 2 NPI — a billing entity). A clinician's own profile is almost always Individual.
+- **Use default information from practice settings** — turn this on when the profile only needs to say WHO or WHERE it applies to, and should otherwise just use your practice-wide identity. Leave it off to type this profile's own name, NPI, taxonomy and address.
+
+**How a claim picks between them.** When you open or prefill a claim, ClinikEHR looks for the most specific match first: a profile scoped to both the claim's clinician and its payer, then one scoped to just the clinician, then your practice-wide defaults. Nothing is ever invented — if no profile and no practice default has an NPI, the field is left blank for you to fill in rather than guessed at.
+
 ## Set it up
 
 <Steps>
   <Step title="Fill in your insurance profile">
     Open **Insurance Profile Settings** and complete the **Practice information** card — **Practice Name**, **NPI**, **Tax ID or SSN**, **Taxonomy** and **Billing Address**, choosing **Individual** or **Organization** to match how you are registered. Then set the **Default billing provider (Box 33)**: the **Billing provider name**, **NPI (Box 33a)** and **Taxonomy code (Box 33b)** printed in box 33 of every CMS-1500 claim. Claims are submitted under this identity, so a wrong value here fails every claim, not one.
+  </Step>
+  <Step title="Give each clinician their own billing profile (group practices)">
+    If more than one clinician sees patients at your practice, select **Add Billing Profile** for each one: set **Target clinician** to them, leave **Target payer** and **Target location** on **All** unless they need narrowing, and choose **Individual**. The **NPI** field pre-fills, read-only, from that clinician's own individual NPI (set on their [Account Settings](/platform/account/profile)) — you do not need to retype it. This is what lets a claim automatically fill in the RIGHT clinician's NPI in Box 24J instead of leaving it blank or printing the practice's own. A solo practice can skip this step — the practice-wide defaults already are that one clinician's identity.
+  </Step>
+  <Step title="Only if this clinic/payer needs a different NPI">
+    Check **Use a different NPI for this clinic/payer**, then edit the NPI field. If the value you enter differs from the clinician's own NPI, the page shows a warning and asks you to confirm before saving — this is a deliberate override, not a typo, and the confirmation is required both here and on save.
   </Step>
   <Step title="Add your first payer">
     Go to **Payers**, select **Add Payer › Payer search**, and search by name, payer ID or alias. Select the payer and it is added to your practice — a "\{Payer\} added to your clinic" toast confirms it.
@@ -130,10 +154,13 @@ Open any client's chart and start recording insurance coverage. The payer you ad
   <Accordion title="Removing a payer only deactivated it">
     That is deliberate. A payer with claims against it is deactivated rather than deleted so the claim history stays readable and auditable. Only a payer with no claims is removed outright.
   </Accordion>
+  <Accordion title="A claim's rendering provider has no NPI, even though I filled in Insurance Profile Settings">
+    The practice-wide **Default billing provider** covers Box 33 (who bills), not Box 24J (who actually saw the patient) once more than one clinician works at your practice. Add a **Billing Profile** for that clinician (**Add Billing Profile** → **Target clinician** → **Individual** → their own NPI) — a claim then fills in their NPI automatically the next time it prefills from an invoice or appointment. Nothing is ever guessed: an unresolved NPI is left blank rather than printed wrong.
+  </Accordion>
 </AccordionGroup>
 
 This tab sets up the **practice's** side. Each **client's** coverage is recorded on their own record — by sending them the **Insurance Profile** intake to fill from their card, typing it in with **Add Coverage**, or letting **Discover** search the payer network for them — and verified with an eligibility check before the visit. That flow, and building, submitting and chasing the claims themselves, is covered in [Insurance claims](/practice/money/insurance-claims).
 
 <StillStuck />
 
-{/* source of truth: components/clinic/dashboard/settings/insurance-settings.tsx, provider-enrollment-settings.tsx, payer-search-sheet.tsx, lib/settings-tabs.ts */}
+{/* source of truth: components/clinic/dashboard/settings/insurance-settings.tsx, insurance-settings-view.tsx, provider-enrollment-settings.tsx, payer-search-sheet.tsx, lib/settings-tabs.ts, lib/insurance/claim-provider-roles.ts */}

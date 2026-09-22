@@ -27,7 +27,11 @@ Nothing to set up, and — unlike the queue — **no department to choose**. His
 
 ## What you're looking at
 
-The page opens on a greeting and the line "View complete history of all consultation records". The toolbar is short by design: a search box, **Search consultations...**, and a **View** button opening **Toggle columns**. There is no department filter, no status filter, no date range and no export button — this page is for finding a record and reading it.
+The page opens on two tabs: **By Patient** (the default) and **All Records** — the encounter-by-encounter table this page has always had.
+
+**By Patient** groups every consultation into one row per patient: how many consultations, their last consultation date, and the status of the most recent one. A search box (name or patient ID) and a **date range** filter narrow it — pick a range and the counts and dates recompute over just that window; leave it blank and you see the patient's entire recorded history. Select a patient to open a panel with their consultations for that same range, each as its own card: presenting complaint, diagnosis, plan, prescriber, and whether it has been signed.
+
+**All Records** is the original toolbar: a search box, **Search consultations...**, and a **View** button opening **Toggle columns**. There is no department filter, no status filter and no export button here — this tab is for finding one specific record and reading it.
 
 | Column | Shows |
 | --- | --- |
@@ -45,13 +49,16 @@ Below the table sits the pager: **Show** … **per page** at 5, 10, 20 or 50 row
 
 <Steps>
   <Step title="Search">
-    Enter a patient name, a patient ID, or the name of the clinician who wrote the note. All three are matched, so "what did Dr Okafor see last month?" is as answerable as "what happened to this patient?".
+    On **By Patient**, enter a patient name or ID to jump to them; on **All Records**, a clinician's name also matches, so "what did Dr Okafor see last month?" is as answerable as "what happened to this patient?".
+  </Step>
+  <Step title="Narrow by date, if you need to">
+    **By Patient**'s date range recomputes the count and last-visit date for that window only — useful for "how many times did I see this person this year?" rather than across their whole chart.
   </Step>
   <Step title="Narrow the table if you need to">
-    **View** opens **Toggle columns** — switch off anything you are not reading so more rows fit on a small screen.
+    On **All Records**, **View** opens **Toggle columns** — switch off anything you are not reading so more rows fit on a small screen.
   </Step>
   <Step title="Open the record">
-    Select **View details**. The header confirms what you have: **Consultation History**, "Complete consultation record for …", and the encounter's status badge.
+    From **By Patient**, select a patient to see their consultations as cards. From **All Records**, select **View details** — the header confirms what you have: **Consultation History**, "Complete consultation record for …", and the encounter's status badge.
   </Step>
 </Steps>
 
@@ -105,8 +112,12 @@ If your hospital requires two-factor authentication, an unverified session canno
     The encounter was created but never documented. That happens when a chart is opened and abandoned. The record is kept honestly rather than deleted.
   </Accordion>
 
-  <Accordion title="I cannot filter by department or by date">
-    Neither filter exists here, deliberately — history is a cross-department search surface. Use the search box for a person or a clinician, and [Analytics](/hospital/executive/analytics) for anything you want grouped by period.
+  <Accordion title="I cannot filter by department">
+    There is no department filter, deliberately — history is a cross-department search surface. Use the search box for a person or a clinician.
+  </Accordion>
+
+  <Accordion title="I cannot filter by date on All Records">
+    That tab is unfiltered by design — it is for finding one specific record fast. Switch to **By Patient**, which has a date-range filter, or use [Analytics](/hospital/executive/analytics) for anything you want grouped by period.
   </Accordion>
 
   <Accordion title="An error message appears instead of the table">
@@ -144,4 +155,4 @@ If your hospital requires two-factor authentication, an unverified session canno
 
 <StillStuck topic="consultation history" />
 
-{/* source of truth: app/u/clinic/consultation/history/, components/clinic/consultation-history/ (consultation-history-actions.tsx, table-columns.ts, past-consultation-form.tsx), lib/clinic-nav-registry.ts */}
+{/* source of truth: app/u/clinic/consultation/history/, components/clinic/consultation-history/ (consultation-history-actions.tsx, table-columns.ts, past-consultation-form.tsx), components/clinic/general/ (patient-history-group-panel.tsx, patient-history-drilldown-sheet.tsx, patient-history-record-cards.tsx), db/actions/consultation-history-grouped.ts, lib/clinic-nav-registry.ts */}

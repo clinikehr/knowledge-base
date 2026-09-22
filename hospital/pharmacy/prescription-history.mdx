@@ -19,9 +19,13 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 ## What you're looking at
 
-The page opens with a greeting and the line **View complete history of all pharmacy prescriptions and dispensing records** — the sentence that tells you this is the archive, not today's work.
+The page opens on two tabs: **By Patient** (the default) and **All Records**.
 
-Two controls sit above the table: **Search for patient**, which filters by the person rather than by the medicine, and **New Prescription**, which takes you back to the live queue to start a fresh script. A **View Columns** dropdown with a **Toggle columns** list is on the right.
+**By Patient** groups every prescription into one row per patient — how many, their last prescription date, and the most recent dispensing status — with a search box and a **date range** filter (leave it blank to see everything on file). Selecting a patient opens their prescriptions for that range as cards: medication, dose, frequency, duration, dispensed status and quantity.
+
+**All Records** opens with a greeting and the line **View complete history of all pharmacy prescriptions and dispensing records** — the sentence that tells you this is the archive, not today's work.
+
+Two controls sit above that table: **Search for patient**, which filters by the person rather than by the medicine, and **New Prescription**, which takes you back to the live queue to start a fresh script. A **View Columns** dropdown with a **Toggle columns** list is on the right.
 
 The table is six columns:
 
@@ -143,4 +147,4 @@ Reading a patient's dispensing record is a clinical read, and it is written to y
 
 <StillStuck topic="prescription history" />
 
-{/* source of truth: components/clinic/pharmacy-history/ (header, actions, table, table-columns, past-prescription-form), app/u/clinic/pharmacy/history/[clinicId]/page.tsx */}
+{/* source of truth: components/clinic/pharmacy-history/ (header, actions, table, table-columns, past-prescription-form), components/clinic/general/ (patient-history-group-panel.tsx, patient-history-drilldown-sheet.tsx, patient-history-record-cards.tsx), db/actions/pharmacy-history-grouped.ts, app/u/clinic/pharmacy/history/[clinicId]/page.tsx */}
