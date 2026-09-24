@@ -23,7 +23,7 @@ The **Facility** tab does two jobs. The top half decides which units this hospit
 
 ## What this tab controls
 
-Nine care-area switches under **Clinical units** and **Operational units**, then up to six setting blocks. Each switch saves the moment you flip it; each block below has its own **Save** button, and appears only while its own care area is on.
+Nine care-area switches under **Clinical units** and **Operational units**, then up to seven setting blocks. Each switch saves the moment you flip it; each block below has its own **Save** button, and appears only while its own care area is on.
 
 | Control | What it does | Default |
 | --- | --- | --- |
@@ -46,6 +46,7 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Not opened after (days)** | The patient has not opened a document request at all. Needs **Records** | 3 |
 | **No response after (days)** | They opened it and did not sign | 7 |
 | **Expiring within (days)** | The link is about to expire and needs re-sending | 5 |
+| **Roles that can discharge** | Under **Who can discharge patients**: "The roles that may discharge a patient from a ward. Owners and managers can always discharge. Staff also need the Discharge a patient permission, which is on unless you have turned it off for them in Staff permissions." Owner only. Needs **In-patient care** | The doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles) |
 
 ## Set it up
 
@@ -70,6 +71,9 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
   </Step>
   <Step title="Set the records chase bands">
     Enter the three day counts and select **Save bands**.
+  </Step>
+  <Step title="Choose who can discharge patients">
+    Under **Who can discharge patients**, use the multi-select to choose the clinical roles that may discharge — owners and managers can always discharge regardless of this choice. Select **Save discharge roles**, confirmed with **Discharge roles saved**. **Reset to default** returns to the doctor-class roles. At least one role must stay chosen.
   </Step>
 </Steps>
 
@@ -96,6 +100,7 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Pattern** | Shift notes file against the new shift, the fluid balance chart re-buckets, and "nothing charted this shift" is measured against the new boundary. Notes already written are **not** re-filed. |
 | **Long wait after** | On the [front desk board](/hospital/front-desk/overview) a patient waiting longer than this turns amber and sorts to the top. It colours a badge and nothing else — it notifies nobody. |
 | The three day counts | The signature-chase queue on the [records desk](/hospital/records/overview) re-bands, so its counts move even though no document changed. |
+| **Roles that can discharge** | The [ward chart](/hospital/inpatient/discharges) checks this the next time someone tries to discharge — a role you remove loses the button (unless it's an owner or manager, who can always discharge), and a role you add gains it. Nobody currently mid-shift needs to sign out and back in. |
 
 Each block saves on its own: selecting **Save bands** does not save the cadence above it.
 
@@ -129,8 +134,11 @@ The sidebar lists the groups you left on and nothing for an area you switched of
   <Accordion title="There is no Facility tab at all">
     **Facility** exists on the Enterprise plan only. A link with `?tab=facility` that lands on **General Settings** is the fallback for a tab this workspace does not have.
   </Accordion>
+  <Accordion title="Save discharge roles is greyed out, or there is no Who can discharge patients card">
+    The card appears only while **In-patient care** is on, and only the clinic owner can save it — a manager or accountant can see the current choice but not change it. **Save discharge roles** also stays disabled until at least one role is selected.
+  </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="facility settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts */}
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/ward/discharge.ts */}

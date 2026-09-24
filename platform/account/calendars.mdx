@@ -1,0 +1,96 @@
+---
+title: Your calendar connections
+description: "Connect your own Google or Outlook calendar from your personal Settings — reachable however your role's navigation is set up in a clinic."
+icon: /images/icons/calendar-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member — connecting your own calendar is never role-gated here" note="Only your own calendar can be connected from this tab. A colleague's calendar is theirs to connect." />
+
+Connecting a calendar is something you do for yourself, so it has a home on your **personal** Settings that nothing about a workspace's own navigation can take away from you.
+
+<Path steps={['Your avatar', 'Profile and Settings', 'Calendars']} />
+
+<TaskHeader before="A Google or Outlook account, and staff membership in at least one workspace" time="5 minutes" after="Your own calendar connected, in the workspace you meant" />
+
+## Why this tab exists here, not only in Settings
+
+A workspace also has its own **Calendar Integrations** tab inside Clinic Settings, and for most people that is where they will actually connect an account — see [Connect an external calendar](/platform/integrations/calendar) for the full picture, including read-only calendar subscriptions, which only an owner or manager can set up.
+
+This tab exists **in addition**, for one specific reason: Clinic Settings is a page an owner can hide from your role entirely, using role-based navigation. Connecting your own calendar is not an act that should depend on whether you can see Settings — so it also lives here, on your account, reachable no matter what a workspace's navigation is set up to show you.
+
+<Note>
+  If you can already reach **Calendar Integrations** inside a workspace's own Settings, use whichever one is more convenient — they operate on the exact same connection. This tab does not add a second calendar; it adds a second door to the one you already have (or are about to make).
+</Note>
+
+## Connect your calendar
+
+<Steps>
+  <Step title="Open the Calendars tab">
+    On **Profile and Settings**, it's the last item in the sidebar.
+  </Step>
+  <Step title="Choose which workspace, if you belong to more than one">
+    A picker reads "Choose a clinic…" — an external calendar account is tied to your staff record in **one** workspace at a time, so the same person working in two workspaces connects each separately. With only one workspace, it's chosen for you.
+  </Step>
+  <Step title="Connect your account">
+    The rest of the screen is the same **Connected Accounts** / **Calendar Subscriptions** section a workspace's own Calendar Integrations tab uses — sign in to Google or Outlook, choose which of that account's calendars to sync, and set whether each one **Blocks booking** or is **Info only**. See [Connect an external calendar](/platform/integrations/calendar) for every step and what a synced event actually does.
+  </Step>
+</Steps>
+
+<Warning>
+  Choose the right workspace before you connect. An account connected under the wrong clinic protects the wrong diary and puts your calendar's events on a schedule you didn't mean to affect.
+</Warning>
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open this tab | Any staff member of any workspace | Nothing — it is reachable regardless of role-based navigation |
+| Connect or disconnect a calendar | The signed-in person, for their own staff record only | Nothing else — you can never connect a colleague's account from here |
+| Choose which workspace to act on | Any staff member with more than one workspace | Nothing |
+
+## Check it worked
+
+- The workspace picker (if shown) lists every workspace you're staff in.
+- After connecting, the row shows **Connected** with a count of calendars syncing.
+- An event from that calendar appears on the workspace's clinic calendar at the right time.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="You are not a staff member of any clinic yet, so there is no schedule to sync to.">
+    Exactly what it says — this tab needs an active staff membership somewhere. Join or create a workspace first.
+  </Accordion>
+
+  <Accordion title="I don't see a workspace picker at all">
+    You belong to exactly one workspace, so it's selected automatically — there's nothing to choose between.
+  </Accordion>
+
+  <Accordion title="I connected here but a colleague still can't see it inside Clinic Settings">
+    They can — it's the identical connection either way, since this tab and the workspace's own Calendar Integrations tab both act on the same record. Ask them to reload.
+  </Accordion>
+
+  <Accordion title="That calendar can only be connected by its own staff member.">
+    You cannot connect a colleague's Google or Outlook account, from here or from Clinic Settings. They need to connect it themselves — from either location.
+  </Accordion>
+</AccordionGroup>
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Connect an external calendar" icon="/images/icons/calendar-days.svg" href="/platform/integrations/calendar">
+    The full mechanics — subscriptions, sync frequency, Out of Office, and what a synced event actually does.
+  </Card>
+
+  <Card title="Your profile and credentials" icon="/images/icons/id-card.svg" href="/platform/account/profile">
+    The other four tabs on the same Settings sidebar.
+  </Card>
+</Columns>
+
+<StillStuck topic="a calendar connection on your own account" />
+
+{/* source of truth: components/home/dashboard/settings/calendar-settings.tsx, components/home/dashboard/settings/settings-sidebar.tsx, settings-content.tsx, components/clinic/dashboard/settings/connected-calendars-section.tsx */}

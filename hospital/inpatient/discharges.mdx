@@ -32,19 +32,34 @@ Write the discharge summary before you start the discharge, not during it. It is
     From [Ward admissions](/hospital/inpatient/admissions), select the occupied bed.
   </Step>
   <Step title="Select Discharge">
-    It sits leftmost in the chart header, deliberately away from the primary slot. The **Discharge Patient** sheet opens.
+    It sits leftmost in the chart header, deliberately away from the primary slot. The **Discharge \{patient\}** panel opens.
   </Step>
-  <Step title="Write the Discharge Summary">
-    One field, **Discharge Summary**, with the prompt **Enter discharge summary...**. Cover the condition on discharge, the treatment given, the medicines going home, and the follow-up arranged.
+  <Step title="Choose Discharged to">
+    Pick one of the required tiles: **Home**, **Home with care or support**, **Transferred to another facility**, **Left against medical advice**, **Deceased** or **Other**. Choosing **Transferred to another facility** asks for **Transferred to** (the receiving facility's name); choosing **Other** asks **Where to**. Both are required.
   </Step>
-  <Step title="Select Discharge Patient">
-    ClinikEHR confirms with **Patient discharged**. The bed empties on the grid and the stay moves to **Ward Discharges**.
+  <Step title="Set the Condition on discharge">
+    Choose **Improved**, **Stable**, **Unchanged** or **Deteriorated**. Required.
+  </Step>
+  <Step title="Write the Discharge summary">
+    Required. Cover the diagnosis, the treatment given and the course of the stay — this is the one part of the record a GP, a community nurse or the patient themselves will actually read.
+  </Step>
+  <Step title="Add follow-up and medications, if there are any">
+    **Follow-up (optional)** and its **Follow-up date (optional)** (today or later), and **Discharge medications (optional)** — what the patient takes home, kept on the discharge record. All optional.
+  </Step>
+  <Step title="Select Discharge">
+    A confirmation opens — **Discharge this patient** — naming what happens: the stay ends and the bed becomes available. Select **Discharge** again to confirm.
   </Step>
 </Steps>
+
+You get **Patient discharged**. The bed empties on the grid and the stay moves to **Ward Discharges**, along with the attending clinician recorded at the moment of discharge, who discharged the patient, and the treatment team as it stood when the stay ended.
 
 <Warning>
   Discharging cannot be undone from the app. It ends the stay, releases the bed to whoever needs it next, and closes the chart to further ordering. If the patient turns out not to be going home, they are admitted again as a new stay — which is a different record from the one you just closed.
 </Warning>
+
+### Who can discharge
+
+Owners and managers can always discharge. Beyond that, it is a role your clinic chooses under **Settings → Facility → Who can discharge patients** — see [Facility](/hospital/settings/facility). Until a clinic makes its own choice, the doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles) can discharge. A person also needs the **Discharge a patient** permission if your clinic uses [Staff permissions](/platform/team/permissions) to restrict it further.
 
 ### When Discharge is disabled
 
@@ -59,18 +74,20 @@ Offline, an amber banner sits across the top of the chart: "You are offline. Dis
 
 ## What you're looking at
 
-**Ward Discharges** opens on the list of completed stays, under the line **View complete history of all discharged patients**. Find someone with **Search for patient**, and use **View Columns** → **Toggle columns** to change what the table shows.
+**Ward Discharges** opens on the list of completed stays, under the line **View complete history of all discharged patients**. Find someone with **Search for patient**, narrow by **All dispositions** or a specific one beside it, and use **View Columns** → **Toggle columns** to change what the table shows.
 
-| Column | Shows |
-| --- | --- |
-| **Patient ID** | Their hospital number |
-| **Patient Name** | Who |
-| **Status** | Their condition as last recorded — **STABLE**, **CRITICAL**, **RECOVERING** |
-| **Admission Date** | When they came in |
-| **Discharge Date** | When they left |
-| **Ward** | Where they were |
-| **Doctor** | The clinician responsible |
-| **Actions** | Opens the stay |
+| Column | Shows | Shown by default |
+| --- | --- | --- |
+| **Patient ID** | Their hospital number | Yes |
+| **Patient Name** | Who | Yes |
+| **Status** | Their condition as last recorded — **STABLE**, **CRITICAL**, **RECOVERING** | Yes |
+| **Admission Date** | When they came in | Yes |
+| **Discharge Date** | When they left | Yes |
+| **Ward** | Where they were | Yes |
+| **Attending at discharge** | The clinician responsible for the stay when it ended. Reads **Not recorded** for a stay discharged before this was tracked — never a guess | Yes |
+| **Discharged By** | Who carried out the discharge | Yes |
+| **Disposition** | Where the patient was discharged to | Yes |
+| **Condition** | Their condition on discharge | No — turn it on from **View Columns** |
 
 A hospital with no completed stays yet sees **No discharged patients available.**, and a filtered page with nothing on it reads **No records found**.
 
@@ -80,8 +97,17 @@ A hospital with no completed stays yet sees **No discharged patients available.*
   <Step title="Open the row">
     Select **View Full Details** from the row's action menu. The page becomes **Patient Discharge Details**; **Back to Discharges** returns you to the list.
   </Step>
-  <Step title="Read the three summary cards">
-    **Patient Information** (identity, admission and discharge dates), **Ward Information** (ward, sub-ward, bed number, attending doctor, diagnosis) and **Discharge Summary**. A stay discharged without a summary says **No discharge summary available.** — worth noticing, because that is a gap in the record rather than a display problem.
+  <Step title="Read Patient Information and Ward Information">
+    **Patient Information** carries identity, admission and discharge dates. **Ward Information** carries the ward, sub-ward, bed number and diagnosis.
+  </Step>
+  <Step title="Read the Discharge Summary">
+    A stay discharged without one says **No discharge summary available.** — worth noticing, because that is a gap in the record rather than a display problem.
+  </Step>
+  <Step title="Read the Discharge card">
+    **Discharged to**, **Condition on discharge**, **Discharged by**, and **Attending at discharge** — the clinician responsible for the stay at the moment it ended, or **Not recorded** for a stay discharged before this was tracked. Then **Follow-up** and **Discharge medications**, each **None recorded.** when nothing was entered.
+  </Step>
+  <Step title="Read the Treatment team card">
+    Everyone who served on the stay, with their role and the period they served. **No treatment team was recorded for this stay.** when the stay predates the treatment team, or none was ever added.
   </Step>
   <Step title="Work through the stay under Patient History">
     Eight tabs cover everything that happened: **Timeline**, **Consultations**, **Nursing Notes**, **Prescriptions**, **Lab Tests**, **Services**, **Radiology** and **Vitals**. Start on **Timeline** for the shape of the admission, then open the tab that answers your actual question.
@@ -136,6 +162,10 @@ Enforcement is **opt-in per person**: anyone who has never been saved in the per
   <Accordion title="Ward Discharges is missing from the sidebar">
     It needs the Enterprise plan and the **In-patient care** area in **Settings → Facility**. See [Care areas](/hospital/get-started/care-areas).
   </Accordion>
+
+  <Accordion title="I can't see the Discharge button at all">
+    Owners and managers can always discharge. Everyone else needs a role your clinic has chosen under **Settings → Facility → Who can discharge patients** — see [Facility](/hospital/settings/facility) — and, if your clinic restricts it further, the **Discharge a patient** permission. Ask an owner or manager.
+  </Accordion>
 </AccordionGroup>
 
 ## FAQ
@@ -147,6 +177,10 @@ Enforcement is **opt-in per person**: anyone who has never been saved in the per
 
   <Accordion title="Can a patient be readmitted to the same bed?">
     Yes, once the bed is free. It is a new admission with its own chart; the previous stay is untouched and stays under **Ward Discharges**.
+  </Accordion>
+
+  <Accordion title="Why does Attending at discharge say Not recorded?">
+    The stay was discharged before ClinikEHR tracked who was attending at the moment of discharge. It is never guessed or filled in after the fact — a gap in an old record stays a gap.
   </Accordion>
 
   <Accordion title="How long are discharged stays kept?">
@@ -164,4 +198,4 @@ Enforcement is **opt-in per person**: anyone who has never been saved in the per
 
 <StillStuck />
 
-{/* source of truth: components/clinic/ward-discharges/, components/clinic/ward-admissions/discharge-dialog.tsx, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/ward-discharges/, components/clinic/ward-admissions/discharge-sheet.tsx, lib/ward/discharge.ts, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}

@@ -16,9 +16,9 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 <Path steps={['Sidebar', 'Inpatient', 'Ward Admissions']} />
 
 <TaskHeader
-  before="Wards, sub-wards and beds created in Settings"
+  before="Wards, sub-wards and beds created in Settings, and at least one clinician on the clinic's staff list"
   time="About a minute to admit"
-  after="A patient occupying a bed, with a live chart against their stay"
+  after="A patient occupying a bed, with an attending clinician named and a live chart against their stay"
 />
 
 ## Before you start
@@ -31,13 +31,13 @@ The page walks four states in order and you cannot skip one: choose a ward under
 
 A brand-new hospital sees **No wards available** with **Please contact your administrator** underneath. That is a settings job, not a ward job.
 
-Selecting a bed card opens the **Bed \{number\} Details** dialog, where the detail lives: **Admitted**, **Diagnosis**, **Attending Doctor**, **Notes** and **Last Updated**. The grid stays deliberately sparse so an empty bay is obvious from across the room.
+Selecting a bed card opens the **Bed \{number\} Details** dialog, where the detail lives: **Admitted**, **Diagnosis**, **Attending**, **Notes** and **Last Updated**. An occupied bed with nobody named as attending reads **Not assigned** rather than guessing at one. The grid stays deliberately sparse so an empty bay is obvious from across the room.
 
 ## Find a bed, or the patient in it
 
 Once you have opened a ward, a search box and filter buttons sit above the bed grid, on the same row as **Back** and the **Wards › \<ward\>** trail.
 
-- **Search** matches on **bed number**, **patient name** and **attending doctor**, in any order — so you can find a bed you know the number of, or a patient whose bed you do not.
+- **Search** matches on **bed number**, **patient name** and **attending clinician**, in any order — so you can find a bed you know the number of, or a patient whose bed you do not.
 - **Bed status** narrows to **Occupied**, **Available**, **Reserved** or **Under maintenance**.
 - **Patient status** narrows to **Critical**, **Under observation**, **Stable** or **Recovering**. It is deliberately separate from bed status: "which beds are free" and "who is critical" are different questions.
 - **Clear filter** empties one; **Clear all** appears once anything is narrowing the grid.
@@ -54,13 +54,22 @@ Admission starts from the consultation that decided the patient needs a bed, not
   <Step title="Select Admit Patient on the consultation">
     Open the patient's [consultation](/hospital/outpatient/consultation) and select **Admit Patient**. A bed picker opens and walks the same ward → sub-ward → bed order as this page. A sub-ward with nothing free is marked **Full**, and picking it says **No free beds in this sub-ward** rather than offering nothing — free a bed or choose another sub-ward. Pick a free bed.
   </Step>
-  <Step title="Fill in Admission Details">
-    Enter the **Admission Summary**, the **Patient Diagnosis** and the **Patient Status**. This is what every colleague reads first on the bed grid, so write it for them rather than for the record.
+  <Step title="Choose the Attending clinician">
+    The **Admit \{patient\}** panel opens. **Attending clinician** is a searchable staff picker and is required — an admission cannot be saved without naming who is responsible for the stay. Its helper text says why: "Responsible for this stay. Others can be added to the treatment team from the ward chart." If the clinic's staff list is empty, the panel says so and the patient cannot be admitted until someone is added to staff.
   </Step>
-  <Step title="Select Admit Patient">
-    You get **Patient admitted successfully**, and the bed fills on the grid.
+  <Step title="Set the Patient status">
+    Choose one of the four tiles — **Critical**, **Under observation**, **Stable** or **Recovering**. It opens on **Under observation**.
+  </Step>
+  <Step title="Add the diagnosis and summary, and admit">
+    **Admitting diagnosis (optional)** and **Admission summary (optional)** are what every colleague reads first on the bed grid, so write them for them rather than for the record. Select **Admit patient**.
   </Step>
 </Steps>
+
+You get **Patient admitted**, and the bed fills on the grid with an attending clinician already assigned to the stay.
+
+<Note>
+  **The attending is never guessed.** Some screens used to show whoever last wrote a round note, or an arbitrary doctor on the clinic's staff list, when nobody had actually been asked. An admission now requires a real answer, and anywhere a stay has none — this page's bed cards, the ward chart, the admissions panel — it reads **Not assigned** rather than a name nobody chose.
+</Note>
 
 ## Record observations
 
@@ -85,6 +94,23 @@ The tabs that list a long record — **History**, **Media** and the **Earlier re
 A badge next to the patient's name states the stay in both directions — **Admitted**, **Discharged**, or **Admission date not recorded** — and the line under it reads ward · bed · **Day 3**. For a patient with an open pregnancy record it ends with her gestation — **28+3**, or **Dating unavailable** where the dating will not derive it. Where there is no open pregnancy the segment is simply not there: it is never blank and never a zero.
 
 The header carries four actions in a deliberate order: **Discharge** leftmost and never primary, then **Notes**, then **New order**, with **Record obs** in the primary slot. The frequent, safe action is where your thumb lands; the irreversible one is not.
+
+### The treatment team
+
+The chart's **Admission** card, in the left-hand rail, carries the stay's basics — **Ward**, **Bed**, **Admitted**, **Day of stay** and **Attending**. Select the pencil next to the card's title to open **Treatment team**.
+
+The panel has four parts:
+
+- **Attending clinician** — the name and **Since \{date\}**, or **Not assigned** in amber when nobody has been named.
+- **Rest of the team** — everyone else currently on the stay, with their role and "since \{date\}", or **No one else is on the team yet.**
+- An add form — choose a **Role** (**Attending**, **Consultant**, **Resident**, **Nurse** or **Other**), the **Clinician**, and an optional **Note**. The button reads **Assign attending** when nobody is attending yet, **Hand over** when you are replacing the current attending, or **Add to team** for any other role.
+- **History** — everyone who has since left the team, with their role, the period they served ("start – end"), and their note. **No earlier team members.** when nothing has ended yet.
+
+<Note>
+  **A handover never overwrites who was responsible before.** Assigning a new attending ends the previous one's row and starts a new one at the same instant, so "who was responsible on a given day" always has an answer. Selecting **Remove** on a member asks you to confirm — **Remove the attending clinician** or **Remove from the team** — and their time on the stay stays in **History**. Removing the attending leaves the stay **Not assigned** until someone else is named.
+</Note>
+
+**Treatment team** opens read-only — nothing can be added or removed — when you are offline or the patient has already been discharged; the current team and its history are still visible.
 
 ### Guardians
 
@@ -199,6 +225,10 @@ Enforcement is **opt-in per person** — anyone never saved in the permissions s
     No wards exist yet. An owner creates them under **Settings → Ward Management**; see [Wards and beds](/hospital/get-started/wards-and-beds).
   </Accordion>
 
+  <Accordion title="No clinicians are recorded on this clinic's staff list yet, so this patient cannot be admitted">
+    The **Attending clinician** picker has nobody to choose from. Add the clinician to the clinic's staff list, then try admitting again.
+  </Accordion>
+
   <Accordion title="Only doctors and nurses can record vitals">
     Recording observations is restricted by role, and can also be granted per person. Ask an owner or manager.
   </Accordion>
@@ -227,6 +257,10 @@ Enforcement is **opt-in per person** — anyone never saved in the permissions s
     No. It belongs to the patient and follows them into their next admission. The **Care Plan** is the one that ends with the stay.
   </Accordion>
 
+  <Accordion title="Can I change who is attending partway through a stay?">
+    Yes — open **Treatment team** from the Admission card's pencil and select **Hand over**. The previous attending's time moves to **History** rather than being overwritten, so a stay always has a full record of who was responsible and when.
+  </Accordion>
+
   <Accordion title="What happens to a claimed round if I go home with it?">
     A claim covers the next few hours and expires on its own, so a flat trolley never blocks a ward overnight. An owner or manager can release one sooner.
   </Accordion>
@@ -238,4 +272,4 @@ Enforcement is **opt-in per person** — anyone never saved in the permissions s
 
 <StillStuck />
 
-{/* source of truth: components/clinic/ward-admissions/, components/clinic/ward-admissions/chart/, components/clinic/clients-management/client-mail-tab.tsx, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/ward-admissions/, components/clinic/ward-admissions/chart/, components/clinic/ward-admissions/chart/care-team-sheet.tsx, components/clinic/clients-management/client-mail-tab.tsx, lib/ward/care-team.ts, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}

@@ -1,0 +1,128 @@
+---
+title: Your Clinics
+description: "The full list of workspaces you own or belong to, with search, sorting and filters, and where you create a new one."
+icon: /images/icons/building.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Anyone with an account" />
+
+**Your Clinics** is the directory behind the dashboard's Quick Actions — every workspace you belong to, however many there are, with the tools to find one and the button that starts another.
+
+<Path steps={['Personal home', 'Clinics']} />
+
+<TaskHeader before="Nothing — an empty account still opens this page" time="Seconds to find a workspace, 2 minutes to create one" after="The right workspace open, or a new one created" />
+
+## What you're looking at
+
+The header carries three badges — **N Clinics**, **N Owned**, **N Patients** — then a search box, a **Sort** menu (by **Name**, **Patients** or **Consultations**, **Ascending** or **Descending**), a grid/list view toggle, a **Filters** panel (minimum patient count, and an **Active clinics only** switch for ones with recorded consultations), and **Create Clinic**.
+
+Below that, four stat cards — **My Clinics**, **Total Patients**, **Consultations**, **Owned Staff** — and three tabs:
+
+| Tab | Shows |
+| --- | --- |
+| **Overview** | A **Performance Summary** card — average patients per workspace, and your consultation rate |
+| **My Clinics** | Every workspace you belong to, owned or not, with its role, patient count and consultation count |
+| **Owned** | Only the workspaces you own, with staff count and patient count |
+
+With nothing to show, **My Clinics** reads "You haven't joined any clinics yet. Create one or ask to be invited." and **Owned** reads "You don't own any clinics yet. Create your first clinic to get started." — each with a **Create Your First Clinic** button.
+
+## Open a workspace
+
+<Steps>
+  <Step title="Find it under My Clinics or Owned">
+    Search narrows both tabs at once; sorting and the grid/list toggle apply to whichever tab you're on.
+  </Step>
+  <Step title="Select the card's button">
+    From **My Clinics**, the button reads **Open Clinic** — or **View Appointments** for a workspace on a solo plan, which takes you straight to its appointment book instead of asking which section you want. Any other workspace opens a **Select Section** dialog: pick a section (Appointment, Triage, Consultation, Laboratory, Pharmacy, Wards, Patients, Billing, Insurance or Settings), then the specific screen inside it.
+  </Step>
+  <Step title="From Owned, select Manage instead">
+    Takes you straight into that workspace's own home or settings — no section picker, because you own it.
+  </Step>
+</Steps>
+
+<Note>
+  An owned workspace also gets an **Upgrade to \{plan\}** shortcut right on its card when a higher plan is available, alongside **Manage**. It opens the same upgrade screen as [Change your plan](/platform/plans/change-plan).
+</Note>
+
+## Create a new workspace
+
+<Steps>
+  <Step title="Select Create Clinic">
+    Top-right on desktop, full-width at the top on a phone.
+  </Step>
+  <Step title="Fill in Create New Clinic">
+    The same dialog described in [Work across more than one workspace](/platform/account/switching-workspaces#create-another-workspace) — name, type, plan, contact details.
+  </Step>
+  <Step title="Create it">
+    You become its owner immediately, and it appears under both **My Clinics** and **Owned** without reloading the page.
+  </Step>
+</Steps>
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open Your Clinics | Anyone with an account | Nothing |
+| See a workspace under My Clinics | Anyone who belongs to it, owner or staff | Membership |
+| See a workspace under Owned, or select Manage | The workspace's owner only | Ownership |
+| Create a new workspace | Anyone with an account | Nothing — creating one makes you its owner |
+
+## Check it worked
+
+- The **N Clinics** badge matches the number of cards you can count across both tabs.
+- Searching for a workspace's name narrows the list to it.
+- **Open Clinic** or **Manage** lands you inside the right workspace, not an error page.
+- A workspace you just created appears immediately, with you as its owner.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Failed to fetch clinics">
+    A temporary read failure. Reload the page; the badges and both tabs are re-fetched together.
+  </Accordion>
+
+  <Accordion title="A workspace I was invited to is missing">
+    The invitation has to be accepted from the email first, sent to the address you're signed in with. See [Invite staff](/platform/team/invite-staff).
+  </Accordion>
+
+  <Accordion title="Open Clinic dropped me straight into Appointments with no picker">
+    That workspace is on a solo plan, which has only one real destination — its appointment book — so the section picker is skipped on purpose.
+  </Accordion>
+
+  <Accordion title="No clinics found after I searched">
+    Your search text does not match any workspace name. Clear it, and check the **Filters** panel for an active minimum-patients or active-only setting.
+  </Accordion>
+
+  <Accordion title="I can't find Manage on a workspace I thought I owned">
+    **Manage** only appears under **Owned**, and only for workspaces where you are the actual owner — a manager or other staff role, however senior, uses **Open Clinic** from **My Clinics** instead.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does creating a second workspace let me change my first one's edition or plan?">
+    No. Each workspace is independent, starts empty, and data never moves between workspaces. See [Work across more than one workspace](/platform/account/switching-workspaces).
+  </Accordion>
+
+  <Accordion title="What is the difference between this page and the switcher in the header?">
+    The switcher is for moving between workspaces you already have open in mind. This page is for finding one, comparing them, or creating a new one — it has search, sorting and stats the switcher does not.
+  </Accordion>
+
+  <Accordion title="Can I leave a clinic from here?">
+    No. Leaving is done by the workspace's owner removing your staff record, not by you from this page. See [Roles](/platform/team/roles).
+  </Accordion>
+
+  <Accordion title="Where does deleting a workspace I own happen?">
+    Deleting a workspace you own happens by deleting your account — there is no way to remove a single owned workspace and keep the rest. See [Delete your account](/platform/account/delete-account).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/home/clinics/clinics-content.tsx, components/home/dashboard/general/section-selection-dialog.tsx, components/home/dashboard/create-clinic-form.tsx, db/queries/clinics.ts, lib/clinic-home.ts */}
