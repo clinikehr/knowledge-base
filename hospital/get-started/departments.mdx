@@ -19,9 +19,9 @@ This is **step 2 of 5**. A department is the unit a consultation is filed under,
 
 ## Why a clinician cannot work without this
 
-Before a clinician sees any consultation list, they pass through a **Select a Department** screen. It is not decorative — the department they pick decides which patients they see. If a department has more than one sub-unit, they pick the sub-unit too, and that choice becomes part of the page's address, so the same clinician can keep two units open in two tabs.
+Before a clinician sees any consultation list — and before a nurse sees any triage queue — they pass through a **Select a Department** screen. It is not decorative — the department they pick decides which patients they see. If a department has more than one sub-unit, they pick the sub-unit too, and that choice becomes part of the page's address, so the same clinician can keep two units open in two tabs.
 
-At the other end, the triage form's assignment card tells the nurse exactly what a department does: "Patient will appear in this department's consultation queue".
+A [triage](/hospital/outpatient/triage) record's department is set the same way, from the other end: a nurse opens a specific department's queue first, and starting a triage from a patient's card in that queue's **Waiting** list is already scoped to it — there is no separate department picker inside the triage chart itself. At a paid hospital, that **Waiting** list only shows patients who have paid for **this** department; at a free hospital, it shows patients checked in today.
 
 ## Three levels, and the one that catches people out
 
@@ -62,7 +62,7 @@ At the other end, the triage form's assignment card tells the nurse exactly what
 
 - Each department row shows a **Sub-Units** count, and each sub-unit row shows a **Rates** count. A zero in either column is unfinished work.
 - Open **Outpatient → Consultation**. The **Select a Department** screen lists your departments, and a department with two or more sub-units asks for a second choice.
-- Record a test triage and tick a department. The patient appears in that department's consultation queue with a **Pending** status.
+- Record a test triage from that department's own queue. The patient appears in that department's consultation queue with a **Pending** status.
 
 ## If something goes wrong
 
@@ -84,7 +84,7 @@ At the other end, the triage form's assignment card tells the nurse exactly what
   </Accordion>
 
   <Accordion title="The patient went to the wrong department">
-    Open the triage record from the list, change the assignment on the **Update Triage** form and save. The patient moves to the new department's queue.
+    A triage's department is fixed by whichever department's queue it was started from — there is no control on the chart to move it afterwards. Start a new triage from the correct department's queue for that patient.
   </Accordion>
 
   <Accordion title="A department has closed">
@@ -106,4 +106,4 @@ At the other end, the triage form's assignment card tells the nurse exactly what
   </Card>
 </Columns>
 
-{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/triage/new-triage-form.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/triage/queue/department-queue-view.tsx, components/clinic/dashboard/settings/clinic-settings-sidebar.tsx */}

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the ward; recording and discharging are for doctors and nurses" note="Needs the In-patient care area" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the ward and admit by default; recording and discharging follow the roles chosen in Facility → Clinical access (everyone can admit, doctors and nurses record and discharge, until a clinic narrows it)" note="Needs the In-patient care area" />
 
 **Ward Admissions** is the bed map for your hospital: who is in which bed, and what is happening to them. From here you admit a patient, record their observations, run the drug round and place inpatient orders.
 
@@ -73,7 +73,9 @@ You get **Patient admitted**, and the bed fills on the grid with an attending cl
 
 ## Record observations
 
-From an occupied bed, **Record Patient Vitals** opens a dialog in four sections — **Vital Signs**, **Measurements**, **Blood Sugar** and **Status**, which carries a **Triage Status** select. **Save Vitals** files them against the stay and they appear on the chart's **Flowsheets** tab. Only doctors and nurses may record them; anyone else is told **Only doctors and nurses can record vitals**.
+From an occupied bed, or from the ward chart's **Flowsheets** tab, **Record vitals** opens the same form used everywhere vitals are captured in the product — blood pressure (with position and cuff details), pulse, respiratory rate, temperature, oxygen saturation and device, weight, height, blood sugar and more, in your hospital's chosen display units. Saving adds the set to the patient's flowsheet rather than editing the last one — a correction is always a new set.
+
+Every vital-sign reading, wherever it was taken, is one flowsheet for the patient. The **Flowsheets** tab shows it with a **This stay / All readings** toggle: just this admission's own readings, or everything ever recorded for the patient anywhere — triage, any ward stay, or the client record — each row labelled with where it was taken. Recording observations is restricted by role, and can also be granted per person.
 
 ## Read the ward chart
 
@@ -110,7 +112,9 @@ The panel has four parts:
   **A handover never overwrites who was responsible before.** Assigning a new attending ends the previous one's row and starts a new one at the same instant, so "who was responsible on a given day" always has an answer. Selecting **Remove** on a member asks you to confirm — **Remove the attending clinician** or **Remove from the team** — and their time on the stay stays in **History**. Removing the attending leaves the stay **Not assigned** until someone else is named.
 </Note>
 
-**Treatment team** opens read-only — nothing can be added or removed — when you are offline or the patient has already been discharged; the current team and its history are still visible.
+**Treatment team** opens read-only — nothing can be added or removed — when you are offline, when the patient has already been discharged, or when you do not have permission to change it; the current team and its history are still visible, and the panel says which of the three applies.
+
+**Who can change a treatment team.** Owners and managers always can. For everyone else it is the **Change the treatment team** permission, under **Ward** in each staff member's permissions — so a clinic can let its doctors hand over the attending without letting every member of staff do it. Someone without it sees "You can see the treatment team but not change it. An owner or manager can give you permission." Staff who already had their permissions set individually keep the ability they had; turn it off for anyone who should not have it. See [Permissions](/platform/team/permissions).
 
 ### Guardians
 
@@ -199,14 +203,14 @@ The ward pages check nothing of their own when you open them — anyone who can 
 
 | Action | Who by default | Permission |
 | --- | --- | --- |
-| Admit a patient from a consultation | Clinicians | **Admit a patient to a ward** |
+| Admit a patient from a consultation, the triage queue or the Disposition tab | **Everyone on the team** by default — a clinic's own choice under **Settings → Facility → Clinical access** can narrow this to specific roles | **Admit a patient to a ward** |
 | Record observations | Doctors and nurses | **Record observations** |
 | Give, hold or refuse a dose | Doctors and nurses | **Give a medication** |
 | Change or stop a drug | Prescribers | **Change or stop a medication** |
 | Amend the problem list | Clinicians | **Amend the problem list** |
-| Discharge a patient | Clinicians | **Discharge a patient** |
+| Discharge a patient | The doctor-class clinical roles — a clinic's own choice under **Settings → Facility → Clinical access** replaces this | **Discharge a patient** |
 
-Enforcement is **opt-in per person** — anyone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log while an allowed one is not, so hiding the group from a role is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions).
+Owners and managers can always admit or discharge, whatever a clinic has chosen. Enforcement is **opt-in per person** — anyone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log while an allowed one is not, so hiding the group from a role is a convenience, not a security boundary. See [Staff permissions](/platform/team/permissions) and [Facility settings](/hospital/settings/facility).
 
 ## Check it worked
 
@@ -272,4 +276,4 @@ Enforcement is **opt-in per person** — anyone never saved in the permissions s
 
 <StillStuck />
 
-{/* source of truth: components/clinic/ward-admissions/, components/clinic/ward-admissions/chart/, components/clinic/ward-admissions/chart/care-team-sheet.tsx, components/clinic/clients-management/client-mail-tab.tsx, lib/ward/care-team.ts, lib/ward/header-labels.ts, lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/ward-admissions/, components/clinic/ward-admissions/chart/, components/clinic/ward-admissions/chart/care-team-sheet.tsx, components/clinic/clients-management/client-mail-tab.tsx, lib/ward/care-team.ts, lib/ward/header-labels.ts, lib/edition-staff-roles.ts, lib/clinical-access.ts */}

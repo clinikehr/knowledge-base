@@ -1,0 +1,102 @@
+---
+title: "Send a report securely"
+description: "What happens when you send a lab result, prescription, radiology report or clinical note as a private link, and what the recipient has to do to open it."
+icon: "/images/icons/link.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { AuditNote, StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Wherever the report's own Download button appears" roles="Anyone who can already open and download the report" />
+
+**Send**, beside **Download**, on a lab result, a prescription, a radiology report or a clinical note opens **Send report securely** — a private link instead of the file itself. No attachment ever leaves your workspace and no health information sits in the email — only a link, and later, a one-time code.
+
+## Choose who gets it
+
+**Send to** offers three choices: the patient's own email on file, a different email you type in yourself, or both. Choosing a different email shows **Other email(s)** — up to three addresses, separated by commas — and a note that sending to anyone other than the patient is a disclosure, with **Reason for this disclosure** required before you can send. That reason is written to the patient's disclosure log along with who it went to and when; see [Access log, disclosure accounting and reviews](/hospital/front-desk/patient-security#access-log-disclosure-accounting-and-reviews). An optional **Note to include** is for a short message only — never health information.
+
+Each recipient gets their **own** link, valid for **7 days** from when it was sent. Sending again — to the same or a different address — always creates a new link rather than changing an existing one.
+
+## What the recipient sees
+
+<Steps>
+  <Step title="Open the link">
+    The page shows **Verify it's you** and, where your workspace's name is available, **Shared by \{your workspace\}** — nothing about the patient or the report yet.
+  </Step>
+  <Step title="Request a code">
+    Selecting **Send me a code** emails a one-time code to the **same address the link was sent to**. The page then reads **Enter the 6-digit code we sent to \{the masked address\}.**
+  </Step>
+  <Step title="Enter the code">
+    The 6-digit code verifies itself as soon as the last digit is entered — there is no separate confirm button. A wrong code clears the box and shows **That code is incorrect.**; select **Resend code** to have a new one emailed at any point.
+  </Step>
+  <Step title="View or download">
+    Once verified, the page reads **You're verified. You can view or download the report below.** — with **View** and **Download** buttons. What comes down is a stored copy of the report exactly as it looked at the moment it was sent; if the record is corrected or updated afterwards, the recipient's copy does not change to match — send a new link for that.
+  </Step>
+</Steps>
+
+Five wrong codes in a row shows **Too many attempts. Try again later.** — send a new link rather than continuing to retry the old one.
+
+A link that has expired reads **Link expired** — **This link has expired. Ask the clinic to send you a new one.** A link you have revoked reads **Link no longer available** — **This link has been revoked and can no longer be used. Ask the clinic for a new one if you still need this report.** Neither ever fails silently or shows a blank page, and neither offers anything to download.
+
+## See and revoke a report's links
+
+Select **Send** on the report at any time to see **Shared links** — every link raised for it, or **No links have been sent for this report yet.** if none has. Each one shows the masked recipient address, whether it went to the **Patient** or an **Other** address, its status (**Active**, **Expired** or **Revoked**), when it was sent and expires, and whether it has been opened.
+
+An active link offers **Revoke**. Confirm and it says so plainly: "\{recipient\} will lose access immediately — they will not be able to view or download this report with this link again." Once revoked, the recipient's next visit shows the same "no longer available" message an expired link shows.
+
+<AuditNote action="Sending a report and revoking a link" />
+
+## The disclosure log
+
+Every report sent to an address that is not the patient's own email on file is one more entry in that patient's disclosure log, alongside reports exported or printed and documents emailed to someone outside your workspace. See [Access log, disclosure accounting and reviews](/hospital/front-desk/patient-security#access-log-disclosure-accounting-and-reviews) for who can read it and how to export it.
+
+## Check it worked
+
+- The confirmation names the masked address (or addresses) it went to.
+- Reopening **Send** on the same report shows the new link under **Shared links**, marked **Active** and **Not opened yet**.
+- Once the recipient completes the code step, that link's row shows it has been opened.
+- After **Revoke**, the row reads **Revoked**, and the recipient's next visit to the link shows the revoked message with no download offered.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The recipient says the link doesn't work">
+    Links expire after 7 days, and a revoked one shows the same kind of message. Select **Send** on the report and send a new one.
+  </Accordion>
+
+  <Accordion title="They never received the code">
+    Ask them to check spam, and confirm you sent to the address they are checking — a link only ever emails a code to the address it was sent to, never a different one.
+  </Accordion>
+
+  <Accordion title="They entered the wrong code too many times">
+    After five wrong attempts the code entry shows **Too many attempts. Try again later.** Send a new link rather than trying to reuse the old one.
+  </Accordion>
+
+  <Accordion title="I sent to the wrong address">
+    Open **Send** on the report, select **Revoke** on that link straight away, then send a new one to the right address.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can someone who isn't the intended recipient open the link?">
+    Having the link alone is not enough — opening it only reaches the code step; downloading needs the one-time code, which is emailed to the address the link was sent to and never shown on the page itself.
+  </Accordion>
+
+  <Accordion title="Does the recipient need an account?">
+    No. The link and code work without signing in or creating anything.
+  </Accordion>
+
+  <Accordion title="If I correct the report after sending it, does the recipient's copy update?">
+    No — what they can download is a snapshot from the moment you sent it. Send a new link if they need the corrected version.
+  </Accordion>
+
+  <Accordion title="Is sending to the patient's own email on file also logged as a disclosure?">
+    No — the disclosure log is for addresses other than the patient's own on file, the same rule the rest of your workspace's disclosure accounting follows.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="sending a report" />
+
+{/* source of truth: components/clinic/shared/send-report-dialog.tsx (staff dialog), components/shared-report/shared-report-view.tsx + app/shared-report/[token]/page.tsx (public page), lib/clinical-reports/report-share-recipients.ts (MAX_ADDITIONAL_RECIPIENTS), lib/clinical-reports/report-share-public-state.ts (closed-link copy) */}

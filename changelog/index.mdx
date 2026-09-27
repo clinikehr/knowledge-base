@@ -7,6 +7,202 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="September 26, 2026" tags={["Hospital","Billing","Pharmacy"]} description="Fixes">
+  ## Payments stay with the right patient, and dispensing shows what's really recorded
+
+  - **Payments:** changing the patient on a new payment now clears everything shown for the previous one — insurance, pending items, invoices and credits — and a payment can't be taken until the newly selected patient's details have loaded. Choosing a patient without insurance after one with insurance no longer leaves the payment in insurance mode.
+  - **Dispensing:** each medication now opens showing its real status (for example **Pending**) instead of being pre-set to **Dispensed**. Set each line yourself, or use **Mark all pending as Dispensed** when everything is going out. Statuses read in plain words, such as **Out of Stock**.
+  - **Lab results:** the downloaded lab results now end with a **Results Verified By** signature — the name, credentials and licence of whoever completed the tests — or say **Preliminary — not yet verified** when they aren't finished. Each test's notes and interpretation are labelled, so they no longer look like part of the results table.
+  - The connection notice now sits in the top-right corner on tablets and computers, and the lab test list's buttons no longer crowd the heading on a phone.
+</Update>
+
+<Update label="September 26, 2026" tags={["Hospital","Platform"]} description="Send a report">
+  ## Send a report without emailing the file itself
+
+  A lab result, a prescription, a radiology report or a clinical note can now be sent straight to a patient's inbox — or up to three other addresses — without attaching the document or putting any health information in the email.
+
+  - The recipient gets a private link, good for 7 days, and a one-time code emailed to that same address before the report can be downloaded — so having the link alone is never enough.
+  - What downloads is a snapshot from the moment it was sent, even if the record is corrected afterwards.
+  - Sending to anyone other than the patient's own email on file asks for a reason, and is recorded in the patient's disclosure log alongside exports, prints and emailed documents.
+  - Reopen **Send** on any report to see who a link went to, whether it's been opened, and to revoke one immediately.
+  - See [Send a report securely](/platform/security/send-a-report).
+</Update>
+
+<Update label="September 26, 2026" tags={["Platform","Hospital"]} description="Printed documents">
+  ## Printed reports never run into the footer, and unfinished documents say so on every page
+
+  Long reports — a lab panel, a radiology report, a clinical note, an invoice — could print their last rows underneath the page footer, where the two overlapped and neither could be read. Every report now moves to a new page before it reaches the footer, keeps a table's heading on each page, and keeps a signature block together.
+
+  - The large diagonal stamp that already marked an undispensed prescription now marks every document that isn't final: an unsigned operation note (**DRAFT — NOT SIGNED**) or a cancelled one, an unsigned, expired, declined or cancelled patient document, a draft or cancelled invoice, a void voucher, and an antenatal card entered in error. A final, signed document never carries a stamp.
+  - A radiology report downloaded from a saved draft is now marked **PRELIMINARY** and carries no signature; only **Submit Report** produces the final, signed report. A study flagged with critical findings now says so in words.
+  - The connection notice (**You're offline**, **Weak connection**, **Back online**) now appears at the top of the screen, so it no longer sits over the **Save** and **Submit** buttons of an open panel.
+</Update>
+
+<Update label="September 26, 2026" tags={["Hospital"]} description="Lab test list">
+  ## Download a visit's lab results straight from the request list
+
+  The lab test list for a visit or ward stay only ever offered the requisition — the order form, with no values on it. Once a test has a result, you no longer have to go find it on the Lab Reports screen: a **Download results** button now sits right beside it.
+
+  - Covers every test in that visit or ward stay that has something recorded, one block per test, each parameter's value, unit, reference range and an **Abnormal**/**Critical** flag.
+  - A test with nothing entered yet is left off; one with values that hasn't been completed still shows, clearly marked **PRELIMINARY** so it's never mistaken for a final result.
+  - The requisition now also carries a large diagonal **REQUISITION — NOT A RESULT** stamp on every page, so it can never be confused with a completed report.
+  - See [Lab test list](/hospital/diagnostics/laboratory).
+</Update>
+
+<Update label="September 26, 2026" tags={["Hospital"]} description="Dispensing">
+  ## Dispensing a script now saves each medication's own status
+
+  Setting one item on a prescription to **Pending**, **Cancelled** or **Out of Stock** while dispensing the rest no longer asks you for a quantity on that item, and no longer records it as dispensed.
+
+  - Each medication on the dispensing sheet keeps the status you chose for IT — dispensing two items and holding a third back for later is now one save, not three.
+  - A quantity is asked for only on the lines you are actually dispensing today.
+  - If part of a save fails partway through, you're told exactly which statuses saved and which didn't, rather than a single pass/fail message.
+  - Items you left as they were aren't saved again, so the record of who dispensed them stays as it was; if nothing changed at all, you're told there's nothing to save.
+  - See [Work the prescription list](/hospital/pharmacy/prescriptions).
+</Update>
+
+<Update label="September 26, 2026" tags={["Solo & Team","Platform"]} description="Free plan">
+  ## Import your client list on Free — and see how much room you have first
+
+  Importing clients from a CSV works on every plan, including Free. On Free, which holds up to 50 clients, the import sheet now shows how many you have used before you run it, and a file that would take you past the limit is refused as a whole — with the number of rows to remove — instead of landing part-way and failing the rest.
+
+  - The line above the **Import** button reads, for example, "42 of 50 clients used on the Free plan · this file adds 8".
+  - The same limit now applies everywhere a client is added by hand, and the message names your plan and its limit instead of a technical error. Registering a newborn after a delivery is never blocked by it.
+  - Your booking page, membership signup and new-client registration follow the same limit. A new client arriving at a full Free practice is asked, in plain words, to contact you directly — instead of seeing an error — before any payment is taken; in the rare case the last place goes while they are paying, their payment is refunded automatically. Existing clients keep booking as normal.
+  - Essential and above have no client limit. See [Clients](/practice/work/clients).
+</Update>
+
+<Update label="September 26, 2026" tags={["Hospital","Pharmacy"]} description="Controlled drugs">
+  ## A witness is always a second person, on every screen that asks for one
+
+  The witness list on controlled-drug dispensing, waste, transfers and counts no longer offers you as your own witness — a countersignature has to be someone else.
+
+  - Dispensing, waste and transfers — including **Give dose** and **Discard** on partial vials — now check every witness the same way: they must be on your team, can't be you, and, in the Pharmacy edition, must hold **Witness a controlled-drug dispense**.
+  - A prescription that has been dispensed, or has had stock drawn for it, can no longer be deleted, so its dispensing record and stock movement always stay together.
+  - See [The dispensing station](/pharmacy/dispensing/station) and [Stock counts](/pharmacy/inventory/stock-counts).
+</Update>
+
+<Update label="September 26, 2026" tags={["Hospital","Pharmacy"]} description="Clinical access">
+  ## Dispensing follows one rule on every screen, and you can choose who dispenses
+
+  Filling a prescription straight from inventory stock now follows the same **Dispense a prescription** choice as the pharmacy counter, so there is no second way round it.
+
+  - **Settings → Facility → Clinical access → Dispense a prescription** now governs filling from stock as well as the counter. Filling from stock stays open to everyone on the team until you save a role on that row — nobody loses access today.
+  - **Staff permissions** has a new **Dispense a prescription** switch, so you can choose which people within those roles may dispense. It is on for everyone until you turn it off for someone. See [Staff permissions](/platform/team/permissions).
+  - Saving result values at the lab bench now checks the **Enter lab results** row too, and writing a ward-round note checks **Write or sign a consultation note** — the same rules as everywhere else those acts happen.
+  - See [Facility settings](/hospital/settings/facility) and [Inventory](/hospital/supply/inventory).
+</Update>
+
+<Update label="September 25, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Telehealth">
+  ## Telehealth recordings show their real state, and play more reliably
+
+  An old recording could look ready and then fail with a format error when you pressed Play — its file had passed the 90-day retention window and was gone.
+
+  - A recording past its 90 days now reads **Expired**, with "This recording expired on {date} and is no longer available". Play and Download are replaced by the reason, and you can still delete it.
+  - A recording whose file is missing says so plainly instead of opening a broken player.
+  - Browsers that can't play the recording's video format (Safari, for recordings made in Chrome or Firefox) now offer a direct download instead of a blank player, and downloaded files are named with the right extension.
+  - The **AI Note Taker** won't start on an expired or missing recording, and no AI minutes are used.
+  - See [Telehealth](/hospital/outpatient/telehealth).
+</Update>
+
+<Update label="September 25, 2026" tags={["Hospital"]} description="Shift handover history">
+  ## Read past shifts' handovers, not just the current one
+
+  The triage department handover and the Nursing station's ward handover each open on a **Current shift** tab, and now have a **Previous shifts** tab beside it.
+
+  - **Previous shifts** pages back through the department's (or ward's) handover history, newest first — each row names the shift and when it started, how many notes (and, in triage, patient handoffs) it carries, who wrote them, and whether the incoming shift acknowledged it.
+  - Select a row to read its notes — and, for triage, the SBAR handoffs written for patients that shift — without leaving the sheet.
+  - History always matches the shift you are looking at: the triage department (and sub-unit, where you have one open) or the ward chosen on the Nursing station board, never mixed with another.
+  - A ward divided into sub-wards can now hand over per sub-ward: a **Whole ward** / sub-ward picker inside the handover sheet scopes the current shift, the note you write, and **Previous shifts**. Choosing a sub-ward shows its own entries alongside anything written for the whole ward.
+  - See [Triage](/hospital/outpatient/triage) and [Nursing station](/hospital/inpatient/nursing-station).
+</Update>
+
+<Update label="September 25, 2026" tags={["Hospital"]} description="Enterprise plan">
+  ## Choose who can prescribe, dispense, order and report — not just admit and discharge
+
+  Clinical access now covers every clinical act, not only the two ward ones.
+
+  - **Settings → Facility → Clinical access** now has seven more rows: **Write or sign a consultation note**, **Prescribe medications**, **Dispense a prescription**, **Order a lab test**, **Enter lab results**, **Order a radiology study**, **Report a radiology study** — each with its own role list, **Save** and **Reset to default**. Owners and managers can always do all nine.
+  - Five of the new rows default to **Everyone on the team** — nobody loses access today — and you can narrow any of them whenever you're ready. Dispense, enter lab results and report a radiology study keep their existing role defaults (Pharmacist; Lab scientist; Radiologist and Doctor).
+  - The card is no longer hidden unless In-patient care is on — only the two ward rows are; the other seven show for every clinic.
+  - See [Facility](/hospital/settings/facility).
+</Update>
+
+<Update label="September 25, 2026" tags={["Hospital"]} description="Enterprise plan">
+  ## Choose who can admit a patient, alongside who can discharge
+
+  You could already choose which roles can discharge a ward patient. Now the same choice is available for admitting one, and both live together under one **Clinical access** card.
+
+  - **Settings → Facility → Clinical access** now has two rows — **Admit a patient to a ward** and **Discharge a ward patient** — each with its own role list, **Save** and **Reset to default**. Owners and managers can always do both.
+  - Admitting defaults to **Everyone on the team** — nobody who could already admit loses that today — and you can narrow it to specific roles whenever you're ready.
+  - The **Admit Patient** button on the consultation list and chart now follows this choice too, so a role your clinic allows to admit sees the button there as well — not only from triage.
+  - See [Facility](/hospital/settings/facility) and [Ward admissions](/hospital/inpatient/admissions).
+</Update>
+
+<Update label="September 25, 2026" tags={["Hospital","Solo & Team","Platform"]} description="Triage, vitals and check-in fixes">
+  ## Triage keeps every patient in view, vitals are flagged to clinical standards, and check-ins follow the rules
+
+  A patient could vanish from a triage queue after their vitals were taken, a blood pressure of 145 went unflagged, and a check-in could be moved to any status or time by hand. This release fixes all three, and tidies the triage screens around them.
+
+  - A patient whose triage has started now stays in the queue as **In triage** until it is finished, however you come back to the department — through its own page or its sub-unit's. See [Triage](/hospital/outpatient/triage).
+  - In **Free Clinic Mode**, today's appointments now join today's check-ins on the **Waiting** list.
+  - **Triage List** always lets you choose the department, and the breadcrumb names the department and sub-unit and takes you back to each.
+  - The queue's **Search patients** box no longer refreshes the whole list on every keystroke.
+  - Vital signs are graded against WHO, American Heart Association and NEWS2 thresholds — borderline in amber, abnormal in red, critical in bold red, always with the reason in words — on **Record vitals** and in every vitals flowsheet. A systolic or diastolic reading on its own is now flagged too.
+  - **Record vitals** records **Level of consciousness** (ACVPU) and **Work of breathing**, and on the triage chart puts the fields the chosen template calls for first — nothing is ever hidden, and anything expected but left empty is listed after the set saves.
+  - The triage chart suggests a template from the patient's age and sex (with a pregnancy screen for women of reproductive age), opens on **Vitals** the first time and on **Orders** after that, and fits the screen the way the consultation chart does.
+  - Check-ins now move only one way at a time: a checked-in visit can be checked out or cancelled, and a closed one checked back in — the same day only. **Cancel check-in** asks for a reason, and the arrival time can only be corrected while the patient is still checked in. See [Check-in](/practice/work/check-in) and [Front desk](/hospital/front-desk/overview).
+  - The **Admit patient** bed picker opens at the same size as every other panel.
+  - When dispensing a prescription, each line's amount and the total now follow the quantity you enter — nothing is charged for an item until you give a quantity — and the total shows at the bottom of the form as well as the top. A lab request shows its total at the bottom too.
+  - The diagonal watermark on downloaded reports — **Preliminary**, **Not dispensed** — now runs corner to corner across the middle of every page instead of sitting off-centre or running off the edge, and is easier to see. A clinical note that hasn't been signed yet now carries **Draft — not signed** across every page; a signed note prints clean.
+  - A lab report whose results are not final yet now carries **Preliminary** across every page, not just a banner on the first, so a later page can never pass as a final result. Final reports print clean.
+</Update>
+
+<Update label="September 24, 2026" tags={["Hospital","Platform"]} description="Enterprise plan">
+  ## Triage is now a department queue and a full encounter chart
+
+  Triage used to be one shared list and a single vitals form, with no acuity level, no reassessment reminders and no way to hand a shift over in writing. Recording a patient told you nothing about how urgent they were, and nothing chased a nurse to go back and check on someone whose condition might have changed.
+
+  - Triage now opens on a department board, the same way Consultation does — pick a department (and sub-unit, where you have one) to see its own queue, with a **Waiting** list of patients who have paid but not yet been triaged.
+  - Recording triage opens a full chart: a vitals flowsheet, **Assessments** — Glasgow Coma Scale, Blantyre, pain scales, qSOFA, SIRS, AVPU and ASA — chief-complaint suggestions as you type, and a template picker that pre-selects what a nurse would need for a given presentation.
+  - Set a patient's **acuity level** on either the Emergency Severity Index or the South African Triage Scale (once a clinician has reviewed it), and get a reassessment countdown that turns amber, then overdue, if nobody checks back in time. Lowering someone's acuity now asks for a reason.
+  - A row's **⋯** menu gives quick actions — change acuity, move their location, mark them reassessed, send to consultation, admit, or record left-without-being-seen — most confirming instantly with an **Undo**.
+  - Switch a department's queue to **Board view** to see patients laid out by location — waiting room, bays, resus — and drag a card to move someone; **List view** goes back to the table.
+  - The chart also carries a **Trends** tab (the last five triages' vitals against this one), a **Safety** tab (isolation screening, fall risk, a mental-health screen), a **Files** tab and an **Orders** tab for a nurse to start labs or imaging before a doctor sees the patient — landing that consultation on the doctor's queue as **Nurse orders — awaiting doctor** — and a **Disposition** tab to send to consultation, admit, refer out, discharge or record left-without-being-seen.
+  - **Emergency** triage is now a single quick form that pins the patient first in the department's consultation queue with a red flag, from the queue, a row, or the chart itself.
+  - A department now has a **shift handover**: a running note thread tagged by what it's about, a handoff for each patient still in the queue, and who is on this shift and the next from your rota — with an **Acknowledge handover** action for the incoming shift. The ward's own shift handover now files correctly against your hospital's timezone and can be acknowledged the same way.
+  - **Facility settings** gained a **Triage** card (acuity system, reassessment timers, nurse-ordered labs/imaging, vitals display units), a **Triage locations** card for naming waiting areas and bays, and a **Queue windows** card that lets an owner or manager choose how far back each module's live queue looks — Facility settings can now be changed by managers as well as owners for these three cards.
+  - Two new permissions govern who may do what: **Record triage** and **Set triage acuity** — see [Permissions](/platform/team/permissions).
+  - Every vital-sign reading is now one flowsheet for the patient, tagged with where it was taken — Triage, a ward stay or the client record — with the same units, checks and early-warning score everywhere. It's on the triage chart, the consultation chart (with a **Record vitals** button for a doctor's own reassessment), the ward chart, the Nursing Station, and the client record — the triage, consultation and ward charts each have a toggle between this encounter and the patient's whole history; the client record has no single encounter, so it always shows everything. **Record vitals** on the client record no longer opens a triage.
+  - **Data export** now covers vital signs across every setting, plus triage's assessments, acuity history, locations and shift handover records, as their own modules.
+
+  See [Triage](/hospital/outpatient/triage), [Departments](/hospital/get-started/departments) and [Facility settings](/hospital/settings/facility).
+</Update>
+
+<Update label="September 24, 2026" tags={["Solo & Team","Hospital","Pharmacy"]} description="Partial-vial dispensing">
+  ## Vials are received, given and sold by the dose — and priced per vial
+
+  Dispensing 7.5 mg of a vial product took the amount off the item's total and left every vial looking full, so the shelf and the vials stopped agreeing. Receiving stock could not create vials, and a vial item's price had to be entered per milligram.
+
+  - For a vial item, **Dispense** is now **Give a dose**: it draws from the open vial first, shows what is left in each vial, and records the patient.
+  - **Receive stock** takes a vial item as a number of vials with a **Cost per vial**, and creates the lot and each vial together. **Opening stock** on a new item does the same.
+  - Items are priced with a **Price per vial** and **Cost per vial**. A dose is charged, and costs, its exact share of the vial — 7.5 mg of a 350.00, 125 mg vial is 21.00 — on the dose screen, at the till and in your cost of goods. A **Single-patient container** is sold whole.
+  - Every other way stock leaves — prescriptions filled from inventory, ward doses, till sales, kits and consumables — now draws from the vials too, and stock inside a vial can no longer be wasted or moved out from under it.
+  - At the till, a vial line starts at one dose, reads "per mg", and is charged to the cent. See [Partial-vial dispensing](/practice/ops/partial-vial-dispensing).
+</Update>
+
+<Update label="September 24, 2026" tags={["Hospital","Platform","Billing"]} description="Ward admissions · Data export · Billing">
+  ## Choose who can change a treatment team, and export every part of a ward stay
+
+  Any member of staff could hand over a patient's attending clinician, and a hospital's data export left out most of the inpatient record — it had ward notes and vitals, but not the stays themselves, the drug chart, care plans, fluid balance or precautions.
+
+  - A new **Change the treatment team** permission, under **Ward** in each staff member's permissions, decides who can assign or hand over the attending and add or remove team members. Owners and managers always can. Staff whose permissions were already set individually keep what they could do; switch it off for anyone who should not. See [Ward admissions](/hospital/inpatient/admissions#the-treatment-team).
+  - Someone without that permission, or without **Discharge a patient**, can no longer make either change by any other route.
+  - **Data export** now covers every part of an inpatient stay: admissions with the full discharge record, the treatment team with every handover, care plans and goals, intake and output, the medication chart (MAR), medication reconciliations, precautions and shift handover notes — plus your wards, sub-wards, bed spaces and daily rates. See [Data export](/hospital/settings/data-export).
+  - **Vials & Containers**, **Dose Titration Plans**, **Billing Provider Profiles** and **Staff Credential Verifications** could be ticked in Data export but were left out of the file. They are now included.
+  - On your personal **Billing** page, **Export** above **Payment History** now saves a spreadsheet of the payments your filters show. The **Export Data** and **Settings** buttons at the top of the page did nothing and are gone; **Settings** is still in the top navigation. See [Invoices and receipts](/platform/plans/invoices-and-receipts).
+</Update>
+
 <Update label="September 24, 2026" tags={["Hospital"]} description="Ward admissions">
   ## Every inpatient has a named attending — with a history of handovers
 

@@ -25,6 +25,8 @@ A consultation is the encounter record: the note you write, the orders you place
 
 **Consultation** has no care-area switch — it is always in the sidebar on Enterprise. Your hospital does need departments set up; with none, the module offers **No Departments Found** and a **Set Up Departments** button instead of a queue. See [Departments](/hospital/get-started/departments).
 
+At a paid hospital, a patient's consultation payment is used the moment a doctor opens and starts working the consultation — not earlier, at triage, and not by a nurse's order alone. A visit the doctor never opens keeps its payment valid for whoever sees the patient next.
+
 ## What you're looking at
 
 The module opens on **Select a Department** — "Choose the department you'd like to access for consultations. Each department has specialized services tailored to patient needs." Pick yours; if it has more than one sub-unit you choose that next, and with only one you go straight through.
@@ -41,6 +43,12 @@ The toolbar carries **Search for patient**, **New Consultation**, **Refresh** an
 | **Admit Patient** | You may edit and the patient is not already admitted |
 | **Currently admitted** | Disabled, when they already have a bed |
 
+### What triage hands you
+
+A row carries what [triage](/hospital/outpatient/triage) already knows about the patient, directly under their name: their acuity level (coloured), a red **Emergency** badge if they were flagged one, and their chief complaint. **Emergency** patients sort to the top of the queue.
+
+Two more lines appear when they apply. **Nurse orders — awaiting doctor** means a nurse already placed a lab or imaging order at triage, which opened this consultation before any doctor took it — it is yours to review, not something already handled. **⚠ N open admissions** is a warning, not a normal state: it means this patient has more than one ward admission open at once, and somebody should close the stale one.
+
 ### The chart
 
 Nine tabs, always in this order: **Overview**, **Chart**, **Results**, **Note**, **Orders**, **Vitals**, **History**, **Mail** and **Documents & forms**. A new consultation lands on **Note**; viewing or updating one lands on **Results**.
@@ -52,7 +60,7 @@ Nine tabs, always in this order: **Overview**, **Chart**, **Results**, **Note**,
 | **Results** | Results against this encounter. On a new one: "Nothing ordered on this encounter yet" |
 | **Note** | Your documentation and your diagnoses |
 | **Orders** | Medications, labs, imaging and services |
-| **Vitals** | **Vital**, **Value**, **Normal range** and **Status**, plus an **Over time** flowsheet of past observations and a **Record vitals** button to enter a new set without leaving the chart |
+| **Vitals** | **Vital**, **Value**, **Normal range** and **Status** for this visit, plus the patient's whole flowsheet underneath — every reading taken anywhere, triage, ward or the client record, each labelled with where it was taken — with a **This visit / All readings** toggle, and a **Record vitals** button to record a reassessment against this consultation without leaving the chart |
 | **History** | Past encounters |
 | **Mail** | Email conversations somebody has linked to this patient — see [Read your mail](/hospital/overview/mail) |
 | **Documents & forms** | Documents attached to this patient, and everything they have been sent |
@@ -211,7 +219,7 @@ A signed note is read-only for everyone, whatever their role, until it is unlock
   </Accordion>
 
   <Accordion title="Where do vitals on the chart come from?">
-    From [triage](/hospital/outpatient/triage) and from any ward observations. The **Vitals** tab reads them; it is not where they are entered.
+    Every reading taken anywhere — [triage](/hospital/outpatient/triage), a ward stay or the client record — is one flowsheet, and the **Vitals** tab shows all of it with a **This visit / All readings** toggle. You can also add to it here: **Record vitals** files a reassessment straight onto this consultation without leaving the chart.
   </Accordion>
 
   <Accordion title="Does admitting a patient close the consultation?">

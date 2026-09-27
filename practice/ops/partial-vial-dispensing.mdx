@@ -24,43 +24,66 @@ The second dose went into the **already-open vial**, not a fresh one. That is de
 ## Set up an item
 
 <Steps>
-  <Step title="Turn on partial dispensing">
-    Open the item in **Inventory → Items** and turn on **Allow partial dispensing**. Until you do, the item behaves exactly as before — whole units only.
+  <Step title="Turn on fractional dispensing">
+    Open the item in **Inventory → Items** and, under **Partial-vial dispensing**, turn on **Allow fractional dispensing**. Until you do, the item behaves exactly as before — whole units only.
   </Step>
   <Step title="Write the strength as it is printed">
-    Enter the strength the way the label reads it: **125 mg** per **12.5 mL**. Both halves matter. From them the dose screen works out that a 7.5 mg dose is **0.75 mL**, and **75 units** on a U-100 syringe — the number the person holding the syringe actually reads.
+    Under **Printed strength**, enter the pair the way the label reads it — **Amount** 125, **Unit** mg, **per mL** 12.5. Both halves matter. From them the dose screen works out that a 7.5 mg dose is **0.75 mL**, and **75 units** on a U-100 syringe — the number the person holding the syringe actually reads.
   </Step>
   <Step title="Say how much one vial holds">
-    **One vial holds** is the amount in a single container — 125 mg. Give the container the name your team uses: vial, pen, ampoule, bottle.
+    **One container holds** is the amount in a single container — 125. **Called a** is the name your team uses: vial, pen, ampoule, bottle.
   </Step>
   <Step title="Set the dose step and the use-by rule">
-    **Dose step** (e.g. 0.25 mg) shapes the dose box and warns on an off-step amount. **Use by, after opening** (e.g. 28 days) is stamped on a vial the first time it is punctured.
+    **Dose increment** (e.g. 2.5) shapes the dose box and warns on an off-step amount. **Beyond-use days after opening** (e.g. 28) is stamped on a vial the first time it is punctured.
   </Step>
   <Step title="Decide whether a vial may be shared">
-    **One patient per vial** binds a vial to the first patient it is drawn for and refuses anyone else. Leave it off for shared multi-dose vials, which is how most clinics run.
+    **Single-patient container** binds a vial to the first patient it is drawn for and refuses anyone else. Leave it off for shared multi-dose vials, which is how most clinics run.
+  </Step>
+  <Step title="Price it per vial">
+    Under **Pricing per vial**, enter the **Cost per vial** and the **Price per vial** — the figures you actually know. Each dose is charged its share of the vial: at 350.00 for a 125 mg vial, a 7.5 mg dose is 21.00 and a 24 mg dose is 67.20. The line underneath works it out as you type, with the cost and margin of one dose.
+
+    A **Single-patient container** is sold whole instead — the patient buys the vial, which is theirs once it is opened — so it has a price per vial and no price per dose.
   </Step>
 </Steps>
 
-## Set up the vials you have
+For an item priced per vial, the ordinary **Unit cost** and **Sale price** fields step aside, so the item has one price in one place.
 
-Receiving puts a quantity into a lot; **Set up vials** says how that quantity is divided.
+## Receive vials
 
-Receive 375 mg of lot AB-1234, then set up **3 vials of 125 mg**. The system refuses to create vials that would claim more than the lot actually holds — if 250 mg is already spoken for, asking for three more vials tells you so, with the number.
+A vial item is received **as vials**, never as a bare amount. In **Receive stock** (or **Opening stock** when you add the item):
+
+<Steps>
+  <Step title="Say how many arrived">
+    Enter the number of **Vials received**. **Each holds** is filled in from the item and can be changed for a delivery that came in a different size.
+  </Step>
+  <Step title="Enter the cost per vial">
+    **Cost per vial** is what you paid for one. You can also change the **Price per vial** here — a new delivery is often when a price changes, and every dose from then on is charged its share of the new price.
+  </Step>
+  <Step title="Check the total and receive">
+    The sheet reads back what goes into stock — "250 mg into stock as 2 vials — 400.00 at cost" — and what one dose will cost and sell for. Select **Receive**: the lot and each vial are created together.
+  </Step>
+</Steps>
+
+What a dose costs is exactly its share of what the vial cost, so your cost of goods and margins are right to the milligram.
+
+Stock that arrived before vials were used — or a lot you received as a plain amount — can still be divided afterwards: open the stock row's menu, choose **Vials**, then **Set up**. The system refuses to create vials that would claim more than the lot holds, and says by how much.
 
 ## Give a dose
 
+For a vial item, **Dispense** becomes **Give a dose**. Choosing a vial item in the general **Dispense** sheet takes you there too.
+
 <Steps>
-  <Step title="Open Give a dose">
-    Choose the **Location** and the **Patient**.
+  <Step title="Choose where from, and for whom">
+    Choose the **Location** and the **Patient**. The patient is required for a **Single-patient container**, because that vial becomes theirs.
   </Step>
   <Step title="Type the dose">
-    The line under the box reads back the dose, the volume and the syringe units: **7.5 mg · 0.75 mL · 75 units on a U-100 syringe**. If the item has no strength recorded, the volume is shown as a dash rather than a guess.
+    The line under the box reads back the dose, the volume and the syringe units — **7.5 mg · 0.75 mL · 75 units on a U-100 syringe** — and, for a shared vial, what this dose is charged and costs. If the item has no strength recorded, the volume is shown as a dash rather than a guess.
   </Step>
   <Step title="Choose the vial, or let it choose">
     **Open vial first, then earliest-expiring** is the default and is almost always what you want. You can pick a specific vial instead.
   </Step>
   <Step title="Give it">
-    Stock, the vial's remaining amount, the lot and the ledger all move together.
+    Select **Give dose**. Stock, the vial's remaining amount, the lot and the ledger all move together. A controlled item asks for a **Witness** first.
   </Step>
 </Steps>
 
@@ -69,6 +92,8 @@ Receive 375 mg of lot AB-1234, then set up **3 vials of 125 mg**. The system ref
 </Warning>
 
 A vial is never drawn from once it is past its **use-by** date or its lot has expired. If every vial is in that state, the screen says so in those words rather than reporting "out of stock" — the drug is in the fridge, and it must not be used.
+
+**Every** way stock leaves — a prescription filled from inventory, a ward dose, a till sale, a kit, a consumable used at an appointment — draws from the vials the same way, so the shelf and the vials can never disagree. Stock of the same item that is not in a vial is used only after the vials.
 
 ## Throw a vial away
 
@@ -88,13 +113,16 @@ Where there is no usage history yet, days of cover shows a dash rather than zero
 
 ## Who can do this
 
-Giving a dose needs the same permission as any other medication administration. Setting vials up needs the permission that covers receiving stock. Both are set in **Settings → Staff permissions**.
+Giving a dose needs the same permission as any other medication administration. Receiving vials and setting them up need the permission that covers receiving stock. Both are set in **Settings → Staff permissions**.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="“This item is not set up for partial-container dispensing”">
-    **Allow partial dispensing** is off for that item. Turn it on in **Inventory → Items**.
+    **Allow fractional dispensing** is off for that item. Turn it on in **Inventory → Items**.
+  </Accordion>
+  <Accordion title="“The containers of lot … hold …, but only … of it would be left in stock here”">
+    You tried to waste, move or adjust stock that is inside vials. Use **Give a dose** to draw from a vial, or **Discard** a vial with a reason — that way the vials and the shelf keep agreeing.
   </Accordion>
   <Accordion title="“Partial-vial dispensing is not included in the current plan”">
     The feature is on **Essential and above** (Professional and above on the Pharmacy and Lab editions). Vials already set up keep working if a plan changes — only setting up new ones stops.
@@ -103,7 +131,7 @@ Giving a dose needs the same permission as any other medication administration. 
     There is stock, but none of it may be used. Discard those vials, with a reason, and set up the replacement.
   </Accordion>
   <Accordion title="“Every open container is assigned to another patient”">
-    The item is set to **One patient per vial** and every open vial belongs to somebody else. Open a new vial, or turn that setting off if your clinic shares multi-dose vials.
+    The item is set to **Single-patient container** and every open vial belongs to somebody else. Open a new vial, or turn that setting off if your clinic shares multi-dose vials.
   </Accordion>
   <Accordion title="The dose box will not take a decimal">
     Either the item does not allow partial dispensing, or the clinic's plan does not include it. Both are named in the message above the box.
@@ -117,7 +145,7 @@ Giving a dose needs the same permission as any other medication administration. 
     Yes. Every draw records the vial and its lot, so a part-used vial is always traceable to the batch it came from — which is what a recall needs.
   </Accordion>
   <Accordion title="Can I sell a part-dose at the till?">
-    Yes. A till line can be 7.5 mg rather than a whole vial, and the sale draws from the same vial the chart does.
+    Yes. A shared vial's line starts at one dose, steps by the **Dose increment**, and is charged its share of the vial — the price reads "per mg" on the line and on the receipt. A **Single-patient container** is sold a whole vial at a time. Either way the sale draws from the same vials the chart does.
   </Accordion>
   <Accordion title="What happens to the leftover when a vial expires?">
     Discard it with a reason. The leftover is recorded as waste rather than quietly vanishing, so your counts still reconcile.

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner to change; manager or accountant to read" note="Only the owner can change these settings" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner to change most of this tab; manager or accountant to read; owner or manager to change Triage, Queue windows and Triage locations" note="Only the owner can change the care-area switches and the rest of this tab" />
 
 The **Facility** tab does two jobs. The top half decides which units this hospital runs: "Which departments this hospital runs. These control what appears in navigation." The bottom half carries the schedules, charts and timing thresholds that decide what the antenatal worklist, the labour chart, the Nursing Station, the front desk board and the Records desk measure against — and those exist nowhere else in the product.
 
@@ -46,7 +46,14 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Not opened after (days)** | The patient has not opened a document request at all. Needs **Records** | 3 |
 | **No response after (days)** | They opened it and did not sign | 7 |
 | **Expiring within (days)** | The link is about to expire and needs re-sending | 5 |
-| **Roles that can discharge** | Under **Who can discharge patients**: "The roles that may discharge a patient from a ward. Owners and managers can always discharge. Staff also need the Discharge a patient permission, which is on unless you have turned it off for them in Staff permissions." Owner only. Needs **In-patient care** | The doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles) |
+| **Clinical access** | Under **Clinical access**: "Which roles may perform each act, besides owners and managers (always allowed). Staff also need the matching permission, which is on unless you have turned it off for them in Staff permissions." Nine rows, each with its own role multi-select, **Save** and **Reset to default** — **Admit a patient to a ward** and **Discharge a ward patient** (need **In-patient care**), **Write or sign a consultation note**, **Prescribe medications**, **Dispense a prescription**, **Order a lab test**, **Enter lab results**, **Order a radiology study**, **Report a radiology study**. Owner only | **Everyone on the team (default)** for admit, write/sign a note, prescribe, order a lab test and order a radiology study — no role is narrowed until you choose one. **Discharge a ward patient**: the doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles). **Dispense a prescription**: Pharmacist — with one difference between the two dispensing screens: the pharmacy counter (marking a prescription dispensed) follows Pharmacist from the moment you open this card; dispensing straight from inventory stock stays open to everyone on the team until you choose a role here, and then follows the same choice. **Enter lab results**: Lab scientist. **Report a radiology study**: Radiologist, Doctor |
+| **Queue windows** | How far back each module's live queue looks — Consultation, Triage, Pharmacy, Laboratory and Radiology, each set separately to 24h, 48h, 72h, 7d, 14d or 30d. Owner or manager | 48 hours for every module |
+| **Acuity system** | Under the **Triage** card: **Emergency Severity Index (ESI)** or **South African Triage Scale (SATS)** — SATS stays disabled with a **Pending clinical review** badge until a clinician signs it off. Owner or manager | ESI |
+| **Reassessment interval by acuity level** | Minutes before a triaged patient of that acuity is due, then overdue, for reassessment — one field per level, 0 to 1440 (0 = continuous care, no timer). Owner or manager | ESI 1: 0 (no timer) · 2: 15 · 3: 30 · 4: 60 · 5: 120 |
+| **Nurse orders — complaint categories** | Which chief-complaint categories a nurse may order labs or imaging for at triage, before a doctor sees the patient. Owner or manager | None — nurse orders off |
+| **Clinic SATS discriminators** | Extra Red/Orange discriminators your hospital adds to the published SATS list — only while SATS has been reviewed. Owner or manager | None |
+| **Vitals display units** | Temperature (°C/°F), weight (kg/lb), height (cm/in) and glucose (mmol/L / mg/dL) — what triage and ward vitals are entered and shown in. Owner or manager | Celsius, kilograms, centimetres, mmol/L |
+| **Triage locations** | Named places — waiting room, bays, resus — per department and, optionally, sub-unit, that the triage queue and Track board place a patient in. Owner or manager | None until you add one |
 
 ## Set it up
 
@@ -72,8 +79,17 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
   <Step title="Set the records chase bands">
     Enter the three day counts and select **Save bands**.
   </Step>
-  <Step title="Choose who can discharge patients">
-    Under **Who can discharge patients**, use the multi-select to choose the clinical roles that may discharge — owners and managers can always discharge regardless of this choice. Select **Save discharge roles**, confirmed with **Discharge roles saved**. **Reset to default** returns to the doctor-class roles. At least one role must stay chosen.
+  <Step title="Choose who can do each clinical act">
+    Under **Clinical access**, use each row's multi-select to choose the roles that may do that act — owners and managers can always do every one, regardless of this choice. Select **Save** on the row you changed, confirmed with **Saved**. **Reset to default** returns that row to its own default. **Admit a patient to a ward**, **Write or sign a consultation note**, **Prescribe medications**, **Order a lab test** and **Order a radiology study** default to **Everyone on the team** — leave a picker empty to keep every role able to do it, or choose specific roles to narrow it. **Discharge a ward patient**, **Dispense a prescription**, **Enter lab results** and **Report a radiology study** each keep a curated default and need at least one role chosen.
+  </Step>
+  <Step title="Set how far back each queue looks">
+    Under **Queue windows**, choose how far back each module — Consultation, Triage, Pharmacy, Laboratory, Radiology — looks on its live queue, then select **Save queue windows**. History always holds every record regardless of this setting; it only decides how far the *live* list looks back.
+  </Step>
+  <Step title="Set the triage acuity system, reassessment timers and nurse orders">
+    Under **Triage**, choose an **Acuity system**, set a reassessment interval for each level, choose which complaint categories may trigger nurse orders, and set the vitals display units. Select **Save triage settings**.
+  </Step>
+  <Step title="Name your triage locations">
+    Under **Triage locations**, pick a department, select **Add location**, and give it a name and a kind (waiting room, bay, resus or other) — optionally scoped to one sub-unit. Reorder with the arrows, or **Archive** one that is no longer in use.
   </Step>
 </Steps>
 
@@ -100,21 +116,39 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Pattern** | Shift notes file against the new shift, the fluid balance chart re-buckets, and "nothing charted this shift" is measured against the new boundary. Notes already written are **not** re-filed. |
 | **Long wait after** | On the [front desk board](/hospital/front-desk/overview) a patient waiting longer than this turns amber and sorts to the top. It colours a badge and nothing else — it notifies nobody. |
 | The three day counts | The signature-chase queue on the [records desk](/hospital/records/overview) re-bands, so its counts move even though no document changed. |
-| **Roles that can discharge** | The [ward chart](/hospital/inpatient/discharges) checks this the next time someone tries to discharge — a role you remove loses the button (unless it's an owner or manager, who can always discharge), and a role you add gains it. Nobody currently mid-shift needs to sign out and back in. |
+| **Clinical access — Admit a patient to a ward** | The [admissions](/hospital/inpatient/admissions) button — on the consultation, on the triage queue, and on the Disposition tab — checks this the next time someone tries to admit; a role you remove loses the button (unless it's an owner or manager, who can always admit), and a role you add gains it. Nobody currently mid-shift needs to sign out and back in. |
+| **Clinical access — Discharge a ward patient** | The [ward chart](/hospital/inpatient/discharges) checks this the next time someone tries to discharge — a role you remove loses the button (unless it's an owner or manager, who can always discharge), and a role you add gains it. Nobody currently mid-shift needs to sign out and back in. |
+| **Clinical access — Write or sign a consultation note / Prescribe medications** | Saving a [consultation](/hospital/outpatient/consultation) — the note, and any prescription in the same save — checks this the next time someone tries to save. A role you remove sees a clear refusal naming the act instead of a saved note. |
+| **Clinical access — Order a lab test / Order a radiology study** | Ordering a test from a [consultation](/hospital/outpatient/consultation), a ward chart, triage nurse orders, or the [antenatal booking profile](/hospital/maternity/antenatal-card) checks this the next time someone tries to order. |
+| **Clinical access — Dispense a prescription** | The [prescription list](/hospital/pharmacy/prescriptions) checks this the next time someone tries to mark a prescription dispensed, and the [inventory](/hospital/supply/inventory) screen checks it the next time someone fills a prescription straight from stock — one rule, both counters. Filling from stock stays open to everyone until you save a choice on this row. |
+| **Clinical access — Enter lab results** | The [lab test list](/hospital/diagnostics/laboratory) checks this the next time someone tries to record a result, and the lab bench's own result entry checks it too. |
+| **Clinical access — Report a radiology study** | [Radiology reports](/hospital/diagnostics/radiology-reports) checks this the next time someone tries to submit findings. |
+| **Queue windows** | Every open [Triage](/hospital/outpatient/triage), [Consultation](/hospital/outpatient/consultation), Pharmacy, Laboratory or Radiology live queue looks back this far from the moment you save. History is never affected. |
+| **Acuity system** | Every [triage chart](/hospital/outpatient/triage) in the hospital shows and accepts acuity from the new system from the moment you save; a level already set is kept as recorded, but its label and colour follow the new system. |
+| **Reassessment interval** | The triage queue's reassessment countdown, and the overdue flag it turns into, recalculate immediately for every triaged patient still in a queue. |
+| **Nurse orders categories** | A chief complaint you remove from the list can no longer start nurse orders on a new triage; one already opened is unaffected. |
+| **Vitals display units** | Every vitals field on triage and ward charts switches to the new unit for entry and display, going forward. Values already recorded are stored in SI units regardless and are simply re-displayed. |
+| **Triage locations** | An archived location stops being offered on the queue's **Move to…** menu and the Track board; it does not move any patient already placed there. |
 
 Each block saves on its own: selecting **Save bands** does not save the cadence above it.
 
 ## Check it worked
 
-The sidebar lists the groups you left on and nothing for an area you switched off, and the settings rail shows a tab for each area you kept. Open **Today's Clinic**: the **Contacts** column counts against the number of contacts in the schedule you chose. Open any labour chart: the badge beside **Cervicograph** names the chart you chose. Open the Nursing Station: the next observation is due at your new interval, and the shift named at the top matches your pattern. Open the front desk board: someone waiting past your threshold is flagged and sorted to the top. Open the records desk: the chase queue counts move to match the new bands.
+The sidebar lists the groups you left on and nothing for an area you switched off, and the settings rail shows a tab for each area you kept. Open **Today's Clinic**: the **Contacts** column counts against the number of contacts in the schedule you chose. Open any labour chart: the badge beside **Cervicograph** names the chart you chose. Open the Nursing Station: the next observation is due at your new interval, and the shift named at the top matches your pattern. Open the front desk board: someone waiting past your threshold is flagged and sorted to the top. Open the records desk: the chase queue counts move to match the new bands. Open a [triage](/hospital/outpatient/triage) queue: the acuity picker shows your chosen system, and its window matches what you set here.
 
 ## Common issues
 
 <AccordionGroup>
   <Accordion title="I can see the switches but cannot move them">
-    "Only the clinic owner can change these." Managers and accountants can read **Facility** and not change it.
+    "Only the clinic owner can change these." Managers and accountants can read **Facility** and not change it — the care-area switches, the antenatal schedule, the partograph, nursing shifts, front-desk and records thresholds, and Clinical access are the owner's to write.
 
-    These settings are the owner's to write. Until August 2026 the switches were live for a manager, who could move one, press save, and be refused — first silently, then with an error. They are now read-only for anyone but the owner, which is what the database has always enforced.
+    Until August 2026 the switches were live for a manager, who could move one, press save, and be refused — first silently, then with an error. They are now read-only for anyone but the owner, which is what the database has always enforced. **Queue windows**, **Triage** and **Triage locations** are the one exception: a manager can save those three.
+  </Accordion>
+  <Accordion title="Save triage settings, Save queue windows or Add location is greyed out">
+    Only the clinic owner or a manager can change these — an accountant, or any other role, can see the current choices but not change them.
+  </Accordion>
+  <Accordion title="South African Triage Scale is greyed out in Acuity system">
+    SATS carries a **Pending clinical review** badge until a clinician has signed off the published tables it is built from, and cannot be selected until then. ESI is available immediately.
   </Accordion>
   <Accordion title="There is no Nursing shifts block">
     Observations and shifts appear only while **In-patient care** is on, **Antenatal contact schedule** and **Partograph** only while **Maternity** is on, **Front desk waiting** only while **Front desk** is on, and **Records chase** only while **Records** is on.
@@ -134,11 +168,11 @@ The sidebar lists the groups you left on and nothing for an area you switched of
   <Accordion title="There is no Facility tab at all">
     **Facility** exists on the Enterprise plan only. A link with `?tab=facility` that lands on **General Settings** is the fallback for a tab this workspace does not have.
   </Accordion>
-  <Accordion title="Save discharge roles is greyed out, or there is no Who can discharge patients card">
-    The card appears only while **In-patient care** is on, and only the clinic owner can save it — a manager or accountant can see the current choice but not change it. **Save discharge roles** also stays disabled until at least one role is selected.
+  <Accordion title="Save is greyed out, or a row is missing from Clinical access">
+    Only the clinic owner can save the card — a manager or accountant can see the current choice but not change it. **Admit a patient to a ward** and **Discharge a ward patient** only appear while **In-patient care** is on; the other seven rows are always there. On **Discharge a ward patient**, **Dispense a prescription**, **Enter lab results** and **Report a radiology study**, **Save** also stays disabled until at least one role is selected — the other five rows default to everyone, so an empty picker there is a valid choice and does not disable **Save**.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="facility settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/ward/discharge.ts */}
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/(clinical-access-card.tsx, queue-windows-card.tsx, triage-settings-card.tsx, triage-locations-card.tsx), components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/queues/queue-window.ts, lib/triage/acuity.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/clinical-access.ts, lib/ward/discharge.ts */}

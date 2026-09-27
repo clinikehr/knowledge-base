@@ -72,7 +72,10 @@ The dispensing actions appear only for staff signed in as a pharmacist. Everyone
     Only a script at **Pending** offers **Dispense**. One already at **Dispensed** offers **Update** instead, for correcting what was recorded.
   </Step>
   <Step title="Select Dispense">
-    The script opens in dispensing mode with the prescribed lines in front of you.
+    The script opens in dispensing mode with the prescribed lines in front of you, each showing exactly what is on record — a line still awaiting dispensing reads **Pending**, not **Dispensed**, until you set it. If the whole script is going out today, **Mark all pending as Dispensed** sets every still-pending line in one click; you still enter each quantity before saving.
+  </Step>
+  <Step title="Set any line that isn't going out today">
+    Each medication has its own **Dispensing Status** — **Dispensed**, **Pending**, **Cancelled** or **Out of Stock** — and its own quantity. Change only the lines that need it: a script with three items can leave two at **Pending** and set the third to **Out of Stock** in the same save. Only a line you set to **Dispensed** asks for a quantity; **Pending**, **Cancelled** and **Out of Stock** save with no quantity at all.
   </Step>
   <Step title="Draw the stock against it">
     Recording that medicine physically left the shelf happens in the **Fill Rx** tab of [Inventory](/hospital/supply/inventory) — that is the step that moves stock, links it to the patient, and takes a witness for a controlled item. See [the pharmacy station](/hospital/pharmacy/station) for the full flow.
@@ -84,6 +87,8 @@ Each line shows its amount as you set the dispensed quantity, and the card total
 Each medication also offers **Download PDF** — a server-generated prescription document (the patient's name, ID, date of birth, age and gender; medication, dosage, frequency, duration and the dosing schedule; quantity; the prescriber's name and licence, and the dispenser's once it is dispensed). A prescription not yet dispensed is stamped **"Not yet dispensed"**, so a partly-filled script can never be mistaken for the final record.
 
 The prescriber's saved signature (**Account → My signature**) prints above their name and licence; without one, the document reads "Electronically signed by" and their name. A prescription written in a visit or on a ward shows no price — it is charged through the patient's bill. A walk-in prescription at the pharmacy shows a **Payment** section instead: the amount, what has been paid, the balance and the payment status, in your clinic's currency.
+
+Beside **Download PDF**, **Send** emails the patient a private link instead of the file itself — see [Send a report securely](/platform/security/send-a-report) for what the recipient sees and how it is logged.
 
 <AuditNote action="Opening a prescription" />
 
@@ -98,7 +103,7 @@ Two different gates decide what you get here.
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open the list and **View Details** | Any staff member the role navigation lets in | Role → route |
-| **Dispense** / **Update** a script | Pharmacists, and the owner for the form itself | The signed-in user's role — the dispense is refused for anyone whose role is not **pharmacist**, the owner included |
+| **Dispense** / **Update** a script | Owners, managers and pharmacists by default | **Settings → Facility → Clinical access → Dispense a prescription** — an owner can widen this to other roles; anyone outside the chosen list is refused |
 | Write a new script | Prescribers and pharmacists | Role → route |
 | Draw the stock in **Fill Rx** | Pharmacy and stock staff | Role → route |
 
@@ -122,7 +127,7 @@ Two behaviours surprise people. Enforcement is **opt-in per person** — a colle
   </Accordion>
 
   <Accordion title="I only see View Details, with no Dispense">
-    The dispensing actions are for pharmacists. Ask an owner or manager to check your role — see [Roles](/platform/team/roles).
+    The dispensing actions default to owners, managers and pharmacists. Ask an owner to check your role, or check **Settings → Facility → Clinical access → Dispense a prescription** for what this clinic has chosen.
   </Accordion>
 
   <Accordion title="I can see the row but the columns I need are missing">
@@ -151,6 +156,10 @@ Two behaviours surprise people. Enforcement is **opt-in per person** — a colle
 
   <Accordion title="Does dispensing here take the medicine off the shelf?">
     Not on its own. Stock moves when you draw it in the **Fill Rx** tab of Inventory. Keeping the two steps distinct is what makes the stock figure trustworthy.
+  </Accordion>
+
+  <Accordion title="Can I mark one item Out of Stock while dispensing the rest of the same script?">
+    Yes. Each medication on the script has its own **Dispensing Status**, so you can leave two lines at **Dispensed** and set a third to **Out of Stock**, **Pending** or **Cancelled** in the same save — only the lines you dispense need a quantity.
   </Accordion>
 
   <Accordion title="Can I sell a script's items at the counter instead?">

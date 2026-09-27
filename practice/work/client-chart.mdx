@@ -28,7 +28,7 @@ Ten tabs run across the chart, opening on **Overview**:
 | **Billing** | Invoices and payments for this person |
 | **Notes** | Every clinical note written for this person, and where you write a new one |
 | **Medications** | Prescriptions and e-prescribing — see [Prescribe and e-prescribe](/practice/clinical/prescriptions) |
-| **Vitals** | Observations recorded for this person, with a trend chart |
+| **Vitals** | This person's whole flowsheet — every reading taken anywhere, triage, a ward stay or here on the client record, each labelled with where it was taken |
 | **Measures** | Scored questionnaires over time, such as a PHQ-9, with arrows showing whether each score moved for the better — see [Scored measures](/practice/forms/scored-measures) |
 | **Labs** | Test results filed against this person |
 | **History** | The visit and activity trail |
@@ -77,6 +77,8 @@ above a note you have open, once it has been saved.
   note you are still typing saves it as a draft first.
 </Note>
 
+Beside **Export PDF**, the mail icon labelled **Send securely** emails the client a private link instead of the file itself — see [Send a report securely](/platform/security/send-a-report) for what the recipient sees and how it is logged.
+
 Long lists are paged. **Notes**, **History** and **Documents & forms** each show 10 entries
 at a time with **Show … per page** under them, and the line beside it tells you
 how many there are in total.
@@ -89,28 +91,37 @@ how many there are in total.
 
 ## Record vitals
 
-**Vitals** shows every set of observations recorded for this person — blood
-pressure, pulse, temperature, respiratory rate, oxygen saturation, weight,
-height, BMI and blood sugar — newest first, with a trend chart above the table.
-Choose which measurement to plot from the selector.
+**Vitals** shows this person's whole flowsheet — every reading taken about
+them anywhere, triage, a ward stay or here on the client record — as a table
+of measurements (blood pressure, pulse, temperature, respiratory rate,
+oxygen saturation, weight, height, BMI and more) against readings, oldest to
+newest left to right, each column labelled with when and where it was taken.
+There is no separate history view to switch to: the client record has no
+single visit to default to, so every reading always shows here.
 
-**Record vitals** opens a panel to enter a set. **Leave anything you did not
-measure empty.** A blank is stored as not taken; it is never recorded as a zero,
-and the table shows an em dash for it. **BMI is calculated** from the height and
-weight you enter rather than typed, so it can never disagree with them.
+**Record vitals** opens a panel to enter a set here, on the client record. It
+does not open a triage — no triage row, no triage queue entry, and nothing
+counted as a triage — it simply adds to this person's flowsheet. Record
+blood pressure (with position and cuff details), pulse, respiratory rate,
+temperature, oxygen saturation and device, weight and height, and, for a
+child, growth measurements — in your clinic's display units. **Leave
+anything you did not measure empty.** A blank is stored as not taken; it is
+never recorded as a zero, and the table shows an em dash for it. **BMI is
+calculated** from the height and weight you enter rather than typed, so it can
+never disagree with them. A correction is a new set, never an edit of the
+last one.
 
-**Blood sugar is recorded in mmol/L**, decimals included — `7.8` is a normal
-random glucose. If you enter a value that can only be mg/dL (say `140`), the
-form refuses it and shows the conversion — divide by 18 — so the reading goes
-in once, in the right unit. Older readings recorded before the unit was
-standardised display with an explicit **mg/dL** label.
+**Blood sugar is entered in your clinic's display unit** — mmol/L unless your
+clinic has changed it — with decimals accepted, as a glucose meter actually
+reads. A value outside anything physiologically possible is refused rather
+than saved, so a reading typed in the wrong unit does not quietly become a
+different one.
 
 Readings outside the normal range for the measurement are shown in red.
 
 <Note>
-  A gap in the trend line is a measurement nobody took. The line is deliberately
-  broken across it rather than joined, so a missing reading never looks like a
-  steady one.
+  A blank cell is a measurement nobody took, not a zero — the flowsheet shows
+  an em dash for it rather than a value that was never recorded.
 </Note>
 
 ## Sticky notes and status notes

@@ -32,7 +32,45 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 | Progress panel | The running job with a percentage and a label, then **Export ready** and a **Download** button | — |
 | **Recent Exports** | Your last few finished jobs, each with **Re-download** until it expires | — |
 
-A hospital's picker is the widest in the product: as well as consultations, prescriptions and appointments, it carries **Ward Consultations**, **Ward Nursing Notes**, **Ward Vitals**, **Insurance Claims**, **Pre-Authorizations**, **Patient Coverage** and **Pharmacy POS Sales**.
+A hospital's picker is the widest in the product: as well as consultations, prescriptions and appointments, it carries every part of an inpatient stay under **Ward & Inpatient** (below), **Insurance Claims**, **Pre-Authorizations**, **Patient Coverage** and **Pharmacy POS Sales**.
+
+### Ward & Inpatient
+
+Everything recorded about an inpatient stay can be exported, one file per module:
+
+| Module | One row per |
+| --- | --- |
+| **Ward Admissions** | stay — the patient, ward, sub-ward and bed, admission diagnosis and summary, the attending, and once the patient has left, the whole discharge record: when, who discharged them, who was attending at that moment, where they went, their condition, the summary, follow-up and take-home medications |
+| **Ward Treatment Team** | person on a stay's team, with their role and the period they served — every handover is in the file |
+| **Ward Consultations** · **Ward Nursing Notes** · **Ward Vitals** | ward round, nursing note and set of observations |
+| **Ward Care Plans** · **Ward Care Plan Goals** | care plan (with its category, priority, status and who last reviewed it), and each goal under it with its target date and evaluation |
+| **Ward Intake & Output** | fluid in or out, with its route and volume |
+| **Ward Medication Chart (MAR)** | scheduled dose — the medication, when it was due, what happened to it, who gave it, any witness, and which device recorded it |
+| **Ward Medication Reconciliations** · **Ward Medication Reconciliation Lines** | reconciliation at a transition of care, and each medicine considered in it with the decision made |
+| **Ward Precautions** | code status or isolation precaution, with when it was set and ended and by whom |
+| **Ward Shift Handover Notes** | handover note for a ward and shift |
+| **Wards** · **Sub-wards** · **Bed Spaces** · **Ward Billing Rates** | part of your ward setup, and each daily rate you charge |
+
+Clinicians are named beside their IDs. Someone who has since left the clinic shows an empty name rather than a guess, and the ID still says who it was.
+
+A **Date range** selects records by when they happened: stays by the day of admission, team members by the day they joined, doses by when they were due, fluid entries by when they occurred, and so on. Your ward setup and rates are always exported whole, whatever the range, so a "last quarter" export still carries every ward you have.
+
+A record marked sensitive that you could not open on screen is left out of the file, and so is any dose or reconciliation decision about a sensitive prescription you could not open.
+
+### Triage
+
+**Clinical Records** carries triage as several modules, not one file, each covering a different part of what [Triage](/hospital/outpatient/triage) records:
+
+| Module | One row per |
+| --- | --- |
+| **Triage** | triage encounter — the patient, department and sub-unit, acuity, disposition and outcome |
+| **Vital Signs** | set of vitals taken, with who took it and when — every reading on the patient's flowsheet, whether it was taken at triage, on a ward stay or on the client record |
+| **Triage Assessments** | scored instrument attempt — GCS, qSOFA and the rest — with its answers, score and band |
+| **Triage Acuity History** | change to a patient's acuity level, including who changed it, when, and any reason given for a downgrade |
+| **Triage Locations** | named location your hospital has set up — waiting room, bay, resus |
+| **Triage Shift Handover Notes** | department handover entry — free text plus any tag (Staffing, Equipment, Surge, Safety) |
+| **Triage Patient Handoffs** | patient handoff written at triage — SBAR fields or free text |
+| **Shift Handover Acknowledgements** | acknowledgement of a shift's handover, ward or triage, with who and when |
 
 **Administrative** also holds your calendar: **Calendar Events** (events and Out of Office blocks, with their times and dates), **Event People & Resources** (who and which rooms or equipment each one applies to), **Calendar Tasks**, and **Clinic Locations** (the sites or premises configured under Settings → Locations).
 

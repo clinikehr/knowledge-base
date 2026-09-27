@@ -66,15 +66,17 @@ The card sits on the chart's **Overview** tab and has two states:
 
 Select **View** on the card to reopen the visit. From there you can:
 
-- **Edit** — change the items, assignment, room or reason, then **Save changes**. The toast reads **Check-in updated**.
+- **Edit** — change the items, assignment, room or reason, then **Save changes**. The toast reads **Check-in updated**. The **Check-in time** can only be changed while the client is still checked in; once they are checked out it is locked, with "Check the patient back in to change the check-in time." A cancelled visit has no **Edit** — it reads **Reopen to make changes**.
 - **Check out** — close the visit. **Check out** is also on the card itself, so a routine departure takes one select.
-- **Cancel check-in** — remove a visit recorded in error. The toast reads **Check-in cancelled**.
+- **Cancel check-in** — remove a visit recorded in error. It asks for a **Reason**, kept with the visit's audit trail; **Cancel check-in** stays disabled until you type one, and **Keep check-in** backs out. The toast reads **Check-in cancelled**. A checked-out visit cannot be cancelled directly — check them back in first.
+
+A visit's status only ever changes through these buttons, in this order: a checked-in client can be checked out or cancelled, and a checked-out or cancelled visit can only be checked back in. Anything else is refused with a message naming where the visit stands — for example "This visit is checked out — check the patient back in before cancelling".
 
 Past visits stay on the chart's **History** tab, where **View check-in** reopens the same sheet.
 
 ## Put someone back on the board
 
-Checked somebody out by mistake, or cancelled the wrong visit? Choose **Check back in** — on the card itself, or inside the visit.
+Checked somebody out by mistake, or cancelled the wrong visit? Choose **Check back in** — on the card itself, or inside the visit. This works for **today's** visits only (your practice's time zone); an older visit reads "This visit is from an earlier day — check the patient in again instead.", so a closed visit from last week never reappears on today's board.
 
 <Note>
   **The arrival time is kept.** Checking someone back in restores the original visit rather than starting a new one, so the time they actually arrived — and the wait built on it — is unchanged. Checking them in again from scratch would instead create a second visit with a fresh arrival time, and the board would count them twice.
@@ -161,7 +163,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The arrival time is wrong">
-    The visit is stamped with the time under **Check-in time**, not the time you saved. Reopen the visit, select **Edit** and correct it.
+    The visit is stamped with the time under **Check-in time**, not the time you saved. Reopen the visit, select **Edit** and correct it while the client is still checked in. The time can't be set in the future, can't move before the day the visit started, and can't move later than a triage already recorded for them — the message says which.
   </Accordion>
 
   <Accordion title="There is no Appointment field in the sheet">
@@ -173,7 +175,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Checked out by mistake">
-    Check them back in. There is no confirmation on check-out precisely because it is reversible this way.
+    Check them back in — the same day. There is no confirmation on check-out precisely because it is reversible this way.
   </Accordion>
 
   <Accordion title="Email prepared (outbound disabled)">

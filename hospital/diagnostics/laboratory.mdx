@@ -67,9 +67,13 @@ Reference ranges come from the test definition, not from this form. A test defin
 
 Each test also shows what it bills — the panel's own price from your [Lab station](/hospital/diagnostics/lab-station) catalogue, or, when only specific parameters were requested and every one of those has its own price set, the sum of just those. An item with no price set yet shows **"No price set"** rather than a $0, and the card totals every test at the top. None of this appears for a clinic marked **free** in Settings — no prices, no total, nothing to collect.
 
-**Download requisition**, beside the number of tests, downloads one PDF with **every** test ordered in that visit or ward stay — each test with the parameters that were asked for, the clinical information from the visit, the patient's latest weight, and the requesting clinician's name and licence. It is marked **"Requisition only — no results are recorded on this document"**, so it can never be mistaken for a completed report; the completed report itself downloads from the same row once the test moves to **Completed** (see [Lab reports](/hospital/diagnostics/lab-reports)).
+**Download requisition**, beside the number of tests, downloads one PDF with **every** test ordered in that visit or ward stay — each test with the parameters that were asked for, the clinical information from the visit, the patient's latest weight, and the requesting clinician's name and licence. It is marked **"Requisition only — no results are recorded on this document"** and now also carries a large, pale diagonal **REQUISITION — NOT A RESULT** stamp across every page, so it can never be mistaken for a completed report even if the banner is scrolled past.
 
 The requisition shows no prices: tests ordered in a visit or on a ward are charged through that patient's bill. It carries the requesting clinician's signature when they have saved one under **Account → My signature**, and otherwise reads "Electronically signed by" and their name.
+
+Once at least one test on the list has a value entered, a second button — **Download results** — sits beside the requisition. It downloads a single PDF covering every test in that visit or ward stay that has something recorded, organized one block per test with each parameter's value, unit, reference range and an **Abnormal**/**Critical** flag on anything out of range — the same layout the [Lab reports](/hospital/diagnostics/lab-reports) screen produces for one test at a time. A test with nothing entered yet is left off this PDF; one with values but not yet **Completed** still appears, its block and the whole document stamped **PRELIMINARY** so it is never read as final. Because different tests on the same visit can be run by different scientists, this report credits each test's own **Conducted by**, rather than a single signature for the whole document.
+
+Beside **Download results**, **Send** emails the patient a private link instead of the file itself — see [Send a report securely](/platform/security/send-a-report) for what the recipient sees and how it is logged.
 
 ## Sign-out is the step that matters
 
@@ -88,7 +92,7 @@ Your **role** decides whether the **Laboratory** group opens at all, and whether
 | Action | Who by default | How it is governed |
 | --- | --- | --- |
 | Open the list and read results | Anyone on the team | Nothing — this page has no role check of its own |
-| **Conduct Lab Test** / **Update Lab Test** | Lab scientists, and the hospital owner | Role — anyone else is told **Only lab scientists can conduct or update lab tests** |
+| **Conduct Lab Test** / **Update Lab Test** | Owners, managers and lab scientists by default | **Settings → Facility → Clinical access → Enter lab results** — an owner can widen this to other roles; anyone outside the chosen list is told **Only lab scientists can conduct or update lab tests** |
 | Order a new test | Clinicians and lab staff | Role |
 | See the money on a request | Anyone who can open the list | Nothing — a hospital workspace has no permission that hides money |
 
@@ -105,7 +109,7 @@ Enforcement of the per-person permissions is **opt-in**: someone never saved in 
 
 <AccordionGroup>
   <Accordion title="Only lab scientists can conduct or update lab tests">
-    Result entry is restricted by role. Ask an owner to set your role correctly, or have a lab scientist enter the values — you can still open the request with **View Lab Results**.
+    Result entry defaults to owners, managers and lab scientists — an owner can widen it under **Settings → Facility → Clinical access → Enter lab results**. Ask an owner to set your role correctly, or have a lab scientist enter the values — you can still open the request with **View Lab Results**.
   </Accordion>
 
   <Accordion title="Please select a lab test first.">
