@@ -1,0 +1,82 @@
+---
+title: Refill and duplicate-dispensing checks
+description: "A warning at the till when a sale looks like an early refill, a duplicate, or an unusual quantity — with its evidence, and never a block."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy']} plans="Professional and above (pharmacy) · Essential and above (clinic & hospital)" roles="Anyone at the till may see and act past a warning; the review list and thresholds need a permission the owner grants" />
+
+When a sale to a registered customer or patient looks like it came too soon, repeats a
+prescription number, or asks for an unusually large quantity, the till shows a warning with the
+evidence behind it — right there in the cart, before you complete the sale. **It never stops the
+sale.** A lost bottle, a changed dose, or someone travelling are all real reasons to dispense
+anyway, and the person at the counter is always the one who decides.
+
+<Path steps={['Sidebar', 'Pharmacy Station', 'POS']} />
+
+## What triggers a warning
+
+| Check | What it looks at |
+| --- | --- |
+| Early refill | The last time this customer/patient received this medicine (or another brand of the same drug), and the days' supply recorded then |
+| Dispensed again today | The same medicine, or another brand of the same drug, already sold to this customer/patient earlier today |
+| Prescription number repeated | The same prescription number filled on any other sale |
+| Unusual quantity | This exact item's own recent sales — a request well above what is usually sold |
+
+A warning only appears when the sale is linked to a **registered customer/patient** — a
+walk-in with no name on file cannot be checked against anything, and the till does not pretend
+otherwise: no warning is not the same as "clear," it means the check had nothing to compare
+against.
+
+## What you see, and what to do
+
+The warning appears as an amber panel above the cart, naming the medicine and the reason —
+for example, *"Last supplied 2 September, 28 days' supply; next due 30 September."* Press **Add
+a reason** to record why you are proceeding (a short list, or your own words) — this is entirely
+optional and never required to complete the sale.
+
+## Days supply and prescription number
+
+Open **Dispensing details** in the cart toolbar to record, on any line:
+
+- **Days supply** — 30, 60, 90, or a custom number. Without this, the early-refill check has
+  nothing to compare against and stays silent.
+- **Prescription number** — optional, used only for the repeated-number check.
+- **Chronic / maintenance medicine** — mark a medicine this way once, and every future sale of
+  it nudges you to record days supply.
+
+## What you'll be asked
+
+If you add a medicine marked **chronic / maintenance** and no customer or patient is attached
+to the sale yet, the till asks — once per sale — whether to attach one, right in the cart:
+*"So we can check when this was last supplied, attach the customer to this sale."* Choose
+**Attach customer** to open the same Customer tab you'd use anyway, or **Skip** to carry on
+without one. Either way, you won't be asked again for the rest of that sale. This never appears
+while the till is offline, and never appears if a customer or patient is already on the sale.
+
+## If the till is offline
+
+A sale taken offline is never checked against history at the counter — the check needs the
+server's own record, which an offline device cannot see. The sale still completes normally.
+Once it reaches the server, the same check runs, and if it finds something, that appears later
+in the review list for someone to look at — it never changes or reverses the sale that already
+happened.
+
+## The review list and thresholds
+
+Owner, manager, and anyone granted the permission can open the review list — every flagged sale,
+its evidence, and any reason recorded — filterable by check and by date, and change how sensitive
+each check is (or turn one off) from the **Thresholds** tab on the same page. The list also shows
+how many sales in the selected period had a maintenance medicine sold with no customer or
+patient identified — a count, not a list of who.
+
+<Path steps={['Sidebar', 'Pharmacy Station', 'Dispensing Checks']} />
+
+Each check can be turned on or off, and the early-refill grace period and the unusual-quantity
+multiple can be adjusted, from that same screen.
+
+<StillStuck />

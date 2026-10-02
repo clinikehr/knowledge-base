@@ -1,0 +1,345 @@
+---
+title: API access
+description: "Create a key so another system can read your inventory, connect another organization by code, and see what changes when you revoke either one."
+icon: /images/icons/plug.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+{/* source of truth for the "API add-on" section below: docs/ClinikEHR_API/IMPLEMENTATION_WAVES.md decisions W39-W47 (owner, 2026-09-28). Written to be true the day this release merges — the add-on cannot be bought before then. */}
+
+<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner, manager, or staff granted the API access permission" />
+
+**API access** lets another system — your own website, a partner's software, an internal report — read your inventory straight out of ClinikEHR, without anyone exporting a file by hand. You choose exactly what it can see when you create the key, and you can switch it off at any moment.
+
+<Path steps={['Sidebar', 'Settings', 'API access']} />
+
+<TaskHeader
+  before="A workspace on the Team or Enterprise plan"
+  time="A few minutes"
+  after="A key another system can use to read your inventory"
+/>
+
+## What this tab controls
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Allow API access** | Master switch for the whole workspace. With it off, no key on this workspace can answer a request, even one you already created | Off |
+| **Create key** | Opens the panel for a new key | — |
+| **Key name**, in the panel | A label so you can tell keys apart later — name it for the system that will use it, not for yourself | — |
+| **Permissions**, in the panel | What this specific key is allowed to read. Every permission in this release is read-only — a key can look, never change anything. Inventory permissions are always offered; patient-record permissions (below) only once your clinic's **API add-on** is active and you've accepted the **API data agreement** | None selected — choose what this key may read |
+| **Expires**, in the panel | An optional date the key stops working on its own. Leave it blank for a key with no set end date | Never |
+| **Allowed IP addresses**, in the panel | Restricts this key to specific addresses or ranges. A request from any other address is refused, even with the right key. Leave it blank to allow any address | Any address |
+| A key's row (a card on a phone) | Opens a panel showing that key's name, **Key ID**, every permission, when it was created, last used and expires, its allowed addresses and its status. The key itself is never shown there — it was shown once, when you created it | — |
+| **Revoke**, next to a key or in that panel | Permanently disables that one key | — |
+
+**Reading the list.** The **Permissions** column shows the first two permissions and a badge such as **+3** for the rest — select the row to see them all, grouped by what they cover. A phone shows each key as a card. Once you have more than ten keys, a footer lets you page through them and choose how many to show. A key never used reads **Never used**.
+
+**What each inventory permission means:**
+
+- **Availability** — whether an item is in stock, running low, or out. No exact numbers.
+- **Catalogue** — item names, strengths, forms, barcodes and prices.
+- **Stock levels** — exact quantities, by location and batch.
+
+**What each patient-record permission means** (offered only once the **API add-on** below is active and you've accepted the API data agreement — greyed out, with the reason shown, until then; if your clinic requires two-factor authentication for staff, you must also complete it yourself before these are enabled for you):
+
+- **Appointments — read** / **Appointments — book, reschedule, cancel**
+- **Patients — read** / **Patients — create / update**
+- **Clinical notes — read** / **Clinical notes — draft only** (a key can never sign, lock, or finalize a note)
+- **Drug requests — read** / **Drug requests — create / cancel / confirm substitution**
+- **Dispensing history and flags — read** (what was dispensed to a linked patient, and the refill and duplicate-dispensing flags recorded for them; never a price or another customer)
+
+A key only ever sees what you selected for it. There is no permission in this release for your CRM, or for a sale's price or total, or who served it.
+
+Your API settings and keys — never the secret itself — are included when you export this clinic's data. See [Data export](/platform/security/data-export).
+
+## Set it up
+
+<Steps>
+  <Step title="Turn on Allow API access">
+    This alone does nothing visible yet — it just makes the rest of the tab available. No system can reach your data until you create a key.
+  </Step>
+  <Step title="Select Create key">
+    This opens the key-creation panel.
+  </Step>
+  <Step title="Enter a Key name">
+    Use something that will still make sense in six months — "Storefront stock widget", not "Key 1".
+  </Step>
+  <Step title="Choose Permissions">
+    Nothing is selected to start — select only what the receiving system actually needs. A key that only shows a public "in stock" badge needs **Availability** alone, not **Stock levels**. Patient-record permissions appear in their own group below the inventory ones, enabled once the API add-on is active and the agreement is accepted.
+  </Step>
+  <Step title="Set Expires, if this key should end automatically">
+    Useful for a key you are handing to a contractor or a short-term project. Leave it blank for an integration you expect to keep running.
+  </Step>
+  <Step title="Set Allowed IP addresses, if this key should only answer from specific places">
+    Optional. Enter one address or range per line — for example `203.0.113.10` or `203.0.113.0/24`. A range must be written exactly, starting at its own first address — `10.0.0.0/8`, not `10.1.2.3/8`. Leave it blank to allow any address.
+  </Step>
+  <Step title="Copy your key now">
+    The dialog titled **Copy your key now** shows the full key exactly once. Select **Copy key** and paste it straight into the system that will use it.
+  </Step>
+</Steps>
+
+<Warning>
+  **The key is shown once, at creation, and never again.** Treat it exactly like a password — anyone who has it can read whatever you selected under Permissions. Never paste it into a website's public code or a mobile app's code: anyone who views the page source or opens the app package can read it out. It belongs on a server you control, not in anything that reaches someone else's browser or phone. If you close the dialog before copying it, revoke that key and create a new one — the secret cannot be shown again.
+</Warning>
+
+## What changes once you save
+
+- **Allow API access off** stops every key on this workspace from answering requests, immediately — nothing is deleted, and turning it back on restores them all without recreating anything.
+- **The list shows a masked key ID, never the key.** Each row's **Key ID** column reads like `ehr_live_••••1234`. Select the clipboard icon, **Copy key ID**, to copy the ID — it identifies the key to anyone helping you, but it cannot be used to call the API. The full key was shown once when you created it and cannot be shown again.
+- **A new key** can read only what you chose under Permissions for it, from this workspace's own data. It shows in the list badged **Active**.
+- **A key given Allowed IP addresses** answers only requests from those addresses or ranges. A request from any other address is refused — even with the correct key — and does not use up anything on the key itself. Leave the field blank and the key answers from anywhere.
+- **Select Revoke, then confirm Revoke key**, and that key stops answering requests immediately. This cannot be undone — the key itself is gone for good, though nothing it already returned to another system is affected. If the same integration still needs access, create a new key and update it there.
+- **If your plan drops below Team**, every key on the workspace stops answering — the same as switching **Allow API access** off, but caused by the plan rather than the switch. A key that was **Active** stays badged **Active**; the plan is what refuses the request, not the key's own status. Move back to Team or Enterprise and every key resumes working on its own, with nothing to recreate.
+
+## Check it worked
+
+- The new key appears in the list, named as you entered it, badged **Active**.
+- Its **Allowed addresses** column reads **Any** if you left the field blank, or a count such as **2 addresses** — hold or select it to see the addresses themselves.
+- The first time the receiving system actually calls it, a last-used time appears against that key.
+- After **Revoke** and **Revoke key**, the badge changes to **Revoked** and the next request from that key is refused.
+- A key given a date under **Expires** is badged **Expired** once that date has passed, and stops answering. It cannot be extended — create a new key.
+
+## Connect another organization
+
+A separate section, **Connected organizations**, is where another business — a partner's software, a marketplace, a billing service — asks to connect to your data directly, instead of you handing them a key yourself. You are always the one who decides: nothing is ever granted automatically, and you choose exactly what to share, item by item.
+
+There is no directory or search for this — the other organization can only reach you if you give them a one-time code.
+
+| Control | What it does |
+| --- | --- |
+| **Get a connection code** | Opens a panel to generate a one-time code, valid for a length of time you choose (24 hours up to 14 days). Give this code to the other organization out of band — by phone, email, or however you already talk to them |
+| **Review**, next to a pending request | Opens a panel showing what the organization is asking for. Nothing is selected to start — tick only what you want to grant, then select **Approve**, or select **Decline** |
+| **Manage**, next to an active connection | Opens a panel to narrow what is granted, or to select **Revoke** |
+
+<Note>
+  Only the clinic **owner** can generate a code, or approve, change, decline, or revoke a connection. A manager or a staff member granted the API access permission can still see this list — the panels and buttons are simply not there for them, with one sentence explaining why.
+</Note>
+
+### Set up a connection
+
+<Steps>
+  <Step title="Select Get a connection code">
+    Choose how long the code should last, then select **Generate code**.
+  </Step>
+  <Step title="Copy the code and give it to the other organization">
+    The dialog titled **Give this code to the organization** shows the code exactly once, grouped for reading aloud, with its expiry. Select **Copy code**, or read it aloud in the groups shown. It cannot be shown again — if you close the dialog before sending it, generate a new one.
+  </Step>
+  <Step title="Wait for their request to appear under Pending requests">
+    The organization enters your code on their own side. Their request then appears here, with what they are asking for and why.
+  </Step>
+  <Step title="Select Review, then choose exactly what to grant">
+    Nothing is selected to start. Tick only the items you want to share — you do not have to grant everything they asked for.
+  </Step>
+  <Step title="Select Approve, or select Decline">
+    Approving moves the connection to **Active** with only what you ticked. Declining lets them try again later with a fresh code, and you may add a reason.
+  </Step>
+</Steps>
+
+### What changes once you decide
+
+- **Approve** grants exactly the items you ticked — never everything requested by default. The connection is badged **Active**.
+- **Manage**, then changing what is ticked and selecting **Save changes**, narrows what is shared at any time. To grant something new, the organization has to request it again.
+- **Manage**, then **Revoke**, then confirming **Revoke connection** ends that organization's access immediately. This cannot be undone — if they need access again, they need a brand-new code from you.
+- A declined or revoked connection sits in a collapsed **History** section at the bottom of the list, so today's view stays focused on what needs your attention.
+
+<Info>
+  Patient information is not part of any connection yet. A request may list it, but approving it has no effect today — the platform does not yet allow any key to read patient data, for any **organization** you connect. The **API add-on** below is different: it is about keys **you** create for your own systems, not about what you share with someone else's.
+</Info>
+
+### Which patients an organization can reach
+
+When a connection does eventually cover patient records, it will only ever reach patients you have specifically **linked** to it — never your whole patient list. From a connection's **Manage** screen you will be able to link an existing patient, or end a link at any time; a patient the organization creates through its own systems is linked automatically. A recorded **basis** for sharing (for example, that the patient is the organization's own enrollee) is required before any patient-data item can be approved at all.
+
+Once this is available, a patient's own profile will show an **External access** card: which organizations can currently reach that patient's information, since when, on what basis, and the last thing that was shared with them.
+
+<Info>
+  Not available yet. Sharing a patient's information with an outside organization stays off for every clinic until the platform's own agreement with that organization is in place — the mechanism above is built, but nothing is shared today, regardless of what a connection lists.
+</Info>
+
+## The API add-on — reach your own patient records
+
+By default, a key you create can read your workspace's own non-patient data. The **API add-on** is what will open everything else your own keys can reach: patients, appointments, clinical notes, your CRM, and your full inventory — still only with keys you create yourself, for your own systems. It does not change what a connected **organization** can see (that stays as described above, and above Team is available on the Pharmacy and Diagnostics Business plans too).
+
+<Note>
+  Patient-record permissions become selectable in the key-creation panel once the add-on is active AND you've accepted the API data agreement below — both are required together. If your clinic requires two-factor authentication for staff, you must also be signed in with it completed before you can create a key carrying a patient-record permission.
+</Note>
+
+| | |
+| --- | --- |
+| **Price** | \$250 a month (₦375,000), on top of your plan. Yearly: \$2,400 (₦3,600,000) |
+| **Available on** | **Team**, **Business** (Pharmacy and Diagnostics) — plans that already have API access. Enterprise includes everything the add-on opens, in your contract, at no extra charge, once it exists |
+| **Included use** | 2,000,000 requests a month; beyond that, \$0.30 (₦450) per 1,000 requests — billed on your next invoice, never interrupted |
+| **Connected organizations** | Up to 10, once you have the add-on (3 without it) |
+| **Before it's bought** | Nothing about this changes until you buy it — your existing keys keep working exactly as they do today |
+
+The add-on card sits above your keys in **Settings → API access**, and shows:
+
+| Section | What it shows |
+| --- | --- |
+| **Usage this month** | How many requests you have used against your included allowance, and a running estimate of any extra usage charge for the month so far — labelled as an estimate, since the month isn't over |
+| **Status** | **Not bought**, **Active** with your renewal date, **Cancelling** with the date access ends, **Payment failed** (access continues while you fix it), or **Ended** |
+| **API data agreement** | Shown once the wording is published — see below |
+
+<Steps>
+  <Step title="Open Settings → API access">
+    Same tab as your existing keys — the add-on card sits above the keys list.
+  </Step>
+  <Step title="Select Add API access">
+    Choose **Monthly** or **Yearly**, then **Continue to payment**.
+  </Step>
+  <Step title="Complete checkout on the secure payment page">
+    You're taken to a page outside ClinikEHR to enter your payment details. Nothing is charged until you complete it there.
+  </Step>
+  <Step title="Return to Settings → API access">
+    The card confirms your payment — this can take a few seconds. If it's still confirming after a while, select **Refresh**, or check back shortly; nothing was charged if checkout was cancelled.
+  </Step>
+</Steps>
+
+**The API data agreement.** Before any key — yours or an add-on customer's — can reach patient records, the clinic **owner** must review and accept an agreement covering how the clinic's own keys may be used and that AI-drafted content is reviewed by a clinician before it is saved. The card shows the full text, the version, and an **Accept agreement** checkbox and button for the owner. A newer version can replace an older acceptance, and the card asks again.
+
+**Cancel** ends the add-on at the close of the period you already paid for — your keys keep working as they do today until then, and existing keys are never deleted. **Resume** while cancelling keeps it renewing instead. Extra usage for a month is billed once, automatically, on your following bill.
+
+## Listing — get found by network partners
+
+Available on **any paid plan** — Starter and above — unlike the rest of this tab, which needs Team or Enterprise. On any paid plan, you can list your pharmacy to a connected marketplace partner so it can be found and checked for availability — separate from everything above. Being listed shares **only** your public listing profile and a general availability band for each item (in stock, low, out of stock, or unknown) — never exact quantities, never prices unless you opt in, never your customers, and never your sales.
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Edit listing profile** / **Set up listing profile** | Opens the panel for your public name, address, phone, hours (shown as your clinic already has them, edited under **Settings → General**), and your map location | — |
+| **Map location**, in the panel | Two fields, latitude and longitude — you place this yourself, or select **Use my current location**. It is never guessed from your address | Not set |
+| **Share prices**, in the panel | Whether the prices you charge are included in what partners see | Off |
+| **Preview** | Shows exactly what a partner would see, built from the same information a partner would actually get — never a separate, simplified copy | — |
+| **Get listed** | Lists your pharmacy to a marketplace partner. Only becomes available once you have saved a listing profile and opened **Preview** | — |
+| **Browse integrations** | Opens a list of every organization that has chosen to be found here, with what it does, a support contact, and links to its privacy policy and terms. **Request connection** on any of them asks you to confirm, exactly as **Get listed** does. Owners only | — |
+| **Un-list**, next to a marketplace name | Stops that one marketplace from seeing your pharmacy | — |
+| **List with other branches** | Lists every eligible pharmacy branch you own to the same marketplace at once | — |
+| **Hidden from listing** | The categories and items you have withheld, with **Restore** to undo any of them | — |
+
+<Note>
+  Only the clinic **owner** can save the listing profile, get listed, or un-list. A manager or a staff member with the API access permission can still preview, and manage what is hidden — the controls are simply not there for them, with one sentence explaining why.
+</Note>
+
+### Get listed
+
+<Steps>
+  <Step title="Select Set up listing profile">
+    Fill in your pharmacy's public name, address, and phone. Place your **map location** yourself — select **Use my current location**, or enter the coordinates by hand. Leave it blank rather than guess; a pharmacy with no location is still listed, just without a map pin.
+  </Step>
+  <Step title="Decide whether to share prices">
+    **Share prices** is off by default. Anyone using a connected partner's app — competitors included — will see any price you share.
+  </Step>
+  <Step title="Select Save">
+    This does not list you yet — it only saves what a partner would see once you do.
+  </Step>
+  <Step title="Select Preview">
+    Read through what a partner would actually see, and the note on what is never shared. **Get listed** stays unavailable until you have opened this.
+  </Step>
+  <Step title="Select Get listed">
+    Confirm what becomes visible, and to whom.
+  </Step>
+</Steps>
+
+**Browse integrations** is for choosing among several organizations rather than the one offered by name. Each entry shows a category (**Marketplace**, **HMO / payer**, **Analytics**, **Logistics** or **Other**) and, when the organization has supplied them, a description and links. If none are listed you'll see **No integrations are listed yet.** A listing gives an organization no access by itself — **Request connection** shares only your listing profile and availability bands, never exact quantities, customers or sales, unless you turn on **Share prices** yourself.
+
+For a pharmacy with more than one branch under the same owner, **List with other branches** lists every eligible branch at once — a branch that is not on a paid plan, or has no saved profile, is skipped and shown as such, never listed silently.
+
+### Referred by a partner
+
+If you signed up through a partner's referral link, the first time you open this tab you'll see a
+banner naming the partner and offering to review their listing request. Opening it shows the same
+**Preview** you'd see setting up a listing yourself, with **Approve** and **Not now** as two equal
+choices — neither is highlighted over the other. Approving lists your pharmacy to that partner
+exactly as **Get listed** above does; choosing **Not now** replaces the banner with a smaller
+reminder you can return to any time.
+
+Signing up through a partner never gives them anything on its own — no access, no connection, and
+no listing. It only means we remember who introduced you, so a referral can be recognised later.
+You can approve, decline, or ignore the request, and you can use ClinikEHR whether or not you ever
+connect to that partner.
+
+### What changes once you save
+
+- **Get listed** makes your listing profile and item availability bands visible to that one marketplace partner — nothing else on this tab changes, and no other permission is granted.
+- **Un-list** takes effect on that partner's next request. If you are listed to more than one marketplace, un-listing one leaves the others untouched.
+- Hiding a category or an item removes it from every listing immediately — a hidden item behaves exactly like one you do not stock, never shown as "hidden."
+
+Confirming which items are which medicine, and seeing which items have nothing partners can search on, both happen on the **Inventory** screen — see [Get found by network partners](/pharmacy/inventory/listing).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The tab shows an upgrade prompt instead of any settings">
+    API access is included in the **Team** and **Enterprise** plans, and in **Business** and **Enterprise** on the Pharmacy and Diagnostics editions. On any other plan the tab shows an upgrade prompt — see [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+  <Accordion title="The tab says I need permission, and shows no settings">
+    You need to be an owner, a manager, or a staff member specifically granted the API access permission. Ask an owner to grant it from [Permissions](/platform/team/permissions).
+  </Accordion>
+  <Accordion title="I lost the key before I copied it">
+    It cannot be shown again — that is deliberate. Revoke that key and create a new one for the same integration.
+  </Accordion>
+  <Accordion title="A key that worked yesterday stopped working, and nobody revoked it">
+    Check your plan. Falling below Team pauses every key on the workspace without changing its badge. Moving back to Team or Enterprise restores it.
+  </Accordion>
+  <Accordion title="Can I bring back a key I revoked?">
+    No — revoking is permanent. Create a new key with the same permissions and give the new one to the integration instead.
+  </Accordion>
+  <Accordion title="I need a permission that isn't listed">
+    Inventory permissions (Availability, Catalogue, Stock levels) and patient-record permissions (Appointments, Patients, Clinical notes, Drug requests, Dispensing history and flags) exist in this release. CRM and sales permissions aren't available yet.
+  </Accordion>
+  <Accordion title="Patient-record permissions are greyed out in the key-creation panel">
+    Two separate things can cause this, and the panel names which: either your clinic's API add-on isn't active yet, or the current API data agreement hasn't been accepted (the owner does this from the add-on card above) — or, if your clinic requires two-factor authentication for staff, you haven't completed it yet this session. Buying the add-on and accepting the agreement clears the first two; signing in with two-factor clears the third.
+  </Accordion>
+  <Accordion title="A key that has the right permission still gets refused">
+    Check its **Allowed addresses** column. If it shows a count rather than **Any**, the key only answers from those specific addresses or ranges — a request from anywhere else is refused, even though the key and its permissions are correct. Either send the request from an allowed address, or create a new key with no address restriction.
+  </Accordion>
+  <Accordion title="I don't see Get a connection code, or Review/Manage on a connection">
+    Only the clinic owner can generate a code or act on a connection. If you are a manager or a staff member with the API access permission, you can still see the list — ask the owner to act, or to grant you ownership.
+  </Accordion>
+  <Accordion title="The other organization says the code doesn't work">
+    A code works once, and it expires — check how long you set it for when you generated it. If it has already been used or has expired, select **Get a connection code** again and share the new one.
+  </Accordion>
+  <Accordion title="Connected organizations shows nothing">
+    No organization has asked to connect yet. Nothing appears here until you give someone a code and they use it to send a request.
+  </Accordion>
+  <Accordion title="Get listed is greyed out">
+    It stays unavailable until you have saved a listing profile and opened **Preview** at least once — the point is that you see exactly what will be shared before the button is even reachable. If it is still unavailable after that, check your plan: listing needs any paid plan, and you need to be the clinic owner to act on it.
+  </Accordion>
+  <Accordion title="I don't see a map location I can trust">
+    The pin is placed by you — it is never filled in from your address automatically. Select **Use my current location**, or enter the coordinates yourself; select the map-check link next to the fields to confirm the point before saving.
+  </Accordion>
+  <Accordion title="I un-listed my pharmacy, but it's still listed to another marketplace">
+    That's expected if you are connected to more than one marketplace — un-listing affects only the one you selected. Repeat for each marketplace you want to stop being listed to.
+  </Accordion>
+  <Accordion title="List with other branches skipped one of my branches">
+    A branch is skipped, and shown as such, when it is not on a paid plan or has no saved listing profile of its own — set that branch up the same way, then try again.
+  </Accordion>
+  <Accordion title="Add API access is missing from the API add-on card">
+    Either the add-on is already active for this clinic, your plan isn't eligible yet (it needs Team, or Business on the Pharmacy and Diagnostics editions), or you're signed in as a staff member who isn't an owner or manager — the card explains which, and states who can act.
+  </Accordion>
+  <Accordion title="The card says it's still confirming after I paid">
+    This can take a few seconds while your payment is confirmed. Select **Refresh**, or check back shortly — nothing on this screen is charged twice, and the card never assumes the payment succeeded until it hears back.
+  </Accordion>
+  <Accordion title="My add-on shows Payment failed">
+    Access continues — nothing is blocked. Update your payment method wherever you manage billing for this clinic, and the add-on returns to **Active** once the next payment goes through.
+  </Accordion>
+  <Accordion title="I don't see an agreement to accept">
+    Only the clinic **owner** sees the **Accept agreement** control — a manager or staff member can see that an agreement exists but cannot act on it. If you are the owner and still don't see it, refresh the page; the card always shows the current version once it loads.
+  </Accordion>
+  <Accordion title="My pharmacy sells through another point-of-sale — can it still be listed?">
+    Not yet available. A setting to mark your pharmacy as selling through another system, and a way
+    to send in a stock feed from that system so your listed availability stays accurate, are both
+    still being finished. For now, listing works fully for pharmacies using ClinikEHR's own till.
+  </Accordion>
+  <Accordion title="Can I invite someone to set up my catalogue without giving them full access?">
+    Not yet available. A time-limited role for exactly this — set up your item list, locations, and
+    devices, with no access to sales, customers, or money — is planned but not on this screen yet.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: lib/settings-tabs.ts (tab registration); lib/edition-staff-roles.ts (the API access permission) */}

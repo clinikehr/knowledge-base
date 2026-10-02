@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Owner to change most of this tab; manager or accountant to read; owner or manager to change Triage, Queue windows and Triage locations" note="Only the owner can change the care-area switches and the rest of this tab" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner to change most of this tab; manager or accountant to read; owner or manager to change Triage, Queue windows, Automatic check-out and Triage locations" note="Only the owner can change the care-area switches and the rest of this tab" />
 
 The **Facility** tab does two jobs. The top half decides which units this hospital runs: "Which departments this hospital runs. These control what appears in navigation." The bottom half carries the schedules, charts and timing thresholds that decide what the antenatal worklist, the labour chart, the Nursing Station, the front desk board and the Records desk measure against — and those exist nowhere else in the product.
 
@@ -46,8 +46,9 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Not opened after (days)** | The patient has not opened a document request at all. Needs **Records** | 3 |
 | **No response after (days)** | They opened it and did not sign | 7 |
 | **Expiring within (days)** | The link is about to expire and needs re-sending | 5 |
-| **Clinical access** | Under **Clinical access**: "Which roles may perform each act, besides owners and managers (always allowed). Staff also need the matching permission, which is on unless you have turned it off for them in Staff permissions." Nine rows, each with its own role multi-select, **Save** and **Reset to default** — **Admit a patient to a ward** and **Discharge a ward patient** (need **In-patient care**), **Write or sign a consultation note**, **Prescribe medications**, **Dispense a prescription**, **Order a lab test**, **Enter lab results**, **Order a radiology study**, **Report a radiology study**. Owner only | **Everyone on the team (default)** for admit, write/sign a note, prescribe, order a lab test and order a radiology study — no role is narrowed until you choose one. **Discharge a ward patient**: the doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles). **Dispense a prescription**: Pharmacist — with one difference between the two dispensing screens: the pharmacy counter (marking a prescription dispensed) follows Pharmacist from the moment you open this card; dispensing straight from inventory stock stays open to everyone on the team until you choose a role here, and then follows the same choice. **Enter lab results**: Lab scientist. **Report a radiology study**: Radiologist, Doctor |
-| **Queue windows** | How far back each module's live queue looks — Consultation, Triage, Pharmacy, Laboratory and Radiology, each set separately to 24h, 48h, 72h, 7d, 14d or 30d. Owner or manager | 48 hours for every module |
+| **Clinical access** | Under **Clinical access**: "Which roles may perform each act, besides owners and managers (always allowed). Staff also need the matching permission, which is on unless you have turned it off for them in Staff permissions." Nine rows, each with its own role multi-select, **Save** and **Reset to default** — **Admit a patient to a ward** and **Discharge a ward patient** (need **In-patient care**), **Write or sign a consultation note**, **Prescribe medications**, **Dispense a prescription**, **Order a lab test**, **Enter lab results**, **Order a radiology study**, **Report a radiology study**. Owner or manager | **Everyone on the team (default)** for admit, write/sign a note, prescribe, order a lab test and order a radiology study — no role is narrowed until you choose one. **Discharge a ward patient**: the doctor-class clinical roles (Doctor, Physiotherapist, Psychiatrist, Psychologist, Counselor and the other behavioral-health and social-work roles). **Dispense a prescription**: Pharmacist — with one difference between the two dispensing screens: the pharmacy counter (marking a prescription dispensed) follows Pharmacist from the moment you open this card; dispensing straight from inventory stock stays open to everyone on the team until you choose a role here, and then follows the same choice. **Enter lab results**: Lab scientist. **Report a radiology study**: Radiologist, Doctor |
+| **Queue windows** | How far back each module's live queue looks — Consultation, Triage, Pharmacy, Laboratory and Radiology, each set separately to 24h, 48h, 72h, 7d, 14d or 30d. The **Pharmacy** window also decides how long a prescription stays open to dispense: a script listed in the Prescription List always opens. Owner or manager | 48 hours for every module |
+| **Automatically check out after** | How long a check-in that nobody closes stays open before it is checked out on its own — 24 hours, 48 hours, 72 hours or 7 days. A patient with an open triage, a consultation in progress, or a current admission is never checked out this way, however long the window has passed. Owner or manager, and only on the Enterprise **subscription** — every other subscription is held at 24 hours and this control shows read-only | 24 hours |
 | **Acuity system** | Under the **Triage** card: **Emergency Severity Index (ESI)** or **South African Triage Scale (SATS)** — SATS stays disabled with a **Pending clinical review** badge until a clinician signs it off. Owner or manager | ESI |
 | **Reassessment interval by acuity level** | Minutes before a triaged patient of that acuity is due, then overdue, for reassessment — one field per level, 0 to 1440 (0 = continuous care, no timer). Owner or manager | ESI 1: 0 (no timer) · 2: 15 · 3: 30 · 4: 60 · 5: 120 |
 | **Nurse orders — complaint categories** | Which chief-complaint categories a nurse may order labs or imaging for at triage, before a doctor sees the patient. Owner or manager | None — nurse orders off |
@@ -71,7 +72,7 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
     Under **Nursing observations**, enter **Every (minutes)** and **Grace (minutes)**, then select **Save cadence**.
   </Step>
   <Step title="Set the shift boundaries">
-    Under **Nursing shifts**, choose a **Pattern** — **Two 12-hour shifts (day / night)**, **Three 8-hour shifts (morning / afternoon / night)**, or **Custom shift times…**, where you name each shift and give it a **Starts at** hour. The boundaries are spelled out underneath as ranges. Select **Save shifts**.
+    Under **Nursing shifts**, choose a **Pattern** — **Two 12-hour shifts (day / night)**, **Three 8-hour shifts (morning / afternoon / night)**, or **Custom shift times…**, where you name each shift and give it a **Starts at** hour. The boundaries are spelled out underneath as ranges. Select **Save shifts**. These are the same boundaries the rota offers when you build a ward shift. Saving never changes a shift already on the rota: you are told how many upcoming ward shifts no longer line up with the new times, and you edit those in the [rota](/hospital/settings/shifts) when you are ready.
   </Step>
   <Step title="Set the front-desk wait threshold">
     Enter **Long wait after (minutes)** and select **Save threshold**. Use the wait your team would actually want flagged, not an aspiration.
@@ -84,6 +85,9 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
   </Step>
   <Step title="Set how far back each queue looks">
     Under **Queue windows**, choose how far back each module — Consultation, Triage, Pharmacy, Laboratory, Radiology — looks on its live queue, then select **Save queue windows**. History always holds every record regardless of this setting; it only decides how far the *live* list looks back.
+  </Step>
+  <Step title="Choose the automatic check-out window">
+    Under **Automatic check-out**, choose how long an unclosed check-in stays open before it closes on its own, then select **Save automatic check-out**. On any subscription below Enterprise, the choice is fixed at 24 hours and the control is read-only.
   </Step>
   <Step title="Set the triage acuity system, reassessment timers and nurse orders">
     Under **Triage**, choose an **Acuity system**, set a reassessment interval for each level, choose which complaint categories may trigger nurse orders, and set the vitals display units. Select **Save triage settings**.
@@ -124,6 +128,7 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Clinical access — Enter lab results** | The [lab test list](/hospital/diagnostics/laboratory) checks this the next time someone tries to record a result, and the lab bench's own result entry checks it too. |
 | **Clinical access — Report a radiology study** | [Radiology reports](/hospital/diagnostics/radiology-reports) checks this the next time someone tries to submit findings. |
 | **Queue windows** | Every open [Triage](/hospital/outpatient/triage), [Consultation](/hospital/outpatient/consultation), Pharmacy, Laboratory or Radiology live queue looks back this far from the moment you save. History is never affected. |
+| **Automatically check out after** | A check-in on the [front desk board](/hospital/front-desk/overview) that nobody has closed by this many hours after the patient checked in — or was last reopened — closes on its own, marked **Checked out automatically**, with no staff name attached. It applies going forward and to check-ins already open past the window. |
 | **Acuity system** | Every [triage chart](/hospital/outpatient/triage) in the hospital shows and accepts acuity from the new system from the moment you save; a level already set is kept as recorded, but its label and colour follow the new system. |
 | **Reassessment interval** | The triage queue's reassessment countdown, and the overdue flag it turns into, recalculate immediately for every triaged patient still in a queue. |
 | **Nurse orders categories** | A chief complaint you remove from the list can no longer start nurse orders on a new triage; one already opened is unaffected. |
@@ -140,12 +145,15 @@ The sidebar lists the groups you left on and nothing for an area you switched of
 
 <AccordionGroup>
   <Accordion title="I can see the switches but cannot move them">
-    "Only the clinic owner can change these." Managers and accountants can read **Facility** and not change it — the care-area switches, the antenatal schedule, the partograph, nursing shifts, front-desk and records thresholds, and Clinical access are the owner's to write.
+    "Only the clinic owner can change these." Managers and accountants can read **Facility** and not change it — the care-area switches, the antenatal schedule, the partograph, nursing shifts, front-desk and records thresholds are the owner's to write.
 
-    Until August 2026 the switches were live for a manager, who could move one, press save, and be refused — first silently, then with an error. They are now read-only for anyone but the owner, which is what the database has always enforced. **Queue windows**, **Triage** and **Triage locations** are the one exception: a manager can save those three.
+    Until August 2026 the switches were live for a manager, who could move one, press save, and be refused — first silently, then with an error. They are now read-only for anyone but the owner, which is what the database has always enforced. **Clinical access**, **Queue windows**, **Triage** and **Triage locations** are the exception: a manager can save those four.
   </Accordion>
-  <Accordion title="Save triage settings, Save queue windows or Add location is greyed out">
+  <Accordion title="Save triage settings, Save queue windows, Save automatic check-out or Add location is greyed out">
     Only the clinic owner or a manager can change these — an accountant, or any other role, can see the current choices but not change them.
+  </Accordion>
+  <Accordion title="Automatically check out after is stuck on 24 hours and will not change">
+    This control follows your **subscription**, not your Facility plan — a hospital structured for Enterprise can still be subscribed to a lower plan, and only the Enterprise subscription can extend past 24 hours. Saving a longer window is refused with "Automatic check-out can be extended on the Enterprise plan." Upgrade the subscription, or leave it at 24 hours.
   </Accordion>
   <Accordion title="South African Triage Scale is greyed out in Acuity system">
     SATS carries a **Pending clinical review** badge until a clinician has signed off the published tables it is built from, and cannot be selected until then. ESI is available immediately.
@@ -175,4 +183,4 @@ The sidebar lists the groups you left on and nothing for an area you switched of
 
 <StillStuck topic="facility settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/(clinical-access-card.tsx, queue-windows-card.tsx, triage-settings-card.tsx, triage-locations-card.tsx), components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/queues/queue-window.ts, lib/triage/acuity.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/clinical-access.ts, lib/ward/discharge.ts */}
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/(clinical-access-card.tsx, queue-windows-card.tsx, auto-checkout-card.tsx, triage-settings-card.tsx, triage-locations-card.tsx), components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/queues/queue-window.ts, lib/check-ins/auto-checkout.ts, lib/triage/acuity.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/clinical-access.ts, lib/ward/discharge.ts */}

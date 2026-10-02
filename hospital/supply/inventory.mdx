@@ -31,6 +31,8 @@ Eight buttons run along the header:
 | **Opening stock** | Sets your starting position when you first go live |
 | **Export** | Takes the catalogue or stock out again |
 | **Add item** | Creates one item by hand |
+| **Link medicines** | Shown to owners, managers and anyone the clinic lets dispense. Matches medicines that are not linked to a stock item — see [Link medicines to stock](#link-medicines-to-stock) |
+| **Catalogue medicines** | Owners and managers. Switches medicines on or off for the prescriber's picker — see [Choose what doctors can prescribe](#choose-what-doctors-can-prescribe) |
 
 Below them, the tabs. A hospital normally sees eleven, with two more appearing when they apply:
 
@@ -46,7 +48,7 @@ Below them, the tabs. A hospital normally sees eleven, with two more appearing w
 | **Recalls** | Vendor and regulator recalls, and who was exposed |
 | **Locations** | Your rooms, stores and devices |
 | **Alerts (n)** | Low stock, expiry and other open alerts |
-| **Reconciliation** | Dispensing enforcement and reconciliation |
+| **Reconciliation** | Dispensing enforcement and reconciliation. A dispense that did not draw from stock is listed here, with **Link to stock** for a medicine that is not linked |
 | **Vaccines** | Appears where vaccine stock exists |
 | **Ward MAR** | Appears where you run wards |
 
@@ -59,6 +61,32 @@ Most of Inventory works the same anywhere. Two tabs exist because the hospital h
 **Fill Rx** is the bridge to the pharmacy unit. A prescription written anywhere in the hospital waits here until someone draws stock against it, with a witness where the item is controlled. See [the pharmacy station](/hospital/pharmacy/station). Filling from stock follows the same **Settings → Facility → Clinical access → Dispense a prescription** choice as the pharmacy counter — with one difference: until an owner saves a role on that row, filling from stock stays open to everyone on the team, while the counter's own dispense screen follows its **Pharmacist** default from the start.
 
 **Ward MAR** is the bridge to the wards, and appears only when your hospital runs them — "Each dose given to an admitted patient depletes stock and is logged here." That is the connection people miss: a nurse signing a dose on the drug chart is a stock movement, not just a clinical note. See [the nursing station](/hospital/inpatient/nursing-station).
+
+## Link medicines to stock
+
+A prescription can only draw stock when its medicine is linked to a stock item. A medicine that is not linked is still dispensed, and shows under **Reconciliation** as **Not linked to inventory**.
+
+<Steps>
+  <Step title="Open Link medicines">
+    Select **Link medicines** in the header, or **Link to stock** on a **Not linked to inventory** row under **Reconciliation**.
+  </Step>
+  <Step title="Choose the matching item">
+    Each unlinked medicine shows up to three stock items with similar names. An exact name match is marked **Exact name**. Select the item that is really the same medicine.
+  </Step>
+  <Step title="Confirm the row">
+    Select **Link to this item**. Linking changes nothing else: no stock moves, no item is created, and a dispense that already happened is not drawn again. If the medicine had no price, it takes the stock item's selling price; a price already set is kept.
+  </Step>
+</Steps>
+
+**Link all exact matches** is the only bulk action. It links only medicines whose name matches exactly one stock item that no other medicine uses, and asks you to confirm first. A similar name is always confirmed row by row.
+
+**Link to stock** on a **Reconciliation** row links the medicine first and marks the entry reconciled only once the link has been saved. **Mark reconciled** on its own records that you have dealt with the entry; it does not link the medicine.
+
+## Choose what doctors can prescribe
+
+The prescriber's medicine list shows a badge beside each medicine — **In stock 24**, **Out of stock** or **Not stocked** — and lists stocked medicines first. Nothing is hidden because of quantity, so a medicine that is out of stock can still be prescribed.
+
+To remove medicines nobody stocks, an owner or manager selects **Catalogue medicines**, filters to **Not linked to stock**, selects the medicines and chooses **Switch off**. They stop appearing when a doctor prescribes; prescriptions already written are not changed, and you can switch them back on.
 
 ## Receive a delivery
 
@@ -80,7 +108,7 @@ Most of Inventory works the same anywhere. Two tabs exist because the hospital h
 
 ## Where the deeper mechanics live
 
-Stock control is the same engine the Pharmacy edition documents in depth:
+Stock control is the same engine the Pharmacy edition documents in depth — including the **Ledger**'s **Via API** marker and **API changes only** filter, for a movement a connected integration made:
 
 <Columns cols={2}>
   <Card title="Batches and expiry" icon="/images/icons/calendar-xmark.svg" href="/pharmacy/inventory/batches-and-expiry">
@@ -128,11 +156,19 @@ Enforcement generally is **opt-in per person**: a colleague never saved in the p
 - The item's on-hand figure on **Stock** matches the shelf.
 - A **Ledger** entry names you, the movement and the time.
 - A dispensed script has left **Fill Rx**, and ward doses appear under **Ward MAR** having reduced the stock they came from.
-- **Alerts (n)** falls as low-stock and expiry warnings are resolved.
+- **Alerts (n)** falls on its own as low-stock and expiry warnings stop being true — receive stock above the threshold, correct an expiry date, use a lot up or archive the item, and the alert leaves the tab without a refresh.
 
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="'Some of this stock is past its expiry date and cannot be transferred.'">
+    The shelf holds the quantity you asked for, but part of it has passed its expiry date, and **Transfer** only moves stock that can still be used. Transfer a smaller quantity, or remove the expired stock first with **Waste** or **Return to vendor**. Your count is not wrong — expired stock is also written off automatically overnight.
+  </Accordion>
+
+  <Accordion title="Transfer says some of this stock is close to expiry">
+    This is a warning, not a refusal — **Transfer** never blocks stock that is merely close to its date, only stock already past it (see above). Once you enter a quantity, the form lists which lot it would come from, how much, and how many days remain, soonest first, right under **Quantity**. If the whole quantity would come from short-dated stock it says so plainly. The **Transfer** button stays enabled and nothing extra needs confirming — moving short-dated stock to a busier location is often the right call. "Close to expiry" is your facility's own expiry-alert horizon under **Settings** › **Inventory** › **Expiry alert horizons**.
+  </Accordion>
+
   <Accordion title="Stock is right on the shelf but wrong on screen">
     Run a cycle count from the **Counts** tab rather than adjusting item by item — a count reconciles and records why; an adjustment only changes the number.
   </Accordion>

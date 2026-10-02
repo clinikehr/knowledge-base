@@ -17,7 +17,15 @@
  *   4. Internal markdown links resolve to a real page or an in-page anchor.
  *   5. Every `import ... from '/snippets/x.mdx'` target exists.
  *
- * Usage: node scripts/validate-docs.mjs [--quiet]
+ * Usage: node scripts/validate-docs.mjs [rootDir] [--quiet]
+ *
+ * `rootDir` defaults to this script's own docs project (".." from
+ * scripts/) — that default, and every check's behaviour, is unchanged from
+ * before this argument existed. Pass a different docs root (e.g. from
+ * api-docs/, `node ../knowledge-base/scripts/validate-docs.mjs .`) to run the
+ * SAME checks against a different Mintlify project without copying this
+ * file — see tests/docs/*.unit.test.ts, which pins that both projects still
+ * behave identically to their pre-argument baselines.
  * Exits non-zero on any error.
  */
 
@@ -25,8 +33,13 @@ import { readFileSync, readdirSync, statSync, existsSync } from 'node:fs';
 import { join, relative, dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
-const ROOT = resolve(dirname(fileURLToPath(import.meta.url)), '..');
+const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+const ROOT = resolve(args[0] || join(dirname(fileURLToPath(import.meta.url)), '..'));
 const QUIET = process.argv.includes('--quiet');
+// See the changelog placeholder-date check below. Off by default everywhere
+// (a laptop run, and every existing CI job unless it's the publish job) so
+// this addition changes nothing for a call that doesn't ask for it.
+const STRICT_DATES = process.argv.includes('--strict-dates');
 
 const errors = [];
 const warnings = [];
@@ -58,6 +71,10 @@ function collectPages(node, out = []) {
     return out;
   }
   if (typeof node === 'string') {
+    // An OpenAPI operation ("GET /v1/me") is navigation to a generated
+    // reference page, not to an .mdx file — the group's `openapi` key names its
+    // document. api-docs/ lists deployed operations this way.
+    if (/^(GET|POST|PUT|PATCH|DELETE|HEAD|OPTIONS) \//.test(node)) return out;
     out.push(node);
     return out;
   }
@@ -141,17 +158,46 @@ const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---/;
  * Implementation vocabulary that must never appear in a reader-facing page.
  * Each entry is [what it gives away, pattern]. Keep the patterns narrow enough
  * that ordinary English survives — "policy" and "function" are fine words.
+ *
+ * Two profiles, selected by `--profile=help|api` (default `help`, so every
+ * existing call — no flag — is byte-for-byte the original Help Center list;
+ * this is the ONLY thing that differs between the two docs projects):
+ *
+ *   - `help` (default, help.clinikehr.com): the original list, unchanged.
+ *   - `api` (api-docs/, docs.clinikehr.com): drops `clinic_id`/`patient_id`/
+ *     `auth.uid` — those are PUBLIC path parameters and JSON field names in
+ *     this API's own contract (`/v1/clinics/{clinic_id}/...`), not leaked
+ *     internals, so flagging them would block the reference itself. Adds
+ *     `ehrapi_` (our internal function-name prefix) and keeps every other
+ *     term — a developer reader still must never see our database vendor,
+ *     runtime, or access-control mechanism named on the page.
  */
-const ARCHITECTURE_TERMS = [
-  ['our database vendor', /\bsupabase\b/i],
-  ['our database vendor', /\bpostgres(ql)?\b/i],
-  ['our serverless runtime', /\bedge functions?\b/i],
-  ['a database access-control mechanism', /\brow[- ]level security\b|\bRLS\b/],
-  ['a stored procedure', /\bRPC\b|\bsecurity definer\b/i],
-  ['a privileged credential', /\bservice[- ]role\b/i],
-  ['an internal column name', /\bclinic_id\b|\bpatient_id\b|\bauth\.uid\b/],
-  ['a database column type', /\bjsonb\b/i],
-];
+const ARCHITECTURE_TERMS_BY_PROFILE = {
+  help: [
+    ['our database vendor', /\bsupabase\b/i],
+    ['our database vendor', /\bpostgres(ql)?\b/i],
+    ['our serverless runtime', /\bedge functions?\b/i],
+    ['a database access-control mechanism', /\brow[- ]level security\b|\bRLS\b/],
+    ['a stored procedure', /\bRPC\b|\bsecurity definer\b/i],
+    ['a privileged credential', /\bservice[- ]role\b/i],
+    ['an internal column name', /\bclinic_id\b|\bpatient_id\b|\bauth\.uid\b/],
+    ['a database column type', /\bjsonb\b/i],
+  ],
+  api: [
+    ['our database vendor', /\bsupabase\b/i],
+    ['our database vendor', /\bpostgres(ql)?\b/i],
+    ['our serverless runtime', /\bedge functions?\b/i],
+    ['a database access-control mechanism', /\brow[- ]level security\b|\bRLS\b/],
+    ['a stored procedure', /\bRPC\b|\bsecurity definer\b/i],
+    ['a privileged credential', /\bservice[- ]role\b/i],
+    ['a database column type', /\bjsonb\b/i],
+    ['an internal function-name prefix', /\behrapi_/i],
+  ],
+};
+
+const PROFILE_ARG = process.argv.find((a) => a.startsWith('--profile='));
+const PROFILE = PROFILE_ARG ? PROFILE_ARG.slice('--profile='.length) : 'help';
+const ARCHITECTURE_TERMS = ARCHITECTURE_TERMS_BY_PROFILE[PROFILE] || ARCHITECTURE_TERMS_BY_PROFILE.help;
 
 for (const [slug, file] of fileSlugs) {
   const raw = readFileSync(file, 'utf8');
@@ -256,6 +302,23 @@ for (const [slug, file] of fileSlugs) {
     const m = prose.match(pattern);
     if (m) {
       err(`${slug}.mdx contains the internal term "${m[0]}" (${term}). Describe the behaviour a user sees, not how it is built.`);
+    }
+  }
+
+  // A changelog `<Update>` dated with a bracketed placeholder (e.g.
+  // `[LAUNCH DATE]`, `[RELEASE DATE]`) is fine while a release is still in
+  // flight — the date is filled in at the release step — but must never
+  // reach a build that actually publishes. Lenient (a warning) by default,
+  // so this NEVER changes default behaviour for either docs project or for
+  // the live knowledge-base changelog, which already carries one
+  // (`[LAUNCH DATE]`, line ~531 as of this writing) while its own release is
+  // pending. Pass `--strict-dates` (the publish job does) to turn every one
+  // of these into a build-blocking error instead.
+  if (slug.startsWith('changelog/') || slug === 'changelog') {
+    for (const m of body.matchAll(/<Update\s+label=["'](\[[^\]]*\])["']/g)) {
+      const message = `${slug}.mdx has a changelog entry dated with an unresolved placeholder (${m[1]}) — fine before release, never in a build meant for publishing.`;
+      if (STRICT_DATES) err(message);
+      else warn(message);
     }
   }
 }

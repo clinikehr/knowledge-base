@@ -1,0 +1,96 @@
+---
+title: Get found by network partners
+description: List your pharmacy so connected marketplace partners can see what you carry, confirm medicine matches, and see what has no code for partners to search on.
+icon: /images/icons/store.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="Any paid plan" roles="Owner decides whether to list; a manager or a staff member with the API access permission can preview and manage what is hidden" />
+
+**Listing** lets a connected marketplace partner see your pharmacy and check whether it carries a medicine, without you exporting anything by hand. You decide whether to be listed, at [Settings → API access](/platform/settings/api-access) — this page covers the two things that live on the **Inventory** screen instead: confirming which of your items are which medicine, and seeing which items a partner has nothing to search on.
+
+<Path steps={['Sidebar', 'Inventory']} />
+
+<TaskHeader
+  before="Nothing — these appear the moment you have items in your catalogue"
+  time="A couple of minutes, as items come up"
+  after="Items correctly matched to a medicine, and a shorter list of items partners cannot find"
+/>
+
+## What you're looking at
+
+Two things on the **Inventory** screen, both reachable regardless of whether this pharmacy is actually listed yet:
+
+- **Medicines to confirm** — a button in the toolbar, with a count badge when anything is waiting. Selecting it opens a list of items whose name looks like a known medicine, each with the substance it was matched against and two buttons: **Confirm** and **Reject**. Nothing is ever confirmed automatically or in bulk — a person always decides, one item at a time. The empty state reads "Nothing to review."
+- **N items partners cannot find** — a banner that appears only when at least one active item has no barcode, NAFDAC number, or in-house code. Selecting **Show them** opens the list, each item with an **Edit** shortcut straight to that item's record.
+
+A brand-new catalogue with every item already coded shows neither of these — that is the intended, quiet state.
+
+## Confirm a medicine match
+
+<Steps>
+  <Step title="Select Medicines to confirm">
+    The toolbar button shows a count when anything is waiting.
+  </Step>
+  <Step title="Read the match">
+    Each row states the item's own name and which substance it was matched against — for example, "Amoxil 500" contains "amoxicillin" — confirm this is the same medicine."
+  </Step>
+  <Step title="Select Confirm, or select Reject">
+    **Confirm** links the item to that medicine, so partners searching by name or by code can find it. **Reject** leaves the item unlinked — it stays exactly as invisible to partner search as it already was, and nothing about the item itself changes.
+  </Step>
+</Steps>
+
+Items are ordered by how fast they sell, so your busiest products get reviewed first.
+
+<Warning>
+  Confirming the wrong match means a partner is told the wrong drug is in stock. Read the substance named, not just the item's own name, before selecting **Confirm**.
+</Warning>
+
+## See what partners cannot find
+
+<Steps>
+  <Step title="Look for the banner">
+    It only appears when at least one active item has none of the three identifiers.
+  </Step>
+  <Step title="Select Show them">
+    Opens the list of affected items.
+  </Step>
+  <Step title="Select Edit on any item to add a barcode, NAFDAC number, or code">
+    Any one of the three is enough — an item does not need all of them.
+  </Step>
+</Steps>
+
+## Hide an item or a category from every listing
+
+From an item's row menu on **Inventory**, select the hide icon to withhold that one item from every listing this pharmacy has, or has yet to get. A hidden item behaves exactly like one you do not stock — it is simply absent, never shown as "hidden" or "unavailable." To hide a whole category, or to see and undo everything currently hidden, use the **Listing** card under [Settings → API access](/platform/settings/api-access).
+
+## Check it worked
+
+- A confirmed match no longer appears in **Medicines to confirm**, and the item can now be found by a partner searching by name or code (once this pharmacy is listed).
+- Adding a barcode, NAFDAC number, or code to every affected item makes the "items partners cannot find" banner disappear.
+- A hidden item or category no longer appears when you preview the listing from **Settings → API access**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Medicines to confirm is empty, but I know some items have odd names">
+    A suggestion only appears when the item's name matches exactly one known medicine. An item matching several medicines, or none, is left out entirely rather than guessed at — link it manually if you know what it is, by correcting the item's name or category.
+  </Accordion>
+  <Accordion title="I rejected a match by mistake">
+    Rejecting only removes it from the queue — it does not change the item. Edit the item and give it a clearer name; if it matches a medicine on the next check, it will be queued again.
+  </Accordion>
+  <Accordion title="The missing-identifiers banner won't go away">
+    It counts active items only. Check that the code you added was saved on the item itself, and that the item is still marked active.
+  </Accordion>
+  <Accordion title="I hid an item, but it still shows in my own Inventory list">
+    That's expected — hiding only affects what a listing partner sees. Your own stock, sales, and dispensing are unaffected.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: lib/ehr-api/listing-model.ts (bands, review-queue wording); db/actions/ehr-api-listing.ts (the actions this page describes) */}

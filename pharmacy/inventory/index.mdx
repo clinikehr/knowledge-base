@@ -36,7 +36,7 @@ The toolbar carries **Receive**, **Dispense**, **Transfer**, **Reports**, **Impo
 | **Recalls** | Quarantining affected lots |
 | **Locations** | Your rooms, shelves and fridges |
 | **Alerts (\{n\})** | Expiry, low stock, temperature and count alerts, counted in the tab itself — [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry) |
-| **Reconciliation** | Clearing sales made beyond recorded stock |
+| **Reconciliation** | Clearing sales made beyond recorded stock, and prescriptions dispensed without drawing stock. **Link to stock** links a medicine that was not linked; **Link medicines** in the header matches many at once |
 
 **Validation** is conditional, and so is a **Vaccines** tab where you hold vaccine stock. Most pharmacies see neither, and their absence is not a fault. **Alerts** carries its count only when something is actually open — a bare **Alerts** means nothing is. When alerts are open, a line above the tabs says so: "\{n\} open inventory alerts — see the Alerts tab."
 
@@ -117,6 +117,10 @@ Each empty state tells you exactly what is still missing:
 
 After adding an item it appears on **Catalog**; after receiving, it appears on **Stock** with its lot and expiry, and the movement appears on **Ledger**.
 
+### Movements made through the API
+
+If your pharmacy connects an integration through **Settings → API access**, a receive, adjust or transfer that integration makes shows a **Via API** marker naming the integration in the **Ledger**'s **Source** column, alongside the movements your own team made at the counter. Tick **API changes only** above the table to see just those. The name shown is the connected key's or organization's own name — never the key itself.
+
 ## Who can do this
 
 **Role** decides whether **Inventory** opens at all. A **Cashier / Till Operator** reaches only **POS** and **Sales** and never sees this screen. **Permission** decides what you may do once it is open, and the switches live in groups named **Till**, **Stock**, **Controlled drugs**, **Money** and **Oversight** on each person's permissions sheet.
@@ -138,6 +142,7 @@ On top of the role bundle, each person carries an access tier — **Own till**, 
 
 Three gates change what the screen *shows*, not just what it does:
 
+- Without **View cost prices and margin**, you can still edit an item, and its **Unit cost** stays exactly as it was recorded — saving never blanks a cost you were not shown.
 - **View cost prices and margin** turns the valuation column into **"Hidden — needs authorisation from your clinic owner."** It is never rendered as a zero, because a zero reads as an empty shelf rather than as a permission boundary.
 - **Manage suppliers and purchase orders** also redacts negotiated unit costs and supplier account numbers, so somebody who can count your stock does not automatically learn what you pay for it.
 - The **Danger Zone** under **Settings** › **Inventory** is hidden from the page entirely for managers and accountants. It is not greyed out; there is nothing there to select.
@@ -149,7 +154,7 @@ Two behaviours surprise people:
 
 See [Staff permissions](/platform/team/permissions).
 
-The caps belong to the **free** plan, not to Starter: every paid pharmacy plan — Starter included — is uncapped while the subscription is active or trialing. A pharmacy with no active subscription (typically after the 7-day trial lapses) gets a **Free plan** strip showing usage against the limit for each countable kind — 20 items, 5 locations, 2 vendors and 5 purchase orders — with **Upgrade for unlimited**. At the limit, creation is refused rather than silently dropped. See [Change your plan](/platform/plans/change-plan).
+The caps belong to the **free** plan, not to Starter: every paid pharmacy plan — Starter included — is uncapped while the subscription is active or trialing. A pharmacy with no active subscription (typically after the 7-day trial lapses) gets a **Free plan** strip showing usage against the limit for each countable kind — 20 items, 5 locations, 2 vendors and 5 purchase orders — with **Upgrade for unlimited**. At the limit, creation is refused rather than silently dropped. If your plan cannot be checked, no strip is shown at all, rather than a Free plan strip that might be wrong. See [Change your plan](/platform/plans/change-plan).
 
 ## Inventory settings
 
@@ -190,6 +195,14 @@ The caps belong to the **free** plan, not to Starter: every paid pharmacy plan �
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="'Some of this stock is past its expiry date and cannot be transferred.'">
+    The shelf holds the quantity you asked for, but part of it has passed its expiry date, and **Transfer** only moves stock that can still be used. Transfer a smaller quantity, or remove the expired stock first with **Waste** or **Return to vendor**. Your count is not wrong — expired stock is also written off automatically overnight.
+  </Accordion>
+
+  <Accordion title="Transfer says some of this stock is close to expiry">
+    This is a warning, not a refusal — **Transfer** never blocks stock that is merely close to its date, only stock already past it (see above). Once you enter a quantity, the form lists which lot it would come from, how much, and how many days remain, soonest first, right under **Quantity**. If the whole quantity would come from short-dated stock it says so plainly. The **Transfer** button stays enabled and nothing extra needs confirming — moving short-dated stock to a busier branch is often the right call. "Close to expiry" is your clinic's own expiry-alert horizon under **Settings** › **Inventory** › **Expiry alert horizons**.
+  </Accordion>
+
   <Accordion title="The item saved but the till cannot find it">
     A catalogue entry with no stock is not sellable unless **Selling without stock** is on. Receive a lot, or add **Opening stock** on the item.
   </Accordion>

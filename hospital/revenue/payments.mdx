@@ -138,7 +138,7 @@ Once Payments opens, almost nothing narrows further:
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
-| Record a payment | Anyone who can open Payments | Nothing |
+| Record a payment | Anyone who can open Payments | The **Collect payments** permission, for anyone you have saved in the permissions sheet — owners and managers always can |
 | Record an insurer's settlement | Anyone who can open Payments | Nothing |
 | See the money figures on **Overview** | Anyone who can open Payments | Nothing |
 | Open the payment reports | Anyone who can open Payments | Nothing |
@@ -146,7 +146,7 @@ Once Payments opens, almost nothing narrows further:
 
 Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
 
-Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it.
+Someone without **Collect payments** sees **Process Patient Payment** and **Record Payment** greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it.
 
 ## Check it worked
 
@@ -184,6 +184,10 @@ Enforcement is **opt-in per person** — someone never saved in the permissions 
 
   <Accordion title="A lab test or imaging study never showed up under Pending Items">
     Fixed — a test or study ordered against a ward admission (rather than an outpatient visit) could be missing from **Pending Items** entirely, so its cost could never be collected here. It now appears alongside everything else.
+  </Accordion>
+
+  <Accordion title="A dispensed prescription is not under Pending">
+    A prescription is listed once it is **Dispensed** and unpaid, whether a doctor wrote it in a visit, it belongs to an admitted patient, or a pharmacist wrote it in the pharmacy station. After a dispense, **Collect payment** on the dispensing screen opens this page with the patient selected. A medicine with no price set is still listed, marked **No price set**; set its selling price under Inventory and it can then be paid.
   </Accordion>
 </AccordionGroup>
 

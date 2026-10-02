@@ -1,0 +1,130 @@
+---
+title: "Choose a note assistant"
+description: "Pick which assistant drafts your notes — ClinikEHR's own, or an outside one your clinic connects — and use it from the note editor."
+icon: "/images/icons/bot.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any clinician can draft; only the owner can change the assistant or manage an outside key" />
+
+Every note editor has a **Draft with…** button that hands a first draft to an assistant, then hands it straight back to you to review. Your clinic chooses which assistant answers that button: **ClinikEHR**, which runs entirely on our own servers, or an outside assistant your clinic connects with its own account — **EvidenceMD** is the first one available. Either way, nothing is ever saved or signed for you — you always read the draft, edit it, and save it yourself.
+
+<Path steps={['Notes', 'New Note', 'Draft with…']} />
+
+<TaskHeader
+  before="Nothing to set up to use ClinikEHR's own assistant. An outside assistant needs your clinic's own account with it first"
+  time="Under a minute to draft; 2 minutes to connect an outside assistant"
+  after="A drafted note in the editor, marked with which assistant wrote it, ready for you to review and save"
+/>
+
+## What you're looking at
+
+The **Draft with…** button sits in the toolbar of both the blank note and the template note editor, and it always names the assistant that will answer it — for example **Draft with ClinikEHR** or **Draft with EvidenceMD**. Selecting it opens a panel where you:
+
+- Type or paste what happened at the visit — dictation, a transcript, or your own rough notes.
+- Optionally tick **Include age band and sex** if you want that context included. Nothing else about the patient is ever sent, whichever assistant you use — no name, date of birth, contact details, or your clinic's name.
+- Select **Generate draft**, then read the result. A template note gets an answer per section; a blank note gets the whole draft as text. Any sources the assistant cites are listed beside the draft, never mixed into it.
+- **Accept into note** to fill the editor, or **Discard & retry** to try again with different wording.
+
+Nothing is saved by this panel. The draft only fills the editor's own fields — your usual **Save** or **Sign** button is what keeps it.
+
+<Note>
+  If your clinic's database hasn't yet received the update this feature needs, the panel says so plainly and drafting is unavailable — the note editor itself works exactly as it always has.
+</Note>
+
+## Draft a note
+
+<Steps>
+  <Step title="Open a note as usual">
+    Start a blank note or a template note the way you always do — see [Write a clinical note](/practice/clinical/notes).
+  </Step>
+  <Step title="Select Draft with…">
+    The button names the assistant your clinic currently uses.
+  </Step>
+  <Step title="Give it what happened">
+    Type or paste dictation, a transcript, or your own rough notes into the panel. This is the only clinical text that leaves for an outside assistant — nothing is pulled from the patient's chart automatically.
+  </Step>
+  <Step title="Generate, then read it">
+    Select **Generate draft**. Read every line against what actually happened — a drafted note is a starting point, not a finished record.
+  </Step>
+  <Step title="Accept, or try again">
+    **Accept into note** fills the editor; **Discard & retry** lets you rephrase what you gave it. Either way, save or sign the note yourself when you're satisfied.
+  </Step>
+</Steps>
+
+<Warning>
+  A generated draft is never submitted for you. Your save or signature says the words are yours to stand behind, not the assistant's — read the whole draft before you keep any of it.
+</Warning>
+
+## Connect an outside assistant (owner only)
+
+<Note>
+  **Who's eligible.** EvidenceMD is available once your clinic has the **API add-on** active (or an **Enterprise** agreement) **and** has accepted the current **API data agreement** — both set up from **Settings → API access**. Until then, the EvidenceMD option shows exactly which of the two is still needed. If either lapses later — the add-on ends, or a new agreement needs re-accepting — EvidenceMD pauses automatically: notes draft with ClinikEHR in the meantime, your EvidenceMD key is kept, and drafting resumes on its own once you're eligible again — no need to choose it a second time.
+</Note>
+
+<Steps>
+  <Step title="Open Settings → AI → Note assistant">
+    <Path steps={['Sidebar', 'Settings', 'AI', 'Note assistant']} />
+  </Step>
+  <Step title="Select Change assistant, then EvidenceMD">
+    The card names your **Current assistant**. **Change assistant** opens a **Choose the note assistant** panel that lists each assistant with what it is and what it is sent — read that, then select **EvidenceMD**. A second panel explains plainly that turning it on sends your clinic's visit content — the text a clinician types or dictates, and the current template's section titles — to EvidenceMD. Tick the confirmation box, which also confirms your clinic already has its own agreement with EvidenceMD covering this use, then select **Turn on EvidenceMD**.
+  </Step>
+  <Step title="Add your EvidenceMD API key">
+    Paste the key from your own EvidenceMD account and select **Save key**. Once saved, the key is never shown again — the field only ever tells you "A key is saved" or "No key saved".
+  </Step>
+  <Step title="Test the connection">
+    Select **Test connection** to confirm the key works, without sending any patient content — it sends a fixed, harmless check only.
+  </Step>
+</Steps>
+
+<Note>
+  **Your clinic pays EvidenceMD directly**, through its own account and key — ClinikEHR does not charge anything extra for using it, and it never draws your ClinikEHR AI credits. Drafting with ClinikEHR's own assistant still uses your usual credits, unchanged.
+</Note>
+
+## The marking on a reopened note
+
+A note drafted by an assistant — or written by a connected integration through the API — carries that marking when you reopen it, not only in the panel at draft time: a banner at the top names which assistant drafted it (or which integration wrote it, if not an assistant), and says plainly whether a clinician has reviewed it yet. The banner stays after the note is signed — a signed note still reads **Drafted by** the assistant, marked **Reviewed**, with the date it was reviewed. Any references the assistant cited appear underneath, shown as the assistant's own — never presented as your own citations.
+
+Select **Mark reviewed** to clear that "not yet reviewed" state without changing the note itself. Signing the note does this for you automatically — you never need to press it separately before signing.
+
+## Drafts to review
+
+**Notes → Drafts to review** lists every draft an assistant or a connected integration wrote that a clinician has not yet reviewed or signed, across the clinic. Filter it by origin or by which clinician it is for; opening a row takes you straight into the same note editor everyone else uses — there is no separate reader.
+
+## Check it worked
+
+Open a note, select **Draft with…**, and confirm it names the assistant you expect. Generate a test draft — a real result (or, for EvidenceMD, a clear failure message naming why) confirms the connection. A note you accepted a draft into and then saved shows the drafted content unchanged when you reopen it, with the origin banner still in place.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Note assistant card says a database update hasn't arrived yet">
+    Drafting isn't available in your environment right now. Write the note yourself — nothing else about the note editor is affected, and this resolves itself once the update reaches your clinic.
+  </Accordion>
+  <Accordion title="EvidenceMD can't be selected">
+    Either your clinic isn't yet eligible (the API add-on or an Enterprise agreement, plus the current API data agreement — the option tells you which is missing; sort it out in **Settings → API access**), or you haven't completed the consent step yet — see "Connect an outside assistant" above. Only the clinic owner can change the note assistant.
+  </Accordion>
+  <Accordion title="The note assistant says EvidenceMD is paused">
+    Your eligibility lapsed — the add-on ended, or a new API data agreement needs accepting. Notes draft with ClinikEHR in the meantime; nothing is lost, and your EvidenceMD key stays saved. Sort out the add-on or agreement in **Settings → API access** and EvidenceMD resumes on its own — you don't need to choose it again.
+  </Accordion>
+  <Accordion title="Test connection fails, or a draft fails with a key error">
+    EvidenceMD rejected the key. Check it was copied correctly from your EvidenceMD account, or generate a new one there and save it again.
+  </Accordion>
+  <Accordion title="A draft says the assistant didn't answer in time, or had a problem">
+    Try again in a moment. If it keeps happening, write the note yourself for now — the assistant is always optional.
+  </Accordion>
+  <Accordion title="Some sections of a template draft say they didn't apply">
+    The assistant answered a section your template doesn't have. It's listed, not silently dropped — review the rest of the draft and add anything useful to the right section yourself.
+  </Accordion>
+  <Accordion title="Only the owner can change the assistant or manage the key">
+    That's by design — everyone can draft, but choosing an outside assistant and connecting its key is an owner decision, since it changes where clinical text is sent.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/notes/new-notes/note-assistant-draft-panel.tsx, components/clinic/dashboard/settings/note-assistant-settings.tsx, lib/notes/note-assistant.ts, db/actions/note-assistant.ts */}

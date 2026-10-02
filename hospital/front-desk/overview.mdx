@@ -39,16 +39,18 @@ Three tiles run across the top. Each shows an em dash while it loads rather than
 | **Long waits** | Those past your long-wait threshold. It turns red only when there is at least one |
 | **Seen today** | Visits already checked out today |
 
-Below the tiles, four buttons cover the whole of reception — **Check in**, **Book appointment**, **New patient** and **New contact**. Each opens a sheet over the board, so you never lose the queue you were looking at.
+Below the tiles, buttons cover the whole of reception — **Check in**, **Book appointment**, **New patient** and **New contact**, plus **Requeue patient** for a hospital selling a consultation rate that covers more than one visit. Each opens a sheet over the board, so you never lose the queue you were looking at.
 
-The queue is filtered by three tabs, each carrying its own live count: **Waiting \{n\}**, **Checked out \{n\}** and **All \{n\}**. The columns are:
+**Requeue patient** puts a returning patient with a still-valid consultation payment back onto a department's triage Waiting list, without taking a new payment — see [Requeue a returning patient](/hospital/outpatient/triage#requeue-a-returning-patient). Not shown for a hospital in Free Clinic Mode, or for a role without the **Requeue patient** permission.
+
+The queue is filtered by four tabs, each carrying its own live count: **Waiting \{n\}**, **Mine \{n\}**, **Checked out \{n\}** and **All \{n\}**. **Mine** is the visits that were assigned to you at check-in and are still here — the answer to "who was given to me?". The columns are:
 
 | Column | Shows |
 | --- | --- |
 | **Checked in** | The time they arrived |
 | **Waiting** | How long they have been waiting, as `45m` or `1h 20m`. A checked-out visit's wait is frozen |
 | **For** | The visit items — a service, a lab test or a custom label. More than one reads like **Endoscopy +2** |
-| **With** | The staff member they are assigned to, or an em dash |
+| **With** | The staff member they are assigned to, or an em dash. The person it names is told: a **A patient was assigned to you** notice waits in their bell until they acknowledge it (it clears itself when the visit is checked out or cancelled), and the patient is on their **My Patients** list for that day |
 | **Location** | The room, if one was recorded |
 | **Status** | The wait band |
 
@@ -60,6 +62,8 @@ Four wait bands, and the colours are not what people assume — amber is ordinar
 | **Waiting** | Five minutes up to your threshold, amber |
 | **Long wait** | Past your threshold, red. Sorted to the top |
 | **Checked out** | They have left, grey |
+
+A visit the hospital closed on its own — see **Automatic check-out** below — carries a small **(automatic)** note beside the **Checked out** badge, so it never reads as if a staff member did it.
 
 When nothing is queued the board reads **Nobody waiting** — "Check someone in to see them here."
 
@@ -84,7 +88,21 @@ When nothing is queued the board reads **Nobody waiting** — "Check someone in 
 
 Select **Check out** on the row — it is only there while the person is still in. It takes effect immediately with no confirmation, because a confirmation on every one would slow a busy desk to a crawl, and because it is reversible: check them back in the same day with **Check back in** on the row. A checked-out visit from an earlier day shows **Earlier day** instead — check the patient in again.
 
+<Note>
+  For a visit the hospital closed automatically, "the same day" means the day it **closed**, not the day it arrived — an automatic check-out is, by its nature, always at least a day (often several) past arrival, so measuring against arrival would make **Check back in** never appear on the one visit it exists for. After that day, check the patient in again, same as any other closed visit.
+</Note>
+
 Select **View**, or anywhere on the row, to reopen the visit sheet, where **Edit**, **Download PDF**, **Email patient** and **Cancel check-in** also live. **Cancel check-in** asks for a **Reason**, kept with the visit's audit trail. A visit's status only changes through these buttons — a checked-in patient can be checked out or cancelled, and a closed visit can only be checked back in — and the arrival time can only be edited while the patient is still checked in.
+
+## Automatic check-out
+
+A visit nobody closes does not stay open indefinitely. Every hospital checks out an unattended visit on its own after a fixed window — 24 hours by default — unless the patient is still in care: an open triage, a consultation in progress, or a current ward admission all hold the visit open past the window, and it becomes eligible again once care ends.
+
+The recorded check-out time is the arrival time plus the window, exactly — never the moment the sweep happened to run. The visit is marked **automatic**, with no staff member credited, and sends no notification, email or automation run.
+
+<Note>
+  The window is fixed at 24 hours on every plan below Enterprise. On the Enterprise plan, an owner or manager can extend it to 48 hours, 72 hours or 7 days — see **Automatically check out after** under [Facility settings](/hospital/settings/facility).
+</Note>
 
 ## When the hospital or a clinician is out of office
 
@@ -127,6 +145,7 @@ One number drives the tile, the badge and the sort order, so there is only ever 
 | --- | --- | --- |
 | Open the board | Any role the Front Desk group is shown to | Role Navigation, plus the **Front desk** care area |
 | Check in, check out, edit a visit | Anyone who can open the board | Role only |
+| Requeue a returning patient, or cancel a requeue | Nobody, until switched on | **Requeue patient** permission |
 | Change the long-wait threshold | Owner and managers | Owner or manager, on **Settings → Facility** |
 
 Two behaviours surprise people. Enforcement is **opt-in per person**: someone who has never been saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. And hiding a module from a role in [Role Navigation](/hospital/settings/role-navigation) is a convenience, not a security boundary — a denied action is recorded, an allowed one is not.
@@ -195,4 +214,4 @@ The board also sits behind your two-factor rule. If your hospital requires it an
 
 <StillStuck topic="the front desk board" />
 
-{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, lib/front-desk/waiting-time.ts, components/clinic/dashboard/settings/facility-settings.tsx, lib/clinic-nav-registry.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify */}
+{/* source of truth: components/clinic/front-desk/front-desk-content.tsx, components/clinic/front-desk/check-in-board.tsx, components/clinic/triage/queue/requeue-patient-sheet.tsx, lib/front-desk/waiting-time.ts, components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/auto-checkout-card.tsx, lib/check-ins/auto-checkout.ts, lib/clinic-nav-registry.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify; automatic check-out: ClinikEHR-Database supabase/migrations/20261487400000_patient_check_in_auto_checkout.sql */}

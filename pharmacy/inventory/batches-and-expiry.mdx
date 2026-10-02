@@ -42,6 +42,8 @@ Above the table sit four panels.
 
 Acknowledged alerts stay quiet for 30 days.
 
+**Alerts close themselves.** An alert is open only while the thing it warns about is still true. Receive or adjust stock above the level, change or remove the item's **Low-stock threshold**, correct a lot's expiry date, use a lot up, dispose of it, or archive the item, and its alert leaves the **Alerts** tab on its own — no refresh, and the tab count drops with it. If the item is still short, a low-stock alert becomes an out-of-stock one (or the reverse) instead of disappearing. The expiry-risk projection is recalculated overnight, so those rows clear the next morning.
+
 The projection itself needs the **Professional** plan — without it the panel shows a dashed card reading "Available on Professional and above". The branch recommendations behind **Check branches**, which find the branch still selling the item, need **Business**. See [Change your plan](/platform/plans/change-plan).
 
 When there is nothing to worry about the panel says so outright: "No stock at risk — every dated lot is on track to sell through before it expires."
@@ -82,12 +84,13 @@ The recall stays **open** until you close it. Closing it releases the quarantine
 
 If **Selling without stock** is enabled, the till will complete a sale for something the system does not think you hold. That is intentional — it keeps a queue moving — but it leaves a shortfall, and this tab is where shortfalls are cleared.
 
-The **POS shortfall** panel lists each one as **Open** or **Settled**.
+The **POS oversells** panel lists each one as **Open**, **Settled** or **Written off**. Switch on **Show resolved** to see the ones already cleared, and use the page controls underneath when there are more than fit on one page.
 
-- **Settle** draws the shortfall against stock you have since received. It reports how many units it settled, or tells you plainly when it could not: "No stock available to settle against — receive stock first, or write the shortfall off."
-- **Write off shortfall** records that the units will never be made whole. It takes a note, and it is the honest ending when the stock was never there.
+- **Settle from stock** draws the shortfall against stock you have since received. It asks you to confirm first, because it records a stock movement. It reports how many units it settled, or tells you plainly when it could not: "No stock available to settle against — receive stock first, or write the shortfall off."
+- **Write off** records that the units will never be made whole. It takes an optional note of up to 500 characters, and it is the honest ending when the stock was never there. A shortfall can be written off once; if someone else settled or wrote it off first, you are told and the list refreshes.
+- If the list cannot load, the panel says so and offers **Try again**. It never shows an empty list for a failed load.
 
-An empty tab reads "No oversells to reconcile", with "Every sale has been covered by recorded stock (or already reconciled)." underneath. A second panel, **Nothing to reconcile**, does the same job for dispenses.
+An empty tab reads "No oversells to reconcile", with "Every sale has been covered by recorded stock (or already reconciled)." underneath. A second panel, **Dispense reconciliation**, does the same job for prescriptions dispensed without drawing stock: **Mark reconciled** records who dealt with it and when, with an optional note, and an entry can be reconciled only once. After **Link all exact matches** in **Link medicines**, the list refreshes so rows for medicines that are now linked are no longer offered **Link to stock**.
 
 ## Who can do this
 
@@ -117,6 +120,7 @@ See [Staff permissions](/platform/team/permissions).
 
 - A newly received lot appears on the **Stock** tab with its expiry date filled in, not blank.
 - Once a lot crosses a horizon, it is listed on **Alerts** and the tab count rises.
+- After you receive stock above the threshold or correct a lot's expiry date, the alert is gone from **Alerts** without you acknowledging it.
 - After settling a shortfall, its row on **Reconciliation** moves from **Open** to **Settled**.
 - After closing a recall, the quarantined lots are sellable again.
 
@@ -148,7 +152,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="'No stock available to settle against — receive stock first, or write the shortfall off.'">
-    There is nothing on hand to settle the shortfall with. Receive the delivery first, or **Write off shortfall** if the units are never coming.
+    There is nothing on hand to settle the shortfall with. Receive the delivery first, or **Write off** the shortfall if the units are never coming.
   </Accordion>
 </AccordionGroup>
 

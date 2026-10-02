@@ -33,14 +33,30 @@ Six stat cards run across the top:
 
 | Card | Counts | Period |
 | --- | --- | --- |
-| **Total Patients** | "Registered in your clinic" | All time |
-| **New Patients** | Newly registered | "Last 30 days" |
-| **Active Patients** | "With recent activity" | Recent |
+| **Total Patients** | "Records you can open in this clinic" | All time |
+| **New Patients** | Registered in the last 30 days | "Last 30 days" |
+| **Seen recently** | "Had a consultation in the last 90 days" | Last 90 days |
 | **Consultations** | Consultations recorded | "Last 30 days" |
 | **Triages** | Triage records taken | "Last 30 days" |
 | **Top Blood Type** | "Most common" across your population | All time |
 
-Two tabs follow. **All Patients** is the list. **Analytics** charts your population: a bar chart of **new registrations over time** (filterable by date range), a status breakdown (**Active**, **Inactive**, **Waitlist**, **New (30d)**, **Returning**), an **age distribution** pie chart alongside an **Adult vs minor** count, a **gender distribution** pie chart, **admissions status** (**Admitted**, **Discharged**, **Not admitted**) and **clinical activity** for the last 90 days (**Consultations**, **Lab tests**, **Prescriptions**). Every figure is clinic-wide, across your whole patient population — not filtered to records any one person can open. A figure with nothing to count reads as a dash, never a zero.
+Two tabs follow. **All Patients** is the list. **Analytics** charts your population, and every figure carries a plain line saying what it counts and over what period:
+
+| Figure | What it counts |
+| --- | --- |
+| **Total** | Every record in this clinic that you can open |
+| **Active**, **Inactive**, **Waitlist** | Records marked that way |
+| **New (30d)** | Registered in the last 30 days |
+| **Registered earlier** | Registered more than 30 days ago (the percentage is its share of the total) |
+| **New registrations over time** | Records created in each calendar month, last 12 months — filterable by date range; a month counts when any day of it falls in your range |
+| **Age distribution** | Age today, in bands **0-17**, **18-30**, **31-45**, **46-59**, **60+**; no date of birth, or an impossible one, is **Unknown** |
+| **Adult vs minor** | Age today against your clinic's own age of majority (shown on the card); with no date of birth, the record's adult or minor type is used |
+| **Admitted** | In a ward bed right now (an open stay) |
+| **Discharged** | Left the ward in the last 30 days |
+| **Not admitted** | Everyone else, not in a ward bed right now |
+| **Consultations**, **Lab tests**, **Prescriptions** | Recorded in the last 90 days, across the whole clinic |
+
+There is also a **gender distribution** pie chart. The admissions figures are counted from your ward stays, so they always agree with the ward occupancy: discharging a patient closes the stay and updates the patient at once. A record you are not allowed to open (an assigned client) is left out of every figure, so no number can reveal one. A figure that could not be read shows a dash, never a zero.
 
 The page header carries **Refresh**, **Import**, **Export** and **New Patient**. The filters are not up there: **Patient status** (**Active**, **Inactive**, **Prospective**, **Archived**), **Billing type** (**Self pay**, **Insurance**), **Waitlist**, **Location** and **Columns** all sit on the table itself, beside the search box. Each filter carries a count while it is on and a **Clear filter** entry; **Clear all** appears once any is set. **Columns** opens a **Visible Columns** list.
 
@@ -104,6 +120,31 @@ Patients who register themselves do not go straight onto your list. They arrive 
 ## Import and export
 
 **Import** takes an existing list in bulk, which is how most hospitals arrive. **Export** takes it out again, and is greyed out while you have no patients. Check a handful of imported records by hand before you rely on the batch — a column mapped to the wrong field is far cheaper to catch at ten records than at ten thousand.
+
+## Importing from another system (FHIR / NDJSON)
+
+The platform can also validate and import a standard FHIR file, an NDJSON file, or a plain JSON
+list of patients — checking every row before writing anything: if any row has a problem, nothing is
+imported and you see exactly which row and field needs fixing, or you can choose to import only the
+rows that passed. A possible duplicate is still added and flagged for you to review — never silently
+merged or refused. No patient is contacted and no automated message goes out because of an import.
+
+To open it, select **Import patients** on the toolbar above the table — the panel is titled
+**Import patients**. Only a clinic owner or manager can import; anyone else is told so inside the
+panel, and nothing is written. The same file types work here whatever the spreadsheet **Import**
+in the page header does — that one maps columns, this one reads a standard health-record file.
+
+A file can hold up to 100 patients. For a longer list, split it into several files and import them one
+after another.
+
+### Possible duplicates
+
+When an import (or a connected system) adds a record that looks like one you already hold, both are
+kept and a **Possible duplicates** button appears on the toolbar, with the number waiting. It is not
+shown while there is nothing to review, and it is shown to owners and managers only. Selecting it
+opens **Possible duplicate patients**, which puts the **New record** beside the **Existing record**.
+Choose **These are different people** to dismiss the pair, or **Same person** to note that they
+should be combined — nothing is merged for you, so combine the two records' information by hand.
 
 ## Who can do this
 
@@ -182,7 +223,7 @@ If your hospital restricts sections by role, a role without this page sees "You 
   </Accordion>
 
   <Accordion title="Do the Analytics figures include waitlist requests?">
-    **Total** does — the same total the top **Total Patients** card shows — and **Analytics** breaks it out further with its own **Waitlist** figure so you can see how many of that total are still pending. **Active**, **Inactive** and the other status figures reflect a patient's actual status once you have decided it, same as everywhere else on this page.
+    **Total** does — the same total the top **Total Patients** card shows, since both count the records you can open — and **Analytics** breaks it out further with its own **Waitlist** figure so you can see how many of that total are still pending. **Active**, **Inactive** and the other status figures reflect a patient's actual status once you have decided it, same as everywhere else on this page.
   </Accordion>
 </AccordionGroup>
 

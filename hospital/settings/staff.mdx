@@ -74,6 +74,7 @@ The **Permissions** sheet groups them by section. On a hospital you can grant:
 | **Ward** (needs In-patient care) | Record observations · Give a medication · Change or stop a medication · Discharge a patient · Amend the problem list · Change the treatment team |
 | **Theatre** (needs Surgical theatre) | Book and reschedule cases · Advance a case · Cancel a case · Record the operation note · Sign the operation note · Manage theatres and the safety checklist |
 | **Triage** | Record triage · Set triage acuity |
+| **Payments** | Collect payments |
 | **Packages & gift cards** | Sell packages · Sell gift cards · Redeem at checkout (package sessions, gift cards and promo codes on an invoice) |
 
 <Note>
@@ -82,6 +83,10 @@ The **Permissions** sheet groups them by section. On a hospital you can grant:
   It is not a check of anyone's licence to prescribe. ClinikEHR cannot know which of your clinicians hold prescribing rights in your jurisdiction, so this is your decision to record, not ours to infer. Grant it deliberately.
 
   Staff who are not governed at all are unaffected, as with every permission here.
+</Note>
+
+<Note>
+  **Collect payments** covers taking a patient's payment from **Payments**, from an invoice's **Record Payment**, from **Collect payment** on a pharmacy or lab row and when charging a card on file. Owners and managers can always do it, and so can anyone you have not saved in the permissions sheet. When you save someone it arrives on for a receptionist, cashier, biller, accountant, pharmacist, pharmacy technician, records officer or storekeeper, and off for doctors, nurses and other clinical roles until you switch it on. Anyone without it sees those controls greyed out with "Your role can't take payments at this clinic. Ask an owner or manager."
 </Note>
 
 <Note>
@@ -105,6 +110,27 @@ Each carries a line explaining exactly what it allows — "Record a dose as give
 
 Owners and managers are never narrowed by any of this.
 
+## Choose who countersigns a team member's notes
+
+A supervised clinician's signed notes wait for a supervisor's countersignature. Owners and managers set that from the staff list.
+
+1. Open the **Actions** menu on the person's row and choose **Supervisors**.
+2. Pick a **Supervisor**, and optionally a **Second supervisor**. Only team members whose role can supervise are offered, and never the person themselves.
+3. Choose **Save**. The team member and the supervisors who gained or lost them are told.
+
+What happens next:
+
+| Situation | What it means |
+|---|---|
+| Two supervisors | Either one can countersign. Whoever acts first closes the request, and the note shows who. |
+| No supervisor | The person's notes need no countersignature. Clearing supervision releases any notes that were waiting. |
+| **Return** | The supervisor returns a note with a reason. It reopens for its author only, who corrects it and signs again. The returned attempt stays in the note's history. |
+| Waiting | A note awaiting countersignature is signed by its author but **not final**, and its PDF says **AWAITING COUNTERSIGNATURE**. |
+
+A supervisor also needs the **Countersign a colleague’s note** permission if you have restricted what that person may do.
+
+If a supervisor is removed from the team, an owner sees **Choose a new supervisor** above the staff list until each person they supervised has someone new, and those people's notes skip the countersignature step in the meantime. Removing a supervisor yourself first asks you to reassign or clear each person they supervised; notes waiting for them move to the new supervisor.
+
 ## Check it worked
 
 The person appears under **Pending Invitations** immediately and moves to **Staff Members** once they accept. Reopen their **Permissions** sheet and confirm the switches held. Then ask them to try one thing you deliberately switched off — it should be refused, and that refusal should appear in your audit log.
@@ -112,6 +138,9 @@ The person appears under **Pending Invitations** immediately and moves to **Staf
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="An invited person says they never got the email">
+    Check the person's row under **Staff Members**. If their **Last active** reads **Never**, the row offers **Resend email**. Press it and you are told plainly whether the email was handed over: if it was not delivered, the row says **Email not delivered — resend** and the message explains what to try. For someone who has never signed in, a resend carries a **new set-password link, and any earlier link stops working** — you are told so. Someone who has already signed in gets a short reminder instead and nothing changes about their sign-in. Hospital mail systems often quarantine mail from a sender they have not seen before, so ask your IT team to allow mail from support@clinikehr.com and look in their quarantine. The person can also open the sign-in page and choose **Forgot password** with the same address.
+  </Accordion>
   <Accordion title="There is no Invite Staff button">
     Inviting is owner-only. A manager or accountant can open the tab and read the lists.
   </Accordion>

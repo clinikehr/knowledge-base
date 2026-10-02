@@ -1,42 +1,34 @@
 ---
 title: The developer API
-description: "ClinikAPI is a separate FHIR R4 developer platform with its own SDKs, components and documentation, licensed apart from your subscription."
+description: "Create a key so another system can read your own workspace's data, and what the API add-on opens once you're ready for patient records."
 icon: /images/icons/code.svg
 ---
 
 import { Availability } from '/snippets/availability.mdx';
 
-<Availability editions={['all']} plans="Licensed separately from your ClinikEHR subscription" roles="Developers" />
+{/* source of truth: docs/ClinikEHR_API/IMPLEMENTATION_WAVES.md decisions W1-W47 (operator slice, workspaces, connections, API add-on) */}
 
-**ClinikAPI** is a developer platform for building healthcare software. It is a separate product from ClinikEHR, with its own account, its own pricing and its own documentation.
+<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner, manager, or staff granted the API access permission" />
 
-## What it is
+The **ClinikEHR API** lets another system — your own website, a partner's software, an internal report — read straight out of your ClinikEHR workspace, without anyone exporting a file by hand. You create the key yourself, from inside your own workspace, and choose exactly what it can see.
 
-A **FHIR R4** API — the healthcare interoperability standard — with SDKs and embeddable React components on top of it, so a developer can read and write clinical records from their own application rather than through a ClinikEHR screen.
+## What it opens today
 
-## Who it is for
+By default, a key you create reads your workspace's own **inventory**: locations, catalogue items, availability, and exact stock levels. The **API add-on** is what opens everything else your own keys can reach — patients, appointments, clinical notes, and your CRM — still only with keys you create yourself, for your own systems. See [API access](/platform/settings/api-access) for the full walkthrough, including the add-on and the API data agreement your patient records need before they're reachable.
 
-Engineering teams building a product: a companion app, an integration between ClinikEHR and another system, a bespoke portal, or a research tool.
-
-It is **not** the way to get your own data out of ClinikEHR for a spreadsheet or a migration. For that, use [Export your data](/platform/security/data-export), which needs no code and no separate account.
-
-## Licensing
-
-ClinikAPI is **licensed separately from your ClinikEHR subscription**. Being on any ClinikEHR plan, including Enterprise, does not include API access, and adding API access does not change your ClinikEHR plan. They are billed independently.
+You can also let another organization — a marketplace, a billing partner — connect to your workspace directly, item by item, under **Connected organizations** on the same tab. Nothing is ever shared without you approving it.
 
 ## Where the documentation is
 
-Everything a developer needs — authentication, resources, SDKs, the React components, sandbox keys and rate limits — is at [docs.clinikapi.com](https://docs.clinikapi.com). None of it is duplicated here, so that there is only one version to be correct.
-
-## Related
+Full endpoint reference, authentication, error codes, permissions and guides are at **[docs.clinikehr.com](https://docs.clinikehr.com)**. If you're the one writing the integration (rather than the one creating the key), that's where to send your developer.
 
 <Columns cols={2}>
-  <Card title="Export your data" icon="/images/icons/file-export.svg" href="/platform/security/data-export">
-    Getting your own records out as CSV or ZIP, no code required.
+  <Card title="API access" icon="/images/icons/plug.svg" href="/platform/settings/api-access">
+    Create a key, connect another organization, and buy the add-on that opens your patient records.
   </Card>
 
-  <Card title="Embed ClinikEHR on your website" icon="/images/icons/code.svg" href="/platform/integrations/embeds">
-    Putting a ClinikEHR page on your own site with a copy-paste snippet.
+  <Card title="Export your data" icon="/images/icons/file-export.svg" href="/platform/security/data-export">
+    Getting your own records out as CSV or ZIP, no code required — for a one-off, not an integration.
   </Card>
 
   <Card title="HIPAA and compliance" icon="/images/icons/shield-halved.svg" href="/platform/security/hipaa">
@@ -44,8 +36,12 @@ Everything a developer needs — authentication, resources, SDKs, the React comp
   </Card>
 
   <Card title="Contact support" icon="/images/icons/life-ring.svg" href="/platform/help/contact-support">
-    Questions about licensing ClinikAPI for your organisation.
+    Questions about a key, a connection, or the add-on.
   </Card>
 </Columns>
+
+## Not to be confused with ClinikAPI
+
+**ClinikAPI** is a **separate product** — a FHIR R4 developer platform for building your own healthcare software from scratch, licensed on its own, apart from any ClinikEHR subscription. It does not read a ClinikEHR clinic's records; if you're trying to get data out of your own ClinikEHR workspace, the API access above is what you want, not ClinikAPI. If you're building an independent product and want FHIR, SDKs and embeddable components, see [docs.clinikapi.com](https://docs.clinikapi.com).
 
 {/* source of truth: /Users/user/ClinikAPI (separate product); docs.clinikapi.com */}

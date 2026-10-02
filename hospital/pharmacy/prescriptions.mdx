@@ -11,7 +11,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the list; only a pharmacist gets the dispensing actions" note="Needs the In-house pharmacy care area" />
 
-**Prescription List** is the pharmacy unit's working queue: every script written across the hospital today, waiting for someone at the dispensary to pick it up. It is where a pharmacy shift starts.
+**Prescription List** is the pharmacy unit's working queue: every script written across the hospital within your **Pharmacy** queue window, waiting for someone at the dispensary to pick it up. That includes scripts a pharmacist wrote in the pharmacy station, and scripts for admitted patients. It is where a pharmacy shift starts.
 
 <Path steps={['Sidebar', 'Pharmacy', 'Prescription List']} />
 
@@ -19,7 +19,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 ## What you're looking at
 
-The page opens with a greeting and the line **Here's a list of all prescriptions for today!** — a reminder that this is the day's queue, not the archive. For anything older, go to [Prescription history](/hospital/pharmacy/prescription-history).
+The page opens with a greeting and the line **Here's a list of all prescriptions for today!** How far back the list looks is the **Pharmacy** queue window — an owner or manager sets it under **Settings → Facility → Queue windows** (24 hours up to 30 days). The same window decides how long a script stays open to dispense: a script in this list always opens. Anything older is in [Prescription history](/hospital/pharmacy/prescription-history).
 
 Above the table:
 
@@ -43,7 +43,7 @@ The table itself carries eight columns, five of them on by default:
 | **Date** | When it was written | No |
 | **Mode** | How the medication is taken | No |
 
-A **Ward Patient** badge on a row means the script belongs to an admitted patient, and the row's actions change wording to match — **View Ward Prescription**, **Dispense Ward Prescription**.
+A **Ward Patient** badge on a row means the script belongs to an admitted patient, and the row's actions change wording to match — **View Ward Prescription**, **Dispense Ward Prescription**. A script a pharmacist wrote with no visit behind it shows **Pharmacy Rx**, and everything one prescribing session wrote for that patient opens together.
 
 The footer sets how many rows you see — **5**, **10**, **20** or **50** **per page** — and tells you how many there are in total.
 
@@ -82,7 +82,30 @@ The dispensing actions appear only for staff signed in as a pharmacist. Everyone
   </Step>
 </Steps>
 
-Each line shows its amount as you set the dispensed quantity, and the card totals everything at the top. A medication with no price configured shows **"No price set"** rather than a $0. None of this appears for a clinic marked **free** in Settings.
+Each line shows its amount as you set the dispensed quantity, and the card totals everything at the top. A medication with no price configured shows **"No price set"** rather than a $0, and a row whose dispensed medicines have no price shows no payment badge — there is nothing to pay. None of this appears for a clinic marked **free** in Settings.
+
+## After you dispense
+
+Select **Dispense Prescriptions** and the success message appears, then you are back on the **Prescription List**. The row now reads **Dispensed**, and beside it a badge says **Payment pending**, **Part paid** or **Paid**. Nothing is charged by dispensing: payment is taken only when you choose **Collect payment** from the row, below.
+
+- If a dispensed line did not draw from stock — a medicine that is not linked to a stock item, a line with no quantity, or not enough usable stock — a **Stock did not move** message says so in plain words. Each is also listed under Inventory → **Reconciliation** so the shelf can be put right.
+- To hand the patient their slip, open the row's **⋯** menu and choose **Print dispensing slip** (see [Print from the list](#print-from-the-list)).
+- A clinic marked **free** in Settings sees no payment badge and no **Collect payment**, because there is nothing to collect.
+
+## Collect payment from the list
+
+**Collect payment** in a row's **⋯** menu opens a panel beside the list — you do not leave the page, and nothing is recorded until you select **Collect**. It is greyed out, with "Your role can't take payments at this clinic. Ask an owner or manager." beneath it, if your role cannot take payments or you have not been given the **Collect payments** permission.
+
+1. The medicines on that row that were dispensed and are still unpaid are **ticked**. The patient's other unpaid items are listed below, unticked, so you can add them.
+2. A medicine with no price shows **No price set** and cannot be ticked; the line says who can set its price in Inventory.
+3. To take part of a line, change **Pay now**. Choose the **Payment method** (Insurance appears only for a patient with insurance on file) and, if you like, add a note. The panel shows the subtotal, any tax or additional charge, and **To collect** in your clinic's currency.
+4. Select **Collect**. **Payment recorded** appears with the reference, and **Print receipt** prints the receipt. If anything goes wrong you see the reason and nothing is marked paid.
+
+In a clinic marked **free** the item does not appear at all. Payment needs a connection: with no internet the panel says **Payment needs a connection** and does not send anything. The row's menu then offers **Print payment receipt** instead of **Collect payment**. The same payment is also listed under [Payments](/hospital/revenue/payments).
+
+## Print from the list
+
+The **⋯** menu on a row also prints. **Print dispensing slip** and **Download slip PDF** appear once a line has been dispensed. **Print payment receipt** and **Download receipt PDF** appear once a dispensed line has been paid, and **Collect payment** appears while one is still unpaid. Anyone who can open the script can print it, and each print is recorded in the audit log.
 
 Each medication also offers **Download PDF** — a server-generated prescription document (the patient's name, ID, date of birth, age and gender; medication, dosage, frequency, duration and the dosing schedule; quantity; the prescriber's name and licence, and the dispenser's once it is dispensed). A prescription not yet dispensed is stamped **"Not yet dispensed"**, so a partly-filled script can never be mistaken for the final record.
 
@@ -143,7 +166,7 @@ Two behaviours surprise people. Enforcement is **opt-in per person** — a colle
 
 <AccordionGroup>
   <Accordion title="Is this the same list as Prescription History?">
-    No. This is today's working queue. History is the cross-day record of everything ever dispensed, and it is the one to search when a patient asks what they were given last month.
+    No. This is the working queue for your Pharmacy queue window. History is the cross-day record of everything ever dispensed, and it is the one to search when a patient asks what they were given last month.
   </Accordion>
 
   <Accordion title="Why do some rows say Ward Prescription?">

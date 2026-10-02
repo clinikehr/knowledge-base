@@ -1,0 +1,62 @@
+---
+title: Drug requests
+description: "A connected partner sends a request for medicines for a linked customer. You decide what happens next — nothing is set aside until you say so."
+icon: /images/icons/pill.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy']} plans="Requires API access and a connected partner (Settings → API access)" roles="Owner, manager, or staff granted the Handle drug requests permission" />
+
+A partner you've connected to — for example a health plan that also runs pharmacies — can send you
+a **request** for medicines for one of its enrollees, once that person is linked as your own
+customer. You decide what happens to every request; nothing is prepared or set aside until you say
+so, and no price ever appears on a request or moves through it. Dispensing always happens at your
+own till, the same way as any other sale.
+
+<Path steps={['Sidebar', 'Requests']} />
+
+<TaskHeader
+  before="A connected partner has sent at least one request"
+  time="A few minutes per request"
+  after="The request moved to its next state, and the partner can see that"
+/>
+
+## What you can do with a request
+
+| Action | What it means |
+| --- | --- |
+| **Accept** | You confirm you will prepare exactly what was asked for. Still nothing is set aside. |
+| **Accept some lines, decline others** | The request becomes **Partly accepted** — the partner sees which lines you agreed to. |
+| **Propose a substitute** | You offer a different medicine for a line, from your own catalogue. The partner has to confirm it before you go any further. |
+| **Decline** | You tell the partner you won't fill this request, with a reason they can see. |
+| **Mark ready** | You've decided what you'll hand over. This still reserves nothing — it only tells the partner the request is prepared. |
+| **Cancel** | You withdraw from a request you'd already accepted or marked ready — for example, if the stock turned out to be needed elsewhere. |
+| **Start a sale from a ready request** | Opens a sale at your till with this request in mind. You still confirm every line yourself before completing the sale, exactly like any other sale. |
+
+A request the partner doesn't hear back on by its needed-by date **expires** on its own — nothing is
+sent to anyone when that happens.
+
+## Money never moves through a request
+
+A request never carries a price, and accepting one never charges anyone. Payment happens the normal
+way, at your till, when the sale is completed — the request is simply linked to that sale afterward
+so you and the partner both know it was fulfilled.
+
+## Matching a line to your catalogue
+
+Most lines arrive with a code your system can already match automatically. When one doesn't match —
+or matches more than one item — you'll see **Not found in your catalogue**, and you can match or
+substitute it by hand when you decide on the request. This never guesses on your behalf.
+
+## While you're offline
+
+Requests can't be accepted, declined, or updated while your connection is down — you'll see your
+last-known list, clearly marked, until you're back online. If you start a sale from a ready request
+while offline, the sale itself is captured the same way any offline sale is, and it links back to the
+request automatically once your till reconnects.
+
+<StillStuck />

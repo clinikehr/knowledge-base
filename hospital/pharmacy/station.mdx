@@ -54,7 +54,7 @@ If the figures cannot be loaded you get **Could not load pharmacy analytics** ra
     **Additional Notes** carries anything the pharmacist should know. The **Prescription Summary** panel shows an **Estimated Total** so nobody is surprised at the counter.
   </Step>
   <Step title="Save">
-    You get **Prescription created successfully**, then a **Prescription Created** dialog showing a **Reference:**. Quote that number to find the script again, and print it from the dialog if the patient is taking paper away.
+    You get **Prescription created successfully**, then a **Prescription Created** panel showing a **Reference:**. Quote that number to find the script again, and print it from the panel if the patient is taking paper away. Creating a prescription takes no payment: where your clinic charges, the panel shows the **Amount due** with a **Payment pending** badge. Medicines are billed when they are dispensed, so **Collect payment** lists what the patient owes once they have been — the same panel as on the [Prescription List](/hospital/pharmacy/prescriptions). It is greyed out, with the reason beneath, if your role cannot take payments, and a clinic marked **free** in Settings sees no amount and no **Collect payment**.
   </Step>
 </Steps>
 
@@ -70,7 +70,7 @@ Writing a script and moving stock are two steps on purpose. Until stock is drawn
     Select the row. The **Fill prescription** sheet opens — "Draw from stock against this script — FEFO, patient-linked, audited."
   </Step>
   <Step title="Choose the stock and location">
-    Pick the **Stock item**, then the **Location** it comes from. **Quantity** shows the on-hand figure for that item beside the label, so you can see what you have while you type.
+    Pick the **Stock item**, then the **Location** it comes from. Each location in the list shows how much **usable** stock it holds — stock that is active and in date — and any that is expired or on hold. The sheet preselects the location holding the most usable stock. If no single location holds the whole quantity, a note names each location and what it holds. A dispense draws from one location at a time.
   </Step>
   <Step title="Name a witness for a controlled item">
     A controlled drug shows **Witness (controlled item)** and will not let you continue without one — "DEA requires a witness to dispense a controlled substance." Name the colleague who actually watched.
@@ -104,7 +104,7 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
 
 ## Check it worked
 
-- The **Prescription Created** dialog showed a **Reference:**, and the script is in the [prescription list](/hospital/pharmacy/prescriptions).
+- The **Prescription Created** panel showed a **Reference:**, and the script is in the [prescription list](/hospital/pharmacy/prescriptions).
 - After dispensing, the script has left **Fill Rx** and reads **Dispensed** in [prescription history](/hospital/pharmacy/prescription-history).
 - The stock item's on-hand figure in [Inventory](/hospital/supply/inventory) has fallen by the quantity you gave out.
 - A controlled dispense records both your name and the witness's.
@@ -121,7 +121,7 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
   </Accordion>
 
   <Accordion title="The quantity I need is more than is on hand">
-    Dispense what you have, or transfer stock in from another location. The **Location** picker only offers what that location actually holds.
+    The **Fill prescription** sheet says so before you press **Dispense**: it names each location and its usable quantity, and says how much is expired. Dispense what is usable, or transfer stock into one location first. Expired stock is never counted as available.
   </Accordion>
 
   <Accordion title="My colleague is not in the witness list">

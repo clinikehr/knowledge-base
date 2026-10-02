@@ -31,17 +31,30 @@ At a paid hospital, a patient's consultation payment is used the moment a doctor
 
 The module opens on **Select a Department** — "Choose the department you'd like to access for consultations. Each department has specialized services tailored to patient needs." Pick yours; if it has more than one sub-unit you choose that next, and with only one you go straight through.
 
-The queue that follows covers **the last 48 hours only**, and says so when it is empty: "No consultations found for Cardiology - Adult Clinic in the last 48 hours." Older encounters are on [Consultation history](/hospital/outpatient/consultation-history) — that is the whole reason that page exists.
+The queue that follows covers **your clinic's Queue window** for consultations — 48 hours unless your hospital changed it under **Settings → Facility → Queue windows** (24 hours to 30 days) — and says so when it is empty: "No consultations found for Cardiology - Adult Clinic in the last 72 hours." Nothing "moves" to history when the window passes: **Consultation history** holds every consultation, always, from the moment it exists. See [Consultation history](/hospital/outpatient/consultation-history) and [Facility](/hospital/settings/facility).
 
 The toolbar carries **Search for patient**, **New Consultation**, **Refresh** and **View Columns**. Columns are **Patient ID**, **Patient Name**, **Status**, **Blood Pressure** and **Pulse Rate**, with **Doctor** and **Created At** hidden by default. What a row offers depends on its status and on whether you may edit:
 
 | Row action | When it appears |
 | --- | --- |
-| **New consultation** | Status **Pending**, and you may edit |
-| **View consultation** | Status **Completed** — shown to everyone |
-| **Update Consultation** | Status **Completed**, and you may edit |
-| **Admit Patient** | You may edit and the patient is not already admitted |
-| **Currently admitted** | Disabled, when they already have a bed |
+| **New consultation** | Status **Pending**, and you may edit — and on any row that **already has a consultation**, so you can write a second, blank one for the same visit (see below) |
+| **Open consultation** | Status **In Progress** — a consultation a nurse's orders opened and no doctor has written in yet (the Status column reads **Awaiting doctor**) — and you may edit. It opens the existing consultation, with the nurse's complaint, notes, vitals and orders at the top |
+| **View consultation** | Any consultation that already exists (**In Progress** or **Completed**) — shown to everyone |
+| **Update consultation** | A consultation **you wrote** (status **In Progress** or **Completed**), and you may edit. Someone else's consultation never offers it |
+| **Write follow-up note** | A consultation that already exists, and you may write notes — whether you wrote it or not. It opens the follow-up note panel for that consultation |
+| **Admit Patient** | You may admit (Clinical Access) and the patient is not already admitted. It is one action among the others, never the only one |
+| **Admitted** | Disabled, when they already have a bed. Beside it (and on the **Admitted** card) is the date the stay began, so an old admission that was never closed is easy to spot |
+
+### Clicking a row, writing a follow-up note, starting another consultation
+
+Selecting a row whose patient already has a consultation opens **that consultation** in update mode — never a new one. If someone else wrote it, the chart opens read-only under **Written by** their name, and you get **Write follow-up note**, **New consultation** and **Admit patient** instead of **Update consultation**; only the person who wrote a consultation can change what it says.
+
+- **Write follow-up note** opens the same panel as in the chart: your own dated, signed entry under that consultation. From the row menu you do not have to open the chart first. The note appears under the consultation, in the chart's **Note** tab, after you leave and come back.
+- **New consultation** (in the row menu, and a button beside **Admit patient** in an open consultation) opens a blank consultation for the same visit. Nothing is created until you save it, so going back leaves no empty record. Once saved, that visit's row opens the **newest** consultation; the earlier one is still in [Consultation history](/hospital/outpatient/consultation-history). A draft you had started on one consultation is not offered on the other.
+- In an open consultation you wrote, **Follow-up note** sits just before **Dictate** on the **Note** tab.
+- A follow-up note can be corrected by **the person who wrote it**, their **supervisor**, or the **co-signer** of the consultation it sits under — nobody else, owners and managers included. They see a pen, **Edit follow-up note**, beside it. The edit panel is prefilled; the note **stays signed by its author**, and you tick **I confirm this amendment is accurate and is my own edit.** before **Save edit** is available.
+- An edited note reads **Written … · Edited … by** your name, in your clinic's time. **Show earlier wording** lists every wording it had before, with who wrote it and when, so nothing is lost.
+- Each new consultation uses a consultation payment, as the first one did.
 
 ### What triage hands you
 
@@ -51,16 +64,18 @@ Two more lines appear when they apply. **Nurse orders — awaiting doctor** mean
 
 ### The chart
 
+Beside the tabs, directly under **Vitals at a glance**, sits the **From triage** card: everything the nurse recorded in the triage **Notes** tab — chief complaint, category, arrival, consciousness, mobility, demeanour, skin, breathing notes and the triage note itself — plus who recorded it and when, and any labs or imaging ordered at triage, so none of it has to be asked for again. The card does not repeat the vitals, because **Vitals at a glance** is right above it. A **Triage status** block at the top of the card shows the early-warning score with its band (for example **NEWS2 6 (medium)**), any **Isolation** precautions and the **Reassessment** countdown, each only when the nurse recorded it; the acuity level, **Emergency** flag and **Nurse orders — awaiting doctor** sit in the card's heading. There is no separate **Triage** card beside it. On a phone or tablet it appears under the vitals strip above the tabs. A long note starts shortened; select **Show more** to read all of it, and **Show less** to fold it back. If the nurse wrote nothing it says "No triage note was recorded." If the nurse changes the note later, the card shows the new text and an **Edited** time.
+
 Nine tabs, always in this order: **Overview**, **Chart**, **Results**, **Note**, **Orders**, **Vitals**, **History**, **Mail** and **Documents & forms**. A new consultation lands on **Note**; viewing or updating one lands on **Results**.
 
 | Tab | What it holds |
 | --- | --- |
 | **Overview** | The encounter at a glance |
-| **Chart** | Everything previously recorded, filterable. Empty: "Nothing recorded for this patient yet." |
+| **Chart** | Everything previously recorded for this patient, filterable. Empty: "Nothing recorded for this patient yet." |
 | **Results** | Results against this encounter. On a new one: "Nothing ordered on this encounter yet" |
 | **Note** | Your documentation and your diagnoses |
 | **Orders** | Medications, labs, imaging and services |
-| **Vitals** | **Vital**, **Value**, **Normal range** and **Status** for this visit, plus the patient's whole flowsheet underneath — every reading taken anywhere, triage, ward or the client record, each labelled with where it was taken — with a **This visit / All readings** toggle, and a **Record vitals** button to record a reassessment against this consultation without leaving the chart |
+| **Vitals** | **Vital**, **Value**, **Normal range** and **Status** for this visit, plus the patient's whole flowsheet underneath — every reading taken anywhere, triage, ward or the client record, each labelled with where it was taken — with a **This visit / All readings** toggle, and a **Record vitals** button to record a reassessment against this consultation without leaving the chart. A second sub-tab, **Triage notes**, lists every triage recorded for the patient: this visit's first, marked **This visit**, then earlier ones newest first, each with the full note, observations, vitals at triage and nurse orders. Select a row to open or fold it; a long history is paged. Empty: "No triage notes for this patient." If it cannot load you can select **Try again**. The sub-tab is kept in the page address, so a reload or a shared link opens on it |
 | **History** | Past encounters |
 | **Mail** | Email conversations somebody has linked to this patient — see [Read your mail](/hospital/overview/mail) |
 | **Documents & forms** | Documents attached to this patient, and everything they have been sent |
@@ -113,6 +128,14 @@ The **Note** tab has two sub-tabs, **Documentation** and **Diagnosis** with a co
 
 Diagnoses live here too, not under Orders. Select **Add first diagnosis**, then fill in **Diagnosis description** and "Clinical notes for this diagnosis...". **Add ICD-10** searches the code list, and there is a separate **Clinical impression** field — "Additional clinical notes or impression...".
 
+## Whose consultation is it?
+
+The clinician who writes a consultation's documentation is its author, and only the author can change it. Open a colleague's consultation and it is read-only: a banner says **Written by** their name and the date, the **Note** editor and autosave are off, and the orders are read-only too. Owners and managers can read it, unlock it and countersign it, but cannot rewrite it.
+
+A consultation opened for the doctor by a triage nurse's orders has no author yet. The first doctor to save documentation on it becomes its author, and that stays on the record.
+
+To add to someone else's consultation — or to one that is already signed — select **Add follow-up note**. You write your own entry, sign it and it appears under the original on the **Note** tab, in [Consultation history](/hospital/outpatient/consultation-history) and in the exported PDF. The original is never edited. This is also how a doctor documents a patient who returns the same day: a follow-up note on that visit, dated and signed.
+
 ## Place orders
 
 The **Orders** tab has four sub-tabs, each with a live count: **Medications**, **Labs**, **Imaging** and **Services**.
@@ -155,7 +178,8 @@ Three actions are deliberately switched off, each stating why. **Sign & lock** a
 | Action | Who by default | Permission |
 | --- | --- | --- |
 | Open the queue and view a chart | Any clinical role the Outpatient group is shown to | Role Navigation |
-| Write and save a consultation | Owner, doctor, physiotherapist, manager | Role — no slug |
+| Write and save a consultation | Owner, doctor, physiotherapist, manager — and only for a consultation you wrote, or one nobody has documented yet | Role — no slug. Authorship decides whose consultation it is |
+| Add a follow-up note under a colleague's consultation | Anyone who may write a consultation note | The clinic's **Clinical Access** choice |
 | Sign and lock it | Those who may edit | **Sign and lock a consultation** |
 | Countersign a colleague's work | Supervisors | **Countersign a colleague's note** |
 | Admit a patient to a ward | Those who may edit | **Admit a patient to a ward** |
@@ -183,7 +207,11 @@ A signed note is read-only for everyone, whatever their role, until it is unlock
   </Accordion>
 
   <Accordion title="The patient is not in the queue">
-    Consultation queues are filled by triage. Either they were never triaged into your department, or it happened more than 48 hours ago — look on [Consultation history](/hospital/outpatient/consultation-history).
+    Consultation queues are filled by triage. Either they were never triaged into your department, or it happened longer ago than your clinic's Queue window — look on [Consultation history](/hospital/outpatient/consultation-history).
+  </Accordion>
+
+  <Accordion title="It says 'This note was written by …' and will not save">
+    Someone else wrote this consultation's documentation. Only its author can change it. Select **Add follow-up note** to add your own signed entry under theirs.
   </Accordion>
 
   <Accordion title="Sign & lock will not do anything">
@@ -207,7 +235,11 @@ A signed note is read-only for everyone, whatever their role, until it is unlock
 
 <AccordionGroup>
   <Accordion title="Can I edit a signed consultation?">
-    Only after unlocking it. Select **Unlock**, make the correction, then sign again. Both the unlock and the re-signature are recorded, so amend rather than working around it.
+    Only its author can, and only after unlocking it. Select **Unlock**, make the correction, then sign again. Both the unlock and the re-signature are recorded, so amend rather than working around it. If you are not the author — or you only need to add something — use **Add follow-up note**.
+  </Accordion>
+
+  <Accordion title="Can a manager fix a doctor's consultation?">
+    No. A manager can read it, unlock it and countersign it, and can add a follow-up note of their own. The doctor's wording stays the doctor's.
   </Accordion>
 
   <Accordion title="Does 'Draft saved' mean the record is filed?">

@@ -21,6 +21,12 @@ The **Departments** tab holds the structure your clinicians pass through on thei
   after="Clinicians can open a consultation list, and each consultation has a price"
 />
 
+## Departments and the rota
+
+**This is a ward / inpatient department** is a switch on each department (owner or manager only; every change is recorded in the audit log). Turn it on for the departments that run inpatient care. The rota offers your **Nursing shifts** times for ward shifts only, and marks a ward shift whose times do not line up with them **Outside the nursing pattern**. Departments that were named like one of your wards were switched on once for you when this arrived; the switch, not the name, is what counts from then on.
+
+A rota shift points at its department itself, not at its name, so **renaming a department never breaks a shift**. If you set a department to **Inactive** while upcoming shifts use it, you are asked first and told how many; the shifts stay on the [rota](/hospital/settings/shifts), marked **Inactive department**, and **Move those shifts** in the rota's banner reassigns them when you are ready. A department with sub-units lets a shift narrow to one sub-unit.
+
 ## What this tab controls
 
 One expandable list, three levels: every department is listed with a summary ("3 sub-units · 7 rates") **without opening anything** — select a department's row to expand it and see its sub-units, and a sub-unit's row to see its consultation rates. Nothing is hidden behind an Add button.
@@ -40,6 +46,7 @@ One expandable list, three levels: every department is listed with a summary ("3
 | **Price** | In your hospital's currency, taken from Billing settings | 0 |
 | **Duration (minutes)** | How long the appointment runs. Minimum 5 | 30 |
 | **Validity duration** + **Validity unit** | How long the consultation stays valid — **Hour(s)**, **Day(s)**, **Week(s)** or **Month(s)** | 1 Day |
+| **Visits allowed** | **One visit**, **Unlimited within validity**, or **Up to N visits** (2–99) — how many times a patient may be seen on ONE payment before the validity period runs out. Not shown for a hospital that does not charge for consultations. | One visit |
 | **Active** | "Enable this rate for bookings" | On |
 
 Edit and delete are available for all three levels from each row's **⋮** menu.
@@ -50,7 +57,7 @@ Edit and delete are available for all three levels from each row's **⋮** menu.
 
 <Steps>
   <Step title="Add a department">
-    Select **Add Department**, fill in **Department name**, and add a code and description if you want them. Leave **Status** on **Active** and select **Add department** in the dialog.
+    Select **Add Department**, fill in **Department name**, and add a code and description if you want them. Leave **Status** on **Active** and select **Add department**.
   </Step>
   <Step title="Expand the department">
     Select the department's row to expand it — it starts with "No sub-units yet" and an inline **Add sub-unit** link, or use **Add sub-unit** from its **⋮** menu.
@@ -59,7 +66,7 @@ Edit and delete are available for all three levels from each row's **⋮** menu.
     Name it, e.g. "Gastroenterology". Even a department with one clinic needs one, because that is where the rates live.
   </Step>
   <Step title="Expand the sub-unit and add rates">
-    Select the sub-unit's row to expand it, then **Add rate**. Name it, choose the **Consultation type**, and set **Price**, **Duration (minutes)** and the validity. An initial and a follow-up is the common minimum.
+    Select the sub-unit's row to expand it, then **Add rate**. Name it, choose the **Consultation type**, and set **Price**, **Duration (minutes)** and the validity. Choose **Visits allowed** if this payment should cover more than one visit — leave it on **One visit** for the traditional pay-per-visit rate. An initial and a follow-up is the common minimum.
   </Step>
   <Step title="Repeat for every department you run">
     Each row's summary line ("3 sub-units · 7 rates") lets you check at a glance that nothing is left at zero.
@@ -82,7 +89,9 @@ Departments are not decoration. They populate the mandatory **Select a Departmen
 | Added a rate | It becomes selectable when a consultation is charged, at the price, duration and validity you set. Switching a rate to inactive takes it off the list without deleting its history. |
 | No departments at all | Clinicians cannot open a consultation list. They get **No Departments Found** — "Your clinic doesn't have any departments set up yet" — and a **Set Up Departments** button that lands here. |
 
-Existing consultations are not re-priced or re-filed when you change a rate or rename a department.
+Existing consultations are not re-priced or re-filed when you change a rate or rename a department. Changing **Visits allowed** on a rate only affects payments made from that point on — a patient who already paid keeps the rule their payment was made under.
+
+If a hospital sells a rate that covers more than one visit, front desk and triage staff can bring a returning patient back onto the department's waiting list with **Requeue patient**, without taking a new payment — see [Triage](/hospital/outpatient/triage).
 
 ## Check it worked
 
@@ -115,4 +124,4 @@ Setting up a hospital for the first time? [Create your departments](/hospital/ge
 
 <StillStuck topic="departments" />
 
-{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/consultation/department-selector.tsx */}
+{/* source of truth: components/clinic/dashboard/settings/department-settings.tsx, components/clinic/dashboard/settings/consultation-rate-visits-field.tsx, components/clinic/consultation/department-selector.tsx, lib/consultation/validity.ts */}

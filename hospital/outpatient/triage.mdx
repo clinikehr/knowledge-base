@@ -33,14 +33,17 @@ Triage is where a patient's vital signs and early assessment are recorded, and w
 
 A department's queue is a rolling window — **48 hours** by default, wider if an owner or manager has changed it under [Facility settings](/hospital/settings/facility) — with a **Search patients** box in the header, next to **Board view**.
 
-A **Waiting** section lists everyone this queue is waiting to triage — this is the only way to start a triage; the **Search patients** box narrows which cards and rows show, it does not open a separate way in. At a **paid** hospital that means patients with a valid, unused payment for this department, each with how long the payment has left (`2d left`, `18h left`). Under **Free Clinic Mode** it instead means patients checked in **today**, or booked with an appointment **today**, who have not yet been triaged in this department — a checked-in patient shows the time they checked in (`Checked in 09:12`), and a patient who is only booked (not yet checked in) shows the appointment's time instead (`Appointment 10:30`); a patient who is both booked and checked in shows just the checked-in card. There is no payment to expire, so no countdown. Either way, each card carries a **Start triage** button. A hospital with nobody waiting sees "No one is checked in or booked for today and waiting for triage" (free clinics) or simply no Waiting section (paid clinics with nobody paid and untriaged).
+A **Waiting** section lists everyone this queue is waiting to triage — this is the only way to start a triage; the **Search patients** box narrows which cards and rows show, it does not open a separate way in. At a **paid** hospital that means patients with a valid, unused payment for this department, each card showing the consultation, how many visits the payment covers (**One visit**, **Unlimited**, or **Up to N**) and how long it has left (`9 days left`, `Expires today`). Under **Free Clinic Mode** it instead means patients checked in **today**, or booked with an appointment **today**, who have not yet been triaged in this department — a checked-in patient shows the time they checked in (`Checked in 09:12`), and a patient who is only booked (not yet checked in) shows the appointment's time instead (`Appointment 10:30`); a patient who is both booked and checked in shows just the checked-in card. There is no payment to expire, so no countdown. Either way, each card carries a **Start triage** button. A hospital with nobody waiting sees "No one is checked in or booked for today and waiting for triage" (free clinics) or simply no Waiting section (paid clinics with nobody paid and untriaged).
+
+A card that was put back on the list with **Requeue patient** (see below) instead of a fresh payment shows **Requeued by [name] at [time]**, with its own **Cancel requeue** action.
 
 Below that, the triage table itself:
 
 | Column | Shows |
 | --- | --- |
 | **Patient** | Who was triaged, with an emergency icon and any privacy badges |
-| **Acuity** | The level, coloured, or **Not triaged** |
+| **Patient ID** | The patient's clinic ID, as in the consultation table, or **—** |
+| **Acuity** | The level, coloured, or **No acuity set** when none has been recorded (older triage records, and records marked triaged by someone who cannot set acuity, have none) |
 | **State** | **Waiting**, **In triage**, **Triaged**, **In consultation**, **Admitted**, **Discharged** or **Left without being seen** — and, where a nurse order opened the consultation ahead of the doctor, "Nurse orders — awaiting doctor" underneath |
 | **Complaint** | The chief complaint, or **—** |
 | **Wait / Reassess** | How long they have been waiting, and the reassessment countdown |
@@ -59,7 +62,7 @@ An empty queue reads "No triaged patients in this window," or "No patients match
     Select **Start triage** on the patient's card in the **Waiting** list. A triage always starts from that list — at a paid hospital because they have a valid payment for this department, at a free hospital because they checked in today, or have an appointment booked for today.
   </Step>
   <Step title="Record the vitals">
-    The chart opens on **Vitals**. Enter what you took — blood pressure (with position and cuff details), pulse, respiratory rate, temperature, oxygen saturation and device, weight and height, and, for a child, growth measurements. Nothing is mandatory; record what you took, in whichever unit your hospital displays (set under Facility settings). Select **Record vitals** to add the set to the flowsheet — a correction is a new set, never an edit of the last one.
+    The chart opens on **Vitals**. Enter what you took — blood pressure (with position and cuff details), pulse, respiratory rate, temperature, oxygen saturation and device, weight and height, and, for a child, growth measurements. Nothing is mandatory; record what you took, in whichever unit your hospital displays (set under Facility settings). Select **Record vitals** to add the set to the flowsheet — a correction is a new set, never an edit of the last one. A blood glucose reading typed in the wrong scale for your hospital's unit is refused with the conversion spelled out, e.g. "…that looks like mg/dL. In mmol/L it would be about 6.1 (divide by 18)."
   </Step>
   <Step title="Add the chief complaint and notes">
     On **Notes**, enter the **Chief complaint** — suggestions appear as you type — a **Category**, the **Arrival mode** (Walk-in, Ambulance, Referral, Wheelchair, Carried, Other) and any presentation or triage notes. A **Template** picker at the top of the chart can pre-select which tabs and instruments a nurse would open for this kind of visit; it is a shortcut, never a second rule set, and switching it after data is entered asks first. The chart suggests one from the patient's age and sex, marked **Suggested** with the reason. On **Record vitals** the template's fields come first under **For this template** — weight, capillary refill and level of consciousness for a child; oxygen device, work of breathing and peak flow for respiratory distress — with every other field still below; anything expected but left empty is listed after the set saves, and the set saves anyway.
@@ -75,6 +78,10 @@ An empty queue reads "No triaged patients in this window," or "No patients match
   </Step>
 </Steps>
 
+If you are allowed to set acuity and none is assigned, **Mark triaged** (and **Send to consultation**) first asks **No acuity has been assigned to this patient. Mark triaged anyway?** — confirm to continue, or cancel and set the acuity first.
+
+**Mark triaged** always shows, even when it cannot be used yet: before the first save it is greyed out with **Save the triage first**, and once a record has moved on (in consultation, admitted, discharged, or left without being seen) the button is replaced by that status in words — e.g. "Triaged — waiting for the doctor" — so the chart never simply drops a button with nothing said about why.
+
 ## The triage chart
 
 Opening a queue row — a **Waiting** card or an already-triaged row — replaces the queue with the chart, in tabs:
@@ -89,8 +96,22 @@ Opening a queue row — a **Waiting** card or an already-triaged row — replace
 | **Trends** | The last five triages' vitals against this one, with a direction arrow on each |
 | **Safety** | Isolation and infection screening, fall risk, and a mental-health/suicide-risk screen |
 | **Files** | Photos and documents, with a **This triage / All files** toggle over the patient's whole file vault |
-| **Orders** | Nurse-ordered labs and imaging, where your clinic allows it for this complaint |
+| **Orders** | Medications, labs, imaging and services in the same four sub-tabs as the consultation's **Orders** tab, where your clinic allows nurse orders for this complaint — see [Nurse orders](#nurse-orders) |
 | **Disposition** | Send to consultation, admit, refer out, discharge or record left without being seen |
+
+### Nurse orders
+
+The **Orders** tab has **Medications**, **Labs**, **Imaging** and **Services** sub-tabs, with a count on each, exactly as on the consultation's **Orders** tab. The sub-tab you are on stays in the address, so a reload or a shared link opens it.
+
+- Nurse orders work only when the patient's chief-complaint category is one your clinic allows under **Settings → Facility → Triage → Nurse orders**. If it is not, every sub-tab is replaced by a note saying so.
+- Each order is saved as soon as you add it. Orders go onto the patient's consultation: the one already open for this visit, or — if there is none yet — a new one with no doctor assigned, which the doctor's queue shows as "Nurse orders — awaiting doctor". A consultation the doctor has already signed does not take new orders; the tab says so.
+- **Medications** go to the pharmacy list like any prescription and carry your name as the person who ordered them. There is no separate doctor sign-off step for a medication ordered from triage.
+- Medications, labs and imaging each follow the role choices under **Settings → Facility → Clinical access**. If your role may not do one, its sub-tab stays visible with the reason and you cannot add to it. Services have no role setting.
+- An order you have placed can be withdrawn only once the doctor opens the consultation.
+
+If the patient is already on a ward, their card on the **Waiting** list carries an **Admitted · ward** chip with the date the stay began, so you know before you open the chart. Opening it, a banner at the top says so — the ward and bed, the date the stay began, and **Open ward chart**. You can still triage an admitted patient; the banner is there so you know. If the admission looks old, close it from [Discharges](/hospital/inpatient/discharges).
+
+What you record here is not copied anywhere. The doctor sees every field of the **Notes** tab on the consultation under **From triage** (directly below **Vitals at a glance**) and in the **Triage notes** sub-tab of the consultation's **Vitals** tab, and the ward sees it on the admission's **SnapShot** and in the **Triage notes** sub-tab of **Care History**. Placing a nurse order or saving a note does not admit anyone — a patient is admitted only when someone chooses **Admit** and picks a bed.
 
 A brand-new triage opens on **Vitals** — the first thing taken at the door. An existing one opens on **Overview**.
 
@@ -139,11 +160,38 @@ Drag a card to another column, or use its own **Move to…** menu, to move that 
 
 The department queue's **Emergency** button (and a row's **Mark emergency**) open a short **Emergency triage** sheet: pick or confirm the patient, a grade, the chief complaint and any vitals you have, then select **Record emergency**. It saves in one step and pins the patient first in the department's consultation queue with a red **Emergency** flag — **the payment gate still applies at a paid hospital**, and a patient with no valid payment is refused with a link straight to Billing so the desk can clear it without losing what was typed.
 
+## Requeue a returning patient
+
+A consultation rate can cover more than one visit — set under [Departments](/hospital/settings/departments) as **Unlimited within validity** or **Up to N visits**. A patient on such a rate who needs to be seen again does not need a new payment: select **Requeue patient** on the department's queue (or from the front desk's check-in board) to put them back on the Waiting list.
+
+<Steps>
+  <Step title="Open Requeue patient">
+    From the department queue's toolbar, or the front desk's check-in board, select **Requeue patient**. Not shown for a hospital in Free Clinic Mode — check-in is already how a returning patient gets back on that list.
+  </Step>
+  <Step title="Find the patient">
+    Search by name, the same picker used everywhere else in triage.
+  </Step>
+  <Step title="Choose the consultation">
+    Every consultation payment the patient still holds is shown as its own card — the department, how many visits it covers, and how long it has left. The visits and validity are the ones the patient paid for. A patient who is already in the triage queue can still be requeued — the card says **Also in the triage queue** and you can select it. A card that cannot be used says why: already on the waitlist, all visits used, or expired on a stated date — with a **Take a payment** link straight to Billing.
+  </Step>
+  <Step title="Add a note if you want one, and select Requeue">
+    The patient appears on the department's Waiting list at once, marked **Requeued**. If they are also in the triage queue, their row there shows **Also on waitlist**.
+  </Step>
+</Steps>
+
+A requeue never takes a visit off the payment and never creates a triage record by itself — the nurse still opens the chart and triages the patient as usual; the visit is only counted once the doctor opens the consultation. Requeuing a patient who is already on that department's waitlist is refused with the date their consultation is valid until and the visits they have left — cancel the first requeue if it was a mistake. Being in the triage queue never stops a requeue.
+
+<Info>
+  **Requeue patient** needs the **Requeue patient** permission — see [Permissions](/platform/team/permissions).
+</Info>
+
 ## Shift handover
 
-A **Handover** button on the department queue opens the department's shift handover: a running, append-only thread of notes tagged **Staffing**, **Equipment**, **Surge** or **Safety**, who is on this shift and the next (from your rota, where one exists), and — for the incoming shift — an **Acknowledge handover from** button naming the previous shift, once they have read it. It is a quiet indicator, never a gate: an unacknowledged handover shows a badge but blocks nothing.
+A **Handover** button on the department queue opens the department's shift handover: a running thread of notes tagged **Staffing**, **Equipment**, **Surge** or **Safety**, who is on this shift and the next (from your rota, where one exists), and — for the incoming shift — an **Acknowledge handover from** button naming the previous shift, once they have read it. It is a quiet indicator, never a gate: an unacknowledged handover shows a badge but blocks nothing.
 
-Each patient still in the queue can also carry its own handoff, written as **Situation / Background / Assessment / Recommendation** or as free text, from the chart's own **Handoff** tab or from the panel. A patient with no handoff written this shift is flagged so nothing is handed over silently. Select **Print** on the handover panel for a paper copy of the same information.
+Each patient still in the queue can also carry its own handoff, written as **Situation / Background / Assessment / Recommendation** or as free text, from the chart's own **Handoff** tab or from the panel. **Add handoff** opens a side panel; **Update handoff** opens the same panel already filled in with the patient's latest handoff, so you change only what is out of date — saving adds a new entry. The latest handoff's text is shown under the patient on the panel. The chart's **Handoff** tab lists every handoff for the patient, including ones from an earlier visit, and shows an error with **Try again** if they cannot be loaded. A patient with no handoff written this shift is flagged so nothing is handed over silently. Select **Print** on the handover panel for a paper copy of the same information.
+
+You can correct a note or a handoff you wrote while its shift is current, and for one hour after it ends: select **Edit** under your entry, change it and select **Save correction**. It then shows **Edited** with the time, and anyone can open what it said before — the original is kept. Nobody else can change your entry. A nurse who already acknowledged the handover sees **Edited after you acknowledged** on an entry that changed afterwards.
 
 The panel opens on a **Current shift** tab. Select **Previous shifts** to page back through this department's history — each row names the shift and when it started, how many notes and handoffs it carries, who wrote them, and whether the incoming shift acknowledged it; select a row to read its notes and handoffs. History stays scoped to the exact department (and sub-unit, if you opened one) you are viewing — it never mixes in another department's notes.
 
@@ -154,6 +202,7 @@ The panel opens on a **Current shift** tab. Select **Previous shifts** to page b
 | Open a department's queue and view a record | Any clinical role the Outpatient group is shown to | Role Navigation |
 | Create or update a triage record | Everyone who could before this permission existed | **Record triage** |
 | Change or set a patient's acuity level, or mark an emergency | Nobody, until switched on | **Set triage acuity** |
+| Requeue a returning patient, or cancel a requeue | Nobody, until switched on | **Requeue patient** |
 
 **Record triage** was switched on for everyone already governed by permissions when it shipped, since recording triage was never previously restricted — it behaves like [every other permission](/platform/team/permissions) from here on. **Set triage acuity** is new capability and starts off for everyone, badged **New**, until an owner or manager saves it on.
 
@@ -201,6 +250,14 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person** �
   <Accordion title="Emergency was refused">
     The sheet names why — almost always an unpaid or expired consultation fee at a paid hospital. Select **Go to Billing** from the same message to clear it.
   </Accordion>
+
+  <Accordion title="Requeue patient was refused">
+    The panel names why against the exact consultation you picked — expired on a stated date, all visits already used, or the patient is already on the waitlist (the message gives the date it is valid until and the visits left). A **Take a payment** link is offered when nothing on the patient's record is usable at all.
+  </Accordion>
+
+  <Accordion title="There's no Requeue patient button">
+    Either your hospital is in Free Clinic Mode (check-in replaces it there), or your role does not hold the **Requeue patient** permission — ask an owner or manager to check it under [Permissions](/platform/team/permissions).
+  </Accordion>
 </AccordionGroup>
 
 ## FAQ
@@ -229,4 +286,4 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person** �
 
 <StillStuck topic="triage" />
 
-{/* source of truth: components/clinic/triage/ (chart/triage-chart.tsx, queue/), components/clinic/general/department-selector.tsx, db/queries/triage-patients.ts, db/actions/triage-chart.ts, lib/triage/ (acuity.ts, instruments/, templates.ts, queue-state.ts), lib/clinic-nav-registry.ts */}
+{/* source of truth: components/clinic/triage/ (chart/triage-chart.tsx, queue/, queue/requeue-patient-sheet.tsx), components/clinic/general/department-selector.tsx, db/queries/triage-patients.ts, db/actions/triage-chart.ts, db/actions/triage-requeue.ts, lib/triage/ (acuity.ts, instruments/, templates.ts, queue-state.ts, mark-triaged-state.ts, glucose-entry.ts), lib/consultation/validity.ts, lib/clinic-nav-registry.ts */}

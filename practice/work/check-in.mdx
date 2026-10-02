@@ -48,7 +48,7 @@ The card sits on the chart's **Overview** tab and has two states:
     **Visit items — services, labs, custom** has two pickers, **+ Add service** and **+ Add lab test**, and a free-text box ("Custom item…") with its own **Add** button. Add as many as the visit needs.
   </Step>
   <Step title="Assign the visit">
-    Pick the clinician or team member under **Assign to**, or leave it on **Unassigned** and assign later.
+    Pick the clinician or team member under **Assign to**, or leave it on **Unassigned** and assign later. The person you pick is told — a **A patient was assigned to you** notice stays in their notification bell until they acknowledge it, and pops up on their screen if they are signed in — and the client appears on their **My Patients** list for that day, marked **Checked in today**. They can also see all their assigned visits under the **Mine** tab of the front desk board.
   </Step>
   <Step title="Enter the reason and the room">
     **Reason for visit** is free text — the placeholder suggests "e.g. Follow-up". **Location / room** ("e.g. Room 3") is for practices that track rooms, and **Notes (optional)** takes "Anything the care team should know…".
@@ -83,6 +83,20 @@ Checked somebody out by mistake, or cancelled the wrong visit? Choose **Check ba
 </Note>
 
 This works for a visit that was **checked out** and for one that was **cancelled**. If two people press it at once, nothing breaks — a visit that is already on the board simply stays there.
+
+<Note>
+  A visit the practice closed automatically (see below) can still be checked back in **on the day it was closed**, even though that is not the day it arrived — the "today" rule is measured against the closing, not the arrival, for exactly that one case. After that day, check the client in again instead.
+</Note>
+
+## Automatic check-out
+
+A visit nobody closes does not stay open forever. Every clinic checks out an unattended visit automatically after a fixed window — 24 hours by default — unless the client is still in care: an open triage, a consultation in progress, or a current admission all hold it open past the window.
+
+An automatically closed visit shows a **Checked out automatically** tag next to the **Out:** time instead of a staff name — nobody at your practice did this, so nobody is credited with it. It sends no notification, no email and no automation run. History and the visit record are unaffected either way.
+
+<Note>
+  On a solo or team practice, the window is fixed at 24 hours — there is no setting to change it. A hospital-structured clinic on the Enterprise plan can extend it under [Facility settings](/hospital/settings/facility).
+</Note>
 
 ## When you or the practice are out of office
 
@@ -209,4 +223,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck />
 
-{/* source of truth: components/clinic/clients-management/patient-checkin-sheet.tsx, client-management-form.tsx, db/actions/check-ins.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify */}
+{/* source of truth: components/clinic/clients-management/patient-checkin-sheet.tsx, client-management-form.tsx, db/actions/check-ins.ts, lib/check-ins/auto-checkout.ts; arrival notice: ClinikEHR-Database supabase/migrations/20261021000000_patient_arrival_notification.sql, supabase/functions/patient-arrival-notify; automatic check-out: ClinikEHR-Database supabase/migrations/20261487400000_patient_check_in_auto_checkout.sql */}

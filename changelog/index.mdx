@@ -7,6 +7,321 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="October 2, 2026" tags={["Hospital"]} description="Triage">
+  ## Nurses can order medications and services from triage, and orders no longer fail on an open consultation
+
+  The triage chart's **Orders** tab now matches the consultation's: **Medications**, **Labs**, **Imaging** and **Services** sub-tabs, each with a count, and the sub-tab you are on stays in the address.
+
+  - Adding an order no longer fails with "That consultation could not be found, or is no longer open for nurse orders" when the patient's consultation already exists or the doctor has started writing. Orders go onto the consultation for this visit, or a new one if there is none; a signed consultation says plainly that it can no longer take orders.
+  - Medications and services ordered at triage appear on the consultation and, for medications, in the pharmacy list.
+  - A role that may not prescribe or order a test still sees that sub-tab, with the reason and a pointer to **Settings → Facility → Clinical access**.
+
+  - The triage queue shows each patient's **Patient ID** again, in its own column and on the phone, tablet, board and **Waiting** cards, like the consultation table.
+
+  See [Nurse orders](/hospital/outpatient/triage#nurse-orders).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital"]} description="Triage">
+  ## Shift handoffs open filled in, and show up on the chart
+
+  Writing a patient's handoff on the shift handover panel now opens a side panel instead of a small pop-up, with **Save handoff** always in view on a phone.
+
+  - **Update handoff** starts from the patient's latest handoff instead of a blank form, and the latest text is shown under the patient on the panel. Correcting your own entry opens with every part filled in.
+  - The **Handoff** tab on the triage chart lists the patient's handoffs from earlier visits too, and says so when it cannot load them instead of showing an empty list. See [Triage](/hospital/outpatient/triage#shift-handover).
+
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital"]} description="Triage">
+  ## Every triage note for a patient, in a Triage notes sub-tab
+
+  The triage note used to sit at the top of the consultation's **Chart** tab and of the ward's **Care History**, which crowded the chart. It now has its own **Triage notes** sub-tab.
+
+  - On a consultation, open **Vitals** then **Triage notes**; on a ward chart, open **Care History** then **Triage notes** (beside **Timeline**). See [Consultation](/hospital/outpatient/consultation) and [Admissions](/hospital/inpatient/admissions).
+  - The triage for this visit comes first, marked **This visit**; earlier triages follow, newest first and paged, each with the full note, vitals at triage and nurse orders.
+  - The sub-tab is kept in the page address, so a reload or a shared link opens on it. The **From triage** card beside the vitals is unchanged.
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Platform"]} description="Facility settings">
+  ## Clinical access choices stay saved — and a save that changes nothing now says so
+
+  A role picked on a **Clinical access** row could appear to save and then be missing after a refresh. The row now shows exactly what is saved, a save that wrote nothing reports an error instead of **Saved**, and a manager can save these choices as well as the owner. See [Facility settings](/hospital/settings/facility).
+
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Platform"]} description="Shifts">
+  ## The shift rota offers wards, and shift times read in 12-hour
+
+  The shift rota only ever said "Department", so a hospital that had set up wards could not tell where its ward shifts were. It also asked for start and end times on a 24-hour clock.
+
+  - Choosing where a shift belongs now lists **Departments** and **Wards** separately, and the rota filter, the **By department or ward** grouping and the shift cards show **(Ward)** against a ward. See [Shifts](/hospital/settings/shifts).
+  - Start and end times use the same picker as the appointment form (**7:00 AM**, **7:00 PM**), in the shift, shift type and coverage rule panels. A shift that ends the next day is labelled **(next day)**.
+  - The rota's cells now show each shift's hours and where it is.
+
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy","Platform"]} description="Inventory">
+  ## Inventory alerts clear themselves when the problem is fixed
+
+  A low-stock or expiring-soon alert used to stay on the **Alerts** tab even after you had received stock, changed the threshold, fixed the expiry date or used the batch up. Now an alert closes as soon as it is no longer true, and the tab and its count update without a refresh.
+  - Receiving or adjusting stock above the level, changing or removing the **Low-stock threshold**, and archiving the item all clear its alerts. See [Batches, expiry and FEFO](/pharmacy/inventory/batches-and-expiry).
+  - Correcting a lot's expiry date, using the lot up or disposing of it clears its expiry alert. Expired stock that has been written off no longer leaves an **Expired** alert behind.
+  - Expiry-risk rows are recalculated overnight.
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy","Billing"]} description="Payments">
+  ## Creating a prescription never reads as paid, and report forms only take payment when you choose
+
+  - The **Prescription Created** panel now shows the **Amount due** with a **Payment pending** badge and says no payment has been taken, with **Collect payment** (the same payment panel as the list) and **Done**. A clinic marked **free** sees no amount and no payment button. See [Pharmacy station](/hospital/pharmacy/station).
+  - The radiology and lab report forms start with **Collect Payment Now** unticked, so a payment is recorded only when someone chooses to take it. In a **free** clinic the option no longer appears. See [Radiology reports](/hospital/diagnostics/radiology-reports).
+  - A pharmacy row whose dispensed medicines have no price no longer says **Payment pending** — there is nothing to pay. See [Prescriptions](/hospital/pharmacy/prescriptions).
+</Update>
+
+<Update label="October 1, 2026" tags={["Pharmacy","Hospital"]} description="Reconciliation">
+  ## Reconciliation clears every exception, and tells you when it cannot load
+
+  The **Reconciliation** tab in **Inventory** now behaves the same way on a phone, a tablet and a desktop, and every action on it says what it did.
+
+  - If the **POS oversells** or **Dispense reconciliation** list cannot load, you now see the problem with **Try again**, instead of "Nothing to reconcile".
+  - Both lists are paged, so a clinic with a long backlog can reach every entry rather than only the newest 200.
+  - **Settle from stock** asks you to confirm before it moves stock, and no longer leaves a record in the audit log when there was no stock to draw.
+  - **Write off** and **Mark reconciled** record who did it and when; an entry that someone else has already cleared is refreshed away instead of being overwritten. Notes are limited to 500 characters.
+  - After **Link all exact matches**, the dispense list refreshes so it stops offering **Link to stock** for medicines that are now linked.
+  - Buttons on the tab are large enough to tap. See [Reconciliation and the POS shortfall](/pharmacy/inventory/batches-and-expiry).
+</Update>
+
+<Update label="October 1, 2026" tags={["Pharmacy","Hospital"]} description="Dispensing checks">
+  ## Dispensing checks fits your screen, and the Possible same person tab opens again
+
+  The **Dispensing checks** page now uses the same layout as Payments on a phone, a tablet and a desktop, and its tabs scroll sideways when they do not fit.
+
+  - The **Possible same customer** tab opened with an error even when there was nothing to review. It now shows the pairs to review, or says there are none.
+  - Every tab now tells you when a list could not load and offers **Try again**, instead of leaving a blank page.
+  - **Flagged sales** is a table on a desktop and stacked cards on a phone or tablet; buttons are large enough to tap.
+  - The **Thresholds** number boxes no longer save a blank or zero value by mistake. See [Dispensing checks](/pharmacy/dispensing/refill-and-duplicate-checks).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy"]} description="Payments">
+  ## The pharmacy list shows what is paid, and free clinics are left alone
+
+  - The **Prescription List** now says **Payment pending**, **Part paid** or **Paid** beside each dispensed row, the same way the lab list does, and it flips to **Paid** as soon as you collect.
+  - Dispensing a prescription returns you to the list with the success message. **Collect payment** from the row's **⋯** menu opens the payment panel; nothing is recorded until you select **Collect**. Dispensing itself never charges. See [Prescriptions](/hospital/pharmacy/prescriptions).
+  - A clinic marked **free** no longer sees **Collect payment** or a payment badge on the pharmacy and lab lists, and a lab order there never takes payment. See [Lab tests and reports](/hospital/diagnostics/lab-reports).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy","Platform"]} description="Payments and permissions">
+  ## Decide who takes payments, and the lab list knows what is already paid
+
+  Taking money is now a permission you can give or withhold per person, and the lab list no longer asks for payment on tests that are already paid.
+
+  - **Collect payments** is a new switch in the permissions sheet, in every edition. It covers **Payments**, an invoice's **Record Payment**, **Collect payment** on the pharmacy and lab lists and charging a card on file. Owners and managers can always take payments, and so can anyone you have not saved in the permissions sheet. See [Staff permissions](/platform/team/permissions).
+  - When you save someone, **Collect payments** arrives on for receptionists, cashiers, billers, accountants, pharmacists, pharmacy technicians, records officers and storekeepers, and off for doctors, nurses, lab scientists and other clinical roles. People already saved in the permissions sheet were set the same way, so switch it on for a clinician who takes payments.
+  - Someone without it sees the payment buttons greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Nothing is hidden, and a refused attempt is recorded.
+  - On the lab list, a test that has been paid now says **Paid** and drops **Collect payment**, whether it came from a consultation, a ward or the lab page. A part-paid row says **Part paid**. See [Lab tests and reports](/hospital/diagnostics/lab-reports).
+  - **Invoice created now names the invoice.** The confirmation after **Create invoice** reads "Invoice INV-… created" with an **Open** button, instead of a generic message. See [Invoices](/hospital/revenue/invoices).
+  - **A pregnant patient's antenatal findings are back on the consultation chart.** Fetal heart rate (flagged when outside 110-160) and fundal height appear on the **Vitals** flowsheet, and the **Pregnancy** tab has a **This contact's findings** card. See [Pregnancy on the chart](/hospital/maternity/pregnancy-on-the-chart).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy"]} description="Payments">
+  ## Collect payment from the Pharmacy and Lab lists, without leaving the page
+
+  **Collect payment** on a prescription or lab row used to send you to the Payments page and make you find the patient again. It now opens a panel beside the list.
+
+  - The medicines you dispensed, or the tests on that row, are already ticked; the patient's other unpaid items are listed so you can add them. A medicine with no price says **No price set**.
+  - Choose the payment method, take all or part of each line, then **Collect**. **Print receipt** appears straight after, and the row stops offering **Collect payment**.
+  - Payment needs a connection: offline, the panel says so and sends nothing. See [Collect payment from the list](/hospital/pharmacy/prescriptions) and [Lab tests and reports](/hospital/diagnostics/lab-reports).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital"]} description="Triage">
+  ## Requeue a patient who is already in the triage queue
+
+  **Requeue patient** used to refuse anyone with an open triage record, so a returning patient whose earlier triage was still showing could not be put back on the waitlist. It no longer does.
+
+  - A patient in the triage queue can be put on the department's **Waiting** list, with the visits and validity of the consultation they paid for. Their queue row shows **Also on waitlist**.
+  - The only refusal is a patient who is already on the waitlist; the message gives the date their consultation is valid until and the visits left. See [Requeue a returning patient](/hospital/outpatient/triage).
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Pharmacy","Platform"]} description="Notifications">
+  ## Pop-ups for new triage, lab orders, prescriptions and emergencies, and your own say over them
+
+  The people whose work a record starts now find out when it arrives, without refreshing a page, and each person can decide how loudly.
+
+  - **New triage**, **New lab order** and **New prescription** pop up for the nurses, lab staff and pharmacists on shift now (everyone in the role when your rota names no one). Several at once become one pop-up, such as **3 new lab orders**. They never name the patient. See [Notification settings](/hospital/settings/notifications).
+  - **Emergency in triage** appears in red for the nurse of record and the doctors and nurses on shift. It stays until dismissed, cannot be switched off, and waits in the bell until acknowledged or the patient is seen.
+  - **My notifications** now has **Clinical activity**, **Assigned to you** and **Everything else**. Choose **Show in my bell** and **Pop up** for each new notice, and **Email me when a patient or shift is assigned to me** (a short email that names no patient). Set it from the clinic's Notifications settings or from **Profile and Settings → Notifications**. See [your notification settings](/platform/account/notifications).
+  - **Emergency in triage** also plays a short alert sound (once more after ten seconds if unacknowledged). **Play a sound for emergencies** is on by default; **Play a sound for other new notices** is off. If your browser blocks sound until you click, the pop-up says so.
+  - **New patient added** pops up by default for owners, managers, receptionists and other administrative roles, and sits quietly in the bell for everyone else, who can switch the pop-up on.
+  - A patient assigned to you now also sends that email, unless you switch it off.
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital"]} description="Triage · Consultation · Wards">
+  ## The whole triage note reaches the doctor and the ward
+
+  What the nurse wrote in the triage **Notes** tab used to be squeezed into a few lines on the consultation. It now shows in full, where the doctor and the ward nurse are already looking.
+
+  - On the consultation, the **From triage** card sits directly under **Vitals at a glance** with the chief complaint, category, arrival, consciousness, mobility, demeanour, skin, breathing notes and the triage note, the latest vitals, who recorded it and when.
+  - The consultation **Chart** tab and the ward chart's **Care History** tab open with a **Triage note** section showing the same note. See [Consultation](/hospital/outpatient/consultation) and [Admissions](/hospital/inpatient/admissions).
+  - A long note starts shortened with **Show more**; if the nurse changes it later, the card shows the new text and an **Edited** time. When nothing was written it says so.
+  - On the consultation, the **From triage** card no longer repeats the vitals shown in **Vitals at a glance**, and the separate **Triage** card is gone: its early-warning score, isolation and reassessment countdown now sit in a **Triage status** block inside **From triage**.
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital"]} description="Consultation">
+  ## Write a follow-up note or start a new consultation from the list
+
+  A patient who comes back the same day no longer needs a workaround, and a colleague's consultation no longer offers you an edit button you cannot use.
+
+  - On the **Consultation** list, a row that already has a consultation opens it, and its menu now includes **Write follow-up note** and **New consultation**.
+  - **New consultation** opens a blank consultation for the same visit. Nothing is saved until you save it, and the row then opens the newest one.
+  - **Update consultation** is offered only to the person who wrote the consultation. Anyone else sees **Write follow-up note**, **New consultation** and **Admit patient**. See [Consultation](/hospital/outpatient/consultation).
+  - Inside a consultation, **Write follow-up note** and **New consultation** sit beside **Admit patient**, and on a phone they are in the bar at the bottom.
+  - A follow-up note can now be corrected by its author, their supervisor or the consultation's co-signer. The note stays signed by its author, the edit shows as **Edited … by** the editor, and **Show earlier wording** keeps everything it said before.
+</Update>
+
+<Update label="October 1, 2026" tags={["Platform"]} description="API access">
+  ## API key lists no longer look like full keys
+
+  The **Key** column on **Settings → API access** used to print a long string that looked like a complete key. It is now called **Key ID** and shows a masked key ID with a clipboard icon.
+
+  - Select **Copy key ID** to copy the ID. It identifies the key to anyone helping you, but cannot be used to call the API.
+  - The full key is still shown once, when you create it. See [API access](/platform/settings/api-access).
+  - The list now fits a phone, pages when you have more than ten keys, shows the first two permissions with a **+N** for the rest, and selecting a key opens a panel with all of its details.
+  - **Create API key** has a **Select all permissions** box above the list. It ticks only the permissions the key can have, and shows how many are selected.
+</Update>
+
+<Update label="October 1, 2026" tags={["Hospital","Platform"]} description="Rota, departments and notifications">
+  ## Wards are marked, the bell updates by itself, and the people on shift come first
+
+  Follow-ups to the rota and notification changes.
+
+  - Each department has a **This is a ward / inpatient department** switch, which the rota and the nursing shift pattern use. See [Departments](/hospital/settings/departments).
+  - Notices that need your action (a patient assigned to you, a note waiting for co-signature or returned, a changed supervisor) are always delivered, even when the clinic has switched that category off. See [Notifications](/hospital/settings/notifications).
+  - The notification bell picks up new notices within about half a minute, without waiting for a refresh.
+  - Switching the rota from **Week** to **Month** opens the month you are in, even when the current week started in the previous month.
+  - Staff pickers list the people **On shift now** first, with everyone else still available. Older shifts with no department can be fixed from the banner on the rota. See [Shifts](/hospital/settings/shifts).
+  - Sending a cover or swap request closes its panel, so **Cover & swaps** is right there to show it.
+  - While the notification bell is open, new notices no longer pop up over it and block its tabs; an emergency still does.
+  - **Doses** on a live baby's birth now opens **BCG**, **OPV-0** and the **Hepatitis B birth dose** to record, and the baby's row shows **Birth doses 0/3**. They had been reading every live baby as a stillbirth and refusing to record. See [Babies and birth records](/hospital/maternity/babies).
+  - The date-and-time panel (such as **Time of birth**) fits a laptop-height window and scrolls inside itself, so **Done** is always reachable.
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Platform","Solo & Team"]} description="Clinical and admin fixes">
+  ## A patient assigned to you reaches you, the rota follows your departments, and the Analytics tab counts what it says
+
+  A consultation a nurse's orders opened can now be opened by the doctor from the list, a patient someone assigns to you shows up where you will see it, and the figures and lists on several screens do what their labels say.
+
+  - **Open a consultation a nurse started.** A consultation opened by nurse orders reads **Awaiting doctor** and its row now offers **Open consultation** (with **Admit Patient** as one action among the others, not the only one). The list shows your clinic's own Queue window, not a fixed 48 hours. See [Consultation](/hospital/outpatient/consultation).
+  - **Assign to a colleague and they know.** At check-in, in the triage nurse of record and when booking an appointment, the person you name gets a notice that stays in their bell until they acknowledge it and pops up if they are signed in; the front desk board has a **Mine** tab with a count, and the patient is on their **My Patients** list for that day. See [Check a client in and out](/practice/work/check-in) and [the front desk board](/hospital/front-desk/overview).
+  - **A notification bell that is yours.** **Unread**, **All** and **Archived**, mark read or unread, archive and restore, and **Acknowledge** on the notices that need you; read notices archive after 30 days. Each person can switch categories off, or silence the pop-up, for themselves. See [Notifications](/hospital/settings/notifications).
+  - **The rota follows your departments and locations.** A shift now belongs to a department you choose (with an optional sub-unit and, with several locations, a location), so the triage handover and the nursing station find the right people, and renaming a department no longer breaks a shift. Shifts that cannot be matched say **Department not set** with a one-click fix, and switching off a department or location that upcoming shifts use tells you how many. See [Shifts](/hospital/settings/shifts).
+  - **Patients Analytics counts what it says.** **Admitted** and **Discharged** now come from real ward stays and discharging a patient clears their admitted status; age bands add up, the adult age follows your clinic's setting, and every figure carries a line saying what it counts and over what period. See [Patients](/hospital/front-desk/patients).
+  - **"No acuity set".** A triaged patient with no acuity now says so instead of "Not triaged", and marking one triaged without an acuity asks first. See [Triage](/hospital/outpatient/triage).
+  - **Long lists scroll to the end.** The last options of a dropdown or searchable list are always reachable, with the mouse wheel, touch or the arrow keys, including inside a side panel; the tab rows on the charts show their scroll bar.
+  - **Staff email that did not arrive.** Adding a staff member now tells you if the welcome email could not be delivered, and a **Resend email** button on their row sends it again. See [Staff](/hospital/settings/staff).
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Pharmacy","Billing"]} description="Pharmacy fixes">
+  ## Dispensed prescriptions reach Payments, with a slip to print and the right price
+
+  A prescription a pharmacist wrote themselves never reached the Prescription List or Payments, medicines added in Inventory showed "No price" on the dispensing screen, and nothing printed after a dispense.
+
+  - **Every prescription is billable.** A dispensed script appears under Payments whether a doctor wrote it in a visit, it belongs to an admitted patient, or a pharmacist wrote it in the pharmacy station. A medicine with no price stays listed, marked **No price set**. See [Record and collect payments](/hospital/revenue/payments).
+  - **A pharmacist's own prescription joins the queue.** It shows as **Pharmacy Rx** in the [Prescription List](/hospital/pharmacy/prescriptions) and opens like any other script. A prescription written today now shows its real time, not 1:00 am.
+  - **Prices follow your stock.** A medicine created in Inventory keeps its selling price on the prescribing, dispensing and billing screens, and medicines that were missing one take it from their stock item. A price you set yourself is never changed.
+  - **After you dispense.** Print a money-free **dispensing slip**, go straight to **Collect payment**, and see in plain words any line that did not draw from stock. The **⋯** menu on the list prints the slip or the payment receipt too. See [Work the prescription list](/hospital/pharmacy/prescriptions#after-you-dispense).
+  - **Fill Rx shows usable stock.** Each location shows what it holds that is in date, the sheet preselects the one that holds it, and a shortfall is named by location before you press **Dispense**. See [the pharmacy station](/hospital/pharmacy/station).
+  - **Link medicines to stock.** **Link medicines** suggests the matching stock item for each unlinked medicine, you confirm row by row, and **Link all exact matches** handles the obvious ones. **Link to stock** on a **Reconciliation** row now links the medicine. See [Inventory](/hospital/supply/inventory#link-medicines-to-stock).
+  - **Choose what doctors can prescribe.** The prescriber's list shows **In stock**, **Out of stock** or **Not stocked** and lists stocked medicines first, and owners and managers can switch medicines off. See [Choose what doctors can prescribe](/hospital/supply/inventory#choose-what-doctors-can-prescribe).
+  - **Pharmacy purchases on the patient record.** A patient's till purchases appear in **Recent Activity**, read-only. See [Patient records](/hospital/records/patient-records).
+  - **Bold patient names.** The patient's name prints in bold on every receipt and slip. On the desktop app this arrives with the next desktop release.
+  - **Prescription window.** A script listed in the Prescription List always opens, however long your **Pharmacy** queue window is. See [Facility settings](/hospital/settings/facility).
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Solo & Team","Platform"]} description="Supervision">
+  ## Supervisors can countersign every kind of clinical note, and you choose who supervises whom
+
+  A supervised clinician's signed consultations, clinic notes, ward notes, treatment plans and care plans now wait for a supervisor's countersignature, and you can set supervisors for people already on your team.
+
+  - **Set supervisors after the invite.** Owners and managers choose up to two supervisors per team member from **Supervisors** in the staff row menu. Either can countersign. See [Choose who countersigns](/hospital/settings/staff#choose-who-countersigns-a-team-members-notes).
+  - **Return a note.** A supervisor can return a note with a reason. It reopens for its author only, who signs it again. The earlier attempt stays in its history.
+  - **On the note and its PDF.** The countersignature shows the supervisor's name, role and date. While it is waiting the note says it is not final.
+  - **Removing a supervisor.** You choose a new supervisor for each person they supervised first, and notes waiting for them move across.
+  - **Awaiting countersignature in lists.** Notes and consultations that still need a countersignature say so in the notes list and in consultation history.
+  - **Discharge summaries.** A discharge summary now belongs to the clinician who discharged the patient; a colleague adds a signed follow-up note, and a supervised discharger's summary is countersigned like any other note.
+  - **Treatment plans.** Only the author changes a plan's objectives. Any clinician can add a dated, signed progress entry, and complete or discontinue it. See [Add a progress entry](/practice/clinical/treatment-planners#add-a-progress-entry).
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Solo & Team","Platform"]} description="Notes">
+  ## A note belongs to the person who wrote it — colleagues add a signed follow-up note instead
+
+  Until now a colleague could open your consultation, clinic note or ward note and edit it. Only the person who wrote a note can change it now, and anyone else who has something to add writes their own follow-up note.
+
+  - **Read-only for everyone else.** A colleague's note opens under **Written by** their name and the date. The editor and autosave are off, owners and managers included. They can still read it, unlock it and countersign it. See [Clinic notes](/hospital/outpatient/notes#only-the-author-changes-a-note) and [Run a consultation](/hospital/outpatient/consultation#whose-consultation-is-it).
+  - **Add follow-up note.** Write your own entry, sign it, and it appears under the original in the chart, in history and in the exported PDF. The original is never edited. It is also how a doctor documents a patient who returns the same day. See [Add a follow-up note](/hospital/outpatient/notes#add-a-follow-up-note).
+  - **Consultations opened by a nurse's orders.** The first doctor to document the visit becomes its author.
+  - **Handover notes.** You can correct your own shift handover note or patient handoff while its shift is current, and for an hour after. The note shows **Edited** with the time, and the original wording is kept. A nurse who already acknowledged the handover sees **Edited after you acknowledged**. See [Read and write the handover](/hospital/inpatient/nursing-station#read-and-write-the-handover).
+  - **Sticky and status notes.** Only their author edits them. An owner or manager can archive someone else's old note; the archive is recorded. See [Sticky notes and status notes](/practice/work/client-chart#sticky-notes-and-status-notes).
+  - **Exports.** **Follow-up Notes** and **Handover Note Edit History** are new modules under [Data export](/hospital/settings/data-export).
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Solo & Team"]} description="Fixes">
+  ## A lab test you order yourself now shows in the lab list
+
+  A test raised with **New Test Report** was saved, but the **Laboratory** list said there was no recent lab test data, so nobody could find it to run.
+
+  - **Listed.** The test appears as soon as it is ordered, marked **Direct lab order**, with its payment status beside **Status** — an order still waiting for payment is listed too. See [Laboratory](/hospital/diagnostics/laboratory).
+  - **Opens where results are entered.** Choosing the row opens it on [Lab reports](/hospital/diagnostics/lab-reports), where you conduct it and enter the result.
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Solo & Team"]} description="Fixes">
+  ## What the triage nurse records now reaches the doctor and the ward, and an admitted patient is flagged
+
+  The chief complaint, triage note and nurse orders were hard to find once a patient moved on, and a patient who was already on a ward gave no sign of it at triage.
+
+  - **From triage.** The consultation's **Overview** and an admission's **SnapShot** now show the chief complaint, triage note, presentation, latest vitals and any labs or imaging ordered at triage — see [Consultation](/hospital/outpatient/consultation) and [Admissions](/hospital/inpatient/admissions).
+  - **Already admitted.** A patient who is on a ward shows an **Admitted · ward** chip on the triage **Waiting** list. Opening a triage for a patient who is on a ward shows a banner with the ward, bed and the date the stay began, and a link to the ward chart — see [Triage](/hospital/outpatient/triage).
+  - **When they were admitted.** The consultation header and **Admitted** card now show the date the stay began, so an old stay that was never closed is easy to recognise.
+</Update>
+
+<Update label="September 30, 2026" tags={["Hospital","Solo & Team","Platform"]} description="Fixes">
+  ## Patient charts use the whole screen, and every tab is easy to reach
+
+  On a large monitor the triage and consultation charts sat in a narrow column with wide empty margins, and on a phone or tablet the tabs past the edge of the screen gave no sign they were there. Both are fixed across the triage, consultation and ward charts and the client record.
+
+  - **Tabs you can find.** The tab row shows a thin scrollbar when there are more tabs than fit, fades at the edge that has more, and on a computer shows arrows to move along. The tab you are on always stays in view. Tab icons are larger beside their names, and each tab is easy to tap on a phone or tablet.
+  - **Charts fill a large screen.** The triage, consultation and client record screens no longer leave wide empty margins on a big desktop monitor.
+  - **Triage queue.** A department's **Waiting** list loads again, including when nobody is waiting, instead of saying the queue could not be loaded.
+  - **Note forms.** A note written on one of your practice's note forms no longer shows a **Next** button on its last page that did nothing. The note saves itself, as before.
+  - **Blank notes.** Text you typed while a note was saving is now kept and saved, instead of the note showing **Saved** without it.
+  - **Settings.** If your settings cannot be read for a moment, the page now says so and offers **Try again**, instead of showing "page not found".
+  - **Where a note opens.** A note written on a note form opens from the client's record, and the Notes page now explains why when you try to open one there — see [Open a note written on a note form](/practice/clinical/note-templates#open-a-note-written-on-a-note-form).
+</Update>
+
+<Update label="September 29, 2026" tags={["Pharmacy","Platform"]} description="Fixes">
+  ## Editing an item no longer blanks a cost you could not see
+
+  If you do not hold **View cost prices and margin**, or you are a setup assistant, saving an edit to an item used to clear its **Unit cost**. An edit now only changes a cost when you change it, so the recorded cost stays as it was.
+
+  - A setup assistant on a paid pharmacy is no longer shown the **Free plan** strip or stopped at 20 items. When the plan cannot be checked, no strip is shown — see [Setup Assistant](/pharmacy/settings/setup-assistant).
+
+</Update>
+
+<Update label="September 29, 2026" tags={["Hospital","Platform"]} description="Fixes">
+  ## A drafted note keeps saying who drafted it, even after it is signed
+
+  A note drafted by an assistant, or written by a connected system, already showed where it came from when you reopened it. That banner now stays put after you sign: it still reads **Drafted by** the assistant, marked **Reviewed**, with the date. A note you sign in the editor stops saying it is waiting for review straight away, instead of only after you reload.
+
+  - Choosing the note assistant now opens a **Choose the note assistant** panel from **Change assistant**, instead of a pair of cards inside the settings card — see [Choose a note assistant](/practice/clinical/note-assistant).
+</Update>
+
+<Update label="September 29, 2026" tags={["Hospital","Pharmacy","Platform"]} description="Fixes">
+  ## Import and duplicate review are now on the Patients page, and you can browse integrations
+
+  The importer for standard health-record files and the review of possible duplicates were built but sat on a screen nothing linked to. They are now on the toolbar of the Patients page you actually use.
+
+  - **Import patients** opens the importer from the toolbar — see [Importing from another system](/hospital/front-desk/patients).
+  - **Possible duplicates** appears, with a count, when an import or a connected system adds a record that looks like an existing one. Nothing is merged for you.
+  - **Browse integrations**, under Settings → API access, lists the organizations that have chosen to be found, so you can pick any of them rather than only the one offered by name — see [API access](/platform/settings/api-access).
+</Update>
+
 <Update label="September 26, 2026" tags={["Hospital","Billing","Pharmacy"]} description="Fixes">
   ## Payments stay with the right patient, and dispensing shows what's really recorded
 

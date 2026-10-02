@@ -1,0 +1,68 @@
+---
+title: Possibly the same person
+description: "A prompt to look when two customer records share a date of birth and a phone or name — never a finding, never a merge."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic', 'pharmacy']} roles="Pharmacist, owner, manager" />
+
+Sometimes two records at your pharmacy or practice turn out to describe the same person —
+registered twice, under slightly different details. ClinikEHR cannot know this for certain, so it
+never decides for you: it shows you a **possible match**, with the reason it noticed, and you look
+and decide. **This is a prompt, never a finding** — nothing about it changes a sale, a dispensing
+warning, or anything a check evaluates, and nothing is ever merged automatically.
+
+## What counts as a possible match
+
+Two records are shown together only when their **date of birth is the same**, and at least one of
+the following also matches:
+
+- The **same phone number** (formatting and country code ignored — "0803 555 0101" and
+  "+234 803 555 0101" are treated as the same number).
+- The **same full name** (capitalisation, spacing, accents, and the order names are written in are
+  all ignored).
+
+A shared phone number **alone** is never enough — households share one number. A shared name
+**alone** is never enough — common names repeat. And a missing date of birth on either record
+means no comparison is made at all.
+
+## The twins example — a known, expected case
+
+Twins share a date of birth, a surname, and very often the household phone number. Because the
+phone rule doesn't need the given name to agree, **twins will show up as a possible match** — the
+same phone, the same date of birth, different first names. This is expected, not a mistake: look
+at the two names, and mark them **Different people** in one click.
+
+## Where you'll see it
+
+A small note on a customer's or patient's own profile, "Possibly the same customer as …" (or
+"patient", depending on your edition), when a match exists for them:
+
+<Path steps={['Sidebar', 'Customers', 'a customer', 'Possibly the same customer as …']} />
+
+And a full list of every possible match at your pharmacy, on its own tab:
+
+<Path steps={['Sidebar', 'Pharmacy Station', 'Dispensing Checks', 'Possible same customer']} />
+
+## What each button does
+
+- **Different people** — records that you checked and they are not the same person. This pair
+  will not be shown to you again.
+- **Same person — to be combined by hand** — records that you believe they ARE the same person.
+  **Nothing is merged automatically** — ClinikEHR has no merge feature. Combine the two records'
+  information yourself, and make sure your team knows which one to keep using.
+- Either button opens a small panel where you can add an optional reason.
+
+## What this is not
+
+This is not the same thing as the **External access** card you may see on the same profile — that
+one is about outside organisations reaching this person's record through the API, a completely
+different question. It is also not "Possible duplicates" — the review for a record created twice
+by an import or an API connection. This feature is about two *separately registered* people who
+might be the same human being.
+
+<StillStuck />

@@ -36,6 +36,13 @@ The confirmation dialog, **Are you absolutely sure?**, lists the consequences un
   It removes the workspaces **you own**. Workspaces where you are merely a staff member are not deleted — you simply stop being able to reach them. If you only want to leave one clinic, ask its owner to remove you instead.
 </Note>
 
+## What can stop it before it's scheduled
+
+Before anything is scheduled, we check for a couple of things that would keep the deletion from finishing later — if either applies today, **nothing is scheduled and nothing is deleted.** The Danger Zone shows exactly what's holding it up and what to do, and **Delete My Account** is greyed out until it's resolved.
+
+- **You're the only owner of a developer workspace.** If you (or your practice) created a [ClinikEHR API](/platform/integrations/developer-api) developer-portal workspace and no one else can manage it, add another owner or close the workspace first, then come back. The card names the workspace and links straight to its members page at [developer.clinikehr.com](https://developer.clinikehr.com). (This is about a **ClinikEHR API** workspace specifically — a separate ClinikAPI account, if you have one, is not affected by this check.)
+- **A paid add-on needs to be closed by our team first.** A few integrations — **ePrescribe (MDToolbox)** and **eLabs Access** are the common ones — can't be switched off automatically. [Contact support](/platform/help/contact-support), we'll close it, and you can try again right after.
+
 ## Before you start
 
 <Steps>
@@ -68,7 +75,7 @@ The confirmation dialog, **Are you absolutely sure?**, lists the consequences un
     The confirm button stays disabled until you choose a reason.
   </Step>
   <Step title="Select Permanently Delete Everything">
-    Billing is cancelled at that moment and the 30-day clock starts. You get a confirmation naming the date everything will be removed.
+    Billing is cancelled at that moment and the 30-day clock starts. You get a confirmation naming today as the request date and the date everything will be removed.
   </Step>
 </Steps>
 
@@ -78,25 +85,37 @@ The confirmation dialog, **Are you absolutely sure?**, lists the consequences un
 
 ## Change your mind
 
-For 30 days the Danger Zone is replaced by **Deletion scheduled** with the date, and a **Cancel deletion — keep my account** button. Select it and your account and all workspace data are intact, exactly as they were.
+For 30 days the Danger Zone is replaced by **Deletion requested** with today's date and the date it completes, and a **Cancel deletion — keep my account** button. Select it and your account and all workspace data are intact, exactly as they were.
 
 The one thing that does not come back automatically is the subscription — it stays cancelled, and you re-subscribe from Billing. See [Change your plan](/platform/plans/change-plan).
 
+<Note>
+  **If an automated step along the way was refused or failed**, the Danger Zone says so plainly underneath the scheduled date — what happened, in plain language, and what to do about it. Your account is still intact and still on its original schedule; nothing is deleted early because of this. You can either fix the cause it names (usually one of the two things listed under [What can stop it before it's scheduled](#what-can-stop-it-before-its-scheduled) above) and wait, or select **Cancel deletion — keep my account** if you've changed your mind.
+</Note>
+
 ## Check it worked
 
-- The Danger Zone now reads **Deletion scheduled** with a date roughly 30 days out.
+- The Danger Zone now reads **Deletion requested** with today's date and a completion date roughly 30 days out.
 - Your Billing page shows no active subscription and no further charges.
 - Your export files are on your own machine and open correctly. Verify this today, not on day 29.
 
 ## If something goes wrong
 
 <AccordionGroup>
+  <Accordion title="Deletion is currently blocked — nothing has been deleted. / Delete My Account is greyed out">
+    Something would stop it from finishing later, so nothing was scheduled and the button won't open the confirmation dialog. See the item(s) listed on the Danger Zone card, above the button — each names what to do — or read [What can stop it before it's scheduled](#what-can-stop-it-before-its-scheduled) above.
+  </Accordion>
+
   <Accordion title="Deletion could not be scheduled. Nothing has been deleted — please try again.">
     Exactly what it says: nothing changed. Try again, and if it repeats, [contact support](/platform/help/contact-support).
   </Accordion>
 
   <Accordion title="Permanently Delete Everything is greyed out">
     You have not chosen a reason yet. Pick one from the list above the button.
+  </Accordion>
+
+  <Accordion title="The last attempt to complete this was refused, or failed">
+    This appears under your scheduled date if an automated step didn't go through when we tried. The message names what happened and what to do — usually the same two things listed under [What can stop it before it's scheduled](#what-can-stop-it-before-its-scheduled). Your account stays intact and on schedule while you sort it out; if you'd rather not, select **Cancel deletion — keep my account**.
   </Accordion>
 
   <Accordion title="The confirmation mentioned items still settling">
