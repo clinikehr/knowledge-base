@@ -11,7 +11,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open the board; the note pen follows your profession" note="Needs the In-patient care area" />
 
-The **Nursing Station** is the board you keep open for a whole shift. It answers one question — who needs something right now — and lets you record it without walking back to the desk.
+The **Nursing Station** is the board you keep open for a whole shift. It answers one question — who needs something right now — and lets you record it without walking back to the desk. You choose your ward first, so the board shows the patients you are looking after and nobody else.
 
 <Path steps={['Sidebar', 'Inpatient', 'Nursing Station']} />
 
@@ -25,25 +25,49 @@ The **Nursing Station** is the board you keep open for a whole shift. It answers
 
 The board's idea of "due" is not a guess. The observation interval, the grace period and your shift boundaries are set once by an owner under **Settings → Facility** — see [Facility](/hospital/settings/facility). If patients look overdue when they are not, or "nothing charted this shift" reads wrong, that is where it is fixed.
 
+## Choose your ward
+
+Opening **Nursing Station** shows **Select a Ward**: one card for each ward in your hospital, the same way Triage and Consultation show their departments.
+
+Each card carries the ward's name, how many patients are admitted (**3 admitted**), and — when there are any — how many have observations **overdue** or **due**. A figure shows **—** when it could not be read, rather than a zero that would claim an empty ward. Cards for wards that have sub-wards list a few of them and say how many there are.
+
+<Steps>
+  <Step title="Select a ward">
+    A ward with no sub-wards opens its board straight away.
+  </Step>
+  <Step title="Choose a sub-ward, or the whole ward">
+    A ward with sub-wards shows a second set of cards, with **Entire ward** first. Choose a sub-ward to see only its patients, or **Entire ward** for every bay in the ward. **Back to Wards** returns to the first step.
+  </Step>
+</Steps>
+
+If patients are admitted but have not been given a bed yet, one more card, **Not in a bed**, appears so they are not lost between wards. It disappears when there are none.
+
+With no wards set up, the page says **No Wards Found** and offers **Set Up Wards**, which opens **Settings → Facility**.
+
+The address of a board names its ward, so you can bookmark the one you work and reload it without choosing again. If an address names a ward that is not in your hospital, you see **Ward not found** and **Back to wards**; the page does not say whether the ward exists elsewhere.
+
 ## What you're looking at
 
-The heading reads **Nursing Station**, and under it: **Observations due across the ward. Recording happens on the patient.**
+The heading is the name of your ward — or **Ward — Sub-ward** when you chose a sub-ward — and above it **Nursing Station** takes you back to the ward cards. On a sub-ward's board the ward's name sits beside it and takes you to the whole ward. Under the heading: **Observations due on this ward. Recording happens on the patient.**
 
 **Filter chips** sit across the top and double as counts. Selecting one narrows the board:
 
 **Overdue · Due · No obs yet · Doses due · No fluids charted · All patients**
 
-Below them are the controls:
+Below them are the controls (the ward itself is chosen on the cards, not on the board):
 
 | Control | What it does |
 | --- | --- |
-| Ward select | Defaults to **All wards** |
 | **Search patient or bed…** | Finds one person without scrolling |
 | **Bed order** | Sorts the way you physically walk the ward |
 | **Priority** | Sorts by what is most overdue |
 | **Refresh** | Re-reads the board |
 
 Use **Bed order** while you are walking, and **Priority** when you come back from a break and need to catch up.
+
+**On shift now.** Above the filters, a line of names shows who the [rota](/hospital/settings/shifts) says is working at this moment. It lists the people whose shift is for the ward you chose (or its sub-ward), together with anyone on a shift for the **In-patient care** unit or for a ward department (one marked **This is a ward / inpatient department**), which cover every ward. If the rota names nobody, the line is left out rather than saying no one is on shift.
+
+If an admitted client's record is restricted to their care team and you are not on it, they do not appear in the worklist. A block headed **1 secured client** (or **2 secured clients**, and so on) above it shows **Secured patient** and a number with **Currently admitted** — no name, ward, bed, observations or doses — and it narrows to the ward or sub-ward you have chosen. Select **Request emergency access** on it if you need the record to give care now; once it is granted the client appears in the worklist like any other. See [Client security](/practice/work/client-security).
 
 ### The worklist columns
 
@@ -64,6 +88,8 @@ With nothing outstanding the board reads **Nothing waiting**. On a brand-new hos
 
 A **Shift handover** block sits above the worklist, on the page rather than behind a button, because a handover that takes a click stops being read.
 
+The block starts with who is on the [rota](/hospital/settings/shifts) for it: **On this shift** and **Next shift**, each with the names of the people whose shift is placed on that ward, together with anyone on a shift for the **In-patient care** unit or for a ward department (one marked **This is a ward / inpatient department**), which cover every ward. If nobody is placed there it says **No rota for this ward** and links to the rota filtered to that ward (**Open the rota for this ward**).
+
 <Steps>
   <Step title="Read what the last shift left">
     Until anyone writes, it says **Nothing written this shift yet.**
@@ -74,6 +100,9 @@ A **Shift handover** block sits above the worklist, on the page rather than behi
   <Step title="Correct your own entry">
     You can correct an entry you wrote while its shift is current, and for one hour after the shift ends so you can fix a slip found at handover. Select **Edit** under your entry, change the text and select **Save correction**. The entry then shows **Edited** with the time; select it to read what it said before — the original is always kept. Nobody else can change your entry. Once the hour has passed, the entry is read-only and a correction is a new entry.
   </Step>
+  <Step title="Acknowledge the handover you inherited">
+    Select **Acknowledge handover from** the previous shift once you have read it. It never blocks anything. Once someone acknowledges it, everyone who opens the handover — including the nurse who wrote it — sees who acknowledged it and when.
+  </Step>
   <Step title="Notice an entry that changed after you acknowledged">
     If you acknowledged the handover and the writer then corrected an entry, it shows **Edited after you acknowledged**. Read it again — the acknowledgement stays recorded, but the words are not the ones you read.
   </Step>
@@ -81,10 +110,10 @@ A **Shift handover** block sits above the worklist, on the page rather than behi
     **Open handover** shows this shift; once the previous shift has entries the button becomes **Handover &amp; history** and shows both.
   </Step>
   <Step title="Page back further">
-    The sheet opens on a **Current shift** tab. Select **Previous shifts** to page back through history beyond the shift immediately before — each row names the shift and when it started, how many notes it carries, who wrote them, and whether the incoming shift acknowledged it; select a row to read its notes. Choose a ward on the board first: a handover's history belongs to one ward, so **Previous shifts** asks you to choose one, the same as writing to the handover does.
+    The sheet opens on a **Current shift** tab. Select **Previous shifts** to page back through history beyond the shift immediately before — each row names the shift and when it started, how many notes it carries, who wrote them, and whether the incoming shift acknowledged it; select a row to read its notes. A handover's history belongs to one ward, which is why the board is always scoped to one. On the **Not in a bed** board there is no ward, so there is no handover to read or write.
   </Step>
   <Step title="Narrow to a sub-ward">
-    A ward divided into sub-wards shows a second picker inside the handover sheet, defaulting to **Whole ward**. Choosing a sub-ward — for the current shift, the composer, and **Previous shifts** alike — reads that sub-ward's own entries together with anything written for the whole ward; it never hides the ward-wide notes. Writing while a sub-ward is chosen files the note against that sub-ward.
+    A ward divided into sub-wards shows a second picker inside the handover sheet. It opens on the sub-ward you chose on the cards, or **Whole ward** if you opened the entire ward. Choosing a sub-ward — for the current shift, the composer, and **Previous shifts** alike — reads that sub-ward's own entries together with anything written for the whole ward; it never hides the ward-wide notes. Writing while a sub-ward is chosen files the note against that sub-ward.
   </Step>
 </Steps>
 
@@ -145,7 +174,7 @@ Two things surprise people. Enforcement is **opt-in per person** — someone nev
 
 <AccordionGroup>
   <Accordion title="Nothing waiting, but I know observations are due">
-    Check the ward select is on **All wards**, that no text is left in **Search patient or bed…**, and that you are on the **All patients** chip rather than a narrower one. Then switch to **Priority** to bring the most overdue to the top.
+    Check you are on the right ward — select **Nursing Station** above the heading to choose another, or **Entire ward** if you are on a sub-ward — that no text is left in **Search patient or bed…**, and that you are on the **All patients** chip rather than a narrower one. Then switch to **Priority** to bring the most overdue to the top.
   </Accordion>
 
   <Accordion title="The pen is disabled">

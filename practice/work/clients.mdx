@@ -23,12 +23,12 @@ The page is headed **Clients Management**, with four figures across the top:
 
 | Card | Counts |
 | --- | --- |
-| **Total Clients** | "Registered in your clinic" |
+| **Total Clients** | "Records you can open in this clinic" — a client restricted to assigned staff counts only for the people who can open them |
 | **New Clients** | "Last 30 days" |
 | **Active Clients** | "With recent activity" |
 | **Consultations** | "Last 30 days" |
 
-The toolbar carries **Import**, **Export** and **Create client**. The row under it holds **Search clients...**, the **Client status** and **Billing type** filters, a **Waitlist** button — a toggle, not a menu, which turns amber while it is on — and a **Sort** control offering **Sort by last name**, **Sort by first name** and **Sort by date added**. A filter that is applied shows a **1** badge and gains a **Clear filter** item.
+The toolbar carries **Import**, **Export** and **Create client**. When an outside system has sent something for you to review, a **Review outside data** button with a count appears at the start of the toolbar. It is not there when nothing is waiting. Selecting it opens a panel listing each item, with **Accept** and **Decline** (a reason is required to decline); nothing reaches a chart until you accept it. See [Records](/hospital/records/overview#outside-submissions--confirm-what-other-systems-send). The row under it holds **Search clients...**, the **Client status** and **Billing type** filters, a **Waitlist** button — a toggle, not a menu, which turns amber while it is on — and a **Sort** control offering **Sort by last name**, **Sort by first name** and **Sort by date added**. A filter that is applied shows a **1** badge and gains a **Clear filter** item.
 
 The table has five columns:
 
@@ -89,6 +89,84 @@ Import works on every plan, and it respects your plan's client limit. On **Free*
 The limit covers every way a client arrives, not only imports. When a Free practice is full, people booking online, joining a membership or registering as a new client from your pages are told "This clinic isn't accepting new clients online right now. Please contact the clinic directly." — your plan is never mentioned to them — and existing clients keep booking as normal. Registering a newborn from the maternity chart is never blocked.
 
 Import in one pass rather than in fragments — a half-imported list is harder to reconcile than a missing one.
+
+## Items accepted automatically
+
+If an owner or manager has turned on [automatic acceptance](/platform/integrations/auto-accept-outside-data) for an app, its new allergies, conditions, reported medicines and referrals reach the record without waiting. Each one shows **Accepted automatically from** and the app's name, who turned it on and when, and "not reviewed by a clinician". That is different from an item a clinician confirmed, which shows no such line.
+
+A clinician, manager or owner can select **Mark reviewed** on it. The line then reads "reviewed by" their name and the date. To take one out of use, choose **Entered in error**; the confirmation says it was accepted automatically. **Review outside data** also lists **Accepted automatically (last 7 days)** beneath the waiting items.
+
+## Allergies a connected app sent, and the detailed allergy list
+
+A connected app can send an allergy for a client. It waits in **Review outside data**, marked **From an outside system**, and nothing reaches the chart until a clinician decides. An allergy shows its substance, code, category, criticality, type, status, reactions (for example "hives, swelling (severe)"), onset date and note.
+
+<Steps>
+  <Step title="Read it">
+    Open **Review outside data** from the toolbar, or the **Outside submissions** card on the client's record.
+  </Step>
+  <Step title="Accept or decline">
+    Select **Accept**, then confirm. Only a clinician, a manager or the owner can accept an allergy. For anyone else **Accept** is switched off and the item says why. If the same allergy is already on the chart, the app can still send it: it waits here, accepting is refused and the item stays waiting, so decline it with a reason.
+  </Step>
+  <Step title="Find it on the record">
+    An accepted allergy appears under **Allergies (detailed)** on the client's record, with a quiet **From** line naming the sending app. The substance is also added to the client's plain allergy list, so medicine checks see it.
+  </Step>
+</Steps>
+
+**Allergies (detailed)** lists the allergies a clinician has confirmed, with their criticality, reactions and onset. It is a separate list from the allergies you type in **Edit client**. A clinician can select **Change** on a row to mark it **resolved**, **inactive**, **ruled out** or **entered in error**. This does not remove the name from the allergy list on the client record: edit it there too. Someone who is not a clinician sees the list but cannot change it. If the list cannot be loaded you see a message and **Try again**, never an empty list.
+
+## Medications a connected app reported
+
+A connected app can send a medicine a client says they take. It waits in **Review outside data**, marked **From an outside system**, and nothing reaches the chart until a clinician decides. A reported medicine shows the medicine, its code, dosage, route, frequency, status, dates, reason and note.
+
+<Steps>
+  <Step title="Read it">
+    Open **Review outside data** from the toolbar, or the **Outside submissions** card on the client's record.
+  </Step>
+  <Step title="Accept or decline">
+    Select **Accept**, then confirm. Only a clinician, a manager or the owner can accept a reported medicine. For anyone else **Accept** is switched off and the item says why. Accepting records that the client reports taking the medicine. It does not prescribe or dispense anything.
+  </Step>
+  <Step title="Find it on the record">
+    An accepted medicine appears under **Medications reported** on the client's record, with a quiet **From** line naming the sending app. Select **Details** to read the rest.
+  </Step>
+</Steps>
+
+**Medications reported** is a separate list from prescriptions and from **Current Medications**. Nothing in it was ordered, dispensed or billed. A clinician can select **Change** on a row to mark it **stopped**, **completed** or **entered in error**. This does not cancel any prescription. Someone who is not a clinician sees the list but cannot change it. If the list cannot be loaded you see a message and **Try again**, never an empty list.
+
+### How a reported medicine is used when you dispense
+
+When a pharmacist dispenses to this client, [drug interaction screening](/pharmacy/dispensing/interaction-screening) also looks at the medicines the client reports taking, while they are active:
+
+- A reported medicine that has a recognised medicine code is checked for interactions, like a prescription the client already has.
+- A reported medicine without one (typed in words, or with a code we do not recognise) is **never guessed at**. The dispensing form lists it as **Reported medicine not checked**, in the client's own words, so the pharmacist knows it was not checked.
+- A stopped, completed, on hold or entered-in-error medicine is not used.
+
+On the client's record, each active medicine says whether it is **Used in pharmacy interaction checks** or **Not checked by pharmacy interaction checks**.
+
+## Outside care team
+
+**Outside care team** on a client's record lists the doctors and practices outside your clinic who look after the client: their primary care doctor, the clinician who referred them, a specialist. It is a contact list. Nobody on it is given access to anything. It is not the same as the staff you assign to a client, which is managed elsewhere.
+
+Each contact shows its type (**Primary care**, **Referring**, **Specialist** or **Other**), name, practice, specialty, NPI, phone, fax and address, and a **Primary** badge on the client's main contact of that type.
+
+<Steps>
+  <Step title="Add a contact">
+    Select **Add contact**, enter a name, choose a type, fill in whatever you know and select **Add contact**. An NPI is 10 digits; leave it blank if you do not have it.
+  </Step>
+  <Step title="Change it">
+    Select **Edit** on a contact. Turn on **Primary for this type** to make it the main contact of that type. Only one contact of each type is primary, so this clears it on the others.
+  </Step>
+  <Step title="Remove it">
+    Select **Remove** and confirm. A removed contact stays in the audit trail.
+  </Step>
+</Steps>
+
+**Notes** on a contact are only for your team. Any staff member can add, edit or remove a contact.
+
+A connected app can add a contact too. Its contacts say **From** and the app's name, and the app that added one can still change or remove it. Every contact says whether connected apps can change it: contacts your team or an intake form added cannot be changed by an app. You can edit or remove any contact yourself, including one an app added. If the list cannot be loaded you see a message and **Try again**, never an empty list. When a client's intake form names a primary care doctor and you accept it, it joins this list as the **Primary care** contact.
+
+## Referrals another practice sent
+
+A connected app can also send a referral asking your clinic to see a client. It waits in **Review outside data** like any outside item. Any member of staff can add it to your list, and the client's record then shows a **Referrals** section with its status. Work it from the **Referrals to action** tab or from that section. See [Work referrals sent to your clinic](/practice/work/referrals).
 
 ## Who can do this
 

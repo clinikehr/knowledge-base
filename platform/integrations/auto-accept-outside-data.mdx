@@ -1,0 +1,107 @@
+---
+title: "Accept outside data automatically"
+description: "Let a trusted app add its new items to the chart without review, and how to pause it, review what it added and undo it."
+icon: /images/icons/code.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner or manager" note="The kinds you can choose depend on what the key or connected app is allowed to send." />
+
+Normally a clinician checks every item another system sends before it reaches a patient's chart. **Automatic acceptance** lets you skip that check, for chosen kinds of **new** item, from one key or one connected organization. It is **off** until you turn it on, and it is a decision your clinic takes and owns.
+
+<Path steps={['Sidebar', 'Settings', 'API access']} />
+
+<TaskHeader before="A key of your own, or a connected organization, that can send allergies, conditions, reported medicines or referrals" time="Two minutes" after="New items of the kinds you chose reach the chart straight away, marked Accepted automatically" />
+
+## Who is responsible
+
+**Your clinic.** Anything added this way becomes part of your patients' records, and your clinic is responsible for it as if your own team had entered it. The app that sent it and ClinikEHR do not check it for you. Automatic acceptance does not change your agreement with ClinikEHR or with the app.
+
+Nothing is checked for you: not whether an item is correct, not whether it belongs to the right patient, and not whether it clashes with what you already know. Allergies and medicines added this way are used by pharmacy interaction checks, so a wrong entry can cause a wrong warning, or a missed one.
+
+## Turn it on
+
+Only an owner or a manager sees the controls. Anyone else who opens the page sees the state of each key and connection, with the line "Only the owner or a manager can change this."
+
+<Steps>
+  <Step title="Open the key or the connection">
+    Under **Automatic acceptance**, find the key. For a connected organization, find it under **Connected organizations**. Select **Automatic acceptance**. Only keys that are live and organizations with an active connection are listed. A test key is never offered.
+  </Step>
+  <Step title="Choose the kinds">
+    Switch on **Allergies**, **Conditions**, **Medicines the patient reports** or **Referrals**. Only the kinds the key or the organization is allowed to send are shown.
+  </Step>
+  <Step title="Set the limit">
+    **Items per hour** and **Items per day** decide when it pauses. They start at 20 and 100, count items of every kind together, and the day's limit cannot be lower than the hour's.
+  </Step>
+  <Step title="Read the warning and confirm">
+    Read the warning, then type your clinic's name exactly as it is written, including capital letters. **Turn on automatic acceptance** is enabled only when the name matches. If it shows **Not available yet**, the wording is not ready and nothing can be switched on.
+  </Step>
+</Steps>
+
+<AuditNote action="Turning it on, changing it or turning it off" />
+
+A key you roll or replace, and a connection you set up again after revoking it, starts with automatic acceptance **off**. Turn it on again.
+
+## What is never automatic
+
+A clinician still reviews:
+
+- **Anything that changes or removes** something already on the chart, including resolving, stopping, ending or taking out of use.
+- **Every "no known allergies" statement.**
+- **Anything the chart would refuse**, such as an allergy the patient already has. It waits in **Review outside data** for you to decline.
+
+## See what was accepted
+
+- **On the record.** Each item shows **Accepted automatically from** and the app's name, who turned it on and when, and "not reviewed by a clinician". It is never shown as confirmed by a clinician.
+- **In Review outside data.** Beneath the waiting items, **Accepted automatically (last 7 days)** lists what was added, by kind and app.
+- **A daily summary.** Each day an item was accepted, owners and managers get a notice in the bell, "Accepted automatically", with how many items each app added. It never names a patient. You can mute it with the **Patient** switch in your notification settings.
+
+## Mark it reviewed
+
+A clinician, a manager or the owner can open an item that was accepted automatically and select **Mark reviewed**. The line then reads "reviewed by" your name and the date, and the app is told the item has been confirmed.
+
+## Undo it
+
+- **Stop new items.** Open **Automatic acceptance** for the key or connection and select **Turn off**. New items wait for review again. Items already added stay on the chart.
+- **Take one item out.** Open it and choose **Entered in error**. The confirmation reminds you it was accepted automatically.
+
+## When it pauses
+
+If an app sends more items than your limit in an hour or a day, automatic acceptance **pauses itself** for that key or connection. New items wait in **Review outside data**, and a notice in the bell, "Automatic acceptance paused", tells you. You cannot switch that notice off. **It never resumes on its own.** Open **Automatic acceptance**, read the reason, and select **Review and turn back on**. You read the warning and type your clinic's name again.
+
+A first bulk load of history will usually pause it. That is meant to happen: review the backlog, then turn it back on.
+
+If the wording of the warning changes in a way that matters, automatic acceptance pauses until an owner or manager reads the new wording and turns it back on. A small correction does not pause anything.
+
+## Check it worked
+
+Have the app send one new item. It appears on the chart straight away with **Accepted automatically from** and its name. Then **Automatic acceptance** shows the kinds you chose.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I do not see Automatic acceptance">
+    The section lists live keys only. Create a key or connect an organization first. If you can open the page but see no buttons, you are not an owner or manager.
+  </Accordion>
+  <Accordion title="A kind I want is missing from the switches">
+    The key or the organization is not allowed to send it, or that kind cannot be accepted automatically yet. Only kinds that apply are shown.
+  </Accordion>
+  <Accordion title="Turn on automatic acceptance will not enable">
+    The name must match your clinic's name exactly, including capital letters and spaces. If a message says the wording changed while the panel was open, close it and open it again.
+  </Accordion>
+  <Accordion title="It says Not available yet">
+    The wording you must agree to is not ready, so nothing can be switched on. You can still turn things off.
+  </Accordion>
+  <Accordion title="Items from the app are waiting again">
+    Either it paused (look for the notice and the state line, "Paused — unusual volume"), or the item is one of the kinds that is never automatic.
+  </Accordion>
+  <Accordion title="It says I need two-factor sign-in">
+    Your clinic requires two-factor sign-in before you can change settings. Complete it and try again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="automatic acceptance of outside data" />

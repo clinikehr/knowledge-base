@@ -38,25 +38,29 @@ One domain per surface, and each surface has its own **Custom domain** card. For
   <Step title="Decide the subdomain">
     Use a subdomain — `book.yourclinic.com`, not `yourclinic.com`. Most registrars cannot point a bare domain at anything but their own hosting, and the card says as much.
   </Step>
-  <Step title="Open the surface's settings tab and find Custom domain">
-    The card is headed **Custom domain** — "Serve this page on a domain you own". Enter your hostname and select **Connect domain**.
+  <Step title="Open the surface's settings and find Custom domain">
+    The card is headed **Custom domain** — "Serve this page on a domain you own". Enter your hostname and select **Connect domain**. **Set up DNS for** your domain opens straight away.
   </Step>
   <Step title="Add the ownership record at your DNS provider">
-    The card now shows two records. Add the first, **1. Ownership (TXT)** — use **Copy value** so nothing is mistyped. This proves the domain is yours.
-  </Step>
-  <Step title="Select Verify now, and wait">
-    The badge moves from **Waiting for TXT record** to **Waiting for CNAME** once the record is visible. Verification is also checked automatically, so **Verify now** just saves you waiting.
+    The list shows three lines: **Ownership**, **Routing** and **Security certificate**. Add **Ownership** first. Each record has a **Type**, a **Host**, a **Full name** and a **Value**, each with its own copy button — most registrars want the **Host** (the part before your domain), a few want the **Full name**. Paste the **Value** exactly. This proves the domain is yours.
   </Step>
   <Step title="Add the routing record">
-    Add **2. Routing (CNAME)**, again with **Copy value**. This is what actually points visitors at your page.
+    Add **Routing**, again copying **Host** and **Value**. This is what points visitors at your page.
+  </Step>
+  <Step title="Select Verify now, or just wait">
+    Changes can take from a few minutes up to 48 hours to appear. You do not have to keep the page open: we check on our own every few minutes while the domain is being connected, and add a notice to your bell when it is live. Each line shows **Verified**, **Not found** (nothing published there yet), **Wrong value** (something is published, and the list shows what we found instead) or **Not checked yet**, so you can see exactly which record is missing. The sheet also says when it was last checked.
   </Step>
   <Step title="Wait for the certificate">
-    The badge moves to **Issuing certificate**. Nothing is required from you — the certificate is requested and installed automatically.
+    **Security certificate** has nothing for you to add. It reads **Not checked yet** until both records above are right, then moves to **Verified** once the certificate is issued — usually minutes.
   </Step>
   <Step title="Confirm it reads Live">
     When the badge says **Live**, an **Open** button appears beside the hostname. Select it, and your page loads on your own address over HTTPS.
   </Step>
 </Steps>
+
+## Seeing the records again
+
+Select **DNS records** on the card at any time — while the domain is being connected, once it is **Live**, and after it has been suspended. If you move to a different registrar, open it there and add the records again. A live domain is re-checked every hour to make sure it keeps working; if a record is removed you get a notice, and the domain comes back by itself once the records are right again.
 
 ## The status ladder
 
@@ -64,18 +68,18 @@ The badge on the card tells you exactly where you are.
 
 | Badge | Means | What to do |
 | --- | --- | --- |
-| **Waiting for TXT record** | The ownership record is not visible yet | Add the TXT record, then **Verify now** |
-| **Waiting for CNAME** | Ownership is proved; routing is not in place | Add the CNAME record, then **Verify now** |
+| **Waiting for ownership record** | The ownership record is not visible yet | Add it from **DNS records**, then **Verify now** |
+| **Waiting for routing record** | Ownership is proved; routing is not in place | Add the routing record, then **Verify now** |
 | **Issuing certificate** | Both records are good; the certificate is being issued | Wait. Usually minutes |
 | **Live** | Your page is being served on your domain | Nothing |
-| **Needs attention** | Setup failed. The reason is shown under the badge | Read the reason, fix the record, **Verify now** |
-| **Suspended** | The domain has been taken out of service | Read the reason, then [contact support](/platform/help/contact-support) |
+| **Needs attention** | Setup failed. The reason is shown under the badge | Read the reason, fix the record, **Verify now**. Automatic checks are paused until you do |
+| **Suspended** | A record was removed or the plan changed, so the domain stopped serving. The reason is shown, and you are told in the bell and by email | Restore the record from **DNS records**; it comes back by itself within the hour, or press **Verify now** |
 
 **Nothing is served on your domain until the badge reads Live.** Until then your ClinikEHR address is the working link, and it keeps working afterwards too.
 
-## Disconnecting
+## Removing a domain
 
-**Disconnect** on the card removes the domain. The confirmation is explicit about the consequences: the domain stops serving the page immediately, your ClinikEHR link keeps working, and for 30 days no other account can claim that hostname.
+Select **Remove** on the card. The confirmation says what happens: the page stops opening on that domain straight away, its ClinikEHR address keeps working, the DNS records at your registrar are not changed (delete them there if you no longer need them), and for 30 days no other account can connect that domain. The card goes back to **Connect domain** immediately, and anywhere else that offered the link on your domain — the **Share** panel for forms — stops offering it. If someone else has the same screen open, it updates when they next return to it.
 
 ## Check it worked
 
@@ -88,7 +92,7 @@ The badge on the card tells you exactly where you are.
 
 <AccordionGroup>
   <Accordion title="I added the records and it still says Waiting">
-    DNS changes take time to spread — usually minutes, occasionally a few hours, and up to 48 in the worst case. Select **Verify now** occasionally rather than deleting and re-adding the domain, which restarts the clock.
+    DNS changes take time to spread — usually minutes, occasionally a few hours, and up to 48 in the worst case. Select **Verify now** occasionally rather than removing and re-adding the domain, which restarts the clock.
   </Accordion>
 
   <Accordion title="Verify now keeps failing after several hours">
@@ -130,4 +134,4 @@ The badge on the card tells you exactly where you are.
 
 <StillStuck topic="a domain that will not go live" />
 
-{/* source of truth: components/clinic/dashboard/settings/custom-domain-card.tsx (SURFACE_EXAMPLE, STATUS_META), types/custom-domains.ts, docs/Domain/CUSTOM_DOMAINS_IMPLEMENTATION.md */}
+{/* source of truth: components/clinic/dashboard/settings/custom-domain-card.tsx, custom-domain-dns-sheet.tsx, lib/custom-domains/domain-card-model.ts (STATUS_META, remove wording), lib/custom-domains/dns-record-views.ts, types/custom-domains.ts, docs/Domain/CUSTOM_DOMAINS_IMPLEMENTATION.md */}

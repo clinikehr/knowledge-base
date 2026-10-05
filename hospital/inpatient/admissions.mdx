@@ -33,6 +33,8 @@ A brand-new hospital sees **No wards available** with **Please contact your admi
 
 Selecting a bed card opens the **Bed \{number\} Details** dialog, where the detail lives: **Admitted**, **Diagnosis**, **Attending**, **Notes** and **Last Updated**. An occupied bed with nobody named as attending reads **Not assigned** rather than guessing at one. The grid stays deliberately sparse so an empty bay is obvious from across the room.
 
+A bed occupied by a client whose record is restricted to their care team, when you are not on it, stays shown as occupied. Its details show **Secured patient** and a number — no name, diagnosis, status, attending or notes — and **New Vitals** and **View Patient** are replaced by **Request emergency access**. Once access is granted the bed opens like any other. Opening that admission's chart by its link shows **This admission is secured** instead of the chart, and no note, observation, drug round or discharge can be saved for it. See [Client security](/practice/work/client-security).
+
 ## Find a bed, or the patient in it
 
 Once you have opened a ward, a search box and filter buttons sit above the bed grid, on the same row as **Back** and the **Wards › \<ward\>** trail.
@@ -75,9 +77,9 @@ You get **Patient admitted**, and the bed fills on the grid with an attending cl
 
 From an occupied bed, or from the ward chart's **Flowsheets** tab, **Record vitals** opens the same form used everywhere vitals are captured in the product — blood pressure (with position and cuff details), pulse, respiratory rate, temperature, oxygen saturation and device, weight, height, blood sugar and more, in your hospital's chosen display units. Saving adds the set to the patient's flowsheet rather than editing the last one — a correction is always a new set.
 
-When the patient was admitted from triage or a consultation, the **SnapShot** opens with **From triage** — the complaint, triage note, presentation, vitals and any labs or imaging ordered at triage. It is read live from the triage record, so it needs a connection and shows nothing for an admission that did not come from a triage. **Care History** has two sub-tabs: **Timeline**, the running record of the stay, and **Triage notes**, which lists every triage recorded for the patient — the one that led to this admission first, marked **This visit**, then earlier ones newest first — each with the full note. When the admission did not come from a triage, nothing is marked **This visit**, and a patient with no triage shows "No triage notes for this patient."
+What the triage nurse recorded is in **Care History**, which has two sub-tabs: **Timeline**, the running record of the stay, and **Triage notes**, which lists every triage recorded for the patient — the one that led to this admission first, marked **This visit**, then earlier ones newest first — each with the full note, the **Safety alerts** and safety findings from the triage **Safety** tab (suicide risk and ideation, isolation with its precautions, fall-risk warning, infection symptoms), and every scored assessment from the **Assessments** tab, newest first. A safety screen shows **Safety screen complete — no concerns** only when the triage nurse marked it complete; otherwise it reads **Safety screen not completed**, never "no concerns". Scored assessments show each band with its score range where the scale has one. When the admission did not come from a triage, nothing is marked **This visit**, and a patient with no triage shows "No triage notes for this patient."
 
-Every vital-sign reading, wherever it was taken, is one flowsheet for the patient. The **Flowsheets** tab shows it with a **This stay / All readings** toggle: just this admission's own readings, or everything ever recorded for the patient anywhere — triage, any ward stay, or the client record — each row labelled with where it was taken. Recording observations is restricted by role, and can also be granted per person.
+Every vital-sign reading, wherever it was taken, is one flowsheet for the patient. The **Flowsheets** tab shows it with a **This stay / All readings** toggle: just this admission's own readings, or everything ever recorded for the patient anywhere — triage, any ward stay, or the client record — each reading labelled with where it was taken. The newest reading is always the first column, and a long history is paged with the most recent readings on the first page. Recording observations is restricted by role, and can also be granted per person.
 
 ## Read the ward chart
 
@@ -94,6 +96,8 @@ The tabs that list a long record — **History**, **Media** and the **Earlier re
 <Note>
   Two pairs of names look alike and are not. **Care History** is the running record of *this* stay; **History** is the structured past history a provider entered. The **Problem List** belongs to the *patient* and follows them between admissions; the **Care Plan** belongs to *this admission* and ends with it.
 </Note>
+
+An entry on the **Problem List** that began as an outside submission carries a quiet line under it, **From** and the sender's name (or **From a connected app** when none was given), so you can see where it came from. Entries you add yourself carry no such line. Outside conditions never appear on the list until a clinician accepts them from **Outside submissions** — see [Records](/hospital/records/overview#outside-submissions--confirm-what-other-systems-send).
 
 A badge next to the patient's name states the stay in both directions — **Admitted**, **Discharged**, or **Admission date not recorded** — and the line under it reads ward · bed · **Day 3**. For a patient with an open pregnancy record it ends with her gestation — **28+3**, or **Dating unavailable** where the dating will not derive it. Where there is no open pregnancy the segment is simply not there: it is never blank and never a zero.
 

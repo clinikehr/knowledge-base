@@ -18,10 +18,10 @@ This is where your hospital's staff rota lives: who is working, when, and what h
 
 | Section | What it does | Who sees it |
 | --- | --- | --- |
-| **Rota** | The week or month grid, by person or by department or ward. Click a slot to assign a shift, or a shift to edit it. On a phone this becomes a day-by-day list instead of a squeezed grid. | Everyone (edit needs a permission — see below) |
+| **Rota** | The week or month grid, by person or by department, ward or unit. Click a slot to assign a shift, or a shift to edit it. On a phone this becomes a day-by-day list instead of a squeezed grid. | Everyone (edit needs a permission — see below) |
 | **Shift types** | Reusable templates like "Day 7:00 AM – 7:00 PM", including overnight shifts. Repeating patterns generate real shifts from a template on a schedule you set (e.g. every Monday, Wednesday and Friday). | Managing needs a permission |
 | **Cover & swaps** | Requests to swap or cover a shift: a colleague accepts, then a manager approves before the shift actually changes hands. | Everyone with a stake in the request; approving needs a permission |
-| **Coverage rules** | A minimum headcount for a department, ward or role during a time window — the rota flags any window that falls short, and highlights a person booked onto two overlapping shifts. | Managing needs a permission |
+| **Coverage rules** | A minimum headcount for a department, ward, unit, typed place or role during a time window — the rota flags any window that falls short, and highlights a person booked onto two overlapping shifts. | Managing needs a permission |
 
 A staff member who cannot manage the rota sees a simple **My shifts** view instead: their own upcoming shifts, a **Request swap or cover** button on each, and the requests they are part of.
 
@@ -31,7 +31,7 @@ A staff member who cannot manage the rota sees a simple **My shifts** view inste
 
 <Steps>
   <Step title="Open the Rota tab">
-    Choose **Week** or **Month**, and **By person** or **By department or ward**. The filter next to it lists your departments and your wards in separate groups. Use the arrows to move between periods.
+    Choose **Week** or **Month**, and **By person** or **By department, ward or unit**. The filter next to it lists your departments, your wards and your units in separate groups. Use the arrows to move between periods.
   </Step>
   <Step title="Select a slot or a shift type">
     Click an empty slot for that day and person, or **New shift** to pick anyone. Choosing a shift type fills in the hours for you; you can still adjust them.
@@ -41,19 +41,32 @@ A staff member who cannot manage the rota sees a simple **My shifts** view inste
   </Step>
 </Steps>
 
-## Every shift belongs to a department or ward
+## Every new shift says where it is
 
-A shift names its **Department or ward** — chosen from your hospital's active departments under [Departments](/hospital/settings/departments), never typed. The list has two groups, **Departments** and **Wards** (a ward is a department marked **This is a ward / inpatient department**), and a ward is shown with **(Ward)** after its name on the rota. A shift on a ward is stored exactly like one on a department. When it applies, a shift may also narrow to one **Sub-unit** (leave it as **Whole department**, or **Whole ward** for a ward, to cover all of it). A new shift cannot be saved without a department; shifts made before this change can be fixed from the banner described below, one click for all shifts that share the same typed department. If your hospital has more than one active [location](/hospital/settings/locations), a **Location** picker appears too; with one location it is hidden and every shift uses it.
+A shift has up to four place fields, together under **Where is this shift?** on the **New shift**, **New shift type** and **New coverage rule** panels, and shown on **View shift**:
 
-Because a shift points at the department itself, **renaming a department or a location never breaks a shift**. The triage handover, the Nursing Station and every assign-staff list read the rota by department and by the shift's time, so someone on shift for **Outpatient Department** shows under that department whatever it is called later. The handover's **No rota for this department** means no shift is set for that department at that time, and it links straight to the rota filtered to that department (**Open the rota for this department**).
+| Field | What you choose | Where the list comes from |
+| --- | --- | --- |
+| **Department** | One of your active departments, and optionally a **Sub-unit** (leave it as **Whole department** to cover all of it). | [Departments](/hospital/settings/departments). Departments you marked **This is a ward / inpatient department** appear in their own **Ward departments** group. |
+| **Ward** | One of your open wards, and optionally a **Sub-ward** (leave it as **Whole ward**). | The wards you set up for in-patient care. A closed ward is not offered, but a shift that already uses it keeps it, marked **(closed)**. |
+| **Unit** | One of your units, grouped **Clinical units** and **Operational units**. | The units switched on under **Settings → Facility**. A unit you have since switched off stays on a shift that uses it, marked **(switched off)**. |
+| **Other place** | A place you type, up to 80 characters — for example **Car park gate**. | Free text. Use it for a place, never for a client's name or anything clinical. |
+
+All four are optional on a shift type and on a coverage rule. **A new shift needs at least one of them**; if you leave all four empty the panel says **Choose where this shift is — a department, ward, unit, or type a place.** and nothing is saved. A shift made before this change keeps the department it had and can still be edited without choosing a place. Choosing a shift type fills in all four places from the type (unless you have already chosen one); you can change any of them. A shift created from a repeating pattern, or by **Copy week**, carries the same places.
+
+A shift never reads **Department not set** while it has a ward, a unit or a typed place: the rota, **My shifts**, the shift types list and the coverage rules list show every place a shift names, for example **Medicine · Emergency Ward · In-patient care**. When you group the rota **By department, ward or unit**, a shift sits under its department if it has one, otherwise under its ward, otherwise under its unit, otherwise under the place you typed. If your hospital has more than one active [location](/hospital/settings/locations), a **Location** picker appears too; with one location it is hidden and every shift uses it.
+
+Because a shift points at the department or ward itself, **renaming a department, a ward or a location never breaks a shift**. The triage handover and the assign-staff lists read the rota by department and by the shift's time, so someone on shift for **Outpatient Department** shows under that department whatever it is called later. The handover's **No rota for this department** means no shift is set for that department at that time, and it links straight to the rota filtered to that department (**Open the rota for this department**). A ward's handover on the [Nursing Station](/hospital/inpatient/nursing-station) reads the rota the same way by ward: a shift placed on that ward appears there, and so does a shift for the **In-patient care** unit, or for a ward department (one marked **This is a ward / inpatient department**), that names no ward, because it covers every ward, so a rota built by department or by ward shows the same people. Its **No rota for this ward** means no shift is placed there at that time, and **Open the rota for this ward** opens the rota filtered to it. A shift placed only on a ward never appears on a department's rota.
+
+**Emails and calendar invites say where.** The email a person gets when a shift is assigned, changed or cancelled, the reminder before it starts, and the calendar invite that comes with them all name the shift's place — its department, its ward (with the sub-ward), its unit and the place you typed, for example **Medicine · Emergency Ward - Bay 2 · In-patient care**. A shift that was never given any of these shows the department text it was created with.
 
 **Times read in 12-hour.** Start and end are chosen on the same time picker as the appointment form — hour, minute and **AM** / **PM**, with quick buttons for common times — so a shift reads **7:00 PM – 7:00 AM**. If the end is at or before the start the panel says **This shift ends the next day**, and the rota shows **(next day)** beside the hours.
 
-**Nursing shift times.** When a shift is for a ward department (one an owner or manager marked **This is a ward / inpatient department** under [Departments](/hospital/settings/departments)) and your hospital runs inpatient care, the shift panel offers the times from **Settings → Facility → Nursing shifts** — for example **Day 7:00 AM – 7:00 PM** — as buttons that fill the start and end for you. You can still change them; a ward shift whose times do not line up with the nursing shifts is allowed and marked **Outside the nursing pattern**. Changing the nursing shift pattern never rewrites a shift: after you save it you are told how many upcoming ward shifts no longer line up.
+**Nursing shift times.** When a shift is for one of your wards, for the **In-patient care** unit, or for a ward department (one an owner or manager marked **This is a ward / inpatient department** under [Departments](/hospital/settings/departments)), the shift panel offers the times from **Settings → Facility → Nursing shifts** — for example **Day 7:00 AM – 7:00 PM** — as buttons that fill the start and end for you. You can still change them; a ward shift whose times do not line up with the nursing shifts is allowed and marked **Outside the nursing pattern**. Changing the nursing shift pattern never rewrites a shift: after you save it you are told how many upcoming ward shifts no longer line up, counting shifts for a ward and for the in-patient unit as well as ward departments.
 
-### Shifts that still need a department
+### Shifts that still need a place
 
-Shifts created before this change carried a typed department. Where the typed text was exactly one department's name or code (ignoring capitals and extra spaces) it was linked for you; nothing is matched any more loosely than that. The rest stay on the rota marked **Department not set**, and a banner at the top of the **Rota** tab counts them with a one-click fix: **Choose the department** gives every shift that shares the same typed text its department in one step (**Assign a department** does the same for upcoming shifts with none). Owners and managers only, and recorded in the audit log.
+Shifts created before this change carried a typed department. Where the typed text was exactly one department's name or code (ignoring capitals and extra spaces) it was linked for you; nothing is matched any more loosely than that. The rest stay on the rota marked **Department not set** — a shift that has a ward, a unit or a typed place is not counted here — and a banner at the top of the **Rota** tab counts them with a one-click fix: **Choose the department** gives every shift that shares the same typed text its department in one step (**Assign a department** does the same for upcoming shifts with none). Owners and managers only, and recorded in the audit log.
 
 **Switching off a department or location that upcoming shifts use** asks first and says how many upcoming shifts use it. Those shifts stay on the rota, marked **Inactive department** or **Inactive location**, so cover never silently disappears; **Move those shifts** in the banner reassigns them when you are ready. Shifts that have already happened are never changed.
 
@@ -79,7 +92,7 @@ Instead of assigning the same shift week after week, create a shift type once, t
 
 ## Coverage rules
 
-Set a minimum headcount for a department or role during a time window — for example, at least two people on Front Desk between 9:00 AM and 5:00 PM on weekdays. The Rota tab flags any window that falls below the minimum, and separately flags a person booked onto two overlapping shifts.
+Set a minimum headcount for a place and a role during a time window — for example, at least two people on Front Desk between 9:00 AM and 5:00 PM on weekdays, or three nurses on the Emergency Ward overnight. A rule can name a department, a ward, a unit or a typed place; leave all four empty for any place. A rule that names more than one counts only the shifts that match all of them: a rule for the Emergency Ward and **In-patient care** counts shifts that name both. The Rota tab flags any window that falls below the minimum, and separately flags a person booked onto two overlapping shifts.
 
 <Note>
   **A shift fills in a day that has NO working hours set at all — it does not add to a day that already has some.** If a person has no [Availability](/hospital/settings/booking-settings) schedule covering a given weekday, a shift assigned that date makes them bookable for exactly the shift's hours. On a day they already have a working-hours schedule — even a narrow one — an extra shift on that same day changes nothing about what can be booked; their regular hours are what's offered. To make someone bookable for LONGER on a day they already work, widen their Availability schedule for that day instead. A service line that never uses shifts sees no change.
@@ -93,4 +106,4 @@ Set a minimum headcount for a department or role during a time window — for ex
 
 ## On shift now
 
-Wherever you choose a person to assign a patient to (the front desk **Check in** sheet, a triage nurse, the appointment form's provider, a ward patient's care team), the people whose shift covers that department and place right now are listed first under **On shift now**. Everyone else is listed below under **Everyone else** and can still be chosen. The **Nursing Station** also shows who is on shift now. If nobody has a matching shift, the list looks exactly as before.
+Wherever you choose a person to assign a patient to (the front desk **Check in** sheet, a triage nurse, the appointment form's provider, a ward patient's care team), the people whose shift covers that department and place right now are listed first under **On shift now**. Everyone else is listed below under **Everyone else** and can still be chosen. The **Nursing Station** also shows who is on shift now: with a ward chosen it lists the people whose shift is for that ward, together with anyone on a shift for the **In-patient care** unit or for a ward department (which cover every ward); with **All wards** it lists everyone on shift. If nobody has a matching shift, the list looks exactly as before.

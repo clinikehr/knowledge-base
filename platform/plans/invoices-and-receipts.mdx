@@ -30,22 +30,21 @@ Your own billing lives outside every workspace, on your personal home.
   <Step title="Go to the Payment History tab">
     The four tabs are **Overview**, **Plan Subscriptions**, **Add-on Features** and **Payment History**. The last one is the ledger.
 
-    Above the table, **Total Payments**, **Successful**, **Pending/Failed** and **This Month** give you the shape of it at a glance.
+    Above the table, **Total Payments**, **Paid**, **Open or failed** and **This Month** give you the shape of it at a glance. Each shows the amounts the payment provider recorded, one line per currency, and **—** when nothing was recorded.
   </Step>
   <Step title="Narrow it down">
-    Search with **Search payments...**, or filter by **Status** (**All Status**, **Paid**, **Pending**, **Overdue**), **Type** (**All Types**, **Subscription**, **Add-ons**, **Metered**, **Top-Up**), **Date** and **Clinic**.
+    Search with **Search payments...**, or filter by **Status** (**All Status**, **Paid**, **Open**, **Past due**, **Failed**, **Refunded**, **Void**), **Type** (**All Types**, **Subscription**, **Add-ons**, **Metered**, **Top-Up**), **Date** and **Clinic**.
 
     **Type** is the fastest way to answer "what was this?" — a staff seat or a plan renewal is a **Subscription**, a credit pack is a **Top-Up**, and per-use clinical charges are **Metered**.
   </Step>
   <Step title="Open the row">
-    The **Invoice Details** sheet shows **Invoice**, **Clinic**, **Plan**, the **Dates** block (**Invoice Date**, **Due Date**, **Period Start**, **Period End**, **Payment Date**), a **Breakdown** with **Discount** and **Total**, and **Payment Information** naming the **Provider**, **Billing Cycle** and **Reference**.
+    The **Invoice details** sheet shows **Invoice**, **Billed to**, **Plan**, the **Dates** block (**Invoice date**, **Due date**, **Period start**, **Period end**, **Payment date**), a **Breakdown** with the plan, any tax, **Discount or credit** and **Total**, and **Payment information** naming the **Provider**, **Billing cycle** and **Reference**. Amounts are exactly what was charged, in the currency it was charged in. The seller is named at the bottom: **Bettar Platforms, Inc.**, the company behind ClinikEHR. An add-on or a credit pack that has no recorded charge amount shows **—** rather than a number.
   </Step>
 </Steps>
 
 ## Get the paperwork
 
-- **Download Receipt** — the icon on each row of the table, for a single charge.
-- **Download PDF** — inside the **Invoice Details** sheet, for the full document.
+- **Download PDF** — the icon on each row of the table, or the button in the **Invoice details** sheet, for a single charge.
 - **Export** — at the top of **Payment History**. It saves a spreadsheet (CSV) of every payment your filters are showing, across all pages, with the amounts, dates, status and payment reference. Clear the filters first to export everything. If nothing matches, it says so instead of saving an empty file.
 
 Receipts are also emailed by the payment provider when a charge succeeds, to the address on the account that owns the workspace. If your bookkeeper needs them, the reliable route is to download from here rather than to forward mail — this list is the record that stays complete.
@@ -56,6 +55,8 @@ Receipts are also emailed by the payment provider when a charge succeeds, to the
 
 **Premium Add-ons** are billed alongside your plan and managed on their own tab — **AI Note Taker**, **ePrescribe**, **ePrescribe PDMP** and **eLabs Access**. Each card shows its price, whether it is **Active** or **Not Subscribed**, and either **Add Feature**, **Included with your plan**, or **Requires Paid Plan** if your plan cannot carry it yet.
 
+Above the cards, **AI Note Taker** says who it is already included for — for example "Included for 3 of 4 team members on Essential" — names them, and shows how many extra paid seats you have and the month's minutes used. It is included for the first 3 clinicians on Essential and the first 5 on Team, in the order they were added; someone who is already covered is never offered a seat to buy. If the check cannot be made, the card says so and offers **Try again** rather than guessing.
+
 Cancelling one warns you: "You'll lose access at the end of your current billing period. This action cannot be undone." The charge then stops at the next cycle, not immediately.
 
 ## When a payment fails
@@ -64,7 +65,7 @@ Cancelling one warns you: "You'll lose access at the end of your current billing
   **A failed renewal takes your paid features away.** A subscription that is not active or trialing is treated as Free across the whole workspace — for every member, immediately, even though the plan name still shows. Your records, notes and history stay fully accessible and nobody is locked out, but the paid capabilities stop until the payment goes through.
 </Warning>
 
-You will see the row as **Overdue** under **Payment History**, and the workspace card under **Plan Subscriptions** as **Past Due**. Fix it from the **Fix Payment** prompt or by going through checkout again — see [Payment methods](/platform/plans/payment-methods).
+You will see the row as **Past due** or **Failed** under **Payment History**, and the workspace card under **Plan Subscriptions** as **Past Due**. Fix it from the **Fix Payment** prompt or by going through checkout again — see [Payment methods](/platform/plans/payment-methods).
 
 The **Overview** tab is the quickest health check: **Billing Alerts** reads "All Payments Up to Date" — "No outstanding invoices or payment issues" — when there is nothing to do.
 
@@ -72,12 +73,16 @@ The **Overview** tab is the quickest health check: **Billing Alerts** reads "All
 
 - The charge you were looking for is in **Payment History** with the right **Clinic**, **Date** and **Amount**.
 - Its **Status** reads **Paid**.
-- **Download Receipt** produces a file that opens.
+- **Download PDF** produces a file that opens.
 - **Overview** shows **Monthly Spend** matching what you expect across your workspaces.
 
 ## If something goes wrong
 
 <AccordionGroup>
+  <Accordion title="Could not load your payment history">
+    The list could not be read, which is not the same as having no charges. Select **Try again**. Nothing has been changed.
+  </Accordion>
+
   <Accordion title="No Payment History">
     Either nothing has been charged yet — normal on Free — or your filters are excluding it. The empty state distinguishes the two: "No payment history available for your clinics yet." versus "No payments match your current search criteria."
   </Accordion>
@@ -91,11 +96,11 @@ The **Overview** tab is the quickest health check: **Billing Alerts** reads "All
   </Accordion>
 
   <Accordion title="I need an invoice addressed to my company">
-    The billing details come from the payment provider's record, not from your workspace profile. [Contact support](/platform/help/contact-support) with the invoice reference from the **Invoice Details** sheet.
+    The billing details come from the payment provider's record, not from your workspace profile. [Contact support](/platform/help/contact-support) with the invoice reference from the **Invoice details** sheet.
   </Accordion>
 
   <Accordion title="I cancelled but was charged again">
-    Cancellation takes effect at the end of the billing period, so one more charge is normal only if it predates the cancellation. Check **Period Start** and **Period End** in the sheet, then [contact support](/platform/help/contact-support) with the reference.
+    Cancellation takes effect at the end of the billing period, so one more charge is normal only if it predates the cancellation. Check **Period start** and **Period end** in the sheet, then [contact support](/platform/help/contact-support) with the reference.
   </Accordion>
 </AccordionGroup>
 

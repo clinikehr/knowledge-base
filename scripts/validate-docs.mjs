@@ -172,28 +172,7 @@ const FRONTMATTER = /^---\r?\n([\s\S]*?)\r?\n---/;
  *     term — a developer reader still must never see our database vendor,
  *     runtime, or access-control mechanism named on the page.
  */
-const ARCHITECTURE_TERMS_BY_PROFILE = {
-  help: [
-    ['our database vendor', /\bsupabase\b/i],
-    ['our database vendor', /\bpostgres(ql)?\b/i],
-    ['our serverless runtime', /\bedge functions?\b/i],
-    ['a database access-control mechanism', /\brow[- ]level security\b|\bRLS\b/],
-    ['a stored procedure', /\bRPC\b|\bsecurity definer\b/i],
-    ['a privileged credential', /\bservice[- ]role\b/i],
-    ['an internal column name', /\bclinic_id\b|\bpatient_id\b|\bauth\.uid\b/],
-    ['a database column type', /\bjsonb\b/i],
-  ],
-  api: [
-    ['our database vendor', /\bsupabase\b/i],
-    ['our database vendor', /\bpostgres(ql)?\b/i],
-    ['our serverless runtime', /\bedge functions?\b/i],
-    ['a database access-control mechanism', /\brow[- ]level security\b|\bRLS\b/],
-    ['a stored procedure', /\bRPC\b|\bsecurity definer\b/i],
-    ['a privileged credential', /\bservice[- ]role\b/i],
-    ['a database column type', /\bjsonb\b/i],
-    ['an internal function-name prefix', /\behrapi_/i],
-  ],
-};
+import { ARCHITECTURE_TERMS_BY_PROFILE } from './internal-vocabulary.mjs';
 
 const PROFILE_ARG = process.argv.find((a) => a.startsWith('--profile='));
 const PROFILE = PROFILE_ARG ? PROFILE_ARG.slice('--profile='.length) : 'help';
@@ -252,6 +231,11 @@ for (const [slug, file] of fileSlugs) {
   for (const m of body.matchAll(/\]\((\/[^)\s#]*)(#[^)\s]*)?\)/g)) {
     const href = m[1];
     if (href.startsWith('/images/') || href.startsWith('/logo/')) continue;
+    // A static download (api-docs/downloads/...) is a file, not a page: it must exist on disk.
+    if (href.startsWith('/downloads/')) {
+      if (!existsSync(join(ROOT, href))) err(`${slug}.mdx links to the download "${href}", which does not exist on disk.`);
+      continue;
+    }
     const target = href.replace(/^\//, '').replace(/\/$/, '');
     if (!target) continue;
     if (!fileSlugs.has(target) && !fileSlugs.has(`${target}/index`)) {

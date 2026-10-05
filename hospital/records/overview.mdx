@@ -1,6 +1,6 @@
 ---
 title: Work the records desk
-description: "Clear the three records queues — intake conflicts, signature chasing and unfiled files — and know when to go to Documents instead."
+description: "Clear the records queues — intake conflicts, signature chasing, unfiled files and items sent in by outside systems — and know when to go to Documents instead."
 icon: /images/icons/folder-open.svg
 ---
 
@@ -30,7 +30,7 @@ Four tiles run across the top:
 | **Expiring or expired** | Anything whose link needs re-sending |
 | **Unfiled files** | Uploads with no folder |
 
-Below them, two shortcuts — **Send for signature** and **New patient** — then the three queues as tabs, each carrying its own count: **Conflicts (n)**, **Signature chase (n)** and **Unfiled (n)**.
+Below them, two shortcuts — **Send for signature** and **New patient** — then the queues as tabs: **Conflicts (n)**, **Signature chase (n)**, **Unfiled (n)** and **Outside submissions**. The first three carry their own count; **Outside submissions** shows its count once it has loaded.
 
 ## Conflicts — decide what the chart says
 
@@ -52,6 +52,28 @@ When a patient answers an intake question differently from what is already on th
 </Steps>
 
 Empty state: **All clear** — "No intake answers are waiting for a decision."
+
+## Outside submissions — confirm what other systems send
+
+Some systems outside ClinikEHR can send your hospital allergies, reported medications, conditions and referrals for a patient. None of that goes onto a chart by itself. Each item waits in this tab, marked **From an outside system**, until a person decides.
+
+Every item shows what it is (for example **Add: Condition**), which patient it is for, what was sent, who sent it and when. A condition shows its name, its code and code system, its status, the onset and resolved dates, and any notes. An allergy shows its substance, code, category, criticality, type, status, reactions, onset and any note. A reported medication shows the medicine, its code, dosage, route, frequency, status, dates, reason and any note. The same queue, limited to one patient, appears on that patient's record, under the intake suggestions. A **Review outside data** button on the Clients and Patients pages opens the whole queue in a panel too.
+
+<Steps>
+  <Step title="Read what was sent">
+    Check the patient and the details. Nothing here is on the chart yet.
+  </Step>
+  <Step title="Decline it, with a reason">
+    Select **Decline**, write why — for example that it is already on the chart — and select **Decline** again. The chart does not change. The reason is kept with the decision.
+  </Step>
+  <Step title="Or accept it">
+    Select **Accept**, then confirm. **Conditions** can be accepted now: the condition is added to the patient's **Problem List**, recorded under your name, with a note that it came from an outside system. A change to a condition already on the list is applied the same way, and a request to retract one marks it **entered in error**. Only a clinician with the **Amend the problem list** permission, a manager or the owner can accept a condition. For anyone else **Accept** is switched off and the item says why. **Allergies** can be accepted by a clinician, a manager or the owner too: the allergy is added to the patient's **Allergies (detailed)** list and its name to the plain allergy list on the record (see [Clients](/practice/work/clients#allergies-a-connected-app-sent-and-the-detailed-allergy-list)). If the same allergy is already on the chart, accepting is refused and the item stays waiting. **Reported medications** can be accepted by a clinician too: the medicine is added to the patient's **Medications reported** list, which records that the patient says they take it. It does not prescribe or dispense anything (see [Clients](/practice/work/clients#medications-a-connected-app-reported)). **Referrals** can be accepted by any member of staff: the referral joins your list as **Received**, and nothing is booked yet. You then work it in the **Referrals to action** tab of the same panel, or from the **Referrals** section on the client's record (see [Work referrals sent to your clinic](/practice/work/referrals)). You can still decline any item.
+  </Step>
+</Steps>
+
+Below the queue, **Recently decided** shows the last few items that were accepted or declined. Empty state: "Nothing waiting. Items sent by outside systems appear here for review."
+
+Only items for patients you are allowed to see are shown. Opening the queue is recorded in the audit log.
 
 ## Signature chase — remind, or re-send
 
@@ -116,6 +138,7 @@ No individual permission governs anything here — the document permissions in t
 | **Accept** or **Reject** a conflict | Anyone who can open the desk | Nothing |
 | Add coverage from a conflict | Whoever may edit a patient record | The patient's insurance tab |
 | **File it** on an unfiled upload | Anyone who can open the desk | Nothing |
+| **Decline** an outside submission | A clinician for an allergy, medication or condition (a condition also needs permission to amend the problem list); any staff member for a referral | The kind of item |
 | Send or re-send for signature | Owners, managers, doctors, nurses, receptionists | The role list on [Documents](/hospital/records/documents) |
 | Change the chase thresholds | Owners and managers | **Settings → Facility** |
 
@@ -127,6 +150,7 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
 - **Conflicts to review** falls by one for each decision.
 - A re-sent document shows a new **Sent** time and its status is no longer **Link expired**.
 - A filed upload leaves **Unfiled** and is findable on the patient's record.
+- A declined outside submission leaves the queue and appears under **Recently decided**, with your reason.
 
 ## Common issues
 
@@ -145,6 +169,14 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
 
   <Accordion title="I cannot find a specific document here">
     Records only shows what is outstanding. Use **Send for signature**, which opens **Forms → eSignatures**, for the full list.
+  </Accordion>
+
+  <Accordion title="Accept says it is not available yet">
+    Adding an outside item to the chart is not switched on yet for any kind of item. The item stays in the queue untouched. You can decline it, or leave it for when accepting is available.
+  </Accordion>
+
+  <Accordion title="Decline says I cannot decide this kind of item">
+    Allergies, medications and conditions are clinical, so a clinician has to decide them. A condition also needs permission to amend the problem list. Ask a clinician to review it.
   </Accordion>
 
   <Accordion title="The tiles all read a dash">

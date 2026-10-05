@@ -46,6 +46,8 @@ Under them, three priority buttons appear **only when they have something to sho
 
 The table shows **Patient ID**, **Patient Name**, **Study Type**, **Status**, **Ordered** and **Ordered By** by default. **Accession**, **Scheduled**, **Performed**, **Reported**, **Technician**, **Radiologist**, **Findings**, **Impression** and **Payment** are available under **Toggle columns**.
 
+A client whose record is restricted to their care team, and whom you are not allowed to see, does not appear in the table. A **Secured clients** block above it shows **Secured patient** and a number with how many imaging orders are waiting — no name, study, finding or note. Select **Request emergency access** on it if you need the record to provide care now; once it is granted the orders appear like any other. See [Client security](/practice/work/client-security).
+
 Badges follow a strict order of importance: **Critical** outranks **STAT**, which outranks **Urgent**, which outranks the plain status. An empty hospital reads **No radiology studies found for this clinic.**
 
 ## Move a study through the list
@@ -170,7 +172,13 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
   </Accordion>
 
   <Accordion title="What does Radiology History show?">
-    Two tabs. **By Patient** (the default) groups every order into one row per patient — how many, their last order date, and the most recent report status — with a search box and a date-range filter; leave the range blank to see a patient's whole history. Selecting a patient opens their orders for that range as cards (study, modality, findings, impression, report status). **All Records** is the original one-row-per-order table.
+    Two tabs. **By Patient** (the default) groups every order into one row per patient — how many, their last order date, and the most recent report status — with a search box and a date-range filter; leave the range blank to see a patient's whole history. Selecting a patient opens their orders for that range as cards (study, modality, findings, impression, report status). **All Records** is the one-row-per-order table, and it goes back as far as the records do — unlike the request queue, which only shows recent orders.
+
+    Above the tabs, **All**, **Visits**, **Ward** and **Walk-in** narrow All Records and a patient's list to one kind of order. The choice stays in the page address, so a refresh or a shared link opens the same view. Patient totals always count every kind. A restricted client you are not allowed to see appears above the tabs as **Secured patient** and a number with how many imaging orders exist; **Request emergency access** on it opens their orders for the time you choose.
+  </Accordion>
+
+  <Accordion title="What is a walk-in imaging order?">
+    An order booked straight at the imaging counter, with no consultation and no ward stay behind it. It has its own row in **All Records**, marked **Walk-in** (select **View Details** to open it), and it counts in the patient's total and appears in their list under **By Patient**, with its source shown on the card.
   </Accordion>
 </AccordionGroup>
 

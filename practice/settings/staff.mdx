@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Inviting, editing and removing staff is owner-only" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Only an owner can invite staff. An owner or a manager can deactivate someone; a manager cannot deactivate another manager or themselves" />
 
 This is where your team lives: who is in the practice, who has been invited and not yet joined, and what each of them is allowed to do. It is also where a seat starts being charged, so read the pricing line before you send an invitation.
 
@@ -28,7 +28,8 @@ This is where your team lives: who is in the practice, who has been invited and 
 | **Staff Members** | Everyone currently in the practice: **Name** (the practice owner carries an **Owner** badge), **Email**, **Specialty**, **Clinical Specialty**, and **Last active**. | Everyone who can open Settings |
 | **Invite Staff** | Opens the five-step invite wizard. | Owner only |
 | Seat counter, under the button | Reads "3 of 5 seats used" plus the per-seat price, or "3 staff · unlimited seats" on an uncapped plan. | Owner only |
-| Row **Actions** menu | **Change Specialty** · **Set Clinical Specialty** · **Permissions** (where your practice has permission-governed modules) · **Require MFA on sign-in** · **Remove MFA requirement** · **Reset two-factor** · **Grant emergency access** · **Remove Staff**. The owner's own row has no menu. | Owner only |
+| Row **Actions** menu | **Change Specialty** · **Set Clinical Specialty** · **Permissions** (where your practice has permission-governed modules) · **Require MFA on sign-in** · **Remove MFA requirement** · **Reset two-factor** · **Grant emergency access** · **Deactivate**. The owner's own row has no menu. | Owner. A manager sees a shorter menu, and **Deactivate** only for team members who are not managers |
+| **Deactivated** card | Former team members, collapsed until you open it: **Name**, **Role**, **Deactivated** (the date), **By** (who deactivated them) and **Open tasks** still assigned to them. Appears only once someone has been deactivated. | Owner or manager |
 | **Pending Invitations** | Invitations sent and not yet accepted, with **Sent** and **Expires** dates and a cancel button. | Everyone; cancel is owner only |
 | **Pending Seat Payments** | "Staff invites awaiting seat payment via Stripe Checkout. Use Retry to generate a new payment link or Cancel to discard." Appears only when there is one. | Owner only |
 
@@ -84,7 +85,9 @@ Select **Set Clinical Specialty** from a colleague's **Actions** menu to choose 
 - **Their sidebar and available actions narrow** to what you granted, from their next sign-in.
 - **Denied actions are recorded** in the audit log; allowed ones are not.
 - **Hiding a module from someone is a convenience, not a security boundary.** Every action is checked when it is performed, so a hidden page they open directly still refuses the action.
-- **Removing someone strips supervision.** If clinicians name them as supervisor, the removal dialog says how many before you confirm.
+- **Deactivating someone ends their access straight away, and keeps their name on their work.** The notes, prescriptions and results they wrote still show who wrote them. Their seat is freed. Their care-team assignments and shared-mailbox access end, a connected personal calendar is disconnected, and any future shifts are marked as needing cover. Tasks still assigned to them stay assigned: the **Deactivated** card shows how many, so you can reassign them.
+- **To bring someone back, invite them again** from **Invite Staff**.
+- **Deactivating a supervisor strips supervision.** If clinicians name them as supervisor, the **Deactivate** dialog lists them and asks you to choose a new supervisor, or clear it, before you confirm.
 
 ## Check it worked
 
@@ -93,8 +96,8 @@ The new person appears under **Pending Invitations** immediately, and moves to *
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="There is no Invite Staff button and the rows have no Actions menu">
-    You are a manager or accountant. The staff list is read-only for both roles; only the practice owner can invite, edit or remove.
+  <Accordion title="There is no Invite Staff button">
+    Only the practice owner can invite staff. A manager sees a shorter row menu and can deactivate team members who are not managers; an accountant reads the list only.
   </Accordion>
   <Accordion title='"You have used all the seats on your plan"'>
     You are at your plan's maximum. The banner names the next tier and offers **View plans**. See [Seats](/platform/plans/seats) and [Change your plan](/platform/plans/change-plan).

@@ -54,11 +54,43 @@ Up to four day-values — 90, 60 and 30 is the usual set — each of which raise
 
 ### Dispense enforcement and ledger reconciliation
 
-**Dispense enforcement** controls how strictly the till and the dispensing form are held to the lot they were given. **Ledger reconciliation** compares recorded movements against on-hand quantities so a drift is found by the system rather than by a count.
+**Dispense enforcement** controls how strictly the till and the dispensing form are held to the lot they were given. The **Ledger reconciliation** card on the **Alerts** tab is not a setting — it lists records whose stock was never taken off the shelf, and is covered under [Ledger reconciliation](#ledger-reconciliation) below.
 
 ### The alert table
 
 Everything raised sits in one table: expiring within a horizon, low stock, temperature breach, count variance, controlled-drug count due and recalls. Each row takes **Acknowledge**, which is a record that a person saw it — not a fix.
+
+## Ledger reconciliation
+
+<Path steps={['Sidebar', 'Inventory', 'Alerts']} />
+
+A prescription is marked dispensed, a lab test is completed, a store order is paid — and the stock was never taken off the shelf. The **Ledger reconciliation** card at the top of **Alerts** lists those records from the last 30 days, with the number of them beside the title. When nothing is out of step the card is not shown at all.
+
+Each row says what happened and what to do about it — for example "Dispensed, but Paracetamol 500mg was never taken off the shelf. Take 4 of Paracetamol 500mg off the shelf now, or mark it reconciled if a stock count already did." Select a row to open it. The sheet shows the record, what the stock ledger already holds for it, and how much is usable at each location, then offers what fits:
+
+- **Take N off the shelf** records the missing stock movement, exactly as the original step would have. It takes from the location with the oldest-expiry stock that can cover the quantity; where more than one location can, **Take it from** lets you choose. Doing it twice cannot take the stock twice — a repeat tells you it was already done.
+- **Return to stock** appears on a prescription that was cancelled after its stock was taken. It puts the stock back where it came from, so use it only when the medicine physically came back and is safe to use. It asks you to confirm first.
+- **Mark as reconciled** is for when the stock is already right — a count corrected it, the item was not used, it was returned, or it was recorded somewhere else. Choose a **Reason** (the button stays off until you do) and add a note if you like; **Something else** needs a note. It records your reason and who chose it, and moves no stock. A record can be marked reconciled once.
+
+When it is done, a message says what changed, the row leaves the card, and the count drops. Reload the page and it stays gone.
+
+What each kind of record offers:
+
+| Record | What you can do |
+| --- | --- |
+| Prescription dispensed, no stock taken | **Take N off the shelf**, or **Mark as reconciled**. With no quantity recorded there is nothing to take, so only **Mark as reconciled** |
+| Prescription cancelled after stock was taken | **Return to stock**, or **Mark as reconciled** |
+| Lab test, radiology study, DOT collection kit, store order, completed appointment | **Take N off the shelf**, or **Mark as reconciled** |
+| Counter sale made beyond recorded stock | Settled or written off on the **Reconciliation** tab — the card opens it for you, and the row leaves once it is settled or written off |
+| Branch transfer sent and not received after two days | **Mark as reconciled** with a reason such as lost in transit. It does not record a receipt — the receiving branch still does that |
+
+Without the permission the sheet still opens, but the three actions are switched off with a message saying so.
+
+A controlled item needs a witness, so **Take N off the shelf** is not offered for it — take it off with a witnessed dispense, then mark the row reconciled. **Take N off the shelf** is also not offered when there is not enough usable stock, and the sheet tells you why; receive stock first, or mark it reconciled. Taking stock off for a prescription follows the same dispensing rules as handing it out: a role that cannot dispense is told so.
+
+Only records completed after the item's line was set up are listed. A reagent, supply or kit item added to a test, study, collection kit or service does not flag the ones you finished before you added it, only the ones completed after.
+
+A prescription you mark reconciled here is also closed on **Reconciliation** under **Dispense reconciliation**, and one reconciled there leaves this card.
 
 ## The reorder strip, and what it deliberately leaves out
 
@@ -104,6 +136,7 @@ An empty tab reads "No oversells to reconcile", with "Every sale has been covere
 | **Draft PO from these** off the reorder strip | Pharmacy Manager, Inventory & Purchasing | **Manage suppliers and purchase orders** |
 | Open, edit or close a recall | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
 | Settle or write off a POS shortfall | Anyone whose role reaches **Inventory** | Role — the toggle exists but nothing reads it yet |
+| Take stock off, return it, or mark a **Ledger reconciliation** row reconciled | Owner, manager, pharmacist, pharmacy technician, storekeeper, lab scientist, phlebotomist, radiology technician, and anyone not yet saved in the permissions sheet | **Reconcile inventory ledger**, plus **Dispense a prescription** for a prescription |
 
 Where **View cost prices and margin** is missing, the catalogue and valuation figures read **"Hidden — needs authorisation from your clinic owner."** — never a zero, because a zero at risk reads as good news rather than as a permission boundary. That gate does **not** reach the **Expiry risk** panel, which returns its money figures to anyone the plan lets in.
 
@@ -122,6 +155,7 @@ See [Staff permissions](/platform/team/permissions).
 - Once a lot crosses a horizon, it is listed on **Alerts** and the tab count rises.
 - After you receive stock above the threshold or correct a lot's expiry date, the alert is gone from **Alerts** without you acknowledging it.
 - After settling a shortfall, its row on **Reconciliation** moves from **Open** to **Settled**.
+- After you take a row off the shelf on **Ledger reconciliation**, the row is gone from the card and the item's on-hand on **Stock** is lower by the quantity. After you mark one reconciled, the row is gone and the on-hand is unchanged.
 - After closing a recall, the quarantined lots are sellable again.
 
 ## Common issues
@@ -149,6 +183,18 @@ See [Staff permissions](/platform/team/permissions).
 
   <Accordion title="'Select at least one affected lot'">
     A recall must name the lots it quarantines. Tick them under **Affected lots** — a recall with no lots would quarantine nothing and tell nobody.
+  </Accordion>
+
+  <Accordion title="A Ledger reconciliation row says there is not enough usable stock">
+    The sheet shows what is on the shelf at each location. Stock that is expired or on hold is not usable. Receive the delivery and open the row again, or mark it reconciled if the stock is already right.
+  </Accordion>
+
+  <Accordion title="'This record is no longer flagged'">
+    Someone put it right while you had it open. Close the sheet; the list refreshes.
+  </Accordion>
+
+  <Accordion title="'This record has already been marked reconciled'">
+    A record can be marked reconciled once. The first person's reason stands.
   </Accordion>
 
   <Accordion title="'No stock available to settle against — receive stock first, or write the shortfall off.'">
@@ -182,4 +228,4 @@ See [Staff permissions](/platform/team/permissions).
 
 <StillStuck topic="a lot or an expiry alert" />
 
-{/* source of truth: components/inventory/expiry-risk-panel.tsx, expiry-alert-settings.tsx, dispense-enforcement-settings.tsx, ledger-reconciliation-card.tsx, pos-shortfall-panel.tsx, recall-sheet.tsx, inventory-content.tsx */}
+{/* source of truth: components/inventory/expiry-risk-panel.tsx, expiry-alert-settings.tsx, dispense-enforcement-settings.tsx, ledger-reconciliation-card.tsx, ledger-reconciliation-sheet.tsx, lib/inventory/ledger-reconciliation-model.ts, pos-shortfall-panel.tsx, recall-sheet.tsx, inventory-content.tsx */}

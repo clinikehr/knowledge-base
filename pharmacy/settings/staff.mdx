@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can invite or remove staff" />
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only an owner can invite staff. An owner or a manager can deactivate someone; a manager cannot deactivate another manager or themselves" />
 
 This tab is where everyone who works in your pharmacy gets an account, a role, and a decision about what they are trusted to do — refund a sale, change a price, see what stock cost you.
 
@@ -28,7 +28,7 @@ This tab is where everyone who works in your pharmacy gets an account, a role, a
 | **Staff Members** card | The list of everyone in the pharmacy, with **Name**, **Email**, **Specialty**, **Clinical Specialty** and **Last active**. | Everyone with settings access |
 | **Invite Staff** button | Opens the five-step **Add team member** wizard. | Owner only |
 | Seat counter | Reads "\{n\} of \{n\} seats used", or "\{n\} staff · unlimited seats". | Owner only |
-| **Actions** menu on a row | **Change Specialty**, **Set Clinical Specialty**, **Permissions**, **Require MFA on sign-in**, **Reset two-factor**, **Grant emergency access**, **Remove Staff**. | Owner only |
+| **Actions** menu on a row | **Change Specialty**, **Set Clinical Specialty**, **Permissions**, **Require MFA on sign-in**, **Reset two-factor**, **Grant emergency access**, **Deactivate**. | Owner. A manager sees a shorter menu, and **Deactivate** only for team members who are not managers |
 | **Pending Invitations** card | Invitations sent but not yet accepted, with **Sent** and **Expires**, and a cancel button. | Everyone with settings access |
 
 ## Seats are included, up to your plan's cap
@@ -85,9 +85,12 @@ Open **Actions → Permissions** on any row to change these later.
 | **Money** | View cost prices and margin · View the net position |
 | **Oversight** | View per-cashier takings |
 | **Payments** | Collect payments |
+| **Inventory** | Reconcile inventory ledger |
 | **Forms** | View forms · Create and edit forms · Publish and close forms · View form responses · Share templates with other clinics · Send documents for signature · Export form responses · Adjust quiz marks · Fill in staff forms |
 
 **Collect payments** covers taking a patient's payment from **Payments**, from an invoice's **Record Payment** and from **Collect payment** on a prescription row. Owners and managers can always do it, and so can anyone you have not saved in the permissions sheet. Someone without it sees those controls greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." The till has its own switches and is not affected.
+
+**Reconcile inventory ledger** covers clearing a record flagged on **Inventory** › **Alerts** › **Ledger reconciliation**: taking its stock off the shelf, returning it to stock, or marking it reconciled with a reason. Owners and managers can always do it, and so can anyone you have not saved in the permissions sheet. It is on for a pharmacist, pharmacy technician, storekeeper, lab scientist, phlebotomist or radiology technician when you save them, and off for anyone else until you switch it on. Taking a prescription's stock off also needs permission to dispense it.
 
 **Forms** permissions arrived after some people were already set up. Anyone you had already saved in the permissions sheet keeps every **Forms** permission switched on, so nobody lost access they had — switch off whatever someone should not do. A new invite starts from the defaults for the role you choose.
 
@@ -109,7 +112,7 @@ After that, on their next sign-in:
 - **The access tier decides what they can see at all** — a cashier on **Own till** sees their own sales and nobody else's.
 - **A refused act is recorded**, so you can see who tried what and when.
 
-Removing someone takes their access away immediately. It does not delete the sales they rang up.
+Deactivating someone takes their access away immediately and frees their seat. Their name stays on the sales they rang up, and nothing is deleted. To bring them back, invite them again.
 
 ## Check it worked
 

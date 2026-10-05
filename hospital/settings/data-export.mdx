@@ -25,7 +25,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 | Control | What it does | Default |
 | --- | --- | --- |
-| **Modules** | A search-and-add picker of everything you can export, grouped as **Clinical Records**, **Patient Profile**, **Documents & Files**, **Telehealth**, **Administrative**, **Insurance**, **Ward & Inpatient** and **Compliance & Audit** | Nothing selected |
+| **Modules** | A search-and-add picker of everything you can export, grouped as **Clinical Records**, **Patient Profile**, **Documents & Files**, **Telehealth**, **Administrative**, **Insurance**, **Ward & Inpatient**, **API access** and **Compliance & Audit** | Nothing selected |
 | **Select all** · **Clear all** | Add or remove every module at once | — |
 | **Date range (optional)** | Narrows the export to a period. **All time** if left alone | All time |
 | **Export** button | Queues the job. Reads "Export \{n\} modules", and picks up a **ZIP** badge once you choose more than one | Disabled until you pick a module |
@@ -77,6 +77,10 @@ A record marked sensitive that you could not open on screen is left out of the f
 | **Handover Note Edit History** | correction of a handover note or handoff — what the entry said before the edit, and when it was replaced |
 
 **Administrative** also holds your calendar: **Calendar Events** (events and Out of Office blocks, with their times and dates), **Event People & Resources** (who and which rooms or equipment each one applies to), **Calendar Tasks**, and **Clinic Locations** (the sites or premises configured under Settings → Locations).
+
+**Administrative** also holds your duty rota, as five modules: **Rota Shifts** (every shift with who it is for, its times, its status and where it is), **Shift Types**, **Shift Patterns**, **Shift Coverage Rules** and **Shift Swap Requests** (each swap or cover request, with who asked, who it was offered to and how a manager answered). A shift's place comes out as names beside the ids — **Department**, **Ward**, **Unit** and **Other Place** — together with **Legacy Department Text**, the department wording the shift was created with before places existed. Shift types, patterns and coverage rules are exported whole whatever date range you choose; **Rota Shifts** follow the range by the shift's start time, and **Shift Swap Requests** by the day the request was made. No patient is named in any of them.
+
+**API access** is its own group, for clinics with API access, and holds two modules. **Linked Patients** lists which outside organization's connection may reach which patient: the organization, the patient, the organization's own reference for that person, how the link was made (**Linked by staff**, **Confirmed match by staff** or **Created through the API**), who linked it, when it began and, if it has ended, when and why. **Disclosures** lists each time a patient's information was sent to an organization: when, which organization, which permission and request, the kind of record, the basis recorded for sharing and which patient. It never contains the information itself. Linked patients are exported whole whatever date range you choose; **Disclosures** follow the range by the day they were sent. As with every patient module, a restricted client you may not open is left out.
 
 **Audit Logs** only appears for owners and managers. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
 

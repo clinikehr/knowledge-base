@@ -29,7 +29,7 @@ Nothing to set up. **Triage** and its history are always in the sidebar on the E
 
 The page opens on two tabs: **By Patient** (the default) and **All Records** — the encounter-by-encounter table this page has always had.
 
-**By Patient** groups every triage record into one row per patient — how many, their last triage date, and the most recent status — with a search box and a **date range** filter (leave the range blank to see a patient's whole recorded history). Selecting a patient opens their triage records for that range as vitals cards: blood pressure, pulse, respiratory rate, oxygen saturation, temperature, weight, height and blood sugar, each with its unit shown.
+**By Patient** groups every triage record into one row per patient — how many, their last triage date, and the most recent status — with a search box and a **date range** filter (leave the range blank to see a patient's whole recorded history). Selecting a patient opens their triage records for that range, newest first. Each starts with a vitals card (blood pressure, pulse, respiratory rate, oxygen saturation, temperature, weight, height and blood sugar, each with its unit) and a **Show full triage record** button that opens everything the triage chart holds: the acuity, any emergency flag, the chief complaint and presentation, the safety screen, every scored assessment, the triage note, the vitals, and who recorded it and when. The newest record opens in full; the others open when you select them. A record marked sensitive that you are not on the care team for shows a notice instead.
 
 **All Records** opens on the line "View complete history of all triage records". It is a separate screen from the list, not a filter on it, and its toolbar is deliberately shorter: **Search for patient**, **New Patient** and **View Columns**. There is no way to start a triage from here and no **Refresh** — this tab is for reading; a new record starts from a patient's **Waiting** card on the [Triage List](/hospital/outpatient/triage).
 
@@ -44,6 +44,8 @@ The page opens on two tabs: **By Patient** (the default) and **All Records** —
 The **⋯** menu on each row offers one action, **View Details**, which opens the full [triage chart](/hospital/outpatient/triage#the-triage-chart) read-only — every tab (Overview, Vitals, Assessments, Notes, Handoff and the rest) is there to read, with no Save button.
 
 Below the table sits the pager: **Show** … **per page** at 5, 10, 20 or 50 rows, with "Showing 1 to 10 of 47" beside it. An empty history reads **No triage history available.** — a different message from the list's, so the wording tells you which screen you are on.
+
+If a client's record is restricted to their care team and you are not on it, they do not appear in **By Patient** or **All Records**. A block headed **1 secured client** (or **2 secured clients**, and so on) above the tabs shows **Secured patient** and a number with how many triage records they have — nothing about them — and the row cannot be opened. Select **Request emergency access** on it if you need the record to give care now; once it is granted the client appears in both views like any other. Opening a restricted client's triage record by its link shows **This triage record is secured** instead of the record. See [Client security](/practice/work/client-security).
 
 ## Find a past record
 
@@ -128,7 +130,10 @@ If your hospital requires two-factor authentication, an unverified session canno
   </Accordion>
 
   <Accordion title="Can I see a patient's vitals over time?">
-    Not on this page — it lists records, not trends. Open the patient's consultation chart and use its **Vitals** tab, which plots the same readings on an **Over time** chart.
+    This page shows them side by side rather than as a trend: on **By Patient**, select the patient and their triage records for the date range open as vitals cards, each expandable to the full triage record. For a trend:
+
+    - Open a record with **View Details** and use the triage chart's **Trends** tab, which sets the last five triages' vitals against this one with a direction arrow on each. Its **Vitals** tab, switched to **All readings**, lists every reading taken anywhere, newest first.
+    - On the patient's [consultation chart](/hospital/outpatient/consultation), the **Overview** tab graphs **Blood pressure & pulse**, **Temperature**, **Blood glucose** and **BMI** over time once at least two readings exist.
   </Accordion>
 
   <Accordion title="Why is the Date column sometimes later than the visit?">

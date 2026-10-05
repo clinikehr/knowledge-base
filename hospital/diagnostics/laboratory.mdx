@@ -42,6 +42,8 @@ Above the table sit four controls: **Search for patient**, **New Test Report**, 
 
 A quiet day, or a hospital that has not ordered anything yet, reads **No recent lab test data available for this clinic.** That is the state a brand-new workspace lands on, and it is correct rather than broken.
 
+If a client's record is restricted to their care team and you are not on it, their waiting tests do not appear in the table. A **Secured clients** block above it shows **Secured patient** and a number with how many lab orders are waiting — no name, test, result or note. Select **Request emergency access** on it if you need the record to provide care now; once it is granted the tests appear in the table like any other. See [Client security](/practice/work/client-security).
+
 <Note>
   This list shows a test as **Pending** or **Completed** only. The richer view — **In Progress** and **Cancelled**, the **Critical** badge, and payment status — lives on [Lab reports](/hospital/diagnostics/lab-reports), which is also where ordering and printing happen.
 </Note>
@@ -149,7 +151,17 @@ Enforcement of the per-person permissions is **opt-in**: someone never saved in 
   </Accordion>
 
   <Accordion title="What does Lab Test History show?">
-    Two tabs. **By Patient** (the default) groups every test into one row per patient — how many, their last test date, and the most recent status — with a search box and a date-range filter; leave the range blank to see a patient's whole history, or narrow it to a specific period. Selecting a patient opens their tests for that range as cards (test name, result, status). **All Records** is the original one-row-per-test table, for finding a single request fast.
+    Two tabs. **By Patient** (the default) groups every test into one row per patient — how many, their last test date, and the most recent status — with a search box and a date-range filter; leave the range blank to see a patient's whole history, or narrow it to a specific period. Selecting a patient opens their tests for that range as cards (test name, result, status, and whether it was a visit, ward or walk-in test). **All Records** is the one-row-per-request table, for finding a single request fast.
+
+    Above the tabs, **All**, **Visits**, **Ward** and **Walk-in** narrow All Records and a patient's list to one kind of test. The choice stays in the page address, so a refresh or a shared link opens the same view. Patient totals always count every kind.
+  </Accordion>
+
+  <Accordion title="What is a walk-in test, and where does it appear?">
+    A walk-in test is one booked straight at the lab counter, with no consultation and no ward stay behind it. It has its own row in **All Records**, marked **Walk-in** — select **View Details** to open the test and its result — and it counts in the patient's total and appears in their list under **By Patient**. A sensitive test's result stays hidden unless you are on the client's care team or the owner.
+  </Accordion>
+
+  <Accordion title="What is the Secured patient block above Lab Test History?">
+    A client whose record is restricted to their care team, and whom you are not allowed to see, shows there as **Secured patient** and a number with how many lab orders exist — nothing else. Select **Request emergency access** to open their tests for the time you choose; the owner and the client's assigned staff are told, and the request is recorded. See [Client security](/practice/work/client-security).
   </Accordion>
 
   <Accordion title="Who sees that I opened a patient's results?">

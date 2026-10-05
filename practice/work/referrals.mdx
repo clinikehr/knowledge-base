@@ -1,0 +1,90 @@
+---
+title: "Work referrals sent to your clinic"
+description: "Accept a referral another practice sent, then accept, decline, schedule and complete it, and see every referral on a client's record."
+icon: /images/icons/clipboard-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member" note="A referral arrives from a connected app." />
+
+A **referral** is another practice asking your clinic to see someone. A connected app can send one for a client. It waits for you, and you decide what happens next: take it on, turn it down, book the visit, and mark it done.
+
+This is not the clinic referral programme (inviting other clinics to ClinikEHR), the **Referred by** source on a client, or the antenatal and postnatal referral in the maternity module. It is also separate from **Outside care team**, which lists the doctors a client names.
+
+<Path steps={['Sidebar', 'Clients', 'Review outside data', 'Referrals to action']} />
+
+<TaskHeader before="A connected app that sends referrals" time="A minute per referral" after="A referral accepted, booked and completed, or turned down with a reason" />
+
+## Add a referral to your list
+
+A referral a connected app sends does not appear on the client's record yet. It waits in **Review outside data**, marked **From an outside system**, showing the service asked for, the reason and its code, the priority, when it is needed by, a summary and who sent it.
+
+<Steps>
+  <Step title="Open Review outside data">
+    Select **Review outside data** on the **Clients** or **Patients** page. The button shows how many items need you, referrals included.
+  </Step>
+  <Step title="Add it">
+    Select **Accept**, then **Add referral**. Any member of staff can do this. It adds the referral to your list as **Received**. It does not accept the referral or book anything: you decide that next.
+  </Step>
+  <Step title="Or decline it">
+    Select **Decline**, write why, and select **Decline** again. The reason is kept with the decision and the sender can see it.
+  </Step>
+</Steps>
+
+## Work the referrals that need you
+
+Open **Review outside data** and select the **Referrals to action** tab. It lists every referral that is **Received** or **Accepted**, with the one needed soonest at the top. Urgent ones are marked.
+
+The same actions are on the client's own record, under **Referrals**, which also keeps the finished ones.
+
+| Select | What it does | Available when it is |
+| --- | --- | --- |
+| **Accept** | Agrees to see the client. You can choose who will see them and which department, or leave both for later. | **Received** |
+| **Schedule** | Marks it booked. You can pick one of the client's upcoming appointments, or mark it scheduled without one. | **Accepted** |
+| **Mark completed** | Records that you have seen the client. | **Accepted** or **Scheduled** |
+| **Decline** | Turns it down. You must write a reason. | **Received** |
+| **Cancel** | Calls it off. You must write a reason. | **Received**, **Accepted** or **Scheduled** |
+| **Entered in error** | For a referral raised for the wrong person. It cannot be changed afterwards. | Any status except **Entered in error** |
+
+A **Completed**, **Declined** or **Cancelled** referral cannot be reopened. If two people open the same referral and one acts first, the other sees a message that it has already moved on, and the list refreshes.
+
+Any member of staff can take any of these steps. Every one is recorded in the [audit log](/platform/security/audit-log) with who did it and when. The reason you write is kept with the referral and is not written into the audit log.
+
+<AuditNote action="Each referral step" />
+
+## Check it worked
+
+Leave the page and open the client's record. **Referrals** shows the referral with its new status, the person or department it was handed to, and the booking if you chose one. Select **Details** for the rest of what the sending practice told you.
+
+## Good to know
+
+- **A sender cannot decide for you.** A connected app can correct a referral or take it back only while it is **Received**. Once you have accepted, declined or booked it, it can no longer change it.
+- **Your reason stays private.** The reason for a decline or cancel is shown to the app that sent the referral, and to no other.
+- **You can export referrals.** **Referrals** is an option when you export your data.
+- **Restricted clients.** A referral for a client restricted to assigned staff is visible only to the people who can open that client.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I do not see Review outside data">
+    The button appears only when something is waiting, whether an outside item or a referral to action. With nothing waiting it is hidden.
+  </Accordion>
+  <Accordion title="It says the referral has already moved on">
+    Someone else got there first. Close the message: the list refreshes and shows where the referral is now.
+  </Accordion>
+  <Accordion title="Decline or Cancel will not go ahead">
+    Both need a reason. Write one, up to 2,000 characters.
+  </Accordion>
+  <Accordion title="The list says it could not load">
+    You see a message and **Try again**, never an empty list, because an empty list would say there is nothing to do. Select **Try again**.
+  </Accordion>
+  <Accordion title="It says I need two-factor sign-in">
+    Your clinic requires two-factor sign-in before you can change a record. Complete it and try again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a referral sent to my clinic" />

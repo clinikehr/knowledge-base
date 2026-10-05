@@ -9,9 +9,9 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner or manager" note="Owner or manager can connect, switch the default, deactivate or reactivate an account. Other roles see it read-only, with no account numbers." />
+<Availability editions={['clinic']} plans="All plans" roles="Owner or manager" note="Free connects one account per provider; Essential and above connect up to 3. Owner or manager can connect, switch the default, deactivate or reactivate an account. Other roles see it read-only, with no account numbers." />
 
-This tab is how your **clients pay you** — card payments on invoices, deposits at booking, and saved cards for later. It is **not** how you pay ClinikEHR for your subscription; that is arranged separately and nothing on this tab affects it.
+This tab is how your **clients pay you** — card payments on invoices, deposits at booking and payment links. Saving a card to charge later is a separate feature that starts on **Essential**; cards a clinic already has stored stay visible on the client's record on Free, and can be removed, but no new card can be saved or charged. It is **not** how you pay ClinikEHR for your subscription; that is arranged separately and nothing on this tab affects it.
 
 <Path steps={['Sidebar', 'Settings', 'Billing', 'Online Payments']} />
 
@@ -27,11 +27,11 @@ This tab is how your **clients pay you** — card payments on invoices, deposits
 
 | Control | What it does | Default |
 | --- | --- | --- |
-| **Connect Stripe Account** | Sends you to Stripe to create a NEW account (up to 3 per provider) and complete their checks — never reuses another account. Owner or manager only — everyone else reads "Only the clinic owner or a manager can connect a payment account" | Not connected |
+| **Connect Stripe Account** | Sends you to Stripe to create a NEW account (one on Free, up to 3 on Essential and above) and complete their checks — never reuses another account. Owner or manager only — everyone else reads "Only the clinic owner or a manager can connect a payment account" | Not connected |
 | **Continue setup** | Appears when Stripe onboarding is started but unfinished: "Onboarding incomplete — your clinic cannot charge patients yet" | — |
 | **Open Stripe Dashboard** | Opens your Stripe account in a new tab for payouts, disputes and statements | — |
 | Status tiles | **Account ID**, **Onboarding** (Complete / Incomplete) and **Charges** (Enabled / Disabled). The badge at the top reads **● Active** or **◌ Pending verification** | — |
-| **Connect Bank Account** | Paystack only. Opens the onboarding form for a NEW subaccount (up to 3). Owner or manager only | Not connected |
+| **Connect Bank Account** | Paystack only. Opens the onboarding form for a NEW subaccount (one on Free, up to 3 on Essential and above). Owner or manager only | Not connected |
 | **Make default** | Switches which connected account new charges use. Disabled with a tooltip until the account can accept charges | — |
 | **Deactivate** | Stops an account taking new charges. Shows what is still tied to it (active memberships, saved cards) before you confirm. Never deletes it | — |
 | **Reactivate** | Brings a deactivated account back (it does not become the default automatically) | — |
@@ -66,7 +66,7 @@ Once the connection is live and **Charges** is enabled:
 - **Payment links become sendable.** You can generate a pay-this-now link for an invoice and send it to a client.
 - **Invoices gain a pay-online route.** An invoice you send stops being purely a request for a bank transfer.
 - **The booking page can take payment at the time of booking** — the full fee, or a deposit a service sets, and cancellation and missed appointment fees can be charged to a saved card after you review them.
-- **[Auto Pay](/practice/settings/auto-pay) becomes available.** It charges saved cards automatically and requires a connected Stripe account specifically; the tab reads "Connect Stripe to use Auto Pay" until then.
+- **[Auto Pay](/practice/settings/auto-pay) becomes available on Essential and above.** It charges saved cards automatically and requires a connected Stripe account specifically; the tab reads "Connect Stripe to use Auto Pay" until then.
 - **[Memberships](/practice/settings/memberships) can be sold.** Without a connected payout account you cannot publish or activate a membership plan at all — the product refuses with "Connect a payout account first".
 
 Until the account can accept charges, all of those stay unavailable. A part-connected account is the common trap: everything looks set up, and nothing works.
@@ -75,9 +75,21 @@ Two things do **not** change. Money already collected in cash or by transfer is 
 
 One provider-specific refusal to know about: if your practice collects through Paystack and something tries to raise a Stripe payment link, it is turned down with "This clinic collects payments via Paystack — Stripe payment links are not available." That is expected, not a fault.
 
+## Three different things, three different plans
+
+| What | Plans |
+| --- | --- |
+| **Pay for the appointment when booking** — the client pays once through your connected account (**Require Upfront Payment** on the booking page, payment links, invoices paid online) | Every plan with online payments, **Free** included |
+| **Deposits, partial prepayment and cancellation or missed appointment fees** — set per service | **Essential** and above |
+| **Save a card on file** — on a client's record or at booking, and **Auto Pay** | **Essential** and above |
+
+Paying once never saves the card. **Memberships** are Essential and above: if your plan drops to Free, current members keep being billed, but no new members can sign up.
+
 ## Multiple accounts, a default, and switching between them
 
-You can connect **up to 3 Stripe accounts and 3 Paystack accounts** (active and deactivated ones both count toward that limit — it exists to stop payouts being redirected by cycling through accounts). Exactly one account per provider is the **default**, and every new charge, payment link, membership sale and Auto Pay attempt uses it.
+**Free** connects **one** Stripe account (or one Paystack account) — enough to take payments online. **Essential and above** connect **up to 3 Stripe accounts and 3 Paystack accounts**. Active and deactivated accounts both count toward the limit, which exists to stop payouts being redirected by cycling through accounts — so on Free you cannot swap your account by deactivating it and connecting another, but you can reactivate it. Once Free has its one account, the tab says "Your plan includes one Stripe account — upgrade to Essential to connect up to 3", and the connect button is gone. Exactly one account per provider is the **default**, and every new charge, payment link, membership sale and Auto Pay attempt uses it.
+
+If your plan drops to Free while you hold two or three accounts, **all of them keep working** — nothing is switched off or removed. You just cannot add another until you are back on Essential or above.
 
 - **The first account you connect becomes the default automatically.** Connecting a second or third never silently takes over payouts — it starts inactive-as-default (still usable once verified, just not the one new money goes to) until you choose **Make default**.
 - **Make default** is disabled with a tooltip until the account can actually accept charges (Stripe: onboarding complete and charges enabled; Paystack: onboarding complete).
@@ -94,7 +106,7 @@ Open any unpaid invoice and look for the option to pay or send a payment link. O
 
 <AccordionGroup>
   <Accordion title="I can see the tab but the Connect button is missing">
-    You are not the owner or a manager. The card reads "Only the clinic owner or a manager can connect a payment account" — any other role can view the accounts, without account numbers, but not act.
+    On **Free**, the button disappears once you have your one account — the tab says "Your plan includes one Stripe account". Otherwise, you are not the owner or a manager. The card reads "Only the clinic owner or a manager can connect a payment account" — any other role can view the accounts, without account numbers, but not act.
   </Accordion>
   <Accordion title="It says connected, but I still cannot take payment">
     Look at the **Charges** tile. "Onboarding incomplete — your clinic cannot charge patients yet" means Stripe still wants something. Select **Continue setup** and finish their questions.
