@@ -58,6 +58,10 @@ New acts get added to the product as it grows. For anyone already governed, a ne
 </Info>
 
 <Note>
+  **Edit appointments** and **Delete appointments** are exceptions too: they have a starting position instead of arriving off-and-badged-**New**. Everyone already governed keeps editing appointments, and nobody gains the right to delete them.
+</Note>
+
+<Note>
   **Record triage** is an exception to the default above. Recording triage was never restricted before this permission existed, so it was switched **on** for everyone already governed when it shipped, rather than off-and-badged-**New**. **Set triage acuity** follows the ordinary rule: new capability, off, until an owner or manager saves it on.
 </Note>
 
@@ -78,12 +82,15 @@ New acts get added to the product as it grows. For anyone already governed, a ne
     | **Pharmacy** | Dispense a prescription |
     | **Payments** | Collect payments |
     | **Inventory** | Reconcile inventory ledger |
+    | **Appointments** | Edit appointments · Delete appointments |
 
     **Dispense a prescription** is the per-person half of **Settings → Facility → Clinical access → Dispense a prescription** — that card chooses which ROLES may dispense, this switch chooses which PEOPLE among them. It governs both dispensing screens: the [pharmacy counter](/hospital/pharmacy/prescriptions) and filling a prescription straight from [inventory](/hospital/supply/inventory).
 
     **Collect payments** — "Take a patient's payment at the desk, from the Payments page or the Collect payment sheet on a pharmacy or lab row, and record a payment against an invoice." It covers Payments, an invoice's **Record Payment**, **Collect payment** on the pharmacy and lab lists, and charging a card on file. Someone without it sees those controls greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Voiding a payment is a separate rule, and the pharmacy till has its own switches. When you save someone, it starts on for owners, managers, receptionists, cashiers, billers, accountants, pharmacists, pharmacy technicians, records officers and storekeepers, and off for clinical roles. Anyone already saved in the permissions sheet when this arrived was set by their job title the same way, so open the sheet of a nurse or doctor who takes payments and switch it on.
 
     **Reconcile inventory ledger** covers clearing a record flagged on **Inventory** › **Alerts** › **Ledger reconciliation**: taking its stock off the shelf, returning it to stock, or marking it reconciled with a reason. Owners and managers can always do it, and so can anyone you have not saved in the permissions sheet. It is on for a pharmacist, pharmacy technician, storekeeper, lab scientist, phlebotomist or radiology technician when you save them, and off for anyone else until you switch it on. Taking a prescription's stock off also needs permission to dispense it.
+
+    **Edit appointments** and **Delete appointments** govern changing a booking from the calendar and deleting one outright. They work differently from every other switch on this sheet: **Edit appointments** is **on** for everyone until you switch it off, and **Delete appointments** is **off** for everyone but you, **managers included**, until you switch it on. A manager is not treated as an owner for these two — open their sheet and decide. Setting a booking to **Cancelled** is never blocked by either. Only the clinic owner can switch **Delete appointments** on. Switching **Edit appointments** off for a doctor or employee stops them saving changes in the app; it does not stop other routes into the same booking, so use their role as well if you need a hard stop.
 
     A group only appears if the matching care area is switched on — see [Care areas](/platform/team/care-areas). **Results** is new in August 2026: a hospital running its own lab or DOT testing can now govern who enters a result and who authorises it, which it previously could not.
 
@@ -121,6 +128,7 @@ New acts get added to the product as it grows. For anyone already governed, a ne
     | **Referrers** | Access the referrer portal |
     | **Payments** | Collect payments |
     | **Inventory** | Reconcile inventory ledger |
+    | **Appointments** | Edit appointments · Delete appointments |
 
     **Collect payments** covers Payments and an invoice's **Record Payment**. It is on for owners, managers, receptionists, billers and accountants when you save them, and off for bench roles until you switch it on.
 

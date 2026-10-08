@@ -1,6 +1,6 @@
 ---
 title: AI credits
-description: "How your monthly agent credit allowance works, what spends it, and how to buy refill packs that never expire."
+description: "How agent credits work, what spends them (agents, AI Note Taker minutes, Rewrite, Autocomplete), and how to buy them by hand or automatically."
 icon: /images/icons/coins.svg
 ---
 
@@ -9,9 +9,9 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Every plan has an allowance; the size varies" roles="Any staff member who can open AI Agents" note="A refill pack is charged to the workspace owner's payment method." />
+<Availability editions={['clinic']} plans="Every plan has an allowance; the size varies" roles="Any staff member who can open AI Agents · owners and managers buy credits · only the owner sets automatic top-up" note="A credit pack is charged by card at checkout. Automatic top-up uses the card on your subscription." />
 
-Credits are what your AI agents run on. Your plan grants a batch every month; when those run out, agents stop until the next grant or until you top up.
+Credits are what your AI agents run on, and what AI Note Taker minutes, AI Rewrite and AI Autocomplete draw on once your plan's own allowance is used. Your plan grants a batch every month; when those run out, agents stop until the next grant or until you buy more.
 
 <Path steps={['Sidebar', 'AI Agents', 'Agent credits']} />
 
@@ -33,7 +33,23 @@ The **Agent credits** card states the arrangement: "Granted monthly with your pl
 
 Every step an agent takes that involves a model costs credits — the agent's own reasoning, and the classification steps a workflow runs to decide what to do next. A longer workflow with more branches costs more than a single reply, and a larger model costs more than a smaller one.
 
-Everything else in ClinikEHR — notes, appointments, dispensing, results — costs no credits at all.
+## What else spends credits
+
+Some AI writing tools spend the same credits:
+
+| What | Credits |
+| --- | --- |
+| **AI Note Taker** minutes beyond the minutes your plan includes each month | 2 a minute |
+| **AI Rewrite** (paid plans only) | 1 each time |
+| **AI Autocomplete** (paid plans only) | 0.35 for each suggestion |
+| A clinical note written with AI | 2 a note (4 on Free) |
+| Dictation | 2 a minute (4 on Free) |
+
+**AI Rewrite and AI Autocomplete are on paid plans only.** On Free they show an upgrade prompt and cost nothing. An Autocomplete suggestion is charged when it is generated, whether or not you press Tab to keep it. If a request fails, the credit is returned.
+
+The AI Note Taker's included minutes come first: 300 a month on Essential, 900 on Team, and unlimited on Enterprise (UTC calendar month, shared by the whole clinic). Credits are only used for minutes beyond that, and only while the switch described below is on.
+
+Everything else in ClinikEHR — appointments, dispensing, results, and notes you write yourself — costs no credits at all.
 
 ## The two rules that decide when you need to buy
 
@@ -42,33 +58,65 @@ Everything else in ClinikEHR — notes, appointments, dispensing, results — co
 
 Together those mean a refill is a safety net rather than a subscription: buy one when your monthly allowance runs short, and it sits behind the allowance until it is needed.
 
-## Top up
+## Buy credits
+
+Only the clinic owner and managers see **Buy credits**.
 
 <Steps>
   <Step title="Open the Agent credits card">
-    It sits on the **AI Agents** page and shows your balance over "credits available". The same balance is on **Dashboard** → **Subscription** as **Agent Studio Credits**.
+    It sits on the **AI Agents** page and on **Settings** → **AI Settings**, and shows your balance over "credits available". The same balance, with the same **Buy credits** button, is on **Dashboard** → **Subscription** as **Agent Studio Credits**.
   </Step>
-  <Step title="Select Top up">
-    The **Top up agent credits** dialog explains: "Refill packs never expire and are used after your monthly plan credits. You'll complete payment securely on the next screen."
+  <Step title="Select Buy credits">
+    The **Buy agent credits** panel explains: "Credits never expire and are used after your monthly plan credits. You will complete payment securely on the next screen."
   </Step>
   <Step title="Choose a pack">
-    Four sizes, priced in US dollars:
+    Five sizes. Clinics billed in US dollars see dollars; clinics billed in naira see naira:
 
-    | Credits | Price |
-    | --- | --- |
-    | 1,000 | \$20 |
-    | 2,500 | \$45 |
-    | 5,000 | \$80 |
-    | 10,000 | \$150 |
+    | Credits | Price | Price in naira |
+    | --- | --- | --- |
+    | 250 | \$5 | ₦6,500 |
+    | 1,000 | \$20 | ₦26,000 |
+    | 2,500 | \$45 | ₦58,500 |
+    | 5,000 | \$80 | ₦104,000 |
+    | 10,000 | \$150 | ₦195,000 |
   </Step>
   <Step title="Pay">
-    The tile shows **Starting…** and hands you to the payment page. On success the balance rises and a **Refill** line appears under **Recent activity**.
+    Select **Continue to payment**. The button shows **Starting…** and hands you to the payment page. On success the balance rises and a **Refill** line appears under **Recent activity**.
   </Step>
 </Steps>
 
 <Warning>
   **Buying a pack charges your card immediately.** It is a one-off purchase, not a subscription, and it is not refundable once the credits are on the balance. Check the pack size before you confirm — the tiles sit next to each other and the largest is more than seven times the smallest.
 </Warning>
+
+## Automatic top-up
+
+Automatic top-up buys a pack for you when your balance runs low, so AI Note Taker minutes and agents do not stop in the middle of a clinic day. It is **off until the clinic owner turns it on**, and **only the owner can change it**. Managers can see how it is set and the recent purchases, with the note "Only the clinic owner can change this."
+
+<Path steps={['Sidebar', 'Settings', 'AI Settings', 'Automatic top-up']} />
+
+The owner chooses:
+
+| Setting | What it does | Starts as |
+| --- | --- | --- |
+| **Top up automatically** | The on/off switch | Off |
+| **Pack to buy** | One of the packs above, priced in your billing currency | 1,000 credits |
+| **Buy when the balance falls below (credits)** | The balance that triggers a purchase | 200 |
+| **Most purchases in a month** | A monthly cap, from 1 to 20 | 3 |
+
+When the balance drops below the number you set, one pack is charged to the card on your subscription. Credits are added only after the payment goes through. You get an email receipt and an in-app notice each time, naming the pack, the amount and the new balance. Once the monthly cap is reached nothing more is bought that month, and the owner is told once.
+
+**It pauses itself if a payment fails** — no saved card, a declined card, or a bank that asks for extra confirmation. The card then shows **Automatic top-up is paused** with the reason in plain words, and the owner is emailed. Select **Turn back on** once the card is fixed; saving the settings with the switch on also clears the pause.
+
+**Recent automatic purchases** lists the date, the pack, the amount and the status: **Paid**, **Failed**, **Skipped: monthly limit reached**, or while in progress **Waiting to be charged** / **Charging**.
+
+## Use credits for AI Note Taker minutes
+
+**Settings** → **AI Settings** has a switch, **Use agent credits when AI Note Taker minutes run out**. It is on for clinics that already exist and for new ones. The owner and managers can change it; everyone else sees it read-only.
+
+- **On:** once the included minutes are used, recording and note generation keep working and each extra minute costs 2 credits. The AI Note Taker's meter reads "Now using agent credits — 2 credits a minute · balance" followed by your balance. The first time this happens in a month the owner gets an in-app notice.
+- **Off:** AI Note Taker stops when the included minutes run out. You can still write the note by hand.
+- **On, but the balance is under 2 credits:** you are told before recording starts, and offered **Buy credits** (owner and managers) or to write the note by hand.
 
 ## Reading the ledger
 
@@ -79,6 +127,10 @@ Together those mean a refill is a safety net rather than a subscription: buy one
 | **Plan grant** | Your monthly allowance arriving |
 | **Refill** | A pack you bought |
 | **Agent run** | Credits spent by an agent |
+| **Note Taker minutes** | Minutes beyond your plan's included minutes |
+| **Rewrite** · **Clinical note** · **Dictation** | A single use of that tool |
+| **Autocomplete × 42** | A day's Autocomplete suggestions folded into one line, with the credits they cost together |
+| **Auto top-up purchase** | A pack bought automatically |
 | **Hold** / **Release** | Credits reserved while a run is in flight, then freed |
 | **Refund** | Credits returned after a failed run |
 | **Expired** | A grant that has been superseded |
@@ -104,6 +156,18 @@ Together those mean a refill is a safety net rather than a subscription: buy one
     The payment page did not open. Try again, and if it still fails check whether your subscription is **Past Due** — a lapsed subscription blocks the purchase. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
 
+  <Accordion title="Buying credits is not set up for your clinic yet">
+    Credit packs are not available to your clinic yet. Contact support@clinikehr.com and we will switch them on.
+  </Accordion>
+
+  <Accordion title="Automatic top-up is paused">
+    The last automatic payment did not go through. The card says why. Fix the card on your subscription, then select **Turn back on**. Only the clinic owner can.
+  </Accordion>
+
+  <Accordion title="AI Autocomplete stopped suggesting, and a message said I am out of credits">
+    The balance is empty. Autocomplete and Rewrite pause for the rest of your session and you see one message, with **Buy credits** if you are the owner or a manager. Writing by hand still works.
+  </Accordion>
+
   <Accordion title="I paid but the balance has not moved">
     Reload the page. Confirmation from the payment provider can take a minute. If the charge shows under **Payment History** but the balance has not risen after five, [contact support](/platform/help/contact-support) with the time of the payment.
   </Accordion>
@@ -116,8 +180,8 @@ Together those mean a refill is a safety net rather than a subscription: buy one
     You ran out. The monthly grant returns on your renewal date; a refill pack is available immediately. Published agents stop serving the public when the balance is empty, so top up before you publish something customer-facing.
   </Accordion>
 
-  <Accordion title="The Top up button is not there">
-    You are not on the **AI Agents** page. The card lives there and on **Settings** → **AI Settings**; it is not on the sidebar, and it is not part of a clinical module. AI Agents is Clinic & Hospital only — a pharmacy or diagnostics workspace has no agents and no credit balance.
+  <Accordion title="The Buy credits button is not there">
+    Only the clinic owner and managers can buy credits. If you are one of them, check you are on the **AI Agents** page or **Settings** → **AI Settings**; the card is not on the sidebar, and it is not part of a clinical module. AI Agents is Clinic & Hospital only — a pharmacy or diagnostics workspace has no agents and no credit balance.
   </Accordion>
 </AccordionGroup>
 
@@ -135,4 +199,4 @@ Together those mean a refill is a safety net rather than a subscription: buy one
 
 <StillStuck topic="a credit balance that does not look right" />
 
-{/* source of truth: components/clinic/agents/agent-credits-card.tsx, components/clinic/dashboard/subscription-dashboard.tsx, lib/dodo-payments/product-mapping.ts (AGENT_PACK_CREDITS, AGENT_PACK_USD_VALUES), lib/subscription-features.ts */}
+{/* source of truth: components/clinic/agents/agent-credits-card.tsx, components/clinic/agents/buy-credits-sheet.tsx, components/clinic/dashboard/settings/auto-topup-card.tsx, components/clinic/dashboard/settings/ai-minutes-credits-switch.tsx, lib/ai/credit-rates.ts, lib/ai/credit-packs.ts, lib/subscription-features.ts */}

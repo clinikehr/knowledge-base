@@ -1,6 +1,6 @@
 ---
 title: "AI settings"
-description: "Manage agent credits, connect external tools, and set up the webhook that lets another system fire the hospital's agents."
+description: "Manage agent credits and automatic top-up, choose whether AI Note Taker minutes use credits, connect tools, and set up the agent webhook."
 icon: "/images/icons/bot.svg"
 ---
 
@@ -28,10 +28,20 @@ The page is headed **AI settings** — "Agent Studio credits, connected tools (M
 | Card | What it does | Gate |
 | --- | --- | --- |
 | **Note assistant** | Choose ClinikEHR or EvidenceMD; manage EvidenceMD's key | Owner-only; EvidenceMD needs the API add-on + agreement above |
-| **Agent credits** | Your balance and usage, with a route to top up | All plans |
+| **Agent credits** | Your balance and usage, with **Buy credits** for the owner and managers | All plans |
+| **AI Note Taker and agent credits** | The switch **Use agent credits when AI Note Taker minutes run out** | Owner and managers change it; others see it read-only |
+| **Automatic top-up** | Buys a credit pack for you when the balance runs low | Owner and managers see it; only the owner changes it |
 | **Connected tools (MCP)** | External servers your agents can call as tools. "Tool arguments are de-identified before they leave to a third-party server." | All plans |
 | **Webhook / API trigger** | "Let any external system fire your agents" — an endpoint, a signing secret and an on/off switch | Team and above |
 | **Agent-to-agent access** | Publish your agents as tools other systems can call | Any paid plan |
+
+### Agent credits and automatic top-up
+
+- **Use agent credits when AI Note Taker minutes run out** is on by default. With it on, each AI Note Taker minute beyond the plan's included minutes costs 2 credits. With it off, AI Note Taker stops when the included minutes run out.
+- **Automatic top-up** is off by default. The owner opens **Edit** and chooses the pack, the balance that triggers a purchase (starts at 200 credits) and the most purchases in a month (starts at 3). The card on your subscription is charged and credits are added once the payment succeeds. A failed payment **pauses** it, and the card says why with **Turn back on** for the owner. A manager sees the state with "Only the clinic owner can change this."
+- AI Rewrite and AI Autocomplete use credits too, and are paid-plan only.
+
+Rates, packs and the details are in [AI credits](/platform/plans/credits).
 
 ### Connected tools
 
