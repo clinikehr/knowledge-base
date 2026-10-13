@@ -39,6 +39,17 @@ The **Settings** tab's **Booking Settings** card — "Configure how appointments
 | **Clinic Timezone** | "All appointment times will be calculated based on this timezone" | UTC |
 | **Advance Booking Days** | "How many days in advance patients can book appointments" | 30 |
 | **Booking Confirmation Message** | "Message shown to patients after they submit a booking request" | Empty |
+| **Show "Powered by ClinikEHR"** | A small line at the foot of your booking page, in every template, and on the confirm, cancel, reschedule and payment-return pages, linking to clinikehr.com. It stays on for Free, Essential and Starter practices; **Team** and **Enterprise** can turn it off. If a Team practice later moves to a lower plan the line comes back, and your choice is remembered if you upgrade again | On |
+
+And the **After a client books** card:
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Redirect after booking** | A switch. Off: clients stay on their confirmation. On: they see their confirmation for 5 seconds, then go to the page you choose. **Stay here** cancels it | Off |
+| **My website** | Takes clients to the **Website** in **Settings → General**, the one website for your whole practice. Unavailable, with the reason shown, until you have entered one there | — |
+| **Another page** | Takes clients to an `https://` address you type, for example a thank-you page. An address that is not a plain `https://` web address is refused when you save | — |
+
+Under the switch, one line says what clients will experience, for example "After booking, clients see their confirmation for 5 seconds, then go to yourclinic.com." Turning the switch off keeps your choice for later. With it on, saving without a usable page is refused.
 
 And the **Payment Settings** card — "Configure payment options and policies for your booking page":
 
@@ -110,6 +121,27 @@ Turning on **Require Upfront Payment** changes the booking flow itself: the clie
 
 **Booking policy** changes only what clients read and agree to from now on. A booking keeps the wording and the amounts the client agreed to.
 
+## The QR code
+
+The **QR code** card gives you a code clients scan with a phone camera to open your booking page. A booking is counted as **Booked from the code** when it is made, including a booking that is paid for first: it is counted once, when the payment completes it.
+
+- **It is in your booking page's own colour, with your logo in the middle.** If that colour is too light for a camera to read reliably, the code is drawn in near-black and the card says so. If your logo cannot be loaded, the code is drawn without it and the card says that too.
+- **Only a code that has been checked is offered.** Before **Download PNG** or **Print** appear, the finished picture is read back on your device and must open exactly the address printed under it. If that check fails, the card says the code could not be checked and offers nothing to print.
+- **It always uses the saved address.** Change the address or the look, save, and the code is drawn again. Anything you have typed but not saved is never printed.
+- **If the page is switched off**, the code still works the moment you turn it on; until then anyone who scans it sees that the page is unavailable, and the card warns you.
+
+### Poster and card
+
+Select **Poster and card** to open **Print your code**. Choose **Poster (A4)** for a wall or window, or **Reception card (A6)** for the front desk, then **Download PDF** or **Download PNG**. Both carry your booking page name and logo in your colour, the line "Scan to book an appointment", and the short address for people without a camera. Everything is in words, so it reads the same on a black-and-white printer. The file is made on your device; nothing is uploaded.
+
+### One code for each location
+
+With more than one active location, a **One code for each location** section lists a code for every one, each with its own **Download PNG**, **Print** and **Poster and card**. Scanning a location's code opens the booking page with that location already chosen, so the **Choose a location** step is skipped.
+
+### How many people used it
+
+Owners and managers see **Last 30 days** on the card: **Opened from the code** and **Booked from the code**. These are counts only. No name, device or address is kept with them. The counts are approximate, and refreshing the page in the same tab counts once.
+
 ## Check it worked
 
 Open your page address in a private browser window — as a visitor, not as yourself. You should see your branding, your featured services, and a calendar offering real times. Book a test appointment and confirm it lands in [Appointments](/practice/work/appointments) and that your **Booking Confirmation Message** is what the client sees.
@@ -136,7 +168,7 @@ Open your page address in a private browser window — as a visitor, not as your
     The choices unlock once a Stripe account is connected and ready to take charges, under Online Payments. Practices that bill in Naira take payments through Paystack, which cannot save a card without charging it, so card on file is not offered to them yet.
   </Accordion>
   <Accordion title="The Custom domain card says I need to upgrade">
-    Serving the page from your own web address is a Team and Enterprise feature. On Solo plans the page stays on its ClinikEHR address, which works exactly the same. See [Change your plan](/platform/plans/change-plan).
+    Serving the page from your own web address is a Team and Enterprise feature. On Free and Essential the page stays on its ClinikEHR address, which works exactly the same. See [Change your plan](/platform/plans/change-plan).
   </Accordion>
   <Accordion title="I changed the page but visitors see the old version">
     Changes reach the public page on save, but an unsaved edit only exists in the preview. Look for the **Save Changes** label on the save button — that wording means you have unsaved work.

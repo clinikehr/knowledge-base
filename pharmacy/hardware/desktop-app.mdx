@@ -26,7 +26,7 @@ It contains **no app code of its own** — it loads your hosted workspace, exact
 
 For a pharmacy the answer is **ClinikEHR Pharmacy POS** on every machine, front and back office. The other two point at different workspaces entirely and will not show you your pharmacy.
 
-Each build reopens on whatever page you were last on, so a counter terminal comes back up on the till after a restart. Neither pharmacy build signs you out on a timer: a session ends when someone ends it. The **ClinikEHR Desktop** build additionally blanks its own window in screen-capture software, because the medical records it shows are confidential in a way a till is not.
+Each build reopens on whatever page you were last on, so a counter terminal comes back up on the till after a restart. Neither pharmacy build has its own idle lock, but both follow the workspace's [Automatic logoff](/platform/security/automatic-logoff) — 60 idle minutes unless an owner or manager chose another time, with a two-minute warning — and signing out never clears the sale queue. The **ClinikEHR Desktop** build additionally blanks its own window in screen-capture software, because the medical records it shows are confidential in a way a till is not.
 
 Installers are published per operating system:
 
@@ -74,7 +74,7 @@ Selecting a link to somewhere outside your workspace — a supplier, a support a
   </Card>
 
   <Card title="A durable sale queue" icon="/images/icons/database.svg">
-    Sales captured offline are stored outside the browser profile, so clearing browser data does not lose queued sales. See [Selling when the internet is down](/pharmacy/pos/offline).
+    Sales captured offline are stored, encrypted, outside the browser profile, so clearing browser data does not lose queued sales. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Card>
 
   <Card title="Serial hardware" icon="/images/icons/barcode.svg">
@@ -147,7 +147,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Do I need the app to sell offline?">
-    No — a browser queues offline sales too. The app stores that queue outside the browser profile, so clearing browsing data cannot wipe queued sales, and that is the reason to prefer it on a till. See [Selling when the internet is down](/pharmacy/pos/offline).
+    No — a browser queues offline sales too. The app stores that queue outside the browser profile, so clearing browsing data cannot wipe queued sales, and the file is encrypted with a key held by the computer's secure key store. That is the reason to prefer it on a till. See [Selling when the internet is down](/pharmacy/pos/offline).
   </Accordion>
 
   <Accordion title="Is anything stored on the machine I should worry about?">
@@ -155,7 +155,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="Can two people share one installed app?">
-    Yes. It is one workspace with normal sign-ins, so a shift change is a sign-out and a sign-in. Neither pharmacy build locks the screen on a timer, so sign out deliberately when you leave a shared machine.
+    Yes. It is one workspace with normal sign-ins, so a shift change is a sign-out and a sign-in. Neither pharmacy build locks the screen on a timer, so sign out deliberately when you leave a shared machine. Signing out clears the offline product and customer lists but keeps any sale not yet sent, and a queued sale is sent under the cashier who rang it up, so it waits if someone else signs in first.
   </Accordion>
 
   <Accordion title="What does not work offline in the app?">

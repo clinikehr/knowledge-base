@@ -39,7 +39,7 @@ The **Lab Reports** tab is the working list, with **Search reports...** and a st
 
 A **Critical** badge replaces the status badge when the test carries critical values, so an urgent result is never buried behind a routine one. With nothing matching, the table reads **No lab reports found** / **Try adjusting your search or filter criteria**.
 
-Each row's **Actions** menu offers, in order: **View Details**, **Start Test**, **Enter Results**, **Edit Results**, **Cancel Test**, **Print Report** and **Print Receipt**.
+Each row's **Actions** menu offers, in order: **View Details**, **Start Test**, **Enter Results**, **Edit Results**, **Cancel Test** (it asks for a reason first), **Print Report** and **Print Receipt**.
 
 ## Order a test
 
@@ -48,7 +48,7 @@ Each row's **Actions** menu offers, in order: **View Details**, **Start Test**, 
     The form opens as **New Lab Test Order** — **Create a new lab test order for a patient.**
   </Step>
   <Step title="Find the patient">
-    Under **Patient Details**, use **Select Patient** and search by name, ID, phone or email. Their ID, age and gender appear as chips so you can check you have the right person.
+    Under **Patient Details**, use **Select Patient** and search by name, ID, phone or email. Their ID, age and gender appear as chips so you can check you have the right person. For someone you are not registering, select **Walk-in** in the switch above and enter their **Full name**, **Sex** and **Age (years)** or **Date of birth (optional)** — see [Walk-in lab and imaging clients](/hospital/diagnostics/walk-in-clients).
   </Step>
   <Step title="Choose the tests">
     **Select Lab Test** — **Choose a test to order** — searches your catalogue. Optionally narrow it with **Select Parameters**; leave that empty to include every parameter the test defines. Select **Add to Order**.
@@ -96,7 +96,7 @@ A downloaded report for a walk-in test — one not ordered from a visit or a war
 
 ## Working offline
 
-Ordering keeps working. An order raised offline is held on the device and confirmed as **Lab order saved offline**, with a provisional reference and the note that it "syncs when the connection returns; payment stays pending." A connection that drops mid-save gives **Connection dropped — lab order queued** instead. Payment is never taken offline; settle it at the desk once you are back online. See [Working offline](/platform/apps/offline).
+Ordering keeps working. An order raised offline is held on the device and confirmed as **Lab order saved offline**, with a provisional reference and the note that it "syncs when the connection returns; payment stays pending." A connection that drops mid-save gives **Connection dropped — lab order queued** instead. Payment is never taken offline; settle it at the desk once you are back online. A walk-in client's order is held the same way and receives its walk-in number when it syncs; take its payment from the client's record under **Walk-in clients**. See [Working offline](/platform/apps/offline).
 
 ## Who can do this
 
@@ -107,6 +107,7 @@ Ordering keeps working. An order raised offline is held on the device and confir
 | Read the list and open a report | Lab and clinical staff | Role |
 | Order a test | Lab and clinical staff | Role |
 | Enter or edit results | Lab scientists | Role — anyone else gets **You are not authorized to submit lab results.** |
+| Cancel a test | Lab scientists, owners and managers | The **Cancel lab tests** switch in [Staff permissions](/platform/team/permissions) |
 | Take payment on the order | Anyone who can open the report | Nothing |
 | See revenue on the Analytics tab | Anyone who can open the page | Nothing — a hospital workspace has no permission that hides money |
 
@@ -147,7 +148,7 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
 
 <AccordionGroup>
   <Accordion title="Can I cancel a test after ordering it?">
-    Yes — **Cancel Test** on the row, confirmed with **Test cancelled**. Cancelling does not refund a payment already taken; handle that in [Billing](/hospital/revenue/billing).
+    Yes, while it is **Pending** or **In Progress** and nobody has paid for it. Choose **Cancel Test** on the row, give a **Reason**, and select **Cancel test**; you get **Test cancelled**. The reason is kept with the order. A test that has been paid cannot be cancelled: you are told **This test has been paid. Ask a manager to refund it first.** A cancelled test can no longer be paid; trying to take its payment says **This test was cancelled and cannot be paid.** A completed test already has a result and cannot be cancelled.
   </Accordion>
 
   <Accordion title="What does the Critical badge actually mean?">

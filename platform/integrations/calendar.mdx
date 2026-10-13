@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, Manager" note="A Google or Outlook account can only be linked by the person who owns it — nobody can connect a colleague's." />
+<Availability editions={['clinic']} plans="All plans — connecting a new Google or Outlook account needs a paid plan; .ics subscriptions are on every plan" roles="Owner, Manager" note="A Google or Outlook account can only be linked by the person who owns it — nobody can connect a colleague's." />
 
 If a provider's real commitments live in Google, Outlook or a therapy network, ClinikEHR needs to know about them — otherwise your booking page happily offers a slot that is already gone. Connecting a calendar brings those events **into** ClinikEHR so availability is calculated against them.
 
@@ -25,6 +25,7 @@ The tab has two sections, and picking the right one saves a lot of confusion.
 | --- | --- | --- |
 | How you connect | Sign in to Google or Outlook | Paste a secret `.ics` link |
 | Direction | Two-way | One-way, into ClinikEHR only |
+| Plans | Paid plans to add a new connection | Every plan, Free included |
 | Who sets it up | Each person connects **their own** account — but this tab is only reachable by an owner, manager or accountant | An owner or manager, for any calendar |
 | Good for | A provider's own working calendar | Apple calendars, and platforms like **Headway, Alma, Rula or Grow Therapy** |
 
@@ -59,6 +60,10 @@ Under **Connected Accounts**, select **Google** or **Outlook** and sign in. Each
 
 <Note>
   This tab lives inside **Settings**, which only an owner, manager or accountant can open. A provider who is none of those has a second door to the exact same connection: **Profile and Settings → Calendars**, on their own personal account, reachable regardless of what a workspace's navigation shows them. See [Your calendar connections](/platform/account/calendars). Failing that, an owner or manager can add a read-only **subscription** to that provider's `.ics` feed instead and assign it to them.
+</Note>
+
+<Note>
+  **On the Free plan you cannot add a new Google or Outlook connection.** The **Google** and **Outlook** buttons are greyed out, and a line above your connections reads "Two-way Google and Outlook sync is part of paid plans. Calendar feeds (.ics) stay available on every plan.", with a button to upgrade. A connection made before is kept: it keeps syncing, and you can still sign in again from its **Reconnect** badge. **Calendar Subscriptions** work on every plan, Free included.
 </Note>
 
 Once connected, choose which of that account's calendars to sync. The row shows **Connected** with a count of calendars syncing, and gives you **Sync now** and a way to disconnect. If the badge turns to **Reconnect**, the permission has lapsed at the provider's end — sign in again from that row.
@@ -102,6 +107,10 @@ If a feed fails repeatedly it is paused automatically, and the tab shows an ambe
 ## If something goes wrong
 
 <AccordionGroup>
+  <Accordion title="Google and Outlook are greyed out">
+    Your workspace is on the Free plan, which cannot add a two-way connection. Upgrade from the button on the same card, or add the calendar as a read-only **subscription** with its secret `.ics` address, which every plan can do. An account you connected before keeps syncing.
+  </Accordion>
+
   <Accordion title="Test connection fails or the preview is empty">
     You almost certainly copied the calendar's public web link rather than its secret `.ics` address. Go back to the provider and take the iCal / ICS link specifically. If it starts `webcal://`, change that to `https://`.
   </Accordion>

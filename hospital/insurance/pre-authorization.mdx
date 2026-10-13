@@ -1,6 +1,6 @@
 ---
 title: Request a pre-authorization
-description: "Ask an insurer to approve treatment before you deliver it, with the codes, quantities and costs the payer needs to decide."
+description: "Ask an HMO to approve treatment before you deliver it, record its decision and authorization code, and carry that code onto the claim."
 icon: /images/icons/clipboard-check.svg
 ---
 
@@ -8,103 +8,159 @@ import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on." />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on, and your hospital's Insurance preference set to Outside the US." />
 
-A pre-authorization asks an insurer to agree, in advance, that they will pay for something. The codes you attach here are what the insurer approves against — get them right and the claim that follows is a formality, get them wrong and you are appealing a denial you could have prevented.
+<InsuranceRegion region="non_us" />
+
+A pre-authorization asks an HMO to agree, in advance, that it will pay for something. The diagnoses and items you list are what the HMO approves against, and the **authorization code** it gives you is what goes on the claim afterwards. Get the request right and the claim is a formality; get it wrong and you are appealing a refusal you could have prevented.
 
 <Path steps={['Sidebar', 'Insurance', 'Pre-Authorization']} />
 
-<TaskHeader before="The insurer added under Companies, its prices set, and the patient's policy on file" time="5 minutes" after="A submitted request you can track to approval or denial" />
+<TaskHeader before="The HMO added under Insurance, its prices set, and the patient's insurance on file" time="5 minutes" after="A request you can follow to the HMO's decision, and a claim that carries its authorization code" />
 
 ## What you're looking at
 
-The heading reads **Pre-Authorization Management** — "Manage insurance pre-authorization requests with AI-powered analysis". A date-range picker, **Refresh**, **Export** and **New Request** sit beside it.
+The heading reads **Pre-Authorization Management**. A date-range picker, **Refresh**, **Export** and **New Request** sit beside it.
 
-Four tabs:
+Three tabs:
 
 | Tab | What it holds |
 | --- | --- |
-| **Overview** | Summary tiles for volume, pending work and approval rate |
+| **Overview** | Summary tiles for volume, pending work and approval rate, a status chart and recent activity |
 | **Requests** | The searchable list of every request |
-| **Analytics** | Status mix and how it is moving |
 | **Activity** | Who did what to a request, and when |
 
-The **Requests** list carries **Request #**, **Patient**, **Type**, **Status**, **AI Analysis**, **Cost**, **Created At** and **Actions**. **Request #**, **Patient**, **Type**, **Cost** and **Created At** all sort. Above it sit a search box — "Search requests, patients, insurance..." — and **All Statuses** and **All Types** filters, which list only the values your own requests actually use.
+The **Requests** list carries **Request #**, **Patient**, **Type**, **Status**, **AI Analysis**, **Cost**, **Created At** and **Actions**. Above it sit a search box and the **All Statuses** and **All Types** filters. Selecting a row opens the request in a side panel.
+
+**Statuses.** Each request shows where it is with the HMO:
+
+| Status | Meaning |
+| --- | --- |
+| **Draft**, **AI reviewed**, **Reviewed** | Being prepared. You can still edit it |
+| **Waiting for the insurer** | Sent to the HMO. It can no longer be edited |
+| **Approved** | The HMO approved it and gave a code |
+| **Partially approved** | The HMO approved some lines and declined others |
+| **Used on a claim** | A claim carries this authorization |
+| **Declined** | The HMO refused it |
+| **Expired** | The authorization passed its end date, or the HMO said it lapsed |
+| **Cancelled** | You cancelled it |
+
+The **All Statuses** filter offers every one of these. An approved request whose **Valid until** date has passed moves to **Expired** by itself.
 
 **Empty state.** A hospital with nothing raised, or a filter that matches nothing, shows **No requests found**. Clear the search and set both filters back to **All** before concluding a request is missing.
 
 ## Raise the request
 
-The form is a set of tabs you work through in order. Each one answers a question the payer will ask.
-
 <Steps>
   <Step title="Open a new request">
-    Select **New Request**. The form opens on **Basic Info**, headed **Patient & Request Information**.
+    Select **New Request**. The **New pre-authorization request** panel opens (a bottom sheet on a phone).
   </Step>
-  <Step title="Identify the patient and the request">
-    Choose the **Patient** and a **Request Type** — both required — then a **Priority Level**. Priority is what tells your own team which requests cannot wait, so set it honestly.
+  <Step title="Choose the patient and their cover">
+    Choose the **Patient**, then the **Insurance cover** the request is for. The cover decides the HMO and the plan, so you never pick the insurer yourself. A patient can have more than one cover, and each shows its HMO, plan, insurance number and whether they are the principal or a dependant. A cover marked **needs review** cannot be chosen until its details are completed; select **Add or fix insurance details** to do that without leaving the panel.
   </Step>
-  <Step title="Set the deadlines">
-    **Submission Deadline** is when you must have sent it; **Authorization Deadline** is when you need an answer by. Both drive your follow-up, so fill them in even when the payer has not stated one. **Additional Notes** carries anything else the reviewer should read.
+  <Step title="Say what kind of request and how urgent">
+    Set the **Kind of request** and the **Urgency** (**Routine**, **Urgent** or **Emergency**). Optionally link an **Encounter** and set **Need an answer by**.
+  </Step>
+  <Step title="Add the diagnoses">
+    Under **Diagnoses**, search ICD-10 by code or name and select each one. At least one is required, and the first is the primary diagnosis. This is the field HMOs read first: an item with no diagnosis behind it is the commonest avoidable refusal.
   </Step>
   <Step title="Add the items">
-    On **Items & Services**, add a line for each thing you want approved. **Item Type**, the item itself, **Quantity** and **Description** are required; **Unit Cost**, **Tariff Code**, **Tariff ID**, **Diagnosis** and **Medical Necessity** carry the payer's own references and your justification.
+    Under **Care items**, select **Add item** for each thing you want approved. Search the HMO's own price list to fill the description, code and price, or type them yourself. Each item needs a **Description**, a **Quantity** and a **Price each**; **Why it is needed** is optional. **Total requested** adds the lines up.
   </Step>
-  <Step title="Attach the codes">
-    Still on each item, use **ICD 10/CPT CODE** and search with "Search ICD-10, CPT, or HCPCS codes...". This is the field payers read first: a procedure code with no diagnosis code supporting it is the commonest avoidable denial. The search matches name, code and description, so try the clinical term rather than the number.
-  </Step>
-  <Step title="Confirm the cover">
-    On **Insurance Details**, choose the **Insurance Company** and **Insurance Plan**. If the patient has nothing on file, select **Add Insurance** and complete the **Add Insurance Details** dialog — it is saved against the patient for next time.
-  </Step>
-  <Step title="Review and submit">
-    On **Review & Submit**, read the summary back. You are asking a payer to commit money against exactly what is on that screen, so an item missing here is an item that is not approved.
+  <Step title="Justify it and save">
+    Write the **Clinical justification**: findings, what was tried, why this care. **Internal notes** stay with you. Select **Create request**. The request opens in its detail panel.
   </Step>
 </Steps>
 
-Costs on the request come from the payer-specific rates under **Insurance** → **Pricing**, not from your standard fees. If a figure looks wrong, the negotiated price is where to fix it.
+Prices come from the HMO's price list under **Insurance** → **Pricing** where it has the item; otherwise you enter the price. Money shows in your hospital's currency.
 
-## Track the answer
+Editing a request that was reviewed puts it back to **Draft**, because the earlier review no longer describes what is on the screen. Once a request is sent, it cannot be edited: record the HMO's decision instead.
 
-Work the **Requests** tab by status. The **AI Analysis** column shows whether an automated review has run — a prompt to look again before you send, never a decision.
+## Review it
 
-The **Overview** tiles are your chase list: a rising pending count means requests are sitting, and a falling approval rate is almost always a coding problem rather than bad luck. When the insurer answers, record their decision on the request — an approval is what you quote on the [claim](/hospital/insurance/claims) afterwards.
+Open a request to see its patient, cover, diagnoses, items, history and **AI review**. Select **Run the AI review** for a check of the request before you send it.
+
+The AI review is marked **AI-generated** and is a suggestion, not a decision. It never changes the request. Read it, then select **I have reviewed this request** to mark it **Reviewed**. Sending a request to the HMO is a person's act: see [How claims reach your HMOs](/hospital/insurance/how-claims-reach-hmos).
+
+## Record the HMO's decision
+
+When the HMO answers by phone or on its own portal, record it on the request.
+
+<Steps>
+  <Step title="Open the decision panel">
+    On a request, select **Record insurer's decision** from **Actions** (or **Record decision** in the request's panel).
+  </Step>
+  <Step title="Say what the HMO decided">
+    Choose **Approved**, **Partially approved**, **Declined** or **Expired**. Only the choices that make sense for the request's status are offered.
+  </Step>
+  <Step title="Enter the authorization">
+    For an approval, enter the **Authorization code** the HMO gave you. Optionally set **Valid from** and **Valid until**, and an **Approved amount** (left empty, it is the sum of the approved lines). You cannot approve more than was asked for.
+  </Step>
+  <Step title="Go line by line when needed">
+    For a partial approval, tick **Approved** on each line the HMO approved, optionally enter the amount it approved, and give a reason for each line it declined.
+  </Step>
+  <Step title="Record it">
+    For a refusal, enter the **Reason the insurer gave**. Select **Record decision**.
+  </Step>
+</Steps>
+
+A decision that arrives through Curacel or the API lands in the same place and looks the same. You can correct a recorded decision until a claim uses it.
+
+## Start a claim from an approval
+
+On an **Approved** or **Partially approved** request, select **Create a claim**. The new claim opens with the patient, the HMO, the authorization code and the lines the HMO approved, at the amounts it approved. You review them before you save.
+
+When you start a claim for a patient who has an open authorization with the same HMO, the claim form offers it under **Pre-authorization (optional)**. Only authorizations that are approved, not yet ended and not used by another claim are listed. A claim carries one authorization, and it shows as **Used on a claim** from then on.
+
+If a claim line is more than the HMO approved for it, or is not one of the approved lines, the claim form says so and by how much. It changes nothing: you decide whether to ask the HMO or to bill the difference to the patient.
 
 ## Who can do this
 
-**Role Navigation** is what decides who gets here. The page itself checks nothing — its old hardcoded role list was retired — so anyone who can reach the **Insurance** group can raise, submit and read a pre-authorisation. Under **Settings → Role Navigation** accountants and billers reach it by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
+**Role Navigation** is what decides who gets here. Anyone who can reach the **Insurance** group can read pre-authorizations. Raising a request and recording a decision are open to owners, managers, doctors and employees; other roles can read pre-authorizations but not change them. If someone sees **You do not have permission to change pre-authorizations at this clinic**, ask an owner or manager.
 
-Your staff sheet's **Billing** section does carry **File insurance claims**, **Add insurance payments**, **Request coverage reports**, **Edit service fees** and **View financial dashboard**, and they are recorded against each person — but no insurance screen reads them, so they change nothing today. Restrict insurance at the **Role Navigation** layer instead.
+Under **Settings → Role Navigation** accountants and billers reach the page by default, alongside owners and managers, and a role with no rule of its own is unrestricted.
 
-Enforcement is **opt-in per person**: a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"** before that changes. A **denied action is recorded**; an allowed one is not. Hiding **Insurance** from a role is a convenience, not a security boundary.
+Your staff sheet's **Billing** section carries **File insurance claims** and **Add insurance payments**; they are recorded against each person but no pre-authorization screen reads them, so they change nothing here. Restrict insurance at the **Role Navigation** layer instead.
+
+Opening a request is recorded in the audit log, and so is every change to it.
 
 ## Check it worked
 
 - The request appears on **Requests** with a **Request #**, the patient and a status.
-- The **Cost** column matches what you expect the payer to approve.
-- Every item you intend to deliver is on the request — one that is not on it is not approved, however the rest is answered.
+- After you record an approval, the status reads **Approved** (or **Partially approved**), the request shows the **Authorization code**, and the claim you start from it shows the same code.
+- Reload the page: the status and code are still there.
 
 ## Common issues
 
 <AccordionGroup>
-  <Accordion title="The patient's insurer is not in the picker">
-    Add the insurer on the **Companies** tab of the [Insurance dashboard](/hospital/insurance/overview) first, then reopen the request.
+  <Accordion title="Pre-authorizations here are for clinics that use the HMO insurance setup">
+    Your hospital's Insurance preference is set to the US. Change it under **Settings** → **General** if you bill HMOs.
+  </Accordion>
+
+  <Accordion title="This patient has no insurance cover on file">
+    Select **Add insurance details**, complete the HMO, plan and insurance number, save, and choose the cover.
+  </Accordion>
+
+  <Accordion title="Add at least one diagnosis (ICD-10 code)">
+    A request needs a diagnosis and at least one item. Search ICD-10 under **Diagnoses** and select one.
+  </Accordion>
+
+  <Accordion title="This request has already been sent to the insurer, so it can no longer be edited">
+    Once a request is sent it cannot change. Record the HMO's decision, or raise a new request for anything you left out.
+  </Accordion>
+
+  <Accordion title="That authorization code is already recorded on another request">
+    Each code belongs to one request. Check the code the HMO gave you and the request you are recording it on.
+  </Accordion>
+
+  <Accordion title="The unit cost is not what we agreed with this HMO">
+    Payer-specific prices live under **Insurance** → **Pricing**. Fix the negotiated price there so every future request is right.
   </Accordion>
 
   <Accordion title="No requests found, but we raised several">
     Clear the search box and set **All Statuses** and **All Types**, then check the date-range picker at the top of the page and select **Refresh**.
-  </Accordion>
-
-  <Accordion title="I cannot find the right code">
-    Search on the clinical term rather than the number. If nothing fits, describe it precisely under **Description** and **Medical Necessity** — a payer will query a vague description, and a query costs more time than the search did.
-  </Accordion>
-
-  <Accordion title="The unit cost is not what we agreed with this payer">
-    Payer-specific prices live under **Insurance** → **Pricing**. Fix the negotiated price there so every future request is right.
-  </Accordion>
-
-  <Accordion title="The request was denied">
-    Read the payer's reason against the codes you submitted. Most denials at this stage are a missing supporting diagnosis, a quantity beyond what the plan allows, or an item the cover excludes. Correct it and raise a new request rather than arguing the old one.
   </Accordion>
 
   <Accordion title="Pre-Authorization is not in my sidebar">
@@ -116,26 +172,30 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
 
 <AccordionGroup>
   <Accordion title="Do I need a pre-authorization for every patient?">
-    No — only where the plan says so. Switch on **Pre-authorization Required** on that plan under **Insurance** → **Plans** so your team can see which ones demand it.
+    No, only where the plan says so. Switch on **Pre-authorization Required** on that plan under **Insurance** → **Plans** so your team can see which ones demand it.
   </Accordion>
 
-  <Accordion title="Is anything sent to the insurer automatically?">
-    No. The request is prepared and tracked here, and you send it to the payer the way you already do.
+  <Accordion title="Is anything sent to the HMO automatically?">
+    No. A person sends the request, using the channel the HMO is set up for. See [How claims reach your HMOs](/hospital/insurance/how-claims-reach-hmos).
   </Accordion>
 
-  <Accordion title="Can I add an item after submitting?">
-    Raise a fresh request for it. An approval covers the items that were on the request when the payer read it, so amending after the fact is not a change the payer has seen.
+  <Accordion title="Can I add an item after the request is sent?">
+    Raise a fresh request for it. An approval covers the items that were on the request when the HMO read it.
+  </Accordion>
+
+  <Accordion title="What happens when an authorization passes its end date?">
+    It moves to **Expired** and is no longer offered to new claims. A claim that already carries it keeps it.
   </Accordion>
 
   <Accordion title="Does an approval guarantee payment?">
-    It removes the commonest reason for refusal, not every one. The claim still has to match the approval on items, quantities and dates.
+    It removes the commonest reason for refusal, not every one. The claim still has to match the approval on items, amounts and dates.
   </Accordion>
 
   <Accordion title="What does the AI Analysis column do?">
-    It flags gaps in a request before a human sends it — a prompt to look again, never a decision. Submitting is always a person's act.
+    It shows whether the AI review has run. The review is a suggestion to check against the patient's record, never a decision.
   </Accordion>
 </AccordionGroup>
 
 <StillStuck topic="a pre-authorization" />
 
-{/* source of truth: components/clinic/insurance/pre-authorization/pre-auth-content-dashboard.tsx, pre-auth-form.tsx, pre-auth-table.tsx, patient-insurance-dialog.tsx, lib/edition-staff-roles.ts, lib/edition.ts */}
+{/* source of truth: components/clinic/insurance/pre-authorization/pre-auth-sheet.tsx, pre-auth-decision-sheet.tsx, pre-auth-detail-sheet.tsx, pre-auth-workspace.tsx, pre-auth-table.tsx, pre-auth-content-dashboard.tsx, lib/insurance/pre-auth-lifecycle.ts, lib/insurance/pa-to-claim.ts, components/clinic/insurance/claims/form-tabs/basic-info-tab.tsx */}

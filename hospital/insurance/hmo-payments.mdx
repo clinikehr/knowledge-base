@@ -1,0 +1,147 @@
+---
+title: Record an HMO payment
+description: "Record money an HMO has paid, share it across the claims it settles, and see what each HMO still owes you."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners, managers, accountants and billers" note="Needs the Insurance care area switched on, and Settings → General → Insurance set to Outside the US." />
+
+<InsuranceRegion region="non_us" />
+
+An HMO usually pays many claims in one transfer. **Record payment** takes that one payment and shares it across the claims it settles, so each claim shows what is still owed and the cash is recorded on the day it arrived.
+
+<Path steps={['Sidebar', 'Insurance', 'Claims', 'HMO receivables']} />
+
+<TaskHeader before="Claims submitted to the HMO, and the remittance advice or bank statement in front of you" time="2 minutes" after="The payment recorded, each claim showing what the HMO still owes" />
+
+## What you're looking at
+
+**HMO receivables** lists each insurer that owes you money: **Open claims**, **Owed**, how old the debt is (**0-30 days**, **31-60**, **61-90**, **Over 90**) and **Credit held** — money received that is not yet shared across claims. **View claims** shows the open claims behind a figure, oldest first.
+
+**Empty state.** **Nothing is waiting on an insurer** when no insurer owes you anything.
+
+Beneath the table, **Payment advices** lists what insurers have told you they paid — see [Payment advices from an insurer](#payment-advices-from-an-insurer).
+
+## Record a payment
+
+<Steps>
+  <Step title="Start">
+    Select **Record payment** on **HMO receivables**, or choose **Record Payment** from a claim's **Actions** menu to start from that claim.
+  </Step>
+  <Step title="Say who paid and how much">
+    Choose the **Insurer**, the **Date received**, the **Amount received** and **How it was paid**. Add a **Reference** — the transfer or cheque number — so you can match it to the bank statement.
+  </Step>
+  <Step title="Share it across claims">
+    The claims that insurer still owes you for are listed. Select **Share oldest first** to fill them in order, or type an amount against each claim. The sheet shows what is **Shared across claims** and what is **Kept as credit**.
+  </Step>
+  <Step title="Record it">
+    Select **Record payment**. You are told **Payment recorded**.
+  </Step>
+</Steps>
+
+A claim cannot be given more than it is owed, and a payment cannot be shared out for more than was received. Money you do not share out is kept as **Credit held** against that insurer until you do.
+
+## Share credit held later
+
+When a claim can take money that was kept as credit — the insurer approves it, or you find the claim the money was for — share the credit across it. No new money is recorded: it was counted when the payment was.
+
+<Steps>
+  <Step title="Open the credit">
+    On **HMO receivables**, select the insurer's **Credit held** amount (it reads, for example, **₦50,000.00 - Apply**). The **Apply credit** sheet opens.
+  </Step>
+  <Step title="Choose the payment">
+    If the insurer has credit on more than one payment, choose it under **Payment**. The oldest is chosen first, so credit is used up in the order it was received.
+  </Step>
+  <Step title="Share it across claims">
+    The claims that insurer still owes you for are listed and filled oldest first. Change any amount, or select **Share oldest first** or **Clear**. The sheet shows what is **Applied to claims** and what is **Still held**.
+  </Step>
+  <Step title="Apply it">
+    Select **Apply credit**. You are told **Credit applied**, and how much of that payment is still held, if any.
+  </Step>
+</Steps>
+
+As with a payment, a claim cannot be given more than it is owed, and you cannot apply more than the credit held. Applying it twice by accident is prevented: if the credit has changed since you opened the sheet — someone else applied it, or you selected **Apply credit** twice — nothing is applied and you are asked to reopen it.
+
+## Payment advices from an insurer
+
+Some insurers tell your workspace when they have paid: how much, on what day, and which claims it covers. Each notice appears under **Payment advices** on **HMO receivables**, so you can check it against your bank statement instead of retyping it. An advice is only what the insurer says — **nothing is recorded in your books until you record it.**
+
+The list shows **Insurer**, **Paid on**, **Method**, **Reference**, **Amount**, **Claims named** and **Status**:
+
+| Status | What it means |
+| --- | --- |
+| **Awaiting you** | The insurer says it paid. You have not recorded it yet. |
+| **Recorded** | You recorded it. The advice now points to the payment you recorded. |
+| **Declined** | You decided it did not match anything you received, and said why. |
+
+When the insurer's **Claims named** are still open, the list shows what each is still owed.
+
+<Steps>
+  <Step title="Check it against the bank">
+    Find the transfer on your statement. If it is not there yet, leave the advice as it is.
+  </Step>
+  <Step title="Record this payment">
+    Select **Record this payment**. **Record payment from an insurer** opens already filled in — the insurer, the amount, the date, how it was paid, the reference and the claims it names, with each amount set to what the claim still owes. Change anything that differs from your bank statement: the figures you confirm are the ones recorded, not the insurer's.
+  </Step>
+  <Step title="Record it">
+    Select **Record payment**. The advice moves to **Recorded**.
+  </Step>
+</Steps>
+
+A claim named in the advice that is no longer open (already paid, written off, or waiting on a write-off) is listed under **Named in the advice, but not available to pay** and cannot be ticked.
+
+If an advice does not match anything you received, select **Decline**, enter a **Reason** and select **Decline advice**. The advice stays on the list as **Declined**; nothing is deleted.
+
+You see the buttons only if you may record HMO payments (below); otherwise the list is read-only.
+
+## What happens to the money
+
+The payment is recorded once, as money received on the day you received it, labelled **HMO remittance**. A claim part-paid shows **Part paid**; one paid in full shows **Paid**. Paying it twice by accident is prevented: sending the same payment again does not record it again.
+
+## Who can do this
+
+| Action | Who by default | The permission |
+| --- | --- | --- |
+| Record an HMO payment | Owners, managers, accountants, billers | **Record HMO payments** |
+| Apply credit held | Owners, managers, accountants, billers | **Record HMO payments** |
+
+You can switch it on or off for a person in their [Permissions](/platform/team/permissions) sheet. Owners and managers can always do this.
+
+## Check it worked
+
+- The claim's **Status** reads **Part paid** or **Paid**.
+- **Owed** for that insurer has gone down by the amount you shared out.
+- Reopen **HMO receivables**: the insurer's **Credit held** shows anything you did not share out, and goes down by what you apply with **Apply credit**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Record payment is not on the menu">
+    You may not have the permission, the claim may not have been submitted yet, or it may already be paid. Only submitted claims can receive a payment.
+  </Accordion>
+  <Accordion title="The claim says it is owed less than I expected">
+    What an HMO owes is the amount it approved, or — before it answers — the amount billed less the patient's share, less anything already paid or written off.
+  </Accordion>
+  <Accordion title="An advice says the insurer paid, but the money is not in our bank">
+    Leave it as **Awaiting you** until the transfer arrives, or select **Decline** with a reason if the insurer confirms it was sent in error. Recording it books the money as received.
+  </Accordion>
+  <Accordion title="Apply credit says the credit has changed">
+    Someone else applied some of it, or the sheet was submitted twice. Nothing was applied by that attempt. Close the sheet and select **Credit held** again to see what is left.
+  </Accordion>
+  <Accordion title="Credit held is not a link">
+    You need the **Record HMO payments** permission to apply credit. Ask an owner or manager.
+  </Accordion>
+  <Accordion title="The insurer paid something we did not bill">
+    Record the payment and leave the extra unshared. It stays as **Credit held** until a claim can take it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="an HMO payment" />
+
+{/* source of truth: components/clinic/insurance/hmo/hmo-receivables.tsx, hmo-payment-advices.tsx, decline-hmo-advice-sheet.tsx, record-hmo-payment-sheet.tsx, db/actions/hmo-money.ts, db/actions/hmo-payment-advices.ts */}

@@ -7,6 +7,622 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="October 13, 2026" tags={["Hospital"]} description="Diagnostics edition">
+  ## Walk-in results save, Positive results are flagged, and station figures load
+
+  Saving results for a walk-in client could fail with a request for the client's name, even though the name was already recorded. Payment taken at the same time was refused as well. Results for a walk-in now save the same way as results for a patient.
+
+  - **Walk-in results and payment.** Opening a walk-in's lab test or imaging study to enter results no longer asks for their details again. **Collect Payment Now** works in the same step. [Walk-in clients](/lims/lab/walk-in-clients)
+  - **Positive / Negative results are flagged.** A test whose result is chosen from a list used to read **Normal** whatever was chosen. A result different from the test's **Reference Range** (for example **Positive** where the reference is **Negative**) is now flagged **Abnormal**. Results already saved are re-checked when you open them to enter results. [Lab Station](/lims/lab/lab-station)
+  - **Station figures show again.** The Lab Station cards and the Imaging station cards and charts could read 0 when there was work on record. Imaging counted only the last few days; the Lab Station figures failed to load. If figures cannot load, the cards now show **—** and say so, rather than 0.
+  - **Imaging confirmation on a phone.** The **Report Saved!** and **Radiology Order Created!** summary now opens from the bottom of the screen, and its buttons are always in reach.
+  - **Imaging summary reports.** The **Daily Report**, **Monthly Report** and **Critical Findings Log** cards on the **Documents** tab now download a PDF for the day, month or period you choose, walk-in clients included. [Report an imaging study](/lims/imaging/reports#download-a-daily-monthly-or-critical-findings-report)
+
+</Update>
+
+<Update label="October 13, 2026" tags={["Platform","Hospital","Solo & Team"]} description="Settings">
+  ## We now ask you to confirm your clinic's time zone
+
+  New clinics start on Eastern Time (New York), and many never changed it. Text and call reminders use your time zone to stay quiet at night, so a clinic somewhere else could have reminders go out at the wrong hour. Owners and managers now see a banner until the time zone has been confirmed.
+
+  - **A clear banner.** At the top of Settings and on the Communications page: **Confirm your clinic's time zone**. The owner opens **Review time zone**, checks the field and saves. [General settings](/hospital/settings/general)
+  - **New York clinics can finish too.** Saving the time zone as it is counts as confirming it, and the banner goes away.
+  - **Managers see it, owners act on it.** A manager is asked to pass it to the owner. Staff never see the banner.
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Hospital","Solo & Team"]} description="Agent Studio">
+  ## Tools you connect with OAuth now work, and failures say why
+
+  A tool connected to Agent Studio with OAuth, such as EvidenceMD, could be signed in and still fail every time with "Could not reach MCP server". It now signs in with the connection you made, and keeps it renewed. When something does go wrong, you are told what to do.
+
+  - **OAuth connections work.** Testing a connected tool, and agents that use it, now present your sign-in and renew it before it runs out. [AI settings](/hospital/settings/ai-settings)
+  - **Clear messages.** "The server refused the sign-in. Reconnect it in Agent Studio." or "Could not reach the server." replace the single general failure.
+  - **EvidenceMD needs the API add-on and the agreement.** As with the note assistant, connecting or using EvidenceMD in Agent Studio needs the **API add-on** (or Enterprise) and the current **API data agreement**. Without them you see which one is missing, with a link to **Settings → API access**. Connections you made earlier are kept and work again once both are in place. [API access](/platform/settings/api-access)
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Pharmacy","Solo & Team","Billing"]} description="Payments">
+  ## Record a reduced amount, so a subsidised item reads Paid
+
+  When a patient's charge is subsidised or reduced, the item used to stay on **Partially paid** or **Pending** because the full price was still counted as owing. You can now enter the amount the patient will actually pay, with a reason, and the item reads **Paid**.
+
+  - **A Reduced amount on each item.** Tick the item on **New Payment** or on **Collect payment**, choose **Reduced amount**, enter what the patient will pay and why. The reason is required. [Payments](/hospital/revenue/payments#reduce-what-a-patient-pays-subsidy)
+  - **Paid, not Part paid.** After the payment the item is **Paid** and no longer under **Pending**.
+  - **The subsidy is not income.** It is never added to the payment, to **Total income** or to revenue. Reductions are listed on their own under **Payments** in **Reduced amounts**, with who gave them.
+  - **On the receipt.** The item is marked as a subsidy and paid in full, and the receipt has a **Subsidy** line.
+  - **Owners and managers by default.** Everyone else needs the owner to switch on **Apply reduced amounts** for them. [Staff permissions](/platform/team/permissions)
+  - **Not with Insurance or an HMO.** A reduced amount cannot be combined with an insurance payment, and it is not offered for an item billed to an HMO.
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Pharmacy","Billing"]} description="Payments">
+  ## See everything that came in, Billing and the Pharmacy till together
+
+  Money taken at the Pharmacy till and money recorded in Billing lived on separate screens, so finding the real total meant adding them up by hand. **Payments** now has a **Total income** tab that does it for you, and a voided payment no longer counts as money collected.
+
+  - **One total, split by source.** Pick any dates and see **Billing**, **Pharmacy POS** after refunds, and the total, with a chart for each day and tables by payment method and by day. [Payments](/hospital/revenue/payments#see-your-total-income-in-one-place)
+  - **Only real money.** Voided payments are left out, refunds are taken off, and the part of a bill an insurer still owes is not counted until you record the insurer's payment.
+  - **Your clinic's days.** Each day follows your clinic's time zone, so a late-evening sale lands on the day it happened.
+  - **Pharmacy.** Pharmacy managers see the figures; anyone you have restricted from **View the net position** sees **—** instead. [Payments in the pharmacy](/pharmacy/money/payments#see-your-total-income-in-one-place)
+  - **Voided payments in revenue.** The revenue report and the **Overview** figures on **Payments** no longer include a payment that was voided.
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Billing"]} description="Laboratory">
+  ## Lab staff can cancel a test with a reason, and a cancelled test can never be paid
+
+  A lab test ordered by mistake could be cancelled by anyone who saw the button, with no reason, and a cancelled test could still be paid from a screen that had not refreshed. Both are fixed.
+
+  - **Cancel a test with a reason.** Choose **Cancel test** on a row in the Lab list or **Cancel Test** in Lab reports and say why. Lab scientists, owners and managers can; you can switch it on or off per person under **Cancel lab tests** in [Staff permissions](/platform/team/permissions). [Lab reports](/hospital/diagnostics/lab-reports)
+  - **Paid tests are protected.** A test that has been paid cannot be cancelled: you are told to ask a manager to refund it first.
+  - **A cancelled test cannot be paid.** Taking its payment now says **This test was cancelled and cannot be paid.** and nothing is charged.
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Solo & Team"]} description="Shifts">
+  ## Upload your staff rota from a spreadsheet instead of entering every shift by hand
+
+  Entering a rota one staff member at a time took a long time. You can now fill in a spreadsheet and upload it, and the shifts appear on the rota for the right departments.
+
+  - **A template to start from.** Download the CSV, fill in one row per shift, and upload it as CSV or Excel. [Upload a rota](/hospital/settings/shifts#upload-a-rota-from-a-spreadsheet)
+  - **Check before anything is saved.** Staff are matched by email, then by exact name; departments by name or code. Rows that cannot be matched are listed with the reason instead of being guessed.
+  - **Safe to repeat.** Uploading the same file again does not add shifts twice, and a shift that would overlap one the person already has is flagged.
+
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Solo & Team"]} description="Patients">
+  ## A patient's sticky notes and status notes follow them to triage, the lab and the pharmacy
+
+  The **Sticky Notes** and **Status Notes** tabs used to be on the client record and the consultation and ward charts only, so the nurse at triage, the lab scientist and the pharmacist worked without them. They now sit on the right edge of those screens too.
+
+  - **Triage chart.** The same two tabs, with their counts and pinned notes. A note added here is the one the doctor sees in consultation. [Triage](/hospital/outpatient/triage)
+  - **Lab requests.** Open a request to conduct, update or view, and the patient's notes are on the right. [Laboratory](/hospital/diagnostics/laboratory)
+  - **Prescriptions.** Open a script to view or dispense, and the notes are there while you work. [Prescriptions](/hospital/pharmacy/prescriptions)
+  - **One set of notes everywhere.** They belong to the patient, not the visit, and you can drag either tab up or down out of the way. [Sticky notes and status notes](/practice/work/client-chart#sticky-notes-and-status-notes)
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Patients">
+  ## Filter your patient list by age, last visit, insurer and more, and export just those rows
+
+  Finding everyone over 65 who has not been seen in a year, or every patient with one HMO, used to mean exporting the whole list and sorting it by hand. The patient and client lists now filter on the details you ask about most.
+
+  - **One Filters panel.** Gender, age band or a custom age range, registration date, last visit, insurer or self-pay, sponsors and dependents, status, billing type, waitlist and location. Each filter you apply shows as a chip above the table that you can remove. [Patient records](/hospital/records/patient-records) · [Clients](/practice/work/clients)
+  - **A real last visit.** **Last visit** now counts any time the patient was seen (a consultation, triage, admission, telehealth call, note, check-in, completed appointment, lab, radiology or dispensing) and says which, for example "12 Oct 2026 · Triage".
+  - **Export what you filtered.** With filters on, the export sheet offers **Export these N patients** first, and the whole registry is still there below it.
+  - **Links keep the filter.** The filters are part of the page address, so a bookmark or a shared link opens the same list.
+  - **Phone numbers survive a spreadsheet.** An exported number written as +234… opens as a number, not a formula, and re-imports unchanged.
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Solo & Team","Hospital","Billing"]} description="Free plan">
+  ## Two-way Google and Outlook sync is part of paid plans
+
+  Connecting a new Google or Outlook account for two-way sync now needs a paid plan. Nothing changes for a workspace already on one.
+
+  - **On Free, existing connections keep working.** A calendar you already connected keeps syncing, and you can sign in again from its **Reconnect** badge. Only adding a new connection needs an upgrade. [Connect an external calendar](/platform/integrations/calendar)
+  - **Calendar subscriptions stay on every plan.** You can still bring any calendar in read-only with its secret `.ics` address, Free included.
+  - **The screen says so.** On Free the **Google** and **Outlook** buttons are greyed out, with a line explaining why and a button to upgrade. [Your calendar connections](/platform/account/calendars)
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Patients">
+  ## Linking a dependent to a sponsor finds every patient, in clinics of any size
+
+  Choosing a sponsor for a dependent sometimes showed no name, so a family could not be linked to the parent who pays. The **Select Sponsor** field now searches your patients as you type.
+
+  - **Type a name or a patient number.** Two letters are enough; the matching patients appear in the list, in a stable order. [Register a patient](/lims/get-started/first-patient)
+  - **A sponsor you registered a moment ago is found at once**, without reloading the page.
+  - **Large clinics are covered.** The search no longer depends on a list loaded when the form opened.
+  - **Editing a dependent shows the sponsor's name**, wherever the sponsor sits in your patient list.
+  - **When nothing matches, it tells you why.** A patient registered as a dependent cannot be a sponsor, and a restricted record is found only by its secure label. [Patients](/lims/front-desk/patients)
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="Team roles">
+  ## New roles: Physician Assistant, CTO, Developer and IT Admin
+
+  You can now invite a **Physician Assistant**, and give the people who look after your systems a role of their own.
+
+  - **Physician Assistant** (title PA-C) is a clinical specialty with the same access as a Nurse Practitioner: prescribing, notes, and emergency alerts. It takes a paid seat like any clinician. [Roles](/platform/team/roles)
+  - **Developer**, **IT Admin** and **CTO** are technical roles. They open **Settings** and nothing else: integrations, security, and a read-only view of your team, locations, services and booking page. They never see patient records, notes or billing, and they are free seats on Clinic & Hospital. [Technical roles](/platform/team/roles#technical-roles)
+  - **A Developer or CTO can manage API access** without you turning anything on, and an IT Admin can once you grant **Manage API access**. Creating a live key still asks for a second factor. [Permissions](/platform/team/permissions) · [API access](/platform/settings/api-access)
+  - **Settings are view-only for them, except API keys.** A Developer, IT Admin or CTO can see your services with their prices and your logo and branding images, but the fields are greyed out, the buttons that change anything are not shown, and a line at the top says an owner or manager can change them. [Technical roles](/platform/team/roles#technical-roles)
+  - **The invite wizard knows about them.** Choosing one shows a short note in place of the clinical and administrative choices, and a **Free** badge on the **Review** step. [Invite someone to your team](/platform/team/invite-staff)
+  - **Seats.** On Pharmacy and Diagnostics every account, technical roles included, still counts toward the plan's cap. [Staff seats](/platform/plans/seats)
+</Update>
+
+<Update label="October 12, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Security and settings">
+  ## Setting up two-factor from Verify now works for everyone
+
+  - **Verify now leads to setup, then back.** If your clinic does not require two-factor and you had not set it up, **Verify now** (shown when you create a live API key, for example) returned you to the page without letting you set it up. It now opens the setup, with **Not now** to go back, and returns you to where you were once you finish. [Two-factor authentication](/platform/security/mfa#actions-that-always-ask-for-your-second-factor)
+  - **Delete My Account waits for its checks.** The button stays unavailable for the moment it takes to check whether anything would stop the deletion, so it no longer looks available to an account that cannot be deleted yet. [Delete your account](/platform/account/delete-account)
+  - **"Powered by ClinikEHR" says how to hide it.** On plans that cannot hide the line, the setting now has a **See plans** link.
+  - **Easier to tap on a phone.** **Download confirmation** in the calendar, the redirect and Powered-by switches, and the booking page designer's buttons are larger, and the designer's buttons are named for screen readers.
+  - **Managers and accountants can save a booking page's services.** They could open the booking page designer, but the list of services on the page would not save for them. It now saves, the same as for an owner. [Booking page designer](/practice/settings/booking-page-designer)
+</Update>
+
+<Update label="October 12, 2026" tags={["Hospital","Platform"]} description="Insurance (non-US)">
+  ## Insurers can be edited again, and every patient appears on a pre-authorization
+
+  For clinics using **Outside the US** insurance (HMOs). A few screens were not doing what the Help Center says they do; now they do.
+
+  - **Edit and View are back on the insurer menu.** On a computer, the **…** menu on the **Companies** list showed only **Delete Company**, so an insurer's details, and a signed webhook's secret, could not be changed from the list. [How claims reach HMOs](/hospital/insurance/how-claims-reach-hmos)
+  - **Choosing a signed webhook and setting its secret keeps your choice.** Saving the secret used to reset the channel to **Not chosen yet** before you could save the insurer.
+  - **New pre-authorization requests list every patient.** The patient search could come up empty for some clinics. [Pre-authorization](/hospital/insurance/pre-authorization)
+  - **The claims page fits a phone.** Large totals no longer push the page sideways, and each insurer's menu button is easier to tap.
+  - **Bill HMO respects a self-pay request.** If a patient paid for a visit themselves and asked that their HMO not be told, **Bill HMO** now refuses it, with the reason, instead of making a claim that would have been held later. [Bill an HMO at the till](/hospital/insurance/bill-hmo)
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Public pages">
+  ## "Powered by ClinikEHR" on every public page, with one rule
+
+  Your booking page, store, membership page, patient portal sign-in, contact form and AI agent page now carry the same small **Powered by ClinikEHR** line at the foot, the way public forms already do.
+
+  - **One rule everywhere.** The line shows on Free, Essential and Starter practices. On **Team** and **Enterprise** you can turn it off with **Show "Powered by ClinikEHR"** in each page's settings. If a Team practice moves to a lower plan the line returns, and your choice is remembered if you upgrade again. [Booking page designer](/practice/settings/booking-page-designer), [Store page](/practice/settings/store-page), [Memberships page](/practice/settings/memberships), [Client portal settings](/practice/settings/portal), [Contact form](/practice/settings/contact-form), [Publishing agents](/platform/ai/publishing-agents)
+  - **Your clients keep their pages clean while paying.** The line never appears on a payment step, and it opens clinikehr.com in a new tab.
+  - **Forms and your agent's note.** Public forms keep their existing choice, and an AI agent's own footer note stays as you wrote it.
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Booking, store and membership pages">
+  ## Send clients to your own page after they book, buy or join
+
+  You can now choose what happens once a client finishes on your booking page, your store or your membership page. Each page has its own switch, and it is off until you turn it on, so nothing changes unless you choose.
+
+  - **Redirect after booking, Redirect after a purchase, Redirect after someone joins.** Turn the switch on, then pick **My website** or **Another page** (an `https://` address). A line under the switch says what clients will see. [Booking page designer](/practice/settings/booking-page-designer), [Store page](/practice/settings/store-page), [Memberships page](/practice/settings/memberships)
+  - **The confirmation always comes first.** Clients see their confirmation for 5 seconds with "Taking you to" and the address, and **Stay here** cancels it. After a card payment it happens only once the payment is confirmed.
+  - **Back to follows your choice.** On the booking pages, the **Back to** button opens the page you chose. [Booking page](/practice/work/booking-page)
+  - **One website for your practice.** Set it once under **Settings → General**. It is what **My website** and the **Back to** button use, and the booking page's **Content** tab now shows it read-only. If your booking page had a website and Settings → General did not, it has been copied over. [General settings](/practice/settings/general)
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Booking page">
+  ## Clients return to your practice after they book, and reminders carry the video link
+
+  After a client booked and paid on your booking page, the button to leave the page could show an error, and the other booking pages sent clients to our homepage instead of yours.
+
+  - **Back to your practice.** After booking, paying, confirming, cancelling or rescheduling, the button reads **Back to** your practice's name and opens your website, or your booking page if you have not added one. [Booking page](/practice/work/booking-page)
+  - **The video link is in the reminder.** For an online appointment, the reminder now carries the client's own **Join video visit** link, as the booking confirmation does. [Telehealth](/hospital/outpatient/telehealth)
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Booking">
+  ## A confirmation your clients can keep, and you can reprint
+
+  After a booking there is now a real confirmation to keep or print: a one-page PDF with your letterhead, the date and time, the services, the location (or "Online video visit"), the booking reference, what was paid and what is due, how to confirm, cancel or reschedule, and your portal's QR code when the portal is on.
+
+  - **Clients**: **Download confirmation** on the page after booking, on the page after paying, and on the confirm page. It works only with the booking reference that came with the booking. A **Download confirmation (PDF)** link in the booking email is coming.
+  - **You**: open an appointment and select **Download confirmation**.
+  - **Store and membership QR counts** are now counted once: a store order when its payment is confirmed, and a membership sign-up when the membership becomes active, including a free trial that starts.
+
+  See [Booking page](/practice/work/booking-page), [Appointments](/practice/work/appointments) and [Patient appointments](/hospital/front-desk/appointments).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="QR codes">
+  ## A branded QR code for every page you share, ready to print
+
+  The QR code on your client portal, booking page, store, membership page, contact form, AI assistant page and every published form is now drawn in that page's own colour with its logo in the middle. A code is only offered for download or printing once it has been read back and shown to open exactly your saved address.
+
+  - **Poster (A4) and reception card (A6)**: choose **Poster and card** on the **QR code** card, then **Download PDF** or **Download PNG**. Each says what the page is for ("Scan to book an appointment", "Scan to shop", "Scan to join", "Scan to contact us", "Scan to chat with us", "Scan to fill in this form", "Scan to open your patient portal") and shows the short address for people without a camera. They print legibly in black and white.
+  - **One code for each location**: with more than one active location, the client portal and booking page give each location its own code. Whoever scans it and then books has that location already chosen.
+  - **How many people used it**: the last 30 days of people who opened the page from the code, and people who then used it (signed in, booked, ordered, joined, sent an inquiry, started a chat or responded). Counts only; nothing about the person is kept. For a form, anyone who may open its responses sees them too.
+  - **Forms**: the **Share** sheet now has the same card, in the form's own colour and logo.
+
+  See [Patient portal settings](/hospital/settings/portal), [Client portal settings](/practice/settings/portal), [Booking page designer](/practice/settings/booking-page-designer), [Store page](/practice/settings/store-page), [Memberships](/practice/settings/memberships), [Contact form](/practice/settings/contact-form), [Publishing agents](/platform/ai/publishing-agents) and [Send a form](/practice/forms/send-a-form).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Billing","Solo & Team"]} description="Subscriptions">
+  ## Every recurring charge in one place, and a phone number that works to the end of the month you paid for
+
+  **Billing → Other subscriptions** now lists the recurring charges besides your plan and its add-ons: your dedicated phone number, the API add-on, and developer workspace plans you manage. Each shows its price, status and next charge, with **Cancel** or **Resume**.
+
+  - **Phone number**: cancelling stops the next charge straight away and the number keeps working until the end of the period you paid for, then it is released. **Resume** keeps it until then. It used to be released the moment you cancelled.
+  - The API add-on and your workspace plans appear here too, with the same cancel-at-period-end behaviour they already had.
+  - The developer portal has its own **Billing & subscriptions** page.
+
+  See [Plans overview](/platform/plans/overview#other-subscriptions).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Billing","Solo & Team"]} description="Plans and add-ons">
+  ## Skip the trial, and add-ons in Naira
+
+  - **Skip the trial**: on the setup screen, a quieter choice under **Try Essential** starts Essential at the full monthly price now, billed from day one with no trial and no trial fee. Stripe takes the payment, or Paystack if your workspace bills in Naira.
+  - **What the trial includes** is now written on the trial card and on the [Plans overview](/platform/plans/overview): the full Essential plan for 30 days, 3 providers, 200 communication credits a month, and which add-ons you can buy during it.
+  - **Add-ons outside the US**: ePrescribe, ePrescribe PDMP and eLabs Access are for US clinics only and show **US only** elsewhere. AI Note Taker is available everywhere.
+  - **Naira clinics pay add-ons in Naira**: AI Note Taker is ₦25,900 a month per user, paid through Paystack, and cancelled the same way as any other add-on. A cancelled add-on keeps working until the end of the month you paid for, and its card shows **Ends on** and the date.
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Billing","Solo & Team"]} description="Add-ons">
+  ## Add-ons can now be bought during the Try Essential and Startup Program trials
+
+  If you started the paid **Try Essential** trial, or a Startup Program trial, you can now add **ePrescribe**, **ePrescribe PDMP**, the **AI Note Taker** and **eLabs Access** without waiting for the trial to end. Each add-on is charged when you buy it.
+
+  - If you cancel the trial, or it ends without moving to the full Essential plan, the add-ons you bought end with it.
+  - A free trial that needs no card still does not include add-ons, and the Free plan still shows **Requires Paid Plan**.
+
+  See [Plans overview](/platform/plans/overview).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Website embeds">
+  ## The store, membership and AI assistant widgets load on your website again
+
+  The copy-paste widgets for your store, membership signup and AI assistant were being blocked from appearing on other websites. They now load, and paying for an order or a membership opens the payment page in a new browser tab instead of inside your page.
+
+  See [Embed ClinikEHR on your website](/platform/integrations/embeds).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Privacy">
+  ## Substance use protections now cover prescribing, outside AI clients and every claim, on paid plans
+
+  Part 2 protections reach the places a substance use record could still slip out, and they are part of the paid plans.
+
+  - **Claims**: a claim for a substance use visit waits for a consent when ClinikEHR cannot tell which visit it is for, in the United States and outside it.
+  - **e-Prescribing** is refused for a client with substance use records until a consent covers it.
+  - **Outside AI clients** connected to your published agents no longer see substance use records without a general-designation consent.
+  - **Paid plans**: on the Free plan the setting shows an upgrade prompt.
+
+  See [Substance use records and 42 CFR Part 2](/platform/security/substance-use-records-part-2).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Client records">
+  ## Client photos show again on client records
+
+  A client's profile photo was not appearing on their record. It now shows again, wherever the photo is used in your clinic.
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Privacy">
+  ## Substance use consents count once the patient's signed copy is attached
+
+  If your clinic is a Part 2 program, a consent to share substance use records now becomes active only when the patient's signed copy is attached, so a record can never leave on the strength of a form nobody has signed.
+
+  - **Awaiting signature**: a saved consent allows nothing until you attach a scan of the signed paper form or the patient's e-signature on a document. The panel opens as soon as you save.
+  - **Review by**: a consent that ends on an event needs a review date, at most 12 months after signing. When it passes, sending stops until you select **Confirm still valid** and choose the next date, or record a new consent.
+  - The same rule applies to a claim to a health plan for a substance use visit. See [Claims to a health plan](/platform/security/substance-use-records-part-2#claims-to-a-health-plan).
+
+  See [Substance use records and 42 CFR Part 2](/platform/security/substance-use-records-part-2).
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Privacy">
+  ## Clients can ask about their own record, and you can answer inside the legal deadline
+
+  A client can now ask for a copy of their record, a correction, a list of who it was shared with, or that a service they pay for themselves not go to their health plan. The requests reach you with their deadlines, and every step is recorded.
+
+  - **Client requests** appear at the top of the Audit Log with the days left; decide, extend once, and give a reason for any refusal. See [Client requests about their record](/platform/security/client-record-requests).
+  - **Download my record** on the portal's Privacy & Security page gives the client a readable copy and a data file; it is on by default for every clinic, and you can switch it off in [Client portal settings](/portal/setup/features#privacy). A client can also ask for a correction and add a statement if it is refused.
+  - **Disclosure accounting** is now on every plan and covers six years, including information sent through the API. Use **Record a disclosure** for a court order or a public-health report. See [Restrict a client to assigned staff](/practice/work/client-security#disclosure-accounting).
+  - **Services not shared with the health plan**: record that a client is paying for a visit themselves and claims for those dates are not sent. See [Restrict a client to assigned staff](/practice/work/client-security#services-the-client-pays-for-themselves).
+  - **Substance use treatment programs** can switch on 42 CFR Part 2 protections: a signed consent before records leave the clinic, and the federal notice on every copy. See [Substance use records and 42 CFR Part 2](/platform/security/substance-use-records-part-2).
+  - **Legal holds** pause the scheduled removals of records, recordings, faxes, mailbox clean-up and old audit entries for a client or the whole clinic, and **Data Export** now includes about sixty more kinds of record, such as history entries, maternity records and memberships. See [Export your data](/platform/security/data-export).
+  - The registration form's consent now says what your details are used for and links the privacy policy.
+
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="API access">
+  ## API keys now end on a date you choose, and we remind you before they do
+
+  A key that never expires lives as long as the system that holds it stays safe, which is never certain. A new live key now needs an end date, at most 12 months away, and the clinic's owners and managers get an email 30 days and 7 days before it stops working.
+
+  - **Choose when the key expires** when you create a key in [API access](/platform/settings/api-access). Keys you already have keep working until you revoke them.
+  - Replace a key before it ends: create the new key, switch the system over, then revoke the old one.
+
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Patient portal">
+  ## A shared e-mail address no longer opens other people's portal records
+
+  The portal now recognises a client by a confirmed e-mail address that belongs to one client record, not by an address that merely matches. If a family or a front desk shares one inbox, nobody can open any of those records until you say whose mailbox it is.
+
+  - **Review shared addresses** in [Client portal settings](/practice/settings/portal#shared-e-mail-addresses): confirm the client's own mailbox, mark a guardian or proxy, or remove a sign-in.
+  - Addresses shared by many records, such as a placeholder, cannot be confirmed; correct the e-mail on the record instead.
+  - Clients with an address of their own are not affected. A client whose record shares an address is told to ask the clinic.
+
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="Security">
+  ## The audit log now covers more of what happens to a patient's record, and it can no longer be edited
+
+  More everyday changes now leave a line in your audit log, and the log itself is protected so that what it says cannot be rewritten afterwards.
+
+  - **More records are tracked.** Changes to a patient's guardians, saved payment methods, billing settings, appointment preferences, sticky notes, ward stays, pharmacy sales, store orders, US insurance claims and eligibility checks, and similar records now appear in the audit log with the person and the time. Free text, contact details and payment references are not copied into the entry.
+  - **Patient portal sign-ins and sign-outs** are recorded. See [Audit log](/platform/security/audit-log).
+  - **Reading an insurance claim or pre-authorization** is recorded, including when an AI review is run on it.
+  - **Entries cannot be edited or deleted**, and an integrity check flags any entry that was altered or removed. After seven years entries are archived rather than discarded unrecorded.
+
+</Update>
+
+<Update label="October 11, 2026" tags={["Desktop","Pharmacy","Hospital"]} description="Desktop v1.0.9">
+  ## The desktop app keeps offline patient data encrypted, and clears it when you sign out
+
+  A shared till or bench computer no longer leaves the previous person's patient list on disk, and a stolen or recycled machine no longer gives up queued orders to anyone who copies a file.
+
+  - **Encrypted offline storage.** Queued sales and orders, and the patient list kept for offline use, are encrypted with a key held by the computer's own secure key store. Existing queued items are converted automatically the first time the new version starts, with nothing lost, and the old unencrypted copy is removed. See [The desktop app](/platform/apps/desktop).
+  - **Signing out clears the patient list.** Signing out, or being signed out for inactivity, removes the offline patient list and everything already synced. Anything not yet sent is kept and goes out after the next sign-in.
+  - **Queued items are sent by the person who captured them.** On a shared computer, a colleague's offline sales or orders wait until that colleague signs in, and the bar shows **captured by another user is waiting**. See [Working offline](/platform/apps/offline).
+  - **No secure key store, no offline patient data.** On a computer that cannot protect the key (a Linux machine with no keyring), the app says **Offline sales are unavailable on this computer** and works only while online. It never stores patient data unprotected.
+  - **Tighter app windows.** The app asks for the camera, microphone and notifications only on signed-in pages, stays on your ClinikEHR address, and opens links to other sites in your browser. The Desktop and Diagnostics apps keep their window out of screenshots and screen shares in every window they open.
+  - **A newer, security-updated engine.** The app now runs on a current version of the technology it is built on.
+  - You may be asked to sign in once after updating.
+</Update>
+
+<Update label="October 11, 2026" tags={["Platform","Hospital"]} description="Security">
+  ## Emailed links to signed documents now last 24 hours
+
+  A link to a completed, signed document sits in an inbox, so it now lapses sooner. Nothing is lost when it does.
+
+  - **The emailed completed copy** is a download link that works for **24 hours** instead of seven days, and the email says so. After that, download the signed copy again from the envelope's page and send it on. See [Download the signed copy](/practice/forms/prepare-a-document-for-signature#download-the-signed-copy).
+  - **Reminders for a document sent the older way** carry a new link, and the link in the earlier email stops working. Patients can always open the document from **Documents** in their portal. See [Documents to sign](/portal/patients/documents#links-that-no-longer-work).
+</Update>
+
+<Update label="October 10, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Desktop"]} description="Security">
+  ## Idle sessions now sign out on their own, and sensitive actions ask for your second factor
+
+  A screen left open on a shared desk no longer stays signed in, and the actions that open or widen access now ask for the same second-factor check everywhere.
+
+  - **Automatic logoff.** After 60 idle minutes you are signed out, two minutes after a **Still there?** box with **Stay signed in**. An owner or manager can set any time from 5 to 240 minutes under **Settings** → **Security** → **Automatic logoff**. Closing the tab does not keep a session alive, unsaved work stays on the device, and the offline sale queue is never cleared. See [Automatic logoff](/platform/security/automatic-logoff).
+  - **Every automatic sign-out is recorded** in the audit log with the reason *inactivity*.
+  - **The patient portal** signs a patient out after 30 idle minutes and after 12 hours in any case. See [Privacy and security](/portal/patients/privacy-and-security).
+  - **Breached passwords are refused.** A password found in a known data breach is rejected when you sign up, reset or change it, with a message that says so. See [Secure your account](/platform/account/security).
+  - **One second-factor rule.** Creating an API key, approving an outside organization's access to patient data, changing a team member's role or permissions, and turning two-factor off all need a session that has just passed the second factor, with a **Verify now** button and, if you have not set it up, a route to do so. See [Two-factor authentication](/platform/security/mfa#actions-that-always-ask-for-your-second-factor).
+  - The desktop apps follow the same logoff time as the web app. See [Desktop app](/platform/apps/desktop).
+  - **The logoff time follows the workspace you are in**, and the 60-minute default applies away from any workspace. If the device is offline when the time runs out, you are signed out on the device and everything captured stays for the next sign-in. See [Automatic logoff](/platform/security/automatic-logoff).
+  - **The patient portal's inactivity time is your clinic's setting**, 5 to 240 minutes (30 by default). See [Client portal features](/portal/setup/features).
+  - **New passwords need at least 12 characters** when you sign up, reset or change one. Passwords you already have keep working. See [Secure your account](/platform/account/security).
+</Update>
+
+<Update label="October 10, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Telehealth">
+  ## Video visits ask before they record, and recordings have an owner
+
+  A patient on a video visit is now told when a recording starts and is asked to agree first, and the people who can host, record, view and delete are yours to choose.
+
+  - When a clinician starts a recording, everyone else in the call sees **Record this session?** and answers **Yes, I agree** or **No, do not record**. If anyone says no, nothing is recorded. Someone who joins mid-recording is asked too. See [Run a video session](/practice/clinical/telehealth) and [Join a video visit](/portal/patients/telehealth).
+  - The red **REC** badge now appears on every participant's screen, not only the clinician's.
+  - Five new switches under **Telehealth** in the staff permissions sheet: host, record, view recordings, delete recordings and AI notes. See [Staff permissions](/platform/team/permissions).
+  - The **AI Note Taker** switch now starts off for each recording, and a recording nobody agreed to cannot be sent for AI notes.
+  - A person you remove from a call, or a call that has ended, is disconnected straight away, and the live connection behind a video-visit link renews itself every few minutes while you are in the call. The invite link itself stays valid for six hours from the scheduled start.
+  - Your data export has two new Telehealth items: **Attendance** and **Recording Consents**.
+  - If someone joins a recording already in progress and says no, they are left out of it, the recording stops, the part already recorded is kept and playable, and no AI notes are made from it. **Recordings** says why it is short.
+  - A video visit nobody ended is now closed automatically after 24 idle hours, quietly, without triggering any follow-up.
+</Update>
+
+<Update label="October 10, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Privacy">
+  ## Sensitive records stay hidden from a guardian, and superbills respect who can see what
+
+  Two places showed more than a clinic had chosen to share. Both now follow the limits you set.
+
+  - A guardian viewing a dependant's portal record no longer sees **lab results**, **imaging reports** or **prescriptions** in a category you hide from them, the same as documents, consultations and files. See [Proxy access limits](/practice/work/client-security#proxy-access-limits).
+  - A new **Create superbills** permission decides who can create, download or email a superbill. Owners, managers and anyone not saved in the permissions sheet keep access; billers and accountants are switched on when you save them. A diagnosis from a record the person cannot open is left out of the superbill, and its text is never used to suggest codes. See [Staff permissions](/platform/team/permissions).
+  - In a couple's or group's telehealth appointment, each person's appointment list now carries only their own join link.
+  - Requesting a portal login code more than a few times in a short while now shows **Too many requests. Please wait a few minutes and try again.** See [Portal troubleshooting](/portal/patients/troubleshooting).
+  - Deleting an account now also removes the files the clinic uploaded (documents, reports, images and recordings), not only its records.
+</Update>
+
+<Update label="October 10, 2026" tags={["Platform"]} description="Roles">
+  ## A manager is someone the clinic made a manager
+
+  Owner and manager rights now come only from your role in each workspace, given by its owner in **Settings** → **Staff & Teams**, never from the profession on your account.
+
+  - **Owner** and **Practice Manager** are no longer offered as a profession on your profile or at sign-up. An account that already shows one keeps it until you choose a profession; it no longer grants anything by itself.
+  - Your profession still counts toward clinical tasks. When someone changes their profession to a clinical one, the owners and managers of the workspaces they work in get a notice. See [Your profile](/platform/account/profile).
+  - Creating your own workspace is unchanged: whoever creates one is its owner.
+</Update>
+
+<Update label="October 10, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Client portal">
+  ## New clients now confirm their email address before their request reaches you
+
+  When someone asks to join your clinic from your portal's **New Patient** button, they now receive a 6-digit code at the email address they entered and type it in to finish. This protects people who already have records with us: a request can no longer be filed in their name by someone who only knows their email address.
+
+  - Your waitlist only receives requests whose email address has been confirmed.
+  - A request made on someone else's behalf is confirmed with the guardian's email address.
+  - A request never changes a record that already exists for that person elsewhere.
+
+  See [New Client Requests](/portal/setup/features#new-client-requests) and [Approve a self-registration request](/portal/setup/invite-patients).
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Share an insurer's held credit across claims whenever a claim can take it
+
+  When you record a payment from an insurer, anything you don't share across claims is kept as credit. Until now that credit could only be seen, not used. It can now be applied to the insurer's claims at any time.
+
+  - On **HMO receivables**, select the insurer's **Credit held** amount to open **Apply credit**, choose the payment, and share it across the claims it settles — oldest first by default.
+  - No new money is recorded, and applying the same credit twice by accident is prevented.
+
+  See [Share credit held later](/hospital/insurance/hmo-payments#share-credit-held-later).
+</Update>
+
+<Update label="October 9, 2026" tags={["Solo & Team","Hospital"]} description="e-Prescribing">
+  ## A Refresh button on Current Medications, and a heads-up before your monthly e-prescribing allowance runs out
+
+  Every time the Medications tab fetched a client's list from the e-prescribing partner, it used up part of your clinic's monthly allowance, even if you had looked a minute earlier. The partner charges for use above that allowance.
+
+  - The tab now reuses the list it fetched in the last few minutes. Select **Refresh** to fetch the latest list straight away.
+  - Owners and managers see how much of the month's included use the clinic has taken once it gets close. Nothing is blocked when you pass it.
+
+  See [e-Prescribing](/platform/integrations/eprescribe#how-often-the-list-is-fetched).
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## See what an insurer says it paid, and what it still owes
+
+  When an insurer tells you it has paid, you no longer retype the transfer from a letter or a message. The notice waits on **HMO receivables** for you to check against your bank statement and record. Insurance screens now also agree with each other about the patient's cover and about where a claim stands.
+
+  - **Payment advices.** A new **Payment advices** section on **HMO receivables** lists what insurers say they paid. **Record this payment** opens the payment sheet already filled in; you change anything that differs from your bank statement, then record it. **Decline** keeps the notice on the list with your reason. Nothing is recorded until you record it. See [Record an HMO payment](/hospital/insurance/hmo-payments).
+  - **A clearer payment badge.** A lab test, medicine or study billed to an insurer reads **Paid · HMO pending** once the patient has paid their own share and the insurer's part is outstanding, instead of **Part paid**. See [Bill an HMO](/hospital/insurance/bill-hmo).
+  - **Claim statuses and the approval rate.** The claims list can be filtered by **Part paid** and **Written off**, and **Approval Rate** now counts only claims the insurer has decided; with none decided it reads **—**. See [File and track claims](/hospital/insurance/claims).
+  - **One source for the patient's cover.** Payments, the patient's Billing tab and the appointment screens take the insurer and co-payment from the patient's recorded insurance cover, so the share the patient is asked to pay always matches what **Bill HMO** works out. A cover with no co-payment recorded means the patient pays in full.
+  - **A single place to choose how an HMO receives claims.** The old submission choice on the HMO's details is gone; the channels section is the only place, as described in [How claims reach your HMOs](/hospital/insurance/how-claims-reach-hmos).
+  - **Patient insurance tab.** **Coverage %** and **Co-pay %** now show what the plan sets and can no longer be typed per patient; change the plan's co-payment under **Insurance** instead.
+  - **Export.** **Insurance Claim Diagnoses** is a new item in [Data export](/hospital/settings/data-export).
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Pre-authorizations that run from request to claim
+
+  Hospitals outside the US can now take a pre-authorization the whole way: ask the HMO, record what it decided and the authorization code it gave you, and carry that code onto the claim. Until now a request was marked approved with nothing to show for it.
+
+  - **Raise it from the patient's cover.** The new request panel starts from the patient's insurance cover, so the HMO and plan are the cover's. Add ICD-10 diagnoses and items priced from the HMO's price list. See [Request a pre-authorization](/hospital/insurance/pre-authorization).
+  - **Record the HMO's decision.** **Record insurer's decision** takes the authorization code, the dates it is valid, the approved amount and, for a partial approval, which lines were approved. The old **Mark as Approved** and **Mark as Denied** shortcuts, which recorded no code, are gone.
+  - **Clear statuses.** Requests now read **Waiting for the insurer**, **Approved**, **Partially approved**, **Used on a claim**, **Declined** or **Expired**, and you can filter on each. An approved request past its end date expires by itself.
+  - **Start a claim from an approval.** **Create a claim** opens the claim with the authorization code and the lines the HMO approved. A claim line above what was approved is flagged, never changed.
+  - **The AI review is a suggestion.** It is marked **AI-generated**, never changes the request, and a person marks the request reviewed after reading it.
+  - **Edit until it is sent.** A request is edited in a side panel (a bottom sheet on a phone) until it goes to the HMO; editing a reviewed request puts it back to draft.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Choose how each HMO receives your claims
+
+  Each HMO now has one submission channel, and **Submit to HMO** on a claim or a pre-authorization request uses it. Before you send, the confirmation says which channel the HMO uses and what leaves.
+
+  - **Five channels.** Curacel, the ClinikEHR API, a signed webhook, an email with a secure link, or the HMO's own portal. See [How claims reach your HMOs](/hospital/insurance/how-claims-reach-hmos).
+  - **Secure email.** The email to the HMO carries no patient details; the claim opens only through a link that expires after 7 days.
+  - **Portal submissions recorded.** Open the HMO's portal from the claim, then record the reference with **Mark as submitted on portal**.
+  - **Notices.** Tick **Email** or **SMS** to tell the HMO a claim is ready, with no patient details. WhatsApp and Telegram read **Coming soon**.
+  - **One send.** A claim that has reached the HMO is never sent twice, and the claim shows how it was sent.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Set up your HMOs in one place, and bill them at their agreed prices
+
+  Hospitals outside the US now set up everything an HMO has agreed with them on the **Insurance** page, and the insurer's price list now prices the claim when you bill it.
+
+  - **Side panels instead of a long form.** Adding or editing an insurer, a plan, a service or medicine price or an item's coverage opens a panel (a bottom sheet on a phone). The old full-page form is gone, and **Edit** and **Delete** on prices now work. See [Set up an HMO](/hospital/insurance/hmo-setup).
+  - **Plans and benefits together.** A plan now holds what the patient pays, its limit, dependants, VAT, waiting period and pre-authorization, and its benefits (what they cover, the claim category, limits and who they are for).
+  - **Price lists with bands and dates.** Each price carries a tariff code, care type, care item, band and the dates it is valid; the same code can have several versions. **Import CSV** loads a whole list.
+  - **Billed at the agreed price.** [Bill HMO](/hospital/insurance/bill-hmo) now puts each item on the claim at the insurer's agreed price when there is one, and works the patient's share out on that price. Where the agreed price is lower than yours, the difference is not billed to anyone.
+  - **Patient insurance.** A patient's insurance now records the plan, insurance number, validity, staff number and employer group, and whether they are a dependant of someone else's policy. Covers that could not be placed show **Needs review** with a **Fix** action.
+  - **One setup page.** HMO setup moved from Claims to the Insurance page, under **Billing setup**.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Choose which connected organization is your insurer
+
+  Hospitals outside the US can now let an HMO or insurer work with them through the API. Under **Settings** → **API access**, the new **Insurer links** section lets an owner or manager say which connected organization is which of their insurers.
+
+  - **Only its own insurer.** A linked organization sees that insurer's enrollees, plans, claims and pre-authorization requests, and nothing belonging to another insurer.
+  - **You stay in charge of the money.** An insurer can vet a claim and decide a pre-authorization request, but a payment it reports is only a message to you. Nothing changes on your claims or payments until you record it. See [Insurer links](/platform/settings/api-access#insurer-links--tell-us-which-connected-organization-is-an-insurer).
+  - **Unlink any time.** Ending a link stops that organization seeing the insurer's information straight away.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Send claims and pre-authorization requests to your HMOs through Curacel
+
+  Hospitals outside the US can now connect their Curacel account and send claims and pre-authorization requests to an HMO without leaving ClinikEHR, then watch the HMO's decision arrive. Connecting is optional; sending by hand still works exactly as before. You need a Curacel account for your hospital.
+
+  - **Connect once.** An owner or manager connects the hospital's Curacel account from the **Curacel** card on **HMO setup**. The sign-in is saved encrypted and is never shown again. See [Connect Curacel](/hospital/insurance/connect-curacel).
+  - **Submit to HMO via Curacel.** On a draft claim or a reviewed request, select it from **Actions**; you are told exactly what is sent before it goes.
+  - **See the decision.** The claim shows **With the HMO**, then **HMO approved**, **HMO part-approved** or **HMO declined**, and the approved amount fills in. **Check HMO status** looks right now.
+  - **Never sent twice.** If Curacel is busy the send is retried for you, and a claim that already reached the HMO is not sent again. A refusal tells you what to fix.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Bill an HMO for its share of a bill, and charge the patient only theirs
+
+  Until now, "Insurance" at the till recorded an insurer's share as money received, so it looked paid even though no HMO had paid anything. Hospitals set to **Outside the US** now bill the insurer properly: its share becomes a draft claim, and the patient pays only their own share.
+
+  - **Bill HMO.** On **Payments**, on **Collect payment**, and on a patient's **Billing** tab, select **Bill HMO** to see the split before you confirm it: what the insurer pays and what the patient pays, item by item. See [Bill an HMO at the till](/hospital/insurance/bill-hmo).
+  - **No more phantom balances.** Items billed to an insurer leave the patient's pending list, or show only the patient's share. An invoice reads **Paid** once the patient has paid their share.
+  - **The claim is ready for you.** Each sale creates a draft claim for the insurer, and more items for the same patient and insurer on the same day join it. Billing the same items twice is safe.
+  - **On the receipt.** A **Billed to HMO** section names the insurer and the amount, with the patient's portion beneath.
+  - **Insurance is no longer a payment method** for these hospitals: the insurer is billed, not recorded as cash. Clinics set to the US are unchanged.
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance outside the US">
+  ## Record what an HMO pays, and see what each one still owes
+
+  Hospitals that bill HMOs can now close the loop. An HMO pays many claims in one transfer, and until now there was nowhere to say so. **Record payment** takes the transfer and shares it across the claims it settles, and **HMO receivables** shows what every HMO owes, how old it is, and any money you have not yet shared out.
+
+  - **Record a payment.** Choose the insurer, enter what arrived and share it oldest-claim-first or claim by claim. A claim part-paid reads **Part paid**; paid in full, **Paid**. A payment cannot be recorded twice, or shared out for more than it was, or more than a claim is owed. See [Record an HMO payment](/hospital/insurance/hmo-payments).
+  - **Write off what will not be paid.** A reason is required. Your hospital can ask for a second person to approve write-offs above an amount you set; the person who asks can never be the one who approves, and a waiting write-off changes nothing on the claim. See [Write off an HMO balance](/hospital/insurance/hmo-write-offs).
+  - **Set up each HMO.** The new **HMO setup** tab holds an insurer's codes, how fast it pays, what each plan covers, its benefits, its employer groups and the dates its prices are valid. See [Set up an HMO](/hospital/insurance/hmo-setup).
+  - **File a claim from an invoice.** **File insurance claim** on a patient's **Billing** tab now opens the claim already filled in: the patient, their insurer and plan, and the invoice's lines at the insurer's agreed prices.
+  - **Who can do it.** Owners, managers, accountants and billers can record payments; only owners and managers can write off or approve, and you can change that per person in the [Permissions](/platform/team/permissions) sheet.
+  - **Your data.** HMOs, plans, benefits, employer groups, tariffs, enrollees and payments are included in a data export.
+</Update>
+
+<Update label="October 9, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Desktop"]} description="Settings">
+  ## Choose which menus your team sees, and their order
+
+  A new **Navigation** tab in **Settings** lets an owner or manager tidy the sidebar for everyone in the clinic: turn off sections you never use and move the busiest ones to the top.
+
+  - **Show or hide.** Switch off a whole section, or a single page inside it. Names stay as they are.
+  - **Reorder.** Move a section up or down within its group, with a preview of the menu before you save.
+  - **Hidden is not blocked.** A section you turn off leaves the sidebar and the phone menu but still opens from a link or a bookmark. Who may open what is still decided by Role navigation.
+  - **Departments stay in charge (Hospital).** A department switched off in Facility hides all of its menu items; they show greyed on this tab with a link to Facility, and your earlier choices return when you turn the department back on.
+  - **Reset any time** to put the standard menu back.
+
+  See [Navigation settings](/practice/settings/navigation) for clinics, [for hospitals](/hospital/settings/navigation), [for pharmacies](/pharmacy/settings/navigation) and [for diagnostic labs](/lims/settings/navigation).
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Platform"]} description="Laboratory and imaging">
+  ## Test or scan someone at the counter without registering them
+
+  A person who only wants one test or one scan no longer has to be registered as a patient first. On a new lab or imaging request, choose **Walk-in** instead of searching for a patient.
+
+  - **Record who they are.** Full name, sex and age (or date of birth) are required; a phone number is optional. Each clinic numbers its walk-in clients from **W-000001**, and the number prints on the receipt and on the report.
+  - **They are not added to your patients.** A walk-in client does not appear in Patient Management, your patient counts or your patient limit, and never receives reminders or marketing messages.
+  - **Pay at the counter.** Take payment on the request as usual; if it was captured offline or payment was skipped, open the client under **Walk-in clients** on Lab History or Radiology History and use **Take payment**.
+  - **Find and open them.** The new **Walk-in clients** tab lists everyone seen this way, with their tests, scans, results and what they have paid. Results are entered, reported and downloaded like any other.
+  - **Link to a patient later.** If they register, an owner or manager can attach their history to their patient record with **Link to patient**.
+
+  See [Walk-in lab and imaging clients](/hospital/diagnostics/walk-in-clients) and, for the Diagnostics edition, [Walk-in clients](/lims/lab/walk-in-clients).
+</Update>
+
+<Update label="October 9, 2026" tags={["Hospital","Billing"]} description="Insurance claims">
+  ## Submitting a claim now works, and records how you sent it
+
+  Outside the US, the claims register could not mark a claim as submitted or record the insurer's payment, and its menu items did nothing. This puts the basics right.
+
+  - **Submit Claim works.** From a claim's **Actions** menu or its detail page, choose how you are sending it (email, fax, the insurer's portal, post or in person) and the claim moves to **Submitted**. See [Claims](/hospital/insurance/claims).
+  - **Claims are numbered for your hospital.** Numbers run in order for your hospital and are never reused, and claims are recorded in your hospital's currency rather than US dollars.
+  - **Editing a draft saves what you changed.** Only the claim's details and items can be changed from the edit form; amounts approved and paid are never set from it.
+  - **Recording an insurer payment is limited to the owner, a manager, a biller or an accountant.** **Record Payment** is live on a claim's **Actions** menu, and **File Appeal** is no longer offered there until appeals have a form of their own.
+  - **Pre-authorization status changes are saved with who made them.** Moving a pre-authorization on from its page now records the change in its history.
+</Update>
+
+<Update label="October 8, 2026" tags={["Platform","Solo & Team","Hospital","Billing"]} description="Payments, appointments and notifications">
+  ## Pending payments that add up, and links that go where you expect
+
+  Several small things that sent people to the wrong place or showed a balance with nothing behind it.
+
+  - **A pending balance always has items behind it.** A visit opened without a price no longer shows an amount owed on **Pending**; the list and the patient's items now follow the same rule. A lab test or imaging study is payable as soon as it is ordered, including one ordered from a ward, and a **cancelled** test or study can no longer be charged. See [Payments](/hospital/revenue/payments).
+  - **Process Payment opens on the patient.** From **Pending**, **Process Payment** (and **View Items**) now opens **New Payment** already on that patient instead of asking for them again.
+  - **Notification settings opens for everyone.** The link at the foot of the bell takes you to **Profile and Settings → Notifs** rather than to the clinic's Settings page, which only owners, managers and accountants can open. Those roles also get a **Clinic notification settings** link. See [Notification settings](/hospital/settings/notifications).
+  - **Appointments no longer start on a US visit code.** A clinic with services set up under **Appointment Services**, or one that bills in a currency other than US dollars, now books from its own services only. Existing bookings made with the old codes open as they were.
+  - **Saving an insurer makes the patient Insurance.** Adding an insurer or plan on a patient's **Insurance** tab sets their **Billing type** to **Insurance**; clearing it sets **Self pay**. Existing patients are not changed. See [Patients](/hospital/front-desk/patients).
+  - **You choose your insurance system.** The owner picks **United States (US insurance claims)** or **Outside the US (HMO and international insurers)** under **Settings → General → Insurance**. A clinic sees only that system's pages in the menu, and the other system's pages say so instead of opening, so an insurer's money can only be recorded once. New workspaces start on United States; clinics that bill in a currency other than US dollars are set to Outside the US for you, and can change it. See [General settings](/hospital/settings/general).
+  - **Roles, Canada and settings follow the same choice.** In a clinic that limits what each role can open, the roles that may open the claims register may also open the US insurance screen, and the same rule hides both from everyone else. Clinics billing in Canadian dollars stay on United States. **Insurance Settings** (US payer enrolment) is shown only to clinics set to United States.
+  - **The client's Billing tab follows it, and pages.** For an Outside-the-US clinic the tab shows the client's insurer, opens the claims register from **File insurance claim**, and offers **Collect patient share** instead of the US copay and deductible. Invoices are listed ten to a page, with 10, 20 or 50 per page.
+</Update>
+
+<Update label="October 8, 2026" tags={["Hospital"]} description="Triage">
+  ## A triage note stays its author's, and every correction is kept
+
+  Another nurse could open a colleague's triage note and rewrite it, with nothing to show what it had said. Now the note belongs to the person who wrote it.
+
+  - **Only the author edits it, during their shift.** Everyone else sees it read-only, with a line saying who wrote it, and uses **Add follow-up note** to add their own signed entry underneath.
+  - **Every correction is kept.** An edited note shows **Edited** with the time; select it to read what the note said before each change.
+  - **It locks when the patient is handed to the doctor.** After **Send to consultation**, an admission or a discharge, the author can no longer change it; add a follow-up note instead. Undoing **Send to consultation** opens it again.
+  - **Owners and managers can correct a wrong note, with a reason.** Select **Correct note**, edit the wording and say why. It works after the shift and after the hand-over, the note then reads **Corrected by** your name and the time, and the history keeps the original wording and your reason.
+  - **The nurse a triage is handed to can write its first note.** If nothing has been written yet, either the nurse who opened the triage or the nurse it was handed to can write the note, and becomes its author.
+  - **No deleting a triage record.** Ordinary staff can no longer remove one; the clinic owner still can, and it is recorded.
+
+  The rest of the chart (chief complaint, vitals, acuity, safety screen) stays open to anyone who records triage. See [The triage note belongs to the person who wrote it](/hospital/outpatient/triage#the-triage-note-belongs-to-the-person-who-wrote-it).
+</Update>
+
 <Update label="October 7, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Appointments">
   ## You decide who can edit and who can delete appointments
 
@@ -225,6 +841,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
 <Update label="October 4, 2026" tags={["Solo & Team","Hospital","Platform"]} description="Insurance">
   ## Confirm insurance a connected app added
+
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
 
   A connected app can now add a client's insurance, and it waits for you before it can be used. Nothing a connected app sends is billed or checked until a person on your team has looked at it.
 
@@ -1387,6 +2005,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
 <Update label="September 21, 2026" tags={["Solo & Team","Billing"]} description="Insurance claims">
   ## A claim now finds the right clinician's NPI on its own
+
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
 
   A claim's **Rendering Provider** (Box 24J) now fills in automatically from that clinician's own **Billing Profile** in Insurance Profile Settings, when one exists — preferring a profile set up for the claim's specific payer over a general one, and only falling back to your practice-wide defaults when no clinician-specific profile exists. A claim that bills more than one clinician across its service lines leaves the claim-level field for you to choose and fills in each line's own clinician instead. Nothing is ever guessed — an NPI that can't be found is left blank rather than printed wrong.
 
@@ -2588,6 +3208,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 <Update label="September 6, 2026" tags={["Billing"]} description="v10.0.0">
   ## Claims: code suggestions arrive from an unbilled appointment too, and the code search opens ready to browse
 
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
+
   Opening the claim form with **Create claim** on an **Unbilled appointments** row used to give you an empty **Diagnosis Codes (Box 21)** and no word about why — the same form opened from a client's **Billing** tab suggested codes straight away. It now behaves the same from both places.
 
   - **Suggestions run from either entry point.** Where the visit has clinical notes, ICD-10 and CPT suggestions appear, marked as suggestions for you to review, exactly as before.
@@ -2622,6 +3244,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 <Update label="September 6, 2026" tags={["Billing"]} description="v10.0.0">
   ## Insurance claims: the screen now tells the truth about every action
 
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
+
   A pass over the claims list, the claim detail panel, payments, analytics and the insurance settings — checked against the payer network's own reference — fixed a set of quiet defects where a button did something other than what it said, or a figure was shown that had never been read.
 
   - **Check status with payer** now asks you to confirm and says it uses a credit. It is no longer offered on a claim the payer rejected on acknowledgement, where there is nothing to fetch and the check would still be charged.
@@ -2649,6 +3273,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
 <Update label="September 6, 2026" tags={["Billing"]} description="v10.0.0">
   ## Medicare Advantage enrolments can be named
+
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
 
   **Settings** → **Insurance** → **Provider Enrollment** could not offer **Medicare Advantage** as a transaction type, even though enrolments of that type could reach your dashboard from the clearing house. One that did showed a blank transaction type when you opened it, which looked like a record with nothing attached.
 
@@ -2755,6 +3381,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
 <Update label="September 6, 2026" tags={["Platform","Billing"]} description="v10.0.0">
   ## Claims: edit everything, delete a draft, and dates that show the right day
+
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
 
   Editing a claim only ever let you change the header — the diagnoses and service lines, the parts that decide what a payer pays, could not be touched once the claim existed. Editing now opens the same full form used to create one, with everything already filled in.
 
@@ -2952,6 +3580,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 <Update label="September 6, 2026" tags={["Solo & Team","Billing"]} description="v10.0.0">
   ## The claim form fills itself in — and a paid claim pays its invoice
 
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
+
   Building a claim meant retyping what the record already knew: the provider's NPI arrived blank, diagnosis codes did not carry over from the visit, the code search returned nothing, and after the payer paid, the original invoice sat "pending" forever.
 
   - **Rendering Provider (Box 31)** now carries the NPI and taxonomy from your Insurance Profile Settings.
@@ -2989,6 +3619,8 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
 <Update label="September 6, 2026" tags={["Solo & Team","Billing"]} description="v10.0.0">
   ## Provider enrolments submit properly, and the form fills itself in
+
+  For clinics set to **United States (US insurance claims)** under **Settings → General → Insurance**.
 
   Creating a provider enrolment could fail no matter how complete the provider's contact details were, with an error that pointed at the wrong thing — and the Provider Enrollment tab started empty even when the Insurance Profile next to it already held the same details.
 

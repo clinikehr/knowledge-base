@@ -76,6 +76,24 @@ Instead of assigning the same shift week after week, create a shift type once, t
 
 **Copy week** duplicates a whole week's rota to another week in one step, for the whole team or one department.
 
+## Upload a rota from a spreadsheet
+
+If your rota already lives in a spreadsheet, **Upload rota** adds many shifts at once instead of entering them one by one.
+
+1. Open **Upload rota** and choose **Download template**. It is a CSV with one row per shift: **Staff email**, **Staff name**, **Department or ward**, **Date**, **Start time**, **End time**, and optional **Title** and **Notes**. Times are your clinic's local time, and an end time earlier than the start means the shift ends the next day.
+2. Fill it in and choose your file. CSV and Excel (XLSX) files both work, up to 500 shifts at a time.
+3. Check the preview. Every row is listed with what will happen to it. Nothing is saved until you choose **Import**.
+
+How people and places are matched:
+
+- A person is found by **Staff email** first. Only if the email is blank is the full name used, and it must match one active staff member exactly. A name shared by two people is not guessed; use the email.
+- A department or ward is found by its name or its code, as set up in your departments. An inactive department is not used.
+- Dates are read day first (02/11/2026) or as 2026-11-02.
+
+Rows that cannot be used are listed with the reason and left out, never guessed: staff or department not found, a date or time that is not readable, a row repeated in the file, or a shift that overlaps another shift the same person already has. Fix them in your file and upload it again. Uploading the same file twice is safe: shifts that are already on the rota are recognised and not added again.
+
+If a person is marked **Out of Office** at that time, that row is reported as not saved so you can confirm it from the rota yourself. Each person gets one notice that shifts were added, not an email for every shift. You need to be an owner or manager, or have the Shifts permission, to upload a rota.
+
 ## Request and approve cover
 
 <Steps>

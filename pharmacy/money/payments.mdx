@@ -23,21 +23,52 @@ In a pharmacy the till is where money arrives, so **Payments** is the screen for
 
 ## What you're looking at
 
-The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". Alongside it sit a date-range picker, **Refresh** and **New Payment**.
+The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". Alongside it sit **Refresh** and **New Payment**.
 
-Three tabs:
+Four tabs:
 
 | Tab | What it holds |
 | --- | --- |
 | **Overview** | Four tiles — **Total Collected** (all time), **Pending Balance** (with the number of customers outstanding), **Recent Payments** (last 7 days) and **Top Method** — then the **Payments by Method** chart over the last six months and a **Recent Activity** list |
 | **Payments** | Every payment received: **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**, with **Search payments...** and pagination |
 | **Pending** | Who still owes you — **Patient Name**, **Patient ID**, **Items**, **Oldest Item** and **Total Pending**, one row per customer |
+| **Total income** | The till and Billing together — what actually came in, per day and by payment method, for the dates you pick. See [See your total income in one place](#see-your-total-income-in-one-place) |
 
 A voided payment stays in the list with its amount struck through and a red **Voided** badge; hover it to read the reason.
 
 **A pharmacy that has never invoiced sees zeroes and empty tabs, not an error.** **Top Method** reads **None** / "No payments recorded", the **Payments** tab reads "No payments found", and **Pending** says "No patients found matching your search with pending payments."
 
-The date-range picker in the header is decorative — it does not filter the tabs. Use the search box and the tab itself.
+The **Overview**, **Payments** and **Pending** tabs are not filtered by date. Use the search box and the tab itself. The **Total income** tab has its own date picker.
+
+## See your total income in one place
+
+The till and Billing used to be two separate screens, so working out what actually came in meant adding them up yourself. The **Total income** tab does it for you.
+
+<Steps>
+  <Step title="Open the tab">
+    On **Payments**, select **Total income**. It opens on the last 30 days.
+  </Step>
+  <Step title="Pick the dates">
+    Choose a range with the date picker above the figures. Everything on the tab follows it: the four figures, the chart and both tables. One click on a day means that single day.
+  </Step>
+  <Step title="Read it">
+    **Total income** is **Billing** plus the **Pharmacy POS** takings after refunds. **Refunded at the till** shows what was handed back. **Income by day** splits each day by where the money came in, **By payment method** lays Billing beside the Pharmacy till for cash, card, bank transfer and the rest, and **Day by day** lists every day that had money in or out, newest first.
+  </Step>
+</Steps>
+
+What counts, so the figure matches your own books:
+
+- **Billing.** Every payment recorded against an invoice or taken at the desk, on the day it was recorded. A **voided** payment is left out.
+- **Insurers.** The part of a bill an insurer still owes is **not** income yet. It counts on the day you record the insurer's payment, from [HMO receivables](/hospital/insurance/hmo-payments), and not again when you share that payment across claims.
+- **Pharmacy POS.** What customers paid at the till, and any later instalment on a part-paid sale on the day it was paid. A cancelled sale is left out. A customer paying from their account balance counts when the balance is spent on a sale, not when it was topped up.
+- **Refunds.** Taken off on the day of the refund, under the method the sale was paid with. A refund never reduces income by more than the sale actually took.
+- **Days.** Each day is a day at your clinic, in your clinic's time zone, so a sale at 11:30 pm is on the day it happened.
+
+If your account may not see income figures, every figure reads **—** with "You do not have permission to see income figures." A dash means "you cannot see this", not "nothing came in". Ask an owner or manager to turn on **View the net position** for you under [Staff permissions](/platform/team/permissions). When you can see the figures and nothing came in, the tab says so: "No income was received between ..." and shows zeros.
+
+<Note>
+  **Total Collected** on **Overview** counts Billing payments only and covers all time, so it will not match **Total income** for the dates you pick. Use **Total income** for the whole picture.
+</Note>
 
 ## Record a payment against an invoice
 
@@ -77,6 +108,18 @@ This is the usual route, and it starts on the invoice, not here.
   </Step>
 </Steps>
 
+## Reduce what a customer pays (subsidy)
+
+For a customer whose charge is subsidised or reduced, record what they will pay so the item reads **Paid** rather than **Partially paid**. This applies to items paid through **New Payment** and through **Collect payment** on a prescription row; the till has its own discount rules.
+
+On a ticked item choose **Reduced amount**, enter **Amount the patient will pay** (the total for that item after the subsidy) and a **Reason (required)**, then apply it. The item takes exactly that amount, and after the payment it is **Paid** and gone from **Pending**.
+
+- The reduced amount must be more than zero, less than the charge, and no less than what was already paid. A full waiver is a write-off and is not recorded here.
+- A subsidy is not money received: **Total income** and the payment totals count only what was paid. Reductions are listed separately under **Payments** in **Reduced amounts** (the reason is shown only to people who hold **Apply reduced amounts**).
+- The receipt shows a **Subsidy** line, and the item is marked "paid in full".
+- It cannot be combined with an **Insurance** payment.
+- **Reduced amount** shows only to owners, managers and people the owner has given **Apply reduced amounts**.
+
 ## Void a payment entered in error
 
 <Steps>
@@ -103,8 +146,10 @@ This is the usual route, and it starts on the invoice, not here.
 | --- | --- | --- |
 | Open **Payments** at all | Any role except a Cashier or a Pharmacy Technician | Role — neither of those two has **Billing** in their sidebar |
 | **New Payment**, **Record Payment** | Everyone who can open **Billing** | Role, and the **Collect payments** permission for anyone you have saved in the permissions sheet — greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." |
+| **Reduced amount** on an item | Owner and manager | The **Apply reduced amounts** permission — off for everyone else until the owner switches it on for a person |
 | **Void Payment** | Owner, manager or accountant only | Role, checked on the server |
 | See the money tiles on **Overview** | Pharmacy Manager | **View the net position** |
+| See **Total income** | Pharmacy Manager | **View the net position** — without it every figure reads **—** |
 
 Voiding is the one hard stop here. Anyone else gets "Only a clinic owner, manager or accountant can void a payment."
 

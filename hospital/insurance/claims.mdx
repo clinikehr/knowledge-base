@@ -8,8 +8,11 @@ import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on." />
+
+<InsuranceRegion region="non_us" />
 
 A claim asks an insurer to pay for care you have already delivered. **Insurance Claims** is your hospital's claim register: you prepare each claim here, send it to the payer the way you already do, and track its answer. Nothing is transmitted electronically to a clearinghouse from this screen — knowing that up front saves waiting for a transmission that will not happen.
 
@@ -21,15 +24,21 @@ A claim asks an insurer to pay for care you have already delivered. **Insurance 
 
 The heading reads **Insurance Claims** with your hospital's name beneath it, and a refresh button and **New Claim** beside it. A row of tiles sits above the tabs: **Total Claims**, **Approval Rate**, **Total Claimed**, **Total Approved**, **Total Paid**, **Pending Claims**, **Denied Claims** and **Pending Appeals**.
 
-Three tabs, each answering a different question:
+Five tabs, each answering a different question:
 
 | Tab | Answers |
 | --- | --- |
 | **Claims** | Where is this claim now? Work the list by status. |
+| **HMO receivables** | What does each HMO owe us, and how old is it? Record payments and write-offs here. |
+| **HMO setup** | The **Curacel** connection, and a pointer to the Insurance page where each HMO's codes, plans, benefits, prices, employer groups and tariff dates are set up — see [Set up an HMO](/hospital/insurance/hmo-setup). |
 | **Analytics** | Which payer is getting slower, or denying more? |
 | **Activity** | Who did what to this claim, and when? |
 
-The list carries **Claim #**, **Patient**, **Type**, **Service Date**, **Insurance**, **Amount**, **Approved**, **Status** and **Actions** — **Amount** is what you billed, **Approved** is what the payer allowed, and the gap between them is your write-off or your appeal. Above it, search on "Search by claim number or notes..." and filter by status, by type (**Outpatient**, **Inpatient**, **Emergency**, **Pharmacy**, **Laboratory**, **Radiology**) and by company.
+**Approval Rate** is the share of decided claims the insurer approved, fully or in part (including claims since paid or part paid). Claims still waiting for an answer, and claims you wrote off, are not counted either way; with nothing decided yet the tile reads **—**.
+
+Each claim is numbered for your hospital in order — for example **CLM-ABC-26-0001** (the first three letters of your hospital's name, the year, then a running number) — and a number is never reused. Claims are recorded in the currency set under **Settings → Billing**.
+
+The list carries **Claim #**, **Patient**, **Type**, **Service Date**, **Insurance**, **Amount**, **Approved**, **Status** and **Actions** — **Amount** is what you billed, **Approved** is what the payer allowed, and the gap between them is your write-off or your appeal. Above it, search on "Search by claim number or notes..." and filter by status (including **Part paid** and **Written off**), by type (**Outpatient**, **Inpatient**, **Emergency**, **Pharmacy**, **Laboratory**, **Radiology**) and by company.
 
 **Empty state.** With nothing raised, or a filter matching nothing, the list reads **No claims found**. Opening a claim that has been removed shows **Claim not found** with a **Back to Claims** button.
 
@@ -44,7 +53,9 @@ The list carries **Claim #**, **Patient**, **Type**, **Service Date**, **Insuran
 | **Under Review** | The payer is assessing it |
 | **Approved** | The payer has agreed an amount |
 | **Denied** | Refused |
-| **Paid** | Money received against it |
+| **Part paid** | The insurer has paid some of what it owes — see [Record an HMO payment](/hospital/insurance/hmo-payments) |
+| **Paid** | The insurer has paid everything it owes on it |
+| **Written off** | What the insurer would not pay was written off — see [Write off an HMO balance](/hospital/insurance/hmo-write-offs) |
 | **Appealed** | Being contested after a denial |
 
 ## Prepare the claim
@@ -53,7 +64,7 @@ The claim form opens as tabs you work through in order.
 
 <Steps>
   <Step title="Create the claim">
-    Select **New Claim**.
+    Select **New Claim**. To bill an invoice, open the patient's **Billing** tab and select **File insurance claim** beside it: the claim opens with the patient, their insurer and plan, and the invoice's lines already filled in at the insurer's agreed prices (your own price where there is none, which you are told). Check every line before you save.
   </Step>
   <Step title="Basic Info">
     The patient, the encounter and the dates. This is what ties the claim to the care that was actually delivered, and it is what a payer checks first.
@@ -62,7 +73,7 @@ The claim form opens as tabs you work through in order.
     Every service, medicine and consumable you are billing for. Prices come from the payer-specific rates on the **Pricing** tab of the [Insurance dashboard](/hospital/insurance/overview), not from your standard fees.
   </Step>
   <Step title="Insurance & Diagnosis">
-    The insurer, the patient's cover, and the diagnosis codes that justify every item. If the form says **No insurance information on file**, select **Add Insurance** and complete the **Add Insurance Details** dialog. An item with no supporting diagnosis is the denial you will spend next month arguing about.
+    The insurer, the patient's cover, and the diagnosis codes that justify every item. If the form says **No insurance information on file**, select **Add Insurance** and complete the **Insurance details** panel. An item with no supporting diagnosis is the denial you will spend next month arguing about.
   </Step>
   <Step title="Review & Submit">
     Read the whole claim back, then save it. You are told **Claim created successfully! Starting AI analysis...**, and an **AI Analysis** tab appears alongside the others.
@@ -81,14 +92,14 @@ A saved claim is a **Draft** — nothing has left the building yet.
     On a draft, **AI Review** looks for gaps a payer would query. It is a prompt to look again, never a decision, and the claim still moves only when a person moves it. **Edit** is available while the claim is a draft, and reopens the full CMS-1500 form filled with what was saved, so diagnoses and service lines are corrected with the same code search they were built with. A draft can also be deleted from its detail panel; a claim that has left draft cannot, and shows no delete control.
   </Step>
   <Step title="Submit">
-    Select **Submit Claim** — offered on a **Draft** or an **AI Reviewed** claim. You are told **Claim submitted successfully** and the status moves on.
+    Send the claim to the insurer the way you already do, then select **Submit Claim** — from the claim's **Actions** menu or its detail page, on a **Draft**, **AI Reviewed** or **Ready to Submit** claim. Choose **How are you sending it?** (**Email**, **Fax**, **Insurer portal**, **Post** or **Handed over in person**) and select **Submit claim**. ClinikEHR does not send the claim for you: this records that you did, and how. You are told **Claim submitted** and the status moves to **Submitted**. A submitted claim can no longer be edited or deleted.
   </Step>
   <Step title="Quote the approval">
-    Where you obtained a [pre-authorization](/hospital/insurance/pre-authorization), quote it. An approved request is the fastest route through a payer's review.
+    Where the insurer approved a [pre-authorization](/hospital/insurance/pre-authorization), attach it: choose it under **Pre-authorization (optional)** on the claim's first tab, or start the claim from the request with **Create a claim**. The claim then carries the authorization code, and a line above what the insurer approved is flagged for you to decide on.
   </Step>
 </Steps>
 
-Record the payer's decision when it arrives, and record the money when that arrives. A claim marked paid with nothing reconciled against it is a claim you have not actually been paid for.
+Record the money when it arrives with **Record Payment** on the claim's **Actions** menu, or share one payment across many claims from **HMO receivables** — see [Record an HMO payment](/hospital/insurance/hmo-payments). A claim only reads **Paid** when a payment has been recorded against it; it cannot be marked paid by editing it.
 
 ## Who can do this
 
@@ -103,7 +114,7 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
 - The claim appears on **Claims** with a **Claim #**, the payer's name and a status past **Draft**.
 - **Total Claimed** on the tiles has risen by the claim's amount.
 - Nothing you meant to bill this month is still sitting as a **Draft**.
-- When money arrives, the claim reads **Paid** _and_ has a payment recorded against it.
+- When money arrives, the claim reads **Part paid** or **Paid** and the amount is recorded against it.
 
 ## Common issues
 
@@ -121,7 +132,7 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
   </Accordion>
 
   <Accordion title="There is no Submit Claim button">
-    It is offered only on a **Draft** or an **AI Reviewed** claim. A claim already submitted has nothing to submit; a claim you may not file will not offer it either — see [Permissions](/platform/team/permissions).
+    It is offered only on a **Draft**, **AI Reviewed** or **Ready to Submit** claim. A claim already submitted has nothing to submit; a claim you may not file will not offer it either — see [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The payer denied the claim">

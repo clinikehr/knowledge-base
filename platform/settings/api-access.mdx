@@ -11,7 +11,7 @@ import { StillStuck } from '/snippets/support.mdx';
 
 {/* source of truth for the "API add-on" section below: docs/ClinikEHR_API/IMPLEMENTATION_WAVES.md decisions W39-W47 (owner, 2026-09-28). Written to be true the day this release merges — the add-on cannot be bought before then. */}
 
-<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner, manager, or staff granted the API access permission" />
+<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner, manager, developer, CTO, or staff granted the API access permission" />
 
 **API access** lets another system — your own website, a partner's software, an internal report — read your inventory straight out of ClinikEHR, without anyone exporting a file by hand. You choose exactly what it can see when you create the key, and you can switch it off at any moment.
 
@@ -28,10 +28,10 @@ import { StillStuck } from '/snippets/support.mdx';
 | Control | What it does | Default |
 | --- | --- | --- |
 | **Allow API access** | Master switch for the whole workspace. With it off, no key on this workspace can answer a request, even one you already created | Off |
-| **Create key** | Opens the panel for a new key | — |
+| **Create key** | Opens the panel for a new key. Creating a key needs a session that has just passed your second factor; if yours has not, you are asked to verify first (**Verify now**), and if you have not set up two-factor you are taken to set it up. See [Two-factor authentication](/platform/security/mfa#actions-that-always-ask-for-your-second-factor) | — |
 | **Key name**, in the panel | A label so you can tell keys apart later — name it for the system that will use it, not for yourself | — |
 | **Permissions**, in the panel | What this specific key is allowed to read. Every permission in this release is read-only — a key can look, never change anything. Inventory permissions are always offered; patient-record permissions (below) only once your clinic's **API add-on** is active and you've accepted the **API data agreement** | None selected — choose what this key may read |
-| **Expires**, in the panel | An optional date the key stops working on its own. Leave it blank for a key with no set end date | Never |
+| **Expires**, in the panel | The date the key stops working on its own. Required, and at most 12 months from today | — |
 | **Allowed IP addresses**, in the panel | Restricts this key to specific addresses or ranges. A request from any other address is refused, even with the right key. Leave it blank to allow any address | Any address |
 | A key's row (a card on a phone) | Opens a panel showing that key's name, **Key ID**, every permission, when it was created, last used and expires, its allowed addresses and its status. The key itself is never shown there — it was shown once, when you created it | — |
 | **Revoke**, next to a key or in that panel | Permanently disables that one key | — |
@@ -71,8 +71,8 @@ Your API settings and keys — never the secret itself — are included when you
   <Step title="Choose Permissions">
     Nothing is selected to start — select only what the receiving system actually needs. A key that only shows a public "in stock" badge needs **Availability** alone, not **Stock levels**. Patient-record permissions appear in their own group below the inventory ones, enabled once the API add-on is active and the agreement is accepted.
   </Step>
-  <Step title="Set Expires, if this key should end automatically">
-    Useful for a key you are handing to a contractor or a short-term project. Leave it blank for an integration you expect to keep running.
+  <Step title="Choose when the key expires">
+    Every key needs an end date, and it can be at most 12 months away. Pick the date that suits the integration. For one you expect to keep running, choose the furthest date and create a replacement before it ends. We email the clinic's owners and managers 30 days and 7 days before a key stops working.
   </Step>
   <Step title="Set Allowed IP addresses, if this key should only answer from specific places">
     Optional. Enter one address or range per line — for example `203.0.113.10` or `203.0.113.0/24`. A range must be written exactly, starting at its own first address — `10.0.0.0/8`, not `10.1.2.3/8`. Leave it blank to allow any address.
@@ -101,7 +101,7 @@ Your API settings and keys — never the secret itself — are included when you
 - Its **Allowed addresses** column reads **Any** if you left the field blank, or a count such as **2 addresses** — hold or select it to see the addresses themselves.
 - The first time the receiving system actually calls it, a last-used time appears against that key.
 - After **Revoke** and **Revoke key**, the badge changes to **Revoked** and the next request from that key is refused.
-- A key given a date under **Expires** is badged **Expired** once that date has passed, and stops answering. It cannot be extended — create a new key.
+- A key is badged **Expired** once its **Expires** date has passed, and stops answering. It cannot be extended past 12 months — create a new key, switch the system that uses it, then revoke the old one. Keys created before this limit existed keep working until you revoke them; we recommend replacing them with a key that has an end date.
 
 ## Connect another organization
 
@@ -141,7 +141,7 @@ There is no directory or search for this — the other organization can only rea
 
 ### What changes once you decide
 
-- **Approve** grants exactly the items you ticked — never everything requested by default. The connection is badged **Active**.
+- **Approve** grants exactly the items you ticked — never everything requested by default. The connection is badged **Active**. Approving, and changing what a connection may see, need a session that has just passed your second factor; if yours has not, you are asked to verify first. See [Two-factor authentication](/platform/security/mfa#actions-that-always-ask-for-your-second-factor).
 - **Manage**, then changing what is ticked and selecting **Save changes**, narrows what is shared at any time. To grant something new, the organization has to request it again.
 - **Manage**, then **Revoke**, then confirming **Revoke connection** ends that organization's access immediately. This cannot be undone — if they need access again, they need a brand-new code from you.
 - A declined or revoked connection sits in a collapsed **History** section at the bottom of the list, so today's view stays focused on what needs your attention.
@@ -164,9 +164,30 @@ To keep your own copy, go to **Settings** → **Data Export** and choose the **A
   Not available yet. Sharing a patient's information with an outside organization stays off for every clinic until the platform's own agreement with that organization is in place — the mechanism above is built, but nothing is shared today, regardless of what a connection lists.
 </Info>
 
+## Insurer links — tell us which connected organization is an insurer
+
+This section appears only when your **Insurance** preference is set to **Outside the US** (**Settings** → **General**). It answers one question: which of your connected organizations **is** one of your insurers or HMOs.
+
+Until you link it, a connected organization is treated as a developer. It can send claims and pre-authorization requests for patients you have linked to it, but it cannot see any insurer's claims, enrollees or plans, and it cannot vet a claim, decide a pre-authorization request or report a payment. Once you link it to an insurer, it can do those things **for that insurer only** and never for another insurer you work with. It still never sees a claim you have not submitted yet, or a request you have not sent.
+
+| Control | What it does |
+| --- | --- |
+| **Link an insurer** | Opens a panel. Choose a connected organization and one of your insurers, then select **Link insurer**. Only organizations you have already granted an insurance permission to are offered. |
+| The bin icon, next to a link | Opens **End this link**. Select **End link** to stop that organization seeing the insurer's information straight away. Nothing already recorded changes, and you can link it again later. |
+
+<Note>
+  Only a clinic **owner** or **manager** can link or unlink. Someone with only the API access permission sees the list but no buttons.
+</Note>
+
+Linking does not grant anything by itself. The organization still needs the insurance permissions you approved under **Connected organizations**, and the platform's own checks for patient data still apply. A payment an insurer reports through the API is only a message to you: it never changes a claim or your payments. You record the money yourself under **Record payment**.
+
 ## The API add-on — reach your own patient records
 
 By default, a key you create can read your workspace's own non-patient data. The **API add-on** is what will open everything else your own keys can reach: patients, appointments, clinical notes, your CRM, and your full inventory — still only with keys you create yourself, for your own systems. It does not change what a connected **organization** can see (that stays as described above, and above Team is available on the Pharmacy and Diagnostics Business plans too).
+
+<Note>
+  **EvidenceMD needs the same two things.** Using EvidenceMD, either as your note assistant or as a connected tool in Agent Studio, requires the add-on (or an Enterprise agreement) to be active **and** the current API data agreement to be accepted. If either is missing, EvidenceMD is refused with a message naming which one, and a connection you made earlier is kept, not deleted — it works again once both are in place.
+</Note>
 
 <Note>
   Patient-record permissions become selectable in the key-creation panel once the add-on is active AND you've accepted the API data agreement below — both are required together. If your clinic requires two-factor authentication for staff, you must also be signed in with it completed before you can create a key carrying a patient-record permission.
@@ -205,7 +226,7 @@ The add-on card sits above your keys in **Settings → API access**, and shows:
 
 **The API data agreement.** Before any key — yours or an add-on customer's — can reach patient records, the clinic **owner** must review and accept an agreement covering how the clinic's own keys may be used and that AI-drafted content is reviewed by a clinician before it is saved. The card shows the full text, the version, and an **Accept agreement** checkbox and button for the owner. A newer version can replace an older acceptance, and the card asks again.
 
-**Cancel** ends the add-on at the close of the period you already paid for — your keys keep working as they do today until then, and existing keys are never deleted. **Resume** while cancelling keeps it renewing instead. Extra usage for a month is billed once, automatically, on your following bill.
+**Cancel** ends the add-on at the close of the period you already paid for — your keys keep working as they do today until then, and existing keys are never deleted. **Resume** while cancelling keeps it renewing instead. Extra usage for a month is billed once, automatically, on your following bill. The add-on also appears in **Billing → Other subscriptions**, where you can cancel or resume it with the same effect.
 
 ## Listing — get found by network partners
 

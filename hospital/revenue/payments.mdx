@@ -19,21 +19,56 @@ Money reaches a hospital two ways: somebody hands it over at a desk and you reco
 
 ## What you're looking at
 
-The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". A date-range picker, **Refresh** and **New Payment** sit beside it.
+The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". **Refresh** and **New Payment** sit beside it.
 
-Three tabs:
+Four tabs:
 
 | Tab | What it holds |
 | --- | --- |
 | **Overview** | **Total Collected**, **Pending Balance**, **Recent Payments** and **Top Method**, with a method breakdown and recent activity |
 | **Payments** | Every payment recorded, searchable and filterable |
 | **Pending** | Patients with an outstanding balance |
+| **Total income** | Billing and the Pharmacy till together, per day and by payment method, for the dates you pick. See [See your total income in one place](#see-your-total-income-in-one-place) |
 
 The **Payments** table shows **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**. **Filter by Method** narrows it to **Cash**, **Card**, **Bank Transfer**, **Mobile Money** or **Insurance**. Each row's **Actions** menu offers **View Details**, **Download Receipt**, **Void Payment**, **Copy Payment ID** and **Copy Payment Info**.
 
 The **Pending** table lists **Patient Name**, **Patient ID**, **Items**, **Oldest Item** and **Total Pending**, with **Process Payment** on the row. **Oldest Item** is what to sort a chase list by.
 
+**Process Payment** (and **View Items** on the row) opens **New Payment** already on that patient, with their unpaid items ready to tick; you are not asked to find them again.
+
+A patient is listed only when something is genuinely payable. A consultation counts at the amount recorded on it, so a visit opened without a price, or at no charge, adds nothing and no longer shows a balance with no items behind it. A lab test or imaging study is payable from the moment it is ordered, whether it comes from a consultation or a ward stay, and a **cancelled** test or study is never offered for payment.
+
 **Empty states.** With nothing outstanding, **Pending** reads **No Pending Payments** and "All patients have cleared their pending payments. Great job!" A search that matches nobody says "No patients found matching your search with pending payments." instead.
+
+## See your total income in one place
+
+Billing and the Pharmacy till used to be two separate screens, so working out what actually came in meant adding them up yourself. The **Total income** tab does it for you.
+
+<Steps>
+  <Step title="Open the tab">
+    On **Payments**, select **Total income**. It opens on the last 30 days.
+  </Step>
+  <Step title="Pick the dates">
+    Choose a range with the date picker above the figures. Everything on the tab follows it: the four figures, the chart and both tables. One click on a day means that single day.
+  </Step>
+  <Step title="Read it">
+    **Total income** is **Billing** plus the **Pharmacy POS** takings after refunds. **Refunded at the till** shows what was handed back. **Income by day** splits each day by where the money came in, **By payment method** lays Billing beside the Pharmacy till for cash, card, bank transfer and the rest, and **Day by day** lists every day that had money in or out, newest first.
+  </Step>
+</Steps>
+
+What counts, so the figure matches your own books:
+
+- **Billing.** Every payment recorded against an invoice or taken at the desk, on the day it was recorded. A **voided** payment is left out.
+- **Insurers.** The part of a bill an insurer still owes is **not** income yet. It counts on the day you record the insurer's payment, from [HMO receivables](/hospital/insurance/hmo-payments), and not again when you share that payment across claims.
+- **Pharmacy POS.** What customers paid at the till, and any later instalment on a part-paid sale on the day it was paid. A cancelled sale is left out. A customer paying from their account balance counts when the balance is spent on a sale, not when it was topped up.
+- **Refunds.** Taken off on the day of the refund, under the method the sale was paid with. A refund never reduces income by more than the sale actually took.
+- **Days.** Each day is a day at your clinic, in your clinic's time zone, so a sale at 11:30 pm is on the day it happened.
+
+When nothing came in for the dates you picked, the tab says so — "No income was received for ..." — and shows zeros, rather than leaving you to wonder whether it loaded.
+
+<Note>
+  **Total Collected** on **Overview** counts Billing payments only and covers all time, so it will not match **Total income** for the dates you pick. Use **Total income** for the whole picture.
+</Note>
 
 ## Record a payment against an invoice
 
@@ -47,7 +82,7 @@ This is the usual route, because it settles a specific balance.
     **Amount** is prefilled with the balance due. Overtype it for a part payment — the invoice then reads **Partially paid** and keeps the remainder outstanding. Zero is refused: "Enter an amount greater than zero".
   </Step>
   <Step title="Choose the method">
-    **Payment Method** defaults to **Cash**, with **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other** alongside. Record what actually happened — the **Overview** tab breaks takings down by method, and a transfer logged as cash quietly ruins that.
+    **Payment Method** defaults to **Cash**, with **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other** alongside. Record what actually happened — the **Overview** tab breaks takings down by method, and a transfer logged as cash quietly ruins that. If your hospital bills HMOs (Settings → General → Insurance set to **Outside the US**), **Insurance** is not a method: use [Bill HMO](/hospital/insurance/bill-hmo) for the insurer's share and take the patient's share with any method here.
   </Step>
   <Step title="Add a reference and save">
     **Reference (optional)** takes the transfer reference, cheque number or terminal receipt number. It is what makes a payment findable when a patient queries it months later. Select **Record Payment**: you get **Payment recorded** and the balance drops immediately.
@@ -70,7 +105,7 @@ This is the usual route, because it settles a specific balance.
     **Payment Items** — "Select what is being paid for" — has two inner tabs: **Direct Payment** for services and consultation rates, and **Pay Invoice** to settle an existing bill. Each item takes a **Pay:** amount, so a part payment is badged **Partial Payment**.
   </Step>
   <Step title="Set the method and amount">
-    **Payment Method** offers six tiles — **Cash**, **Card**, **Insurance**, **Mobile Money**, **Bank Transfer** and **Other** — then **Amount to Pay**, **Reference (Optional)** and **Notes (Optional)**.
+    **Payment Method** offers six tiles — **Cash**, **Card**, **Insurance**, **Mobile Money**, **Bank Transfer** and **Other** — then **Amount to Pay**, **Reference (Optional)** and **Notes (Optional)**. Hospitals set to **Outside the US** see five tiles — there is no **Insurance** tile — and a **Bill HMO** button for a patient with an insurer on file; see [Bill an HMO at the till](/hospital/insurance/bill-hmo).
   </Step>
   <Step title="Process it">
     A **Payment Successful** dialog shows the reference, date and method, and offers **Print Receipt**. Part-paid items are called out: "⚠️ This includes partial payments. Some items have remaining balances."
@@ -78,6 +113,29 @@ This is the usual route, because it settles a specific balance.
 </Steps>
 
 <AuditNote action="Recording, viewing or voiding a payment" />
+
+## Reduce what a patient pays (subsidy)
+
+When the clinic subsidises or reduces a charge for a patient, record the amount the patient will actually pay, so the item reads **Paid** instead of **Partially paid** or **Pending**.
+
+<Steps>
+  <Step title="Tick the item and choose Reduced amount">
+    Under **Payment Items**, tick the item. Next to its **Pay:** box, choose **Reduced amount**. The button shows only to owners, managers and anyone an owner has given **Apply reduced amounts**.
+  </Step>
+  <Step title="Enter what the patient will pay, and why">
+    **Amount the patient will pay** is the total for that item after the subsidy. **Reason (required)** cannot be left empty. The panel shows **Patient pays now** and **Subsidy (not collected)** before you apply it.
+  </Step>
+  <Step title="Process the payment">
+    The item now takes exactly that amount, shows **Reduced to … · Subsidy …**, and after the payment it reads **Paid** and no longer appears under **Pending**.
+  </Step>
+</Steps>
+
+- **The amount must be more than zero, less than the charge, and no less than anything already paid on the item.** Waiving an item completely is a write-off, not a reduced amount, and is not recorded here. You can reduce one item and charge another in full in the same payment.
+- **Not for an item billed to an HMO.** The HMO and the patient already share its price, so **Reduced amount** is not offered for it.
+- **A subsidy is not money received.** The payment total, **Total income** and the revenue figures count only what was paid. Reductions are listed on their own under **Payments** in **Reduced amounts**, with the date, item and who gave it, and voided payments are left out. The reason is shown to owners, managers and anyone who holds **Apply reduced amounts**.
+- **The receipt says so.** The item is marked "Subsidy … — paid in full" and the receipt has a **Subsidy** line. It is never counted as paid and never leaves a balance due.
+- **Not with Insurance.** A reduced amount cannot be combined with an insurance payment. Choosing **Insurance** removes any reduction you set.
+- **To change it, untick the item.** Unticking removes the reduction and the item goes back to its full balance.
 
 ## Send a payment link instead
 
@@ -142,11 +200,13 @@ Once Payments opens, almost nothing narrows further:
 | Record an insurer's settlement | Anyone who can open Payments | Nothing |
 | See the money figures on **Overview** | Anyone who can open Payments | Nothing |
 | Open the payment reports | Anyone who can open Payments | Nothing |
+| See **Total income** | Anyone who can open Payments | Nothing |
+| Reduce what a patient pays (**Reduced amount**) | Owners and managers | The **Apply reduced amounts** permission. It is off for everyone else, even staff you have not saved in the permissions sheet, until the owner switches it on for a person |
 | Void money already taken | Owners, managers, accountants | A server check nobody bypasses — "Only a clinic owner, manager or accountant can void a payment." |
 
 Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
 
-Someone without **Collect payments** sees **Process Patient Payment** and **Record Payment** greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it.
+Someone without **Collect payments** sees **Process Patient Payment** and **Record Payment** greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it, **Total income** included.
 
 ## Check it worked
 

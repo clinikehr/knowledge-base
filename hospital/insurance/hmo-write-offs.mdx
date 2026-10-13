@@ -1,0 +1,81 @@
+---
+title: Write off an HMO balance
+description: "Write off what an HMO will not pay, with a reason, and decide whether a second person must approve larger write-offs."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners and managers" note="Needs the Insurance care area switched on, and Settings → General → Insurance set to Outside the US." />
+
+<InsuranceRegion region="non_us" />
+
+Sometimes an HMO rejects a line for good. A **write-off** closes what it will not pay so the claim stops showing as owed. It is permanent, it needs a reason, and it is recorded against the person who made it.
+
+<Path steps={['Sidebar', 'Insurance', 'Claims', 'HMO receivables']} />
+
+<TaskHeader before="A submitted claim with a balance the HMO has refused" time="1 minute" after="The balance no longer shown as owed, with the reason on record" />
+
+## Write off a balance
+
+<Steps>
+  <Step title="Open the claim's balance">
+    On **HMO receivables**, select **View claims** for the insurer, then **Write off** beside the claim. You can also choose **Write off balance** from a claim's **Actions** menu.
+  </Step>
+  <Step title="Enter the amount and the reason">
+    **Amount to write off** starts at what is owed; you can write off less. **Reason** is required — say why it will not be collected.
+  </Step>
+  <Step title="Confirm">
+    Select **Write off**. You are told **Written off** and the balance is reduced at once — unless your hospital asks for a second person to approve it, below.
+  </Step>
+</Steps>
+
+You cannot write off more than the insurer owes. A claim with a write-off already waiting for approval cannot take a payment or another write-off until it is decided.
+
+## Ask for a second approval above an amount
+
+By default the person who may write off a balance does it on their own. To make larger ones wait for someone else, an owner or manager opens **Approving write-offs** on **HMO receivables**, switches on **Require a second person for larger write-offs** and sets **Needs approval above**. A write-off up to that amount still applies at once; above it, the button reads **Send for approval**.
+
+A waiting write-off **changes nothing** on the claim. It appears under **Write-offs** as **Waiting for approval**. A person who may approve it, and who is **not the person who asked**, sees **Approve** and **Refuse**:
+
+- **Approve** applies the write-off. It cannot be undone. If the claim's balance has changed since the request, you are told and the request must be refused and asked again.
+- **Refuse** leaves the claim as it was.
+
+You can add a note to either.
+
+## Who can do this
+
+| Action | Who by default | The permission |
+| --- | --- | --- |
+| Write off, or ask to write off | Owners, managers | **Write off HMO balances** |
+| Approve or refuse | Owners, managers | **Approve HMO write-offs** |
+| Turn second approval on or off, set the amount | Owners, managers | — |
+
+Both permissions are off for everyone else until an owner switches them on for a person in their [Permissions](/platform/team/permissions) sheet. The person who asks can never be the person who approves.
+
+## Check it worked
+
+- The claim reads **Paid** or **Part paid** with the written-off amount no longer owed — or **Written off** if nothing was paid.
+- Under **Write-offs**, the request reads **Written off**, with your reason.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Write off is not offered">
+    You may not have the permission, or the claim is not submitted, is denied or is already settled.
+  </Accordion>
+  <Accordion title="I asked for a write-off and nothing changed">
+    It is waiting for a second person to approve it. It will show **Waiting for approval** under **Write-offs**.
+  </Accordion>
+  <Accordion title="Approve is missing on my own request">
+    A different person must approve it. Ask another owner, manager or person who has been given **Approve HMO write-offs**.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a write-off" />
+
+{/* source of truth: components/clinic/insurance/hmo/write-off-sheet.tsx, write-off-requests-panel.tsx, write-off-policy-card.tsx, db/actions/hmo-money.ts */}

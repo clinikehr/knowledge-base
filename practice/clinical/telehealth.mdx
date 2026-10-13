@@ -67,14 +67,18 @@ With a waiting room on, an amber card tells you "\{n\} people are waiting to joi
 
 Select the record button to open the **Start Recording?** sheet:
 
-> Records BOTH sides of the call — every participant's video and audio, plus any shared screen, composited into one file. All participants will be notified that recording has started.
+> Records BOTH sides of the call — every participant's video and audio, plus any shared screen, composited into one file. Everyone in the call is asked to agree first, and recording begins only when they have.
 
-Below it sits an **AI Note Taker** switch with a **Note template** picker when your plan includes it, then the consent line: "**Important:** Ensure you have consent from all participants before recording."
+Below it sits an **AI Note Taker** switch with a **Note template** picker when your plan includes it. The switch starts **off** for every recording: the recording goes to an outside AI service, so you turn it on for the recordings you want notes for. The sheet ends with the consent line: "**Consent:** each person in the call sees a request to agree to being recorded. If anyone says no, nothing is recorded. Each answer is saved with the recording."
 
-Confirm with **Start Recording**. Everyone sees the **REC** badge while it runs. **Stop Recording?** ends it and begins processing; the file lands on **Recordings** once that finishes.
+Confirm with **Start Recording**. Recording does not begin straight away. Each other person in the call sees **Record this session?** with **Yes, I agree** and **No, do not record**, and cannot carry on without choosing. You see how many people are still to answer. When everyone has agreed, recording starts and everyone sees the red **REC** badge. If anyone says no, or does not answer within about 90 seconds, nothing is recorded and the call carries on. Someone who joins while a recording is running sees the badge at once and is asked the same question; until they answer they are kept out of it (their video and voice are left out of the file) until they answer; if they say no, or do not answer, the recording stops, the part already recorded is kept and can be played, and no AI notes are made from it. In **Recordings** that recording carries the note **Stopped — a participant declined recording**. If you leave the call while a recording is running, the recording stops, the part already recorded is kept and can be played, and **Recordings** says **Stopped — the host left the call**.
+
+If your clinic has turned off **Require explicit consent to record** in **Settings → Client Portal**, people are still told with the **REC** badge, but they are not asked to agree first. Leave that setting on unless your clinic's policy says otherwise.
+
+**Stop Recording?** ends it and begins processing; the file lands on **Recordings** once that finishes. Each person's answer, with the time and the wording they saw, is kept with the recording and is included in your data export as **Recording Consents**.
 
 <Warning>
-  **Get consent before you start recording, and get it on the record.** The recording captures every participant's video and audio and becomes part of the client's clinical record. Say what you are recording and why, ask, and wait for the answer. If anyone objects, do not record.
+  **Say what you are recording and why before you press Start.** The recording captures every participant's video and audio and becomes part of the client's clinical record. ClinikEHR asks each person to agree and keeps their answer, but a clear word from you first is still the right way to start. If anyone objects, do not record.
 </Warning>
 
 ## Write the note
@@ -91,9 +95,11 @@ Role decides whether **Telehealth** opens. The plan decides what the room can do
 
 | Action | Who can do it by default | Governed by |
 | --- | --- | --- |
-| Schedule and host a call | Any clinician | Role — any plan; Free is capped at 5 calls a month |
-| Record a session | The host | Plan — **Session Recordings**, Essential and above |
-| Generate AI consult notes from a recorded session | The host | Plan — Essential and above; the upgrade prompt names Team |
+| Schedule and host a call | Any clinician | Role — any plan; Free is capped at 5 calls a month. Once you save a person's permissions: **Host video visits** |
+| Record a session | The host | Plan — **Session Recordings**, Essential and above. Once you save a person's permissions: **Record video visits** |
+| Play, download or list recordings | Any clinician | **View video visit recordings** |
+| Delete a recording | Owners and managers | **Delete video visit recordings** — off for everyone else until you switch it on for a person |
+| Generate or read AI consult notes from a recorded session | The host | Plan — Essential and above; the upgrade prompt names Team. Once you save a person's permissions: **AI notes from video visits** |
 | Document against a client who is not yours | Owner, manager, and staff set to **Full client list** or **Entire practice** | The access tier chosen when they were invited |
 
 Two behaviours surprise people:
@@ -114,6 +120,10 @@ The call moves from **Upcoming** to **Recent**, badged **Completed**. A recordin
 <AccordionGroup>
   <Accordion title="Telehealth Consultations Limit Reached">
     Every plan includes telehealth links each month: Free 10, Essential 250, and Team and Enterprise unlimited. Links reset on the 1st of each month. A link for a visit that is cancelled before the call starts does not count. When you have used them, the message names your plan, says when the allowance resets and offers an **Upgrade** button to the next plan. **Recordings** and the **AI Notes** tab need Essential and above. See [Change your plan](/platform/plans/change-plan).
+  </Accordion>
+
+  <Accordion title="A call is still shown as in progress after everyone left">
+    A call nobody ended is closed automatically once it has been idle for 24 hours. It moves to **Completed** and anyone still shown in it is marked as having left. This is done quietly: no follow-up message or workflow is triggered by it, and the client's join link stops working.
   </Accordion>
 
   <Accordion title="Patient email required">

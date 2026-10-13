@@ -29,9 +29,19 @@ Money arrives two ways: somebody hands it over at the desk and you record it, or
 | --- | --- |
 | **Overview** | The money picture — what came in, how, and when |
 | **Payments** | Every payment recorded, newest first |
-| **Pending** | What is still owed |
+| **Pending** | What is still owed. **Process Payment** on a row opens **New Payment** already on that client; a cancelled lab test or study is never offered for payment |
+| **Total income** | Everything that came in through Billing and, if you run a pharmacy till, the till too — per day and by payment method, for the dates you pick |
 
-A new practice sees all three empty. The **Pending** tab is the one to watch daily: it is your outstanding balance, in your practice's currency, and it should shrink as you work it.
+A new practice sees the first three empty. The **Pending** tab is the one to watch daily: it is your outstanding balance, in your practice's currency, and it should shrink as you work it.
+
+## See your total income
+
+Select **Total income** and pick the dates with the date picker (it opens on the last 30 days). You get **Total income**, **Billing**, **Pharmacy POS** and **Refunded at the till**, a chart of each day, and tables **By payment method** and **Day by day**. **Pharmacy POS** reads zero unless your practice sells over a pharmacy till.
+
+- A **voided** payment is left out.
+- The part of a bill an insurer still owes is not income until you record the insurer's payment.
+- Each day is a day at your practice, in your practice's time zone.
+- When nothing came in for the dates you picked, the tab says so and shows zeros.
 
 ## Record a payment against an invoice
 
@@ -45,7 +55,7 @@ This is the usual route, because it settles a specific balance.
     **Amount** is prefilled with the balance due. Overtype it for a part payment — the invoice then reads **Partially Paid** and keeps the remainder outstanding.
   </Step>
   <Step title="Choose the method">
-    **Payment Method** defaults to **Cash**; the others are **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other**. Set it to what actually happened: the **Overview** tab breaks takings down by method, and a bank transfer logged as cash quietly ruins that.
+    **Payment Method** defaults to **Cash**; the others are **Card**, **Bank Transfer**, **Mobile Money**, **Insurance** and **Other**. If your clinic's Insurance setting is **Outside the US**, there is no **Insurance** method: bill the insurer with **Bill HMO** and take the patient's share here. Set it to what actually happened: the **Overview** tab breaks takings down by method, and a bank transfer logged as cash quietly ruins that.
   </Step>
   <Step title="Add a reference">
     **Reference (optional)** takes the transfer reference, cheque number or terminal receipt number — "Transaction / receipt reference". It is what makes a payment findable when a client queries it three months later. **Notes (optional)** carries anything else.
@@ -62,6 +72,15 @@ This is the usual route, because it settles a specific balance.
 <Warning>
   Once a payment is recorded against an invoice, that invoice can no longer be deleted — only cancelled. Record against the right invoice: correcting one afterwards is a deliberate, recorded reversal, not a quiet edit.
 </Warning>
+
+## Reduce what a client pays (subsidy)
+
+When a charge is subsidised or reduced for a client, record what they will pay so the item reads **Paid** instead of **Partially paid** or **Pending**. In **New Payment**, tick the item and choose **Reduced amount**; enter **Amount the patient will pay** and a **Reason (required)**. The item takes exactly that amount and, once the payment is recorded, is **Paid** and no longer in **Pending**.
+
+- The amount must be more than zero, less than the charge, and no less than anything already paid. A full waiver is a write-off and is not recorded here. It is not offered for an item billed to an HMO.
+- A subsidy is not money received. The payment total and **Total income** count only what was paid; reductions are listed on their own under **Payments** in **Reduced amounts**, with who gave them; the reason is shown only to people who hold **Apply reduced amounts**.
+- The receipt carries a **Subsidy** line. It cannot be combined with an **Insurance** payment.
+- **Reduced amount** shows only to owners, managers and people the owner has given **Apply reduced amounts** under [Staff permissions](/platform/team/permissions).
 
 ## Send a payment link instead
 
@@ -159,6 +178,7 @@ To charge a card on file automatically after an appointment rather than asking e
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Payments** | Any staff member | Nothing — the page is not role- or permission-gated |
+| Reduce a charge (**Reduced amount**) | Owners and managers | The **Apply reduced amounts** permission, off for everyone else until an owner switches it on for a person |
 | Record a payment | Any staff member | The **Collect payments** permission, for anyone you have saved in the permissions sheet — owners and managers always can |
 | Send a payment link | Any staff member | Nothing |
 | Record an insurer's payment | Any staff member | Nothing |

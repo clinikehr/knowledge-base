@@ -1,0 +1,59 @@
+---
+title: Automatic logoff
+description: "How long a signed-in session may sit idle before ClinikEHR signs it out, how an owner or manager changes that, and what happens to unsaved work."
+icon: /images/icons/timer.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+
+<Availability editions={['all']} roles="Anyone is signed out; an owner or manager sets the time" />
+
+A screen left open on a shared desk should not stay signed in all night. ClinikEHR signs a session out after a period with no activity, and it does so on the server: closing the tab, or leaving the machine, does not keep the session alive.
+
+## How long
+
+| | |
+| --- | --- |
+| **Default** | 60 minutes |
+| **What an owner or manager can set** | Any whole number from 5 to 240 minutes, for the whole workspace |
+| **Where** | <Path steps={['Settings', 'Security', 'Automatic logoff']} /> — type the minutes and select **Save logoff time** |
+
+Anyone can see the current time on that card; only an owner or a manager can change it.
+
+**The time that applies is the one for the workspace you are in.** If you work in more than one workspace, the clock follows the workspace you are currently working in, and on pages that belong to no workspace (your home dashboard) the 60-minute default applies. If you sit idle in a workspace with a short time and then open another, the short time is the one that counts for the idle period you just had.
+
+## The warning
+
+Two minutes before the end, a box appears: **Still there?** It counts down and offers **Stay signed in** and **Sign out now**. Choosing **Stay signed in**, or simply using the page, keeps you signed in. Closing the box counts as staying.
+
+If the time runs out, you are taken to the sign-in page with "You were signed out after a period of inactivity. Sign in to continue." Every automatic sign-out is recorded in the [audit log](/platform/security/audit-log) as a sign-out with the reason *inactivity*.
+
+## Your unsaved work
+
+- Anything you had typed but not saved stays on that device; open the same form after you sign in again.
+- On the Pharmacy and Diagnostics apps, sales and orders waiting to sync stay in the queue. Signing out never clears them, and they send once the person signing in has a session again.
+- No password or code is stored to make signing back in quicker.
+
+<Note>
+  **Working offline.** If the device is offline when the time runs out, you are signed out on that device anyway: a **You were signed out** box covers the screen, and sign-in opens as soon as the connection returns. Everything you had captured stays on the device, and waiting sales and orders send after the next person signs in. The server ends its side of the session shortly afterwards.
+</Note>
+
+## How quickly a sign-out takes effect
+
+The server ends an idle session within a few minutes of its limit, even if the tab was closed. Pages and the sign-in prompt stop working for that session straight away. The one thing that does not stop at once is a copy of the session's access code that already exists: it can still be used to read data for up to an hour after the session is ended, until it expires on its own. We keep that lifetime at one hour.
+
+## The desktop apps
+
+The desktop apps open the same pages, so the same time, warning and sign-out apply on the ClinikEHR Desktop and Pharmacy POS builds. See [Desktop app](/platform/apps/desktop).
+
+## Related
+
+<Columns cols={2}>
+  <Card title="Two-factor authentication" icon="/images/icons/key.svg" href="/platform/security/mfa">
+    The second factor, and the actions that always ask for it.
+  </Card>
+  <Card title="HIPAA and compliance" icon="/images/icons/shield-half.svg" href="/platform/security/hipaa">
+    How access is recorded and kept.
+  </Card>
+</Columns>

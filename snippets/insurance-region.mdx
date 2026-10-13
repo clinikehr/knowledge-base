@@ -1,0 +1,22 @@
+export const INSURANCE_REGION_LABELS = {
+  us: 'United States',
+  non_us: 'Outside the US',
+};
+
+export const InsuranceRegion = ({ region }) => {
+  const us = region === 'us';
+  return (
+    <div className="ck-avail" role="note" aria-label="Which insurance setup this page is for">
+      <span className="ck-avail__label">Insurance</span>
+      <span className="ck-pill ck-pill--plan">{INSURANCE_REGION_LABELS[region] || region}</span>
+      <span className="ck-avail__note">
+        {us
+          ? 'For clinics whose owner chose United States (US insurance claims) under Settings → General → Insurance: electronic claims to US payers, eligibility checks and insurer remittance. '
+          : 'For clinics whose owner chose Outside the US (HMO and international insurers) under Settings → General → Insurance: HMOs, the claims register, pre-authorization and HMO payments. '}
+        {us
+          ? <a href="/hospital/insurance/claims">Outside the US? See the HMO and international insurance pages.</a>
+          : <a href="/practice/money/insurance-claims">In the United States? See US insurance claims.</a>}
+      </span>
+    </div>
+  );
+};

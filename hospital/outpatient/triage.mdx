@@ -101,6 +101,8 @@ Opening a queue row — a **Waiting** card or an already-triaged row — replace
 | **Orders** | Medications, labs, imaging and services in the same four sub-tabs as the consultation's **Orders** tab, where your clinic allows nurse orders for this complaint — see [Nurse orders](#nurse-orders) |
 | **Disposition** | Send to consultation, admit, refer out, discharge or record left without being seen |
 
+**Sticky Notes** and **Status Notes** sit as two tabs on the right edge of the chart, each with a count, exactly as on the consultation chart and the client record. They hold the patient's notes across every visit, not just this triage, so a note added here is the same note the doctor sees in consultation. Drag a tab up or down to move it out of the way. Pinned sticky notes also show as cards on the chart. See [Sticky notes and status notes](/practice/work/client-chart#sticky-notes-and-status-notes).
+
 ### Nurse orders
 
 The **Orders** tab has **Medications**, **Labs**, **Imaging** and **Services** sub-tabs, with a count on each, exactly as on the consultation's **Orders** tab. The sub-tab you are on stays in the address, so a reload or a shared link opens it.
@@ -132,6 +134,16 @@ The Assessments tab offers every instrument that applies to the patient's age: *
 ### Growth percentiles for children
 
 For a patient young enough for it, the Vitals tab also records head circumference and shows a **weight-for-age** and a **height-for-age** percentile beside the reading, worked out against WHO growth reference data.
+
+### The triage note belongs to the person who wrote it
+
+The **Triage note** on the **Notes** tab is the nurse's own words. The nurse who writes it is its author, and only the author can change it, and only while their shift is current (plus one hour after it ends, so a slip can still be fixed at handover). If the triage has no note yet, either the nurse who opened it **or the nurse it was handed to** can write the first one, and whoever does becomes its author. Everything else on the chart — chief complaint, vitals, acuity, the safety screen — stays open to anyone who records triage.
+
+- **Every change is kept.** Once the note has been corrected it shows **Edited** with the time, and selecting it shows what the note said before each correction. Writing the note for the first time is not a correction.
+- **Everyone else adds a follow-up note.** If you did not write it, the note is read-only and a line under it says who did. Select **Add follow-up note**, write your entry and sign it; it appears under the triage note with your name and the time, and the original is never edited. You need the **Record triage** permission to add one.
+- **An owner or manager can correct it, with a reason.** If the author is off shift or the patient has already been handed on and the note is wrong, an owner or manager selects **Correct note**, edits the wording and **must** give a reason. The note then reads **Corrected by** their name and the time, the author stays the author, and the history shows what it said before and why it was corrected. This is the only way anyone but the author changes a note, and it works after the shift and after the hand-over.
+- **It locks when the patient is handed to the doctor.** Once you select **Send to consultation**, a consultation exists for the visit, or the patient is admitted, discharged or marked left without being seen, the author can no longer change it. Add a follow-up note to record anything further, or, for a mistake, an owner or manager can correct it with a reason. Undoing **Send to consultation** opens the note again.
+- **A triage record cannot be deleted by ordinary staff.** Only the clinic owner can remove one, and the removal is recorded in the [audit log](/platform/security/audit-log).
 
 ## Acuity and reassessment
 
@@ -233,6 +245,10 @@ Two behaviours worth knowing. Permission enforcement is **opt-in per person** �
 
   <Accordion title="A patient I started triaging is not in the queue">
     Once a triage is saved, the patient leaves the **Waiting** list and appears in the queue table as **In triage** — whether or not they have been marked **Triaged**. A triage started from a department's own queue shows in that department's queue and in every one of its sub-units' queues, so it is there whichever way you come back to the department. If you still cannot see them, clear the **Search patients** box, and check the queue window under [Facility settings](/hospital/settings/facility) — a queue only looks back as far as its window.
+  </Accordion>
+
+  <Accordion title="I can't type in the Triage note">
+    The note is read-only for anyone but its author (or, while there is no note yet, the nurse responsible for the triage), once the author's shift has ended, and after the patient has been handed to the doctor. A line under the note says which applies. Select **Add follow-up note** to add your own signed entry under it; owners and managers can also select **Correct note** and give a reason. See [The triage note belongs to the person who wrote it](#the-triage-note-belongs-to-the-person-who-wrote-it).
   </Accordion>
 
   <Accordion title="I can view the chart but there is no Save button">

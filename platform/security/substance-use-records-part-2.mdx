@@ -1,0 +1,108 @@
+---
+title: Substance use records and 42 CFR Part 2
+description: "Turn on Part 2 protections, record a patient's consent, and see what is refused and what carries the federal notice."
+icon: /images/icons/list-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Paid plans; the Free plan shows an upgrade prompt in place of the switch" roles="Owner, Manager to switch on; staff who can open the client to record a consent" />
+
+If your clinic is a federally assisted program that provides substance use disorder diagnosis, treatment or referral, federal rules (42 CFR Part 2) are stricter than ordinary health privacy rules about who may receive those records. This page covers what ClinikEHR does when you switch the protections on. It does not tell you whether your clinic is a Part 2 program; ask your compliance adviser.
+
+Workplace drug testing (the DOT workflow in the laboratory edition) follows a different federal rule, 49 CFR Part 40, and is not changed by anything here.
+
+## Turn it on
+
+<Path steps={['Settings', 'Security', 'Substance use treatment program (42 CFR Part 2)']} />
+
+Switch on **This clinic is a Part 2 program**. It is off by default, and a clinic that leaves it off sees no change anywhere. Only the clinic owner or a manager can change it. On the Free plan the card offers an upgrade instead of the switch; a clinic that already had it on can still switch it off.
+
+## What changes when it is on
+
+A record you have marked **Substance use** (see [Sensitive records](/practice/work/clients)) is treated as a Part 2 record. For those records:
+
+| Where it leaves the clinic | What happens |
+| --- | --- |
+| **Send securely** to someone other than the client | Refused unless an active consent, with its signed copy attached, names that recipient or is a general designation. The client's own copy is not affected. |
+| **Fax** | Refused unless a general-designation consent covers it. |
+| The laboratory **referrer** portal | The order is left out of that referrer's list unless a consent covers them. |
+| Report PDFs (lab, imaging, prescription, note, signed document) | A final page is added: the federal notice to the recipient about redisclosure. |
+| **Data export** | Every export from a Part 2 program arrives as a ZIP that includes a notice file, whether or not it contains substance use records. |
+| A **claim or pre-authorization** for a substance use visit | Held back unless the client has an active consent for treatment, payment and operations that names that health plan or is a general designation. See [Claims to a health plan](#claims-to-a-health-plan). |
+| **e-Prescribing** from the client's record | Refused for a client who has substance use records unless an active treatment, payment and operations consent covers it: a general designation, or one that names the pharmacy. When the first try is refused you are asked **Which pharmacy will receive this prescription?**; enter its name and a consent that names that pharmacy releases the link. If it is still refused, record the consent on the client first. |
+| An **outside AI client** connected to your published agents | Substance use records the sender could not be given are hidden from it; only a general designation lets one through. |
+| The **EHR API** and FHIR | Records marked **Substance use** are always left out of what the API returns, with or without a consent. |
+
+If a send is refused you see: "This record is protected by federal substance use disorder confidentiality rules (42 CFR Part 2). It cannot be sent to this recipient without the patient's written consent. Record that consent on the patient's record first."
+
+## Claims to a health plan
+
+A claim for a substance use visit leaves only when the client has an active consent for treatment, payment and operations that names the health plan or is a general designation. The check depends on which insurance setup your clinic uses (**Settings**, **General**, **Insurance**).
+
+<InsuranceRegion region="us" />
+
+**United States.** The visit a claim bills is linked to it when the claim is created. If a claim does not name a visit (older claims), ClinikEHR looks for the client's visits within a day of the service dates. If it cannot tell which visit the claim is for, it asks for the consent rather than guessing, so the claim is held back until one is on file.
+
+<InsuranceRegion region="non_us" />
+
+**Outside the US.** The claim or pre-authorization is traced to the visit it came from: a consultation, a lab test, an imaging order, a prescription, a triage or a ward visit. If the encounter is missing or cannot be identified, the consent is required.
+
+## Record a consent
+
+<Path steps={['Clients', 'Open the client', 'Security', 'Record consent']} />
+
+The **Substance use records: consent to share (42 CFR Part 2)** section appears on a client's **Security** tab only when the clinic is a Part 2 program. Select **Record consent** and fill in:
+
+- who may share the records (your program) and who may receive them: a named person, a named organisation, or a general designation such as "my treating providers";
+- what information and what purpose, and whether it is a specific purpose or treatment, payment and health care operations;
+- when the consent ends: a date, or an event. A consent that ends on an event also needs a **Review by** date, at most 12 months after it was signed (see [Keep an event-based consent current](#keep-an-event-based-consent-current));
+- who signed and when;
+- a confirmation that the patient was told they can revoke it at any time.
+
+The version of the wording shown on the form is recorded with the consent. A consent with no end date or event, or without the revocation confirmation, cannot be saved.
+
+## Attach the signed copy
+
+A saved consent shows **Awaiting signature** and allows nothing to be sent. It becomes **Active** only when the patient's signed copy is attached. After you save, the **Attach the signed copy** panel opens; you can also select **Attach signed copy** beside the consent at any time. Choose one:
+
+- **Scanned paper form**: select **Upload a scan** to add the signed paper form to the client's files and attach it in one step, or choose a file that is already in the client's files.
+- **E-signed document**: send the consent form to the client for e-signature from their Documents tab first (see [Documents](/practice/work/clients)), then choose it here. The consent shows **Awaiting signature** until the client has signed it, then becomes **Active**.
+
+A file flagged by the virus check, an archived file, or a document that was cancelled or has expired cannot be attached. If the attached file is later removed, the consent goes back to **Awaiting signature**.
+
+| Status | What it means | Can records be sent? |
+| --- | --- | --- |
+| **Awaiting signature** | Saved, no signed copy attached yet | No |
+| **Active** | Signed copy attached, in effect, not ended or revoked | Yes, to the recipient it names |
+| **Review due** | An event-based consent whose review date has passed | No, until you confirm it |
+| **Expired** | The end date has passed | No |
+| **Revoked** | Withdrawn | No |
+
+## Keep an event-based consent current
+
+A consent that ends on an event (for example, "when the referral is complete") has no end date, so ClinikEHR asks you to check it at least every 12 months. The **Review by** date is set when you record the consent, and shown beside it. When that date passes the consent shows **Review due** and nothing is sent on it.
+
+Select **Confirm still valid**, confirm the event has not happened, and choose the next review date (at most 12 months from today). The consent is **Active** again. If the event has happened, select **Revoke** instead, or record a new consent. You can confirm early, before the date passes.
+
+## Revoke a consent
+
+On the same section, select **Revoke** beside the consent and confirm. From then on it no longer allows a send. Copies already sent stay sent and stay in the [disclosure accounting](/platform/security/audit-log).
+
+## Check it worked
+
+- With the setting on, try **Send securely** to an outside address for a record marked **Substance use** and no consent: it is refused.
+- Record a consent naming that address and send again: it is still refused, because the consent is awaiting its signed copy.
+- Attach the signed copy and send again: it goes, and the entry in the audit log names the consent.
+
+## Common issues
+
+**A send is refused though I recorded a consent.** The consent must show **Active**: signed copy attached, in effect, not expired or revoked, and not past its review date. It must name the e-mail address you are sending to, or be a general designation. A fax needs a general designation. A consent that shows **Awaiting signature** or **Review due** allows nothing.
+
+**I cannot upload a scan.** Storing files in the client's files is not part of every plan. Use the **E-signed document** option instead, or choose a file that is already in the client's files.
+
+**The Part 2 section does not appear on the client.** The clinic setting is off, or you cannot open this client.
+
+**A referrer says an order is missing.** If it is a substance use record in a Part 2 program, it is held back until a consent covers that referrer. Send the result securely once the consent is recorded.

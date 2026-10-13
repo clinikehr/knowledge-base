@@ -1,0 +1,110 @@
+---
+title: Connect Curacel
+description: "Connect your hospital's Curacel account to send claims and pre-authorization requests to your HMOs from ClinikEHR, and see the HMO's decision come back."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner or manager to connect; anyone who can edit claims to send" note="Needs Settings → General → Insurance set to Outside the US, and a Curacel account for your hospital." />
+
+<InsuranceRegion region="non_us" />
+
+[Curacel](https://www.curacel.co/) is the service many HMOs use to receive claims and pre-authorization requests. Once you connect it, you can send a claim or a request to the HMO straight from ClinikEHR instead of by email or portal, check whether a patient's cover is active, and see the HMO's decision on the claim without leaving the page.
+
+Connecting Curacel is optional. Everything in [Claims](/hospital/insurance/claims) and [Pre-authorization](/hospital/insurance/pre-authorization) still works by hand if you do not.
+
+<Path steps={['Sidebar', 'Insurance', 'Claims', 'HMO setup']} />
+
+<TaskHeader before="A Curacel account for your hospital, and your HMOs added in HMO setup" time="3 minutes" after="Connected shows on the Curacel card, and Submit to HMO sends your claims through Curacel" />
+
+## Connect your account
+
+<Steps>
+  <Step title="Open the Curacel card">
+    On the **HMO setup** tab, the **Curacel** card shows **Not connected**. Only an owner or manager sees **Connect Curacel**.
+  </Step>
+  <Step title="Choose the account">
+    Pick **My clinic's own Curacel account** if your hospital has its own Curacel sign-in. Pick **The shared ClinikEHR account** only if ClinikEHR has told you to; you then enter the account number Curacel gave you.
+  </Step>
+  <Step title="Enter your sign-in">
+    Use **Email and password** or **An API key**. If your Curacel login covers several accounts, you are asked to **Choose which Curacel account to use**.
+  </Step>
+  <Step title="Select Connect">
+    ClinikEHR checks the sign-in with Curacel first. If it is accepted the card reads **Connected**; if not, nothing is saved.
+  </Step>
+</Steps>
+
+Your password or key is saved encrypted and can not be shown again. To change it, connect again and enter the new one. Select **Update HMO list** afterwards to match your insurers to Curacel's list.
+
+## Send a claim to the HMO
+
+<Steps>
+  <Step title="Open the claim">
+    In **Claims**, find a draft claim that is ready to send.
+  </Step>
+  <Step title="Select Submit to HMO">
+    It is in the claim's **Actions** menu and appears on a claim that has not been sent. Set the insurer's **Submission channel** to **Curacel** first (see [How claims reach your HMOs](/hospital/insurance/how-claims-reach-hmos)). Read the confirmation, which says the claim goes through Curacel and what is sent, then select **Submit to HMO**.
+  </Step>
+  <Step title="Follow the decision">
+    The claim reads **Submitted** with a line beneath it saying **With the HMO**. When the HMO decides it changes to **HMO approved**, **HMO part-approved** or **HMO declined**, and the approved amount fills in. Select **Check HMO status** to look now.
+  </Step>
+</Steps>
+
+A pre-authorization request is sent the same way from its **Actions** menu.
+
+If Curacel is busy, you are told it will be sent again automatically. If the HMO or Curacel refuses it, you are told what to fix, such as a missing diagnosis or insurance number. Fix it and select **Submit to HMO** again; a claim that has already reached the HMO is never sent twice.
+
+## What is sent
+
+The patient's name and insurance number, the visit date, the diagnoses and the billed lines (and, on a pre-authorization request, the patient's sex). Nothing else about the patient is sent. Because this is patient information going to an outside service, only people who can edit claims can send them, and each send is recorded in the [audit log](/platform/security/audit-log).
+
+## Status updates from Curacel
+
+By default ClinikEHR checks Curacel for decisions regularly. If your hospital uses its own Curacel account, you will also be able to have Curacel tell ClinikEHR the moment an HMO decides. **Status updates** appears on the card once ClinikEHR switches these updates on; until then, decisions arrive through the regular check.
+
+<Steps>
+  <Step title="Open Status updates">
+    On the **Curacel** card, select **Status updates**. Only an owner or manager sees it, and only when the card reads **Connected** with your clinic's own account.
+  </Step>
+  <Step title="Copy the address">
+    Select **Copy** next to **Address for Curacel**, then paste it into Developer Access in your Curacel account as the address for claim and pre-authorization updates.
+  </Step>
+  <Step title="Create a token in Curacel">
+    In your Curacel dashboard, create a token for these updates and copy it.
+  </Step>
+  <Step title="Paste it into ClinikEHR">
+    Paste it into **Token from Curacel** and select **Save token**. The sheet then shows **Token saved**. The token is stored encrypted and can not be shown again; to change it, enter a new one.
+  </Step>
+</Steps>
+
+Until a token is saved the sheet shows **No token saved** and statuses keep arriving through the regular check. To stop accepting updates, select **Remove token** and confirm; statuses then arrive only through the regular check, which can take longer. Disconnecting Curacel removes the token too.
+
+## Disconnect
+
+Select **Disconnect** on the card and confirm. Claims and requests already sent stay with the HMO and keep their status here. You can not send new ones, check cover or refresh statuses until you connect again. The saved sign-in and the status-update token are deleted.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Curacel card says Not available">
+    Your hospital's Insurance setting must be **Outside the US**, and Curacel only works in the live product. A test or preview workspace shows the card as not available.
+  </Accordion>
+  <Accordion title="Curacel did not accept the credentials">
+    Check the email and password by signing in to Curacel yourself. If your hospital has several Curacel accounts, choose the right one when asked.
+  </Accordion>
+  <Accordion title="Submit to HMO via Curacel is not in the menu">
+    The claim must be a draft that has not been sent, Curacel must read **Connected**, and you need permission to edit claims. Two-factor sign-in must also be complete if your hospital requires it.
+  </Accordion>
+  <Accordion title="The claim says it was rejected">
+    Curacel or the HMO refused the details. The message names what to fix, such as the insurance number, a diagnosis or a line's price. Fix it and send again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Curacel" />
+
+{/* source of truth: components/clinic/insurance/curacel/*, lib/insurance/curacel.ts, components/clinic/insurance/claims/claims-table.tsx */}

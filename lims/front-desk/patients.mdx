@@ -40,7 +40,7 @@ Below that are six cards.
 
 Two tabs follow: **All Patients** is the register itself, **Analytics** breaks it down by gender, age, country and chronic conditions.
 
-**The register's toolbar** has **Search patients...**, a **Patient status** filter (**Active**, **Inactive**, **Prospective**, **Archived**), a **Billing type** filter (**Self pay**, **Insurance**), a **Waitlist** toggle that shows only self-registered requests awaiting a decision, and **Columns**, which lists every column under **Visible Columns**. Each filter shows a count while it is on and offers **Clear filter**; **Clear all** appears once any is set. **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last Visit** are shown by default. **Lab Tests**, **Blood Type**, **Genotype**, **Email**, **Occupation**, **Country**, **Triages** and **Prescriptions** are hidden until you switch them on — turn on **Lab Tests** if you want to see at a glance who your repeat testers are.
+**The register's toolbar** has **Search patients...**, **Columns**, which lists every column under **Visible Columns**, and **Filters**. **Filters** opens a **Filter patients** panel: **Gender**; **Age**, as a band (**Under 5**, **5 to 17**, **18 to 64**, **65 and over**) or a **Custom range** in years; **Registered**, a date range; **Last visit** (**In the last 30 days**, **In the last 90 days**, **In the last 12 months**, **Not seen for over a year**); **Insurance**, either **Self-pay (no insurer)**, any insurer, or one named insurer; **Sponsors and dependents**; **Patient status**; **Billing type**; **Waitlist**; and **Location** when you have more than one. Select **Apply**. The button then shows how many filters are on, each one appears above the table as a chip you can remove, and **Clear all** removes them together. The summary figures above the table keep counting every patient. The filters are part of the page address, so a bookmarked or shared link opens the same list. **Patient ID**, **Full Name**, **Category**, **Age**, **Gender**, **Phone**, **Nationality**, **Consultations** and **Last visit** are shown by default. **Last visit** shows the date of the most recent time the patient was seen and what it was, for example "12 Oct 2026 · Triage": a consultation, triage, ward admission, telehealth call, clinical note, check-in, completed appointment, lab test, radiology order or dispensing all count. Someone not yet seen shows **—** in the table and **No visits yet** on a phone. **Lab Tests**, **Blood Type**, **Genotype**, **Email**, **Occupation**, **Country**, **Triages** and **Prescriptions** are hidden until you switch them on — turn on **Lab Tests** if you want to see at a glance who your repeat testers are.
 
 **Each row's menu** offers **View details**, **Edit**, **Send to patient**, and on a waitlist row, **Approve request** and **Decline request**. **Send to patient** opens the same three-step sheet the patient's own record uses, so you can send a form, a signature request or a consent document without leaving the register.
 
@@ -78,7 +78,7 @@ The full field-by-field walkthrough is on [Register your first patient](/lims/ge
   </Step>
 </Steps>
 
-**Export** does the reverse for the register you already hold, and stays disabled while the register is empty.
+**Export** does the reverse for the register you already hold, and stays disabled while the register is empty. With filters on, the export sheet first offers **Export these N patients**, the rows the filtered register shows, with the whole register below it.
 
 ## Decide a waitlist request
 
@@ -86,7 +86,7 @@ Patients who register themselves land on the waitlist rather than straight into 
 
 <Steps>
   <Step title="Show the queue">
-    Select **Waitlist**. The button turns amber and the register narrows to requests awaiting a decision. Select it again to clear the filter.
+    Select **Filters**, switch on **Waitlist**, and select **Apply**. The register narrows to requests awaiting a decision. Remove the **Waitlist** chip above the table to clear it.
   </Step>
   <Step title="Open the row menu">
     Choose **Approve request** or **Decline request**.
@@ -147,7 +147,7 @@ See [Permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The patient is not in the list">
-    Check three things in order: the **Waitlist** filter is not still on, the search box is empty, and the record was actually saved rather than left open in the form. A self-registered patient sits on the waitlist until somebody approves them.
+    Check three things in order: no filter chip is still showing above the table (select **Clear all**), the search box is empty, and the record was actually saved rather than left open in the form. A self-registered patient sits on the waitlist until somebody approves them.
   </Accordion>
 
   <Accordion title="Selecting a row opens the record read-only">
@@ -181,6 +181,10 @@ See [Permissions](/platform/team/permissions).
 
   <Accordion title="What is the Category column?">
     It is the patient type on the record — whether they are registered in their own right or linked to a sponsor, such as a parent or an employer account paying for them.
+  </Accordion>
+
+  <Accordion title="I can't find the sponsor when I link a dependent">
+    Type at least two letters of their name, or part of their patient number, into **Select Sponsor**. The list is searched as you type, so it works in a clinic of any size and finds a sponsor you registered a moment ago. Two things hide a person from it: a patient who is themselves registered as a dependent cannot be a sponsor, and a restricted record is found only by its secure label, not by name.
   </Accordion>
 
   <Accordion title="Can I put a patient in without a phone number or an email?">

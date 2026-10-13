@@ -1,6 +1,6 @@
 ---
 title: The desktop app
-description: "Install the Windows, macOS or Linux shell to get silent receipt printing, scanner support and a sale queue that survives a browser wipe."
+description: "Install the Windows, macOS or Linux shell to get silent receipt printing, scanner support and an encrypted sale queue that survives a browser wipe."
 icon: /images/icons/app-window.svg
 ---
 
@@ -68,16 +68,24 @@ Each keeps its own session, its own settings and its own local queue, so two bui
 
 - **Silent receipt printing.** Receipts go straight to the printer with no dialog and without taking focus off the till, including a scannable barcode of the sale number. Prescriptions, payment slips, lab and imaging orders and invoices print the same way.
 - **Serial and barcode hardware.** Scanners and count-scanner cradles on a USB serial bridge are picked up without a port picker. See [Barcode scanners](/pharmacy/hardware/barcode-scanner) and [Stock counts](/pharmacy/inventory/cipherlab).
-- **A durable local queue.** Sales and captured orders are stored in a file the app owns, outside the browser's data. Clearing browsing data, or the browser profile being wiped by IT, does not touch queued sales.
+- **A durable, encrypted local queue.** Sales and captured orders are stored in a file the app owns, outside the browser's data, and the patient details in it are encrypted with a key held by the computer's own secure key store (Windows, macOS Keychain, or the Linux keyring). Clearing browsing data, or the browser profile being wiped by IT, does not touch queued sales, and a copy of the file cannot be read on another machine or by another user.
 - **Automatic updates.** The shell checks on launch and every few hours, and installs quietly when you quit. Nothing in the queue is affected.
 - **Screen-capture protection**, on the Desktop and Diagnostics builds: the window renders black in screenshots, recordings and screen shares. Useful on a workstation showing patient data; it also means a screen share during a support call shows a black rectangle.
+
+## Signing out, shared computers and the offline queue
+
+- **Signing out clears the patient list.** When you sign out, or are signed out automatically after being idle, the app removes the patient list it keeps for offline use and every item that has already synced. The next person to sign in starts with nothing of yours on screen or on disk.
+- **Unsent work is kept.** Sales and orders you captured while offline and that have not reached the server yet are never cleared by signing out. They are the only copy, so they stay and send after the next sign-in.
+- **Each item is sent by the person who captured it.** If a colleague signs in on the same computer first, your queued items wait; the bar shows **1 sale captured by another user is waiting. They send when that person signs in.** Nothing is lost, rejected or sent under the wrong name. Items captured before this version have no owner and send under whoever signs in.
 
 ## Kiosk mode and idle locking
 
 Two options exist for machines nobody supervises. Both are set when the terminal is installed, not from inside the app — ask [support](/platform/help/contact-support) to configure them.
 
 - **Kiosk mode** runs full-screen with no window controls. It is **off by default**, including on tills, because staff multitask and a window with no controls traps them. Turn it on only for a genuinely dedicated, customer-facing terminal.
-- **Idle lock** signs the session out — properly, not just showing a lock screen — after a period with no keyboard or mouse activity. It is **off by default** on the Pharmacy POS and ClinikEHR Desktop builds, where a session ends when the person ends it, and set to **15 minutes** on the Diagnostics build.
+- **Idle lock** signs the session out — properly, not just showing a lock screen — after a period with no keyboard or mouse activity. It is **off by default** on every build, because the workspace's automatic logoff does that job.
+
+Separately from the idle lock, every build follows the workspace's [Automatic logoff](/platform/security/automatic-logoff): signed out after 60 idle minutes unless an owner or manager chose another time, with a two-minute warning, and the offline queue left untouched.
 
 A workspace that requires two-factor still requires it here, regardless of either setting. See [Two-factor on patient data](/platform/security/mfa).
 
@@ -91,6 +99,18 @@ A workspace that requires two-factor still requires it here, regardless of eithe
 ## If something goes wrong
 
 <AccordionGroup>
+  <Accordion title="Offline sales or orders are unavailable on this computer">
+    The bar says **Offline sales are unavailable on this computer (no secure key store). Work while online.** The app will not keep patient details offline unless the computer can protect them, and it never falls back to storing them unprotected. On Windows and macOS this does not occur. On Linux it means no keyring is running (for example GNOME Keyring or KDE Wallet): sign in to a desktop session that provides one, install and start a keyring service, then restart the app. Until then everything works while the connection is up, but nothing can be captured offline. Items already saved on the computer are kept and are encrypted and sent as soon as the key store is available.
+  </Accordion>
+
+  <Accordion title="Another user's items are waiting on this computer">
+    They were captured by a colleague who is signed out. They send automatically when that person signs in on this computer; nobody else can send them. If that person has left the clinic, [contact support](/platform/help/contact-support) with the provisional references.
+  </Accordion>
+
+  <Accordion title="The app asked me to sign in again after updating">
+    Updating to this version changes how the app stores its sign-in cookie. If you are asked once to sign in again, nothing queued is lost.
+  </Accordion>
+
   <Accordion title="Windows blocks the installer">
     The builds are unsigned. Choose **More info** → **Run anyway**. If your organisation blocks unsigned installers outright, ask [support](/platform/help/contact-support).
   </Accordion>

@@ -41,6 +41,17 @@ Above the tabs sit **Preview**, **Save Changes** and **Publish** / **Unpublish**
 | **Clinic Timezone** | "All appointment times will be calculated based on this timezone." | UTC |
 | **Advance Booking Days** | "How many days in advance patients can book appointments" | 30 |
 | **Booking Confirmation Message** | "Message shown to patients after they submit a booking request" | Blank |
+| **Show "Powered by ClinikEHR"** | A small line at the foot of your booking page, in every template, and on the confirm, cancel, reschedule and payment-return pages, linking to clinikehr.com. It stays on for Free, Essential and Starter practices; **Team** and **Enterprise** can turn it off. If a Team practice later moves to a lower plan the line comes back, and your choice is remembered if you upgrade again | On |
+
+And the **After a client books** card:
+
+| Control | What it does | Default |
+| --- | --- | --- |
+| **Redirect after booking** | A switch. Off: clients stay on their confirmation. On: they see their confirmation for 5 seconds, then go to the page you choose. **Stay here** cancels it | Off |
+| **My website** | Takes clients to the **Website** in **Settings → General**, the one website for your whole practice. Unavailable, with the reason shown, until you have entered one there | — |
+| **Another page** | Takes clients to an `https://` address you type, for example a thank-you page. An address that is not a plain `https://` web address is refused when you save | — |
+
+Under the switch, one line says what clients will experience, for example "After booking, clients see their confirmation for 5 seconds, then go to yourclinic.com." Turning the switch off keeps your choice for later. With it on, saving without a usable page is refused.
 | **Accept Payments** | "Allow patients to pay through the booking page". Reveals everything below | Off |
 | **Payment Methods** | Card, Cash, Bank Transfer, Insurance | None |
 | **Require Upfront Payment** | "Require payment before appointment" | Off |
@@ -107,6 +118,33 @@ Options and add-ons set on a service are offered on the page: the patient choose
 A booking made here creates a real appointment in the hospital diary, so the front desk sees it alongside everything booked by phone.
 
 Patients can also use a promo code, a gift card or a session from their package on the booking page and in the patient portal. The **Promo code** and **Gift card** fields appear only while you have an active promo code or gift card, and **Use a session from your package** only for a patient who confirmed their email with the code. See [Used when a patient books online](/hospital/revenue/packages-and-gift-cards#used-when-a-patient-books-online).
+
+## The QR code
+
+The **QR code** card gives you a code patients scan with a phone camera to open your booking page. A booking is counted as **Booked from the code** when it is made, including a booking that is paid for first: it is counted once, when the payment completes it.
+
+- **It is in your booking page's own colour, with your logo in the middle.** If that colour is too light for a camera to read reliably, the code is drawn in near-black and the card says so. If your logo cannot be loaded, the code is drawn without it and the card says that too.
+- **Only a code that has been checked is offered.** Before **Download PNG** or **Print** appear, the finished picture is read back on your device and must open exactly the address printed under it. If that check fails, the card says the code could not be checked and offers nothing to print.
+- **It always uses the saved address.** Change the address or the look, save, and the code is drawn again. Anything you have typed but not saved is never printed.
+- **If the page is switched off**, the code still works the moment you turn it on; until then anyone who scans it sees that the page is unavailable, and the card warns you.
+
+### Poster and card
+
+Select **Poster and card** to open **Print your code**. Choose **Poster (A4)** for a wall or window, or **Reception card (A6)** for the front desk, then **Download PDF** or **Download PNG**. Both carry your booking page name and logo in your colour, the line "Scan to book an appointment", and the short address for people without a camera. Everything is in words, so it reads the same on a black-and-white printer. The file is made on your device; nothing is uploaded.
+
+### One code for each location
+
+With more than one active location, a **One code for each location** section lists a code for every one, each with its own **Download PNG**, **Print** and **Poster and card**. Scanning a location's code opens the booking page with that location already chosen, so the **Choose a location** step is skipped.
+
+### How many people used it
+
+Owners and managers see **Last 30 days** on the card: **Opened from the code** and **Booked from the code**. These are counts only. No name, device or address is kept with them. The counts are approximate, and refreshing the page in the same tab counts once.
+
+## The confirmation PDF
+
+After someone books, they can keep or print a confirmation. **Download confirmation** appears on the page they land on after booking, on the page they return to after paying, and on the page behind the **Confirm** link in their email; a **Download confirmation (PDF)** link in the booking email is coming and is not there yet. It is a one-page PDF with your letterhead, their first name only, the date and time in your time zone (and theirs when it differs), the service or services, the location with its address or "Online video visit", their booking reference, what they paid and what is still due in your currency, and how to confirm, cancel or reschedule. If your client portal is on and has an address, it also carries a QR code with "Scan to manage your appointments"; for a visit at one of your locations it is that location's code.
+
+The link is personal to the booking: it only works with the booking reference that came with the booking, and someone without it, or with a wrong one, gets the same "could not be found" answer as for an appointment that does not exist.
 
 ## Check it worked
 

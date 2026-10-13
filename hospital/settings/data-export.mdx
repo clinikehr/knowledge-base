@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Audit Logs module: owner or manager only" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Audit Logs, Quarterly Access Reviews and Transfers of Care modules: owner or manager only" />
 
 "Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back." Use it for finance, a migration, a regulator, or your own peace of mind before a big change.
 
@@ -34,7 +34,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 Under **Clinical Records**, **Follow-up Notes** exports each follow-up note a colleague added under a note — what it says, which kind of note it was added to, who wrote it and when they signed it. A follow-up note under a record marked sensitive that you could not open on screen is left out.
 
-A hospital's picker is the widest in the product: as well as consultations, prescriptions and appointments, it carries every part of an inpatient stay under **Ward & Inpatient** (below), **Insurance Claims**, **Pre-Authorizations**, **Patient Coverage** and **Pharmacy POS Sales**.
+A hospital's picker is the widest in the product: as well as consultations, prescriptions and appointments, it carries every part of an inpatient stay under **Ward & Inpatient** (below), **Insurance Claims**, **Insurance Claim Diagnoses**, **Pre-Authorizations**, **Pre-Authorization Lines**, **Patient Coverage** and **Pharmacy POS Sales**.
 
 ### Ward & Inpatient
 
@@ -74,7 +74,7 @@ A record marked sensitive that you could not open on screen is left out of the f
 | **Triage Patient Handoffs** | patient handoff written at triage — SBAR fields or free text |
 | **Triage Requeues** | request to put a returning, already-triaged patient back in a department's waiting list — who asked, when, any note, and whether it was used or cancelled |
 | **Shift Handover Acknowledgements** | acknowledgement of a shift's handover, ward or triage, with who and when |
-| **Handover Note Edit History** | correction of a handover note or handoff — what the entry said before the edit, and when it was replaced |
+| **Handover Note Edit History** | correction of a handover note, a handoff or a triage note — what the entry said before the edit, when it was replaced and, for a triage note an owner or manager corrected, that it was a correction and the reason given. A client restricted to an assigned team is left out for anyone outside it |
 
 **Administrative** also holds your calendar: **Calendar Events** (events and Out of Office blocks, with their times and dates), **Event People & Resources** (who and which rooms or equipment each one applies to), **Calendar Tasks**, and **Clinic Locations** (the sites or premises configured under Settings → Locations).
 
@@ -82,7 +82,7 @@ A record marked sensitive that you could not open on screen is left out of the f
 
 **API access** is its own group, for clinics with API access, and holds two modules. **Linked Patients** lists which outside organization's connection may reach which patient: the organization, the patient, the organization's own reference for that person, how the link was made (**Linked by staff**, **Confirmed match by staff** or **Created through the API**), who linked it, when it began and, if it has ended, when and why. **Disclosures** lists each time a patient's information was sent to an organization: when, which organization, which permission and request, the kind of record, the basis recorded for sharing and which patient. It never contains the information itself. Linked patients are exported whole whatever date range you choose; **Disclosures** follow the range by the day they were sent. As with every patient module, a restricted client you may not open is left out.
 
-**Audit Logs** only appears for owners and managers. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+**Audit Logs**, **Quarterly Access Reviews**, **Transfers of Care** and **HIV and PMTCT Records (owner and manager only)** only appear for owners and managers. The HIV and PMTCT module holds a woman's HIV status and ART details and the infants' HIV test results; they are in no other export module. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
 
 ## Run an export
 
@@ -111,7 +111,7 @@ Nothing in the hospital changes — an export reads, it never writes. What chang
 - **The file contains PHI.** The tab says so: "Files contain **PHI**. Handle securely per HIPAA." A ward vitals CSV on a shared drive is the same disclosure risk as a paper chart left in a corridor.
 - **Download links expire.** "Links expire in 24 hours." After that a job in **Recent Exports** shows as expired and **Re-download** disappears — run the export again rather than hunting for the old link.
 - **Large exports queue and notify.** You do not have to sit and watch; the job carries on if you navigate away, and you can find it again in **Recent Exports**.
-- **The picker respects your role.** An accountant can export billing and administrative modules but never sees **Audit Logs**.
+- **The picker respects your role.** An accountant can export billing and administrative modules but never sees **Audit Logs**, **Quarterly Access Reviews** or **Transfers of Care**.
 
 <AuditNote action="Exporting hospital data" />
 

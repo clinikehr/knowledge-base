@@ -45,6 +45,10 @@ Neither bypasses the edition gate, the plan gate, or a workspace's two-factor re
     | **Entire practice** | Bill, schedule and document for all clients, plus most reports and practice settings |
 
     Biller and scheduler seats cost nothing and count toward no cap — as long as that person is not also clinical. See [Staff seats](/platform/plans/seats).
+
+    **Physician Assistant** is a clinical specialty (title **PA-C**) with the same access as a Nurse Practitioner: it can prescribe, write and sign notes, and is reached by emergency alerts. It takes a paid seat, like any clinician. It is a clinical role you pick as the **Specialty**, not an administrative role.
+
+    **Technical roles** — **Developer**, **IT Admin** and **CTO** — are for the people who connect and look after your systems. See [Technical roles](#technical-roles) below.
   </Tab>
   <Tab title="Pharmacy">
     **Administrative roles**
@@ -88,6 +92,28 @@ Neither bypasses the edition gate, the plan gate, or a workspace's two-factor re
   </Tab>
 </Tabs>
 
+## Technical roles
+
+<Availability editions={['all']} plans="All plans" roles="Owner" note="Technical roles are invited like any other role. Developer and CTO manage API access by default; IT Admin does not." />
+
+**Developer**, **IT Admin** and **CTO** are for the person who connects your clinic to other software and keeps it secure. They never see patient information.
+
+| | Developer | IT Admin | CTO |
+| --- | --- | --- | --- |
+| Opens **Settings** | Yes | Yes | Yes |
+| Manages **API access** (create and revoke keys, turn access on or off) | Yes, by default | Only if you grant **Manage API access** | Yes, by default |
+| Looks at the team list, locations, services, **service prices**, **HMO tariffs and plans**, booking page setup and your **logo and branding images** | View only | View only | View only |
+| Patient records, notes, appointments, lab, pharmacy, billing, reports, the audit log | No | No | No |
+| Takes a paid seat | No | No | No |
+
+On every Settings page except **API access**, a technical role sees the values but cannot change them: fields are greyed out, the buttons that save, add, edit or delete are not shown, and a line at the top says **You can view these settings. An owner or manager can change them.** On **API access** a Developer or CTO can create and revoke keys; an IT Admin sees a view-only message until you grant **Manage API access**.
+
+A technical role lands on **Settings** after sign-in and sees nothing else in the sidebar. If they open a link to any other page, they see a screen saying their role does not include it. This is not a setting you can switch off: it applies on every plan, and it is also enforced where your data is stored, not only in the menus.
+
+Creating a live API key still asks for a second factor, exactly as for an owner. See [API access](/platform/settings/api-access).
+
+On Clinic & Hospital the three technical roles are free seats. On Pharmacy and Diagnostics every account still counts toward the plan's cap, technical roles included.
+
 ## Where a role lands after sign-in
 
 ClinikEHR puts people where their work is rather than on a generic dashboard. A cashier opens on the till; a phlebotomist opens on intake. You do not configure this on most plans — it follows from the role.
@@ -126,7 +152,7 @@ Two things about this screen are worth knowing before you use it.
 
 ## Changing someone's role
 
-From the row menu on **Staff Members**, **Change Specialty** updates the specialty for an existing member. Their administrative role and permissions are managed from the same menu under **Permissions**.
+From the row menu on **Staff Members**, **Change Specialty** updates the specialty for an existing member. Their administrative role and permissions are managed from the same menu under **Permissions**. Changing a role or permissions needs a session that has just passed your second factor; if it has not, you are asked to verify first. See [Actions that always ask for your second factor](/platform/security/mfa#actions-that-always-ask-for-your-second-factor).
 
 <Note>
   **The full row menu is the owner's.** An accountant can open **Settings** → **Staff & Teams** and read the list. A manager gets a shorter row menu and can deactivate team members who are not managers, but never another manager or themselves. **Permissions** and **Invite Staff** are the owner's.

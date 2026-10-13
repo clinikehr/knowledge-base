@@ -6,6 +6,7 @@ icon: /images/icons/user-lock.svg
 
 import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
 
@@ -144,18 +145,58 @@ Below the access report, the client's **Security** tab shows an **Access log** �
 
 Only the clinic owner and the client's current primary provider (set under [Care team](#care-team) below) see this log. A manager who is not the primary provider does not — the access report above already covers assignment and emergency-access changes for managers; the access log is for the clinician actually treating the client.
 
+## Legal hold
+
+<Availability editions={['clinic']} plans="All plans" roles="Clinic owner or manager" />
+
+When records may be needed for a legal matter, place a hold so this client's records are not removed on a retention timer. While a hold is on, these scheduled removals stop: the retention clean-up of old records, telehealth recordings and call notes past their keep-for date, unassigned incoming faxes, exact locations on form answers, spam and trash in the mailbox, and the removal of very old audit entries (clinic-wide holds only). A recording, fax or message is not tied to one client, so a hold on any one client keeps those for the whole clinic. Copies you export are not held. On the **Security** tab, under **Legal hold**, select **Place a hold** and say why. **Release** it, with a reason, when the matter ends. Both are recorded, and the hold stays on record after it is released. A hold on the whole clinic is placed in [Security settings](/practice/settings/security#substance-use-treatment-program-and-legal-hold).
+
+Placing a hold does not stop you deleting the practice: that is a separate, owner-confirmed step. If you are closing the account, tell support about the hold first.
+
+## Substance use consents
+
+If your clinic is a Part 2 program, the **Security** tab also shows **Substance use records: consent to share (42 CFR Part 2)**. See [Substance use records and 42 CFR Part 2](/platform/security/substance-use-records-part-2).
+
+## Services the client pays for themselves
+
+<InsuranceRegion region="us" />
+
+United States: the US claim submission skips a claim whose service dates overlap an active restriction.
+
+<InsuranceRegion region="non_us" />
+
+Outside the US: a claim or pre-authorization sent through the health plan's portal, by e-mail or by webhook is skipped the same way.
+
+<Availability editions={['clinic']} plans="All plans" roles="Clinic owner or manager" />
+
+When a client pays for a service themselves, in full, and asks that it not be shared with their health plan, your clinic has to agree. Record it on the **Security** tab under **Services not shared with the health plan**: select **Record a restriction**, choose the first and last date of the service, and confirm the client is paying for it themselves, in full.
+
+While the restriction is active, a claim or pre-authorization whose service dates overlap it is not sent to the health plan, by any route (the health plan's portal, e-mail, a webhook or the US claim submission). You see: "This client asked that this service not be shared with their health plan, and your clinic agreed. It was not sent." A claim link already e-mailed for those dates stops working when you record the restriction. A claim with no service dates is held while any restriction is active.
+
+On the Outside the US insurance setup, **Bill HMO** refuses a visit under an active restriction before any claim is made. You see: "This visit can't be billed to the HMO: the patient paid for it themselves and asked that their HMO not be told." [Bill an HMO at the till](/hospital/insurance/bill-hmo)
+
+Select **End** and give a reason when the client changes their mind. The restriction stays on record. A client can also ask from the portal; the request arrives with its deadline in [Client requests about their record](/platform/security/client-record-requests).
+
 ## Disclosure accounting
 
-<Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
+<Availability editions={['clinic']} plans="All plans" roles="Clinic owner or manager" />
 
-The **Disclosure accounting** section on the same tab lists disclosures of this client's record to someone outside your clinic:
+The **Disclosure accounting** section on the same tab lists disclosures of this client's record to someone outside your clinic. A client is entitled to this list for the last six years, so it is on every plan and covers six years unless you choose a date range.
 
 - **Exports and prints** — a clinical report, invoice or other document downloaded or printed as a PDF.
 - **Emails** — a signed document or payment notice emailed to the client or another recipient outside your clinic.
 - **Shares** — a signed document sent to someone who is neither the client nor a member of your clinic (an employer, insurer, or a witness on a form, for example).
 - **Report links** — a lab result, prescription, radiology report or clinical note sent as a private link to anyone other than the client's own email on file. See [Send a report securely](/platform/security/send-a-report).
+- **API** — information an outside organisation received through the ClinikEHR API: the organisation, the kind of record and how many times that day.
+- **Recorded by the clinic** — disclosures the system cannot see, which you record yourself.
 
-Select **Export CSV** to save the list for your own records. The export itself is recorded in the HIPAA audit log.
+Choose **Last 6 years** to pick a narrower range. Select **Export CSV** to save the list for your own records. The export itself is recorded in the HIPAA audit log.
+
+### Record a disclosure
+
+Some disclosures happen outside the product: a court order, a report to a public-health authority, a request from law enforcement. Select **Record a disclosure**, give the date, who it went to, what was shared and why, and the legal basis if you have one. Do not record disclosures made for treatment, payment or running the practice; the law leaves those out of an accounting. A recorded disclosure is never edited. If you made a mistake, select **Void** and give a reason: the entry is kept, marked, and left out of the list.
+
+A client can also ask for this list from the portal; see [Client requests about their record](/platform/security/client-record-requests).
 
 Emergency access has its own report above rather than appearing twice.
 
@@ -198,7 +239,7 @@ Select **Approve** to restrict the record the same way [Restrict to assigned sta
 
 <Availability editions={['clinic']} plans="Essential and up" roles="Clinic owner or manager" />
 
-When a parent or guardian reaches a dependant's portal record through a shared contact email — common for a child too young to have their own email on file — some categories of sensitive record stay hidden from that guardian by default, even though the dependant sees them fine on their own login: behavioural health, substance use, reproductive health, HIV status, and other sensitive records. This covers the dependant's documents, consultations and files.
+When a parent or guardian reaches a dependant's portal record through a shared contact email — common for a child too young to have their own email on file — some categories of sensitive record stay hidden from that guardian by default, even though the dependant sees them fine on their own login: behavioural health, substance use, reproductive health, HIV status, and other sensitive records. This covers the dependant's documents, consultations, files, lab results, imaging reports and prescriptions.
 
 A shared contact email is what makes someone a guardian here. A client whose own email is on their record is not treated as a proxy on their own login, so their own sensitive records are never hidden from them.
 

@@ -74,12 +74,18 @@ If the room has a waiting room you are told how many people are waiting, with **
 
 ## Record the session
 
-Select the record button to open **Start Recording?**. It tells you exactly what is captured: "Records BOTH sides of the call — every participant's video and audio, plus any shared screen, composited into one file. All participants will be notified…" and "Important: Ensure you have consent from all participants before recording."
+Select the record button to open **Start Recording?**. It tells you exactly what is captured: "Records BOTH sides of the call — every participant's video and audio, plus any shared screen, composited into one file. Everyone in the call is asked to agree first, and recording begins only when they have."
 
-Confirm with **Start Recording**. Everyone sees a persistent red **REC** pill for as long as it runs. Stop with **Stop Recording?** → **Stop Recording**. Finished recordings appear on **Recordings**.
+The sheet carries the **AI Note Taker** switch, which starts **off** for every recording because the recording goes to an outside AI service, and ends with the consent line: "**Consent:** each person in the call sees a request to agree to being recorded. If anyone says no, nothing is recorded. Each answer is saved with the recording."
+
+Confirm with **Start Recording**. Recording does not begin straight away. Each other person in the call sees **Record this session?** with **Yes, I agree** and **No, do not record**, and cannot carry on without choosing. You see how many people are still to answer. When everyone has agreed, recording starts and everyone sees the red **REC** badge. If anyone says no, or does not answer within about 90 seconds, nothing is recorded and the call carries on. Someone who joins while a recording is running sees the badge at once and is asked the same question; until they answer they are kept out of it (their video and voice are left out of the file) until they answer; if they say no, or do not answer, the recording stops, the part already recorded is kept and can be played, and no AI notes are made from it. In **Recordings** that recording carries the note **Stopped — a participant declined recording**. If you leave the call while a recording is running, the recording stops, the part already recorded is kept and can be played, and **Recordings** says **Stopped — the host left the call**.
+
+If your clinic has turned off **Require explicit consent to record** in **Settings → Client Portal**, people are still told with the **REC** badge, but they are not asked to agree first. Leave that setting on unless your clinic's policy says otherwise.
+
+**Stop Recording?** ends it and begins processing; the file lands on **Recordings** once that finishes. Each person's answer, with the time and the wording they saw, is kept with the recording and is included in your data export as **Recording Consents**.
 
 <Warning>
-  **Get consent before you start recording, and get it on the record.** A telehealth recording captures every participant's video and audio and becomes part of the patient's clinical record. Say what you are recording and why, ask, and wait for the answer — then start. If anyone objects, do not record.
+  **Say what you are recording and why before you press Start.** A telehealth recording captures every participant's video and audio and becomes part of the patient's clinical record. ClinikEHR asks each person to agree and keeps their answer, but a clear word from you first is still the right way to start. If anyone objects, do not record.
 </Warning>
 
 ## Write the note
@@ -88,16 +94,18 @@ Two ways, and you can use both.
 
 **The Notes panel** is host-only and opens beside the call. It has a template picker and saves continuously as you type. A patient switcher at the top means a group call produces one note per patient; until you pick someone it reads "No client linked yet".
 
-**The AI Note Taker** is switched on in the **Start Recording** sheet along with a **Note template**. After you stop, "AI will automatically generate your session notes." Drafts land on **AI Notes**, where **Save to Notes** files one to a chart — choose the **Patient** and **What to save**. Read it before you save; it is a draft, not a record.
+**The AI Note Taker** is switched on, for that recording only, in the **Start Recording** sheet along with a **Note template**. It is off by default, and a recording nobody agreed to cannot be sent for notes. After you stop, "AI will automatically generate your session notes." Drafts land on **AI Notes**, where **Save to Notes** files one to a chart — choose the **Patient** and **What to save**. Read it before you save; it is a draft, not a record.
 
 ## Who can do this
 
 | Action | Who by default | Governed by |
 | --- | --- | --- |
 | Open **Telehealth** and schedule a room | Any clinician the Outpatient group is shown to | Role Navigation |
-| Host a call, admit from the waiting room | The clinician the room belongs to | Room host |
-| Start and stop recording | The host | Room settings — recording must be enabled on the room |
-| Run the in-call AI note taker | The host | Plan — it needs Essential and above; below that the toggle is disabled |
+| Host a call, admit from the waiting room | The clinician the room belongs to | Room host. Once you save a person's permissions: **Host video visits** |
+| Start and stop recording | The host | Room settings — recording must be enabled on the room. Once you save a person's permissions: **Record video visits** |
+| Play, download or list recordings | Any clinician | **View video visit recordings** |
+| Delete a recording | Owners and managers | **Delete video visit recordings** — off for everyone else until you switch it on for a person |
+| Run the in-call AI note taker and read its notes | The host | Plan — it needs Essential and above; below that the toggle is disabled. Once you save a person's permissions: **AI notes from video visits** |
 | File an AI draft to a patient's chart | Clinicians | The same rules as writing a [clinic note](/hospital/outpatient/notes) |
 | Cancel a session or mark a no-show | Anyone who can open the module | Role |
 
@@ -117,12 +125,17 @@ A telehealth call needs a live connection throughout, so nothing on this page wo
 ## Common issues
 
 <AccordionGroup>
+
+  <Accordion title="A call is still shown as in progress after everyone left">
+    A call nobody ended is closed automatically once it has been idle for 24 hours. It moves to **Completed** and anyone still shown in it is marked as having left. This is done quietly: no follow-up message or workflow is triggered by it, and the client's join link stops working.
+  </Accordion>
+
   <Accordion title="The invite email was not sent">
     The patient has no email address on file. Add one to their record, then use **⋯** → **Send Invite**, or **Copy Link** and send it yourself.
   </Accordion>
 
   <Accordion title="The patient cannot get in">
-    Join links are personal and short-lived, so an old email will not work — resend with **Send Invite**. If the room has a waiting room, they are waiting for you to **Admit** them.
+    Join links are personal and work for six hours from the scheduled start, so an old email will not work — resend with **Send Invite**. The booking confirmation and the appointment reminder both carry the client's own **Join video visit** link once the visit has a room. If the room has a waiting room, they are waiting for you to **Admit** them.
   </Accordion>
 
   <Accordion title="Nobody can see or hear me">

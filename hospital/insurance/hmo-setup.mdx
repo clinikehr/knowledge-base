@@ -1,0 +1,124 @@
+---
+title: Set up an HMO
+description: "Tell ClinikEHR how an HMO pays — its codes, its plans, what each plan covers, its price list, the employer groups it serves and the dates its prices are valid."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owners and managers" note="Needs the Insurance care area switched on, and Settings → General → Insurance set to Outside the US." />
+
+<InsuranceRegion region="non_us" />
+
+Hospitals outside the US bill HMOs. Everything an HMO has agreed with you is set up in one place, the **Insurance** page, so a claim can be priced and split the way the HMO will adjudicate it.
+
+<Path steps={['Sidebar', 'Insurance', 'Insurance Dashboard']} />
+
+<TaskHeader before="The Insurance care area on, and your insurance set to Outside the US" time="10 minutes per insurer" after="An insurer whose plans, benefits and prices are ready to bill against" />
+
+## What you're looking at
+
+| Tab | What you set up there |
+| --- | --- |
+| **Companies** | The insurer: its name, your code for it, its **HMO code**, **Your provider code**, how many days it takes to pay, contacts and how it is reached |
+| **Plans** | Each plan: what the patient pays, the limit, dependants, pre-authorization — and the plan's **Benefits** |
+| **Pricing** | The insurer's agreed prices for services and medicines |
+| **Coverage** | How much of one particular item the insurer covers |
+| **Billing setup** | Per insurer: **Billing details**, **Employer groups** and **Tariff terms** |
+
+Everything opens in a side panel (a bottom sheet on a phone). The **Add** button at the top of the page adds an insurer, plan, service price, medicine price or item coverage from any tab.
+
+**Empty state.** A hospital with no insurer yet sees **Add an insurer first** on **Billing setup** — add one on **Companies**, then come back.
+
+## Add the insurer
+
+<Steps>
+  <Step title="Open the panel">
+    On **Companies**, select **Add**. Enter the **Insurer name**; it is the only required field.
+  </Step>
+  <Step title="Enter the codes">
+    **Your code for this insurer** is how you refer to it. **HMO code** is the insurer's own short code. **Your provider code** is the code it gave your hospital. They appear on its letters and remittance advice.
+  </Step>
+  <Step title="Set how fast they pay">
+    **Pays within (days)** is the insurer's payment terms, from 0 to 365.
+  </Step>
+  <Step title="Add contacts, then save">
+    Email, phone, address and website are optional. Select **Add insurer**.
+  </Step>
+</Steps>
+
+To change an insurer later, open its row menu and choose **Edit**. Turn **Active** off to stop offering it on new claims while keeping its history.
+
+## Add a plan and say what it covers
+
+On **Plans**, select **Add Plan**.
+
+- **Patient pays (%)** — the share of each bill the patient pays. The insurer covers the rest. Leave it empty if you have not agreed one.
+- **Plan limit per enrollee** — the most the plan will pay for one member.
+- **VAT on the plan** — recorded for the insurer's records. Tax, additional charges and flat-rate fees always stay with the patient; they are never billed to the insurer.
+- **Waiting period (days)**, **Pre-authorization required**, **Network**, **Plan code** and **Plan type**.
+- **Covers dependants** and **Most dependants covered**.
+- **Valid at every provider** and **The insurer's plan ID**.
+
+### Benefits
+
+A benefit is a rule for one kind of care under a plan. Save the plan, then use **Add benefit** in the same panel. Name it (for example *Dental* or *Maternity*), choose what it **Covers** and its **Claim category**, say whether it is **Covered**, what the patient pays, the limit (an amount or a number of times), the waiting period in days and who it is **For**. **Remove** asks first; claims already filed are not changed.
+
+## Set the price list
+
+On **Pricing**, select **Add Service** or **Add Medicine**.
+
+- **Tariff code** and the item's name. A bill line is priced from this row when its code, or failing that its name, matches.
+- **Care type** and **Care item** group the price (for example *Laboratory*, then *Haematology*).
+- **Price** is the insurer's agreed price for one unit.
+- **Tariff band**, **Valid from** and **Valid until** say which version of the list this price belongs to. The same code can appear again with another band or start date; the version in force on the day is the one used.
+- **Active** off keeps the price but never uses it.
+
+To load a whole list, select **Import CSV**, choose the insurer and the file. **Download the template** shows the columns. Prices with the same code, band and start date are updated, not duplicated, and the panel lists the first rows it could not import.
+
+## Add employer groups and tariff terms
+
+On **Billing setup**, choose the insurer. **Add group** takes the company's name, its group code and policy number, and its status (**Active**, **Inactive** or **Terminated**). Removing a group does not remove its members' cover; they stop being linked to the group.
+
+**Tariff terms** sets the band and the dates for every price in one list at once: choose **Services** or **Medicines**, enter the **Tariff band** and **Valid from** / **Valid until**, and select **Apply to the list**.
+
+## How a bill is priced
+
+When you bill an HMO for a sale ([Bill HMO](/hospital/insurance/bill-hmo)), each item goes on the claim at the insurer's agreed price where there is one, and at your own price where there is not. The patient's share is worked out on that agreed price. If the agreed price is lower than yours, the difference is not billed to anyone. An agreed price **higher** than your own is not used: the claim stays at your price.
+
+When you start a claim from an invoice, ClinikEHR also uses the insurer's agreed price and tells you which lines used your price. See [File and track claims](/hospital/insurance/claims).
+
+## Who can do this
+
+| Action | Who by default | Notes |
+| --- | --- | --- |
+| Change an insurer, plan, benefit, price, group or tariff terms | Owners and managers | Anyone else can read them |
+
+## Check it worked
+
+- The insurer is on **Companies**, with its codes.
+- A plan row shows **Patient pays** as a percentage.
+- A price row shows its **Tariff band** and dates.
+- Leave the page and come back: everything is still there.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Tariff terms says the insurer has no prices yet">
+    Add the prices first under **Pricing**. Tariff terms sets the band and dates on prices that exist.
+  </Accordion>
+  <Accordion title="A price with that code already exists">
+    The same code, band and start date can only appear once for an insurer. Change the band or the **Valid from** date to add another version.
+  </Accordion>
+  <Accordion title="I cannot change any of this">
+    Only owners and managers can. Ask one of them, or ask for the role.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="HMO setup" />
+
+{/* source of truth: components/clinic/insurance/insurance-content-dashboard.tsx, sheets/*, hmo/hmo-setup-panel.tsx, db/actions/insurance-catalogue.ts, hmo-setup.ts, lib/insurance/hmo-tariff.ts */}

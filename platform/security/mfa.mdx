@@ -52,6 +52,19 @@ Enter your current code and the screen opens. Nothing is broken and nothing was 
   **Signing in with a passkey counts as one factor only.** A passkey is a strong, phishing-resistant replacement for your _password_ — it is not a second factor and it does not satisfy a workspace's two-factor requirement. If you sign in with a passkey in a workspace that requires two-factor, you will still be asked for your authenticator code before any patient data opens. Enrol an authenticator app even if you never type a password again.
 </Warning>
 
+## Actions that always ask for your second factor
+
+A few actions open access or widen it, so they need a session that has just passed the second factor, **whether or not your workspace requires two-factor**:
+
+- creating an API key (see [API access](/platform/settings/api-access));
+- approving an outside organization's access to patient data, or changing what it may see;
+- changing a team member's role or permissions;
+- turning two-factor off, for the workspace or for one team member.
+
+If your session has not passed the second factor, the action does not run and you see **"This needs a two-factor-verified session. Verify your second factor to continue."** with a **Verify now** button. Enter your code and try again; you come back to the page you were on.
+
+If you have not set up two-factor yet, **Verify now** takes you to set it up first. You cannot do these four things without it, so it is worth doing once, from <Path steps={['Your avatar', 'Profile and Settings', 'Security']} />. If your clinic does not require two-factor, the setup page also offers **Not now**, which takes you back without changing anything.
+
 ## Recovery codes
 
 You are shown a set at enrolment — "Save your recovery codes" — with a **Copy codes** button and a confirmation, **I've saved my codes — continue**. Each code works once, in place of the six-digit code, and they are never shown again.
@@ -69,6 +82,8 @@ Turning off your own two-factor requires a current six-digit code from the app �
 An owner turning the requirement off for a whole workspace does not un-enrol anyone; it only stops the product insisting.
 
 ## Related
+
+- [Automatic logoff](/platform/security/automatic-logoff) — how long an idle session lasts.
 
 <Columns cols={2}>
   <Card title="Secure your account" icon="/images/icons/shield-halved.svg" href="/platform/account/security">

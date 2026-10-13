@@ -1,0 +1,110 @@
+---
+title: "Walk-in clients"
+description: "Test or scan someone at the counter without registering them: record who they are, take payment at once, and link them to a patient later."
+icon: "/images/icons/test-tube.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['lims']} plans="All plans" roles="Anyone who can order a lab test or an imaging study; taking payment needs the Collect payments permission; only an owner or manager can link a client to a patient" />
+
+Some people only want one test or one scan and will never be your patient. Choose **Walk-in** instead of searching for a patient, record who they are, and the request goes to the bench like any other. A walk-in is **not added to your patients** — they do not appear in Patient Management, your patient counts or your patient limit, and they never receive reminders or marketing messages.
+
+<Path steps={['Sidebar', 'Test Requests', 'New Test Report']} />
+
+<TaskHeader
+  before="The test or study in your catalogue"
+  time="About a minute"
+  after="A paid request on the bench's list, labelled with the client's walk-in number"
+/>
+
+## Request a test or scan for a walk-in
+
+<Steps>
+  <Step title="Choose Walk-in">
+    On the lab ordering form ([Lab Reports](/lims/lab/reports)) or the imaging ordering form ([Imaging requests](/lims/imaging/requests)), the first card has a **Patient** / **Walk-in** switch. Select **Walk-in**.
+  </Step>
+  <Step title="Record who they are">
+    Enter **Full name**, **Sex** and either **Age (years)** or **Date of birth (optional)**. **Phone (optional)** is the only field you may leave empty. If you give a date of birth the age is worked out from it. There is no "unidentified" option: a result is a clinical record, and the report has to say who it is for.
+  </Step>
+  <Step title="Choose the tests and take payment">
+    Add the tests or studies exactly as you would for a patient. Tick **Collect Payment Now** to take payment at the desk — walk-in requests are meant to be paid at the counter, so there is no pay-later list for them. Then select **Create Lab Orders** (or **Create &amp; Pay**).
+  </Step>
+  <Step title="Hand over the slip">
+    The receipt names the client and prints their number in the form **Walk-in W-000123**. Each clinic numbers its walk-ins from **W-000001**. That number is what the client quotes when they come back for the result.
+  </Step>
+</Steps>
+
+Each walk-in request gets its own walk-in number. If the same person has a lab test and a scan on one visit, put the tests on one request where you can; if they register later, link each of their walk-in records to the one patient.
+
+## Find a walk-in client
+
+On **Lab History** and **Radiology History** there is a **Walk-in clients** tab beside **By Patient** and **All Records**. It lists one row per client — their number, name, sex and age, how many requests, the latest status, and what has been paid of what is due — with a search box for name, number or phone. Select **Open** for the client's record: their details, every lab test and imaging order with its result, and its payment state.
+
+The list on [Test Requests](/lims/lab/test-requests) shows a walk-in's request with the client's name, their walk-in number in the ID column, and **Walk-in client** as the type. Results are entered, reported and downloaded exactly like any other request; the report carries the walk-in number where a patient's report carries their patient ID.
+
+## Take payment later
+
+If a request was captured offline, or payment was skipped, open the client from **Walk-in clients**. Under **Take payment**, choose the payment method and select **Record payment**. Walk-in payments go through this panel and the order forms only; they do not appear in the pending payments list on Payments.
+
+## Link a walk-in to a patient
+
+When someone you tested at the counter registers as a patient, an owner or manager can attach their history to their record. Open the client, under **Link to patient** search for the patient and select them, then confirm **Link to patient**.
+
+- Their tests, scans and the payments for them move onto the patient's record.
+- The walk-in record is kept, with who linked it and when.
+- It cannot be undone, and a client can be linked only once.
+
+## Who can do this
+
+| Action | Who by default | The governing permission |
+| --- | --- | --- |
+| Request a lab test or scan for a walk-in | Anyone who can order lab or imaging | The lab and radiology ordering permissions |
+| Take payment | Owners, managers, and staff with the permission | **Collect payments** |
+| Link a client to a patient | Owners and managers | Role |
+| Open the client's record | Lab and imaging staff | Role |
+
+Opening a walk-in's record is recorded in the [Audit log](/platform/security/audit-log) against the walk-in's number, never their name.
+
+## Check it worked
+
+After you create the request, leave the form and open **Lab History** → **Walk-in clients**: the client should be there with their number. Search for them in **Patients**: they should not be.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The Walk-in switch is missing">
+    It appears when you start a **new** request. On a request that already exists the card shows the client's details instead.
+  </Accordion>
+  <Accordion title="“Enter the client's name, sex and age or date of birth.”">
+    One of the required fields is empty. Name, sex and age (or date of birth) are all needed; phone is not.
+  </Accordion>
+  <Accordion title="Send is missing on a walk-in's report">
+    A walk-in has no patient record to send to, so a report cannot be sent securely. Download or print it, or link the client to a patient first.
+  </Accordion>
+  <Accordion title="Payment failed after the request was created">
+    The request is saved and waits as unpaid. Open the client under **Walk-in clients** and use **Take payment**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I register them as a patient straight away instead?">
+    Yes — choose **Patient** and use **Select Patient**. Walk-in is for people you do not want to register.
+  </Accordion>
+  <Accordion title="How long is a walk-in's record kept?">
+    As long as any lab record: seven years. It is included in your data export under **Walk-in Lab &amp; Imaging Clients**.
+  </Accordion>
+  <Accordion title="Is this the same as a walk-in test in Lab History?">
+    No. A **Walk-in** test in **All Records** is a registered patient tested without a visit or ward stay. A **walk-in client** is someone who was never registered.
+  </Accordion>
+  <Accordion title="Does it work offline?">
+    Yes for the request: it is held on the device and sent when the connection returns, and the walk-in number is assigned then. Payment is never taken offline, so settle it under **Take payment** once you are back online.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a walk-in lab or imaging client" />

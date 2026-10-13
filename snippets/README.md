@@ -30,6 +30,7 @@ If you need a comment inside an `.mdx` file, use `{/* … */}` (a JSX expression
 | `TaskHeader` | `task-header.mdx` | Before-you-start / time / outcome, on task pages only |
 | `StillStuck` | `support.mdx` | The escape hatch that closes every task page |
 | `AuditNote` | `support.mdx` | States that an action is recorded, on pages about viewing or exporting patient data |
+| `InsuranceRegion` | `insurance-region.mdx` | Which insurance setup a page is for (`us` or `non_us`), under the availability strip of every insurance page, with a link to the other one |
 
 ## Usage
 

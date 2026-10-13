@@ -1,0 +1,99 @@
+---
+title: Bill an HMO at the till
+description: "Bill the insurer its share of a patient's bill, take the patient's share with their usual payment method, and see the claim waiting in Claims."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone who can collect payments" note="Needs Settings → General → Insurance set to Outside the US, and the patient's insurer on file." />
+
+<InsuranceRegion region="non_us" />
+
+When a patient's HMO covers part of their bill, **Bill HMO** splits the bill once: the insurer's share becomes a draft claim, and the patient pays only their share. The insurer's share is never recorded as cash you have received.
+
+<Path steps={['Sidebar', 'Billing', 'Payments']} />
+
+<TaskHeader before="The patient's insurer, plan and co-payment recorded on their profile" time="1 minute" after="A draft claim for the insurer's share, and the patient's share ready to collect" />
+
+## Where you will find it
+
+- **Payments** page — under **Payment Method**, once a patient with an insurer on file is selected.
+- **Collect payment** sheet on a pharmacy or laboratory row — beside the payment method.
+- A patient's **Billing** tab — **Bill HMO** on an invoice's **Actions** menu.
+
+For clinics set to **Outside the US**, **Insurance** is no longer a payment method: billing the insurer is **Bill HMO**, and the patient's share is paid with **Cash**, **Card**, **Bank Transfer**, **Mobile Money** or **Other**.
+
+## Bill the insurer
+
+<Steps>
+  <Step title="Choose the patient and tick what they are paying for">
+    On **Payments**, select the patient and tick their pending items. On **Collect payment**, the items for that row are already ticked.
+  </Step>
+  <Step title="Select Bill HMO">
+    The sheet names the insurer, the plan and member number, and says what percentage of each item the patient pays. Each item shows **Price** (the insurer's tariff where one applies), **Insurer pays** and **Patient pays**, with the totals underneath.
+  </Step>
+  <Step title="Confirm">
+    Select **Bill** followed by the insurer's name and amount. You are told which draft claim was created and what the patient pays.
+  </Step>
+  <Step title="Collect the patient's share">
+    The same items come back showing only the patient's share. Collect it as you would any payment. Tax and fees are never billed to the insurer; they are added to the patient's payment.
+  </Step>
+</Steps>
+
+On a patient's **Billing** tab the invoice shows **HMO billed** with the amount, its balance drops to the patient's share, and the invoice reads **Paid** once the patient has paid that share.
+
+## What the insurer is billed
+
+- **The price on the claim.** Each item goes on the claim at the insurer's agreed price from its [price list](/hospital/insurance/hmo-setup) when one matches by code or name and its dates are in force, and at your own price otherwise. The insurer's share is that price less the patient's percentage, and the patient pays their percentage of the same price. When the agreed price is lower than yours, the difference is not billed to anyone, and the sheet says the share is worked out on the insurer's tariff. An agreed price higher than yours is not used.
+- **No co-payment recorded, or 100 percent.** If the patient's plan has no co-payment recorded, they pay in full and there is nothing to bill, so the sheet tells you to add it to their insurance details first. A plan where the patient pays everything has nothing to bill either.
+- **Paid already.** If the patient has already paid their share in cash, billing the insurer afterwards gives the same split. The order of the two does not matter.
+- **Billing twice.** Billing the same items again does not create a second claim; you are told they are **already billed**.
+- **Same day, same insurer.** More items billed for the same patient and insurer on the same day join the same draft claim.
+
+## Review and send the claim
+
+The claim is a **Draft** in [Claims](/hospital/insurance/claims). Check the lines and send it when you are ready. When the insurer pays, [record the payment](/hospital/insurance/hmo-payments).
+
+## On the receipt
+
+A receipt for items billed to an insurer has a **Billed to HMO** section with the insurer's name and amount, and a **Patient portion** line, so the patient can see what the insurer is paying.
+
+## Who can do this
+
+Billing the insurer is part of taking the payment, so it follows the **Collect payments** permission. You can switch it on or off for a person in their [Permissions](/platform/team/permissions) sheet. Owners and managers can always do it.
+
+## Check it worked
+
+- The items on **Payments** now show only the patient's share, or disappear if the insurer covers all of it.
+- **Claims** has a **Draft** claim for the insurer with the same items.
+- On the lab, pharmacy and imaging lists the item's payment badge reads **Paid · HMO pending** once the patient has paid their share and the insurer's part is outstanding.
+- The insurer's share is **not** in your takings. It appears in **HMO receivables** once the claim has been sent.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Bill HMO is not there">
+    The patient needs an insurer on file, and your clinic's Insurance setting must be **Outside the US**. Clinics set to the US keep the **Insurance** payment method.
+  </Accordion>
+  <Accordion title="This patient has no active insurance on file">
+    Their insurance may have expired, or needs checking. Update it on the patient's profile, then try again.
+  </Accordion>
+  <Accordion title="This visit can't be billed to the HMO: the patient paid for it themselves">
+    The patient paid for this visit themselves and asked that their HMO not be told, and your clinic recorded that on their **Security** tab under **Services not shared with the health plan**. **Bill HMO** will not make a claim for any item whose service dates fall inside that restriction, and nothing is changed. Take the patient's payment as usual. If the patient changes their mind, an owner or manager ends the restriction there, and you can bill the HMO again. [Services not shared with the health plan](/practice/work/client-security)
+  </Accordion>
+  <Accordion title="One or more of these items is no longer pending">
+    Someone paid or cancelled an item since the list loaded. Refresh the list and try again.
+  </Accordion>
+  <Accordion title="The insurer declined the claim">
+    A declined claim no longer counts as billed to the insurer, so the items come back on the patient's list at their full balance.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="billing an HMO" />
+
+{/* source of truth: components/clinic/insurance/hmo/bill-hmo-sheet.tsx, db/actions/hmo-sale.ts, lib/insurance/hmo-sale-split.ts */}

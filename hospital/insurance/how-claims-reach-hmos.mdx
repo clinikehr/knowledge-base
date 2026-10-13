@@ -1,0 +1,86 @@
+---
+title: How claims reach your HMOs
+description: "Choose how each HMO receives claims and pre-authorization requests: Curacel, the API, a signed webhook, a secure email link or the HMO's portal."
+icon: /images/icons/shield-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Owner or manager to choose a channel; anyone who can edit claims to send" note="Needs Settings → General → Insurance set to Outside the US." />
+
+<InsuranceRegion region="non_us" />
+
+Every HMO has **one** way of receiving your claims and pre-authorization requests. You choose it once on the insurer, and from then on **Submit to HMO** on a claim or a request uses it. Nothing is sent twice: once a record has reached the HMO, selecting **Submit to HMO** again tells you it was already sent.
+
+<Path steps={['Sidebar', 'Insurance', 'Insurance Dashboard', 'Edit an insurer']} />
+
+<TaskHeader before="The insurer added, and what the chosen channel needs (below)" time="5 minutes" after="Submit to HMO names the channel and sends the claim, and the claim shows how it was sent" />
+
+## Choose the channel
+
+Open the insurer and find **How claims reach this HMO**. Pick a **Submission channel**. When you select **Save changes**, ClinikEHR checks the channel is ready; if it is not, the insurer is saved and you are told what is missing.
+
+| Channel | What happens | What it needs |
+|---|---|---|
+| **Curacel** | The claim or request is sent to the HMO through your [Curacel connection](/hospital/insurance/connect-curacel), and the HMO's decision comes back on its own. | Curacel connected. |
+| **ClinikEHR API** | The claim becomes available to the HMO's connected organization, which reads it through the ClinikEHR API. | API access on, and an organization linked to this HMO in [API access](/platform/settings/api-access). |
+| **Signed webhook** | A signed message with the claim is posted to the HMO's web address. The HMO checks the signature with a secret you share with them. | A public **Webhook address** (https) and a **Signing secret**. |
+| **Email (secure link)** | The HMO is emailed a link to a claim pack. The email itself carries no patient details; the link opens only that one claim or request and expires after 7 days. | The **HMO claims email**. |
+| **HMO portal** | Nothing is sent from ClinikEHR. You submit on the HMO's site and record the reference. | The **HMO portal address**. |
+
+### The signing secret
+
+For **Signed webhook**, type the **Signing secret** (at least 16 characters) and select **Set secret**. It is stored encrypted and is never shown again — the card only reads **Secret set**. To change it, enter a new one and select **Replace secret**; **Remove secret** stops signed messages to this HMO until you set another. Share the secret with the HMO in the way you already share credentials.
+
+### Send a test
+
+With a webhook or email channel saved, select **Send test**. A webhook test posts a signed message that contains no claim; an email test sends a plain message with no claim attached. Tests use the saved address, so save the insurer first if you just changed it.
+
+## Also tell the HMO (notice only)
+
+Under **Also tell the HMO (notice only)** you can tick **Email** or **SMS**. These never carry the claim. They send one short line — "A new claim from your clinic is ready (ref …)" — with your clinic's name and the reference number, and never a patient's name or any clinical detail. A notice goes out once per claim, after the claim has been sent.
+
+- **Email** uses the claims email address. If email is the submission channel, the secure-link email already does this job.
+- **SMS** is sent from your clinic's own SMS number and paid for in message credits. If your clinic has no SMS number, or sending to that country is not priced yet, the notice is skipped — the claim itself still goes through.
+- **WhatsApp** and **Telegram** read **Coming soon** and can not be ticked yet.
+
+## Send a claim or a request
+
+<Steps>
+  <Step title="Open the Actions menu">
+    On a claim in **Claims**, or a request in **Pre-authorization**, open **Actions** and select **Submit to HMO**. It appears on a claim that has not been sent and names an HMO.
+  </Step>
+  <Step title="Read the confirmation">
+    The confirmation says which channel this HMO uses and what leaves — for example, that a signed message goes to the HMO's webhook. If the channel is not ready it says why instead, such as **Set the webhook signing secret first**.
+  </Step>
+  <Step title="Select Submit to HMO">
+    You are told the claim was sent, or that it is queued and will be sent again automatically. Underneath the status the claim reads, for example, **Sent via Signed webhook**.
+  </Step>
+</Steps>
+
+On the **HMO portal** channel the confirmation shows **Open HMO portal** and a **Portal reference** box. Submit on the HMO's site, type the reference it gave you and select **Mark as submitted on portal**.
+
+If a delivery fails for a reason you can fix — a wrong address, a refused signature — the claim reads **… delivery failed - submit again**. Correct the insurer and select **Submit to HMO** again. If the HMO's side is only busy, the claim reads **Sending via …, will retry** and goes by itself.
+
+## Check it worked
+
+- The claim's status is **Submitted** (a request reads **Waiting for the insurer**), with a line saying how it was sent.
+- Selecting **Submit to HMO** a second time says it was **already sent**.
+
+<AccordionGroup>
+  <Accordion title="Submit to HMO is not on the menu">
+    It is offered only on an unsent claim or request that names an HMO, to someone who can edit claims with two-factor sign-in done. Claims that went through Curacel show **Check HMO status** instead.
+  </Accordion>
+  <Accordion title="The channel says it is not ready">
+    The message names the missing piece — Curacel not connected, no organization linked, no webhook address or secret, no email or portal address. Fix it on the insurer and try again.
+  </Accordion>
+  <Accordion title="Can the HMO see the claim without the link?">
+    No. The email has no patient details. The link opens one claim only, stops working after 7 days, and every time it is opened is recorded in your audit log.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

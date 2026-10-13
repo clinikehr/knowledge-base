@@ -8,13 +8,16 @@ import { Availability } from '/snippets/availability.mdx';
 import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
 
 <Availability editions={['clinic']} plans="Enterprise" roles="Any staff member the Insurance group is shown to" note="Needs the Insurance care area switched on." />
+
+<InsuranceRegion region="non_us" />
 
 **Insurance Management** is a register your hospital maintains itself: who your insurers are, what you have agreed to charge each of them, what their plans cover, and which patients hold a policy. Everything on the [Pre-authorization](/hospital/insurance/pre-authorization) and [Claims](/hospital/insurance/claims) screens is built from what you set up here.
 
 <Note>
-  Solo and team practices use a different, electronic claims system that transmits to a payer. It is documented separately in [File insurance claims](/practice/money/insurance-claims), and the two share no data.
+  ClinikEHR has two separate insurance setups, and the clinic owner chooses one under **Settings → General → Insurance**. This page is for **Outside the US (HMO and international insurers)**. A clinic set to **United States (US insurance claims)** uses electronic claims that are transmitted to US payers instead, documented in [File insurance claims](/practice/money/insurance-claims). The two share no data.
 </Note>
 
 <Path steps={['Sidebar', 'Insurance', 'Insurance Dashboard']} />
@@ -23,32 +26,31 @@ import { StillStuck } from '/snippets/support.mdx';
 
 ## What you're looking at
 
-The heading reads **Insurance Management** — "Manage insurance companies, pricing, coverage, and patient insurance details". A date-range picker, **Refresh** and **New Insurance** sit beside it.
+The heading reads **Insurance Management** — "Manage insurance companies, pricing, coverage, and patient insurance details". **Refresh** and **Add** sit beside it; **Add** offers **Insurer (HMO)**, **Plan**, **Service price**, **Medicine price** and **Item coverage**, and each opens in a side panel (a bottom sheet on a phone).
 
-Four tabs:
+Six tabs:
 
 | Tab | What it holds |
 | --- | --- |
 | **Overview** | Four count tiles, a **Coverage Distribution** chart and **Recent Activity** |
 | **Companies** | Every insurer you accept, with **Company Details**, **Company Code**, **Point of Contact**, **Contact Phone** and **Status** |
-| **Pricing** | **Service Prices** and **Medicine Prices**, side by side, per insurer |
+| **Plans** | Every plan with what the patient pays, its limit and pre-authorization; open one to edit it and its benefits |
+| **Pricing** | **Service Prices** and **Medicine Prices**, side by side, per insurer, with **Import CSV** |
 | **Coverage** | **Coverage Management** — what each plan actually pays for |
+| **Billing setup** | Per insurer: billing details, employer groups and tariff terms |
 
-The **Overview** tiles count **Insurance Companies** (with how many are active), **Service Prices**, **Medicine Prices** and **Coverage Items**. They are counts of what you have configured, not money.
+The **Overview** tiles count **Insurance Companies** (with how many are active), **Service Prices**, **Medicine Prices** and **Coverage Items**, then **Claims filed**, **Paid in full**, **Part paid** and **Written off**. They are counts, not money; a count that could not be read shows a dash, never 0.
 
 **Empty states.** A hospital that has configured nothing sees **No Partners Registered** on **Companies**, with an **Add Your First Company** button; **No service prices found** and **No medicine prices found** under **Pricing**; and **No Coverage Profiles** under **Coverage**. Work the tabs in the order below and each fills in turn.
 
 ## Add an insurer
 
 <Steps>
-  <Step title="Open the insurance form">
-    Select **New Insurance**. The form opens as five tabs — **Company**, **Plans**, **Services**, **Medicines** and **Coverage** — which is the same order this page's tabs fill up in.
-  </Step>
-  <Step title="Enter the company">
-    On **Company**, **Company Name** is the only required field. **Company Code**, **Contact Email**, **Contact Phone**, **Website** and **Contact Address** are what your billing clerk needs when chasing a claim. Leave **Active Status** on.
+  <Step title="Add the insurer">
+    Select **Add**, then **Insurer (HMO)**. **Insurer name** is the only required field. The codes, **Pays within (days)**, email, phone, website and address are what your billing clerk needs when chasing a claim. Leave **Active** on, then select **Add insurer**.
   </Step>
   <Step title="Add the insurer's plans">
-    On **Plans**, choose the **Insurance Company** and enter a **Plan Name**. Then set **Plan Type**, **Coverage Type**, **Network Type**, **Deductible Amount**, **Maximum Coverage Amount**, **Copay Percentage** and **Waiting Period (Days)**. Switch on **Pre-authorization Required** where the plan demands approval before treatment — that is the flag that tells your team to raise a request first.
+    Select **Add**, then **Plan**. Choose the **Insurer** and enter a **Plan name**. Then set **Patient pays (%)**, **Plan limit per enrollee**, **Waiting period (days)**, **Network**, and whether it **Covers dependants**. Switch on **Pre-authorization required** where the plan demands approval before treatment — that is the flag that tells your team to raise a request first. Once the plan is saved, add its benefits in the same panel. See [Set up an HMO](/hospital/insurance/hmo-setup).
   </Step>
 </Steps>
 
@@ -60,20 +62,20 @@ Two insurers paying different amounts for the same procedure is the normal case,
 
 <Steps>
   <Step title="Price the services">
-    On the **Pricing** tab select **Add Service**, or use the **Services** tab of the insurance form. **Service Prices** is "Fee-for-service pricing by insurance company" — each row carries a **Service**, a **Company**, a **Category**, a **Price** and a **Status**.
+    On the **Pricing** tab select **Add Service**. **Service Prices** is "Fee-for-service pricing by insurance company" — each row carries a **Service** with its tariff code, a **Company**, a **Category**, a **Price** and a **Status**, and shows the tariff band and dates when it has them. Use **Import CSV** to load a whole list.
   </Step>
   <Step title="Price the medicines">
     Select **Add Medicine**. **Medicine Prices** is "Medication pricing with dosage and strength details", so the **Details** column carries dosage and strength — the same drug at two strengths is two rows.
   </Step>
 </Steps>
 
-Pre-authorizations and claims are priced from these rows, not from your standard service list. An insurer with no pricing produces requests and claims at the wrong value.
+Pre-authorizations and claims, and the insurer's share when you [bill an HMO](/hospital/insurance/bill-hmo), are priced from these rows, not from your standard service list. An insurer with no pricing produces requests and claims at your own prices.
 
 ## Say what the plan covers
 
 <Steps>
   <Step title="Add a coverage rule">
-    On **Coverage**, select **Add Coverage**. **Coverage Management** configures "coverage for services, medications, lab tests, and wards", so a rule can attach to any of the four.
+    On **Coverage**, select **Add Coverage**; use a row's menu to **Edit** or delete it. **Coverage Management** configures "coverage for services, medications, lab tests, and wards", so a rule can attach to any of the four.
   </Step>
   <Step title="Set the share and the ceiling">
     Each rule records a **Medical Item**, the **Insurance Body**, a **Category**, a **Coverage %** and a **Max Benefit**. A blank ceiling shows as **Unlimited**.
@@ -82,14 +84,17 @@ Pre-authorizations and claims are priced from these rows, not from your standard
 
 ## Record a patient's policy
 
-A patient's own policy is captured from the request or claim you are raising, not from this dashboard.
+A patient's own policy is captured from the request or claim you are raising, not from this dashboard. It is the patient's **enrollee** record with the insurer.
 
 <Steps>
   <Step title="Start a request or a claim">
     Open a new [pre-authorization](/hospital/insurance/pre-authorization) or [claim](/hospital/insurance/claims) and choose the patient.
   </Step>
   <Step title="Add their insurance">
-    Where the form says **No insurance information on file**, select **Add Insurance**. The **Add Insurance Details** dialog takes the insurer, the **Policy Number**, the **Expiry Date**, **Coverage %**, **Co-pay %**, **Discount %**, **Payment Terms (Days)** and **Special Instructions**. It is saved against the patient and reused next time.
+    Where the form says **No insurance information on file**, select **Add Insurance**. The **Insurance details** panel takes the **Insurer**, the **Plan**, the **Insurance number**, **Valid until**, the **Staff number** and **Employer group**. Switch on **Covered as a dependant** and give the **Principal's insurance number** and the **Relationship** for someone covered under another person's policy. **Primary cover** is the one used first when a bill is split. The plan's patient share is shown under the plan. It is saved against the patient and reused next time.
+  </Step>
+  <Step title="Fix a cover that needs review">
+    A cover carried over from the older insurance fields that could not be matched to one of your insurers, or that repeats another person's number, shows **Needs review** with the reason. Select **Fix**, choose the right insurer or correct the number, and save.
   </Step>
 </Steps>
 
@@ -154,7 +159,7 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
   </Accordion>
 
   <Accordion title="What can I do from the companies list?">
-    Each row has **View**, **Edit** and **Delete**. **View** shows the contact details on file without any risk of changing them; **Edit** opens the same fields for correction, including the **Active** switch; **Delete** removes the insurer after a confirmation that spells out what is lost.
+    Each row has **View**, **Edit** and **Delete**. **View** and **Edit** open the same side panel with the insurer's details, including the **Active** switch; **Delete** removes the insurer after a confirmation that spells out what is lost. An insurer that patients, plans or claims still refer to cannot be deleted; make it inactive instead.
 
     Edits apply to new claims and pre-authorizations. Anything already filed keeps the details it was filed with, so correcting a payer's phone number today does not rewrite last month's paperwork.
   </Accordion>
@@ -166,4 +171,4 @@ Enforcement is **opt-in per person**: a colleague never saved in the permissions
 
 <StillStuck topic="insurance" />
 
-{/* source of truth: components/clinic/insurance/insurance-content-dashboard.tsx, insurance-form.tsx, insurance-companies-table.tsx, insurance-service-prices-table.tsx, insurance-medicine-prices-table.tsx, insurance-coverage-table.tsx, insurance-stats.tsx, patient-insurance-dialog.tsx, lib/edition-staff-roles.ts */}
+{/* source of truth: components/clinic/insurance/insurance-content-dashboard.tsx, sheets/*, insurance-plans-table.tsx, insurance-companies-table.tsx, insurance-service-prices-table.tsx, insurance-medicine-prices-table.tsx, insurance-coverage-table.tsx, insurance-stats.tsx, patient-insurance-dialog.tsx, lib/edition-staff-roles.ts */}
