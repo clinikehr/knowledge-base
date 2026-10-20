@@ -1,0 +1,188 @@
+---
+title: "Record a prescription pickup"
+sidebarTitle: "Pickups"
+description: "Record who collected dispensed medicine, the counselling offer, the clinic's own questions and a signature, and scan a slip to find it."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise" roles="Anyone who can dispense records a pickup" note="Needs the In-house pharmacy care area" />
+
+When a patient, or someone collecting for them, picks up medicine your pharmacy dispensed, record the handover here. The record shows who collected it, whether counselling was accepted or declined, the answers to your clinic's own questions, the privacy-notice acknowledgment when one is due, and a signature.
+
+<Path steps={['Sidebar', 'Pharmacy', 'Prescription List']} />
+
+<TaskHeader before="At least one prescription dispensed" time="Under a minute" after="A pickup record with a signature, and the row marked Collected" />
+
+## What you're looking at
+
+Every prescription you dispense gets a pickup code. The code is printed as a barcode on the dispensing slip. On the **Prescription List**:
+
+| Where | What you see |
+| --- | --- |
+| Beside the dispense status | **Awaiting pickup**, **Sent to sign**, or **Collected** with the date |
+| In the toolbar above the table | **Scan code**, which opens **Scan or type a code** with **Find pickup** and **Use camera** (shown to people who can dispense) |
+| The row's actions menu | **Record pickup**, while any dispensed medicine on that row is still to be collected |
+
+A prescription dispensed before pickups existed has no status badge and no code.
+
+## Your patient is told it's ready
+
+When you dispense a prescription, the patient gets one message, once, with their pickup code. You don't send it and there is nothing to switch on.
+
+- **What it says.** That their prescription is ready to collect at your clinic, the 12-digit pickup code, and to bring the code or the dispensing slip. It never names the medicine, the dose or the patient, and it carries no amount.
+- **How it arrives.** By text when your plan includes texting, your clinic has its own number and enough communication credits, and the patient has a mobile number they allow texts on. Each text uses credits, as appointment reminder texts do. Otherwise by email, when the patient has an email address and your clinic's email notifications are on. If neither is possible, nothing is sent.
+- **If your clinic has a portal,** the email links to the patient's **Prescriptions** page, where the same code shows as a barcode too. See [Records in the portal](/portal/patients/records).
+- **Only once.** Dispensing more medicines for the same visit, or editing a prescription afterwards, does not send it again. A pickup that is voided or already collected before the message goes out sends nothing.
+- **The patient's choice.** A client can turn it off from their portal, and you can turn it off for them: open the client, then **Contacts**, and switch off **Tell me when a prescription is ready to collect**. In the pharmacy edition the same switch is on the customer's **Insights** tab. It saves at once and applies to texts and email.
+
+A pickup left at the till as **Collect later** is not messaged: the customer was there when the sale was made.
+
+## Find the pickup
+
+You can open a pickup in any of three ways:
+
+- **Scan the slip.** With no field selected, scan the barcode on the dispensing slip with a handheld scanner. The pickup opens, and you do not need to select **Scan code** first.
+- **Scan your own pharmacy label.** If your clinic also uses other pharmacy software, link its Rx number to the prescription first (see [Link your pharmacy software's Rx number](#link-your-pharmacy-softwares-rx-number)). Scanning that label then opens the same pickup.
+- **Type it or use the camera.** Select **Scan code** in the toolbar. In **Scan or type a code**, enter the pickup code or the Rx number and select **Find pickup**, or select **Use camera** and hold the barcode in front of it. A handheld scanner can scan straight into the field: it types the code and presses Enter. The panel closes and the pickup opens. If no pickup matches, the message appears under the field and the panel stays open so you can try again.
+
+Finding a pickup needs a connection. When you are offline the panel says so and **Find pickup** stays unavailable; nothing is recorded offline.
+
+Or open the row's actions menu and select **Record pickup**.
+
+## Record the pickup
+
+<Steps>
+  <Step title="Check the medicines to hand over">
+    Every medicine still to collect is ticked under **Medicines to hand over**. Untick any the person is not taking today. The unticked ones stay awaiting pickup under a new code.
+  </Step>
+  <Step title="Choose who is collecting">
+    Under **Who is collecting**, choose **The patient** or **Someone else for the patient**. For someone else, enter the **Name of the person collecting** and their **Relationship to the patient**.
+  </Step>
+  <Step title="Record the counselling offer">
+    Under **Pharmacy counselling was offered**, choose **Accepted** or **Declined**.
+  </Step>
+  <Step title="Answer your clinic's questions">
+    If your clinic added its own questions, they appear under **Questions from this clinic**. Answer each **Yes** or **No**. The record keeps the exact wording that was shown.
+  </Step>
+  <Step title="Acknowledge the privacy notice, when asked">
+    The **Privacy notice** section appears only when an acknowledgment is due. Select **Read notice** to show the text, then tick the acknowledgment box.
+  </Step>
+  <Step title="Take the signature">
+    The person collecting signs in the box with a finger, stylus or mouse. If they are signing on a pen tablet, tick **I am signing on a pen pad** so the record says so.
+
+    If a Topaz signature pad is connected to this computer, a choice between **Sign on screen** and **Use Topaz pad** appears. Choose **Use Topaz pad**, let them sign on the pad, then select **Capture from Topaz pad**. Select **Capture again** to retake it.
+  </Step>
+  <Step title="Select Record pickup">
+    **Pickup recorded.** appears. If you unticked medicines, the message gives the new code they are waiting under.
+  </Step>
+</Steps>
+
+<AuditNote />
+
+## Send it to the patient's phone
+
+If the patient isn't at the counter, they can sign on their own phone instead. Under **Or send to the patient's phone** in the same sheet:
+
+- **Email the patient** sends the link straight away, at no cost.
+- **Text the patient** sends it from your clinic's own number. You're shown how many communication credits it uses, and it is sent only after you confirm.
+
+The patient opens the link, confirms their date of birth, answers the same questions and signs. Until they do, the row shows **Sent to sign**. A link works once, and only for as long as your clinic set under [Settings → Pickups](/hospital/settings/pharmacy-pickups). Sending a new link replaces the old one, and you can still record the pickup in person.
+
+<Warning>Texting uses communication credits. The sheet shows the cost before anything is sent.</Warning>
+
+## Download the pickup record
+
+Open a collected pickup and select **Download record** for a PDF of the handover: the medicines, who collected them, the answers, the signature and who recorded it.
+
+## Link your pharmacy software's Rx number
+
+If your clinic prints labels from other pharmacy software, you can link that label's Rx number to the prescription. Scanning the label then opens the pickup.
+
+<Steps>
+  <Step title="Open the prescription to dispense">
+    Open the prescription from the **Prescription List**.
+  </Step>
+  <Step title="Enter the number">
+    Select the **Pharmacy Rx number** field beside the medicine, then scan the label or type the number.
+  </Step>
+  <Step title="Link it">
+    On a medicine that is not dispensed yet, the number is linked when you dispense. On one that is already dispensed, select **Link number**. The field then says **Linked: scanning the label with this number opens the pickup.**
+  </Step>
+</Steps>
+
+Each Rx number can be linked to only one prescription in your clinic; a number already in use is refused with a message saying so. To remove a link, select **Unlink**.
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Record a pickup | Pharmacists, and anyone else who may dispense | **Dispense a prescription** |
+| Link an Rx number | Anyone who may dispense | **Dispense a prescription** |
+| Change pickup questions and the privacy notice | Owner and manager | Settings: [Pickups](/hospital/settings/pharmacy-pickups) |
+
+Enforcement is opt-in per person: once an owner saves someone's permissions, those permissions apply. A refused action is recorded in the audit log; an allowed one is not recorded as a refusal.
+
+## Check it worked
+
+Leave the **Prescription List** and come back. The row now shows **Collected** with today's date. If only part of the order was collected, the row still shows **Awaiting pickup** for the rest.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I don't see Record pickup in the actions menu">
+    Either nothing on that row has been dispensed yet, or everything has already been collected. The menu item appears only while dispensed medicine is waiting.
+  </Accordion>
+  <Accordion title="Scanning the slip does nothing">
+    Click on an empty part of the page first, so no field is selected, then scan again. Or select **Scan code** in the toolbar and enter the code in **Scan or type a code**.
+  </Accordion>
+  <Accordion title="The code isn't found">
+    The code may belong to a pickup that was already collected, or to another clinic. A prescription dispensed before pickups existed has no code: open it from its row instead.
+  </Accordion>
+  <Accordion title="Record pickup stays greyed out">
+    A required answer is missing. Check that you chose who is collecting and the counselling answer, answered every required question, ticked the privacy acknowledgment if it's shown, and that there is a signature.
+  </Accordion>
+  <Accordion title="The signature could not be read">
+    Clear the box and sign again.
+  </Accordion>
+  <Accordion title="Use Topaz pad doesn't appear">
+    The Topaz signature service isn't running on this computer, or the pad isn't connected. Install Topaz's signature service and plug the pad in, or use the on-screen box.
+  </Accordion>
+  <Accordion title="I don't see the phone options">
+    Signing links are turned off for your clinic. An owner or manager can turn on **Allow signing links** under [Settings → Pickups](/hospital/settings/pharmacy-pickups).
+  </Accordion>
+  <Accordion title="Text needs a clinic phone number and credits">
+    Your clinic has no ClinikEHR phone number yet, or not enough communication credits. Email the link instead.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is the privacy notice asked every time?">
+    By default it is asked once, and again whenever your clinic publishes a new version. An owner or manager can change it to every pickup under [Settings → Pickups](/hospital/settings/pharmacy-pickups).
+  </Accordion>
+  <Accordion title="Can someone collect for the patient?">
+    Yes. Choose **Someone else for the patient** and record their name and relationship. They sign, and the record says it was them.
+  </Accordion>
+  <Accordion title="What does the patient see on their phone?">
+    Your clinic's name, their first name, the medicines to collect, your questions and, when it's due, your privacy notice. They confirm their date of birth first; after five wrong tries the link stops working.
+  </Accordion>
+  <Accordion title="Does a pickup work offline?">
+    No. A pickup is recorded online, because it completes a record that already exists.
+  </Accordion>
+  <Accordion title="A patient says they never got the message">
+    Check, in order: the patient's switch (**Tell me when a prescription is ready to collect**) is on; they have an email address or a mobile number with permission to text; your clinic's email notifications are on; and, for texts, your clinic has a number and credits. The message goes out within a few minutes of dispensing and only once. Their pickup code is always on the dispensing slip, and in their portal if you have one.
+  </Accordion>
+  <Accordion title="Can I change a pickup after recording it?">
+    No. The record stays as it was signed.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/pharmacy/pickup/*, lib/pharmacy-pickup/*, components/clinic/pharmacy/pharmacy-table.tsx */}

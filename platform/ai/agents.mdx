@@ -64,6 +64,10 @@ Select the **Start** node and pick a trigger.
 | **Webhook / API call** | An outside system calls your workspace's endpoint. |
 
 <Note>
+  No agent texts, emails, messages or calls a client by itself, whatever starts it: a **Schedule**, an event, a **Webhook / API call**, a **Preview**, a call or a conversation in Team chat. When it tries, it drafts the message and the run pauses at that step. The one exception is a reply to the person who just texted or WhatsApped the agent: an agent started by **Inbound SMS** or **Inbound WhatsApp** may answer that same person on that same channel straight away. The reply must go out within 30 minutes of that message arriving, and the agent can send at most five of these replies for each message that arrives. Texting anyone else, emailing or calling from that run still waits, and so does a reply to that same person after the 30 minutes have passed or after the fifth reply: it is drafted for approval. The person who started a **Preview** run can approve it if they have the **Contact patients through agents** permission, and any owner or manager can. For every other trigger an owner or a manager decides. Approve or reject under **Messages waiting for your approval** on **Agent runs** (and on a card in Team chat when the agent is in a conversation). Nothing is sent until then, and a request nobody decides within 24 hours expires. When it is approved the agent sends it once and carries on; when it is rejected or expires the agent carries on knowing it was not sent, so you can add an **If / else** step that handles that case. If your agent used to reply to clients on its own, it now drafts those replies for approval. See [Approve a message to a client](/platform/team/team-chat-ai-agents#approve-a-message-to-a-client).
+</Note>
+
+<Note>
   There is no "when an invoice becomes overdue" trigger, because that is not an event — it is the passage of time. For anything time-based (overdue invoices, following up submitted claims, expiring memberships) use a **Schedule** trigger with a worklist tool, and let the agent find the records that now qualify.
 </Note>
 

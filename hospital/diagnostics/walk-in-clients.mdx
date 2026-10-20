@@ -28,10 +28,10 @@ Some people only want one test or one scan and will never be your patient. Choos
     On the lab ordering form ([Lab reports](/hospital/diagnostics/lab-reports)) or the imaging ordering form ([Radiology reports](/hospital/diagnostics/radiology-reports)), the first card has a **Patient** / **Walk-in** switch. Select **Walk-in**.
   </Step>
   <Step title="Record who they are">
-    Enter **Full name**, **Sex** and either **Age (years)** or **Date of birth (optional)**. **Phone (optional)** is the only field you may leave empty. If you give a date of birth the age is worked out from it. There is no "unidentified" option: a result is a clinical record, and the report has to say who it is for.
+    Enter **Full name**, **Sex** and either **Age (years)** or **Date of birth (optional)**. **Phone (optional)** and **Email (optional)** may be left empty. If you give a date of birth the age is worked out from it. There is no "unidentified" option: a result is a clinical record, and the report has to say who it is for. If the client gives a phone or email **and agrees**, tick **OK to message me when my results are ready** so you can tell them later that their results are ready to collect (see [Tell them their results are ready](#tell-them-their-results-are-ready)). Never tick it for them. A local number such as 0803... is read using your clinic's country, set in **Settings → General**, and saved with its country code (+234803...). If no country is set, enter the country code yourself, for example +234..., or text messages cannot be sent to that number.
   </Step>
   <Step title="Choose the tests and take payment">
-    Add the tests or studies exactly as you would for a patient. Tick **Collect Payment Now** to take payment at the desk — walk-in requests are meant to be paid at the counter, so there is no pay-later list for them. Then select **Create Lab Orders** (or **Create &amp; Pay**).
+    Add the tests or studies exactly as you would for a patient. Tick **Collect Payment Now** to take payment at the desk — walk-in requests are meant to be paid at the counter. If a request is left unpaid, it waits in **Pending payments** (see below). Then select **Create Lab Orders** (or **Create &amp; Pay**).
   </Step>
   <Step title="Hand over the slip">
     The receipt names the client and prints their number in the form **Walk-in W-000123**. Each clinic numbers its walk-ins from **W-000001**. That number is what the client quotes when they come back for the result.
@@ -48,7 +48,33 @@ The worklist on [Laboratory](/hospital/diagnostics/laboratory) shows a walk-in's
 
 ## Take payment later
 
-If a request was captured offline, or payment was skipped, open the client from **Walk-in clients**. Under **Take payment**, choose the payment method and select **Record payment**. Walk-in payments go through this panel and the order forms only; they do not appear in the pending payments list on Payments.
+If a request was captured offline, or payment was skipped, open the client from **Walk-in clients**. Under **Take payment**, choose the payment method and select **Record payment**. You can also take it from **Billing**: on [Payments](/hospital/revenue/payments#take-a-walk-in-clients-payment), **New Payment** has a **Walk-in clients** switch — search by walk-in number or name, tick the orders being paid, and record the payment. It is the same payment either way. Walk-in clients who owe are listed in the **Walk-in clients** tab of **Pending**. In the **Payments** table their payments read **Walk-in · Name (W-000123)** with a **Walk-in** badge.
+
+## When a client has not paid yet
+
+An unpaid walk-in order is listed on the **Walk-in clients** tab of **Pending** on the Payments page, with a **Walk-in** badge, their walk-in number and what they owe. Select **Process payment** to open **New Payment** on the **Walk-in clients** tab for that client.
+
+## Pay before the sample is collected, and hold the result until paid
+
+Two switches under **Settings → Billing**, in the card **Walk-in clients: payment**, decide how strict your front desk is. Only an owner or manager can change them.
+
+- **Pay before the sample is collected.** While it is on, an unpaid walk-in test or scan cannot be started: moving it on from its first status is refused with "This walk-in client has not paid yet. Take payment before the sample is collected or the scan is done." Cancelling is never blocked, and an order with nothing to pay is not held up. Owners and managers can still let an unpaid order through, and so can anyone you give **Let walk-in tests go ahead before payment** in the permissions sheet.
+- **Hold the result until it is paid.** The result is still entered as usual. On the report screen the **Download** and **Report** buttons are greyed out and read **Held until paid**, with a **Collect payment** link that opens **New Payment** for that client. If a report is requested anyway it is refused: "This result will be available once the walk-in client's payment is complete." Paying lifts the hold at once.
+
+Clinics created from October 2026 start with both switches **on**. A clinic that existed before keeps working exactly as it did, with both **off**, until its owner turns them on.
+
+## Tell them their results are ready
+
+If the client agreed to be messaged at the counter, open them from **Walk-in clients**. The **Tell them their results are ready** card offers **Email notice** and **Text notice** once at least one test or scan is completed. You confirm before it goes. The message says only that their results are ready to collect at your clinic and quotes their walk-in number; it contains no results, test names or amounts. A text uses your clinic's text credits.
+
+- The link in the message opens a page that shows your clinic's name and phone and the walk-in number, and nothing else. It expires after 14 days.
+- Each client can be sent at most three notices a day to the same address or number.
+- A client who did not agree cannot be messaged; the card says so.
+- On a test workspace such as Staging a notice is recorded but nothing is delivered, and the card marks it "test, not delivered".
+
+## When a walk-in registers as a patient
+
+When you register a new patient and a walk-in has the same name and the same phone number, a message asks **Link walk-in W-000123?** and says how many tests and scans would move. Choose **Link walk-in** to attach their tests, results and payments to the new patient, or **Not now** to leave things as they are. Nothing is linked unless you confirm. The link is recorded in the [Audit log](/platform/security/audit-log). An owner or manager can still link later from the client's record.
 
 ## Link a walk-in to a patient
 
@@ -64,7 +90,11 @@ When someone you tested at the counter registers as a patient, an owner or manag
 | --- | --- | --- |
 | Request a lab test or scan for a walk-in | Anyone who can order lab or imaging | The lab and radiology ordering permissions |
 | Take payment | Owners, managers, and staff with the permission | **Collect payments** |
-| Link a client to a patient | Owners and managers | Role |
+| Link a client to a patient from their record | Owners and managers | Role |
+| Accept the link offered when a matching patient is registered | Anyone who registers patients | Role |
+| Let an unpaid walk-in order go ahead | Owners and managers; others when you switch it on for them | **Let walk-in tests go ahead before payment** |
+| Turn pay-first and result hold on or off | Owners and managers | Role |
+| Send a results-ready notice | Anyone who can open the walk-in's record | Role; the client must have agreed |
 | Open the client's record | Lab and imaging staff | Role |
 
 Opening a walk-in's record is recorded in the [Audit log](/platform/security/audit-log) against the walk-in's number, never their name.
@@ -76,6 +106,12 @@ After you create the request, leave the form and open **Lab History** → **Walk
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="“This walk-in client has not paid yet…”">
+    Your clinic requires walk-in clients to pay before the sample is collected. Take payment from **Pending payments** or the client's record, then try again. An owner or manager can let it through, or give you the **Let walk-in tests go ahead before payment** permission.
+  </Accordion>
+  <Accordion title="“This result will be available once the walk-in client's payment is complete.”">
+    Your clinic holds results until they are paid. The result is saved; take the payment and the report can be downloaded and printed.
+  </Accordion>
   <Accordion title="The Walk-in switch is missing">
     It appears when you start a **new** request, in the full and lab-only editions. The pharmacy edition has no lab or imaging. On a request that already exists the card shows the client's details instead.
   </Accordion>
@@ -86,7 +122,10 @@ After you create the request, leave the form and open **Lab History** → **Walk
     A walk-in has no patient record to send to, so a report cannot be sent securely. Download or print it, or link the client to a patient first.
   </Accordion>
   <Accordion title="Payment failed after the request was created">
-    The request is saved and waits as unpaid. Open the client under **Walk-in clients** and use **Take payment**.
+    The request is saved and waits as unpaid. Open the client under **Walk-in clients** and use **Take payment**, or take it from **Billing → New Payment → Walk-in clients**.
+  </Accordion>
+  <Accordion title="A walk-in's payment was recorded by mistake">
+    An owner, manager or accountant can void it under **Payments** (**Actions → Void Payment**). The lab tests and imaging it paid for go back to unpaid on the client's record, so they can be paid again, and a test that has not been done can be cancelled. Voiding does not give the client their money back.
   </Accordion>
 </AccordionGroup>
 

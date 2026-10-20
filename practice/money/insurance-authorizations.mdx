@@ -1,0 +1,89 @@
+---
+title: Track insurance and EAP authorizations
+description: "Record the sessions or units a payer approved for a client, see what is left when you book, and request more before they run out."
+icon: /images/icons/shield-halved.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above" roles="Owners, managers, billers and front desk; a client's own clinician for their clients" />
+
+<InsuranceRegion region="us" />
+
+A payer or an employee assistance program (EAP) often approves a set number of sessions for a client between two dates. Record that approval once, and ClinikEHR counts what has been used from the appointments themselves, so the number cannot drift.
+
+<Path steps={['Sidebar', 'Clients', 'a client', 'Authorizations']} />
+
+<TaskHeader
+  before="The payer's letter or the approval details"
+  time="2 minutes per authorization"
+  after="The client's record shows how many are left, and bookings warn you before they run out"
+/>
+
+## Add an authorization
+
+<Steps>
+  <Step title="Open the card">
+    On the client's record, select **Add authorization**.
+  </Step>
+  <Step title="Enter what was approved">
+    Choose or type the **Payer or EAP**, the **Authorization number**, and the dates. Under **Counted in**, choose **Sessions** or **Units**. For units, enter the **Minutes in one unit** and how minutes become units: **The 8-minute rule** (a unit counts once more than half of it is used) or **Always round up**.
+  </Step>
+  <Step title="Say what uses one up">
+    Switch on **A no-show uses a session** or **A late cancellation uses a session** if this payer bills them. An attended session always counts.
+  </Step>
+  <Step title="Limit it, if the payer did">
+    **Service codes (CPT)**, **Clinicians** and **Kind of visit** (telehealth only, in person only, or either) are optional. A booking outside them is allowed, but it needs a reason that is kept on record.
+  </Step>
+  <Step title="Attach the letter">
+    Choose the payer's letter (a PDF or a photo, up to 8 MB). It is kept with the client's files. **Fill from letter (AI)** reads it and fills the form in. Every field it fills is marked **AI-filled**. Check each one: nothing is saved until you select **Save**. It uses AI credits.
+  </Step>
+</Steps>
+
+## More about one authorization
+
+Select **More** on an authorization.
+
+- **EAP details.** Type the **Case number**, the **EAP company contact** and the **Employer**. The employer is shown only to billing staff, owners and managers. It never appears on clinical screens, on the client portal, or in your data export; anyone else sees a note that it is hidden.
+- **Past sessions.** If an authorization starts in the past, **Past sessions** lists the client's completed sessions in that window. Tick the ones that belong to it and type a **Reason**. Their claims then carry the authorization number. A session you chose to put under a different authorization at booking is left as you chose.
+- **Payer answer.** Record whether the answer came by hand or electronically, the **Payer reference number** and its status (requested, pended, approved, denied or confirmed by staff).
+- **Group sessions.** Switch on **Does not cover group sessions** if the payer excludes them. Otherwise each client in a group session uses their own authorization, one session each (or the minutes, if it counts units).
+- **Client notice.** When an authorization has run out or ended, **Client notice** lets you tell the client. A client who uses the portal gets a secure portal message; anyone else gets an e-mail. Either says only that the sessions their insurance or EAP covered have ended and to get in touch with you. It carries no clinical details. You choose to send it (it is never automatic), and the time it was last sent is shown. A client with no portal sign-in and no e-mail address on file cannot be reached this way.
+- **Close and report.** Choose the **Outcome** (completed, referred or ended early) and select **Close with this outcome**. **Download closing report** makes a one-page PDF on your letterhead: authorization number, case number, amounts, first and last session and the outcome. It carries no client name and no clinical information. You can add one line from the clinician, and it is printed only if you confirm the client has consented. You send it to the EAP yourself.
+
+## See when a service needs prior authorization
+
+ClinikEHR reads the last **eligibility check** you ran for the client and tells you when their plan says a service needs prior authorization. It makes no new request to the payer and costs nothing extra.
+
+- **When you book.** If the service you are booking matches a service the plan flagged, you see **This service needs prior authorization from** the payer's name, with the date of the check it came from. If that check is more than 30 days old, it says so and that the answer may have changed.
+- **On the client's Authorizations card.** **Prior authorization** lists the services the plan flagged. If you have not run an eligibility check for that coverage, it says so and does not guess. Run an eligibility check to find out.
+- **What it cannot tell you.** Not every plan reports this. When the check does not say, nothing is shown as "not needed": the card says the check did not flag a service, and that is what the plan reported, not a promise. Always confirm with the payer for a costly or unusual service.
+
+## Asking a payer for an authorization electronically
+
+Electronic authorization requests are **not available yet**. Ask the payer the way you do today (phone or the payer's portal), then record the approval with **Add authorization**. Everything else on this page works as before.
+
+## What you see when you book
+
+When you book an appointment for a client with an authorization, the **Authorization** panel picks the one that ends soonest and still has room. You can choose another, or **No authorization** for self-pay or other insurance. It warns at the last one left and within 14 days of the end date. When no authorization has room, **Continue as self-pay** shows your price for the booking and books it without an authorization. At zero left, after the end date, or for a clinician, code or kind of visit it does not cover, you must type a reason to continue.
+
+Your home dashboard shows an **Authorizations running low** card to owners, managers and billing staff when any authorization has 2 or fewer left or ends within 14 days; it counts them and links to the report, with no client names.
+
+The calendar and **Care team** show **n left** beside the client. The **Authorizations** tab on the insurance page lists every authorization running low or ending soon, and creates a **Request more sessions** task for your billing staff.
+
+Your client sees what is left, the payer's name and the end date on their portal dashboard. They cannot change anything.
+
+## Who can do this
+
+| Action | Who | Governed by |
+| --- | --- | --- |
+| See what is left | Staff who can see the client | Role |
+| Add, change, close, choose which one a booking uses | Owners and managers; billers, front desk and the client's clinician by default | Permission **Manage insurance authorizations** |
+
+<AuditNote action="Viewing, adding or changing an authorization, each reason given to go past a limit or to link past sessions, EAP detail changes (without their contents), and each closing report download" />
+
+<StillStuck />

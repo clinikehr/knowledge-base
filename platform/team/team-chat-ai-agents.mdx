@@ -1,0 +1,103 @@
+---
+title: Work with AI agents in Team chat
+description: "Add an AI agent to a conversation, set its daily limit, schedule and events, message it directly, approve its actions and remove its replies."
+icon: /images/icons/messages-square.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above, like the Agent Builder" roles="Everyone reads. Admins, owners and managers add agents, remove replies and approve actions" />
+
+<Path steps={['Sidebar', 'Team chat']} />
+
+A published AI agent can answer in a conversation it has been added to. Everything it writes is marked, so nobody mistakes it for a colleague. An agent never appears on its own: someone with the right role builds and [publishes it](/platform/ai/publishing-agents), then adds it to a conversation.
+
+## Recognise an agent's reply
+
+An agent's message shows the **AI agent** badge beside its name, and **asked by** with the name of the person whose question started it. The agent acts with that person's permissions, so it can only do what they are allowed to do. If they aren't allowed, the agent says so in the thread and does nothing.
+
+## Add an agent to a conversation
+
+Where AI agents aren't available to you, the screens say **AI agents aren't available yet** and no agent is offered. Where they are, a conversation has none until an admin, owner or manager adds one.
+
+<Steps>
+  <Step title="Open the conversation's details">
+    Choose the conversation's name at the top, then find **AI agents**.
+  </Step>
+  <Step title="Choose an agent and select Add">
+    Only a channel admin, an owner or a manager can add agents. Agents can't be added to patient, order or direct conversations.
+  </Step>
+  <Step title="Set its limits and select Save">
+    Choose **Replies per day in this conversation** (1 to 500). Optionally choose a schedule, and up to 10 events it should also run on.
+  </Step>
+</Steps>
+
+Select **Change** to edit these later, or **Remove** to stop the agent answering. What it already wrote stays. An agent that is paused shows **Paused**.
+
+## Ask an agent
+
+Type **@** and the agent's name, shown with an **AI agent** badge. Only agents added to the conversation are offered, and only if your role may use them. While it works, the thread shows a line such as **Billing Assistant is working…**. If it can't finish, the line says why in plain words, for example that the daily limit was reached or the clinic is out of credits.
+
+## What an agent can and can't do
+
+An agent works only with the tools it was built with, and only as far as the person asking is allowed. Their role decides which kinds of task it will do for them, and their permissions decide the rest. See [Control which roles can use an agent](/platform/ai/agent-role-access).
+
+- **Contacting patients.** Texting, emailing, messaging or calling a patient needs the **Contact patients through agents** permission on the person asking (owners and managers always have it). Without it, the agent says it can't and nothing is drafted. Even with it, **nothing is sent until a person approves the message**: the agent drafts it and a card in the thread asks for approval. See [Approve a message to a client](#approve-a-message-to-a-client) and [Permissions](/platform/team/permissions).
+- **Names and details.** An agent sees only the message that asked and its thread, with client details removed. It does not write a client's name in the chat.
+- **Scheduled and event runs** act with the role the agent was set to run as, because no one asked. If one of them tries to contact a client, it drafts the message for an **owner or a manager** to approve. It never sends on its own.
+
+## Credits
+
+Every agent reply spends [agent credits](/platform/ai/credits) from your clinic, the same as running that agent anywhere else. When there are none left, the agent says **I can't run right now — the clinic has no agent credits left.** in the thread and does nothing.
+
+## Schedules and events
+
+A schedule runs the agent daily, weekly or monthly at the time you choose, in your time zone. Events run it when something happens, from the same list a channel feed uses. Scheduled and event runs post short lines with counts and links, never a patient's name.
+
+## Message an agent directly
+
+Agents your clinic offers for direct messages are listed under **Agents** in the sidebar (on a phone, under **Direct messages**). Select one to open a private conversation with it.
+
+## An action that needs an approval
+
+When an agent wants to do something that needs a person to approve it, the thread shows a card marked **needs an approval**. An owner or manager selects **Approve** or **Decline** right on the card. Everyone else sees that it is waiting. The decision is recorded the same way as every other approval.
+
+## Approve a message to a client
+
+This is the same everywhere an agent runs: Team chat, a schedule, an event, a webhook, a test run in the Agent Builder. No agent texts, emails, WhatsApps, messages or calls a client without a person approving it first, with one exception: an agent that answers a text or WhatsApp message can reply straight away to the person who sent it, on the same channel (see below). When an agent wants to contact a client otherwise, it does not send anything, and **the agent pauses at that step until someone decides**. In Team chat it posts a card in the thread that shows:
+
+- the **Action** (Text, Email, WhatsApp, Message or Call);
+- **To**, the client's name and a masked number or address (only the last four digits of a number, or the first letter and domain of an address);
+- the whole drafted message;
+- **From**, who asked ("Asked by" with their name) or **Scheduled run**;
+- when the request **Expires**. A request that nobody decides within 24 hours expires, the thread says so, and nothing is sent.
+
+Select **Approve and send** to deliver exactly the message shown, or **Reject** to send nothing. Approving sends a real message to the client straight away, and you can't undo it. The message can't be edited on the card: to change it, reject it and ask the agent to write it again. A long message scrolls inside the card, and **Read the whole message** opens it in a larger panel.
+
+Who can decide:
+
+- When someone asked the agent in the thread: the person who asked, if they have the **Contact patients through agents** permission and can open that client, and any owner or manager.
+- For a run started from the Agent Builder (a test run, for example): the person who started it, if they have the **Contact patients through agents** permission, and any owner or manager.
+- For a scheduled, event or webhook run, or an automatic reply: an owner or a manager only.
+
+Your permission and your access to that client are checked again at the moment you approve. If they changed since the agent drafted the message, nothing is sent and the card tells you why. Everyone else in the conversation sees that the card is waiting, without the client's name or the message. Requests waiting for you also appear in **Activity**, and runs outside Team chat show theirs under **Messages waiting for your approval** on **Agent runs** in the Agent Builder.
+
+### The agent waits for your decision
+
+While a message is waiting, the agent's run is paused. When someone approves, the agent sends exactly that message once and carries on with the rest of its steps, knowing whether it was sent. If someone rejects it, or nobody decides within 24 hours, the agent carries on too, knowing the message was not sent, and it can take a different step. If an agent has a **User approval** step right before a step that only contacts clients, you are asked once, on the message's own card, not twice. If that next step also has other tools or connected services, the **User approval** step stays, so you are still asked.
+
+### Replying to someone who just wrote to you
+
+An agent that answers an **Inbound SMS** or **Inbound WhatsApp** message may reply to the person who just wrote in, on the same channel, without waiting for approval. That is the only exception. If the same agent tries to text a different number, use the other channel, send an email or place a call, it still waits for approval. The agent can send at most five of these quick replies for each message that arrives, and only within half an hour of that message arriving. After that, a reply to the same person is drafted for approval like any other message. A phone call is not paused: what the agent says during a live call is spoken as part of the call and the call carries on, and any message it tries to send to the caller waits for approval for up to 24 hours.
+
+When a message is approved the thread says whether it was sent. In a test environment the thread says nothing reached the client. If sending fails, the thread says so and nothing is delivered. The agent does not try again by itself. Approvals and rejections are recorded in the audit log with who decided and when.
+
+## Remove an agent's reply
+
+A channel admin, an owner or a manager can delete an agent's reply. Open **Message actions**, choose **Delete**, and give a reason. Everyone sees **Message deleted**; the original is kept for the audit trail.
+
+<StillStuck />
+
+{/* source of truth: chat-message-item.tsx, chat-message-cards.tsx (AgentApprovalBlock), chat-agent-contact-card.tsx, lib/chat/agent-contact-card-model.ts */}

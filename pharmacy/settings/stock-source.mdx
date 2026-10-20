@@ -1,0 +1,72 @@
+---
+title: Stock source
+description: "Choose whether your stock numbers come from our till or from another system's stock report, and check that the reports are arriving."
+icon: /images/icons/boxes.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} roles="Owner changes it; owner, manager or anyone with the API access permission can see the report status" />
+
+Most pharmacies sell and count stock in ClinikEHR. If you sell through **another system** instead, you can tell ClinikEHR to take that system's stock report, so that listings show what you really have.
+
+<Path steps={['Sidebar', 'Settings', 'API access', 'Stock source']} />
+
+<TaskHeader
+  before="Your catalogue imported, with barcodes or NAFDAC numbers so reports can be matched, and the owner signed in"
+  time="2 minutes"
+  after="Listings use the stock reports you send, and you can see when the last one arrived"
+/>
+
+## The two choices
+
+| Choice | What it means |
+| --- | --- |
+| **Our till** | ClinikEHR's own sales and stock are the record. This is how every pharmacy starts. |
+| **Another system's stock report** | You keep selling in your other system and send its stock report. ClinikEHR's till refuses to sell, and the online store is not advertised in listings, because there must be one record of your stock, not two. |
+
+## Switch
+
+<Steps>
+  <Step title="Select Use another system's stock report">
+    Only the owner sees this button. Everyone else sees who can change it.
+  </Step>
+  <Step title="Confirm">
+    Read the message and select **Use stock report**. Your existing stock records are kept. Until the first report arrives, your products show as "unknown" in listings.
+  </Step>
+</Steps>
+
+To go back, select **Switch back to our till**. The stock report we hold from your other system is cleared, and our own stock becomes the record again.
+
+## Send the report: create a key
+
+Your other system sends its stock report with a key that you create here. This works on **every paid pharmacy plan, including the Listing plan**.
+
+<Steps>
+  <Step title="Create the key">
+    On the same screen, under **Keys**, select **Create key**. Give it a name for the system that will use it, and tick **Stock report**. On the Listing plan this is the only permission offered. It lets the key send stock reports and nothing else: it cannot read or change your stock.
+  </Step>
+  <Step title="Copy it once">
+    The key is shown once. Put it in your other system, which sends the report to the address your developer or vendor was given. If you lose the key, revoke it and create a new one.
+  </Step>
+</Steps>
+
+Developers: the route and its rules are on the [API reference](https://docs.clinikehr.com/inventory#send-a-stock-report).
+
+## Check that reports are arriving
+
+While you use a stock report, the card shows its status:
+
+| Status | Meaning |
+| --- | --- |
+| **Waiting for the first report** | Nothing has been accepted yet. |
+| **Receiving reports** | The latest report is recent. |
+| **Out of date** | The latest report is older than its allowed age, so your pharmacy shows as "unknown" until a new one arrives. |
+| **Last report rejected** | The newest report was not applied. The card says why: too few products compared with the last one, an unreadable row, or an empty report. |
+
+It also shows how long ago the last report was accepted and how many products were matched and not matched. Products that were not matched are counted and ignored; nothing is guessed.
+
+<StillStuck />

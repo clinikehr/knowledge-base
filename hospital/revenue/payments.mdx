@@ -1,6 +1,6 @@
 ---
 title: Record and collect payments
-description: "Record what a patient pays at the desk, send a secure payment link, chase what is outstanding, and void a payment taken in error."
+description: "Record what a patient pays at the desk, send a secure payment link, chase what is outstanding, reduce a charge, and void, refund or credit a payment."
 icon: /images/icons/hand-coins.svg
 ---
 
@@ -21,16 +21,22 @@ Money reaches a hospital two ways: somebody hands it over at a desk and you reco
 
 The heading reads **Payments Management** — "Process and track payments from patients for services, medications, and more". **Refresh** and **New Payment** sit beside it.
 
-Four tabs:
+Six tabs, with **Approvals** and **Credits** after **Pending** (**Credits** for people who may refund and credit):
 
 | Tab | What it holds |
 | --- | --- |
 | **Overview** | **Total Collected**, **Pending Balance**, **Recent Payments** and **Top Method**, with a method breakdown and recent activity |
-| **Payments** | Every payment recorded, searchable and filterable |
-| **Pending** | Patients with an outstanding balance |
+| **Payments** | Every payment recorded, in **Full payments** and **Reduced payments**, searchable and filterable |
+| **Pending** | Patients and walk-in clients with an outstanding balance |
 | **Total income** | Billing and the Pharmacy till together, per day and by payment method, for the dates you pick. See [See your total income in one place](#see-your-total-income-in-one-place) |
 
-The **Payments** table shows **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**. **Filter by Method** narrows it to **Cash**, **Card**, **Bank Transfer**, **Mobile Money** or **Insurance**. Each row's **Actions** menu offers **View Details**, **Download Receipt**, **Void Payment**, **Copy Payment ID** and **Copy Payment Info**.
+The **Payments** table shows **Date**, **Patient**, **Invoice**, **Amount**, **Method**, **Type**, **Reference** and **Received By**. **Filter by Method** narrows it to **Cash**, **Card**, **Bank Transfer**, **Mobile Money** or **Insurance**. Each row's **Actions** menu offers **View Details**, **Receipt**, **Void Payment**, **Copy Payment ID** and **Copy Payment Info**.
+
+**View a payment.** Select **View Details** on a row (or the row itself) to open its payment sheet: the **amount** and **method**, whether it was voided, the date and time, the patient or walk-in client, the **reference**, who recorded it, any notes recorded on the payment, the invoice and what it paid for (with each line's full name, such as the medicine and dose or the test), any **reduction** (**Discount**, **Subsidy**, **Waived** or **Part-paid**), and any refunds or credits linked to the payment (a line cancelled and credited, credit used to pay, credit restored). Anything the record does not hold reads **—**. **Print receipt** prints the receipt. **Receipt** on a row's **Actions** menu prints it straight away without opening the sheet. **Cancel & credit** appears for people allowed to refund and credit. Opening a payment is recorded in the audit log.
+
+Under **Payments** are two tabs. **Full payments** lists payments charged at full price and paid in full. **Reduced payments** lists payments where the charge was lowered below full price (a discount, a subsidy or a waiver) or that only part-paid an invoice, so a balance remains. Each reduced row carries a **Discount**, **Subsidy**, **Waived** or **Part-paid** badge, and the **Reduced amounts** report sits under it. **Part-paid** reads the invoice's balance as it stands now, so a payment that finished an invoice later is listed under **Full payments**. Both tabs list every payment, a page at a time, with the true total beneath; search or **Filter by Method** to narrow them.
+
+Under **Pending** are two tabs, **Patients** and **Walk-in clients**. **Walk-in clients** lists walk-in clients who still owe, with a **Walk-in** badge, their walk-in number, the unpaid orders and the **Balance owing**; **Process payment** opens **New Payment** on that client. On a phone these lists show as cards.
 
 The **Pending** table lists **Patient Name**, **Patient ID**, **Items**, **Oldest Item** and **Total Pending**, with **Process Payment** on the row. **Oldest Item** is what to sort a chase list by.
 
@@ -52,7 +58,7 @@ Billing and the Pharmacy till used to be two separate screens, so working out wh
     Choose a range with the date picker above the figures. Everything on the tab follows it: the four figures, the chart and both tables. One click on a day means that single day.
   </Step>
   <Step title="Read it">
-    **Total income** is **Billing** plus the **Pharmacy POS** takings after refunds. **Refunded at the till** shows what was handed back. **Income by day** splits each day by where the money came in, **By payment method** lays Billing beside the Pharmacy till for cash, card, bank transfer and the rest, and **Day by day** lists every day that had money in or out, newest first.
+    **Total income** is **Billing** plus the **Pharmacy POS** takings after refunds. **Refunded at the till** shows what was handed back. Two cards sit below the figures: **Reductions** (charges you chose not to collect, with a table by category) and **Refunds** (money handed back, with a table by method). Reductions are not money received, so they are in none of the income figures; the Reductions card matches the **Reduced amounts** report for the same dates. **Income by day** splits each day by where the money came in, **By payment method** lays Billing beside the Pharmacy till for cash, card, bank transfer and the rest, and **Day by day** lists every day that had money in or out, newest first.
   </Step>
 </Steps>
 
@@ -114,6 +120,14 @@ This is the usual route, because it settles a specific balance.
 
 <AuditNote action="Recording, viewing or voiding a payment" />
 
+### Take a walk-in client's payment
+
+A walk-in lab or imaging client has no patient record, so they are not in the patient search. At the top of **New Payment**, switch from **Patients** to **Walk-in clients**. Search by walk-in number, name or phone — clients who still owe come first — and choose the client. Their unpaid lab tests and imaging orders are listed and ticked; untick anything they are not paying today, choose the method and select **Record payment**. Select **Print receipt** to give them a slip. This is the same payment the lab screens take (see [Walk-in lab and imaging clients](/hospital/diagnostics/walk-in-clients)), so a walk-in is never charged twice for an order. You need the **Collect payments** permission to see the switch.
+
+Walk-in clients who still owe also appear in the **Pending** tab, on the **Walk-in clients** tab of **Pending**, with a **Walk-in** badge and their walk-in number. **Process payment** on one opens this screen for that client.
+
+In the **Payments** table a walk-in's payment reads **Walk-in · Name (W-000123)** with a **Walk-in** badge, instead of a patient's name.
+
 ## Reduce what a patient pays (subsidy)
 
 When the clinic subsidises or reduces a charge for a patient, record the amount the patient will actually pay, so the item reads **Paid** instead of **Partially paid** or **Pending**.
@@ -130,12 +144,26 @@ When the clinic subsidises or reduces a charge for a patient, record the amount 
   </Step>
 </Steps>
 
-- **The amount must be more than zero, less than the charge, and no less than anything already paid on the item.** Waiving an item completely is a write-off, not a reduced amount, and is not recorded here. You can reduce one item and charge another in full in the same payment.
-- **Not for an item billed to an HMO.** The HMO and the patient already share its price, so **Reduced amount** is not offered for it.
-- **A subsidy is not money received.** The payment total, **Total income** and the revenue figures count only what was paid. Reductions are listed on their own under **Payments** in **Reduced amounts**, with the date, item and who gave it, and voided payments are left out. The reason is shown to owners, managers and anyone who holds **Apply reduced amounts**.
+- **The amount must be less than the charge and no less than anything already paid on the item.** To waive a whole unpaid item, choose **Request full waiver** in the same panel. A full waiver always goes to a second owner or manager (see [Approvals](#approvals)); once approved, the item shows **Waived** and the front desk records it with nothing to collect. A waiver is only for an item with nothing paid on it. You can reduce one item and charge another in full in the same payment.
+- **An item an HMO partly covers is reduced on the patient's share only.** The HMO's share does not change, so the HMO claim stays correct.
+- **A subsidy is not money received.** The payment total, **Total income** and the revenue figures count only what was paid. Every reduction — at payment, set before payment, on a price list item, and on an invoice — is listed on its own under **Payments** in **Reduced amounts**, with the date, item, where it was given, its category and who gave it. Group the list by category or by where it was given; voided payments are left out. The reason is shown to owners, managers and anyone who holds **Apply reduced amounts**.
 - **The receipt says so.** The item is marked "Subsidy … — paid in full" and the receipt has a **Subsidy** line. It is never counted as paid and never leaves a balance due.
 - **Not with Insurance.** A reduced amount cannot be combined with an insurance payment. Choosing **Insurance** removes any reduction you set.
-- **To change it, untick the item.** Unticking removes the reduction and the item goes back to its full balance.
+- **To change it before you pay, untick the item.** Unticking removes the reduction and the item goes back to its full balance.
+- **Reduce an item before anyone pays for it.** In **Reduced amount**, choose **Save for later** instead of applying it. The item then shows **Reduced** — on its row, and on the patient's total in the **Pending** tab — for everyone, and the front desk collects the reduced amount without needing the permission. It stays until the item is paid or someone with **Apply reduced amounts** removes it; removing it asks for a reason, and the item goes back to its full price.
+- **Optionally file it under a category.** A reduction can carry a category beside its reason, so the **Reduced amounts** report can be grouped.
+
+### Reduce an invoice
+
+Open an invoice's **Record Payment** (from **Billing → Invoices**, **Pay Invoice** here, or **Collect payment** on the patient's billing tab). Anyone with **Apply reduced amounts** sees **Reduced amount** against each line of the invoice:
+
+- **Reduce a line** by entering what the patient will pay for it, with a reason. The invoice total goes down by the amount forgone, and the balance with it.
+- **Reduce the whole invoice** by an amount or a percentage. It is spread across the lines in proportion to their price, so your line reports stay accurate. With an HMO on the invoice the amount or percentage is of the patient's share.
+- **If the patient has already paid more than the new total,** the extra becomes the patient's credit. Nothing is refunded automatically.
+- **Take a reduction back** with **Take back reduced amounts** and a reason, while the invoice is not fully paid. The reduction stays in the record. It cannot be taken back once the invoice is fully paid, or after a credit was issued from it.
+- **The invoice and the receipt show a Reduced amount line** with the amount only. The reason is kept inside the clinic.
+- **A draft invoice is edited directly.** Once an invoice has been sent, or has a payment on it, its prices and discount can no longer be edited — every change is a recorded reduced amount.
+- **A discount needs the same permission and a reason.** The **Global Discount (%)** and each line's discount on the invoice form are available only to people who hold **Apply reduced amounts**, and ask for a reason.
 
 ## Send a payment link instead
 
@@ -183,10 +211,107 @@ If the patient is not in front of you, send a link and let them pay by card.
 ## Void a payment taken in error
 
 <Warning>
-  Voiding is the only way back, and only these roles can do it: "Only a clinic owner, manager or accountant can void a payment." The dialog explains what happens — the payment "will be marked voided and the invoice balance restored. The record is kept for your books and audit trail." Give a **Reason (optional)** anyway; a voided payment with no reason is a question somebody will ask later.
+  Void is for a payment that should never have been recorded — the wrong patient, the wrong amount, or one entered twice. It does not give money back to the patient. Only these roles can void: "Only a clinic owner, manager or accountant can void a payment." Give a **Reason (optional)** anyway; a voided payment with no reason is a question somebody will ask later.
 </Warning>
 
-Nothing is deleted. The voided row stays visible, struck through and badged **Voided**, and the invoice returns to its outstanding balance.
+Open the row's **Actions** menu, select **Void Payment**, and read the dialog before you confirm. It says what will happen:
+
+- **A payment against an invoice** is marked voided and the invoice balance is restored.
+- **A payment with no invoice** (taken at **New Payment**, from **Collect payment** on the Lab or Pharmacy list, or a walk-in's payment) is marked voided, and everything it paid for goes back to unpaid. The dialog names them — for example "the 2 lab tests and 1 medication it paid for will show as unpaid again in Lab, Pharmacy, Imaging and Pending Items". They can then be paid again, correctly.
+
+A lab test that has not been done can be cancelled once its payment is voided (**Cancel Test** on the Lab list). Voiding does not return money to the patient. If the service will not be done and the patient has already paid, do not void — use **Cancel & credit** instead (see [Void, refund or credit](#void-refund-or-credit) below).
+
+Nothing is deleted. The voided row stays visible, struck through and badged **Voided**, with the reason and who voided it in the audit log. If the payment cannot be voided you are told why — for example that it was already voided, or that you do not have permission — and nothing changes.
+
+## Void, refund or credit
+
+Three different things, and the product keeps them apart:
+
+| You want to… | Use | What happens |
+| --- | --- | --- |
+| Correct a payment recorded in error | **Void Payment** | No money moves. The record stays and the items become payable again. |
+| Undo a payment for a service that will not be done | **Cancel & credit** | The item is cancelled, the payment taken for it is released, and the cash is held as the patient's **credit**. |
+| Give money back to the patient | **Refund credit** | Pays the credit back, by cash, transfer, mobile money, card or another way, and records it. |
+
+### Cancel & credit
+
+Open the payment's **Actions** menu and choose **Cancel & credit**. Tick the paid lab test, imaging study, service, medicine that has not been dispensed, or consultation that has not started, give a reason, and confirm. The patient is credited what was actually paid for it (after any reduced amount). A lab test that has been paid offers the same choice when you cancel it from the Lab list. A medicine that was dispensed (take it back through a return), a consultation that has started, or an item that already has a result cannot be cancelled this way, and a walk-in client has no account to hold a credit — void the payment if it was a mistake. A payment from which an item has been credited can no longer be voided as a whole; settle the credit instead.
+
+You need the **Refund and credit payments** permission (owners and managers have it; an owner can give it to a person).
+
+### The patient's credit
+
+A patient with credit has a **Credit balance** card on their billing tab, with its history. You can:
+
+- **Spend it.** In **New Payment**, a **Patient credit** method appears whenever the patient has credit. It pays for their own items only, and the payment is refused if the credit does not cover it. Voiding such a payment puts the credit back.
+- **Refund it.** **Refund credit** records the money paid back, with a reason. Choose **Back to the original card (automatic)** when the patient paid online by card: pick the card payment and the refund is sent to the card provider, which returns the money to the card the patient paid with. It is recorded as paid out only when the provider confirms it, which can take a few minutes; until then the credit is held for the refund, and if the provider cannot complete it the credit comes back. You can never refund a card payment for more than it took. The other methods (cash, bank transfer, mobile money, card, other) only record that you paid the money back yourself.
+- **Let it expire.** Under **Settings → Billing & Plans → Reductions & refunds**, **Patient credit expiry** can make unused credit lapse after 3, 6, 12 or 24 months. It is **Never** unless you change it. The oldest credit lapses first, the patient's credit history shows it as expired, and an owner is told when credit is about to lapse within 30 days. Credit that was used or refunded is never affected, and a lapse does not change **Total income**.
+- **Transfer it** to a family member or guarantor with **Transfer to another patient** and a reason. Owners and managers only.
+
+### Reduction categories
+
+Every reduced amount is given a **Category**: **Staff**, **Indigent / charity**, **Goodwill**, **Price match** or **Other** to begin with. Owners and managers can add, rename and retire categories under **Settings → Billing & Plans → Reductions & refunds → Reduction categories**. Renaming changes only the name, so earlier figures stay together; a retired category is hidden from new reductions and stays on the ones already given. **Other** is always available and always needs a written reason of at least 10 characters.
+
+A category can carry its own limits: a **largest reduction** (for example Goodwill no more than 20% of the charge), **Always needs a second approver** (it then goes to [Approvals](#approvals) whatever its size), and **Needs an eligibility document**. A category with no limits follows the clinic's default. The limits are checked on the server for a reduced amount typed at **New Payment**, one saved for later, and one on an invoice. A category that **needs an eligibility document** cannot be used for a one-off reduced amount; use a [patient reduction rule](#patient-reduction-rules), which holds the document. A reduced amount that needs a second approver is never turned away at the till: the screen says **Needs approval**, the patient pays the item in full, and the reduction is sent to [Approvals](#approvals) automatically. If it is approved, the difference becomes the patient's credit; if it is rejected, nothing changes. On an invoice line, or a price-list item that is not yet an item on the patient's account, an approval-sized reduction is still refused, with a sentence saying what to do.
+
+The **Reduced amounts** report shows the category by its current name and can be grouped by it.
+
+### Approvals
+
+The **Approvals** tab on the **Payments** page is one inbox for the requests that need a second owner or manager: a refund above your **Refund approval limit**, and a reduced amount that takes off more than the percentage you set under **Settings → Billing & Plans → Reductions & refunds**. Leave either blank for no second approval.
+
+- **To approve** is for owners and managers. Waiting requests come first, oldest first, each showing who asked, the kind, the amount, the category and the reason. **Approve** can carry a note, and you can approve a **smaller** amount than was asked for, never a larger one. **Reject** needs a reason, which the person who asked will see. A decision is final; if something should change, the person asks again.
+- **My requests** is for everyone who can ask. It shows your own requests and, read-only, your department's (the department set on the staff profile as it is today). For a colleague's request you see who asked, the kind, the amount, the category and the status, but not the reason, the note or the patient. Without a department you see only your own, and the page tells you to ask a manager to set one. A department head gets no approval rights.
+- **Withdraw** a request that is still waiting. **Request again** starts a new request from one that was rejected, expired or withdrawn, already filled in, so you can change the amount or the reason. Approvers see it follows the earlier one.
+- **History** shows the last 90 days; pick a date range for older ones.
+- **The requester can never approve their own.** If your clinic has no other owner or manager, the owner can approve their own request after confirming, and the record says it was self-approved because no second approver was available. As soon as another owner or manager exists, the two-person rule applies again.
+- **While a reduced amount waits,** the item stays at full price and can be paid. If it is paid in full before the approval, approving it turns the difference into the patient's credit. If it is rejected, nothing changes.
+- **Patient rules and waivers come here too.** A [patient reduction rule](#patient-reduction-rules) above your approval percentage (or a fixed-amount rule, when you have set a percentage, or a 100% rule) shows as a **Patient rule**, and a request for a full waiver shows as a reduced amount of the whole charge. Neither does anything until it is approved.
+- **You are told.** Owners and managers see a count beside **Payments** in the menu while requests wait, get a notice in the app, and an e-mail that says a request is waiting without naming the patient or the amount. Turn the e-mail off with the clinic's notification settings for billing.
+- **A request nobody decides expires** after the number of days set under **Settings → Billing & Plans → Reductions & refunds** (7 by default). Approvers are reminded after two days, and the person who asked is told when it expires. Owners and managers see what is waiting on the home dashboard, and the person who asked is notified when a request is decided.
+
+A refund above the limit is sent from the patient's **Credit balance** card; a reduced amount above the percentage is sent when you save it from **New Payment**, and the screen says it was sent for approval.
+
+### Patient reduction rules
+
+A **reduction rule** gives one patient an automatic reduction: what it covers (all items, consultations, lab tests, pharmacy, services or radiology), a percentage or a fixed amount off each item, a start and an end date, a category and a reason. Open the patient's **Billing** tab and choose **Add rule** under **Reduction rules**.
+
+- **It applies by itself.** New items in scope are reduced when they are paid, and **New Payment**, **Pending** and the front desk show a **Reduction rule** badge with the terms and the end date. The badge never shows the reason.
+- **The best one wins.** If an item has both a reduction set on it and a rule, only the larger reduction applies. Reductions never stack. An HMO's share of an item is never reduced.
+- **Items that were already waiting.** When you save a rule, the patient's unpaid items in its scope are listed with tick boxes. Ticked ones get the reduction; the others are left out of the rule for good. Items already paid never change.
+- **It ends on its end date, or when you remove it** (a reason is required). Removing it stops it for new items only.
+- **A rule that needs a second approver** (see [Approvals](#approvals)) waits there and does nothing until it is approved.
+- **A fixed amount is compared as a percentage of the list price.** ₦5,000 off a ₦10,000 consultation counts as 50%, and is checked against your approval percentage the same way a percentage rule is; an amount equal to or above the price counts as 100% and always needs a second approver. When what the rule covers has no single list price (**All items**, or lab tests, services or medicines that are priced differently), the percentage cannot be known, so a fixed-amount rule goes to a second owner or manager whenever your clinic has an approval percentage set.
+- **Eligibility.** A rule can carry a note and can require a document. It then applies only while a verified, unexpired [eligibility document](#eligibility-documents) is attached; until then the badge says it is paused and why.
+
+Owners, managers and anyone with **Apply reduced amounts** can set and remove rules.
+
+### Reduction templates
+
+Under **Settings → Billing & Plans → Reductions & refunds → Reduction templates**, owners and managers can save ready-made rules, such as "Staff family, 20% on everything for a year": a name, what it covers, the percentage or amount, how many days it runs, a category and whether it needs a document. Staff then choose the template in **Add rule** and the terms fill in.
+
+- **Staff can lower or shorten, never raise.** Changing a template's terms needs a reason, which is kept with the rule. Raising the amount, lengthening the dates or widening what it covers needs an owner or manager.
+- **Editing or retiring a template never changes rules already given.** Each shows how many patients use it. Retiring only hides it from new use. An owner or manager can choose **Update existing rules** to bring them up to the template's current terms, with a reason; each rule keeps its own record of the change.
+- Anything above your approval percentage still needs a second owner or manager.
+
+### Eligibility documents
+
+A rule, or a category, can require an eligibility document such as an ID or a letter. From a rule that needs one, choose **Add eligibility document**.
+
+- **Kept apart.** Documents are not part of the patient's clinical record or their files list. Only owners, managers and people with **Apply reduced amounts** can see or open them, and every time one is opened it is recorded.
+- **A second person checks it.** The person who adds a document can never verify it. Another owner, manager or person with **Apply reduced amounts** chooses **Verify** or **Reject** (a reason is required, and the person who added it sees it). The rule applies only once the document is verified.
+- **Expiry.** A document can have an expiry date. When it passes, the rules relying on it pause: new items get no reduction, and you are asked for a new document. Items already paid never change.
+- **Files** can be PDF, JPEG or PNG, up to 10 MB.
+- **How long they are kept.** A document is deleted one year after the last rule using it ends (a document no rule used, one year after it was added). The deletion is recorded as a count only.
+- **Export.** A data export lists each document's kind, status and dates, not the file itself.
+
+### The Credits tab
+
+The **Credits** tab on the **Payments** page (for owners, managers and anyone with **Refund and credit payments**) lists every patient who holds credit, largest first, with the total held and, if you have set credit to expire, how much lapses within 30 days. Below it, **Refunds made** lists the credit paid back in a period you pick. **Export CSV** saves either list; names that look like a spreadsheet formula are saved as plain text. Open a patient's billing tab to spend, refund or transfer their credit.
+
+### Refunds in your figures
+
+Cancelling and crediting does not change **Total income** by itself — the cash is still with you. A payment made with credit is not counted again as income. When credit is refunded, **Total income** goes down by that amount and says so under **Billing**; a card refund counts once the card provider has confirmed it. Every income figure follows the same rule: a payment made with credit and a voided payment are not income, and a refund is money going out. That covers the dashboard cards, the executive overview, the revenue forecast and the reports.
 
 ## Who can do this
 
@@ -202,9 +327,12 @@ Once Payments opens, almost nothing narrows further:
 | Open the payment reports | Anyone who can open Payments | Nothing |
 | See **Total income** | Anyone who can open Payments | Nothing |
 | Reduce what a patient pays (**Reduced amount**) | Owners and managers | The **Apply reduced amounts** permission. It is off for everyone else, even staff you have not saved in the permissions sheet, until the owner switches it on for a person |
+| Set a patient reduction rule, add or open an eligibility document, check a document someone else added | Owners and managers | The **Apply reduced amounts** permission. Templates are changed by owners and managers only |
 | Void money already taken | Owners, managers, accountants | A server check nobody bypasses — "Only a clinic owner, manager or accountant can void a payment." |
+| Cancel a paid item and credit the patient, refund or transfer credit | Owners and managers | The **Refund and credit payments** permission. It is off for everyone else until the owner switches it on for a person |
+| Approve a large refund or a large reduced amount | A different owner or manager | The clinic's **Refund approval limit** and the reduction percentage under **Settings → Billing & Plans → Reductions & refunds** |
 
-Your hospital's staff sheet does carry a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — and they are recorded against each person. No billing screen reads them, so they change nothing today. Restrict billing at the **Role Navigation** layer instead.
+Your hospital's staff sheet also carries a **Billing** section of per-person toggles — **Create billing documents**, **Add client payments**, **Add insurance payments**, **Edit service fees**, **View Payment Reports**, **View financial dashboard**, **Refund payments** — that are recorded against each person but that no billing screen reads, so they change nothing today. In particular, the **Refund payments** toggle there does not control refunds: use **Refund and credit payments** in the permissions sheet instead. Restrict billing at the **Role Navigation** layer.
 
 Someone without **Collect payments** sees **Process Patient Payment** and **Record Payment** greyed out with "Your role can't take payments at this clinic. Ask an owner or manager." Enforcement is **opt-in per person** — someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not. No figure on this page is withheld by permission — if you can open Payments you see all of it, **Total income** included.
 
@@ -213,7 +341,7 @@ Someone without **Collect payments** sees **Process Patient Payment** and **Reco
 - The payment is under **Payments** with your name in **Received By**, the method and your reference.
 - The invoice reads **Paid**, or **Partially paid** with the correct remaining balance.
 - The **Pending** tab no longer lists that balance.
-- A voided payment is struck through and badged **Voided**, and the invoice balance is back.
+- A voided payment is struck through and badged **Voided**. For an invoice payment the invoice balance is back; for a payment with no invoice, the items it paid for show as unpaid again in Lab, Pharmacy, Imaging and **Pending**.
 
 ## Common issues
 
@@ -223,7 +351,7 @@ Someone without **Collect payments** sees **Process Patient Payment** and **Reco
   </Accordion>
 
   <Accordion title="I recorded a payment against the wrong invoice">
-    Void it with a reason, then record it correctly. You cannot delete an invoice once it has a payment, and voiding is limited to owners, managers and accountants.
+    Void it with a reason, then record it correctly. You cannot delete an invoice once it has a payment, and voiding is limited to owners, managers and accountants. A payment taken at **New Payment** works the same way: voiding it puts the items it paid for back to unpaid, ready to be paid correctly.
   </Accordion>
 
   <Accordion title="Send payment link is not offered, or is refused">
@@ -259,7 +387,15 @@ Someone without **Collect payments** sees **Process Patient Payment** and **Reco
   </Accordion>
 
   <Accordion title="Does voiding refund the patient's card?">
-    No. It corrects your record and restores the invoice balance. Returning money charged to a card is done with your payment provider.
+    No. Voiding corrects your record: it restores the invoice balance, or sets the items a payment paid for back to unpaid. It does not return money to the patient. If the service will not be done, use **Cancel & credit**, then refund the credit — to the original card, for an online card payment, with **Back to the original card (automatic)**.
+  </Accordion>
+
+  <Accordion title="Void Payment says part of the payment was cancelled and credited">
+    An item of that payment was cancelled and its cash is now the patient's credit, so the whole payment can no longer be voided. Refund or spend the credit instead.
+  </Accordion>
+
+  <Accordion title="A refund says it needs approval">
+    It is above your clinic's **Refund approval limit**. Another owner or manager approves it on the patient's **Credit balance** card. If you are the only owner or manager, you can approve your own after confirming.
   </Accordion>
 
   <Accordion title="Where do pharmacy counter takings appear?">
@@ -267,7 +403,7 @@ Someone without **Collect payments** sees **Process Patient Payment** and **Reco
   </Accordion>
 
   <Accordion title="Can I print a receipt later?">
-    Yes — **Download Receipt** on the payment's row, or **Print Receipt** from the payment view.
+    Yes — **Receipt** on the payment's **Actions** menu prints it straight away, or use **Print receipt** in the payment's sheet.
   </Accordion>
 </AccordionGroup>
 

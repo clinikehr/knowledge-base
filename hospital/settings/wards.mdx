@@ -69,6 +69,34 @@ Every ward and sub-ward row also shows **Occupancy** — a bar and a count of oc
   Deleting a ward or sub-ward is permanent and only works once the level below it is empty — the confirmation names what's still underneath if it isn't, and the delete is refused rather than cascading. Delete every bed space first, then the sub-ward, then the ward. A bed space that is occupied, or carries an active admission, cannot be deleted at all until the patient is discharged. A ward that is temporarily out of use should be set to **Closed** instead, and a bed under repair to **Under maintenance**.
 </Warning>
 
+## Bed fees
+
+Below the ward list, the **Bed fees** card is where you say what a night in each ward costs. Every ward is listed with its fee, and every sub-ward under it can keep the ward's fee or have its own.
+
+| Control | What it does |
+| --- | --- |
+| **Set ward fee** · **Change ward fee** | Opens **Ward bed fee**. Enter the **Fee per day** and select **Save fee**. Applies to every bed in the ward |
+| **Set a different fee** · **Change section fee** | Opens **Section bed fee** for one sub-ward. That sub-ward is charged this fee instead of the ward's |
+| **Use the ward fee** | Removes a sub-ward's own fee, so it is charged the ward's fee again |
+| **Remove** | Removes the ward's fee. New stays in that ward are then not charged for the bed |
+
+- **A sub-ward's own fee always wins** over the ward's. A sub-ward with no fee of its own shows **Uses the ward fee** and the amount.
+- **A stay is one continuous stay.** Each 24 hours started is charged from the moment the patient is admitted, with a minimum of one: 23 hours owes one day, 36 hours two days, 49 hours three. Moving the patient to another bed with **Move bed** does not start a new stay or a new minimum day (see [Move a patient to another bed](/hospital/inpatient/admissions#move-a-patient-to-another-bed)). Each 24 hours is charged at the fee of the bed the patient was in **when that 24 hours began**.
+- **The fee is live.** From admission it appears in the patient's **Pending Items** in [Payments](/hospital/revenue/payments) and grows each day until the patient is discharged. It can be paid at any time, in part or in full, and a reduced amount can be applied like on any other item.
+- **A new fee applies from the next 24 hours.** Changing a fee never rewrites one already charged: a 24-hour period that has started keeps the fee it began with, so a total never changes after the fact. The old fee is kept, not replaced.
+- **Fee history.** Select **Fee history** under the list to open **Bed fee history**: every fee each ward and section has had, with the amount per day and the dates it was in force ("Since the start", "From 3 Oct 2026 until 9 Oct 2026", or "in force").
+- Owners and managers can set fees. Everyone else on the team can see them. Each change is recorded in the [audit log](/hospital/settings/security).
+
+### Bed days for a patient covered by an HMO
+
+A bed day is billed to the insurer like any other item, with one difference: **the insurer is billed when the patient is discharged**, so the claim covers the whole stay in one go (for a stay of more than 30 days, each completed 30 days is billed as it passes, and the days left over at discharge). Until then the bed fee's row in **Bill HMO** reads **Billed to the insurer when the patient is discharged**. The patient's own share stays payable at any time. See [Bill an HMO at the till](/hospital/insurance/bill-hmo#what-the-insurer-is-billed).
+
+To price bed days at the insurer's agreed rate, add a service to that insurer's [price list](/hospital/insurance/hmo-setup) named **Bed day** (or "\<ward name\> bed day"). The price is per day. With no such price, the insurer pays its percentage of your own bed fee.
+
+<Note>
+  A ward with no fee set adds nothing to the patient's pending payments. If a patient was admitted and no bed fee appears for them, check that their ward, or their sub-ward, has a fee here.
+</Note>
+
 ## What a ward is for
 
 **What this ward is for** describes the ward's clinical function — what happens in it — and it is separate from a sub-ward's **Type**, which describes the room (single, double, VIP). It is optional, and the **For** column in the ward list shows **Not set** until you choose something.

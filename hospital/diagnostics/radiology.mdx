@@ -38,11 +38,14 @@ Under them, three priority buttons appear **only when they have something to sho
 | **Search studies, patients, or findings...** | Searches all three |
 | **Create Report** | Raises a new imaging request |
 | **Refresh** · **Export** | Re-read the list; take a copy |
-| **Columns** → **Toggle columns** | Shows the optional columns |
+| **Filter by date range** | Looks further back than your queue window, or at particular days |
+| **View Columns** → **Toggle columns** | Shows the optional columns |
 | **All statuses** | **Pending**, **Scheduled**, **In Progress**, **Completed**, **Reported** |
 | **All urgencies** | **Routine**, **Urgent**, **STAT** |
 | **All modalities** | **X-Ray**, **CT Scan**, **MRI**, **Ultrasound**, **Mammography**, **Fluoroscopy**, **PET Scan**, **DEXA Scan**, **ECG**, **Echo** |
-| **All categories** · **Pick a date range** | Diagnostic, screening, interventional or therapeutic; and the period |
+| **All categories** | Diagnostic, screening, interventional or therapeutic |
+
+With no dates chosen the list shows your **Radiology** queue window (see [Facility settings](/hospital/settings/facility)). To look further back, select **Filter by date range** (beside **View Columns**) and pick the first and last day; the list then shows the studies created on those days, newest first. **Clear dates** returns to the queue window. A range can be up to 12 months — a wider one is refused with **Choose a range of 12 months or less.** A list shows at most 1,000 studies at a time; if more match, a line under the table says **Showing the newest 1,000** and asks you to narrow the dates. **Export** follows the dates you pick (and the same 12-month limit), and the file's name carries those dates; if more than 1,000 studies match, the file holds the newest 1,000 and a message asks you to narrow the dates. **Refresh** keeps the dates you picked.
 
 The table shows **Patient ID**, **Patient Name**, **Study Type**, **Status**, **Ordered** and **Ordered By** by default. **Accession**, **Scheduled**, **Performed**, **Reported**, **Technician**, **Radiologist**, **Findings**, **Impression** and **Payment** are available under **Toggle columns**. **Payment** reads **Paid · HMO pending** for a study billed to the patient's insurer once the patient has paid their own share and the insurer's part is still outstanding.
 
@@ -52,7 +55,7 @@ Badges follow a strict order of importance: **Critical** outranks **STAT**, whic
 
 ## Move a study through the list
 
-Each row's menu offers **View Study**, then the one status action that applies:
+Each row's menu offers **View Study**, then the one status action that applies. It also offers **Ask the ordering clinician**, which opens a team chat conversation with the clinician who ordered the study, linked to the order and its patient (see [Ask about an order](/hospital/pharmacy/prescriptions#ask-about-an-order)). A walk-in client has no patient record, so their orders do not offer it:
 
 <Steps>
   <Step title="Schedule Study">
@@ -173,6 +176,8 @@ Per-person enforcement is **opt-in**: someone never saved in the permissions she
 
   <Accordion title="What does Radiology History show?">
     Two tabs. **By Patient** (the default) groups every order into one row per patient — how many, their last order date, and the most recent report status — with a search box and a date-range filter; leave the range blank to see a patient's whole history. Selecting a patient opens their orders for that range as cards (study, modality, findings, impression, report status). **All Records** is the one-row-per-order table, and it goes back as far as the records do — unlike the request queue, which only shows recent orders.
+
+    Each order's **⋯** menu offers **View Details** and **Download PDF**, which saves the order's report without opening it. Select **View Details** to open a past order and you can save its report from there too: **Download PDF** saves the radiology report, and **Send** shares it securely by email, exactly as on the live report form. If a file cannot be made you see **Download failed**; try again, and contact support if it keeps happening.
 
     Above the tabs, **All**, **Visits**, **Ward** and **Walk-in** narrow All Records and a patient's list to one kind of order. The choice stays in the page address, so a refresh or a shared link opens the same view. Patient totals always count every kind. A restricted client you are not allowed to see appears above the tabs as **Secured patient** and a number with how many imaging orders exist; **Request emergency access** on it opens their orders for the time you choose.
   </Accordion>

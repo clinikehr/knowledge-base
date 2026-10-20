@@ -1,0 +1,80 @@
+---
+title: Control which roles can use an agent
+description: "Choose who can use each agent, which roles each of its tools works for, who an agent acts as when no one is asking, and what a website assistant may do."
+icon: /images/icons/toolbox.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Essential and above, like the builder itself" />
+
+An agent does things for the person who asks it, so what it can do should follow that person's role. A cashier should not be able to ask an agent to open a clinical note, and a doctor should not be able to ask it to change a bill. Owners and managers set these rules for each agent.
+
+<Path steps={['Sidebar', 'AI Agents', 'Your agent', 'Who can use']} />
+
+<TaskHeader before="An agent you can open in Agent Builder, and an owner or manager account" time="5 minutes per agent" after="An agent that only the right roles can use, and only for the right kinds of work" />
+
+## How the rules work
+
+- **Rules only narrow.** A role being allowed means the agent may try. The person's own permissions still apply to every step, so an agent can never do something its asker could not do themselves.
+- **A refused step gets a plain answer.** If someone's role is not allowed to use a kind of tool, the agent says so for that part, for example "I can't do that for your role. Ask someone who handles billing tasks.", and carries on with the rest.
+- **Owners and managers always pass.** The role lists never lock them out.
+- **Contacting patients needs a permission too.** Texting, emailing, messaging or calling a patient through an agent also needs the person's **Contact patients through agents** permission (see [Permissions](/platform/team/permissions)). Owners and managers always have it, and so does anyone whose permissions you have not set yet. Even then, nothing reaches the patient until a person approves the drafted message on its card (the only exception is an agent answering the person who just texted or WhatsApped it, on the same channel, within 30 minutes of their message), and the agent waits for that decision before it carries on: see [Approve a message to a client](/platform/team/team-chat-ai-agents#approve-a-message-to-a-client).
+- **Every refusal is recorded** in your audit log, without any message text.
+
+## Until you choose, safe defaults apply
+
+Each tool belongs to a kind of work, and each kind starts with sensible roles. **Communications** covers texting, emailing, messaging and calling, posting to your team, and reading, searching and drafting clinic mail. Billing, accounting, cashier, storekeeper, records and employee roles are not in it unless you add them for a tool.
+
+
+| Kind of tool | Roles that can use it by default |
+| --- | --- |
+| **Billing and finance** | Owner, manager, biller, accountant, cashier, receptionist |
+| **Clinical** | Clinical roles |
+| **Scheduling** | Front desk and clinical roles |
+| **Admin** | Owner and manager |
+| **Communications** | Front desk and clinical roles |
+| **General** | Every staff role except technical roles |
+
+## Choose who can use an agent
+
+<Steps>
+  <Step title="Open the agent">
+    On the **Agent Builder** page, open the agent and select **Who can use** in the top bar.
+  </Step>
+  <Step title="Pick the roles">
+    Under **Who can use this agent**, choose the roles. Leave it empty to let everyone use the agent. People whose role is not listed do not see the agent when they type @ or start a direct message in Team chat.
+  </Step>
+  <Step title="Adjust a tool if you need to">
+    Under **Tools**, each tool shows its kind and the default roles. Choose roles to replace the default for that tool alone. Select **Reset to default** to go back to the default.
+  </Step>
+  <Step title="Save">
+    Select **Save**. The change applies to the next thing anyone asks.
+  </Step>
+</Steps>
+
+## When no one is asking
+
+Scheduled runs, webhooks and other automatic runs have no person behind them. Under **When no one is asking, act as**, choose the role the agent should act as. It then uses the tools that role is allowed to use. If you leave it on **Choose automatically**, the agent acts as the most limited role that can use all of its tools, and the screen shows which role that is. The **Who can use this agent** list applies to that role too.
+
+## Assistants on your public website
+
+An assistant on your public website is not limited by staff roles. You choose its **Public scope** instead, in **Public UIs**, and it gets the safe tools in each scope you tick and nothing else:
+
+| Scope | What the assistant can do |
+| --- | --- |
+| **Booking** | Find free times, book, and confirm, reschedule or cancel the visitor's own appointment, after the assistant has checked it is theirs with the booking reference or confirmation code they were given |
+| **Enquiries & leads** | Take down a visitor's details and questions for your team |
+| **Clinic information** | Answer questions about your clinic, read-only |
+| **Forms & payment links** | Send your published public forms and payment links your clinic has already issued |
+
+Each scope lists the tools it includes on the screen. A visitor can never see another person's appointment, an invoice, a note or anything about your staff.
+
+<Note>
+  Agents you published before this was introduced now follow these rules too. Owners and managers are reminded with a notice in the app.
+</Note>
+
+<StillStuck />

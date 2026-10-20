@@ -1,0 +1,149 @@
+---
+title: Run an outreach event
+description: "Run an off-site screening day: set up stations, check people in, follow them from station to station, and see every record made at the event."
+icon: /images/icons/map.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="Enterprise Clinic only" roles="Owners and managers run events; any team member can work at one" note="Starts off. Turn it on in Settings, then Navigation" />
+
+**Outreach Events** is for screening days and health fairs away from your usual rooms. You set up an event with its stations, check people in as they arrive, follow each person from station to station, and see afterwards how many people came and what was recorded for them.
+
+It is an **Enterprise Clinic** feature, and it is **off in the menu until you turn it on** in **Settings**, then **Navigation**. See [Turn Outreach Events on](#turn-outreach-events-on).
+
+<Path steps={['Sidebar', 'Front Desk', 'Outreach Events']} />
+
+<TaskHeader
+  before="Outreach Events switched on in Navigation, and the patients you expect already registered"
+  time="About ten minutes to set up an event"
+  after="A running event, with every record made for checked-in attendees tagged to it"
+/>
+
+## Turn Outreach Events on
+
+<Steps>
+  <Step title="Open Navigation">
+    Go to **Settings**, then **Team**, then **Navigation**. Only the clinic owner or a manager sees this tab.
+  </Step>
+  <Step title="Switch Outreach Events on">
+    Find **Outreach Events** under **Front Desk**. It reads **Off until you turn it on**. Switch it on and select **Save**.
+  </Step>
+</Steps>
+
+The menu updates for everyone in the clinic. **Reset to standard navigation** turns it back off. Turning it off only hides it from the menu: the page still opens from a link or a bookmark. The **Front desk** care area must be on, or the menu item stays hidden. See [Navigation](/hospital/settings/navigation).
+
+## What you're looking at
+
+The **Outreach Events** page lists your events, with **All**, **Open**, **Planned** and **Closed** tabs. On a phone each event is a card; on a tablet or computer it is a table. A clinic with none sees **No outreach events yet**.
+
+Open an event to see its name, dates, place and status, then three tabs:
+
+| Tab | What it is for |
+| --- | --- |
+| **Attendees** | Everyone checked in, with how far they have got. Search by name, or scan or type a card number |
+| **Stations** | The places an attendee moves through. Add or remove stations here |
+| **Report** | People checked in, station completion, and the records made at the event |
+
+An event is **Planned** until you open it, **Open** while people are arriving, and **Closed** when the day is over.
+
+## Create an event
+
+<Steps>
+  <Step title="Select New event">
+    Enter the **Event name**, the **Starts** and **Ends** dates, and the **Place**. The place is printed on attendee cards.
+  </Step>
+  <Step title="Set the stations">
+    The sheet starts with three common stations. Rename them, change their type, remove them, or select **Add a station**. Types are Intake, Vitals, Lab, Radiology, Consultation, Dental, Vision, Pharmacy and Other.
+  </Step>
+  <Step title="Create the event">
+    Select **Create event**. It opens on the event page, **Planned**. Select **Open event** when people start to arrive.
+  </Step>
+</Steps>
+
+## Check people in
+
+<Steps>
+  <Step title="Select Check in">
+    The button works while the event is **Open**.
+  </Step>
+  <Step title="Choose the patient">
+    Search for the patient. Someone new? Select the register button beside the search, add them through the normal registration sheet, then search for them again. Checking in never creates a patient by itself.
+  </Step>
+  <Step title="Select Check in, then print the card">
+    The person is on the list and gets a card number. Select **Print card** to print a small card with a barcode. Any station can scan it, or you can type the 12 digits into **Scan or type a card number** to open that person.
+  </Step>
+</Steps>
+
+Checking in the same person twice keeps their first card.
+
+## Follow people through the stations
+
+Open an attendee and mark each station **Done** or **Skip**, or **Undo** one marked by mistake. The list shows how many stations each person has handled. Station progress changes only while the event is **Open**.
+
+## Work at this event
+
+Select **Work at this event** on the banner. From then on, every record you make for a person who is checked in to this event is tagged to it automatically: triage and vitals, consultations, notes, lab and imaging orders, prescriptions, documents and prescription pickups. You do not change how you record anything.
+
+<Note>
+  **A record is tagged only for a person who is checked in to the event.** A walk-up who was never checked in is not tagged, and the banner says so. Check them in first if their records should count.
+</Note>
+
+Select **Stop working here** when you finish. Closing the event ends it for everyone working at it, and an event you are not working at tags nothing. You work at one event at a time in a clinic.
+
+## Read the report
+
+The **Report** tab shows people checked in, how many have at least one record made at the event, and the total tagged records. Each station shows how many people are **done**, **skipped** and **waiting**, and the records made for that kind of station. **Download station counts** saves a file of the counts with no names. For the full attendance list, use **Settings**, then **Data export**, and choose **Outreach Events**, **Outreach Event Stations**, **Outreach Event Attendees** or **Outreach Station Visits**.
+
+## Who can do this
+
+| Action | Who by default | Governed by |
+| --- | --- | --- |
+| Open the page | Owner, manager, receptionist, medical assistant and clinical roles | Role Navigation |
+| Create, edit, open and close an event, manage stations, check people in | Owner and manager | The **Run outreach events** permission, which an owner can switch on for a person. It is pre-ticked for receptionists when you set up their permissions |
+| Work at an event, mark stations | Any team member who can see the patient | Role and patient access |
+
+Saving a person's permissions starts enforcing them. A refused action is recorded in the audit log; an allowed one is not.
+
+## Check it worked
+
+Leave the page and open the event again. The attendee is still listed, the station still reads **Done**, and the **Report** tab counts them.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't see Outreach Events in the menu">
+    It starts off. An owner or manager turns it on in **Settings**, then **Navigation**. It also needs an Enterprise Clinic plan and the **Front desk** care area.
+  </Accordion>
+  <Accordion title="Check in is greyed out">
+    The event is **Planned** or **Closed**, or you do not have the **Run outreach events** permission. Open the event, or ask an owner or manager.
+  </Accordion>
+  <Accordion title="A record I made is not counted in the report">
+    You were not working at the event when you made it, or the person was not checked in to it. Records are tagged as they are made, so check the person in and turn on **Work at this event** before you record.
+  </Accordion>
+  <Accordion title="I can't change the stations">
+    A closed event is a record, so its stations are read-only. A station that already has visits cannot be removed.
+  </Accordion>
+  <Accordion title="The card is not found when I scan it">
+    The card belongs to another event or another clinic, or the number was mistyped. A card number is 12 digits.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I reopen a closed event?">
+    Yes. An owner or manager selects **Reopen**. Everyone has to select **Work at this event** again.
+  </Accordion>
+  <Accordion title="What happens to the records if I delete the event?">
+    Events are closed, not deleted. If an event were ever removed, the records stay and simply lose the event tag.
+  </Accordion>
+  <Accordion title="Can a patient see their card number?">
+    The card is printed for them at check-in. It carries their first name, the last initial, and the number, and no clinical information.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />

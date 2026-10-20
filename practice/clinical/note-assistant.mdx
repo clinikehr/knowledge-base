@@ -11,19 +11,27 @@ import { StillStuck } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="All plans" roles="Any clinician can draft; only the owner can change the assistant or manage an outside key" />
 
-Every note editor has a **Draft with…** button that hands a first draft to an assistant, then hands it straight back to you to review. Your clinic chooses which assistant answers that button: **ClinikEHR**, which runs entirely on our own servers, or an outside assistant your clinic connects with its own account — **EvidenceMD** is the first one available. Either way, nothing is ever saved or signed for you — you always read the draft, edit it, and save it yourself.
+Your clinic chooses which assistant helps write its notes: **ClinikEHR**, which runs entirely on our own servers, or an outside assistant your clinic connects with its own account — **EvidenceMD** is the first one available. Which control you see in the note editor depends on that choice:
 
-<Path steps={['Notes', 'New Note', 'Draft with…']} />
+| Your clinic's assistant | In the note editor |
+| --- | --- |
+| **ClinikEHR** | The **AI Note Taker**. There is no **Draft with…** button. |
+| **EvidenceMD**, connected and ready | The **AI Note Taker** and a **Draft with EvidenceMD** button. |
+| **EvidenceMD**, chosen but not ready (no key saved, consent not recorded, or paused) | The **AI Note Taker** only. Owners and managers also see a short line saying what to finish in **Settings → AI**, but only on a wide screen (a laptop or desktop, or a tablet held sideways). On a phone or a narrow window the line is not shown, so open **Settings → AI** to check. |
+
+Either way, nothing is ever saved or signed for you — you always read the draft, edit it, and save it yourself.
+
+<Path steps={['Notes', 'New Note', 'Draft with EvidenceMD']} />
 
 <TaskHeader
-  before="Nothing to set up to use ClinikEHR's own assistant. An outside assistant needs your clinic's own account with it first"
+  before="Your clinic has chosen EvidenceMD and saved its key. With ClinikEHR's own assistant there is nothing to set up: use the AI Note Taker"
   time="Under a minute to draft; 2 minutes to connect an outside assistant"
   after="A drafted note in the editor, marked with which assistant wrote it, ready for you to review and save"
 />
 
 ## What you're looking at
 
-The **Draft with…** button sits in the toolbar of both the blank note and the template note editor, and it always names the assistant that will answer it — for example **Draft with ClinikEHR** or **Draft with EvidenceMD**. Selecting it opens a panel where you:
+The **Draft with EvidenceMD** button sits in the toolbar of both the blank note and the template note editor, but only when your clinic uses EvidenceMD and it is ready. Selecting it opens a panel where you:
 
 - Type or paste what happened at the visit — dictation, a transcript, or your own rough notes.
 - Optionally tick **Include age band and sex** if you want that context included. Nothing else about the patient is ever sent, whichever assistant you use — no name, date of birth, contact details, or your clinic's name.
@@ -32,8 +40,10 @@ The **Draft with…** button sits in the toolbar of both the blank note and the 
 
 Nothing is saved by this panel. The draft only fills the editor's own fields — your usual **Save** or **Sign** button is what keeps it.
 
+What comes back is an **AI-generated draft** for you to review, not a note. It is marked as such in the panel and again on the note after you accept it. If the draft cannot be produced, the panel says why in plain words — for example that the key was rejected or the assistant did not answer in time — and you can write the note yourself; the form works either way.
+
 <Note>
-  If your clinic's database hasn't yet received the update this feature needs, the panel says so plainly and drafting is unavailable — the note editor itself works exactly as it always has.
+  If your clinic's database hasn't yet received the update this feature needs, the button does not appear — the note editor itself works exactly as it always has.
 </Note>
 
 ## Draft a note
@@ -42,8 +52,8 @@ Nothing is saved by this panel. The draft only fills the editor's own fields —
   <Step title="Open a note as usual">
     Start a blank note or a template note the way you always do — see [Write a clinical note](/practice/clinical/notes).
   </Step>
-  <Step title="Select Draft with…">
-    The button names the assistant your clinic currently uses.
+  <Step title="Select Draft with EvidenceMD">
+    The button appears only when your clinic uses EvidenceMD. With ClinikEHR's own assistant, use the **AI Note Taker** instead.
   </Step>
   <Step title="Give it what happened">
     Type or paste dictation, a transcript, or your own rough notes into the panel. This is the only clinical text that leaves for an outside assistant — nothing is pulled from the patient's chart automatically.
@@ -82,7 +92,7 @@ Nothing is saved by this panel. The draft only fills the editor's own fields —
 </Steps>
 
 <Note>
-  **Your clinic pays EvidenceMD directly**, through its own account and key — ClinikEHR does not charge anything extra for using it, and it never draws your ClinikEHR AI credits. Drafting with ClinikEHR's own assistant still uses your usual credits, unchanged.
+  **Your clinic pays EvidenceMD directly**, through its own account and key — ClinikEHR does not charge anything extra for using it, and it never draws your ClinikEHR AI credits. The **AI Note Taker** with ClinikEHR's own assistant still uses your usual credits, unchanged.
 </Note>
 
 ## The marking on a reopened note
@@ -112,11 +122,14 @@ Older links to **Drafts to review** still work: they open this tab.
 
 ## Check it worked
 
-Open a note, select **Draft with…**, and confirm it names the assistant you expect. Generate a test draft — a real result (or, for EvidenceMD, a clear failure message naming why) confirms the connection. A note you accepted a draft into and then saved shows the drafted content unchanged when you reopen it, with the origin banner still in place.
+Open a note and confirm the toolbar matches the table above: no **Draft with…** button on ClinikEHR, **Draft with EvidenceMD** on a connected EvidenceMD clinic. Generate a test draft — a real result (or a clear failure message naming why) confirms the connection. A note you accepted a draft into and then saved shows the drafted content unchanged when you reopen it, with the origin banner still in place.
 
 ## Common issues
 
 <AccordionGroup>
+  <Accordion title="I chose EvidenceMD but there is no Draft with EvidenceMD button">
+    The button shows only when EvidenceMD is connected and ready: the key saved, consent recorded, and your clinic still eligible. Open **Settings → AI → Note assistant** to see which is missing. The **AI Note Taker** is available meanwhile.
+  </Accordion>
   <Accordion title="The Note assistant card says a database update hasn't arrived yet">
     Drafting isn't available in your environment right now. Write the note yourself — nothing else about the note editor is affected, and this resolves itself once the update reaches your clinic.
   </Accordion>

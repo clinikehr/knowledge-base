@@ -50,7 +50,7 @@ A brand-new practice sees **No unbilled appointments**, **No claims found** — 
     Go to **Settings** → **Insurance**. **Insurance Profile Settings** holds your practice's billing identity, and everything else reads from it.
   </Step>
   <Step title="Add the payers you bill">
-    On **Payers**, open the payer search sheet — "Search by payer name, ID, or alias (e.g. Aetna, Blue Cross, 62308)…" — and add each one. Afterwards you can **Deactivate** a payer or **Remove payer** entirely.
+    On **Payers**, open the payer search sheet — "Search by payer name, ID, or alias (e.g. Aetna, Blue Cross, 62308)…" — and add each one. Afterwards you can **Deactivate** a payer or **Remove payer** entirely. Each payer card also has **Group session minimum minutes** (owners and managers can change it): the least time a client must attend a group session for this payer to be billed. It fills in when you [bill a group session](/practice/clinical/telehealth#bill-a-group-session); leave it empty for no minimum.
   </Step>
   <Step title="Enrol each provider with each payer">
     On **Provider Enrollment**, create an enrollment, submit the draft, then sync its status. This is the step people skip and the one that blocks everything: a payer accepts nothing from a provider it has not enrolled, however correct the claim is.
@@ -111,6 +111,18 @@ Check before the appointment, not after: an **Ineligible** badge on the morning 
     **Check status with payer** asks the payer for the claim's current status. It asks you to confirm first, because each check uses one claim credit, and payers usually need two to three days after submission before they can answer. It is not offered on a claim the payer rejected on acknowledgement — there is nothing to fetch for one of those, so use **Reopen for correction** instead. **Reopen for correction** turns a rejected or denied claim back into a draft — "Claim reopened as draft — correct it and resubmit". Only drafts are editable, and **Edit** reopens the full CMS-1500 form the claim was built in — the same four steps, the same live ICD-10 and CPT search, the same date and modifier fields — filled with what was saved. Correct the diagnoses, the service lines, the payer or the member ID, then submit again. A claim that must be undone after submission is **voided** in ClinikEHR (with a required reason, kept in the audit trail) — voiding here does not void it at the payer, so follow their replacement process too.
   </Step>
 </Steps>
+
+## Supervised clinicians
+
+When the clinician who saw the client has a supervisor and the session's note went to that supervisor for co-signature, the claim carries the supervisor too. On the **Review** step, **Supervising provider** shows who will be sent.
+
+- By default the clinician is the rendering provider and the supervisor is sent as the **supervising provider**.
+- Some payers and employee assistance programs do not credential associates. For those, an owner or manager can choose **Bill under the supervisor** for that payer under **Co-sign settings** in the **Co-sign inbox**. The supervisor is then sent as the rendering provider, and the clinician stays in the claim record only.
+- The supervisor is worked out when you send the claim, so if someone else co-signs the note first, the claim names them.
+- If the note is not co-signed yet, **Note not co-signed yet** appears. The claim can still be sent.
+- If the supervisor has no NPI on their profile, the claim is held and the message names who must add it. Everyone adds their **National Provider Identifier** and **Provider taxonomy code** in their own account settings.
+
+See [Set up co-signing](/practice/clinical/cosign-settings).
 
 ## Telehealth claims
 

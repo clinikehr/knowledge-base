@@ -1,0 +1,75 @@
+---
+title: "Pickup settings"
+sidebarTitle: "Pickups"
+description: "Choose how often customers acknowledge your privacy notice at pickup, publish the notice, add your own pickup questions and set signing links."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Owner or manager" />
+
+The **Pickups** tab decides what your pharmacy asks when someone collects medicine: how often the privacy notice is acknowledged, the notice itself, your own yes-or-no questions, and whether a customer may sign on their own phone. Each card saves on its own.
+
+<Path steps={['Settings', 'Pickups']} />
+
+## What this tab controls
+
+| Card | Control | What it does |
+| --- | --- | --- |
+| **Privacy notice acknowledgment** | **Once, and again when the notice changes** | The default. The customer acknowledges at their first pickup, and again after you publish a new version |
+| | **At every pickup** | "The patient is asked each time medicine is collected." |
+| **Questions at pickup** | The default questions | Counselling offered, and who is collecting. Marked **Always asked**; they can't be removed |
+| | **Add a question** | Adds your own yes-or-no question. Turn on **Must be answered** to make it required |
+| | **Edit**, **Move up**, **Move down**, **Remove** | Change the wording, the order, or remove one of your questions |
+| **Remote signing** | **Allow signing links** | Lets staff send the customer a link to sign on their own phone |
+| | **A link works for** | **1 hour**, **24 hours**, **3 days** or **7 days** |
+| **Your privacy notice** | **Publish your privacy notice** / **Publish a new version** | Write the notice, give a link to your website copy, or both |
+
+## Set it up
+
+<Steps>
+  <Step title="Publish your privacy notice">
+    Under **Your privacy notice**, select **Publish your privacy notice**. Enter the **Notice text**, a **Link to the notice on your website (optional)**, or both, and select **Publish**.
+  </Step>
+  <Step title="Choose how often it is acknowledged">
+    Under **Privacy notice acknowledgment**, choose **Once, and again when the notice changes** or **At every pickup**.
+  </Step>
+  <Step title="Add your own questions">
+    Under **Questions at pickup**, select **Add a question**, enter the **Question**, turn on **Must be answered** if it is required, and select **Add question**.
+  </Step>
+  <Step title="Decide on signing links">
+    Under **Remote signing**, turn **Allow signing links** on or off, and choose how long a link works.
+  </Step>
+</Steps>
+
+## What changes once you save
+
+- **The pickup sheet** at the till and on **Awaiting pickup** asks the new questions, in the order you set, from the next pickup someone opens. See [Record a prescription pickup at the till](/pharmacy/pos/pickups).
+- **Publishing a notice** creates a new version. With **Once, and again when the notice changes**, every customer is asked again at their next pickup. Until any notice is published, nobody is asked to acknowledge anything.
+- **Earlier records do not change.** A pickup keeps the exact wording of each question and the notice version that was shown when it was signed. Editing or removing a question never rewrites an earlier answer.
+- **Removing a question** only stops it being asked from now on.
+
+## Check it worked
+
+Open a pickup from **Awaiting pickup** on the **Sales** screen. Your questions appear under **Questions from this clinic**, and the **Privacy notice** section appears when the customer is due to acknowledge.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't see the Pickups tab">
+    Only an owner or manager sees it.
+  </Accordion>
+  <Accordion title="Publish refuses my link">
+    "The link must start with http:// or https://." Copy the full address from your browser's address bar.
+  </Accordion>
+  <Accordion title="Customers aren't asked about the privacy notice">
+    No notice is published yet, or the customer already acknowledged the current version and you chose **Once, and again when the notice changes**.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/settings/pharmacy-pickup-settings.tsx, lib/pharmacy-pickup/pickup-questions.ts, lib/settings-tabs.ts */}

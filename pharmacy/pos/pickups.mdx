@@ -1,0 +1,113 @@
+---
+title: "Record a prescription pickup at the till"
+sidebarTitle: "Prescription pickups"
+description: "Mark prescription items, record who collected a prescription with a signature after the sale, or leave it to collect later."
+icon: "/images/icons/file-signature.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['pharmacy']} plans="All plans" roles="Anyone whose role reaches POS sells; recording the pickup needs 'Dispense a prescription'" />
+
+When you sell a prescription at the till, the pharmacy records the handover: who collected it, whether counselling was accepted or declined, your own questions, the privacy-notice acknowledgment when one is due, and a signature. You can record it straight after the sale, or leave it as **Collect later**.
+
+<Path steps={['Sidebar', 'POS']} />
+
+<TaskHeader before="A customer on the sale, and a line marked as a prescription" time="Under a minute" after="A pickup record with a signature, or a pickup waiting to be collected" />
+
+## Mark prescription items
+
+Items that are always sold on prescription can be marked once, so the till never forgets.
+
+<Steps>
+  <Step title="Open the item">
+    Open the item in your inventory and edit it.
+  </Step>
+  <Step title="Turn on Prescription item">
+    Turn on **Prescription item** and save. The till then ticks and locks **This is a prescription** on that item's line, so selling it always leaves a pickup to record.
+  </Step>
+</Steps>
+
+Nothing is marked to begin with. Until you mark an item, the till treats it as an over-the-counter sale unless the cashier ticks the line.
+
+## Sell a prescription
+
+<Steps>
+  <Step title="Add the customer">
+    A pickup belongs to a customer, so choose them on the sale. A sale with no customer leaves no pickup to record.
+  </Step>
+  <Step title="Tick the prescription lines">
+    Each line in the cart has **This is a prescription**. It is ticked, and locked, for a **Prescription item**. Tick it yourself for any other line sold on a prescription.
+  </Step>
+  <Step title="Complete the sale">
+    Take payment as usual. Once the sale is saved, the **Record pickup** sheet opens for the prescription lines.
+  </Step>
+  <Step title="Record the pickup, or leave it for later">
+    Fill in the sheet as described in [Record a prescription pickup](/hospital/pharmacy/pickups): who is collecting, the counselling answer, your questions, the privacy notice when it's due, and the signature. Then select **Record pickup**. If the customer will collect later, select **Collect later** instead.
+  </Step>
+</Steps>
+
+<AuditNote />
+
+The sheet uses the clinical wording on its own labels, for example **The patient** and **Someone else for the patient**. It means the customer.
+
+## Find a pickup that's waiting
+
+A pickup left as **Collect later** stays listed until someone records it:
+
+- on the **Sales** screen, under **Awaiting pickup**, with its code, the number of items and the date;
+- on the customer's record, on the **Purchases** tab.
+
+Select **Record** beside it to open the sheet. You can also scan the pickup code.
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Tick **This is a prescription** and complete the sale | Anyone whose role reaches POS | — |
+| Record the pickup | Owner, manager, and staff given the permission | **Dispense a prescription** |
+| Mark an item as a **Prescription item** | Anyone who may edit inventory items | — |
+
+A cashier without **Dispense a prescription** can still complete the sale. They see "Awaiting pickup — a pharmacist will record the handover." and the pickup waits on the **Sales** screen.
+
+## Check it worked
+
+After recording, the pickup no longer appears under **Awaiting pickup** on the **Sales** screen. After **Collect later**, it does.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The pickup sheet didn't open after the sale">
+    Either no line was ticked **This is a prescription**, the sale had no customer, the sale was taken while the till was offline, or you don't have **Dispense a prescription**. An offline sale's pickup appears under **Awaiting pickup** once the till is back online and the sale has synced.
+  </Accordion>
+  <Accordion title="I can't untick This is a prescription">
+    The item is marked **Prescription item**, so the line is always a prescription. Change the item if that's wrong.
+  </Accordion>
+  <Accordion title="Record pickup stays greyed out">
+    A required answer is missing: who is collecting, the counselling answer, a required question, the privacy acknowledgment when it's shown, or the signature.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Is the customer messaged when I choose Collect later?">
+    No. A sale taken at the till is not messaged, because the customer was there. A prescription dispensed from the Prescription List does message the patient, once, with their pickup code. See [Record a prescription pickup](/hospital/pharmacy/pickups).
+  </Accordion>
+  <Accordion title="Does a pickup work offline?">
+    No. The sale itself works offline as usual; the pickup is recorded once you're back online.
+  </Accordion>
+  <Accordion title="Can the customer sign on their own phone?">
+    Yes, if your pharmacy allows signing links. See [Send it to the patient's phone](/hospital/pharmacy/pickups#send-it-to-the-patients-phone).
+  </Accordion>
+  <Accordion title="Where do I change the questions and the privacy notice?">
+    Under [Settings → Pickups](/pharmacy/settings/pickups).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
+
+{/* source of truth: components/clinic/dashboard/pharmacy-station/pos/pharmacy-pos-form.tsx, lib/pharmacy-pos/prescription-pickup-line.ts, components/clinic/pharmacy/pickup/awaiting-pickup-list.tsx, components/inventory/item-form-sheet.tsx */}

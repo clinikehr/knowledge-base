@@ -39,7 +39,7 @@ Below those: a **Waiting on you (\{n\})** card, shown only when something is pen
 
 <Steps>
   <Step title="Name it and pick a shape">
-    Enter a **Note Title** ("Enter note title..."), then a **Template Type**: **SOAP Note**, **Progress Note**, **Initial Assessment**, **Therapy Session**, **Discharge Summary**, **Treatment Plan** or **General Note**.
+    Enter a **Note Title** ("Enter note title..."), then a **Template Type**: **SOAP Note**, **Progress Note**, **Initial Assessment**, **Therapy Session**, **Discharge Summary**, **Treatment Plan** or **General Note**. A note with the **Discharge Summary** type is the discharge summary for a client leaving your care as an outpatient. If your clinic requires your signed notes to be co-signed, it is sent to your supervisor like any other note, and it follows the discharge-summary settings in [Co-sign settings](/practice/clinical/cosign-settings).
   </Step>
   <Step title="Attach it to a client">
     Open the **Client** picker ("Search for a client...") and search by name, client ID or national ID. If they are not registered, **Register new client** takes you there without losing what you have typed.
@@ -82,7 +82,83 @@ A locked note carries a **Read-Only (Locked)** badge and reads "This note is loc
 
 ## Countersign a colleague's note
 
-**Waiting on you (\{n\})** collects work by somebody you supervise: "Notes signed by a colleague you supervise. They are not final until you countersign." Select **Read the note**, read it properly, then countersign from the panel underneath.
+<Availability editions={['clinic']} plans="Team practices where a clinician has a named supervisor" roles="The supervisor named on the clinician's profile, and the clinician" />
+
+When a clinician who has a supervisor signs a note, it goes to the supervisor and is **not final** until they countersign it. Nothing changes for a clinician with no supervisor.
+
+### Where a note waiting for you shows up
+
+- **Notes** in the sidebar carries a number: the notes waiting for your signature plus your own notes that were sent back. It is just a count — it never names a person or a client.
+- The **Dashboard** has a **Notes that need you** card with **Awaiting my signature** (oldest first) and **Changes requested**. Select a row to open it. The card does not appear when nothing is waiting.
+- The **Co-sign inbox** on the Notes page is where you work through them. It appears only when something is waiting for you or you have submitted notes.
+- On a client's chart, the **Notes** tab shows **Pending co-sign**, **Changes requested** or **Co-signed** beside each note, with **Review & sign** for the supervisor and **See comments** for the author.
+- **Care team → My Patients** marks a client **Needs my signature**, has a **Needs my signature** filter, and the client's detail sheet shows the count.
+- You also get a notification when a note arrives, when one you returned is resubmitted, and when yours is countersigned or sent back.
+
+### The co-sign inbox
+
+**For me to co-sign** has four tabs: **To co-sign**, **Overdue**, **Sent back** (notes you returned that are waiting on the author) and **Done (30 days)**. The oldest note comes first, and you can filter by associate. Each row shows the kind of note, the **client's initials** (or **Restricted** if you are not allowed to see that client), the associate, how long it has waited, and a deadline. The deadline is counted in your practice's open days; it shows **—** for a kind of note your practice has set to have no deadline. See [Co-signing: statements, deadlines and cover](/practice/clinical/cosign-settings).
+
+**My submitted notes** is the same for an associate: **Waiting**, **Changes requested** and **Co-signed**. **Changes requested** counts in your sidebar number and your notifications.
+
+For a treatment plan review or a measure interpretation, the inbox row and the notification open that exact record in the client's chart instead of the Notes page. If you may not see the client, the link falls back to the Notes page.
+
+Select **Open** on a row to read the note's sections and co-sign it or ask for changes from the same panel. To co-sign several at once, **Open** each note you want, tick them, and select **Co-sign selected**. One signature covers the batch. Only notes you opened in the last 12 hours can be ticked, and if any note in the batch has stopped being eligible nothing is signed and you are told.
+
+Owners and managers also see a **Practice overview**: everything waiting in the practice grouped **By supervisor** or **By associate**, with how long each has waited. **Move to…** hands a waiting note to another of the author's supervisors — only one who is allowed to see that client. A request about a restricted client or a sensitive note you are not allowed to open is counted but not shown.
+
+### Countersign it
+
+<Steps>
+  <Step title="Read it">
+    Select **Open** (or **Read the note**) and read the note properly.
+  </Step>
+  <Step title="Choose what you attest to">
+    Under **I attest that**, pick one of your practice's statements. The one your practice prefers for this kind of note is already chosen. You can add a sentence of your own. If your licence on file has expired or is missing, the panel says so and **Co-sign** stays off until you update it in your profile.
+  </Step>
+  <Step title="Countersign">
+    Select **Co-sign** in the panel and sign. The note is then final, and the statement you chose is printed under your name on the note and its PDF.
+  </Step>
+</Steps>
+
+### Ask for changes instead
+
+Select **Request changes**. A panel opens with the note's sections:
+
+- Write **why you are sending it back**. With only this, the note goes back as a plain return.
+- Select **Comment** on a section to leave a comment about just that section.
+- Select **Edit** on a plain-text section to reword it. Your wording is recorded as a suggestion — who, what it said before and what you propose — and **nothing is written into the author's note until the author accepts it**. You cannot countersign while you have suggestions waiting; send the note back, or select **Discard my edit**.
+
+Select **Send back to author**. The note becomes editable again for its author. If the author had already signed it, that signature is kept in the note's history as superseded, and the author signs the note again when they resubmit — so the final note carries both signatures on the same text.
+
+You can send a note back as many times as it needs. Every round stays on the note, and each time it comes back you see which sections changed since your last review.
+
+### If your note comes back
+
+The panel on the note reads **Changes requested**, with your supervisor's comments grouped by section.
+
+1. Select **Mark resolved** on each comment as you deal with it. Comments are a checklist; they never stop you resubmitting.
+2. For each suggested edit, select **Accept** (the wording goes into your note — the page reloads to show it) or **Reject**. A rejection needs a reason, which your supervisor reads. If you changed that section yourself since, the edit cannot be accepted; reject it, or copy the wording by hand. **You cannot resubmit until every suggested edit is accepted or rejected.**
+3. Make your own changes, then sign the note again. That resubmits it.
+
+Your supervisor then sees **Since your review**, a list of the sections that changed (section names only), and which sections they commented on that you did not touch.
+
+### If you rejected your supervisor's edit
+
+When the note comes back to the supervisor they see your reason and can **Withdraw my edit**, select **Request changes** to discuss it, or **Co-sign with noted disagreement**. A plain **Co-sign** is not offered while a rejected edit is unanswered. A note signed that way reads **Co-signed with noted disagreement**, and the disagreement stays in the history.
+
+### Who can read the comments
+
+Review comments, suggested edits and the earlier signatures are **internal**. They are never printed on the note's PDF, never shown in the client portal, and never included in a record export, a release of records or the EHR API. The author, the supervisors who can act on the note, and the practice's owners and managers can read them in the note's history. For a sensitive note only the author, the named supervisor and the practice owner can.
+
+### Sensitive notes and restricted clients
+
+- A note marked **sensitive** goes to **one named supervisor** — the first of your supervisors who is able to see the client. Only that supervisor can open, comment on, suggest edits to and countersign it, and only while it is waiting. Nobody else gains access, and every time they open it is recorded.
+- If the client is **restricted**, the note goes to a supervisor who is allowed to see that client. If none of your supervisors can, you are told before anything is sent: *None of your supervisors can see this patient. Ask an owner or manager to add one to the patient's allowed staff.* Access is never widened for you.
+
+### Billing
+
+If you create or send an insurance or EAP claim for a client whose note is still waiting for a countersignature, or was sent back, the claim screen shows **Note not co-signed yet**. It is a warning only — you can still send the claim.
 
 ## Mark a note sensitive
 
@@ -151,7 +227,7 @@ The note is in **Recent Notes** with the right client against it and a **Final**
   </Accordion>
 
   <Accordion title="AI Rewrite or AI Autocomplete shows a flag and will not run">
-    Your practice is on Free — both need Essential or above, and the tooltip reads "Upgrade to use AI Rewrite". They are separate from the AI Note Taker, which is included for the first 3 clinicians on Essential and 5 on Team, with a $20/month add-on for anyone beyond that.
+    Your practice is on Free — both need Essential or above, and the tooltip reads "Upgrade to use AI Rewrite". They are separate from the AI Note Taker, which is included for every clinician on Essential, Team and Enterprise (not on Free).
   </Accordion>
 
   <Accordion title="A locked note needs correcting">
