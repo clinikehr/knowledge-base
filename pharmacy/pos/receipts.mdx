@@ -62,6 +62,12 @@ A completed receipt is headed **SALES RECEIPT**, carries your pharmacy's name, a
 
 The receipt number looks like **POS-20260816-59E46A** and prints as a **barcode** at the bottom. That barcode is what lets a returning customer's slip be scanned straight back into the sales list.
 
+### A prescription sale carries its pickup code
+
+When the sale created a prescription pickup that is still waiting, the receipt also prints a block headed **PRESCRIPTION PICKUP**: its own barcode and **Pickup code:** with the 12 digits. It sits above the **Thank you for your purchase!** footer, so the sale-number barcode is still the last thing on the slip and the one you scan for returns. Scanning the pickup barcode with **Scan code** opens that pickup. See [Prescription pickups](/pharmacy/pos/pickups).
+
+The block is left off when there is nothing for it to open: the sale had no prescription line or no customer, the balance is not paid in full yet (no pickup exists), the pickup was already collected, or **Prescription pickup codes** is switched off in [Pickup settings](/pharmacy/settings/pickups). A reprint shows the code if the pickup is still waiting at the time you reprint. On an older desktop app version the code prints as a line of text without its barcode, and the till tells you once to update.
+
 ### An offline receipt is deliberately different
 
 A sale rung up during an outage prints **PROVISIONAL — WILL CONFIRM ON SYNC** across the top, a **Provisional No:** instead of a receipt number, and **no barcode at all** — the provisional number does not exist on the server yet, so a barcode would scan to nothing.

@@ -9,13 +9,29 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open it; editing follows a fixed role list" note="Needs the Records care area · Solo and Team keep the same people under Clients" />
+<Availability editions={['clinic']} plans="Enterprise" roles="Any staff member can open it, unless your clinic has separated Patients from Patient Records; editing follows a fixed role list" note="Needs the Records care area · Solo and Team keep the same people under Clients" />
 
 **Patient Records** is the records office's door onto the hospital's patient list. Reception uses it to register people; the records office uses it to find, correct, export and account for what is held. This page covers the second job.
 
 <Path steps={['Sidebar', 'Records', 'Patient Records']} />
 
 <TaskHeader before="The Records care area switched on, and patients on the register" time="A minute to find a record" after="The record you were asked for, read or corrected, with the access logged" />
+
+## If your clinic has separated Patients from Patient Records
+
+This is an optional setting, off by default (see [Navigation](/hospital/settings/navigation)). When an owner or manager turns it on, **Patient Records** becomes its own page with its own box in [Role navigation](/hospital/settings/role-navigation), and it carries the clinical side of the record:
+
+- The page lists patients with their clinical columns and the **Analytics** tab.
+- An open patient shows the **Medical Profile** and two tabs: **Documents** (the patient's files and folders) and **Recent Activity**.
+- Reception keeps [Patients](/hospital/front-desk/patients) for details, contact information, insurance, forms and consents.
+
+Doctors, nurses, records officers and lab and radiology staff can open it by default; the receptionist and the biller cannot, and see "You do not have access to patient records in this clinic" if they try. Owners and managers always can. Opening a chart is recorded in the audit log, and so is a refused attempt. Old links to **Recent Activity** or **File it** carry you here automatically.
+
+<Warning>
+  Today this separates the pages, the menu and who is let in to this page. Restricting the underlying clinical records inside the system follows in a later update, so treat it as a working separation rather than a complete lock. It only narrows access once **Role-based navigation** is on.
+</Warning>
+
+Without the separation, everything below applies to the single page.
 
 ## One list, two doors
 

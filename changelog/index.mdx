@@ -7,6 +7,190 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="October 22, 2026" tags={["Billing","Hospital","Pharmacy","Solo & Team"]} description="Reduced amounts and waivers">
+  ## Reduce or waive what a patient pays, from the pharmacy, the lab and the payment form
+
+  A clinic reported that a reduced amount was refused on medicines ("The reduced amount must be less than the charge") and that **Request full waiver** was only offered in some places. Reductions and waivers now follow the same rules wherever you take a payment, for owners and for staff you have allowed to apply them.
+
+  - **A reduced amount on a medicine or an imaging order is accepted again.** A reduction of ₦10 on a ₦2,000 medicine no longer stops the payment. The charge it is checked against is the price you see in the pending list. See [Payments](/hospital/revenue/payments).
+  - **Pharmacy and Lab collect panels.** **Collect payment** on a prescription row now offers **Reduced amount**, **Request full waiver** and **Save for later** beside each medicine's **Pay now** box, and the Lab's **Collect payment** panel offers the waiver too. A waiver goes to a second owner or manager to approve, and until then the item stays at its full price. See [Pharmacy prescriptions](/hospital/pharmacy/prescriptions) and [Lab reports](/hospital/diagnostics/lab-reports).
+  - **Waive a service or consultation you pick on the payment form.** On **Add Services** and **Consultations**, choose **Reduced amount** on the item, then **Request full waiver**. When you record the payment, the item is added to the patient's pending items at its full price, unpaid, and the waiver waits in **Payments**, **Approvals**. If only waived items are selected, the button reads **Add unpaid and send waiver for approval** and no payment or receipt is made. See [Record and collect payments](/practice/money/payments).
+  - **The pharmacy collect panel lists medicines only.** Laboratory, imaging and other charges no longer appear among the prescribed medicines; take those from their own screens or from **Payments**.
+  - **The reason tells you what is missing.** Some categories, such as **Other**, need a written reason of at least 10 characters. Under **Reason (required)** a live count says how many more characters are needed, and the buttons point at it, instead of the message appearing under **Category**.
+  - **The payment form fits a phone.** With a waiver on a picked service, **New Payment** no longer runs off the right edge of a phone, the **Direct Payment** and **Pay Invoice** tabs are large enough to tap, and the long submit button wraps its label. See [Pharmacy payments](/pharmacy/money/payments).
+</Update>
+
+<Update label="October 22, 2026" tags={["Hospital"]} description="Enterprise plan">
+  ## Give the front desk and the clinical team their own pages: Patients and Patient Records
+
+  Some clinics want reception to register and look after patients without seeing the medical profile. An owner or manager can now separate the two. It is **off** until you turn it on, and nothing changes in your menu or your pages while it is off.
+
+  - **One switch, on the Enterprise plan.** In **Settings**, **Navigation**, the **Patients and Patient Records** card has the switch **Separate Patients from Patient Records**. Turning it on asks you to confirm and tells you who keeps access. See [Navigation](/hospital/settings/navigation).
+  - **Patients becomes the front desk's page.** It keeps names, contact details, insurance, forms and consents, and the patient's team chat, and shows a **Has allergies** or **No allergies on file** tag instead of the medical profile. The clinical columns, blood type and the **Analytics** tab move away. See [Register and find patients](/hospital/front-desk/patients).
+  - **Patient Records is its own page.** It holds the **Medical Profile**, **Documents**, **Recent Activity** and analytics, and has its own box in **Role navigation**. Old links to **Recent Activity** or **File it** take people there. See [Manage patient records](/hospital/records/patient-records) and [Role navigation](/hospital/settings/role-navigation).
+  - **A new permission, See clinical records.** Owners and managers always have it. Doctors, nurses, records officers and lab and radiology staff have it by default; the receptionist and the biller do not and see "You do not have access to patient records in this clinic." See [Staff and teams](/hospital/settings/staff).
+  - **Place sections under Front desk or Records.** When both departments are on in **Facility**, a few rows in **Navigation** get a **Show under** menu so you can move them. Moving a row changes only the heading it sits under, never who may open the page, and **Reset to standard navigation** puts everything back.
+  - **What this protects today.** It separates the pages and the menu, and the Patient Records page checks who may open it. Restricting the underlying clinical records follows in a later update, so treat it as a working separation, not a complete lock. It also narrows access only while **Role-based navigation** is on; the card offers to switch it on for the owner.
+</Update>
+
+<Update label="October 22, 2026" tags={["Platform","Hospital","Pharmacy"]} description="Fixes">
+  ## Custom domains, legal notices, Team chat AI and phones: things that did not work now do
+
+  A set of fixes for things clinics ran into after the last update.
+
+  - **Custom domains work again for owners and managers.** Adding, verifying or removing a domain could answer "Access denied" to the very people allowed to do it. See [Serve a page on your own domain](/platform/settings/custom-domain).
+  - **Read the full text stays open.** A legal update, such as the Data Processing Agreement, could close again as soon as it opened, so it could not be read or accepted. A text that cannot be loaded now says so.
+  - **Team chat AI help works.** **Summarise thread**, the voice-note transcript and **Writing help** answered "The summary could not be made" every time. They now work, and a refusal because of your plan or credits is explained. **Draft a reply** now answers the message you chose it on. Pressing an AI action again after a failure is not charged twice. See [views and safety](/platform/team/team-chat-views-and-safety).
+  - **Product updates arrive as one card.** When several updates are waiting, they show as a single card at the bottom of the screen with **Review**. It opens a sheet titled **Product update** (or the number of updates) where you can open the setting each one is about or **Dismiss** it.
+  - **The menu stays put while a page loads.** The sidebar and header no longer rebuild when a page's data arrives, on clinical pages, dashboards, billing and insurance.
+  - **The calendar opens in Day on a phone,** and in **Week** the names of short items are readable. See [Appointments](/practice/work/appointments).
+  - **Radiology Station figures count every order.** The tiles and charts counted only the last two days of orders and read 0 on a clinic with none, however wide the period. See [Radiology Station](/hospital/diagnostics/radiology-station).
+  - **Recent Sales has its actions menu on a phone.** Receipt, return and void were out of reach on the phone cards. See [Returns, voids and amendments](/pharmacy/pos/returns).
+  - **Cancelling a test from an order of several tests asks which one.** **Cancel test** now shows **Test to cancel** and says **Choose the test to cancel.** if you have not picked one, instead of doing nothing. See [Lab reports](/hospital/diagnostics/lab-reports).
+  - **Buttons that were too small to tap** on a tablet or phone, such as **Cancel** and **Save** in a staff member's **Permissions** sheet and the pickup switches in pharmacy settings, are now full size.
+</Update>
+
+<Update label="October 22, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Team chat">
+  ## Approval requests in Team chat are readable, and @ lists everyone
+
+  Approval requests sent to owners and managers used to show as empty messages from a "former staff" member. They now appear in a read-only **Notifications** conversation as notices from ClinikEHR, showing the request, the amount and who asked, with **Approve** and **Reject** buttons.
+
+  - Typing **@** now lists every team member who uses Team chat, not just the first few. See [Team chat](/platform/team/team-chat).
+  - There is no message box in **Notifications**; see [approvals and critical results](/platform/team/team-chat-patients-and-teams).
+</Update>
+
+<Update label="October 20, 2026" tags={["Pharmacy","Hospital","Solo & Team"]} description="Controlled medicines">
+  ## Mark which medicines are controlled
+
+  Until now a clinic could not say which of its medicines are controlled, so nothing could treat them differently. You can now mark them yourself, and a prescription for one is never faxed.
+
+  - **A Controlled medicine switch** on each inventory item. Choosing a **DEA schedule** switches it on for you. See [Mark a medicine as controlled](/hospital/supply/inventory#mark-a-medicine-as-controlled) and [Add your first stock item](/pharmacy/get-started/first-stock-item).
+  - **A Controlled badge** in the Catalog and Stock lists for every medicine that is marked or has a DEA schedule, and the **Controlled** filter matches the same medicines.
+  - **A one-time reminder** for owners and managers on Inventory until the first controlled medicine is marked.
+  - **A new permission, Mark medicines as controlled.** Owners and managers always have it; others see the switch but can't change it.
+  - **Faxing is refused** for a prescription of a controlled medicine, and when it isn't clear, you are asked whether it is controlled before the fax can go.
+
+</Update>
+
+<Update label="October 20, 2026" tags={["Solo & Team","Hospital"]} description="Fax">
+  ## Send a document by fax, and see what happened to it
+
+  Faxing a document now works where you already download it, and you can follow every fax you send. Before this, a fax went out with no last check and no record of whether it arrived.
+
+  - **Send by fax** sits beside the download button on signed clinical notes, final lab reports (and a visit's results once every test is completed), reported radiology reports, issued invoices, dispensed prescriptions (not controlled medicines) and signed patient documents. A draft can't be faxed. See [Faxing a document](/hospital/settings/communications#faxing-a-document).
+  - **A last check before it goes.** You see the number and page count and are reminded a fax can't be recalled. Pressing the button twice never sends or charges twice.
+  - **A Sent tab** under **Communications** → **Fax** lists each fax with its status — **Queued**, **Sending**, **Delivered** or **Failed** — the pages, the credits and the number it went to. A failed fax shows why, is refunded automatically, and notifies whoever sent it.
+  - **Daily limits** of 200 faxes per clinic and 10 per number, and some premium-rate and international destinations can't be faxed.
+  - The permission is now called **Send and triage fax** everywhere.
+
+</Update>
+
+<Update label="October 20, 2026" tags={["Solo & Team","Hospital"]} description="Calendar">
+  ## A tidier calendar header, with Create always in the same place
+
+  The calendar's top bar had grown into a long row of buttons that wrapped unevenly on a laptop. It now reads in one order on a large screen: the dates and **Today** with the back and forward arrows on the left, the **Day**, **Week**, **Month**, **Providers** and **Resources** switcher beside them, then search and **Filters**, with **Create** last on the right.
+
+  - **The dates are spelled out.** The title shows the days you are looking at, such as "18 – 24 Oct 2026", instead of only the month.
+  - **Less used actions are in one menu.** The ellipsis button next to **Create** (**Calendar tools**) now holds **Current Schedule**, **Supervision meeting**, **Color by Status** / **Color by Service** and the settings shortcuts (**Services**, **Classes**, **Booking Page**, **Availability**).
+  - **Same order on every screen.** On a laptop or tablet the header uses two rows; on a phone **Today**, the arrows and **Create** stay on the first row. Buttons are large enough to tap.
+  - See [Appointments](/practice/work/appointments).
+</Update>
+
+<Update label="October 20, 2026" tags={["Solo & Team","Hospital"]} description="Navigation">
+  ## Team chat, Mail, Marketing and Fax now sit together under Communications
+
+  Everything you use to talk to colleagues, patients and other practices is now in one place in the menu, just under **Dashboard**, the way **Notes** groups its pages.
+
+  - **One section, four pages.** **Communications** opens to **Team chat**, **Mail**, **Marketing** and **Fax**, in the sidebar and in the phone menu. **Team chat** still opens the chat right where you are, and its unread count shows on **Communications** too, so you see it with the section closed. In the Pharmacy and Diagnostics editions **Team chat** keeps its own place in the menu.
+  - **Fax is in the menu.** The **Fax Inbox** used to be reachable only from **Settings**. It now has its own page under **Communications**, and bookmarks to its old address still open it. If your clinic has no fax number yet, the page says so and offers **Set up a number**.
+  - **Your menu choices carry over.** If you had turned off **Mail**, **Marketing** or **Team chat** in **Settings**, **Navigation**, they stay off; they now appear as pages under **Communications** there.
+  - **Who can open Fax.** Where your hospital limits menus by role, every role that can open **Mail** can now open **Fax**, including roles you had customised in **Role navigation**. To take it away from a role, untick **Fax** under **Communications** in **Role navigation**. Sending and filing faxes still needs the **Send and triage fax** permission.
+  - See [Communications settings](/practice/settings/communications) and [Team chat](/platform/team/team-chat).
+</Update>
+
+<Update label="October 20, 2026" tags={["Platform"]} description="AI Agents">
+  ## Only an owner or manager can add or change a connected tool
+
+  A connected tool holds the address of an outside system and the sign-in your agents use to reach it, so changing one is now limited to the people who run the clinic.
+
+  - **Who can change them.** Only an owner or manager can add a tool, remove it, or change its sign-in, including **Reconnect**. Where your clinic requires two-factor sign-in, their session must have passed it.
+  - **What everyone else sees.** Every staff member can still see the connected tools and choose them on an agent. The **Add MCP server**, **Reconnect** and remove controls are no longer shown to them, and a refused attempt says "Only an owner or manager can add or remove a connected tool."
+  - **Changing a tool's address signs it out.** If the address or the sign-in address of a tool is changed, the saved sign-in is cleared and the tool has to be connected again, so an old sign-in is never sent to a new destination.
+  - See [AI settings](/practice/settings/ai-settings) and [Agent tools](/platform/ai/agent-tools).
+</Update>
+
+<Update label="October 20, 2026" tags={["Hospital","Pharmacy"]} description="Pharmacy pickups">
+  ## Make the pickup signature optional, and choose whether prescriptions carry a pickup code
+
+  Some pharmacies prefer not to make a patient's signature compulsory when medicine is collected, and some do not use pickup barcodes at all. An owner or manager can now set both.
+
+  - **Require a signature at pickup.** On by default, so nothing changes until you turn it off. Off, the pickup sheet still offers the signature (marked optional) and **Record pickup** works without it. A pickup recorded that way says **Not signed**, on screen and in the downloaded record. The privacy notice acknowledgment is still asked whenever it is due.
+  - **Prescription pickup codes (Rx barcode).** On by default. Off, the dispensing slip prints no code or barcode, **Scan code** is hidden from the Prescription List, and the ready-to-collect message and the patient's portal no longer show a code. You record a pickup from the row's actions menu as before, and a slip printed earlier still scans.
+  - **Where to find them.** On the Enterprise plan, in **Settings**, **Facility**, under **Pharmacy pickups** (while In-house pharmacy is on). On other plans and in the Pharmacy edition, in **Settings**, **Pickups**. See [Pickup settings](/hospital/settings/pharmacy-pickups) and [Record a prescription pickup](/hospital/pharmacy/pickups).
+  - **A refunded sale cancels its pickup.** At the till, returning or voiding a whole sale now takes its prescription pickup off **Awaiting pickup**, and returning only some lines removes just those lines. A pickup already collected is left as recorded and marked as refunded afterwards. [See Returns, voids and amendments](/pharmacy/pos/returns)
+  - **A warning when a prescription has no customer.** Completing a sale with a prescription line and no customer now says a pickup can only be recorded for a customer, and offers **Add customer** or **Continue**. It never stops the sale. [See Prescription pickups](/pharmacy/pos/pickups)
+  - **A pickup follows what is left, and shows a later refund.** A prescription line with some units returned shows what is still to collect with the returned units noted, and cannot be recorded for more. A collected pickup whose sale was refunded afterwards reads **Sale refunded on** the date, on the pickup sheet and on the downloaded record. [See Prescription pickups](/pharmacy/pos/pickups)
+  - **A till pickup is created once the sale is paid in full.** A part-paid or unpaid prescription sale makes no pickup at the till, which says so; the pickup appears as soon as the balance is settled. The warning for a sale with no customer now says patient in the full edition.
+  - **The pickup code is on the sale receipt.** A prescription sale with a pickup waiting prints a **PRESCRIPTION PICKUP** block with the code and its barcode, above the footer, on the printed receipt, the reprint and the PDF. It is left off when the pickup does not exist yet, is already collected, or pickup codes are switched off. Install desktop app v1.1.1 or later to print the code as a barcode; an older version prints it as text. [See Print and reprint receipts](/pharmacy/pos/receipts)
+</Update>
+
+<Update label="October 20, 2026" tags={["Hospital"]} description="Laboratory">
+  ## Tests ordered together now show up, open and download together
+
+  Tests a lab scientist ordered for a patient from the Lab module, and the antenatal profile a midwife orders from Maternity, each appeared on the **Laboratory Test List** as a separate row, one per test, while a doctor's request from a consultation was already a single row. They now behave the same way, and Lab History no longer calls a registered patient a walk-in.
+
+  - **One row per order.** Everything requested together for one patient is one row on the Test List, with all its tests inside it. Select it and every test opens together for result entry. [See the Laboratory worklist](/hospital/diagnostics/laboratory)
+  - **One report.** **Download results** and **Download requisition** save the whole order as one document, not one per test.
+  - **Maternity orders are labelled for what they are.** The antenatal profile reads **Maternity / ANC** on the Test List and in Lab History, instead of **Direct lab order**. Its tests now carry a price from your laboratory catalogue and show as unpaid until collected, like a request made at the lab. [See Record an antenatal contact](/hospital/maternity/record-a-contact)
+  - **Registered patients are no longer "walk-in".** A registered patient tested without a visit or ward stay is a **Direct lab order** in Lab History, and the filter above the tabs now reads **All**, **Visits**, **Ward**, **Direct orders** and **Maternity / ANC**. **Walk-in clients** keeps its own tab for people who were never registered. [See walk-in clients](/hospital/diagnostics/walk-in-clients)
+  - **Imaging follows the same rule.** In Radiology History a registered patient's order with no visit or ward stay reads **Direct order**, and the filter offers **All**, **Visits**, **Ward** and **Direct orders**. [See Radiology](/hospital/diagnostics/radiology)
+  - **Lab Station counts orders.** **Lab Orders**, **Pending Orders** and **Completed Orders** now count each order once, and a small line under every figure says how many tests are inside it, for example **12 tests**. [See the Lab Station](/hospital/diagnostics/lab-station)
+  - **Orders already on file.** Past direct orders requested together are now shown together. Antenatal profiles ordered before today read **Direct lab order**, because nothing recorded that they came from Maternity.
+</Update>
+
+<Update label="October 20, 2026" tags={["Hospital"]} description="Wards">
+  ## A patient who is already admitted can no longer be admitted again
+
+  The **Admit** button stayed active for a patient already on a ward, so the same patient could be given a second bed while still on admission. Admitting now stops at one active admission per patient.
+
+  - **Admit is greyed out for an admitted patient** and reads **Admitted · \{ward\}**, on the consultation list, the consultation chart, the triage queue's row menu and the triage **Disposition** tab. **Open current admission** takes you to the stay. [See Admissions](/hospital/inpatient/admissions)
+  - **If two people admit at the same moment,** the second is told **This patient is already admitted to \{ward\} since \{date\}** and no bed is taken.
+  - **To admit again,** discharge the current stay first. [See Discharges](/hospital/inpatient/discharges)
+</Update>
+
+<Update label="October 20, 2026" tags={["Platform"]} description="Telehealth">
+  ## Leaving a video call no longer ends it for everyone
+
+  The red button at the bottom of a call used to end the call for everyone the moment it was pressed, and nobody could join again. Pressed by mistake, it cost the visit. It now says **Leave call**, and it only takes you out.
+
+  - **Leave call drops only you.** The call stays open and you, or anyone else, can come back with the same link using **Rejoin call**. Patients and guests get **Leave call** only. [See Telehealth](/practice/clinical/telehealth)
+  - **End call is in a menu, for the host.** Open the arrow beside **Leave call** and choose **End call**. It asks **End this call for everyone?** first and tells you what happens: everyone is removed, the link stops working and a running recording stops.
+  - **Team chat calls and huddles** are still ended from the chat with **End huddle**, so someone stepping out of a huddle can no longer close it for the others. [See calls and huddles](/platform/team/team-chat-codes-and-calls)
+  - **If you are recording and you leave, the recording stops** and the part already recorded is kept. Someone else leaving does not stop it.
+  - **A dropped call tells you why.** If the call ends under you, you are removed, your session expires or your connection cannot be restored, you see the reason and, where the call is still open, **Rejoin call**, instead of being sent away without a word.
+  - **An empty call finishes on its own.** If everyone has left and nobody comes back within 30 minutes, the call is finished as if the host had ended it: the visit is closed, the link stops working, and a group session's attendance or a supervision meeting's hours are worked out. Someone returning inside the 30 minutes keeps it open.
+  - **Ending a call now waits for confirmation.** **End call** only completes once the video service confirms the call is closed for everyone; if it cannot, you are told.
+  - **Recording shows who it is waiting for.** After you start a recording you see who still has to say yes, and if it does not start you are told whether someone said no or did not answer in time. A brief connection drop on the person recording no longer stops the recording at once.
+</Update>
+
+<Update label="October 20, 2026" tags={["Platform"]} description="Team chat">
+  ## Team chat tells you only what matters, and you hear it wherever you are
+
+  Sounds and counts now follow what you asked to be told about, and asking a colleague about an order no longer takes you off your queue.
+
+  - **Sounds on every page.** Direct messages, mentions and incoming calls now play their sound wherever you are in ClinikEHR, not only inside Team chat. You hear nothing for the conversation you are already reading, and with several tabs open only one makes the sound. [See Team chat](/platform/team/team-chat)
+  - **The bell shows what is for you.** Your bell lists direct messages, mentions of you or your group, **@channel** and **@everyone**, and messages sent as **High** or **Urgent**, and an AI agent's answer to a question you asked in a thread. Ordinary channel messages and replies in threads you follow no longer add to it; they show as an unread count. [See what you are notified about](/platform/team/team-chat#choose-what-youre-notified-about)
+  - **The unread count follows your setting.** Set to **Only mentions and direct messages**, a conversation counts only those. Set to **Nothing**, it counts nothing, not even mentions. A muted channel stays at zero.
+  - **Two settings now stick.** **Hide my typing** and **Tell me when my patient arrives** were not being saved; they are now. [See typing and sounds](/platform/team/team-chat-views-and-safety)
+  - **Ask about an order in the chat panel.** **Ask the prescriber** and **Ask the ordering clinician** open the conversation beside your pharmacy, laboratory or imaging queue, so you stay where you were. [See Ask about an order](/hospital/pharmacy/prescriptions#ask-about-an-order)
+</Update>
+
+<Update label="October 20, 2026" tags={["Platform"]} description="Team chat">
+  ## Rename a Team chat channel
+
+  Owners, managers and a channel's admins can now change a channel's name from **Channel details**, under **Name**. Everyone in the channel sees the new name straight away, and a note in the channel says who renamed it. See [Team chat](/platform/team/team-chat).
+</Update>
+
 <Update label="October 19, 2026" tags={["Platform"]} description="Every plan and edition">
   ## Team chat is easier to reach and easier to trust, and pages fit your screen
 

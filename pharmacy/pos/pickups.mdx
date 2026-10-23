@@ -37,13 +37,13 @@ Nothing is marked to begin with. Until you mark an item, the till treats it as a
 
 <Steps>
   <Step title="Add the customer">
-    A pickup belongs to a customer, so choose them on the sale. A sale with no customer leaves no pickup to record.
+    A pickup belongs to a customer, so choose them on the sale. If you complete a sale that has a prescription line and no customer, the till stops first and says: "This sale has a prescription line, so a pickup can only be recorded for a customer. Add a customer, or continue without a pickup record." Select **Add customer** (**Add patient** in the full edition) to choose one, or **Continue** to sell without a pickup record. It never stops the sale, and it does not appear when the till is offline.
   </Step>
   <Step title="Tick the prescription lines">
     Each line in the cart has **This is a prescription**. It is ticked, and locked, for a **Prescription item**. Tick it yourself for any other line sold on a prescription.
   </Step>
   <Step title="Complete the sale">
-    Take payment as usual. Once the sale is saved, the **Record pickup** sheet opens for the prescription lines.
+    Take payment as usual. Once the sale is saved and paid in full, the **Record pickup** sheet opens for the prescription lines. If the customer part-paid or has not paid, no pickup is created yet and the till says "Pickup is recorded once the sale is paid in full." The pickup appears under **Awaiting pickup** as soon as the balance is settled, whether at the desk, from the customer's account, or by a discount that clears it.
   </Step>
   <Step title="Record the pickup, or leave it for later">
     Fill in the sheet as described in [Record a prescription pickup](/hospital/pharmacy/pickups): who is collecting, the counselling answer, your questions, the privacy notice when it's due, and the signature. Then select **Record pickup**. If the customer will collect later, select **Collect later** instead.
@@ -63,6 +63,12 @@ A pickup left as **Collect later** stays listed until someone records it:
 
 Select **Record** beside it to open the sheet. You can also scan the pickup code.
 
+The pickup code is also printed on the sale receipt, as a barcode with the 12 digits, so the customer can bring that slip back to collect. See [Print and reprint receipts](/pharmacy/pos/receipts).
+
+## If the sale is refunded
+
+Returning or voiding the whole sale cancels its pickup, and it disappears from **Awaiting pickup**. If only some lines are given back, those lines come off the pickup and it is cancelled when none are left. A line with only some units returned shows what is left to collect, with the returned units noted. A pickup that was already collected is not changed; it reads **Sale refunded on** the date, on the pickup sheet and on the downloaded record. See [Returns, voids and amendments](/pharmacy/pos/returns).
+
 ## Who can do this
 
 | Action | Who by default | Permission |
@@ -81,13 +87,13 @@ After recording, the pickup no longer appears under **Awaiting pickup** on the *
 
 <AccordionGroup>
   <Accordion title="The pickup sheet didn't open after the sale">
-    Either no line was ticked **This is a prescription**, the sale had no customer, the sale was taken while the till was offline, or you don't have **Dispense a prescription**. An offline sale's pickup appears under **Awaiting pickup** once the till is back online and the sale has synced.
+    Either no line was ticked **This is a prescription**, the sale had no customer (you chose **Continue** on the warning), the sale was not paid in full yet, the sale was taken while the till was offline, or you don't have **Dispense a prescription**. An offline sale's pickup appears under **Awaiting pickup** once the till is back online and the sale has synced.
   </Accordion>
   <Accordion title="I can't untick This is a prescription">
     The item is marked **Prescription item**, so the line is always a prescription. Change the item if that's wrong.
   </Accordion>
   <Accordion title="Record pickup stays greyed out">
-    A required answer is missing: who is collecting, the counselling answer, a required question, the privacy acknowledgment when it's shown, or the signature.
+    A required answer is missing: who is collecting, the counselling answer, a required question, the privacy acknowledgment when it's shown, or the signature (unless your pharmacy has made the signature optional in [Pickup settings](/pharmacy/settings/pickups)).
   </Accordion>
 </AccordionGroup>
 

@@ -28,10 +28,10 @@ An agent is an assistant you build that follows steps you define. This tab holds
 | **Note assistant** | Choose ClinikEHR or EvidenceMD | Which assistant helps with notes. **Draft with EvidenceMD** appears in the note editor only when EvidenceMD is chosen and connected; with ClinikEHR the **AI Note Taker** is the entry. Owner-only; see [Choose a note assistant](/practice/clinical/note-assistant) |
 | | API key, **Test connection** | An outside assistant's own account key — write-only, never shown again once saved |
 | **Agent credits** | Balance and **Top up** | "Granted monthly with your plan. Each agent run debits per model." Refill packs "never expire and are used after your monthly plan credits" |
-| **Connected tools (MCP)** | **Add MCP server** | Connects an outside tool — a name and its address. "External Model Context Protocol servers your agents can call as tools" |
+| **Connected tools (MCP)** | **Add MCP server** | Connects an outside tool — a name and its address. Owner or manager only. "External Model Context Protocol servers your agents can call as tools" |
 | | **No auth** · **Bearer token** · **OAuth** | How the tool checks it is you. **OAuth** opens a sign-in window and keeps itself refreshed |
 | | **Test** | Reaches the server and lists the tools it offers, before you save anything |
-| | Reconnect · Remove | Re-authorise a connection marked **Reconnect**, or delete one |
+| | Reconnect · Remove | Re-authorise a connection marked **Reconnect**, or delete one. Owner or manager only |
 | **Webhook / API trigger** | Enabled / Disabled switch | Whether the endpoint accepts anything at all. Team plan |
 | | **Endpoint URL** + **Copy** | The address an outside system posts to |
 | | **Signing secret** — **Reveal**, **Copy**, **Rotate** | The shared password that proves a request really came from your system |
@@ -47,7 +47,7 @@ A **webhook** is just a web address an outside system can send a message to. Whe
     The **Agent credits** card shows what you have. Select **Top up** if you need a refill pack before a busy run.
   </Step>
   <Step title="Connect an outside tool">
-    Select **Add MCP server**, give it a name and its address, then choose how it authenticates. Select **Test** first — you should see a tick and the tools it offers. Then select **Add**, or **Add & Connect** for OAuth, which opens a sign-in window.
+    This is for an owner or manager; everyone else can see the list of tools but not add to it. Where your clinic requires two-factor sign-in, your session must have passed it. Select **Add MCP server**, give it a name and its address, then choose how it authenticates. Select **Test** first — you should see a tick and the tools it offers. Then select **Add**, or **Add & Connect** for OAuth, which opens a sign-in window.
 
 If a tool does not respond, **Test** says why: the server refused the sign-in (select **Reconnect**), or it could not be reached (check the address). **EvidenceMD** is the exception to "any paid plan": connecting or using it as a tool needs the **API add-on** (or an Enterprise agreement) **and** the current **API data agreement**, both from **Settings → API access**. Without them it is refused with a message saying which is missing, and a connection made earlier is kept until you qualify.
   </Step>
@@ -87,7 +87,7 @@ For a connected tool, select **Test** — a tick and a list of tool names means 
     The webhook trigger is a Team feature: "Let any external system (Zapier, a form backend, another app) fire your agents by POSTing a signed request to your clinic's webhook endpoint." See [Change your plan](/platform/plans/change-plan).
   </Accordion>
   <Accordion title="The webhook panel says only clinic owners and managers can configure webhook triggers">
-    Ask an owner or manager. Credits and connected tools are visible more widely.
+    Ask an owner or manager. Credits and connected tools are visible to everyone; connected tools are managed by owners and managers.
   </Accordion>
   <Accordion title="My integration started getting rejected">
     Someone rotated the signing secret, or the endpoint was switched off. Reveal the current secret, update it in the sending system, and confirm the switch reads **Enabled**. Requests older than five minutes are also refused, so a badly out-of-sync clock on the sending machine will fail every time.
