@@ -7,6 +7,260 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="October 31, 2026" tags={["Platform"]} description="Calendar">
+  ## An appointment's details show the same time as the calendar
+
+  When your clinic's time zone differs from your device's, an appointment's details showed the clinic's clock while the calendar and **Edit** showed yours, so after saving it looked as though the appointment had moved by hours. It never moved. The details now show your device's time, like the calendar, with the clinic's own time on a line underneath.
+</Update>
+
+<Update label="October 31, 2026" tags={["Solo & Team","Billing"]} description="Forms · Free plan">
+  ## The Free plan sends each form by email up to 5 times a month
+
+  A form emailed from **Share** → **Send to patients or an email address** now uses a monthly allowance on the Free plan. Paid plans and trials are unchanged and have no limit.
+
+  - **Five emails per form per month.** Each email sent counts as one, and so does a **Remind** or **Resend** you press. Reminders we send ourselves, patient portal sends and forms handed over in person do not.
+  - **You see what is left.** The sheet shows "3 of 5 sends left for this form this month". If you choose more people than are left, nothing is sent and it tells you how many you can still send. When none are left it gives the date the allowance resets, on the 1st of the month in your clinic's time zone.
+  - **A send held until you are back counts** when you ask for it, because it will go. Someone with no email address is not counted.
+  - **Patient portal and in-person sends still work** when the allowance is used up.
+  - **The link, QR code and embed are not counted.**
+
+  See [How many times the Free plan can send a form](/practice/forms/send-a-form#how-many-times-the-free-plan-can-send-a-form).
+</Update>
+
+<Update label="October 31, 2026" tags={["Platform","Hospital"]} description="Team chat">
+  ## Booking, lab and radiology posts from an AI agent read clearly and open the record
+
+  An agent that posted when a booking was made, cancelled or missed, or when a lab result or imaging report was ready, showed codes you could not use, "[removed]" where a date should be, and notes about how it had looked things up. Those posts are now short and fixed.
+
+  - **One clear message per event.** It shows what happened, the day and time, the name of the service, test or study, and who, with the client as a chip. See [Booking, lab and radiology events post a fixed message](/platform/team/team-chat-ai-agents#booking-lab-and-radiology-events-post-a-fixed-message).
+  - **Open appointment, Open result or Open report** takes you straight to that record.
+  - **They go out even with no agent credits.** These posts are not written by the agent, so they do not use credits.
+  - **Other agent replies are tidier.** Internal codes and extra blank lines are gone, and dates close to today are kept instead of being removed.
+</Update>
+
+<Update label="October 31, 2026" tags={["Platform","Billing"]} description="Payments">
+  ## A reduced price on a picked service now waits for approval instead of being refused
+
+  On **New payment**, a reduction on a service or consultation picked from the price list that went over your approval percentage was turned away, and a clinic with one owner could never get past it. It now behaves like a full waiver.
+
+  - **The item is added unpaid and the request waits.** The row reads **Reduced to** the amount you typed, **added unpaid, waits for approval**, and the request appears in **Payments**, **Approvals**. See [Payments](/hospital/revenue/payments).
+  - **A sole owner can approve their own request** there, after confirming it. Once approved, the patient pays the reduced amount from their pending items.
+  - **The success message is clearer.** A line settled at its reduced amount no longer shows "This includes partial payments", and items added unpaid show a short note that they are waiting for approval.
+  - **Pay Invoice charges what the invoice says.** An invoice's total already includes its tax and service charge, but **Pay Invoice** added them a second time, so the amount was more than the invoice owed and the payment was refused. It now takes the invoice's own total (less any reduced amounts).
+  - **A reduced amount on an invoice keeps its category.** On **Pay Invoice**, the patient's **Record Payment** and the **Invoices** list, a reduced line was refused with "Choose a category for this reduced amount." even after a category was chosen. The category you choose is now kept.
+  - **A paid invoice with reduced lines is a reduced payment.** A payment that settled an invoice whose lines had a reduced amount was listed under **Full payments**. It is now under **Reduced payments**, with a **Subsidy** badge.
+</Update>
+
+<Update label="October 30, 2026" tags={["Platform","Hospital"]} description="Team chat">
+  ## Refund requests reach Team chat, and a decided request stops asking to be decided
+
+  A request that someone had already approved still showed **Approve** and **Reject** to everyone else in **Notifications**, and refund requests never appeared there at all. Both now behave like price reductions.
+
+  - **Refund requests appear in Team chat.** When someone asks for a patient's credit to be refunded, owners and managers other than the person who asked now get a card in **Notifications**, the same as for a price reduction. Requests filed before this update do not get a card; they stay in **Approvals**. See [Approvals and critical results](/platform/team/team-chat-patients-and-teams#approvals-and-critical-results).
+  - **A decided request shows the outcome.** A price reduction or refund request card now reads **Approved by** or **Rejected by** the colleague's name and when it was decided (with the date if it was not today), with no **Approve** or **Reject** for anybody, and an open card updates without a reload. A request that was withdrawn or has expired says so.
+  - **Scrolling stays steady.** Scrolling through a long **Notifications** history no longer jumps while cards load.
+</Update>
+
+<Update label="October 30, 2026" tags={["Hospital","Pharmacy"]} description="Clinical and pharmacy">
+  ## Wards, services and imaging are priced and protected, and dispensing takes the right stock
+
+  Charges that start in the ward, in Triage or in an order now match your price lists, a paid order can no longer be removed by mistake, and the pharmacy draws stock from the right place in the right order.
+
+  - **Ward stays now reach Pending Items.** A new switch, **Charge ward admissions automatically** in [Facility](/hospital/settings/facility#ward-admission-charges), lets each clinic choose whether a patient's stay is added to their pending payments at the bed fee from [Ward management](/hospital/settings/wards#bed-fees). It appears in [Payments](/hospital/revenue/payments) as, for example, "Ward A · Bed 3 - 4 day(s)" with the days and fee underneath, grows each day, and a day already paid stays paid while the next day is listed on its own. Clinics that already used bed fees are switched on; others start off. A stay on a bed with no fee is still listed in Pending, marked as not priced.
+  - **A bed fee set for the first time is never charged back.** If you set a ward's first fee while a patient is already in the bed, only the 24-hour periods that start after you set it are charged; the stay stays listed under **Payments** as **No price set** until then, including for a patient who has already been discharged from a bed with no fee. Payments > Pending also opens several times faster for a clinic with many ward stays.
+  - **A stay marked paid is billed for the days added later, but a discharged one is closed.** Because a stay is now priced day by day, a stay that was marked paid and then ran longer is listed again in **Pending** for the extra days while the patient is still admitted. A stay of a patient who had already been discharged is closed as settled instead, with the unpaid balance kept in the payment history as a reduction, so old stays do not suddenly show as owed. See [Payments](/hospital/revenue/payments).
+  - **Services ordered from Triage or the ward are priced from your service list.** A service added under **Orders** → **Services** on a triage visit or a ward admission now always takes its price from your clinic's service list times the quantity, and appears in the patient's **Pending Items**. A service your clinic has not priced is added without a price. On the ward, a service that already has a payment, discount or bill against it can no longer be removed: ask billing to void or credit it first.
+  - **An imaging order that has been paid for can no longer be removed or changed by mistake.** From the consultation, the admission or the triage visit, an imaging order with a payment, discount or bill against it can no longer be taken off or switched to another study; ask billing to void or credit it first. Only studies from your own clinic's imaging list can be ordered. See [Place orders](/hospital/outpatient/consultation#place-orders).
+  - **A consultation with paid orders cannot be deleted.** Deleting a consultation that has orders with a payment, discount or bill against them is refused with a plain sentence; ask billing to void or credit them first.
+  - **An approved waiver on a consultation sends the patient to Triage.** When an owner or manager approves a full waiver on a consultation, the patient now appears on that department's Triage **Waiting** list, the same as after paying for it, for the consultation's usual validity. A partly reduced consultation still joins the list once the rest is paid. If a waiver is approved long after it was requested, select **Requeue patient** once to put the patient on the **Waiting** list. Voiding the record of nothing paid that an approved waiver leaves behind does not undo the waiver: the item stays **Waived** and the patient stays on the list. See [Triage](/hospital/outpatient/triage).
+  - **Voiding a consultation payment takes the patient off the Triage waiting list.** If a consultation payment is voided, or the item it paid is refunded or cancelled, the patient no longer waits in **Triage** on that payment, unless they have already been seen. A patient who was already seen keeps their visit and is not queued again. Paying the consultation again in full puts the patient back on the **Waiting** list once. A consultation closed by an approved full waiver is the exception: voiding its record of nothing paid leaves it **Waived** and the patient on the **Waiting** list. See [Triage](/hospital/outpatient/triage) and [Payments](/hospital/revenue/payments#void-a-payment-taken-in-error).
+  - **Dispensing draws from your pharmacy's own stock first, in a clearer order.** When you have chosen your pharmacy's location under **Settings** → **Inventory** → **Where the till sells from**, a prescription you dispense draws from it and turns to another location only when it cannot cover the quantity; if no location can, the message lists the usable stock in each. Within a location, batches with an expiry date are used first, soonest first, then batches with no expiry date, oldest first, and a batch with no expiry date never stops a dispense. The same order applies at the till and everywhere else stock is drawn. See [Prescriptions](/hospital/pharmacy/prescriptions).
+  - **Dispensing takes exactly what you dispense off the shelf.** Raising the quantity on a line that is already dispensed takes the extra from stock, dispensing a line again after setting it back takes only what was not yet drawn, and lowering a dispensed quantity is refused with a plain sentence (adjust the stock in Inventory). The quantity box accepts whole numbers only. See [Prescriptions](/hospital/pharmacy/prescriptions).
+  - **A prompt to choose your pharmacy's location.** The owner of a clinic with two or more stock locations who has not yet chosen where the pharmacy sells from now sees a small dismissible prompt on the **Pharmacy** page and in **Settings** → **Inventory**. Until a location is chosen, nothing changes. See [Inventory settings](/pharmacy/settings/inventory).
+  - **An archived medicine can no longer be prescribed from an old screen.** If a screen was open when you archived a medicine and someone saves a new prescription for it, the save is refused with a clear message and the medicine leaves the list; an older consultation that already used it still opens and can be edited. See [Delete or archive a medicine you no longer want](/hospital/supply/inventory#delete-or-archive-a-medicine-you-no-longer-want).
+</Update>
+
+<Update label="October 30, 2026" tags={["Billing","Hospital","Pharmacy"]} description="Billing">
+  ## Faster, consistent money figures, newest first, and a credit panel for each patient
+
+  The **Total income** tab on **Payments** could sit on its loading placeholder, and money paid with a gift card was counted a second time. Alongside that, lists now show the newest first, the Billing page no longer says your clinic is missing while it opens, and an item that is already paid can no longer be charged again.
+
+  - **A patient's credit opens in a panel.** On **Payments** → **Credits**, **View credit** on a patient's row shows their balance, what expires soon, their full credit history and any refund requests, and lets you refund or transfer the credit without leaving the page. If part of it cannot be loaded, the panel says so and offers **Try again** instead of showing a blank or "Never expires". See [The Credits tab](/hospital/revenue/payments#the-credits-tab).
+  - **Total income opens straight away**, even right after the **Overview** tab has loaded. If it ever cannot load, it says so and offers **Try again** instead of waiting. See [Total income](/hospital/revenue/payments#see-your-total-income-in-one-place).
+  - **A gift card is counted once.** A payment made with a gift card is no longer added to **Billing**: the money was counted when the gift card was sold, the same rule as a payment made with credit.
+  - **A record of nothing paid is not a payment.** A waived item closed with nothing to pay no longer adds to the number of payments under **Billing**, and no longer shows an **Other** row of zero under **By payment method**.
+  - **Every money figure now agrees.** The same rule applies to the **Overview** cards, **Payments by Method**, the Billing dashboard, the executive overview, the revenue forecast and the reports: a payment made with a gift card or credit is not counted again, and a record of nothing paid is not counted as a payment. In the payments reconciliation report such rows read **Paid with a gift card (counted when sold)** or **Nothing paid (not counted)**. See [Refunds in your figures](/hospital/revenue/payments#refunds-in-your-figures).
+  - **An item that is already paid cannot be charged again.** The cashier now refuses to take money on an item that is paid in full or was closed by an approved waiver, and on an amount above what is still owed (including an insured patient's share). Nothing is recorded, you see a plain sentence, and the list reloads. Voiding a payment puts the item back at what is still owed, except an item closed by an approved waiver, which stays closed as Waived and does not return to Pending. See [Payments](/hospital/revenue/payments#common-issues).
+  - **Newest first in Approvals and Pending.** Waiting requests in **Approvals** now show the newest at the top, still above decided ones, and **Pending** → **Patients** puts first the client whose most recent unpaid item is newest. See [Approvals](/hospital/revenue/payments#approvals).
+  - **The Billing page no longer flashes "Clinic not found" while it opens.** It shows the loading placeholder until your clinic has loaded, and the campaign report in Marketing does the same when you pick a campaign.
+</Update>
+
+<Update label="October 29, 2026" tags={["Billing","Hospital"]} description="Billing">
+  ## Services keep their price, show as pending, and an approved waiver closes the item
+
+  Some services ordered from a consultation reached the bill with no price, so they never showed in Billing and could not be paid. Others showed "Paid" next to an amount nobody had paid, and a full waiver that had been approved still waited at the desk as if it were owed.
+
+  - **A service keeps its name and price** when you find it by searching in a consultation's **Orders** → **Services**, however long your price list is. The price is always your clinic's price for that service. See [Place orders](/hospital/outpatient/consultation#place-orders).
+  - **Services now appear on the Pending tab** in **Billing** → **Payments**, with everything else a patient owes. See [Payments](/hospital/revenue/payments).
+  - **"Paid" means paid.** A pending item shows "(Paid …)" only when part of it has really been paid, and the amount is what was received.
+  - **An approved full waiver closes the item straight away.** It leaves the patient's pending items with nothing to collect, and the waiver is kept in the payment history. Waivers approved before this update are closed the same way.
+  - **A waiting request closes when the item is paid in full.** If a reduced-amount or waiver request is still waiting and the item is then paid in full, the request is withdrawn with a note and no longer shows to approvers. A part-payment leaves it waiting. See [Approvals](/hospital/revenue/payments#approvals).
+  - **New services get their own code.** Every new service, with or without a category, receives a code no other service in your hospital has. Codes already given are not changed. See [Services](/hospital/revenue/services).
+  - **Administer vaccine opens on a location that holds the vaccine.** If the location you choose has too little, the message names where the stock is, for example "Not enough stock at Main Pharmacy. Pharmacy Fridge has 12." See [Inventory](/hospital/supply/inventory).
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Enterprise plan">
+  ## The bell counts only your activity on Enterprise
+
+  On Enterprise, the number on the notification bell also counted setup steps, so it never went down after you had read everything.
+
+  - **No Setup tab on Enterprise.** The bell shows **Activity** only, and its number counts unread activity alone. Your workspace is set up with you. See [The notification bell](/start/tour#the-notification-bell).
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Clinical notes">
+  ## Services listed on a note now reach the bill
+
+  Services added in the **Services** section of a note started from a template were not reaching the client's bill. Now they do.
+
+  - **Each service is billed at your clinic's price**, unpaid, like a service added on the chart, and saving the note again does not bill it twice. See [Services on a note](/practice/clinical/notes#services-on-a-note).
+  - **A service with a payment, discount or bill against it stays on the bill**: billing voids or credits it first.
+  - Notes saved before this change are not billed after the fact.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital","Billing"]} description="Enterprise plan">
+  ## Add staff on Enterprise without a seat payment
+
+  On Enterprise, every new member of staff used to go through a seat payment before they could join. Your Enterprise contract now sets how many staff you may have, and adding them is free.
+
+  - **No seat payment and no checkout** when you invite someone on Enterprise. Supervisor, biller, scheduler and technical roles still do not count. See [Staff](/hospital/settings/staff).
+  - **Your staff places are shown** under **Invite Staff**: "12 staff · unlimited (Enterprise)", or "12 of 20 staff places used (Enterprise)" when your contract sets a number.
+  - **At the limit**, the invitation is refused with "You have used all N staff places on your Enterprise plan. Contact us at support@clinikehr.com to raise it." Nothing is charged.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Enterprise plan">
+  ## Patient Records is now a complete lock on the clinical record
+
+  When a clinic separated Patients from Patient Records, staff without **See clinical records** were kept off the Patient Records page, but they could still reach consultations, notes and vital signs through other screens.
+
+  - **The clinical record itself is locked** for staff without **See clinical records**: consultations, clinical notes, triage, vital signs (including on the ward), stored files, and recorded allergies, medicines and problems. See [What is locked](/hospital/records/patient-records#what-is-locked-for-staff-who-may-not-see-clinical-records).
+  - **Pharmacy, lab and imaging keep their own work**: a pharmacist still dispenses from the Pharmacy queue, and lab and imaging staff still complete their requests and results, with the patient's name on every order and printed report.
+  - **The front desk keeps what it needs**: patient details, contact information, insurance, forms and consents, and a yes or no allergy tag.
+  - **Billing and insurance screens say why** when a consultation is hidden from you: a paid consultation, the consultations, lab tests and medicines offered on a claim or pre-authorization, and an AI review of one now read "You do not have access to this patient's clinical record, so the consultation details are not shown. Ask an owner or manager." instead of looking empty. Billing or insurance staff who prepare claims from a consultation's diagnosis need **See clinical records** switched on. See [Staff](/hospital/settings/staff).
+  - **Still to come**: the blood type, genotype and history fields on a patient's details are left off the front desk pages, and from any other page for staff without **See clinical records**, but they are not yet locked by the database the same way.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Maternity">
+  ## See every antenatal contact, and correct the most recent one without losing what it said
+
+  Once a contact was recorded there was no way to fix a mistyped blood pressure or a wrong finding, and the card only showed contacts as a trend table.
+
+  - **Contact records, newest first**, on the antenatal card: every contact of the pregnancy with who recorded it, badged **Latest**, **Amended** or **Entered in error**. See [The antenatal card](/hospital/maternity/antenatal-card#contact-records-newest-first).
+  - **View** opens any contact read-only, with every vital and finding recorded at it.
+  - **Edit the most recent contact**: the form opens filled in, you give a reason, and **Save amendment** keeps what it said before as an earlier version, with who wrote it and why it changed. See [View or amend a contact](/hospital/maternity/antenatal-card#view-or-amend-a-contact).
+  - **Nothing is counted twice**: an amended contact keeps its number, its place in her schedule and its programme doses, and her doctor's chart shows the corrected values once.
+  - **Someone else's amendment is never saved over**: if another member of staff amended the contact while you had it open, you are asked to reopen it.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital","Pharmacy"]} description="Maternity and Pharmacy">
+  ## Antenatal medicines can now be sent to the Pharmacy to dispense
+
+  A midwife could only give iron and folate or IPTp-SP from the antenatal room's own stock, so nothing reached the Pharmacy for the pharmacist to dispense.
+
+  - **Send to pharmacy** sits on the **Programme doses** block, beside **Give it now, from stock**. Pick one or more medicines with dose, frequency, duration and quantity. See [Programme doses](/hospital/maternity/programme-doses#send-it-to-the-pharmacy).
+  - **One row per antenatal visit in the Pharmacy queue**, badged **Maternity / ANC**. A medicine sent later in the same visit joins the row until it is dispensed; everything in it opens in one dispense form, and the pharmacist dispenses it and collects payment the normal way. See [Prescription List](/hospital/pharmacy/prescriptions).
+  - **Record the dose against what was dispensed**: once the pharmacy has dispensed it, the medicine appears on **Record dose**, and the ledger row shows **Dispensed by the pharmacy**.
+  - **A dose given from stock is now charged**: **Give it now, from stock** adds it to her bill as an unpaid item at the medicine's price, ready to be reduced or waived in Billing. A medicine with no price is not charged, and the confirmation says so. Marking the dose in error takes an unpaid charge off again. Charging starts with this update — doses given before it are not billed. See [Programme doses](/hospital/maternity/programme-doses#give-the-dose-from-stock-here).
+  - **Choose whether vaccines given from stock are charged**: a new setting, **Charge patients for vaccines given from stock** (Settings → Facility, off unless you turn it on), adds each vaccine given from **Inventory → Vaccines** — and a newborn's birth doses — to the patient's bill at the vaccine's sale price. **Administer vaccine** says the amount before you give it, and the **Vaccines** list shows each dose's charge. See [Facility](/hospital/settings/facility) and [Inventory](/hospital/supply/inventory#give-a-vaccine-from-stock).
+  - **An archived medicine can no longer be prescribed**, from Maternity or from the Pharmacy.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital","Pharmacy"]} description="Pharmacy and Laboratory">
+  ## Hiding the Billing menu no longer stops a pharmacist taking payment
+
+  A clinic that hid **Billing** from a role's sidebar found that the same people could no longer use **Collect payment** on the Pharmacy list, even with the **Collect payments** permission on. The two are now separate.
+
+  - **Collect payment on a Pharmacy or Lab row** needs the **Collect payments** permission and access to that list, nothing more. See [Prescription List](/hospital/pharmacy/prescriptions#collect-payment-from-the-list) and [Laboratory](/hospital/diagnostics/laboratory).
+  - **When it is greyed out, the reason is the real one**: the permission is off, or the role cannot open that list.
+  - **Role Navigation says what hiding Billing does**: it hides the Billing pages, and staff with the permission can still collect from the Pharmacy and Lab lists. See [Role navigation](/hospital/settings/role-navigation).
+  - **Check who can take money.** Because hiding **Billing** no longer blocks it, more staff can now collect payment from these lists: pharmacists whose role menu has no **Billing**, and in the Pharmacy and Diagnostics editions, technicians and lab scientists whose permissions you have not set. Turn **Collect payments** off for anyone who should not take money. See [Staff](/hospital/settings/staff).
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital","Pharmacy"]} description="Pharmacy, Laboratory and Radiology">
+  ## Ask the prescriber now tells the prescriber, and tells you when they reply
+
+  A question asked from a prescription, a lab order or an imaging order opened a conversation, but nobody was told about it: the prescriber did not know a question was waiting, and the pharmacist or lab did not know when an answer came back.
+
+  - **Your first message notifies the prescriber**, in the bell and on their phone where they have notifications on. Every reply after that notifies the other person. Opening the question on its own notifies no one. See [Ask about an order](/hospital/pharmacy/prescriptions#ask-about-an-order).
+  - **A focused panel beside your work.** **Ask the prescriber** opens the conversation with the order shown at the top (what was ordered, when, and by whom), ready to type into, and **Resolve with a note** when it is settled. Choosing the notification opens the same panel.
+  - **The notification names the order, never the patient.** It says, for example, "asked about a prescription you ordered", without the patient, the medicine or the test.
+  - **The order row shows Question open**, with the number of replies you have not read yet. See [Laboratory](/hospital/diagnostics/laboratory) and [Radiology](/hospital/diagnostics/radiology).
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Laboratory">
+  ## Tests requested together for a walk-in client are one entry
+
+  When several tests were requested at once for a walk-in client, the **Laboratory** list showed the client once per test, with the same time on every row, and each test had to be opened on its own. A walk-in client's request now works like a doctor's request.
+
+  - **One row per request.** Everything you request together for one walk-in client is one row on the **Laboratory** list, with every test inside it. Requests made before this change are grouped the same way. See [Laboratory](/hospital/diagnostics/laboratory).
+  - **All the tests open together**, to view results, conduct the tests or update them, and **Download results** saves them as one report.
+  - **Payment is unchanged.** A walk-in client still pays when the tests are requested, or later from **Lab History** → **Walk-in clients**, and a lab that holds walk-in results until they are paid still does: an unpaid order shows **Held until paid** with a **Collect payment** link instead of **Download results**.
+</Update>
+
+<Update label="October 29, 2026" tags={["Hospital"]} description="Maternity">
+  ## The labour chart now shows everything you chart
+
+  Some of what midwives recorded on a labour observation was saved but never shown on the labour chart, and the liquor always appeared blank. Every value is now shown back.
+
+  - **Every field has a row.** **Labour observations** now lists fetal heart rate, liquor, moulding, caput, cervical dilatation, head descent, contractions with their strength and duration, oxytocin, drugs and IV fluids, pulse, blood pressure, temperature, urine protein, acetone and volume, and notes, grouped **Fetal**, **Labour**, **Drugs**, **Maternal** and **Notes** as on the paper partograph. See [Labour observations](/hospital/maternity/labour-chart#labour-observations).
+  - **Liquor reads as you charted it**, in the same words the observation sheet offers, such as **Meconium — light**.
+  - **Head descent is drawn on the cervicograph**, in fifths palpable on its own axis, as on the paper partograph. See [Head descent](/hospital/maternity/labour-chart#head-descent).
+  - Corrected observations stay on the chart, struck through, with every value they recorded.
+</Update>
+
+<Update label="October 29, 2026" tags={["Billing","Hospital"]} description="Billing">
+  ## Add the same service more than once in New Payment, with a quantity
+
+  **Add Services** in **New Payment** let you pick each service only once and had no quantity, so a service given twice could not be charged twice at the desk, though it could from a consultation's **Orders**. It now works the same way as **Orders**.
+
+  - **The same add form as Orders.** Choose a service in **Service** (type to search the whole price list), set **Quantity**, check the **Line total**, add **Notes**, and select **Add service**. See [Take a payment with no invoice behind it](/hospital/revenue/payments#take-a-payment-with-no-invoice-behind-it).
+  - **Each Add service is its own line**, so the same service added twice is two lines, each with its own quantity, and **Remove** takes one off.
+  - **A service with no price set shows "—"**, never a zero, and the payment waits until it is removed or priced.
+  - **Payment details and receipts now name each service** added with **Add Services**, instead of showing "Other".
+  - **Reduced amount** and **Request full waiver** work on every line, including a service added twice and a line with a quantity above 1. A waived line is added to the patient's pending items at its full quantity and price until it is approved.
+</Update>
+
+<Update label="October 29, 2026" tags={["Pharmacy","Hospital"]} description="Inventory">
+  ## Merge a duplicate medicine, archive the starter list, and price your own medicines
+
+  When a starter medicine and your own medicine were linked to the same stock item, doctors still saw both when prescribing, each with its own price, and could pick the starter one at its placeholder price.
+
+  - **Merge into your own medicine.** In **Link medicines**, the starter medicine's row now offers **Merge into** your medicine. The starter one is archived: it leaves prescribing and the till, its past prescriptions and sales stay readable, and nothing is deleted. See [Merge a duplicate medicine](/hospital/supply/inventory#merge-a-duplicate-medicine).
+  - **Unpaid lines follow.** When you merge, prescription lines for the starter medicine that are not paid yet move to your medicine and are charged at its price. Paid and part-paid lines are never moved.
+  - **Find what to archive, and what to price.** **Catalogue medicines** now shows each medicine's price, filters to **Starter list (not yours)** or **No price set**, and has **Edit** on every row, including archived ones. Archive and unarchive many medicines at once. See [Choose what doctors can prescribe](/hospital/supply/inventory#choose-what-doctors-can-prescribe).
+  - **Archived means gone from every list.** An archived medicine is no longer offered when admitting a patient to a ward or prescribing from a clinical note, as it already was not in **Orders → Medications** or at the till.
+</Update>
+
+<Update label="October 29, 2026" tags={["Billing","Solo & Team","Hospital","Pharmacy"]} description="Failed payments">
+  ## Paused API add-ons stay visible, and only the owner is offered the payment button
+
+  - **API add-on and developer workspace plans.** If every payment attempt fails, the add-on or workspace plan now shows under **Billing** as **Payment failed — paused** instead of disappearing.
+  - **Paying a paused API add-on.** The clinic owner selects **Pay open invoice** on the add-on's row and pays in the billing page of the account the add-on is billed to; paying restores it.
+  - **Paying a paused workspace plan.** A workspace plan has no payment button yet: its row says to contact support@clinikehr.com, who help you pay the open invoice and restore it.
+  - **No second purchase while one is paused.** Buying a new API add-on or workspace plan is refused until the paused one is paid or cancelled, so you are never billed twice.
+  - **Owner only.** The **Update payment method** button on the paused notice is shown to the clinic owner only. Managers and other staff see a note to ask the owner.
+  - **Past Due is not paused.** While a declined renewal is being retried, your plan keeps working. See [Payment methods](/platform/plans/payment-methods).
+</Update>
+
+<Update label="October 28, 2026" tags={["Billing","Solo & Team","Hospital","Pharmacy"]} description="Failed payments">
+  ## A subscription that cannot be charged is now paused, not cancelled
+
+  When every payment attempt on a subscription fails, the workspace is now **paused for nonpayment** instead of being cancelled. Nothing is deleted and your plan is kept.
+
+  - **A clear notice.** The owner is emailed once, and a red notice, "Your subscription is paused for nonpayment", shows on the workspace card under **Billing** and on the plan page.
+  - **One way back.** The owner selects **Update payment method**, pays the open invoice in Stripe's billing page, and the plan is restored automatically. See [Payment methods](/platform/plans/payment-methods).
+  - **No double billing.** While paused, checkout will not start a second subscription; pay the open invoice first.
+</Update>
+
 <Update label="October 26, 2026" tags={["Billing","Solo & Team","Hospital"]} description="Fix">
   ## Adding or changing items on an invoice saves again
 

@@ -47,6 +47,8 @@ The table itself carries eight columns, five of them on by default:
 
 A **Ward Patient** badge on a row means the script belongs to an admitted patient, and the row's actions change wording to match — **View Ward Prescription**, **Dispense Ward Prescription**. A script a pharmacist wrote with no visit behind it shows **Pharmacy Rx**, and everything one prescribing session wrote for that patient opens together.
 
+A row badged **Maternity / ANC** holds the routine antenatal medicines a midwife sent from the woman's antenatal card with **Send to pharmacy** — iron and folate, IPTp-SP and the like. Everything sent for one woman at one antenatal visit is one row — a medicine sent later in the same visit joins it until it is dispensed — and opening it lists every medicine in the one dispense form. Dispense it and collect payment exactly as for any other script: the stock leaves the shelf when you dispense, not when the midwife sends it. Once it is dispensed, the midwife records the dose against it on the [Programme doses](/hospital/maternity/programme-doses#send-it-to-the-pharmacy) block. A dose the midwife gives from the antenatal room's own stock is billed straight to the patient and never appears in this queue.
+
 The footer sets how many rows you see — **5**, **10**, **20** or **50** **per page** — and tells you how many there are in total.
 
 **A secured row.** A script for a client whose record is restricted to their care team, when you are not on that team, is listed as **Secured patient** with a number, how many items are **waiting**, its status and the time — and no name, hospital number, medicine, dose or prescriber. It has no **⋯** menu and cannot be opened or dispensed. If you are assigned to the client, covering for someone who is, or in the client's department, you see the script as a normal row. Otherwise select **Request emergency access**, give a reason and a duration, and the row opens as normal until that time ends; the owner and the client's team are told. See [Client security](/practice/work/client-security#emergency-access).
@@ -63,7 +65,7 @@ The footer sets how many rows you see — **5**, **10**, **20** or **50** **per 
     Select **⋯** at the end of the row. **View Details** is always offered, to everyone.
   </Step>
   <Step title="Ask a question about it">
-    **Ask the prescriber** opens a team chat conversation with the clinician who wrote the script, linked to that script and its patient. See [Ask about an order](#ask-about-an-order).
+    **Ask the prescriber** opens a conversation with the clinician who wrote the script, beside your queue. Your first message notifies them, and their reply notifies you. See [Ask about an order](#ask-about-an-order).
   </Step>
   <Step title="Read it in view mode">
     **View Details** opens the script read-only: the medications, quantities, dosage, frequency, duration and any instructions the prescriber left. Use this when a ward rings to ask what was written.
@@ -87,7 +89,7 @@ The dispensing actions appear only for staff signed in as a pharmacist. Everyone
     Each medication has its own **Dispensing Status** — **Dispensed**, **Pending**, **Cancelled** or **Out of Stock** — and its own quantity. Change only the lines that need it: a script with three items can leave two at **Pending** and set the third to **Out of Stock** in the same save. Only a line you set to **Dispensed** asks for a quantity; **Pending**, **Cancelled** and **Out of Stock** save with no quantity at all.
   </Step>
   <Step title="Draw the stock against it">
-    Recording that medicine physically left the shelf happens in the **Fill Rx** tab of [Inventory](/hospital/supply/inventory) — that is the step that moves stock, links it to the patient, and takes a witness for a controlled item. See [the pharmacy station](/hospital/pharmacy/station) for the full flow.
+    When you save a line as **Dispensed**, the stock leaves the shelf by exactly the quantity you entered, taken from the usable batches in order: batches with an expiry date are used first, soonest first; batches with no expiry date after them, oldest first (an expired or quarantined batch is never used). When you have chosen your pharmacy's own location under **Settings** → **Inventory** → **Where the till sells from**, the stock comes from that location first, and another location is used only when it cannot cover the quantity; if no location can, the message lists the usable stock in each. The movement is recorded against the patient and you. Saving the same line again changes nothing. If you later raise the quantity on a line that is already dispensed, only the extra is taken; you cannot lower it, because the shelf would silently keep the difference — adjust the stock in [Inventory](/hospital/supply/inventory) instead. Setting a dispensed line back to **Pending**, **Cancelled** or **Out of Stock** does not put the medicine back on the shelf. The **Fill Rx** tab of Inventory remains the way to draw stock with a witness for a controlled item. See [the pharmacy station](/hospital/pharmacy/station) for the full flow.
   </Step>
 </Steps>
 
@@ -103,7 +105,7 @@ Select **Dispense Prescriptions** and the success message appears, then you are 
 
 ## Collect payment from the list
 
-**Collect payment** in a row's **⋯** menu opens a panel beside the list — you do not leave the page, and nothing is recorded until you select **Collect**. It is greyed out, with "Your role can't take payments at this clinic. Ask an owner or manager." beneath it, if your role cannot take payments or you have not been given the **Collect payments** permission.
+**Collect payment** in a row's **⋯** menu opens a panel beside the list — you do not leave the page, and nothing is recorded until you select **Collect**. It is greyed out, with "Your role can't take payments at this clinic. Ask an owner or manager." beneath it, if you have not been given the **Collect payments** permission. It depends on that permission and on being able to open the Pharmacy, not on the **Billing** menu: a role whose sidebar has no **Billing** still collects here.
 
 1. The medicines on that row that were dispensed and are still unpaid are **ticked**. The patient's other unpaid medicines are listed below, unticked, so you can add them. Laboratory, imaging and other charges are not listed here: take those from their own screens or from [Payments](/hospital/revenue/payments).
 2. A medicine with no price shows **No price set** and cannot be ticked; the line says who can set its price in Inventory.
@@ -115,9 +117,23 @@ In a clinic marked **free** the item does not appear at all. Payment needs a con
 
 ## Ask about an order
 
-When something on a script is unclear — a dose, a substitution, a missing instruction — choose **Ask the prescriber** from the row's **⋯** menu. It opens a team chat conversation with the clinician who wrote the script, linked to that script and its patient. The conversation opens in the Team chat panel beside your work, docked on the right on a large screen and as a sheet on a phone, so you stay on your queue; **Open full chat** in its header takes you to the whole page. If a question about that order is already open you are taken to the same conversation rather than a second one. Laboratory and imaging orders offer the same thing as **Ask the ordering clinician**: see [Laboratory](/hospital/diagnostics/laboratory) and [Radiology](/hospital/diagnostics/radiology).
+When something on a script is unclear — a dose, a substitution, a missing instruction — choose **Ask the prescriber** from the row's **⋯** menu. Laboratory and imaging orders offer the same thing as **Ask the ordering clinician**: see [Laboratory](/hospital/diagnostics/laboratory) and [Radiology](/hospital/diagnostics/radiology).
 
-The entry is not offered on a secured row, or on an order with nothing yet to ask about. Only people who may open that client's record can start the conversation. If the clinician who placed the order cannot be reached in team chat you are told **There is no one to ask**, and the conversation is not created. For how conversations work, see the Team chat guides.
+The question opens in a panel beside your work, docked on the right on a large screen and as a sheet on a phone, so you stay on your queue. The top of the panel shows the order: what was ordered, the **Prescriber** (or **Ordered by**), when it was ordered and who asked. Below it is the conversation, with the cursor already in the box so you can type the question straight away. **Open full chat** takes you to the whole Team chat page. If a question about that order is already open you are taken to the same conversation rather than a second one.
+
+**Who is told, and when:**
+
+- **Sending your first message tells the prescriber.** Opening the panel on its own notifies no one, so nothing reaches them until you have actually asked something.
+- Every message after that, in either direction, tells the other person: a notification in the bell, and a phone notification where they have turned those on. You are never notified about your own messages.
+- The notification names the kind of order and who wrote, for example "Dr Bello asked about a prescription you ordered" or "Ama replied about a lab order". It never names the patient, the medicine or the test.
+- Choosing the notification opens the same panel on the page the person is on. Where the panel cannot show, it opens the conversation in Team chat.
+- Each person's own settings still apply: a conversation they have muted, Do not disturb, and a clinic that has turned staff notifications off.
+
+While a question is open, the order's row shows **Question open**. When there is a reply you have not read, it says how many, for example **Question open · 1 unread**. Select it to open the conversation.
+
+When the question is answered, choose **Resolve with a note** in the panel. Under **How was it settled?** write a short note (3 to 500 characters), then choose **Resolve and close**. The note is saved on the order and the conversation closes; the order can be asked about again later if something new comes up.
+
+The entry is not offered on a secured row, or on an order with nothing yet to ask about. Only people who may open that client's record can start the conversation or see the order in the panel. If the clinician who placed the order cannot be reached in team chat you are told **There is no one to ask**, and the conversation is not created. For how conversations work, see the Team chat guides.
 
 ## Print from the list
 
@@ -152,7 +168,7 @@ Two behaviours surprise people. Enforcement is **opt-in per person** — a colle
 
 - A dispensed script shows **Dispensed** in the **Status** column, with your name under **Dispensed By**.
 - The row leaves the pending part of the queue and can be found in [Prescription history](/hospital/pharmacy/prescription-history).
-- If you drew stock in **Fill Rx**, the item's on-hand figure in [Inventory](/hospital/supply/inventory) has dropped by what you gave out.
+- The linked item's on-hand figure in [Inventory](/hospital/supply/inventory) has dropped by exactly the quantity you dispensed.
 
 ## Common issues
 
@@ -198,7 +214,7 @@ Two behaviours surprise people. Enforcement is **opt-in per person** — a colle
   </Accordion>
 
   <Accordion title="Does dispensing here take the medicine off the shelf?">
-    Not on its own. Stock moves when you draw it in the **Fill Rx** tab of Inventory. Keeping the two steps distinct is what makes the stock figure trustworthy.
+    Yes, when the medicine is linked to a stock item and you enter a quantity: saving the line as **Dispensed** takes exactly that quantity from batches with an expiry date first, soonest first, then batches with no expiry date, oldest first, starting with your pharmacy's own location when you have chosen one under **Settings** → **Inventory**. If it cannot (not linked, no quantity, or not enough usable stock) a **Stock did not move** message says so and the line is listed under Inventory → **Reconciliation**; a clinic that has turned on strict stock rules refuses the save instead. Quantities are whole numbers only.
   </Accordion>
 
   <Accordion title="Can I mark one item Out of Stock while dispensing the rest of the same script?">

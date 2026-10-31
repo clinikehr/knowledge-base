@@ -56,7 +56,22 @@ Every agent reply spends [agent credits](/platform/ai/credits) from your clinic,
 
 ## Schedules and events
 
-A schedule runs the agent daily, weekly or monthly at the time you choose, in your time zone. Events run it when something happens, from the same list a channel feed uses. Scheduled and event runs post short lines with counts and links, never a patient's name.
+A schedule runs the agent daily, weekly or monthly at the time you choose, in your time zone. Events run it when something happens, from the same list a channel feed uses. Scheduled and event runs post short plain lines, never a patient's name.
+
+### Booking, lab and radiology events post a fixed message
+
+When an agent runs on **New appointment booked**, **Appointment cancelled**, **Appointment no-show**, **Lab result ready** or **Imaging report ready**, it does not write the post itself. The post is built from the record, so it always reads the same way and carries no codes you cannot use:
+
+- **A booking** has a first line with what happened and the booking code (**New booking**, **Booking cancelled** or **No-show**), a second line with the day, time and service (for example **Tue 3 Nov, 10:00 · General Checkup**), and a third line with the provider and how it was made: **online booking**, **added by staff**, **booked by phone**, **client portal booking**, **from a linked calendar** or **booked by an AI assistant**. If a booking was cancelled before the post went out, the first line says so, for example **New booking (since cancelled)**.
+- **A lab result** reads **Lab result ready · Full blood count**, then the day and time and who ordered it. **A radiology report** reads **Radiology report ready ·** the name of the study, then the day, time and who reported it (or who ordered it, when no one is recorded yet). The post names the test or study and never shows a result or a finding.
+- Times are the clinic's own time. A part that is not recorded is shown as a dash or left out.
+- The client is a chip under the post, never a name in the text. Opening the chip is recorded on the client's record, as everywhere in Team chat.
+- **Open appointment**, **Open result** or **Open report** takes you to that record: the appointment's details on the calendar, the lab test in **Lab history**, or the order in **Radiology history**. If you cannot see it, you get a message saying it could not be found or you do not have access.
+
+A paused agent posts nothing, and each event is posted once. Writing these posts does not spend agent credits, and they go out even when your clinic has no agent credits left. Replies the agent writes itself still need credits.
+
+Posts for other events, and replies to a mention or a direct message, are still written by the agent. They now leave out internal codes and keep dates that are close to today.
+
 
 ## Message an agent directly
 

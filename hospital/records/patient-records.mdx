@@ -27,8 +27,25 @@ This is an optional setting, off by default (see [Navigation](/hospital/settings
 
 Doctors, nurses, records officers and lab and radiology staff can open it by default; the receptionist and the biller cannot, and see "You do not have access to patient records in this clinic" if they try. Owners and managers always can. Opening a chart is recorded in the audit log, and so is a refused attempt. Old links to **Recent Activity** or **File it** carry you here automatically.
 
+### What is locked for staff who may not see clinical records
+
+Anyone without **See clinical records** (see [Staff](/hospital/settings/staff)) is now refused the patient's clinical record by the system itself, not only by this page. Whichever screen, report or connection they try, they cannot read:
+
+- consultations and consultation history
+- clinical notes
+- triage and vital signs, including on the ward
+- the patient's stored files (**Documents**)
+- recorded allergies, reported medicines and the problem list
+- **Recent Activity** and the chart timeline
+
+Where a list would have shown these, they see "This record could not be found, or you do not have access to it."
+
+**Pharmacy, lab and imaging staff keep their own work.** A pharmacist still sees and dispenses the prescriptions in the [Pharmacy](/hospital/pharmacy/prescriptions) queue, and lab and imaging staff still see and complete their requests and results, with the patient's name on each order and on the printed report. What they lose is the rest of the chart. If one of them needs the full record, switch **See clinical records** on for that person.
+
+**Forms and consents sent to the patient stay with reception** on [Patients](/hospital/front-desk/patients).
+
 <Warning>
-  Today this separates the pages, the menu and who is let in to this page. Restricting the underlying clinical records inside the system follows in a later update, so treat it as a working separation rather than a complete lock. It only narrows access once **Role-based navigation** is on.
+  Two things this does not cover yet. The **blood type, genotype, allergies, medical history and current medicines written on the patient's details** are left off the front desk pages, but they are not yet locked inside the system the way the records above are. And billing or insurance staff without **See clinical records** no longer see a consultation's complaint or diagnosis, so switch it on for anyone who prepares claims from them. The separation only narrows access once **Role-based navigation** is on.
 </Warning>
 
 Without the separation, everything below applies to the single page.

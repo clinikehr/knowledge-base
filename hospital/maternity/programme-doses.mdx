@@ -1,6 +1,6 @@
 ---
 title: Programme doses
-description: "Record IPTp, tetanus and iron-folate against a pregnancy, read what the schedule says is due, and correct a dose recorded in error."
+description: "Record IPTp, tetanus and iron-folate against a pregnancy, send ANC medicines to the pharmacy, and correct a dose recorded in error."
 icon: "/images/icons/syringe.svg"
 ---
 
@@ -27,13 +27,14 @@ The dialog says it plainly: "This records the dose against the pregnancy. It doe
 
 A dose given at your hospital is given the normal way — through a screen that draws the stock and records the lot. This ledger then says *which pregnancy, which programme, which position in the series* and points back at that administration. A dose given somewhere else is recorded as reported, with nothing to point at.
 
-There are three ways a dose can have been given here, and all three end at the same place — a record for the ledger to point at:
+There are four ways a dose can have been given here, and all four end at the same place — a record for the ledger to point at:
 
 | The dose was | Give it on | It then appears in |
 | --- | --- | --- |
 | A vaccine, such as tetanus toxoid | The vaccine screen | **Which administration drew the stock** |
 | A drug for an admitted patient | The ward drug chart | The same list |
-| A drug for a woman at clinic — IPTp-SP, iron and folate | **Give it now, from stock**, on this block | The same list, straight away |
+| A drug for a woman at clinic, from the antenatal room's own stock — IPTp-SP, iron and folate | **Give it now, from stock**, on this block | The same list, straight away |
+| A drug for a woman at clinic, dispensed by the pharmacy | **Send to pharmacy**, on this block, then the Pharmacy dispenses it | The same list, once it has been dispensed |
 
 <Note>
   **Give it now, from stock** was added because there was no way to record IPTp-SP or iron and folate as given here at all. They are not vaccines, and the woman receiving them has no bed — so neither of the other two routes fitted her, and the only remaining option said the dose came from another facility, which was not true.
@@ -104,6 +105,8 @@ Use this for a drug you are handing to a woman at clinic — IPTp-SP, iron and f
     It confirms **Dose given** — "Stock has been drawn and the lot recorded. It is not on the pregnancy's ledger until you select Record dose."
 
     You are returned to the ledger form with the new record already chosen in **Which administration drew the stock**.
+
+    **The dose is charged to her bill.** The confirmation ends "… is on her bill, unpaid, in Billing." It appears in **Billing** as an unpaid item at the medicine's price times the dose given, and can be reduced or waived there like any other item. A medicine with no price is not charged — the confirmation says "Not charged: … has no price in the medicine list. Set its price so the next dose is charged." — and nothing is added to her bill.
   </Step>
   <Step title="Finish with Record dose">
     Set the **Programme** and **Dose number**, then select **Record dose**.
@@ -114,7 +117,13 @@ Use this for a drug you are handing to a woman at clinic — IPTp-SP, iron and f
   **These are two acts, and the first one cannot be undone.** Once **Give the dose** succeeds, the stock is gone and the lot is recorded — whatever happens next. If **Record dose** then fails, the block keeps the record selected and shows a standing notice: "Stock has already been drawn for this dose and the lot recorded. It is **not** on this pregnancy's ledger until you select **Record dose**. Do not give a second dose if this step fails — select **Record dose** again."
 
   Select **Record dose** again. Do not go back and give a second dose.
+
+  If the charge could not be added, the block says "This dose has been given but is **not on her bill yet**" with **Charge it again**. Use it — a dose is only ever charged once, however many times you select it.
 </Warning>
+
+<Note>
+  **A dose is charged once.** A dose given from stock is charged when you give it, and never appears in the **Pharmacy** queue. A medicine sent to the pharmacy is charged when the pharmacist dispenses it, and recording the dose against it adds no second charge. Give a dose one way or the other, never both.
+</Note>
 
 <Note>
   **This needs stock set up.** If your clinic has no medications or no active storage location in **Inventory**, the step says so plainly — "No medications are set up in this clinic's stock, so a dose can't be given from here" — rather than showing you an empty list. Set the item up under **Inventory**, or record the dose as **Reported from another facility**.
@@ -122,9 +131,44 @@ Use this for a drug you are handing to a woman at clinic — IPTp-SP, iron and f
   If the list simply could not be loaded it says that instead — "The stock list could not be loaded, so it isn't possible to say what is available" — with a **Try again**. An empty list and a failed read are never shown as the same thing.
 </Note>
 
+## Send it to the pharmacy
+
+Use this when the pharmacy, not the antenatal room, hands over the medicine. Everything you send for one woman at one antenatal visit reaches the **Pharmacy** queue as one row badged **Maternity / ANC** — if you send another medicine later in the same visit, it joins that row while the pharmacy has not dispensed it yet. Once the row is dispensed, a new send starts a new row. The pharmacist dispenses it and collects payment the normal way. Nothing leaves the shelf until the pharmacist dispenses it.
+
+<Note>
+  **A visit is the antenatal contact recorded today.** If no contact has been recorded for her today, each send is its own row.
+</Note>
+
+<Steps>
+  <Step title="Select Send to pharmacy">
+    It sits at the top right of the **Programme doses** block beside **Record dose**, and under **Which administration drew the stock** beside **Give it now, from stock**.
+  </Step>
+  <Step title="Choose the Medicine">
+    **Medicine** searches your clinic's medicine list. A medicine that has been archived is not offered.
+  </Step>
+  <Step title="Fill in Dose, Frequency, Duration and Quantity">
+    **Quantity** is how many units the pharmacy hands over — a whole number of at least 1. The other three are the instructions the pharmacist sees.
+  </Step>
+  <Step title="Add another medicine if she needs more than one">
+    Select **Add another medicine** for each — iron and folate and IPTp-SP, say. **Remove this medicine** takes a line away. They all travel as one order.
+  </Step>
+  <Step title="Select Send to pharmacy">
+    It confirms **Sent to the pharmacy** — "It is one Maternity / ANC order in the Pharmacy queue. Once it has been dispensed, record the dose here against it."
+  </Step>
+  <Step title="Record the dose once it has been dispensed">
+    Select **Record dose**, choose the **Programme**, keep **Given at this clinic**, and pick the medicine from **Which administration drew the stock** — a dispensed line reads "dispensed by the pharmacy". Then select **Record dose**.
+  </Step>
+</Steps>
+
+<Note>
+  **A medicine still waiting at the pharmacy is not offered on the ledger.** Only a dispensed line can be recorded as a dose — until then she has not received it. A dispensed line can be recorded once: one dispensed medicine is one dose.
+</Note>
+
 ## Correct a dose recorded in error
 
-Nothing here is deleted. A wrong dose is marked as entered in error, keeping the row, its reason and any administration it points at — and freeing its position in the series so the correct dose can be recorded.
+Nothing here is deleted. If the dose was given from stock and its charge has not been paid, marking it in error also takes the charge off her bill. A charge that has already been paid stays — refund it from **Billing**.
+
+A wrong dose is marked as entered in error, keeping the row, its reason and any administration it points at — and freeing its position in the series so the correct dose can be recorded.
 
 <Steps>
   <Step title="Select Mark in error on the row">
@@ -152,7 +196,7 @@ The row stays in the ledger, struck through and badged **Entered in error**, and
 | --- | --- |
 | **Dose** | The programme and its number — **IPTp 2**, **Tetanus toxoid 3** — with an **Entered in error** badge where one applies |
 | **Given** | The date it was given |
-| **Source** | **Given here** or **Reported elsewhere** |
+| **Source** | **Given here** or **Reported elsewhere**, and **Dispensed by the pharmacy** when the dose was recorded against a medicine the pharmacy dispensed |
 
 With nothing recorded it reads **No programme doses recorded for this pregnancy.**
 
@@ -163,6 +207,7 @@ With nothing recorded it reads **No programme doses recorded for this pregnancy.
 | Read the ledger and the schedule | Anyone who can open the antenatal card | Nothing |
 | Record a dose | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
 | Give a dose from stock, here | The same — it opens from inside **Record dose** | **Record a programme dose** |
+| Send medicines to the pharmacy | The same | **Record a programme dose** |
 | Mark a dose as entered in error | The same | **Record a programme dose** |
 
 Recording and correcting share one permission on purpose: whoever may assert that a dose happened may assert that it did not.
@@ -208,6 +253,22 @@ Recording and correcting share one permission on purpose: whoever may assert tha
     "A dose can only be recorded against the woman it was given to." You are on the wrong pregnancy's card, or you copied another patient's reference.
   </Accordion>
 
+  <Accordion title="That medicine has not been dispensed by the pharmacy yet.">
+    "Record the dose once it has been dispensed." The pharmacy has not dispensed this line yet, so she has not received it. Wait until it is dispensed, then record the dose.
+  </Accordion>
+
+  <Accordion title="That dispensed medicine is already recorded against a dose. One dispensed line is one dose.">
+    Another ledger row already points at this dispensed medicine. Send another supply to the pharmacy if she needs a second dose.
+  </Accordion>
+
+  <Accordion title="One of these medicines has been archived and can no longer be prescribed.">
+    "Remove it and choose another." The medicine was archived in your medicine list after you opened **Send to pharmacy**. Remove that line and pick an active one.
+  </Accordion>
+
+  <Accordion title="This pregnancy is no longer active, so medicines can't be sent against it.">
+    The pregnancy record has been closed. Medicines can only be sent while it is open.
+  </Accordion>
+
   <Accordion title="A dose can't be dated in the future.">
     Set **Date given** to today or earlier.
   </Accordion>
@@ -224,12 +285,24 @@ Recording and correcting share one permission on purpose: whoever may assert tha
     **Record dose** never does. **Give it now, from stock** does — that is the whole difference between the two, and it is why they are separate steps with separate confirmations. The ledger points at a stock movement; it never causes one.
   </Accordion>
 
+  <Accordion title="Is a dose given from stock charged?">
+    Yes. **Give the dose** adds it to her bill as an unpaid item at the medicine's price times the dose given, in **Billing**, where it can be reduced or waived. A medicine with no price in the medicine list is not charged, and the confirmation says so. A dose reported from another facility is never charged, and doses given before this change are not charged afterwards.
+  </Accordion>
+
+  <Accordion title="Is tetanus toxoid charged?">
+    Tetanus toxoid is given on **Inventory → Vaccines**, so it is charged only if your hospital has turned on **Charge patients for vaccines given from stock** in Settings → [Facility](/hospital/settings/facility). If that dose is later marked in error here before it is paid, the charge is taken off her bill.
+  </Accordion>
+
   <Accordion title="I gave the dose but Record dose failed. Should I give it again?">
     No. The stock has already been drawn and the lot recorded — giving it again would give a second dose and draw a second one. The block keeps the record selected and says so; select **Record dose** again.
   </Accordion>
 
   <Accordion title="Why is Give it now, from stock missing?">
     It appears only when **Given at this clinic** is selected, and only where the pregnancy record could name the woman. If it is absent, give the dose on the vaccine screen or the ward drug chart and choose it from **Which administration drew the stock**.
+  </Accordion>
+
+  <Accordion title="When do I use Send to pharmacy instead of Give it now, from stock?">
+    Use **Give it now, from stock** when the antenatal room hands the medicine over from its own stock. Use **Send to pharmacy** when the pharmacy hands it over — the pharmacist dispenses it, draws the stock and collects payment. Never both for the same dose.
   </Accordion>
 
   <Accordion title="Why is there no Dose number for iron and folate?">
@@ -251,4 +324,4 @@ Recording and correcting share one permission on purpose: whoever may assert tha
 
 <StillStuck topic="programme doses" />
 
-{/* source of truth: components/clinic/maternity/programme-doses-panel.tsx, lib/maternity/programme-schedule.ts, db/actions/maternity.ts (recordProgrammeDose, voidProgrammeDose) */}
+{/* source of truth: components/clinic/maternity/programme-doses-panel.tsx, components/clinic/maternity/anc-send-to-pharmacy-step.tsx, lib/maternity/programme-schedule.ts, db/actions/maternity.ts (recordProgrammeDose, voidProgrammeDose), db/actions/maternity-pharmacy.ts */}

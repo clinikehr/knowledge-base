@@ -32,14 +32,16 @@ import { StillStuck } from '/snippets/support.mdx';
 Selecting **Invite Staff** opens a sheet titled **Add team member** — a five-step wizard: **1 Profile → 2 Specialty → 3 Supervisor → 4 Permissions → 5 Review**.
 
 <Warning>
-  Seats are billed on this plan. Enterprise is uncapped, but every seat is still charged — the line under the button reads, for example, "12 staff · unlimited seats · $X/mo per seat". Inviting someone adds a recurring charge. Supervisor, biller and scheduler assignments, and the developer, IT admin and CTO roles, are free; it is the staff account itself that costs.
+  Seats are billed on this plan — the line under the button reads, for example, "4 of 10 seats used · $X/mo per seat". Inviting someone adds a recurring charge. Supervisor, biller and scheduler assignments, and the developer, IT admin and CTO roles, are free; it is the staff account itself that costs.
+
+  **Enterprise** is different: your contract sets a number of **staff places**, and inviting someone up to that number costs nothing — there is no seat payment and no checkout. The line under the button reads "12 staff · unlimited (Enterprise)" when your contract has no limit, or "12 of 20 staff places used (Enterprise)" when it does. The free roles above still do not count toward the number.
 </Warning>
 
 ## Set it up
 
 <Steps>
   <Step title="Check the seat line before you start">
-    Under **Invite Staff** you get either "N of M seats used" or "N staff · unlimited seats", with the per-seat price where one applies. At a cap you are told before you open the sheet.
+    Under **Invite Staff** you get either "N of M seats used" or "N staff · unlimited seats", with the per-seat price where one applies. On Enterprise it reads "N of M staff places used (Enterprise)" or "N staff · unlimited (Enterprise)", with no price. At a cap you are told before you open the sheet.
   </Step>
   <Step title="Open Add team member">
     Select **Invite Staff**. Step **1 Profile** takes their name and work email. Anything you do not know can be added later.
@@ -94,7 +96,7 @@ The **Permissions** sheet groups them by section. On a hospital you can grant:
 
 **Mark medicines as controlled** covers switching **Controlled medicine** on or off for an inventory item. A prescription for a controlled medicine can't be faxed. Owners and managers can always do it. It is on for a pharmacist when you save them, and off for everyone else, including anyone you have not saved in the permissions sheet, until you switch it on.
 
-  **See clinical records** covers opening [Patient Records](/hospital/records/patient-records): the medical profile, clinical documents and recent activity. It only applies if your clinic has separated Patients from Patient Records in [Navigation](/hospital/settings/navigation); otherwise it does nothing. Owners and managers can always open it. When you save someone, it arrives on for doctors, nurses, records officers and lab and radiology staff, and off for the receptionist and the biller until you switch it on. Someone without it who opens Patient Records sees "You do not have access to patient records in this clinic." For now it decides who may open the Patient Records page; it does not yet lock the underlying clinical records.
+  **See clinical records** covers opening [Patient Records](/hospital/records/patient-records): the medical profile, clinical documents and recent activity. It only applies if your clinic has separated Patients from Patient Records in [Navigation](/hospital/settings/navigation); otherwise it does nothing. Owners and managers can always open it. When you save someone, it arrives on for doctors, nurses, records officers and lab and radiology staff, and off for the receptionist and the biller until you switch it on. Someone without it who opens Patient Records sees "You do not have access to patient records in this clinic." Without it, the clinical record itself is locked for that person, not only the page: consultations, notes, triage, vital signs, stored files and recorded allergies, medicines and problems. A pharmacist, lab or imaging member of staff without it keeps the prescriptions or requests they work on. See [what is locked](/hospital/records/patient-records#what-is-locked-for-staff-who-may-not-see-clinical-records).
 
   **Manage the inventory catalogue** covers archiving, restoring and deleting an item on **Inventory** › **Catalog**, and writing off a lot on **Stock**. Owners and managers can always do it, and so can anyone you have not saved in the permissions sheet. It is on for a pharmacist, pharmacy technician or storekeeper when you save them, and off for anyone else until you switch it on.
 </Note>
@@ -156,6 +158,9 @@ The person appears under **Pending Invitations** immediately and moves to **Staf
   </Accordion>
   <Accordion title="I am told I have used all the seats on my plan">
     The warning appears above the table before you open the sheet, and the next invitation is refused. Change your plan, or remove someone who has left.
+  </Accordion>
+  <Accordion title="I am told I have used all the staff places on my Enterprise plan">
+    You see "You have used all N staff places on your Enterprise plan. Contact us at support@clinikehr.com to raise it." Your number of staff places is part of your Enterprise contract, so it is raised by us rather than by changing plan: email support@clinikehr.com (the **Email us** button opens it) and we will raise it. Nothing is charged at the limit, and you can also free a place by removing someone who has left.
   </Accordion>
   <Accordion title="Someone is stuck under Pending Seat Payments">
     Their seat payment was never completed. Use **Retry** on the row for a new payment link, or **Cancel** to discard. Expired ones drop off the list on their own.

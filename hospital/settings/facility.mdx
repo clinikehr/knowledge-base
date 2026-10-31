@@ -56,6 +56,14 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Clinic SATS discriminators** | Extra Red/Orange discriminators your hospital adds to the published SATS list — only while SATS has been reviewed. Owner or manager | None |
 | **Vitals display units** | Temperature (°C/°F), weight (kg/lb), height (cm/in) and glucose (mmol/L / mg/dL) — what triage and ward vitals are entered and shown in. Owner or manager | Celsius, kilograms, centimetres, mmol/L |
 | **Triage locations** | Named places — waiting room, bays, resus — per department and, optionally, sub-unit, that the triage queue and Track board place a patient in. Owner or manager | None until you add one |
+| **Charge patients for vaccines given from stock** | Under **Vaccine charges**: "Each vaccine given from stock is added to the patient's bill, unpaid, at the vaccine's selling price for each unit given. A vaccine with no selling price is not charged. Doses given before this was turned on are not charged." Covers vaccines given from **Inventory → Vaccines** and the newborn doses on a birth record. The selling price is the **Sale price** on the vaccine's item in Inventory. Owner or manager | **Off** |
+| **Charge ward admissions automatically** | Under **Ward admission charges**: "When on, a patient's stay is added to their pending payments at your bed fee for each 24 hours started, and grows each day until they are discharged. Stays are charged from the moment you turn this on: days before that are never added. When off, nothing is added for you. Add a Bed Fee yourself on the patient's bill." The bed fees are set in [Ward management](/hospital/settings/wards#bed-fees). Shown when the **In-patient care** area is on. Owner or manager | **Off** for a clinic that has not set a bed fee; **On** for a clinic that already had one when this was added |
+
+## Ward admission charges
+
+Under **Ward admission charges**, **Charge ward admissions automatically** decides whether a patient's stay in a bed is added to their [pending payments](/hospital/revenue/payments) for you, at the fee you set under [Ward management](/hospital/settings/wards#bed-fees). Each 24 hours started is one day. Turn it on and a new admission appears in **Pending Items** straight away at one day's fee, and grows by a day's fee each day.
+
+Turning it on never adds charges for days before that moment. Leave it off if you charge for beds yourself: add a Bed Fee to the patient's bill and nothing is added for you. Only an owner or a manager can change it, and the change is recorded in the [audit log](/hospital/settings/security).
 
 ## Set it up
 
@@ -136,6 +144,8 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Nurse orders categories** | A chief complaint you remove from the list can no longer start nurse orders on a new triage; one already opened is unaffected. |
 | **Vitals display units** | Every vitals field on triage and ward charts switches to the new unit for entry and display, going forward. Values already recorded are stored in SI units regardless and are simply re-displayed. |
 | **Triage locations** | An archived location stops being offered on the queue's **Move to…** menu and the Track board; it does not move any patient already placed there. |
+| **Charge patients for vaccines given from stock** | From the next vaccine given, each one adds one unpaid item to the patient's bill in **Billing**, where it can be reduced or waived like any other. Vaccines given earlier, or while this was off, are never charged. **Administer vaccine** says the amount before you give it, and the **Charge** column on [Inventory → Vaccines](/hospital/supply/inventory) shows what each dose was charged. Turning it off stops new charges; charges already made stay. |
+| **Charge ward admissions automatically** | Turning it **on** adds each stay to the patient's pending payments from then on. A patient already in a bed is charged from the next 24 hours that start after you turn it on; the days before are never charged. Turning it **off** stops new days being added and keeps the days already charged; turning it on again later does not remove them. A day that started while it was off is never charged. |
 
 Each block saves on its own: selecting **Save bands** does not save the cadence above it.
 

@@ -32,7 +32,7 @@ Eight buttons run along the header:
 | **Export** | Takes the catalogue or stock out again |
 | **Add item** | Creates one item by hand |
 | **Link medicines** | Shown to owners, managers and anyone the clinic lets dispense. Matches medicines that are not linked to a stock item, and unlinks one that is — see [Link medicines to stock](#link-medicines-to-stock) |
-| **Catalogue medicines** | Owners and managers. Switches medicines on or off for the prescriber's picker — see [Choose what doctors can prescribe](#choose-what-doctors-can-prescribe) |
+| **Catalogue medicines** | Owners and managers. Archives medicines so prescribers and the till no longer offer them, and unarchives them — see [Choose what doctors can prescribe](#choose-what-doctors-can-prescribe) |
 
 Below them, the tabs. A hospital normally sees eleven, with two more appearing when they apply:
 
@@ -91,12 +91,36 @@ Select **Unlink** on the row and confirm. Only that medicine loses its link. Any
 
 If the list changed while you had it open (someone else linked or unlinked the same medicine), the unlink is refused with a message rather than applied to the new link. Close the sheet and open it again to see the current links.
 
+### Merge a duplicate medicine
+
+Two medicines on one stock item each keep their own price, and doctors see both when they prescribe. If one of them is a medicine from your starter list (for example **Omeprazole** at its starter price beside your own **Omeprazole Cap**), merge it into yours. Owners and managers can merge.
+
+<Steps>
+  <Step title="Find the duplicate">
+    On the **Linked** tab, choose **Sharing a stock item** in the filter. Each row shows the medicine's price.
+  </Step>
+  <Step title="Open Merge">
+    The starter medicine's row shows **Merge into** followed by the name of your own medicine. Your own medicine's row has no merge button: it is the one kept.
+  </Step>
+  <Step title="Check and merge">
+    The sheet shows the medicine to archive and the one to keep, with their prices. If prescriptions for the starter medicine are not paid yet, **Move unpaid prescription lines** is on: those lines move to your medicine and are charged at its price. Select **Merge and archive**.
+  </Step>
+</Steps>
+
+The merged medicine is archived and stops drawing from the stock item. It no longer appears when a doctor prescribes in **Orders → Medications** (consultation, triage and ward), in the pharmacy prescription form, or at the till. Its past prescriptions and sales stay readable with its name, and nothing is deleted. Paid and part-paid lines are never moved, and nor are lines already on an invoice or with a reduction waiting. If you turn **Move unpaid prescription lines** off, those lines keep the starter price, and a line not dispensed yet does not draw stock (it shows under **Reconciliation**).
+
+To keep the starter medicine and archive your own instead, select **Keep** *(starter medicine)* **instead** (for example **Keep Omeprazole instead**). The sheet warns you that your own medicine will be archived, and **Merge and archive** stays off until you tick the box that confirms it.
+
+On the **Not linked** tab, if the stock item you choose is marked **Used by another medicine**, an owner or manager also sees **Merge into the medicine on this item**. Use it instead of **Link to this item** when the two are really the same medicine. **Link to this item** is still there for two different medicines that genuinely share one stock item.
+
+You can unarchive a merged medicine in **Catalogue medicines**.
+
 ### Delete or archive a medicine you no longer want
 
 After you unlink a medicine, an owner or manager is asked what to do with it:
 
 - **Delete medicine** is offered when the medicine has never been prescribed, sold or dispensed. It removes the medicine for good.
-- **Archive medicine** is offered when it has prescriptions or sales, because those records still need it. Archiving takes it off every prescriber's list; its past prescriptions and sales stay as they are. You can switch it back on in **Catalogue medicines**.
+- **Archive medicine** is offered when it has prescriptions or sales, because those records still need it. Archiving takes it off every prescriber's list and the till; its past prescriptions and sales stay as they are. You can unarchive it in **Catalogue medicines**.
 
 **Keep it** leaves the medicine unlinked and still prescribable. You can come back to it later: on the **Not linked** tab, owners and managers have **Delete or archive** on every row.
 
@@ -106,7 +130,22 @@ After you unlink a medicine, an owner or manager is asked what to do with it:
 
 The prescriber's medicine list shows a badge beside each medicine — **In stock 24**, **Out of stock** or **Not stocked** — and lists stocked medicines first. Nothing is hidden because of quantity, so a medicine that is out of stock can still be prescribed.
 
-To remove medicines nobody stocks, an owner or manager selects **Catalogue medicines**, filters to **Not linked to stock**, selects the medicines and chooses **Switch off**. They stop appearing when a doctor prescribes; prescriptions already written are not changed, and you can switch them back on.
+An owner or manager manages the list in **Catalogue medicines**. Each row shows its price and has **Edit**, which opens the medicine form so you can change its name or selling price.
+
+<Steps>
+  <Step title="Archive the starter list">
+    Choose **Starter list (not yours)** to see only the medicines your account was set up with, before you added your own. Select the ones you do not use and choose **Archive**, then confirm.
+  </Step>
+  <Step title="Price your own medicines">
+    Choose **No price set** to see medicines with no selling price. These are your own medicines, and a prescription for them is charged nothing. Do not archive them: select **Edit** on each one and enter its **Selling price**.
+  </Step>
+</Steps>
+
+Archived medicines stop appearing when a doctor prescribes and at the till. Prescriptions and sales already written are not changed and still show the medicine, and nothing is deleted. Archived medicines are listed under the **Archived** filter, where you can **Edit** them and **Unarchive** them; editing an archived medicine does not unarchive it.
+
+An archived medicine cannot be prescribed anywhere: not in a consultation, triage or ward order, not in the pharmacy prescription form, and not when sending an antenatal visit's medicines to the pharmacy. If a screen was already open when the medicine was archived and you save a new prescription for it, the save is refused with *"Medicine name" is archived and can no longer be prescribed. Choose another medicine.* The medicine then drops out of the list, so you can pick another and save again. An older consultation that already used the medicine still opens, and you can still edit and save it, and a prescription already written for it can still be dispensed.
+
+If a medicine shares its stock item with one of your own, [merge it](#merge-a-duplicate-medicine) instead. Archiving the stock item and restoring it later turns back on every medicine still linked to it.
 
 ## Receive a delivery
 
@@ -124,6 +163,32 @@ To remove medicines nobody stocks, an owner or manager selects **Catalogue medic
 
 <Note>
   **Picking is earliest-expiry-first, and an undated lot is invisible to it.** A lot received with no expiry date will not be picked ahead of anything, so short-dated stock sits at the back of the shelf until it expires. Switch on **Require expiry date on new lots** under [Inventory settings](/hospital/settings/inventory) and the problem stops arising.
+</Note>
+
+## Give a vaccine from stock
+
+The **Vaccines** tab lists every vaccine given from your stock, newest first, with the patient, the vaccine, the VIS edition, the date and a **Charge** column.
+
+<Steps>
+  <Step title="Select Administer vaccine">
+    Choose the **Patient**, the **Vaccine**, the **Dose**, the **Location** it comes from and, if you need a particular one, the **Lot**. Once you pick the vaccine, **Location** opens on a place that holds it; if the place you choose has too little, the sheet says where the stock is. Add the **VIS edition date** — it is required for a vaccine marked as needing one.
+  </Step>
+  <Step title="Read what will be charged">
+    If your hospital has turned on **Charge patients for vaccines given from stock** (Settings → [Facility](/hospital/settings/facility)), the sheet says it before you give the dose: "This vaccine will be added to the patient's bill at …", or "Not charged — this vaccine has no selling price." With the setting off, nothing about money is shown.
+  </Step>
+  <Step title="Select Administer">
+    The dose is drawn from stock against the patient. With charging on, the confirmation ends "… is on the patient's bill, unpaid, in Billing." — one unpaid item at the vaccine's **Sale price** for each unit given, which can be reduced or waived in **Billing** like any other.
+  </Step>
+</Steps>
+
+| **Charge** shows | Means |
+| --- | --- |
+| **Charged · Unpaid** (with the amount) | On the patient's bill, not yet paid. **Paid**, **Part paid** or **Waived** once Billing settles it |
+| **Not charged** | Given while charging was off, before it was turned on, or with no selling price |
+| **Charge voided** | The dose was marked entered in error on a pregnancy's ledger before it was paid |
+
+<Note>
+  **The price is the vaccine's own Sale price**, per unit (dose), set on the vaccine's item. A vaccine with no sale price is not charged — set one and the next dose is. If the charge cannot be added at the moment you give the dose, the sheet stays open with **Charge it again**; a dose is only ever charged once, however many times you select it.
 </Note>
 
 ## Where the deeper mechanics live

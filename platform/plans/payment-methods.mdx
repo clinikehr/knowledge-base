@@ -64,17 +64,33 @@ The card details themselves are held by the payment provider, not by ClinikEHR, 
     Go through [Change your plan](/platform/plans/change-plan). Checkout collects the payment details again, so a plan change is also the natural moment to move to a different card.
   </Step>
   <Step title="If the card is simply expiring">
-    [Contact support](/platform/help/contact-support) **before** your next billing date, naming the workspace. Waiting for the renewal to fail works, but it costs you the paid features in between — see the warning below.
+    [Contact support](/platform/help/contact-support) **before** your next billing date, naming the workspace. Waiting for the renewal to fail works, but it can end with the subscription paused and the paid features off — see the warning below.
   </Step>
 </Steps>
 
 ## What a failed payment does
 
 <Warning>
-  **A subscription that is not active or trialing is treated as Free** — every paid feature in the workspace drops to the Free floor immediately, for every member, even though the plan name still shows on the card. Records, notes and history stay readable and nobody is locked out, but telehealth, insurance, the store, extra staff seats and the rest stop until the payment succeeds. Fix a declined card the same day.
+  **A subscription that has ended or is paused for nonpayment is treated as Free** — every paid feature in the workspace drops to the Free floor immediately, for every member, even though the plan name still shows on the card. Records, notes and history stay readable and nobody is locked out, but telehealth, insurance, the store, extra staff seats and the rest stop until the subscription is restored. A single declined renewal does not do this: it shows as **Past Due** while the payment is retried, and your plan keeps working. Fix a declined card the same day so it never gets to the paused state.
 </Warning>
 
-The workspace card under **Billing** shows the status honestly: **Active**, **Trial Active**, **Past Due**, **Cancelled** or **No Subscription**.
+The workspace card under **Billing** shows the status honestly: **Active**, **Trial Active**, **Past Due**, **Paused**, **Cancelled** or **No Subscription**.
+
+### Past Due
+
+When a renewal payment is declined, the card reads **Past Due** while the payment is retried. **Your plan and every paid feature keep working during the retries.** Update the card (see above) so the next attempt succeeds. If every attempt fails, the subscription becomes **Paused**.
+
+### Paused for nonpayment
+
+When every payment attempt has failed, Stripe stops trying and the subscription is **paused for nonpayment** instead of being cancelled. The workspace card reads **Paused - payment needed**, and a red notice, "Your subscription is paused for nonpayment", appears on the card and at the top of the plan page.
+
+- **Paid features are off**, as for any plan that has ended. Your records, notes and history are untouched and nothing is deleted.
+- **Your plan is kept.** Nothing is downgraded or removed while it is paused.
+- **The owner is emailed once**, when the pause starts.
+- **To restore it:** the owner selects **Update payment method** in the notice, fixes the card in Stripe's billing page and pays the open invoice there. The plan comes back automatically once the payment goes through; there is nothing to re-buy.
+- **You cannot start a new subscription while paused.** Checkout refuses, because the unpaid one would still be waiting to bill. Pay the open invoice first, then change plan if you want a different one.
+
+Managers and other staff see the notice too, with the words "ask the clinic owner" in place of the button: only the owner can open Stripe's billing page, so ask the owner to update the payment method.
 
 ## Not this: the account your patients pay into
 

@@ -1,6 +1,6 @@
 ---
 title: The antenatal card
-description: "Read one pregnancy over time — every contact in sequence, the gestation at each, the flags from the latest visit, and the A4 card she carries."
+description: "Read one pregnancy over time: every contact in sequence, the latest flags, viewing and amending a contact, and the A4 card she carries."
 icon: "/images/icons/chart-line.svg"
 ---
 
@@ -42,6 +42,18 @@ Anything else recorded at a visit — lie, movements, oedema, pallor, danger sig
 
 With nothing recorded yet the section reads **No contacts recorded yet**.
 
+### Contact records — newest first
+
+Under the series, **Contact records** lists every contact of the pregnancy again, this time **newest first** — the order you look for "what did we write at her last visit". Each row gives the contact number, the date, the gestation, who recorded it, and a badge where it applies:
+
+| Badge | Means |
+| --- | --- |
+| **Latest** | The most recent contact — the only one that can be amended |
+| **Amended** | It has been corrected since it was first recorded; the row also says who amended it and when |
+| **Entered in error** | It was [retracted](/hospital/maternity/retract-a-record). It stays listed so a withdrawn visit never looks like one that was never recorded |
+
+Every row has **View**. The latest also has **Edit** — see [View or amend a contact](#view-or-amend-a-contact) below.
+
 <Note>
   **Every gestation on the card is worked out from the *current* due date**, including the contacts recorded before it was last changed. That is what re-dating means. Where a due date has been changed, a **Due date was changed** panel states the previous date, the reason and who changed it, and says the same thing in as many words.
 </Note>
@@ -65,6 +77,37 @@ Three things about this panel decide how to read it:
 - **It is separate from the booking list.** **Risk factors recorded at booking** is its own panel and is exactly what a person wrote down. Nothing calculated is mixed into it.
 
 <AuditNote action="Opening an antenatal card" />
+
+## View or amend a contact
+
+**View** opens the contact read-only: the date, every vital and finding recorded at it (a value nobody recorded shows **—**), and the referral if there was one. Nothing on that screen can change the record.
+
+Only the **most recent** contact can be changed, and changing it never overwrites what was written. Saving an amendment keeps the contact as it was as an **earlier version**, with the name of whoever wrote it, when, and your reason for the change.
+
+<Steps>
+  <Step title="Select Edit on the latest contact">
+    On the row badged **Latest** in **Contact records** — or select **View** and then **Edit** at the bottom of the sheet. The form opens with everything recorded at that visit already filled in, and a panel reading **You are amending this contact**.
+  </Step>
+  <Step title="Correct what was wrong">
+    Change the date, a vital or a finding. Clearing a box removes that value; it never becomes a zero.
+  </Step>
+  <Step title="Give the reason for the amendment">
+    **Reason for the amendment** is required — "Blood pressure was mistyped" is enough. It is shown with the earlier version, so whoever reads it next knows why it changed.
+  </Step>
+  <Step title="Select Save amendment">
+    The toast reads **Contact 3 amended**. The row now carries **Amended**, with your name and the time.
+  </Step>
+</Steps>
+
+To see what it said before, select **View** on the contact: under **Earlier versions** each version lists who wrote it, when it was replaced, by whom and why. Select **View earlier version** to read its values.
+
+<Note>
+  **What an amendment leaves alone.** The contact keeps its number, its place in her schedule and any programme doses recorded against it — an amended contact is still one contact, and nothing is counted twice. A referral made at the visit is carried forward unchanged: it already put her on a consultation list, and a clinician may have signed it off. Her doctor's chart and vitals show the amended values once, never both versions.
+</Note>
+
+An older contact cannot be edited. If an older visit is wrong, [mark it as entered in error](/hospital/maternity/retract-a-record) and record the visit again. A contact on a pregnancy that has been closed can be viewed but not amended.
+
+<AuditNote action="Opening a contact or one of its earlier versions" />
 
 ## Programme doses
 
@@ -120,6 +163,8 @@ A pregnancy with nothing recorded yet still produces a card — the contacts sec
 | Action | Who by default | Permission |
 | --- | --- | --- |
 | Open and read the card | Doctor, Nurse Practitioner, Nurse, Midwife — plus owners and managers | Nothing; the card has no check of its own |
+| View a contact and its earlier versions | Anyone who can open the card | Nothing of its own |
+| Amend the most recent contact | Anyone not yet governed; otherwise only if switched on | **Record an antenatal contact** |
 | Record or void a programme dose from it | Anyone not yet governed; otherwise only if switched on | **Record a programme dose** |
 | Download the card | Anyone who can open the card | Nothing of its own — the document is produced under your own access, so it holds only what you may already read |
 
@@ -130,6 +175,7 @@ Downloading is recorded in the audit log as an export, with your name and the ti
 - The card opens on her name, and the row you recorded this morning is the last one in the series, badged **Latest**.
 - Its **Gestation** matches what the sheet showed you when you recorded it.
 - **Contacts recorded** on the **Schedule** block matches the **Contacts** count on **Today's Clinic**.
+- After an amendment, **Contact records** shows **Amended** on that contact, **View** shows the corrected values, and **Earlier versions** holds what it said before. **Contacts recorded** on the **Schedule** block has not changed.
 - **Download card** saves a PDF whose **Antenatal Contacts** table has the same number of rows as the series on screen.
 
 ## Common issues
@@ -141,6 +187,18 @@ Downloading is recorded in the audit log as an export, with your name and the ti
 
   <Accordion title="No contacts recorded yet, but I recorded one">
     Check you recorded it against this pregnancy rather than another woman's row — the contact sheet names her at the top for exactly that reason. A contact marked as entered in error is also kept out of the series.
+  </Accordion>
+
+  <Accordion title="There is no Edit on the contact I want to correct">
+    Only the most recent contact of a pregnancy that is still open can be amended. For an older contact, [mark it as entered in error](/hospital/maternity/retract-a-record) and record the visit again. You also need the **Record an antenatal contact** permission.
+  </Accordion>
+
+  <Accordion title="Someone else amended this contact while you had it open">
+    Another member of staff saved an amendment after you opened the form, and yours was not saved over theirs. Close the form, open the contact again, check what it says now, and amend it again if it still needs it.
+  </Accordion>
+
+  <Accordion title="Only the most recent contact can be amended">
+    A newer contact was recorded since you opened this one. Earlier contacts can be viewed, and corrected only by marking them as entered in error.
   </Accordion>
 
   <Accordion title="A gestation on an old row is not what we wrote in the notes that day">
@@ -186,7 +244,11 @@ Downloading is recorded in the audit log as an export, with your name and the ti
   </Accordion>
 
   <Accordion title="Why is the newest contact at the bottom?">
-    Because the card is read as a trend, top to bottom, the way an antenatal card always has been. Reversing it would put the numbers in the order they were typed rather than the order they happened.
+    Because the series is read as a trend, top to bottom, the way an antenatal card always has been. Reversing it would put the numbers in the order they were typed rather than the order they happened. **Contact records**, under it, lists the same contacts newest first.
+  </Accordion>
+
+  <Accordion title="Does amending a contact delete what it said before?">
+    No. The earlier version is kept, read-only, with who wrote it and why it was replaced — select **View** on the contact and look under **Earlier versions**. Every amendment is also in your [audit log](/platform/security/audit-log).
   </Accordion>
 
   <Accordion title="What does entered … under a date mean?">
