@@ -51,6 +51,8 @@ The table shows **Patient ID**, **Patient Name**, **Study Type**, **Status**, **
 
 A client whose record is restricted to their care team, and whom you are not allowed to see, does not appear in the table. A **Secured clients** block above it shows **Secured patient** and a number with how many imaging orders are waiting — no name, study, finding or note. Select **Request emergency access** on it if you need the record to provide care now; once it is granted the orders appear like any other. See [Client security](/practice/work/client-security).
 
+The row shows its payment status — **Paid**, **Part paid** or **Payment pending** — beside **Status** (**Paid · HMO pending** for a study billed to the patient's insurer once the patient has paid their own share). A study with no price, a cancelled study and a clinic that charges no one show no payment word. **Collect payment** in the row's menu opens a sheet with that study ticked and the patient's other unpaid items listed. It needs the **Collect payments** permission and access to Radiology, not the **Billing** menu: if you cannot use it, the item is greyed out with the reason beneath it. A walk-in client has no patient record, so their row never offers it (see [Walk-in lab and imaging clients](/hospital/diagnostics/walk-in-clients)).
+
 Badges follow a strict order of importance: **Critical** outranks **STAT**, which outranks **Urgent**, which outranks the plain status. An empty hospital reads **No radiology studies found for this clinic.**
 
 ## Move a study through the list
@@ -112,6 +114,7 @@ A role without the rights to move a study sees a single disabled item reading **
 | Schedule, conduct or complete a study | Radiology technicians and radiologists | Role — others see a disabled **Status: \{Status\}** item |
 | Write or edit a report | Radiologists and doctors | Role — others get **You don't have permission to edit reports. Only radiologists and doctors can create or modify reports.** |
 | Edit **Technical Details** | Technicians and radiologists | Role — read-only for everyone else |
+| Cancel a study | Radiologists, radiology technicians, owners and managers | The **Cancel imaging studies** switch in [Staff permissions](/platform/team/permissions) |
 | See payment on a study | Anyone who can open the study | Nothing — a hospital workspace has no permission that hides money |
 
 Per-person enforcement is **opt-in**: someone never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded** in the audit log; an allowed one is not. See [Staff permissions](/platform/team/permissions).

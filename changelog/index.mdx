@@ -7,6 +7,85 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="November 2, 2026" tags={["Hospital","Billing"]} description="Payments">
+  ## Open full billing from a patient's credit stays on the Payments page
+
+  On **Payments**, **Credits**, **View credit**, the **Open full billing** button used to open the patient's record, where the rest of their chart was one click away. It now shows the patient's invoices, payments and credit in a panel over the **Payments** page, so working on credit never opens the medical record.
+
+  See [Payments](/hospital/revenue/payments).
+</Update>
+
+<Update label="November 1, 2026" tags={["Hospital","Billing"]} description="Radiology">
+  ## Radiology shows what is paid, takes payment from the list, and cancels with a reason
+
+  The Radiology list now reads like the Lab list. Each study shows **Paid**, **Part paid** or **Payment pending** beside its status, and **Collect payment** in the row's menu opens the payment sheet with that study ticked. A cancelled study never reads as unpaid and is never offered for payment.
+
+  - **Cancel Study asks why.** Choose **Cancel Study** on a row in Radiology reports and give a reason. Radiologists, radiology technicians, owners and managers can; you can switch it on or off per person under **Cancel imaging studies** in [Staff permissions](/platform/team/permissions). [Radiology reports](/hospital/diagnostics/radiology-reports)
+  - **A paid study is cancelled and credited.** The payment is released as the patient's credit instead of staying stuck on the cancelled study; it needs the **Refund and credit payments** permission. [Radiology](/hospital/diagnostics/radiology)
+</Update>
+
+<Update label="November 1, 2026" tags={["Hospital","Billing"]} description="Ward stays">
+  ## Decide how a ward stay with no bed fee is billed
+
+  A stay that happened before your clinic set its bed fee used to sit in the patient's pending payments at no charge, with a link to set a fee that could never change it. It now says **No bed fee was set when this stay happened.**, and an owner or manager chooses for the days before the first fee.
+
+  - **Charge at the first fee** prices the days before the first fee that applied to the bed at that fee. Days that already had a fee keep it.
+  - **Don't bill this stay** charges nothing for those days. Days with a fee are charged as usual. Undo is listed under **Ward stays with days not billed**.
+  - Nobody is billed until someone chooses, each choice is recorded with who made it, and it can be undone until a payment is taken.
+  - A fee of 0 now reads **Free** instead of **No price set**. Removing a bed fee also stops charging patients who are already admitted, from that moment.
+
+  See [Payments](/hospital/revenue/payments) and [Ward management](/hospital/settings/wards#bed-fees).
+</Update>
+
+<Update label="November 1, 2026" tags={["Platform","Billing","Pharmacy"]} description="Communications credits">
+  ## Pharmacy and Diagnostics plans now include message credits every month
+
+  Paid Pharmacy and Diagnostics plans get monthly message credits for Communications, by tier, the same way the Clinic & Hospital plans do. More credits are $15 per 500.
+
+  - **200 a month** on Pharmacy Starter and Professional, and Diagnostics Starter Lab and Professional Lab.
+  - **1,000 a month** on Pharmacy Business, Enterprise and Listing, and Diagnostics Business Lab and Enterprise.
+  - **A paid trial gets 200 a month**, the same as Essential.
+
+  See [Communications](/practice/settings/communications#credits-your-plan-includes-each-month).
+</Update>
+
+<Update label="November 1, 2026" tags={["Platform","Billing"]} description="Communications">
+  ## Keep the phone or fax number you already have
+
+  A practice no longer has to give up its number to use Communications. On either card in Settings → Communications, **Bring your own number** moves a US or Canada number from your current carrier to ClinikEHR.
+
+  - **What it costs.** With no number on the card yet, the same as a new number: $49 setup plus $15 a month, with no separate transfer fee. If the card already has a number you pay for, $25 once and your monthly price carries on. See [Bring your own number](/hospital/settings/communications#bring-your-own-number).
+  - **Your number keeps working with the old carrier until it moves.** The carrier sets the date and the card shows it when it is known. Calls and faxes work as soon as it arrives; texting needs the texting registration, which starts on its own for the main number.
+  - **If the carrier needs something fixed**, the card shows what and **Fix and resubmit** sends it again.
+  - **Cancelling:** before the request is sent, everything is refunded; after, the one-time fee and any month already started are not. A transfer your carrier cancels is refunded in full.
+  - **Good to know:** the $49 setup fee for a new number is not refunded if you cancel the number later. Only a number that fails to set up refunds the first payment.
+</Update>
+
+<Update label="November 1, 2026" tags={["Platform","Billing","Hospital","Solo & Team"]} description="Communications credits">
+  ## Auto top-up that really tops up, and clearer rules for message credits
+
+  The **Auto top-up** switch in Settings → Communications used to do nothing. It now works: the owner chooses a low-balance level, a pack and a monthly limit, and a pack is bought automatically with the card on the ClinikEHR subscription when the balance gets that low.
+
+  - **Owner-controlled and capped.** Only the owner can change it, and the monthly limit is the most it can ever buy. If a charge fails it pauses, says why and emails the owner. See [Auto top-up](/hospital/settings/communications#auto-top-up).
+  - **A receipt each time**, by email and in the app, and a list of this month's automatic purchases on the tab.
+  - **With no credits, reminders go by email only.** If the balance is zero or below, no text or call is sent.
+  - **Long texts use more credits.** A long text, or one with an emoji or curly quotes, is sent in more than one part and uses one credit for each part.
+  - **Caribbean +1 numbers** (for example Jamaica and the Bahamas) cost more than US and Canada numbers, and premium-rate numbers are blocked.
+  - **AI agents use credits.** Texts and calls an agent makes are charged to the same balance. Agents can no longer send faxes; staff send faxes from **Documents**.
+  - **This month's usage shows every charge** in plain words.
+  - The pack button no longer says it bills "your card on file": a one-time pack opens a secure checkout page.
+</Update>
+
+<Update label="November 1, 2026" tags={["Platform","Billing"]} description="Communications">
+  ## Pick your exact phone number, get a fax number, and change a number once
+
+  Getting a number used to mean taking whatever was available. You now choose, and fax has its own number.
+
+  - **Pick your number.** Choose **Local** or **Toll-free**, enter an area code, and select the exact number from the list before you pay. If it is taken by the time payment finishes, you are asked to pick another at no extra charge.
+  - **A fax number of its own.** Settings → Communications now has a **Number for texts and calls** and a separate **Fax number**. Each is $49 to set up and $15 a month; a toll-free number adds $10 a month.
+  - **Change a number once.** Use **Change number** to move to a local or toll-free number with no setup fee. Your old number keeps working until the new one is ready. See [Communications](/hospital/settings/communications#pick-your-number-and-change-it-once).
+</Update>
+
 <Update label="October 31, 2026" tags={["Platform"]} description="Calendar">
   ## An appointment's details show the same time as the calendar
 
