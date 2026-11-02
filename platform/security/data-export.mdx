@@ -1,6 +1,6 @@
 ---
 title: Export your data
-description: "Take a copy of your workspace's records as CSV or ZIP, including before you close an account, when the data becomes unrecoverable."
+description: "Take a copy of your workspace's records as CSV or ZIP, with a face sheet PDF for every client, including after your plan ends and before you close an account."
 icon: /images/icons/file-output.svg
 ---
 
@@ -17,13 +17,15 @@ Your records are yours, and you can take a copy at any time without asking anyon
 
 <TaskHeader before="Somewhere secure to put the file — the export contains patient or customer data" time="A minute to start; a large export finishes on its own" after="A downloadable file containing exactly the modules and dates you chose" />
 
-The **Data Export** card explains itself: "Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back."
+The **Data Export** card explains itself: "Export clinic data as CSV, or client face sheets as PDF, in a ZIP. Large exports run in the background — you can navigate away and check back."
 
 ## Export
 
 <Steps>
   <Step title="Choose what to export">
     Under **Modules**, search and add what you need. They are grouped by subject — **Clinical Records**, **Patient Profile**, **Documents & Files**, **Telehealth**, **Administrative**, **Insurance**, **Ward & Inpatient**, **API access** and **Compliance & Audit**. **Select all** takes everything; **Clear all** starts again. Each choice appears as a chip you can remove.
+
+    **Insurance** holds each client's cover, by name. In the US track, **Patient Insurance Coverage (US)** lists every coverage with its payer name and payer ID, member ID, group, who the policyholder is and how they relate to the client, dates, primary or secondary, and the plan's copay and deductible figures. In the non-US track, **HMO Enrollees** lists every enrolment with the HMO, plan and employer group by name, the insurance number, status, validity, and the principal's number for a dependant. Both follow the insurance preference you set in **Settings → General**; see [US insurance](/practice/settings/insurance) and [HMO insurance](/hospital/insurance/overview).
 
     **API access** holds **Linked Patients** (which outside organization may reach which patient, who linked it, since and until when) and **Disclosures** (each time patient information was sent to an organization — when, which organization, which permission, which patient). Neither contains the information itself, and a restricted client you may not open is left out.
 
@@ -34,6 +36,13 @@ The **Data Export** card explains itself: "Export clinic data as CSV or ZIP. Lar
     **Compliance & Audit** also holds the privacy records: care team assignments, emergency access grants, restriction requests, client record requests, Part 2 consents, recorded disclosures, health plan sharing restrictions and legal holds. Like the audit trail, they are for owners and managers only.
 
     If your clinic is a Part 2 program (see [Substance use records and 42 CFR Part 2](/platform/security/substance-use-records-part-2)), every export arrives as a ZIP that includes a notice file, even when you chose one module.
+  </Step>
+  <Step title="Add face sheets (optional)">
+    Under the module picker, **Face sheets (PDF)** gives you one PDF per client: their details (name, date of birth, gender, address, every phone number and email), their guardians and emergency contacts, and their insurance for the track your clinic uses, on your clinic's letterhead (its name and address, and its logo when the logo is small enough to repeat on every sheet). Choose **Add face sheets**; it appears as a chip like any module. **Select all** leaves it out on purpose, so you ask for the PDFs when you want them.
+
+    The ZIP holds a `face-sheets` folder with one PDF per client, named by the client's **patient number** (or a short record code when there is none), never by their name, and an `index.csv` that lists each file beside the client's name and date of birth so you can find anyone. Cover that a person or an outside app added and the clinic has not confirmed is marked **Not yet confirmed by the clinic**. Clients you may not open (restricted clients) are left out, and the finished job says how many.
+
+    A single export holds up to 2,500 face sheets. For more, set a **Date range**: for face sheets it picks clients by the date they were added, so you can export a year at a time. A name with characters outside the basic Western alphabet (for example some African or Asian scripts) prints as **?** on the PDF; the CSV modules in the same export hold the exact spelling.
   </Step>
   <Step title="Set a date range">
     **Date range (optional)** defaults to **All time**. Narrow it for a patient access request or an investigation — a smaller export is faster, easier to read, and discloses less.
@@ -53,13 +62,21 @@ The **Data Export** card explains itself: "Export clinic data as CSV or ZIP. Lar
 ## What the formats are for
 
 - **CSV** — one module, one spreadsheet. This is what you want for analysis, for a mail merge, or for loading into another system.
-- **ZIP** — several modules at once, each as its own CSV inside. This is what you want for a full copy, an access request covering more than one kind of record, or an archive before a change.
+- **ZIP** — several modules at once, each as its own CSV inside, and the face sheet PDFs when you add them. This is what you want for a full copy, an access request covering more than one kind of record, or an archive before a change.
 
 ## Exporting from a single screen
 
 You do not have to come to Settings for everything. Most tables in the product have their own **Export**, and every analytics report can be exported from where it is drawn. Use those for "this list, as it looks right now"; use **Data Export** for "a copy of the records themselves".
 
 <AuditNote action="Exporting data" />
+
+## If your plan has ended
+
+A cancelled, expired or unpaid plan does not take your records away, and it does not stop you exporting them. Owners, managers and accountants can still sign in and run **Data Export** for the workspace, and the export reads the same records it always did.
+
+- When you sign in you land on the plan page. Under the plan notice, a card reads **Your records are yours** with a **Download your clinic's data** button that opens **Settings → Data Export**.
+- On a **Pharmacy** or **Diagnostics** workspace the rest of the workspace is closed behind the plan notice, and **Download your clinic's data** is offered on that notice. Only the **Data Export** tab opens; the other settings tabs stay closed until a plan is chosen.
+- You do not need an active plan to export, but the export is still a ZIP of your own records: plan the download before you close the account, because [deleting an account](/platform/account/delete-account) removes the data after 30 days.
 
 <Warning>
   **If you are closing an account, export first.** Deleting an account cancels billing immediately and removes the data after a 30-day recovery window. Once that window passes the records are gone, and no support request can bring them back. The account screen says the same thing: "Need a copy of your records? Export each clinic's data first from **Clinic Settings → Data Export**." Note the wording — _each_ workspace exports separately. See [Delete your account](/platform/account/delete-account).
