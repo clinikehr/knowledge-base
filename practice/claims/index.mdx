@@ -1,0 +1,96 @@
+---
+title: ClinikEHR Claims for Medi-Cal
+description: "Turn CMS-1500 claims into the file Medi-Cal takes, check every field yourself, and upload it to the Medi-Cal Provider Portal."
+icon: /images/icons/file-export.svg
+sidebarTitle: Overview
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans. The Free plan has monthly limits; paid plans have none" roles="Owners, managers and staff whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+ClinikEHR Claims makes the electronic file Medi-Cal takes from the claims you already have on CMS-1500 forms. You add the claims, check every field, approve them, make the file, and **upload it to Medi-Cal yourself** in the Medi-Cal Provider Portal.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims']} />
+
+## What it does, and what it does not
+
+| ClinikEHR Claims does | You still do |
+| --- | --- |
+| Reads fillable CMS-1500 PDFs and CSV exports, and gives you a typed form beside a scan | Check every field against the original |
+| Checks procedure codes, modifiers, units and diagnoses and tells you what looks wrong | Decide what to do about each finding. The checks are advice |
+| Makes a **test file** (free) and a **production file** | Upload the file in the Medi-Cal Provider Portal |
+| Keeps your claims, your files and a count of what this month has used | Download Medi-Cal's reports from the Provider Portal and add them under [Reports](/practice/claims/reports) |
+
+There is no clearinghouse in the middle. ClinikEHR does not send anything to Medi-Cal for you, and it has no way to see your Provider Portal account. ClinikEHR is not certified or approved by Medi-Cal; **Medi-Cal decides** whether your Submitter ID is active, whether your test passes and whether each claim is accepted.
+
+<Info>
+  This is the United States insurance track. The pages for clinics outside the US are under [Hospital insurance](/hospital/insurance/overview), and the older electronic-claims page for US practices is [File insurance claims](/practice/money/insurance-claims).
+</Info>
+
+## The four steps
+
+The bar at the top of **Medi-Cal claims** shows where you are: **Add claims**, **Review**, **Generate**, **Upload to Medi-Cal**.
+
+<Steps>
+  <Step title="Get set up with Medi-Cal, once">
+    Ask Medi-Cal for a Submitter ID, register in the Provider Portal and send the test claims. See [Get set up with Medi-Cal](/practice/claims/get-set-up).
+  </Step>
+  <Step title="Add claims">
+    Drop in PDFs, pictures or a CSV, or type a claim. See [Add claims](/practice/claims/add-claims).
+  </Step>
+  <Step title="Review and confirm">
+    Open each claim, compare it with the page, confirm every field and run the code checks. See [Review and confirm a claim](/practice/claims/review-a-claim) and [Approve claims](/practice/claims/approve-claims).
+  </Step>
+  <Step title="Make the file and upload it">
+    Make a test or production file, download it and upload it in the Provider Portal. See [Make a Medi-Cal file](/practice/claims/make-a-file).
+  </Step>
+</Steps>
+
+## What it costs
+
+Test files are free. A claim in a production file uses clinical credits the first time it goes into one: **25** on Free, **15** on Essential, **10** on Team, included on Enterprise. See [Make a Medi-Cal file](/practice/claims/make-a-file#what-a-file-costs) and [Clinical credits](/platform/plans/clinical-credits).
+
+## All the pages
+
+<Columns cols={2}>
+  <Card title="Get set up with Medi-Cal" icon="/images/icons/list-check.svg" href="/practice/claims/get-set-up">
+    Submitter ID, Provider Portal, the 10-claim test and the Setup checklist.
+  </Card>
+  <Card title="Add claims" icon="/images/icons/file-csv.svg" href="/practice/claims/add-claims">
+    PDFs, scans, CSV exports and the CSV template.
+  </Card>
+  <Card title="Review and confirm a claim" icon="/images/icons/clipboard-check.svg" href="/practice/claims/review-a-claim">
+    Confirm each field and use the code checks.
+  </Card>
+  <Card title="Approve claims" icon="/images/icons/circle-check.svg" href="/practice/claims/approve-claims">
+    Who approves, and why a biller cannot approve their own.
+  </Card>
+  <Card title="Make a Medi-Cal file" icon="/images/icons/file-export.svg" href="/practice/claims/make-a-file">
+    Test and production files, credits, Free limits, download and upload.
+  </Card>
+  <Card title="Corrected claims and voids" icon="/images/icons/file-pen.svg" href="/practice/claims/corrected-claims-and-voids">
+    Fix or cancel a claim Medi-Cal already has.
+  </Card>
+  <Card title="Saved details and copying a claim" icon="/images/icons/copy.svg" href="/practice/claims/saved-details">
+    Fill a new claim from earlier ones.
+  </Card>
+  <Card title="Read Medi-Cal's reports" icon="/images/icons/file-lines.svg" href="/practice/claims/reports">
+    Add the Error report, Volser Summary or payment advice and see each claim's result.
+  </Card>
+  <Card title="Dashboard, files and your data" icon="/images/icons/file-text.svg" href="/practice/claims/dashboard-and-files">
+    The claims summary, the Files screen and how long things are kept.
+  </Card>
+  <Card title="Sign up for a Claims workspace" icon="/images/icons/user.svg" href="/practice/claims/claims-workspace">
+    A Claims-only account, and how to turn on the full EHR.
+  </Card>
+</Columns>
+
+<StillStuck topic="ClinikEHR Claims" />
+
+{/* source of truth: lib/claims/claim-list.ts (CLAIM_STEPS), lib/claims/claim-file-rates.ts, components/clinic/claims/claims-home-content.tsx */}

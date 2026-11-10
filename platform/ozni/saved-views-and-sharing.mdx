@@ -1,0 +1,46 @@
+---
+title: Saved views and sharing
+description: "Save a result from Ozni, open it later, and share it with a colleague or your team. Colleagues only ever see what their own access allows."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Everyone with access to Ozni" />
+
+When Ozni shows you a table, a chart or a set of figures, select **Save to artifacts** under it to keep it. A saved view is a snapshot: it shows the time it was read, and it does not change afterwards. Ask Ozni again when you want today's figures.
+
+## Open your saved views
+
+<Path steps={['Menu', 'Ask Ozni', 'Artifacts']} />
+
+The page lists your saved views, newest first, and the ones colleagues have shared with you. Select a title to open it. Select **Delete** to remove one; anyone you shared it with can no longer open it.
+
+## Share a saved view
+
+Select **Share** on a saved view. You can:
+
+- tick named colleagues and select **Share**, or
+- select **Make a link**, then **Copy**, and send the link to your team. Only people signed in to ClinikEHR at your clinic can open it. It is never public.
+
+Tick **Also send in Team chat** to send each person you picked a direct message with a link to the view. The message has only the link, never the figures, and goes to people one by one, never to a channel. Anyone whose role has Team chat switched off is skipped; they still find the view under **Artifacts**.
+
+Select **Stop sharing** to take access away from everyone you shared it with. This also takes the view off any [project](/platform/ozni/projects) you had pinned it to. If someone you shared with, or pinned it for, leaves your team, their access to it ends.
+
+**Share** is greyed out when the result contains client details. Only results with no client information, such as stock levels, counts and reports, can be shared. You can still open your own saved view whenever you like.
+
+## Refresh
+
+Select **Refresh** on an open view to read it again with your own access and see today's figures. It uses 5 credits from your clinic and asks you to confirm first. It counts toward your clinic's daily limit for assistant credits, shows against your name on the usage page, and is recorded in the audit log. Pressing Refresh twice for the same request is charged once. If a colleague refreshes a view you shared, they see the new figures but your saved copy does not change. If you refresh your own, your saved copy is replaced. Results with client details cannot be refreshed because they cannot be shared.
+
+## What a colleague sees
+
+A colleague sees the snapshot checked against their own access, every time they open it. If their role, plan or clinic does not include the feature the view came from, they cannot open it. If they are not allowed to see money figures at your clinic, the money columns and numbers are removed, none of those figures are sent to them in any form, and a short note says some figures are hidden. Views about you personally, such as your own notifications or time off, cannot be saved to share. Opening or refreshing a saved view is recorded in the audit log. Views pinned to a [project](/platform/ozni/projects) work the same way for everyone in it.
+
+<AuditNote action="Saving, opening, sharing or deleting a saved view" />
+
+<StillStuck topic="saved views" />
+
+{/* source of truth: components/assistant/artifacts/*, _shared/assistant/artifacts.ts, artifacts-endpoint.ts; AS42 */}

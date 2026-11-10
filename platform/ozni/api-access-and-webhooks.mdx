@@ -1,0 +1,59 @@
+---
+title: API access and webhooks with Ozni
+description: "Ask Ozni whether API access is on, which keys exist and how your webhooks are doing, and let it revoke a key, pause a webhook or retry a failed delivery after you confirm."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="Team and Enterprise — Business and Enterprise on the Pharmacy and Diagnostics editions" roles="Owner, manager, or staff granted the API access permission" />
+
+Ozni can look at your clinic's API access and webhooks, and can make four small changes for you. It works from the same permission as the screen: if you cannot open **Settings**, **API access**, Ozni will not show you what is on it.
+
+<Path steps={['Settings', 'API access']} />
+
+## What you can ask
+
+| Ask | What Ozni tells you |
+| --- | --- |
+| "Is API access on? Which keys do we have?" | Whether **Allow API access** is on, and for each key its name, what it may read, when it was created, when it was last used (or **Never used**), when it expires, whether it is active, revoked or expired, and how many addresses it is limited to. It also lists the organizations connected to your clinic. |
+| "How are our webhooks doing?" | For the Webhook / API trigger: whether it is on, how many calls it received in the last day and week, and when the last one came. For the event addresses of a developer workspace you administer: whether each is active or paused, how many deliveries went through or failed in 30 days, the web address's host name, and for a failed delivery the response code and error. |
+| "Where is the documentation for this event?" | A link to the developer documentation for events. |
+
+Ozni never shows a key, a signing secret or what an event contained. **A key is shown once, when you create it, and nobody can read it back, including Ozni.** If a failed delivery's response contains text that reads like an instruction, Ozni quotes it as text and does not follow it.
+
+Select **Show me** and Ozni opens **Settings**, **API access**, or **Settings**, **AI settings**, **Webhook / API trigger**.
+
+## What Ozni can change for you
+
+Each change is its own card, and nothing happens until you confirm.
+
+### Revoke an API key
+
+Ask "Revoke the API key called Website stock sync." The card is red and tells you:
+
+- which key it is, what it may read and when it was last used;
+- what stops working: every system, website or partner program that sends this key is refused from the moment you confirm;
+- that this cannot be undone.
+
+**Revoke** stays off until you **type the key's name exactly** into the box on the card. Ozni checks the name again when you confirm, and if the key was renamed or already revoked, nothing is changed and the card says why.
+
+After a key is revoked, from Ozni or from the screen, the clinic owner and the person who revoked it get a notice in the app, and the owner gets an email with the subject **An API key was revoked**. It names the key, who revoked it and when, and never shows the key.
+
+Ozni cannot create a key. Create the replacement in **Settings**, **API access**, and give it to the system that needs it.
+
+### Pause or resume a webhook
+
+Ask "Pause the Webhook / API trigger." While it is paused, calls from outside systems are refused and start nothing. The signing key does not change. Ozni can do the same for one event address in a developer workspace you administer. It will not change an address, rotate a signing secret or create or delete one.
+
+### Retry a failed delivery
+
+Ask "Retry the failed delivery to hooks.example.com." Ozni re-sends **one** delivery per card, signed as before. A receiver that already handled the event should ignore the repeat.
+
+Ozni retries at most **20 deliveries a day** for your clinic. After that it tells you so and points you to **Webhooks** in the developer portal, which can re-send a whole time range.
+
+<AuditNote action="Revoking a key, pausing a webhook and retrying a delivery" />
+
+<StillStuck />

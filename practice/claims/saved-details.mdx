@@ -1,0 +1,96 @@
+---
+title: Saved details and copying a claim
+description: "Fill a new claim from patients, providers and payers you have already billed, or copy a claim to bill the same thing again."
+icon: /images/icons/copy.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+You do not have to retype the same patient, referring provider or payer on every claim. Once a claim has been confirmed, its patient, providers and payer are available to fill the next one, and a whole claim can be copied for a patient you bill regularly.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home', 'a claim']} />
+
+<TaskHeader
+  before="At least one claim you have already confirmed"
+  time="Under a minute"
+  after="A new claim with the details filled in, waiting for you to check them"
+/>
+
+## Fill from an earlier claim
+
+On an open claim, the **Fill from an earlier claim** card lets you find a patient by member ID, or pick a provider or payer you have billed before.
+
+<Steps>
+  <Step title="Find the patient">
+    Under **Member ID (box 1a)**, type at least three characters of the member ID and select **Find patient**. Matches show the name and "Member ID ending" the last four characters.
+  </Step>
+  <Step title="Choose the patient">
+    Select **Use this patient**. The patient's details are filled into the claim.
+  </Step>
+  <Step title="Pick a provider or payer">
+    The list shows **Referring provider (box 17)**, **Rendering provider (box 24J)** and **Payer (box 11c)** from your earlier claims. Choose one to fill it in.
+  </Step>
+  <Step title="Check what was filled">
+    The boxes are filled **for you to check**. They join **To check**, and nothing counts until you confirm it. See [Review and confirm a claim](/practice/claims/review-a-claim).
+  </Step>
+</Steps>
+
+"No earlier confirmed claim has that member ID." means nothing matched. The lists are empty until the clinic has a confirmed claim: "Providers and payers appear here once the clinic has a confirmed claim."
+
+## Copy a claim
+
+<Steps>
+  <Step title="Open a claim">
+    Any claim, in any status.
+  </Step>
+  <Step title="Select Copy this claim">
+    You see "Claim copied" and "Set the date of service on each line, then check it." A new draft opens.
+  </Step>
+  <Step title="Set the dates and check it">
+    The patient, provider, diagnoses and service lines are kept. The dates of service, the claim number and any original claim number are cleared, and the copy is a normal original claim, never a correction. Confirm every box, then mark it ready.
+  </Step>
+</Steps>
+
+To correct or cancel a claim Medi-Cal already has, use [Corrected claims and voids](/practice/claims/corrected-claims-and-voids) instead.
+
+## Check it worked
+
+- The filled boxes appear in **To check** with the source of the value.
+- A copied claim opens as a **Draft** with empty dates.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Type a little more of the member ID'">
+    Enter at least three characters.
+  </Accordion>
+  <Accordion title="The Fill from an earlier claim card has nothing in it">
+    Nothing has been confirmed yet. Confirm a claim first.
+  </Accordion>
+  <Accordion title="'The claim could not be copied'">
+    Try again. If it keeps failing, contact support with the time it happened.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does choosing a saved patient confirm the fields?">
+    No. They are filled in as your own typing, unconfirmed. You still confirm each one.
+  </Accordion>
+  <Accordion title="Where are the saved patients stored?">
+    They are not a separate list. They come from the claims your clinic has already confirmed, so you manage them by managing claims.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="saved details" />
+
+{/* source of truth: components/clinic/claims/claim-editor/saved-parties-card.tsx, lib/claims/claims-saved-parties.ts, lib/claims/claim-follow-ups.ts (buildCopyDraft) */}

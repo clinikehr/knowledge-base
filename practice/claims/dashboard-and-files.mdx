@@ -1,0 +1,69 @@
+---
+title: Dashboard, files and your data
+description: "Read the claims summary on the Medi-Cal claims home, find the files you have made, and see how long forms, claims and files are kept."
+icon: /images/icons/gauge.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+The Medi-Cal claims home opens with a summary of where your claims are. The **Files** screen keeps every file you have made. This page explains both, and what is kept after you upload a form.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims']} />
+
+## Your claims at a glance
+
+The **Your claims at a glance** card on the home page shows:
+
+| Tile | What it counts |
+| --- | --- |
+| **Draft**, **Ready**, **Approved**, **In a file** and the other statuses | Claims in each status. Select a tile to filter **Your claims** to it |
+| **Close to the 6-month limit** | Claims not yet filed that are in their last month to bill or past Medi-Cal's 6-month limit |
+| **Billed (claims in a file)** | The total charge (box 28) of claims that have been put in a file |
+| **Paid** | The total Medi-Cal paid on your claims, from the payment advices (835) you have added under [Reports](/practice/claims/reports). A dash until you add one |
+
+When some claims are close to the limit the card says how many are past it and how many are in the last month to bill, and adds "Medi-Cal decides whether to take a late claim." File those claims first.
+
+Above the card, the usage line shows what this month has used. On the Free plan it reads "This month on Free:" with your production files, test files and production claims against their limits, and **Upgrade plan**. On a paid plan it says what a production claim costs in credits and that test files are free.
+
+## Files
+
+**Files** lists every Medi-Cal file you have made, with **Kind** (**Test** or **Production**), **Made**, **Claims**, **Downloads used** and a **Download** button. At the top, **Send a file to Medi-Cal** repeats the Provider Portal steps. A new workspace shows "No files yet. Choose claims on the Claims screen and press Generate."
+
+See [Make a Medi-Cal file](/practice/claims/make-a-file) for downloading and uploading.
+
+## What is kept, and for how long
+
+| What | How long |
+| --- | --- |
+| The forms and pictures you uploaded | **Deleted after 7 days.** An open claim made from a deleted scan says "The page image has expired - scans are kept for 7 days. The boxes are still here." |
+| The claims you made, once confirmed | Kept as a clinic record, so a rejected claim can be filed again |
+| The files you made | Kept, and listed under **Files** |
+
+Claims and files are part of your clinic's records. They go with your data when you export it, and they are removed when an account is deleted, like the rest of the clinic's data.
+
+If a scan has expired and you need the page again, add the file again.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="The summary will not load">
+    Reload the page. If a message is shown on the card, it says what was wrong.
+  </Accordion>
+  <Accordion title="Paid shows a dash">
+    Paid comes from the payment advices (835) you add under [Reports](/practice/claims/reports). Until you add one, or until one names a claim here, it shows a dash instead of 0, because 0 would say nothing was paid.
+  </Accordion>
+  <Accordion title="Billed is lower than I expected">
+    **Billed** adds up only claims that have been put in a file, not drafts, ready or approved claims.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="the claims dashboard" />
+
+{/* source of truth: components/clinic/claims/claims-dashboard.tsx, claims-usage-line.tsx, files/files-screen.tsx, claim-page-image.tsx; docs/Medi-Cal-Converter/IMPLEMENTATION_PLAN.md MC10 */}

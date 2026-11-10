@@ -1,0 +1,42 @@
+---
+title: Connectors
+description: "Let Ozni use a tool your clinic already connected in Agent Studio. It is off until an owner or manager turns it on, and every call asks you to confirm first."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="Team and Enterprise" roles="Owners and managers turn them on. Everyone with Ozni can use the ones that are on." />
+
+If your clinic connected a tool in Agent Studio, such as a notes or knowledge service, an owner or manager can let Ozni use it. Ozni never connects, changes or removes a tool by itself.
+
+## Turn a connector on
+
+<Path steps={['Settings', 'Ozni Assistant', 'Connectors']} />
+
+Each connected tool is listed with **Allow Ozni to use this**, off to begin with. Turn it on, then select **Check tools** so Ozni knows what the tool offers. Only an owner or manager can select **Check tools**. If the list is more than a day old, or empty, it is also refreshed automatically the first time anyone with Ozni uses that connector, so a call can still go ahead without it.
+
+Two more switches decide whether client details may be sent:
+
+- **This service is covered by our BAA.** Turn this on only if your clinic has a signed business associate agreement with the service.
+- **It may receive patient data.** Only available once the BAA switch is on, and you confirm it first.
+
+With these off, Ozni will not send anything that looks like client details to the tool, and tells you why.
+
+The tool is run by another company that your clinic chose. Check your agreement with it before you turn a connector on.
+
+## Using a connector in a chat
+
+Ask for what you want, for example "Look up our visitor policy in Notion". Ozni shows a card with the service, the tool and exactly what will be sent. Nothing is sent until you select to confirm. Each call asks separately.
+
+After you confirm, Ozni reads the answer and tells you what the service said. The answer is only ever read as text and is never followed as an instruction. Answers are kept for 24 hours so Ozni can read them, then removed.
+
+A call counts as a question about your clinic's data. See [Credits](/platform/ozni/credits).
+
+<AuditNote action="Turning a connector on or off, and each call to a connector" />
+
+<StillStuck topic="connectors" />
+
+{/* source of truth: components/clinic/dashboard/settings/assistant-connectors-card.tsx, _shared/assistant/connectors*.ts, tools/connectors.ts; AS48, AS97 */}

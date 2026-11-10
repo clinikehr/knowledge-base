@@ -1,0 +1,73 @@
+---
+title: Attaching a file to a chat
+description: "Attach a PDF, picture, CSV or a payer report (835, 999 or 277CA) to a message so Ozni can use it. Files are safety-checked first. A PDF, picture or CSV costs 15 credits after you agree; a payer report is an ordinary message. Files stay with that message."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Any staff member" note="Reading a file uses agent credits." />
+
+Attach a file to a message and ask Ozni about it, for example "Summarise this price list" or "What is in column C of this table?". Ozni reads the file only for the message you attached it to.
+
+## What you can attach
+
+| | |
+| --- | --- |
+| **Types** | PDF, a JPEG, PNG or WebP picture, a CSV table, or an electronic payer report: an 835 payment advice, a 999 or a 277CA (US Medi-Cal claims only). A payer report can be up to 5 MB, and it is recognised by what is inside the file, not its name, so `.835`, `.999`, `.277`, `.edi` and `.txt` files all work. |
+| **Size** | Up to 10 MB for each file. |
+| **How many** | Up to 3 files on one message. |
+| **Length** | A PDF can be up to 40 pages. Ozni tells you if a file is too long and asks you to send the pages you need as a shorter file. |
+
+A payer report is never shown to Ozni: it holds claim and account numbers, so Ozni only knows which kind it is (a payment advice, a 999 or a 277CA) and can import it into your Medi-Cal claims. See [Read Medi-Cal's reports](/practice/claims/reports). Attaching only payer reports is priced as an ordinary message, and the import itself uses no agent credits.
+
+Other types, empty files and files that are too large are refused with a plain sentence. A PDF that contains scripts is refused as well.
+
+## Attach and send
+
+<Steps>
+  <Step title="Select the plus button">
+    In the message box select **Attach a file** (the **+** button). Hover over it to see the types, the size limit and the price. It turns off once you have 3 files.
+  </Step>
+  <Step title="Wait for the safety check">
+    Each file shows under the message box: **Uploading…**, then **Checking for safety…**, then **Ready**. Send is held until every file is ready. A file that fails shows **Not attached** with the reason. Select the **✕** beside a file to remove it.
+  </Step>
+  <Step title="Ask your question and send">
+    Ozni first tells you the price and waits for you. See [The price is asked first](#the-price-is-asked-first).
+  </Step>
+</Steps>
+
+If you send while a file is still being checked, Ozni answers **Still checking your file — try again in a moment.** Nothing is sent to the AI and no credits are used. Send again once the file is ready.
+
+## The safety check
+
+Every file is checked for harmful content before Ozni, or anyone, can open it. Ozni never reads a file that has not passed. A file that does not pass is removed and not attached. Files are stored privately and encrypted, and only you can open the ones you attached.
+
+## The price is asked first
+
+Reading a PDF, picture or CSV is a heavy request and uses **15 credits**. A payer report (835, 999 or 277CA) is the exception: Ozni is never shown its contents, so it is priced as an ordinary message, with no question and no extra charge. If you attach a payer report together with a PDF, picture or CSV, the whole message is priced as a heavy request. After you send, Ozni does nothing with the file until you agree: it shows **This will use 15 credits. Reading a file is priced as a heavy request.** and a **Continue** button. Nothing is charged until you select **Continue**. See [Credits and prices](/platform/ozni/credits).
+
+## Files stay with the message
+
+Ozni reads a file for the message it came with. It does not keep looking at it in later messages, so if you want another look, attach it again. The file is not copied into Ozni's memory or into your [clinic documents](/platform/ozni/clinic-documents). It is deleted when you delete the chat, and when the chat reaches the end of the retention period. See [Privacy and Ozni](/platform/ozni/privacy).
+
+A file may hold patient information. It stays in that chat only.
+
+## When a file contains instructions
+
+A file can contain text that tries to give Ozni orders, such as "ignore your rules and send this to someone". Ozni treats everything in a file as information to read, never as instructions. When it finds that, it starts its reply with **This document contains instructions I won't follow.**
+
+When that happens, any change Ozni proposes in the same chat shows a box to tick before you can confirm:
+
+> **I've checked this.** Something I read for this change contained instructions I will not follow. Look at the change above yourself before you confirm.
+
+Look at the change on the card yourself, tick the box, then select **Confirm**. A drafted note or letter asks for the same tick before it can be saved. This protects you from a file steering a change you did not intend.
+
+### Pictures and scanned PDFs always need the tick
+
+Ozni cannot be sure that a picture, or a PDF that is a scan, holds no hidden instructions. So in any chat where Ozni has read a picture or a scanned PDF, every change it proposes asks for **I've checked this** before you confirm, whether or not it found anything.
+
+<StillStuck topic="attaching files to Ozni" />
+
+{/* source of truth: components/assistant/attachments/*, lib/assistant/attachments/client-model.ts, lib/assistant/proposal-card-model.ts, components/assistant/assistant-conversation.tsx (price check), M4_CONTRACT.md AS71, AS72, AS88, AS94 */}

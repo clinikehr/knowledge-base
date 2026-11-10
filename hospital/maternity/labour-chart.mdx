@@ -35,10 +35,10 @@ Below the delivery record on [the labour record](/hospital/maternity/labour-reco
     The field states the rule: "When the observation was MADE, not when it is being typed." A future time is refused.
   </Step>
   <Step title="Labour progress">
-    **Cervical dilatation**, **Head descent** (fifths palpable), **Contractions** per 10 minutes, **Contraction strength**, **Contraction duration**, **Moulding** and **Caput**.
+    **Cervical dilatation**, **Contractions** per 10 minutes, **Contraction strength** and **Contraction duration**. For a single baby the sheet also asks for **Head descent** (fifths palpable), **Moulding** and **Caput** in the fetal section below.
   </Step>
   <Step title="Fetal condition">
-    **Fetal heart rate** and **Liquor**.
+    **Fetal heart rate**, **FHR decelerations**, **Liquor**, **Presentation**, **Position**, **Moulding**, **Caput** and **Head descent**. Leave a field blank if it was not assessed; blank is kept as "not recorded", never as normal.
   </Step>
   <Step title="Maternal condition">
     **Pulse**, **Blood pressure**, **Temperature**, **Urine volume**, **Urine protein** and **Urine acetone**.
@@ -104,7 +104,7 @@ Every field on the observation sheet has a row, grouped as on the paper partogra
 
 | Group | Rows |
 | --- | --- |
-| **Fetal** | **Fetal heart rate**, **Liquor**, **Moulding**, **Caput** |
+| **Fetal** | **Fetal heart rate**, **FHR decelerations**, **Liquor**, **Presentation**, **Position**, **Moulding**, **Caput** |
 | **Labour** | **Cervical dilatation**, **Head descent**, **Contractions**, **Contraction strength**, **Contraction duration** |
 | **Drugs** | **Oxytocin running**, **Drugs and IV fluids** |
 | **Maternal** | **Pulse**, **Blood pressure**, **Temperature**, **Urine protein**, **Urine acetone**, **Urine volume** |
@@ -226,3 +226,16 @@ That is the whole point — a reader can see what was believed at the time, not 
 <StillStuck topic="the labour chart" />
 
 {/* source of truth: components/clinic/maternity/partograph/partograph-chart.tsx, partograph-grid.tsx, partograph-entry-form.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/partograph.ts */}
+
+## Twins, triplets and more
+
+The mother has one set of observations; each baby has their own. At the top of the labour chart, **Babies in this pregnancy** shows how many babies the pregnancy record holds. If it is wrong, or a twin is found in labour, select **Change**, choose the **Number of babies**, say **Why this is being changed**, and save. The number can't go below a baby who already has observations on the chart, and the change is recorded with your reason. If the pregnancy was marked as multiple without a number, the chart counts two until you set it.
+
+With more than one baby:
+
+- **Labour observation** shows one **Fetal condition** block per baby, named **Twin A** and **Twin B** for two babies and **Baby 1**, **Baby 2** and so on for three or more. Each block has **Fetal heart rate**, **FHR decelerations**, **Liquor**, **Presentation**, **Position**, **Moulding**, **Caput** and **Head descent**. A block you leave empty saves nothing for that baby. Head descent, moulding and caput are usually assessed only for the baby that is presenting, so a second baby's fields are often blank until the first is born.
+- **Labour observations** shows a **Fetal** group for each baby, for example **Fetal - Twin A** and **Fetal - Twin B**. The mother's rows appear once.
+- A **Fetal heart rate** chart below the cervicograph draws one line per baby, each with its own marker shape and line style and a label at its last reading, over the shaded reference range of the chart in use. Select **Twin A** or **Twin B** above the cervicograph to choose whose head descent it shows.
+- Findings about a baby's heart rate or liquor name the baby, for example "Twin B: Fetal heart rate below the reference range". Nothing compares one baby with another.
+- If the babies share one sac, turn on **The babies share one sac** in the **Change** sheet. Liquor is then recorded once, for the first baby.
+- When you record a birth, **Baby on the labour chart** links each birth to the baby you monitored. It is optional and defaults to the birth order. A labour can hold up to 8 babies.

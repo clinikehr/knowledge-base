@@ -1,0 +1,177 @@
+---
+title: Add claims
+description: "Drop in fillable PDFs, printed forms, scans or a CSV, or type a claim, and see what ClinikEHR could read from each."
+icon: /images/icons/file-csv.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+Every claim starts as a **draft** on the Medi-Cal claims home. You can drop in files and let ClinikEHR read what it can, or type a claim yourself. Nothing you add is treated as correct until you [confirm each field](/practice/claims/review-a-claim).
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home']} />
+
+<TaskHeader
+  before="Nothing. Set up with Medi-Cal is needed before you make a production file, not before you add claims"
+  time="A minute a file"
+  after="One draft claim for each form or CSV claim, listed under Your claims"
+/>
+
+## What you're looking at
+
+Under the step bar and the usage line, the drop zone says **Drop your claims here**: "Drag files in, click to choose them, or paste an image. You can add many at once." It takes PDF, JPG, PNG, HEIC or CSV, up to 50 MB each. Under it are **New claim (type it)** and **Download the CSV template**. Each file you add shows its progress, then a line saying what was read.
+
+A new workspace shows "No claims yet. Drop a file above, or type a claim." in **Your claims**.
+
+## Drop in files
+
+<Steps>
+  <Step title="Add the files">
+    Drag them onto the drop zone, select it to choose them, or paste an image. You can add many at once.
+  </Step>
+  <Step title="Read the result under each file">
+    A claim that was read says **Read 1 claim. Check each one before you make a file.** A file with a problem says so in plain words.
+  </Step>
+  <Step title="Open the claims">
+    They appear under **Your claims** as drafts. Open each one and check it.
+  </Step>
+</Steps>
+
+### What is read, and what you type
+
+| You add | What happens |
+| --- | --- |
+| A **fillable CMS-1500 PDF** | The values typed into the form are read into a claim |
+| A **PDF printed or saved from another system**, with real text in it rather than a picture of a page | The text is matched to the boxes of the form by where it sits on the page |
+| A **scan or a photo** (JPG, PNG, HEIC, or a PDF that is only a picture) | Nothing is read until you choose. You can have it [read with AI](#read-a-scan-with-ai), or type it from the page |
+| A **CSV** | Matched to claim boxes by its column names, as below |
+
+Anything read from a file, by AI or not, is marked as needing a check. Boxes that were read with less certainty come first in the review list.
+
+## Read a scan with AI
+
+Read with AI uses your clinic's credits, so it is for owners, managers and anyone who has been given **Approve claims for a file** or **Make production Medi-Cal files** in the staff permissions. Anyone else sees "You do not have permission to use Read with AI at this clinic, because it uses the clinic's credits. Ask an owner or manager." Typing the claim needs no extra permission.
+
+A scan or photo is never sent to AI on its own. Under the file you see a line such as "This page is a scan. Reading it uses 10 agent credits." (for several pages, "This file has 3 scanned pages. Reading them uses 30 agent credits."), with how many agent credits you have and two buttons: **Read with AI** and **Type it instead**.
+
+<Steps>
+  <Step title="Choose Read with AI">
+    The progress line reads "Reading with AI… this can take about a minute for each page."
+  </Step>
+  <Step title="Open the claim">
+    Select **Open the claim to check it**. If the file made several claims, it opens the first.
+  </Step>
+  <Step title="Check every box">
+    Each box the AI read is marked **AI** and shows a confidence. They wait in **To check**, least sure first, until a person confirms them. See [Review and confirm a claim](/practice/claims/review-a-claim).
+  </Step>
+</Steps>
+
+What to know first:
+
+- **10 agent credits a page.** You are charged only for a page that is actually read. A page that could not be read costs nothing, and the message under the file says why.
+- **Up to 5 pages at a time.**
+- **JPEG and PNG photos, and scanned PDFs.** Save a HEIC photo as a JPEG first. An image over 3.5 MB is refused.
+- **Agent credits are not clinical credits.** Agent credits read scans and are bought on the **Agents** page (**Buy agent credits**). Clinical credits pay for the claims in a file. See [Agent credits](/platform/plans/credits) and [Make a Medi-Cal file](/practice/claims/make-a-file).
+- **If you do not have enough**, the page says how many you have and that the page takes 10, and offers **Buy agent credits**. You can type the claim instead.
+- **Typing always works** and costs nothing. Choose **Type it instead**.
+- **A person confirms every box.** Nothing the AI reads can be marked ready, approved or put in a file until it is confirmed. AI can misread a box, so compare each one with the page.
+- **How it is handled.** The reading runs in ClinikEHR's own cloud account, under a business associate agreement. Uploaded forms are deleted after 7 days.
+
+Each read shows in your agent credit activity as "Claim page read with AI".
+
+### Ask Ozni to read a file you attach
+
+You can also attach a PDF or a photo in a chat with Ozni and ask it to read the file into draft claims. Ozni says how many pages it is and what it would cost in agent credits, and waits for your reply before it shows a card: a PDF with typed text or form fields is read for free, and only a scan or photo uses AI, at the same 10 agent credits a page. Nothing is read until you select **Read the file** on the card, and the same permission applies as here. The drafts land in **To check**, exactly as above, and Ozni never confirms a box for you. The file is copied into your Claims uploads and is removed after 7 days.
+
+## Type a claim
+
+Select **New claim (type it)**, or **Type it instead** (**Type it** when AI reading is not offered) under a scan. The claim opens as **New claim**, headed "Type the claim exactly as it is on the CMS-1500." Save it as a draft, or mark it ready once every field is confirmed. See [Review and confirm a claim](/practice/claims/review-a-claim).
+
+## Add claims from a CSV
+
+A CSV can hold many claims. **One row is one service line**; the claim columns repeat on every row of the same claim.
+
+<Steps>
+  <Step title="Get the template">
+    Select **Download the CSV template**. It downloads as `clinikehr-claims-template.csv`, with a heading row and one fictional example row.
+  </Step>
+  <Step title="Fill it in">
+    The columns include **Claim ID**, **Medi-Cal ID**, the patient's name, birth date, sex and address, up to twelve diagnoses (**Diagnosis A** onward), and for each service line **Service Date From**, **Service Date To**, **Place of Service**, **Procedure Code**, **Modifier 1** to **Modifier 4**, **Diagnosis Pointer**, **Charge**, **Units** and **Rendering NPI**. It also has **Prior Authorization**, **Resubmission Code** and **Original Claim Number** for corrected claims.
+  </Step>
+  <Step title="Drop it in">
+    A file with the template's own headings is read straight away.
+  </Step>
+</Steps>
+
+### A CSV from another product
+
+If the columns are not the template's, ClinikEHR says "We need your help to match your columns to the claim." and opens **Match your columns**:
+
+<Steps>
+  <Step title="Choose where the file is from">
+    Under **Where is this file from?**, choose **ClinikEHR template**, **TherapyNotes export**, **SimplePractice export**, **Office Ally / generic CMS-1500 CSV** or **I am not sure**. The choice pre-fills the matching.
+  </Step>
+  <Step title="Match each column to a box">
+    Every column heading in your file is listed. Choose the box it fills, or **Leave this column out**. Columns you leave out are ignored. Match at least the Medi-Cal ID, the date of service, the procedure code and a diagnosis, or a claim cannot be made.
+  </Step>
+  <Step title="Select Read the file">
+    The claims are made as drafts.
+  </Step>
+</Steps>
+
+<Warning>
+  Only the **ClinikEHR template** is checked against a real file. The **TherapyNotes**, **SimplePractice** and **Office Ally** settings are best guesses at those products' column names, because none of them publishes its export. When one is used you see "We haven't been able to check this export's column names yet - please check each column." Treat the matching as a starting point, check each column, and change any that is wrong.
+</Warning>
+
+## Check it worked
+
+- The files you added show a message under them and each claim is in **Your claims** with the status **Draft**.
+- The step bar moves to **Review**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'This file type is not supported'">
+    Use a PDF, a photo or scan, or a CSV. Word documents and spreadsheets saved as .xlsx are not accepted; save a spreadsheet as CSV.
+  </Accordion>
+  <Accordion title="'That file is too large. Split it and upload the parts.'">
+    Each file can be up to 50 MB. Split a large PDF or CSV and add the parts.
+  </Accordion>
+  <Accordion title="'You have … agent credits and this takes 10'">
+    There are not enough agent credits to read the page. Select **Buy agent credits**, or type the claim.
+  </Accordion>
+  <Accordion title="'The file could not be opened. Upload it again.'">
+    The file is damaged or password-protected. Save it again from its source and add it again.
+  </Accordion>
+  <Accordion title="'The file could not be uploaded. Check your connection and try again.'">
+    The upload did not finish. Check your connection and add the file again.
+  </Accordion>
+  <Accordion title="Rows say 'need a look'">
+    Those rows of a CSV could not be turned into a claim. Check them against the template, fix them in the file and add it again, or type those claims.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can ClinikEHR read a scan for me?">
+    Yes, when you choose **Read with AI**: 10 agent credits a page, for a page that is read. See [Read a scan with AI](#read-a-scan-with-ai). Or type the claim beside the scan; the page stays next to the form so you can copy from it.
+  </Accordion>
+  <Accordion title="Will adding the same file twice make two claims?">
+    A file already read says **Already read** and the claims are not made twice. Two different files describing the same visit are flagged as a **Possible duplicate**.
+  </Accordion>
+  <Accordion title="How long are my uploaded forms kept?">
+    Seven days, then they are deleted. The claims you made from them are kept. See [Dashboard, files and your data](/practice/claims/dashboard-and-files#what-is-kept-and-for-how-long).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="adding claims" />
+
+{/* source of truth: components/clinic/claims/claims-drop-zone.tsx, lib/claims/extract-outcome.ts, lib/claims/upload-files.ts, lib/claims/ai-read.ts, lib/claims-intake/csv.ts (CSV_PRESETS, CLINIKEHR_TEMPLATE_COLUMNS), lib/claims/mapping-options.ts */}

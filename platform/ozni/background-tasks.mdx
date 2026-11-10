@@ -1,0 +1,63 @@
+---
+title: Run in background
+description: "Send a big request or a Deep look to the background and keep working. It runs while ClinikEHR is open in a tab, pauses when it is not, and tells you when it is ready."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Everyone with access to Ozni. Deep look is for the owner." />
+
+Some requests take a while: a Deep look, or reading a few attached files. Instead of watching the reply, choose **Run in background**. You confirm the same price first, then carry on with your work.
+
+## Start one
+
+- **Deep look:** select **Deep look**, tick **Run in background** in the confirmation, and confirm.
+- **A request that asks you to confirm a price:** select **Run in background** next to **Continue**.
+
+## What happens while it runs
+
+A Task card shows in the Ozni menu and under the chat. It shows the progress and a **Cancel** button.
+
+The task runs from your open browser, not from our servers. Keep ClinikEHR open in at least one tab. If you close every tab, the task shows **Paused — reopen Ozni to continue**, and it carries on when you open ClinikEHR again. With ClinikEHR open in two tabs, only one of them runs the task.
+
+When it finishes you get a notification that links to the chat. The answer is in the chat like any other.
+
+## Running now
+
+While anything is running or waiting for you, the **Ozni** button in the header shows a small count, and a **Running now** tab appears at the top of the Ozni panel and the full page. The count is read out as, for example, "2 running, 1 waiting for approval". Open the tab to see:
+
+- your own background tasks, with their progress, **Open** and **Cancel**;
+- the clinic's automations that are working or waiting for an approval. Owners and managers see all of them; other staff see only the approvals waiting for them. **Review** or **Open** takes you to the Runs screen, where approvals are decided;
+- the steps of a plan you are working through, ticking as they finish.
+
+It never shows a client's name or details. Ask "What's running?" and Ozni answers from the same list. A run that is already in progress cannot be cancelled from here.
+
+## Splitting a big request into parts
+
+When a request has two or three separate pieces that only look things up, such as several reports, Ozni can offer to run them as **parts** in the background at the same time. You see one card first: it lists each part in plain words, the most each part can cost (up to 30 credits, so up to 90 for three), and that together they count as one of your two background tasks. Nothing starts until you press **Start in the background**.
+
+- The parts only read. They never change, send or draft anything, and they cannot ask you questions.
+- Each part has its own credit hold, so a part you cancel, or that does not finish, is not charged for what it did not finish.
+- The chat shows the parts as a checklist (**Part 1 of 3** and so on). **Cancel part** stops one; **Cancel all parts** stops them all. Parts that already finished are kept.
+- When every part has ended, press **Combine the results**. Ozni then reads what the parts found and gives you one answer. If a change would help, it appears as a card you confirm, like any other change.
+- Keep ClinikEHR open in a tab while the parts run.
+
+## Limits
+
+- You can have 2 background tasks at a time. Your clinic can have 5.
+- A background task only reads and analyses. If it suggests a change, you see an ordinary confirmation card in the chat and nothing changes until you confirm it.
+- It uses your own access. If you lose access to the clinic or to Ozni, the task stops.
+- A task that has made no progress for 7 days is closed (it shows as stopped) and no longer counts toward your limit. Ask again if you still need it.
+
+## Credits and cancelling
+
+The price is the same as asking in the chat. Credits are held when a step starts and the price is charged only for a step that finishes. If you cancel, or the step is cut off because you closed every tab, the held credits are given back and nothing is charged for that part, even if part of the work had already been read. When you reopen ClinikEHR the step starts again from its beginning, and you pay once, for the run that finishes.
+
+<AuditNote action="Starting, pausing and cancelling a background task" />
+
+<StillStuck topic="background tasks" />
+
+{/* source of truth: components/assistant/assistant-task-driver.tsx, assistant-task-card.tsx, lib/assistant/background-tasks.ts; AS41, AS98 */}

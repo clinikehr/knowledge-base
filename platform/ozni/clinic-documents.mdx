@@ -1,0 +1,80 @@
+---
+title: Assistant documents
+description: "Add your clinic's own policies, procedures and price lists so Ozni can answer from them and name the document it used. No patient information."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owners and managers add documents. Any staff member can suggest one." />
+
+Add your clinic's own documents, such as policies, procedures, price lists and scripts, and Ozni answers questions from them. Ask "What does our late-cancellation policy say?" and the answer comes from your document, with the document named under it.
+
+<Warning>
+**Assistant documents** are for your clinic's own paperwork, never for anything about a patient. A document that holds patient information is not added.
+</Warning>
+
+## Open the page
+
+<Path steps={['Settings', 'Ozni Assistant', 'Assistant documents']} />
+
+On the full Ozni page you can also select **Assistant documents** under your list of chats, which opens the same screen. An older link to the documents page lands there too. The page lists each document with its type, size, a status and who can use it.
+
+| Status | What it means |
+| --- | --- |
+| **Waiting for approval** | A colleague suggested it. An owner or manager has not added it yet. |
+| **Being checked** | An upload that was started and not finished. |
+| **In use** | Ozni can answer from it. |
+| **Not added** | The document was refused. The message says why. |
+
+## Add a document (owners and managers)
+
+<Steps>
+  <Step title="Select Add a document">
+    A sheet opens called **Add a clinic document**.
+  </Step>
+  <Step title="Choose the file">
+    Choose a PDF, a picture (JPEG, PNG or WebP), a Word document, or a text, markdown or CSV file. A file can be up to 20 MB and 200 pages, and your clinic can keep up to 200 documents. Documents count toward your plan's file storage.
+  </Step>
+  <Step title="Name it and choose who can use it">
+    The **Title** is filled in from the file name; change it if you like. Under **Who can use it**, choose **All staff** or **Owners and managers only**. Ozni answers from a document only for the people who may use it.
+  </Step>
+  <Step title="Select Add document">
+    Ozni reads the file and checks it. When it is done you see **Document added. The assistant can now answer from it.**
+  </Step>
+</Steps>
+
+Adding a text document is free. Answering a question from your documents is an ordinary Ozni question; see [Credits and prices](/platform/ozni/credits).
+
+### Scanned pages
+
+A scan or a picture has no text to read, so Ozni reads it page by page. Before it starts, the sheet says **This is a scan, so it has to be read page by page.** and shows the price: **1 credit per page, up to 3 for hard-to-read pages**. It holds the most it could cost, and anything not used goes back. Select **Read and add** to go ahead, or **Cancel** to stop. A document that came from a scan is marked **Read from a scan** in the list.
+
+## Suggest a document (any staff member)
+
+If you are not an owner or manager, the button reads **Suggest a document** and the sheet **Send suggestion**. Your owner or manager is told. Nothing is used until they add it: they open the suggestion under **Waiting for your approval**, select **Review and add**, or select **Decline** to remove it. Declining removes the file, and the person who suggested it is not told.
+
+## What is refused
+
+Ozni checks every document before it is added. A document is **Not added** when it holds patient information, such as a patient's identity together with health details, or numbers that identify a person. The message tells you what the problem was, including the page when it can. Take the patient information out and add the document again.
+
+## Change who can use a document, replace it, download it, delete it
+
+Owners and managers can, on any document that is **In use**:
+
+- **Who can use it** menu: switch between **All staff** and **Owners and managers only**.
+- **Replace**: upload a newer file. The list shows it as a new version.
+- **Download**: anyone who may use the document can download it.
+- **Delete**: confirm **Delete** and Ozni stops answering from it. This cannot be undone.
+
+## Answers with citations
+
+When Ozni answers from a document it lists the document under the answer, with a link to the **Assistant documents** screen, so you can check the original. If nothing in your documents matches, Ozni says so and points you here. Text inside a document is only ever read as information. If a document contains instructions, Ozni does not follow them; see [Attaching a file to a chat](/platform/ozni/attachments#when-a-file-contains-instructions).
+
+<AuditNote action="Adding, replacing or deleting an assistant document" />
+
+<StillStuck topic="clinic documents" />
+
+{/* source of truth: components/assistant/documents/clinic-documents-content.tsx, document-upload-sheet.tsx, lib/assistant/documents/client-model.ts; AS12, AS16, AS17, AS63, AS69 */}

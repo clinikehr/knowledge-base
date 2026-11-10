@@ -14,6 +14,10 @@ import { InsuranceRegion } from '/snippets/insurance-region.mdx';
 
 <InsuranceRegion region="us" />
 
+<Note>
+  Billing Medi-Cal on CMS-1500 forms? [ClinikEHR Claims](/practice/claims/index) turns them into the file Medi-Cal takes, and you upload it yourself.
+</Note>
+
 Electronic claims, eligibility checks and insurer remittance go to US payers, so this page is for a practice whose owner has chosen **United States (US insurance claims)** under **Settings → General → Insurance** (new workspaces start there). A practice set to **Outside the US (HMO and international insurers)** sees the claims register and pre-authorisation instead, and this page tells it so; bill the insurer with **Bill HMO** and record its payment from **HMO receivables → Record payment**.
 
 Insurance in a solo or team practice is electronic end to end: you add the payers you bill, enrol your providers with them, check a client's cover before the visit, and turn appointments you have not billed yet into real claims that are transmitted, tracked and reconciled.
@@ -67,7 +71,9 @@ Coverage lives on the client's record: open the client, choose **Edit**, and go 
     - If their carrier matches a payer in your network, **the coverage record is created for you**.
     - If it cannot be matched confidently, you get a review item, and opening the Insurance tab from it shows the coverage form **prefilled from their answers** — the payer picker is the one field left for you, because matching a carrier name to your payer list is exactly the judgement that needs a human.
 
-    Sending intakes needs the patient's email on file, and granting portal access alongside the send is offered (and needed — a patient who cannot sign in cannot open what you sent).
+    The intake also has two optional photo fields, **Insurance Card — Front** and **Insurance Card — Back**. The patient can take a photo with their phone or upload a file (JPG, PNG, HEIC or PDF, up to 10MB). The photos are saved to the client's **Documents & forms**, in an **Insurance** folder, where you can open them beside the coverage record. A photo on its own never creates coverage: the coverage comes from the carrier and member details they typed.
+
+    Sending intakes needs the patient's email on file, and granting portal access alongside the send is offered (and needed — a patient who cannot sign in cannot open what you sent). To send the Insurance Profile automatically when someone books, switch it on under **Settings** → **Patient Experience** → **Sharable Documents**.
   </Step>
   <Step title="Type it — Add Coverage">
     Select **Add Coverage** and fill the form yourself from the card in front of you: **Insurance Payer** (picked from your own payer network — add the payer in [Insurance settings](/practice/settings/insurance) first if it is not there), **Member ID** (required), **Group Number**, and the **Subscriber Details** when the patient is not the subscriber. Mark one coverage **Primary** when there are several.
@@ -84,6 +90,10 @@ A connected app, such as an intake form on your website or another system you ha
 Compare it with the card in front of you, then select **Confirm**. The question reads **Confirm this insurance and make it active?** Choose **Confirm** and the coverage becomes active. If someone on your team has already confirmed it, you are told so, and the card shows its current state.
 
 If the app later changes the payer, member ID, group number, subscriber or relationship on insurance you already confirmed, it goes back to waiting for confirmation. Saving the coverage yourself from **Edit** also confirms it. Any member of staff can confirm it. The app can only add insurance for a payer you have already enabled under **Settings** → **Insurance**.
+
+Recording coverage does not change the client's **Billing type**. A self-pay client stays **Self pay**, and nothing goes to an insurer unless you create and submit a claim. This also works for a practice that bills everyone self-pay and only wants the card on file.
+
+Coverage is not yet sent along with lab orders or e-prescriptions: it is kept on the client's record, so share it from there when a lab or a pharmacy asks for it.
 
 Once coverage is saved, **Verify** runs an eligibility check and the coverage card shows an **Eligible** or **Ineligible** badge. **Batch verify** on the Insurance page runs the whole list at once and reports back in about thirty seconds.
 

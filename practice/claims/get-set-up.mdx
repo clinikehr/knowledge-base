@@ -1,0 +1,143 @@
+---
+title: Get set up with Medi-Cal
+description: "Get a Medi-Cal Submitter ID, register in the Provider Portal, send the 10-claim test and mark each step in the Setup checklist."
+icon: /images/icons/list-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owners and managers change Setup; other staff can read it" />
+
+<InsuranceRegion region="us" />
+
+Before Medi-Cal takes a real claim file from you, Medi-Cal has to give you a Submitter ID and accept a test. This page walks the steps and shows where to record each one in **Setup**. **Medi-Cal** gives out the ID and decides when your test has passed; ClinikEHR cannot see either, so the checklist records what you tell it.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Setup']} />
+
+<TaskHeader
+  before="The NPI and Tax ID of the provider or organisation you bill under"
+  time="The forms take minutes; Medi-Cal's side can take days"
+  after="A saved Submitter ID, at least one billing provider, and a checklist that reads Sending real claims"
+/>
+
+## What you're looking at
+
+**Medi-Cal claims setup** says "Do this once. You can come back to it any time." It has three cards:
+
+| Card | What it holds |
+| --- | --- |
+| **Your Medi-Cal Submitter ID** | **Submitter ID** (3 letters or numbers), **Contact name** ("Who Medi-Cal can call about a file") and **Contact phone** |
+| **Billing providers** | The people or organisations you bill Medi-Cal for. Each claim names one |
+| **Getting ready for Medi-Cal** | The four-step checklist |
+
+A workspace created as a Claims workspace also shows **Turn on the full EHR** at the bottom. See [Sign up for a Claims workspace](/practice/claims/claims-workspace).
+
+## Ask Medi-Cal for your Submitter ID
+
+<Steps>
+  <Step title="Send the Medi-Cal application">
+    Complete the Medi-Cal Telecommunications Provider and Biller Application/Agreement (**DHCS 6153**) and send it to Medi-Cal. Medi-Cal gives your clinic a **3-character Submitter ID** and a password. Keep the password private: ClinikEHR never needs it and never stores it.
+  </Step>
+  <Step title="Mark the step">
+    Under **Getting ready for Medi-Cal**, select **I've sent the form**.
+  </Step>
+  <Step title="Save the Submitter ID when you have it">
+    In **Your Medi-Cal Submitter ID**, enter the **Submitter ID**, a **Contact name** and a **Contact phone**, then select **Save**. You see "Submitter details saved". Every file you make carries the ID.
+  </Step>
+</Steps>
+
+If you bill for other providers, ask Medi-Cal whether your business must also register as a billing agent.
+
+## Register in the Provider Portal
+
+<Steps>
+  <Step title="Register your Submitter ID">
+    Register it in the Medi-Cal Provider Portal. You need the Submitter ID and the NPI of a provider you bill for. If you get stuck, the Medi-Cal telephone line is **1-800-541-5555**.
+  </Step>
+  <Step title="Mark the step">
+    Select **I've registered**.
+  </Step>
+</Steps>
+
+## Add the provider you bill under
+
+<Steps>
+  <Step title="Select Add a provider">
+    In **Billing providers**, select **Add a provider**. The **Add a billing provider** sheet asks for who is billed on the claim, "as it is registered with Medi-Cal".
+  </Step>
+  <Step title="Fill in the details">
+    Choose **Billed as**, then enter the name (**Last name** and **First name** for a person, **Organisation name** for an organisation), **NPI** (10 digits), an optional **Taxonomy code**, **Tax ID** and **Tax ID type**, the address and an optional phone.
+  </Step>
+  <Step title="Select Add provider">
+    The Tax ID is saved but never shown again, only its last four digits. To change it later, open **Edit** and type a new one, or leave it blank to keep it.
+  </Step>
+</Steps>
+
+## Send the test claims
+
+<Steps>
+  <Step title="Make a test file">
+    Add and approve test claims, then make a **Test file**. Test files are free. See [Make a Medi-Cal file](/practice/claims/make-a-file).
+  </Step>
+  <Step title="Upload it in the Provider Portal">
+    Upload it under **Transaction Center**, **EDI Submission**. Medi-Cal asks for at least **10 test claims** for each type of claim you bill. Fix anything Medi-Cal reports and send the file again until it passes.
+  </Step>
+  <Step title="Mark the step">
+    Select **I've started testing**. The checklist reads **Testing**.
+  </Step>
+  <Step title="Mark production once Medi-Cal says the test passed">
+    When Medi-Cal tells you the test has passed, select **Medi-Cal told me my test passed**. The checklist reads **Sending real claims**.
+  </Step>
+</Steps>
+
+A step marked by mistake can be taken back one step with **Not yet**.
+
+<Warning>
+  Production files are real submissions and use credits. **Production** stays switched off in the file maker until the checklist reads **Sending real claims**. Mark it only when Medi-Cal has told you the test passed.
+</Warning>
+
+## Who can do this
+
+Only an owner or a manager can save the Submitter ID or mark checklist steps. Everyone else sees the details read-only with the note "Only the owner or a manager can change these details."
+
+## Check it worked
+
+- **Your Medi-Cal Submitter ID** shows the three characters you saved.
+- **Billing providers** lists your provider; the first one is marked **Default**.
+- **Getting ready for Medi-Cal** says "Where you are:" followed by your stage: **Not started**, **Form sent to Medi-Cal**, **Registered in the Provider Portal**, **Testing** or **Sending real claims**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I can't change the Submitter ID or the checklist">
+    Only the owner or a manager can. Ask one of them, or sign in as one.
+  </Accordion>
+  <Accordion title="The checklist asks me to save my Submitter ID first">
+    "Save your Submitter ID above first, then mark each step here as you finish it." Enter the three characters and select **Save**.
+  </Accordion>
+  <Accordion title="Making a production file says 'Not in production yet'">
+    The message reads: Medi-Cal hasn't moved you to production yet. Make test files until Medi-Cal confirms your test, then choose "Medi-Cal told me my test passed" in Setup. That button is on the **Send real claims** step of the checklist.
+  </Accordion>
+  <Accordion title="It says 'Finish setup first'">
+    "Add the clinic's Medi-Cal Submitter ID in Setup before making a production file. Test files do not need it."
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does ClinikEHR check that Medi-Cal approved me?">
+    No. The checklist records what you tell it. Medi-Cal decides when each step is complete, and your Provider Portal account is the proof.
+  </Accordion>
+  <Accordion title="Who do I call if I am stuck with Medi-Cal?">
+    The Medi-Cal telephone line is 1-800-541-5555. For a ClinikEHR question, email support@clinikehr.com.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Medi-Cal setup" />
+
+{/* source of truth: lib/claims/certification.ts, components/clinic/claims/setup/*, lib/claims/claims-messages.ts */}

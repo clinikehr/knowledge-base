@@ -38,6 +38,7 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Inventory** | "Stock, purchase orders and consumables. The Store is separate." | On |
 | **Schedule** | Which antenatal contact schedule this clinic runs — **WHO 2016 — eight contacts**, **Focused ANC — four visits** or **This hospital's own schedule**. Owner only. Needs **Maternity** | WHO 2016 — eight contacts |
 | **From (weeks)** · **To (weeks)** · **What it is called** | One row per contact window, on your own schedule only. Up to 20, and at least 1 | Seeded from the schedule on screen |
+| **Antenatal profile tests** | Which laboratory tests **Order antenatal profile** offers on a woman's [antenatal card](/hospital/maternity/antenatal-card). **Choose tests** opens a list of your own laboratory catalogue to tick, in the order you want them listed; **Use the built-in list** goes back to the product's booking set. Owner only. Needs **Maternity** | The built-in list: HIV, hepatitis B, syphilis, a blood count, urinalysis and a malaria parasite screen, where your catalogue has them |
 | **Chart** | Which labour chart this clinic runs — **WHO Labour Care Guide (2020)** or **Classic partograph (alert and action lines)**. Owner only. Needs **Maternity** | WHO Labour Care Guide (2020) |
 | **Every (minutes)** | How often a ward observation is expected. Needs **In-patient care** | 240 |
 | **Grace (minutes)** | How late an observation may run before the patient is marked overdue | 30 |
@@ -58,6 +59,16 @@ Nine care-area switches under **Clinical units** and **Operational units**, then
 | **Triage locations** | Named places — waiting room, bays, resus — per department and, optionally, sub-unit, that the triage queue and Track board place a patient in. Owner or manager | None until you add one |
 | **Charge patients for vaccines given from stock** | Under **Vaccine charges**: "Each vaccine given from stock is added to the patient's bill, unpaid, at the vaccine's selling price for each unit given. A vaccine with no selling price is not charged. Doses given before this was turned on are not charged." Covers vaccines given from **Inventory → Vaccines** and the newborn doses on a birth record. The selling price is the **Sale price** on the vaccine's item in Inventory. Owner or manager | **Off** |
 | **Charge ward admissions automatically** | Under **Ward admission charges**: "When on, a patient's stay is added to their pending payments at your bed fee for each 24 hours started, and grows each day until they are discharged. Stays are charged from the moment you turn this on: days before that are never added. When off, nothing is added for you. Add a Bed Fee yourself on the patient's bill." The bed fees are set in [Ward management](/hospital/settings/wards#bed-fees). Shown when the **In-patient care** area is on. Owner or manager | **Off** for a clinic that has not set a bed fee; **On** for a clinic that already had one when this was added |
+
+## Antenatal profile tests
+
+Under **Antenatal profile tests**, choose the booking tests your midwives order in one action from a woman's antenatal card. The card shows the list in force and whether it is the **Built-in list** or **Your clinic's list**.
+
+1. Make sure every test you want is in your laboratory catalogue first, under **Laboratory → Tests**. You can only choose tests your laboratory offers.
+2. Select **Choose tests**. Search your tests, and tick each one in the order you want it listed. The **Chosen** list at the top shows the order; select the cross beside a test to remove it.
+3. Select **Save**.
+
+Blood group and genotype can be on the list like any other test. When they are, the order sheet reminds staff to also record the result on the pregnancy record and the patient record. To go back to the product's booking set, select **Use the built-in list**.
 
 ## Ward admission charges
 
@@ -124,6 +135,7 @@ Turning it on never adds charges for days before that moment. Leave it off if yo
 | --- | --- |
 | A care area **off** | Three things go together: its navigation group, its settings tab and its analytics report. Nothing is deleted — "existing records stay reachable by direct link" — and turning it back on restores all three. It hides menus for everyone; it is not a permission. |
 | **Schedule** or its windows | [Today's Clinic](/hospital/maternity/todays-clinic) and every [antenatal card](/hospital/maternity/antenatal-card) measure contacts against the new schedule from the moment you save, for women already booked as well as new ones. The **Contacts** column changes its total, **Next contact** moves, and **Due** / **Overdue** are recalculated on every open pregnancy. It does **not** move [Coverage](/hospital/maternity/coverage), whose thresholds are fixed. |
+| **Antenatal profile tests** | The next time anyone opens **Order antenatal profile**, the sheet lists your tests, in your order, and says it is your clinic's list. Tests already ordered are not changed. A test you later delete from your laboratory catalogue shows on the sheet as removed and is not ordered until you choose again. |
 | **Chart** | Every [labour chart](/hospital/maternity/labour-chart) in the hospital is read against the new system from the moment you save — the badge beside **Cervicograph** changes, alert and action lines appear or disappear, the fetal heart rate band moves, and the classic chart stops assessing anything after full dilatation. No observation is altered, and nothing is migrated. |
 | **Every** / **Grace** | The [Nursing Station](/hospital/inpatient/nursing-station) recalculates when each observation is due, and how long past due before a patient shows as overdue. |
 | **Pattern** | Shift notes file against the new shift, the fluid balance chart re-buckets, and "nothing charted this shift" is measured against the new boundary. Notes already written are **not** re-filed. |
@@ -195,4 +207,4 @@ The sidebar lists the groups you left on and nothing for an area you switched of
 
 <StillStuck topic="facility settings" />
 
-{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/(clinical-access-card.tsx, queue-windows-card.tsx, auto-checkout-card.tsx, triage-settings-card.tsx, triage-locations-card.tsx), components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/queues/queue-window.ts, lib/check-ins/auto-checkout.ts, lib/triage/acuity.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/clinical-access.ts, lib/ward/discharge.ts */}
+{/* source of truth: components/clinic/dashboard/settings/facility-settings.tsx, components/clinic/dashboard/settings/(clinical-access-card.tsx, queue-windows-card.tsx, auto-checkout-card.tsx, triage-settings-card.tsx, triage-locations-card.tsx), components/clinic/maternity/anc-schedule-editor.tsx, components/clinic/maternity/anc-profile-editor.tsx, components/clinic/maternity/partograph-version-picker.tsx, lib/maternity/anc-profile.ts, lib/maternity/anc-schedule.ts, lib/maternity/partograph.ts, lib/queues/queue-window.ts, lib/check-ins/auto-checkout.ts, lib/triage/acuity.ts, lib/clinic-nav.ts, lib/nursing/due-state.ts, lib/clinical/shift-pattern.ts, lib/front-desk/waiting-time.ts, lib/records/queue-ageing.ts, lib/clinical-access.ts, lib/ward/discharge.ts */}

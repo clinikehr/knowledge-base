@@ -1,0 +1,74 @@
+---
+title: Superbills and statements
+description: "Create a numbered superbill from a client's paid visits for their insurer, send it by email, fax or the client portal, correct or void it, and send an account statement."
+icon: /images/icons/file-text.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Create superbills permission; voiding is owner or manager" />
+
+A **superbill** is the document a client takes to their insurer to ask for reimbursement. It lists the visits they paid for, the procedure and diagnosis codes, and what was charged and paid. It is not a bill. An **account statement** is different: it is a running balance, made at the moment you send it.
+
+<Path steps={['Sidebar', 'Clients', 'Client', 'Billing', 'New', 'Superbill']} />
+
+<TaskHeader
+  before="A visit the client has paid for, in full or in part, and the clinic's Tax ID and NPI saved in Settings"
+  time="Three minutes"
+  after="A numbered superbill in the client's billing history, ready to send, fax or share"
+/>
+
+## Create a superbill
+
+<Steps>
+  <Step title="Choose the paid visits">
+    The sheet lists the client's paid visits that are not already on a superbill, each with its charge and what has been paid. Visits with a procedure code are ticked to start with; a line without one is listed but not ticked, because it cannot go on a superbill until it has one. **From** and **To** only narrow the list. If there is nothing to choose, **Superbill** in the **New** menu is switched off and says **No paid visits to put on a superbill yet**. Money a client has been refunded does not count as paid.
+  </Step>
+  <Step title="Review the diagnoses">
+    Diagnoses a clinician recorded on the visits you chose are ticked for you. Only a diagnosis written in a diagnosis field of a finished visit counts; a code that only appears in a note, or on a visit still in draft, does not. A diagnosis you cannot open, for example one marked sensitive, is left out. **Suggest more** asks for suggested diagnoses; each is marked **AI suggestion** and starts unticked, and only a licensed clinician can tick one: a doctor, nurse practitioner, physician assistant, psychologist, psychiatrist, counsellor, therapist or a similar role. A psychiatric nurse can too, and so can an owner or manager, whatever their own job title. A plain nurse or medical assistant cannot. Nothing suggested reaches the document unless such a clinician ticks it. The payer, member ID and group come from the client's insurance and you can change or clear them. You can set the place of service and modifiers for each line; leave them blank and they print blank.
+
+    The provider signature is not typed. It names the rendering provider on the visits you chose, with their credentials as saved on their profile and the issue date. If someone else issues the superbill, it also says it was prepared by them.
+  </Step>
+  <Step title="Check and issue">
+    If anything required is missing, the sheet lists it with a link to where you fix it: the rendering provider's NPI, the clinic's Tax ID, a procedure code on every line, at least one diagnosis, and the client's date of birth. **Issue superbill** is switched off until the list is empty.
+  </Step>
+</Steps>
+
+Issuing gives the superbill a number such as **SB-0001** and freezes it. What you issued is what every email, fax and download shows afterwards.
+
+## Send it
+
+Under **Superbills and statements** in the client's billing tab, each superbill has **Download**, **Send / Resend**, **Fax** (when your clinic can fax) and **New version**.
+
+**Send / Resend** emails the client's address on file a secure link to the superbill, not the file itself. The email names no diagnosis and no amount, and the link stops working after 3 days, so use **Send / Resend** again if it has expired. If you void the superbill or replace it with a new version, the old link stops working at once and the client sees "This superbill was replaced. Ask your clinic for the current copy." Send the new version to give them a working link.
+
+**Fax** goes to the number you enter. A superbill or statement copy marked sensitive, or for a client whose chart carries a sensitivity marking, cannot be faxed: you are told so and asked to send it by secure link instead. If your clinic is set up as a substance use treatment program, the client's written consent must be on file first, and the faxed pages carry the federal confidentiality notice.
+
+Issued superbills also appear on the client's portal, under **Billing documents**, with their statements shared there. A superbill that has been replaced shows which version replaces it. A voided superbill is not shown.
+
+## Correct or void it
+
+A correction is never an edit. **New version** opens the same sheet and issues **SB-0001 v2**, which replaces v1. Version 1 stays readable, marked **Superseded**.
+
+**Void** is for an owner or manager and needs a reason. The superbill stays in the history marked **Voided** with the reason, who did it and when, and its visits can go on a new superbill. Nothing is deleted.
+
+<Note>
+  Creating a superbill needs the **Create superbills** permission, and faxing also needs permission to send and triage faxes.
+</Note>
+
+## Ask Ozni
+
+Ozni can list a client's superbills, issue a new one, email an issued one and fax it. **Issue superbill** is offered only when every diagnosis was recorded by a clinician and nothing is missing, and it never adds a suggested code; otherwise Ozni sends you to the **Superbill** review above. Each step shows a card and waits for your **Confirm**. See [Making changes with Ozni](/platform/ozni/making-changes).
+
+## Account statements
+
+<Path steps={['Sidebar', 'Clients', 'Client', 'Billing', 'New', 'Statement']} />
+
+Choose a period and the sheet shows what the statement covers. The balance is worked out when you send or download it. You can **Email** (a secure link to a copy of the statement, not a file attached to the message; the link stops working after 3 days), **Fax**, share to the **Client portal** or **Download** it. A copy of each statement you email, prepare for fax or share is kept in the client's billing history with its date and how it was sent. A copy marked **Kept for fax** is not proof that a fax went out: the fax is only sent when you finish the fax step, and the fax history shows whether it did. Statements are not numbered or versioned.
+
+<AuditNote>Creating, sending, downloading and voiding a superbill, and sending a statement, are recorded in the audit log with who did it and when.</AuditNote>
+
+<StillStuck />

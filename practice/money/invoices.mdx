@@ -1,6 +1,6 @@
 ---
 title: Create and send an invoice
-description: "Build an invoice from your services, choose exactly who receives the emailed PDF, and know what you can and cannot change afterwards."
+description: "Build an invoice from your services, choose exactly who receives the emailed invoice link, and know what you can and cannot change afterwards."
 icon: /images/icons/file-text.svg
 ---
 
@@ -11,14 +11,14 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="All plans" roles="Any staff member who can reach Billing" />
 
-An invoice lists what a client owes you, in your practice's currency, and can be emailed as a branded PDF to the client, to whoever is actually paying, or to both. This page covers creating one, sending it, and what you can change afterwards.
+An invoice lists what a client owes you, in your practice's currency, and can be emailed as a branded message with a secure link to the invoice to the client, to whoever is actually paying, or to both. This page covers creating one, sending it, and what you can change afterwards.
 
 <Path steps={['Sidebar', 'Billing', 'New Invoice']} />
 
 <TaskHeader
   before="At least one service in your price list, and a client record to bill"
   time="Two minutes"
-  after="A Pending invoice, emailed as a PDF to the recipients you chose"
+  after="A Pending invoice, emailed as a secure link to the recipients you chose"
 />
 
 ## What you're looking at
@@ -60,21 +60,27 @@ Money is in your practice's own currency, from **Settings** → **Billing**. Wit
 
 ## Send it
 
-Select **Send Invoice** from the invoice's actions. The **Send Invoice** dialog explains itself: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
+Select **Send Invoice** from the invoice's actions. The **Send Invoice** dialog explains itself: "A branded email with a secure link to invoice \{number\} (no file attached; the link expires after 3 days) will be sent to the recipients you choose."
 
 **Send to** offers three choices, each naming the client: "\{Client\}'s email on file", **A different email**, or "Both — \{Client\} and a different email".
 
 The last two reveal **Other emails**, with the placeholder "billing@employer.com, family@example.com" and the helper "Up to 3 addresses, separated by commas." Exceed it and the dialog refuses: "You can add up to 3 other email addresses."
 
+### What the link shows, and what happens if it stays unpaid
+
+The link opens the invoice **as it is when the client opens it**, not a copy from the day you sent it. After a payment it shows what has been paid and what is left, and once the invoice is settled it shows **Paid**. If you cancel the invoice, the link shows "This invoice was replaced or cancelled. Ask your clinic for the current copy." instead of the bill.
+
+An invoice that is still unpaid gets up to two automatic payment reminders, and each one carries the same secure link, with no file attached. If it is still unpaid after the second, your clinic is told **once**: a notice in the app and an email to your clinic's email address, saying "\{invoice number\} still unpaid by \{client\}". The email's subject has no name and no amount. A client whose record is restricted shows as **Secured patient** and a number, and a clinic that runs a substance use treatment program leaves the name out of the email (the notice in the app keeps it). Both follow **Settings** › **Notifications**: the **Billing** category and the **Email notifications** switch. See [Notifications](/platform/settings/notifications).
+
 ### A worked example — employer-billed care
 
-An employer sends staff to you for pre-employment medicals and pays centrally. Choose the **Both** option, then enter `accounts@northgate-logistics.example, hr@northgate-logistics.example` in **Other emails** and select **Send Invoice**. One email goes out per recipient with the same PDF attached: the employee keeps a record of what was done and who paid, and the accounts team gets the bill.
+An employer sends staff to you for pre-employment medicals and pays centrally. Choose the **Both** option, then enter `accounts@northgate-logistics.example, hr@northgate-logistics.example` in **Other emails** and select **Send Invoice**. One email goes out per recipient with the same secure link to the invoice: the employee keeps a record of what was done and who paid, and the accounts team gets the bill.
 
 The same pattern covers family-billed care — an adult child paying for a parent receives it while the client still gets their copy.
 
 ## Download a copy
 
-Select **Download PDF** from the invoice's actions for a paper bill at the desk. You get the same branded PDF the email attaches, confirmed with **Invoice PDF downloaded**. Your bank details and other offline channels appear on it only if you added them under **Settings** → **Payment Details** and switched them on — see [Payment details](/practice/settings/payment-details).
+Select **Download PDF** from the invoice's actions for a paper bill at the desk. You get the same branded PDF the email's link opens, confirmed with **Invoice PDF downloaded**. Your bank details and other offline channels appear on it only if you added them under **Settings** → **Payment Details** and switched them on — see [Payment details](/practice/settings/payment-details).
 
 ## Cancel, do not delete
 
@@ -102,7 +108,7 @@ See [Staff permissions](/platform/team/permissions).
 ## Check it worked
 
 - The invoice is under **Billing** → **Invoices** with a **Pending** badge and the number you will quote.
-- After sending, a toast names who it went to, and each recipient has an email with the PDF attached.
+- After sending, a toast names who it went to, and each recipient has an email with a secure link to the invoice, which stops working after 3 days. Send the invoice again if it has expired; a cancelled invoice's link stops working at once.
 - The download produces a PDF that opens. A tiny file that will not open means the download failed.
 
 ## Common issues
@@ -121,7 +127,7 @@ See [Staff permissions](/platform/team/permissions).
   </Accordion>
 
   <Accordion title="The client says they never received it">
-    Check the email on their record, then re-send using **A different email** with an address they confirm. Ask them to check spam — the email carries a PDF attachment, which some filters treat harshly.
+    Check the email on their record, then re-send using **A different email** with an address they confirm. Ask them to check spam — the email carries a secure link, which some filters treat harshly.
   </Accordion>
 
   <Accordion title="Delete is greyed out">

@@ -1,0 +1,70 @@
+---
+title: Drafts from Ozni
+description: "Ozni can draft a clinical note, a referral letter or a message to a client. You review and edit it, and nothing is saved or sent until you approve it."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['full']} plans="All plans" roles="Clinical staff, owners and managers who can see clients' clinical records" note="A message to a client needs permission to contact clients." />
+
+Ozni can write a first draft of a clinical note, a referral letter or a message to a client from records you have asked it to read. The draft is for you to review. **Nothing is saved or sent until a clinician approves it**, and Ozni never signs anything.
+
+<Warning>
+Ozni is AI and can make mistakes. Every draft is marked **AI-generated draft**. Check every fact against the record before you approve it. You are responsible for what is saved.
+</Warning>
+
+## Ask for a draft
+
+In the chat, ask in your own words: "Draft a progress note for this client from their last two notes" or "Write a referral letter to a cardiologist". Ozni reads the records you are allowed to open, then asks before it writes, because a clinical draft is a heavy request and uses **15 credits**. See [Credits and prices](/platform/ozni/credits).
+
+Ozni drafts only from records it read in that chat and lists them as the draft's sources. It does not add a dose, date, result or diagnosis that the record does not state.
+
+The same rules as the screens apply. Notes and letters are for clinical roles with access to the client's clinical record. A message to a client needs permission to contact clients, and a message that uses clinical details needs a clinical role.
+
+## The draft in the chat
+
+The draft appears as a card with the **AI-generated draft** badge and a **Review** button. A draft message also has **Copy** and **Open in messages**.
+
+## The review sheet
+
+Select **Review** to open the draft in a large sheet. It shows:
+
+- The **AI-generated draft** badge and who the draft is for.
+- A banner: "This is a draft written by Ozni from the records listed below. Nothing has been saved."
+- Every section as a box you can edit. Change anything that is wrong.
+- **Sources**: the records Ozni used, each with a link and its date.
+- A line that tells you to check the draft against the record.
+
+When you are happy with it, select **Approve and save as draft**. The note or letter is saved as an **unsigned draft** that you open in Notes to read again and sign there. The sheet shows **Approve within** a number of minutes. An approval stays open for 15 minutes; after that, select **Renew approval** and your edits are kept. Select **Close** to leave without saving anything.
+
+| Draft | When you approve it |
+| --- | --- |
+| **Clinical note** | Saved as an unsigned draft note. |
+| **Referral letter** | Saved as an unsigned note called **Referral Letter**. It is not sent. You can download or fax it from the note. |
+| **Message to a client** | There is no save. Select **Copy**, or **Open in messages** to put the text in the message box for that client. You read it again and send it yourself. |
+
+Saving a draft never signs it and never sends it. Signing happens only in the normal note editor.
+
+## Start from a template
+
+For a first visit note, Ozni can start from one of your clinic's own note templates, using its section titles exactly. If your clinic has no templates, Ozni offers a standard layout such as a medical clerkship or a progress note. If your plan includes the AI scribe, the sheet also tells you that you can record a visit you are about to have and let the scribe write the note instead.
+
+## Sensitive records
+
+Records marked sensitive, such as substance use treatment records protected by 42 CFR Part 2, are handled with extra care.
+
+- **Substance use records (Part 2).** A draft that uses them carries the redisclosure notice and a **Part 2 records** badge. Ozni cannot save it: copy it into the note editor and mark the note sensitive there. The **Approve and save as draft** button is not shown.
+- **Other records marked sensitive.** If the draft would use a record marked sensitive, Ozni cannot save it yet either, so that the note does not lose its marking. Copy it into the note editor and mark the note sensitive there.
+- **Messages.** Ozni will not write a message to a client from a record marked sensitive. Nothing is drafted.
+
+## If something in a record tells Ozni what to do
+
+Text inside a record is information, never an instruction. If Ozni reads something that contains instructions, the review sheet asks you to tick **I've checked this** before you can approve. See [Attaching a file to a chat](/platform/ozni/attachments#when-a-file-contains-instructions).
+
+<AuditNote action="Reading the records for a draft, and saving a draft" />
+
+<StillStuck topic="drafts from Ozni" />
+
+{/* source of truth: components/assistant/assistant-draft.tsx, lib/assistant/drafts/draft-model.ts, lib/assistant/executors/approve-save-*-draft.ts, supabase/functions/_shared/assistant/drafts.ts, drafts-sensitivity.ts; AS6 */}

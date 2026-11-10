@@ -21,6 +21,7 @@ This is where your hospital's staff rota lives: who is working, when, and what h
 | **Rota** | The week or month grid, by person or by department, ward or unit. Click a slot to assign a shift, or a shift to edit it. On a phone this becomes a day-by-day list instead of a squeezed grid. | Everyone (edit needs a permission — see below) |
 | **Shift types** | Reusable templates like "Day 7:00 AM – 7:00 PM", including overnight shifts. Repeating patterns generate real shifts from a template on a schedule you set (e.g. every Monday, Wednesday and Friday). | Managing needs a permission |
 | **Cover & swaps** | Requests to swap or cover a shift: a colleague accepts, then a manager approves before the shift actually changes hands. | Everyone with a stake in the request; approving needs a permission |
+| **Time off** | Staff ask for leave; an approver says yes or no. Approved leave blocks that person's bookings and shows on the rota. | Everyone asks for their own; deciding needs the **Approve time off** permission (owners and managers always) |
 | **Coverage rules** | A minimum headcount for a department, ward, unit, typed place or role during a time window — the rota flags any window that falls short, and highlights a person booked onto two overlapping shifts. | Managing needs a permission |
 
 A staff member who cannot manage the rota sees a simple **My shifts** view instead: their own upcoming shifts, a **Request swap or cover** button on each, and the requests they are part of.
@@ -69,6 +70,35 @@ Because a shift points at the department or ward itself, **renaming a department
 Shifts created before this change carried a typed department. Where the typed text was exactly one department's name or code (ignoring capitals and extra spaces) it was linked for you; nothing is matched any more loosely than that. The rest stay on the rota marked **Department not set** — a shift that has a ward, a unit or a typed place is not counted here — and a banner at the top of the **Rota** tab counts them with a one-click fix: **Choose the department** gives every shift that shares the same typed text its department in one step (**Assign a department** does the same for upcoming shifts with none). Owners and managers only, and recorded in the audit log.
 
 **Switching off a department or location that upcoming shifts use** asks first and says how many upcoming shifts use it. Those shifts stay on the rota, marked **Inactive department** or **Inactive location**, so cover never silently disappears; **Move those shifts** in the banner reassigns them when you are ready. Shifts that have already happened are never changed.
+
+## Ask for time off
+
+Anyone with a staff profile can ask for leave from **Time off** in this tab (a staff member who cannot manage the rota sees it beside **My shifts**).
+
+<Steps>
+  <Step title="Choose the days">
+    Select **Request time off**. Under **Days**, choose the first and last day (up to 31 days at a time; for one day, pick it twice). Turn off **All day** to take part of a single day, and choose **From** and **Until**.
+  </Step>
+  <Step title="Say what kind, and send">
+    Choose the **Type** (**Vacation**, **Sick leave**, **Personal** or **Other**), add a note if it helps, and select **Send request**. The people who approve time off are told. Only you and they can read your note and your type.
+  </Step>
+  <Step title="Watch the answer">
+    Your requests are under **My requests**, newest first, with **Waiting for a decision**, **Approved**, **Declined** or **Cancelled**. You are told when it is decided. Select **Cancel request** to withdraw one that is waiting, or an approved one that has not ended. Cancelling an approved request frees your calendar for that time again.
+  </Step>
+</Steps>
+
+You cannot have two open requests on the same days. A request that has already ended cannot be made.
+
+## Approve or decline time off
+
+Owners and managers always see two more tabs under **Time off**: **To decide** (waiting requests, soonest first, with a count) and **Decided**. Anyone else needs the **Approve time off** permission, ticked under **Staff & Teams** → a person's **Permissions**; a person who has not been given it does not see them.
+
+- **Approve** shows how many bookings are already in that time (appointments and classes, with the day and time, never a client's name) before you confirm. They stay exactly as they are: nothing is moved or cancelled, so you move or cancel those yourself. You can add a reply for the person.
+- **Decline** asks for an optional reply and tells the person.
+- **Withdraw approval** (under **Decided**) declines an approved request that has not ended and removes that person's Out of Office again.
+- Nobody approves their own request, except the clinic owner.
+
+An approved request puts an **Out of office** on that person's calendar for those days, exactly as if they had added it themselves: online booking cannot book them and staff are asked to confirm before booking them. It shows on the **Rota** as a **Time off** marker on their row and in a **Time off in this period** line above the grid, with the dates only, never the type or the note.
 
 ## Build a repeating pattern
 

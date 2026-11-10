@@ -118,7 +118,40 @@ On the client's chart, a document row offers **View details**, **Revoke access**
 
 ## Documents on the client's chart
 
-The **Documents & forms** tab of a chart holds two things. **Health Records** is a vault for files you hold about the person — an empty one reads "Vault is empty", and **Select files to upload** (or **Store File**) adds to it.
+The **Documents & forms** tab of a chart holds two lists. **Patient Vault** (headed **Health Records**) is for files you hold about the person — an empty one reads "Vault is empty", and **Select files to upload** (or **Store File**) adds to it. **Sent & Shared** lists everything sent to the person and where each one has got to.
+
+### Are completed forms and signatures saved to the patient's chart automatically?
+
+Yes. Completed forms and signed documents are saved to the client's chart automatically — you do not file them yourself. On the client's chart, open **Documents & forms**, then **Sent & Shared**:
+
+- **A form** you sent them (from the form, or automatically with an appointment) shows **Completed** once they answer. **Open the response** opens their answers on the form's **Responses** tab.
+- **A document** they signed shows **Completed**. **View details** shows when it was sent, opened and signed, and **Download** on its **eSignatures** row gives you the signed PDF.
+- **A signature request** they signed opens with **Open signature tracking**, where **Signed document** downloads the signed copy.
+
+A signed copy is not added to **Patient Vault** as a separate file; a file the client attaches while filling in a document is. A form filled in without an invitation — from a public link, a booking page or an embedded form — is not on **Sent & Shared**: read it on the form's **Responses** tab.
+
+### Uploading a file
+
+Select **Store File**, choose the files (PNG, JPG, PDF, DOCX, DOC, TXT or MD, up to 50 MB each), pick a folder and, if the file is sensitive, a **Sensitivity** category, then select **Complete secure upload**. Each file is checked for viruses before it can be opened or shared. Until the check finishes the row shows **Scanning**; it usually takes under a minute, and the file opens as soon as the check is done. Two other words can appear:
+
+- **Blocked** — the file did not pass the virus check and cannot be opened. Upload a clean copy.
+- **Scan failed** — the check could not finish. Upload the file again.
+
+A file of any other type is refused before it is stored. The **Sensitivity** you choose is applied with the upload itself, so the file is private from the moment it appears. If the sensitivity cannot be applied — for example your plan does not include it — the upload is refused and nothing is stored, rather than saving the file unmarked.
+
+Files stored before uploads were checked are not marked **Scanning** and still open as before, but they cannot be shared with the patient until they have been checked. The practice owner or a manager can check one with **⋯** → **Scan now**. The file shows **Scanning** while it is checked, one file at a time. If it comes back clean it can be shared like any new upload; if it does not pass, it shows **Blocked** and cannot be opened. Selecting **Scan now** again while a check is running does nothing. A stored file in a format the check cannot read (anything other than PNG, JPG, PDF, DOCX, DOC, TXT or MD) cannot be scanned: upload it again in one of those formats.
+
+If a practice has split **Patients** from **Patient Records**, people who are not allowed to see clinical records cannot open a client's files at all, by any route.
+
+### Sensitive files
+
+A file you marked sensitive wears a **Sensitive** label, followed by its category (for example "Sensitive · Substance use"), on its row and in the secure viewer's header, so you know you are opening a restricted record. Only the person who uploaded it, the client's care team and the practice owner can see it, whether they open it from the list or by any other route. Opening it is on the audit trail, with the category recorded.
+
+### Archive and restore a file
+
+A file is never deleted from the vault. Select a file's **⋯** menu → **Move to archive**. You are asked first, and told that the file is not deleted and can be restored. The file leaves the list and is kept.
+
+To get one back, select **Show archived** above the list, open the file's **⋯** menu and select **Restore**. Select **Back to active files** to return to the normal list.
 
 ### Opening a file
 
@@ -139,6 +172,8 @@ Every page you view carries a faint, repeating watermark with your name, this pr
 Every file in the vault starts private. To let the patient see one themselves, open its **⋯** menu (or the secure viewer's header) and select **Share with patient** — it appears in their portal under **Files**, where they can view it in the same kind of in-app preview and download it at any time; a shared file shows a green **Shared with patient** label wherever it's listed. **Stop sharing**, from the same menu, removes it from their portal immediately.
 
 A file you've marked sensitive can't be shared — the menu explains why. Share the file once the sensitivity mark is cleared, if that's appropriate for this record.
+
+Only a file that has passed the virus check can be shared. While a file shows **Scanning**, **Share with patient** is not available; it appears as **Share (after the virus check)**. A file stored before uploads were checked cannot be shared until the owner or a manager has used **Scan now** on it and it has come back clean.
 
 Below the vault, **Sent & Shared** is one list of everything this person has been sent — forms, consent documents and signature requests together, in one set of words. Until something has been sent it offers **Send documents to sign** as a second route into the same intake sheet. Under each item's name is its date: **Due** and the **Complete by** date you chose for a form or a signature request, **Overdue** in amber once that date has passed and it is still waiting, or **Link expires** for a consent document. The same date shows on an appointment's forms checklist. Each row carries its own actions; see [Everything one person has been sent](/practice/forms/send-a-form#everything-one-person-has-been-sent). Clients with portal access can also open and sign from there — see [Documents to sign](/portal/patients/documents).
 
@@ -165,7 +200,7 @@ See [Staff permissions](/platform/team/permissions).
 
 ## Check it worked
 
-The document is on **eSignatures**, marked **Document**, at **Sent**. When they open it the status becomes **In progress**, and once they sign it becomes **Completed** and the signed copy is on their chart's **Documents & forms** tab.
+The document is on **eSignatures**, marked **Document**, at **Sent**. When they open it the status becomes **In progress**, and once they sign it becomes **Completed** and the signed copy is listed on their chart, under **Documents & forms** → **Sent & Shared**.
 
 ## Common issues
 
@@ -215,7 +250,7 @@ The document is on **eSignatures**, marked **Document**, at **Sent**. When they 
   </Accordion>
 
   <Accordion title="Where does the signed copy live?">
-    On the client's chart, under the **Documents & forms** tab, alongside anything you have uploaded about them yourself.
+    On the client's chart, under **Documents & forms** → **Sent & Shared**. Files you upload yourself are on the **Patient Vault** list beside it.
   </Accordion>
 </AccordionGroup>
 

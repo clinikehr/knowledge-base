@@ -1,0 +1,137 @@
+---
+title: Corrected claims and voids
+description: "Replace a claim Medi-Cal already has with a corrected claim, or ask Medi-Cal to cancel it with a void, using the 13-digit original claim number."
+icon: /images/icons/file-pen.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+A claim that has gone into a file is never changed. To fix one, you make a **new** claim. Which kind depends on what Medi-Cal did with the original:
+
+- **Medi-Cal turned it away before processing it** (it shows **Rejected**, with no claim number): [fix and re-file it](#a-claim-medi-cal-turned-away). The copy is free if you keep the same patient, dates and provider.
+- **Medi-Cal processed it** (it has a claim number): make a corrected claim that tells Medi-Cal to replace it (code 7 in box 22), or a void that cancels it (code 8).
+
+The new claim goes through confirm, approve and file like any other.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home', 'a claim that is in a file']} />
+
+<TaskHeader
+  before="The 13-digit claim control number Medi-Cal gave the original claim"
+  time="A few minutes"
+  after="A new draft claim that replaces or cancels the original once filed"
+/>
+
+## Where to find the number
+
+The 13-digit claim control number is on the remittance advice (RAD) or the claim status in the Medi-Cal portal. Enter digits only.
+
+## Make a corrected claim
+
+<Steps>
+  <Step title="Open the original claim">
+    A claim that is in a file shows a note: "It is in a file that was made. A filed claim is never changed." with **Make a corrected claim** and **Void this claim**.
+  </Step>
+  <Step title="Select Make a corrected claim">
+    The sheet says "This asks Medi-Cal to replace the original claim with this one."
+  </Step>
+  <Step title="Enter the original claim control number (box 22)">
+    Enter all 13 digits. If a number is shorter or has other characters you see "Enter all 13 digits of the original claim control number, digits only."
+  </Step>
+  <Step title="Choose the service line, if asked">
+    When the original has several service lines you are asked **Which service line**. Medi-Cal takes **one service line** on a corrected claim or a void, so the new claim carries only the line you choose, and its total (box 28) is that line's charge.
+  </Step>
+  <Step title="Select Make the corrected claim">
+    You see "Corrected claim made" and the new claim opens as a draft. Correct what was wrong, confirm every field, mark it ready, approve it, and put it in a new file.
+  </Step>
+</Steps>
+
+## A claim Medi-Cal turned away
+
+Medi-Cal can turn a claim away at the door, before it processes it. Medi-Cal gives such a claim no claim number, so there is nothing for a corrected claim to replace. You see it when you add the file's Error report, Volser Summary or 999 file acknowledgement under [Reports](/practice/claims/reports): the claim shows **Rejected**. Open it and you see "Medi-Cal turned this claim away before processing it. Fix it and send it again — the first copy is free if you keep the same patient, dates and provider." with **Fix and re-file**.
+
+<Steps>
+  <Step title="Select Fix and re-file">
+    The claim is copied as a new draft, linked to the rejected one. The copy keeps the dates and claim number and has nothing in box 22, because it is a new claim, not a replacement. You see "Claim copied to re-file".
+  </Step>
+  <Step title="Fix what Medi-Cal objected to">
+    The reason is on the claim and in [Reports](/practice/claims/reports). Correct it, confirm every field, mark the claim ready and approve it.
+  </Step>
+  <Step title="Put it in a new file and upload it">
+    Make a production file as usual.
+  </Step>
+</Steps>
+
+**The copy is free, once for each rejected claim, if you keep the same patient, dates and provider.** Medi-Cal never processed the rejected claim, so it is not charged a second time: when the copy goes into a production file it uses no credits. This applies when the rejection comes from an Error report, Volser Summary or 999 acknowledgement you added for one of your own production files, and only to the first copy of a claim you were charged for. If you change the patient, member ID, a date of service or the billing provider on the copy, it is charged like a new claim. A copy of a free copy is charged too. A claim re-filed this way does not count towards the 25 production claims a month on the Free plan. The file itself still counts towards the Free limit on production files.
+
+If a copy will not be free, the toast tells you why (for example "The free re-file of this claim was already used, so this copy is charged like a new claim.") and the copy is charged like any claim.
+
+A rejected claim that **has** a claim number was processed. It does not show **Fix and re-file**; make a corrected claim instead.
+
+## Void a claim
+
+<Steps>
+  <Step title="Select Void this claim">
+    Offered on claims that are in a file, accepted or paid.
+  </Step>
+  <Step title="Enter the number and choose the line">
+    The same two questions as a corrected claim.
+  </Step>
+  <Step title="Select Make the void claim">
+    A last question asks "Make the void claim?" It says the void is filed in a new file, and once Medi-Cal takes it the original is cancelled. Select **Void this claim**.
+  </Step>
+  <Step title="Take it through the normal steps">
+    The void is a new claim: confirm it, approve it and put it in a file, then upload the file to Medi-Cal.
+  </Step>
+</Steps>
+
+<Warning>
+  A void asks Medi-Cal to cancel the original claim, and it cannot be undone once it is filed. A void also uses credits in a production file, like any other claim.
+</Warning>
+
+## Check it worked
+
+- The new claim appears under **Your claims** as a draft, showing **Replaces or voids another claim**.
+- It does not show **Possible duplicate**; that badge is for an original claim that looks like another.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'This looks like a claim already filed'">
+    "Some of these claims have the same member, date and service as a claim already filed. File a replacement instead: a corrected claim with code 7 in box 22 and the 13-digit original claim number. Nothing was charged."
+  </Accordion>
+  <Accordion title="'The corrected claim could not be made'">
+    Check the original claim number, and that you chose a service line if asked, then try again. The message under it says what was wrong.
+  </Accordion>
+  <Accordion title="'Medi-Cal processed this claim and gave it a claim number, so it is corrected with a corrected claim, not re-filed.'">
+    Fix and re-file is only for a claim Medi-Cal turned away before processing it. Make a corrected claim instead.
+  </Accordion>
+  <Accordion title="I do not see Void this claim">
+    A void is offered only after the claim is in a file, accepted or paid. A claim still in draft or ready can simply be edited.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Can I correct a claim by editing it?">
+    Not once it is in a file. The claim is locked so what you filed stays a true record. Make a corrected claim.
+  </Accordion>
+  <Accordion title="Is a corrected claim charged again?">
+    Yes. It is a new claim, so it uses credits in a production file like any other. The one exception is a claim Medi-Cal turned away before processing it: its first re-filed copy is free.
+  </Accordion>
+  <Accordion title="Why does it say there is nothing to correct?">
+    Medi-Cal turned the claim away before processing it, so it has no claim number to replace. Use **Fix and re-file** instead.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a corrected claim" />
+
+{/* source of truth: components/clinic/claims/claim-editor/follow-up-sheet.tsx, claim-editor.tsx, lib/claims/claim-follow-ups.ts, lib/claims/claim-editor-model.ts, db/actions/claims-follow-ups.ts */}

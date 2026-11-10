@@ -1,0 +1,161 @@
+---
+title: Make a Medi-Cal file
+description: "Make a free test file or a production file from your claims, see what it costs in credits, download it and upload it in the Provider Portal."
+icon: /images/icons/file-export.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans. The Free plan has monthly limits; paid plans have none" roles="Anyone whose role opens Medi-Cal Claims can make a test file. Production files need the Make production Medi-Cal files permission (owners and managers have it)" />
+
+<InsuranceRegion region="us" />
+
+A Medi-Cal file is what you upload in the Medi-Cal Provider Portal. A **test file** is free and is how you prove yourself to Medi-Cal. A **production file** is the real submission and uses credits.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home', 'Generate']} />
+
+<TaskHeader
+  before="Claims that are ready (test file) or approved (production file); for production, Setup showing Sending real claims and enough clinical credits"
+  time="A minute, plus the upload"
+  after="A downloaded file, uploaded to the Provider Portal"
+/>
+
+## Make the file
+
+<Steps>
+  <Step title="Choose the claims">
+    In **Your claims**, tick the claims. A file takes between 1 and 500 claims. For a single claim you can skip the tick: select the **⋯** menu at the end of its row and choose **Generate file…**. A draft shows it greyed out, with "Mark it ready first"; a claim with problems to fix shows it greyed out, with "Fix N problems first".
+  </Step>
+  <Step title="Select Generate">
+    The button reads **Generate** with the number ticked. The arrow beside it opens a menu with **Approve** for the same claims. The **Make a Medi-Cal file** sheet opens: "N claims chosen."
+  </Step>
+  <Step title="Choose Test file or Production file">
+    **Test file** is free. **Production file** is "the real submission. Only approved claims go in. It uses credits, once for each claim the first time it goes in a file." Production is greyed out until you have the permission and Setup shows production; the sheet says why and links to **Open Setup**.
+  </Step>
+  <Step title="Read the summary">
+    The sheet shows **Claims**, **Credits per claim**, **Credits this file uses** and **Credits the clinic has**. If the balance is short it says "This file needs N credits and the clinic has M. Buy at least X more." with **Buy credits**. **Buy credits** opens the **Buy clinical credits** panel on top of the sheet: it shows what the file needs, what the clinic has and how many more you need, marks the smallest pack that covers it, and shows any volume bonus. Choose a pack, select the **Buy** button (it names the credits and the price) and pay with Stripe. After paying you come back to **Medi-Cal Claims** with a "Payment received" message, and the sheet opens again with the same claims ticked. If you cancel the payment, nothing is charged and the sheet stays closed. Your credits appear as soon as the payment is confirmed, and the sheet then shows the new balance. Only an owner or manager can buy credits; anyone else reads "Ask the clinic owner or a manager to add credits."
+  </Step>
+  <Step title="Look at the code checks">
+    **Code checks** says how many of the claims have code warnings, with **Open claim** links. Warnings never stop a file.
+  </Step>
+  <Step title="Select Make test file or Make production file">
+    The button reads **Making the file...** while it works. When it is done the sheet reads **Test file made** or **Production file made**, with the number of claims and, for production, "N credits used; M left."
+  </Step>
+</Steps>
+
+### What a file costs
+
+A production claim costs credits **once, the first time it goes into a file**. Making the file again with a claim that was already charged does not charge it again.
+
+| Plan | Credits for each claim in a production file |
+| --- | --- |
+| Free | 25 |
+| Essential | 15 |
+| Team | 10 |
+| Enterprise | Included |
+
+The first re-filed copy of a claim Medi-Cal turned away before processing it is free: see [Corrected claims and voids](/practice/claims/corrected-claims-and-voids#a-claim-medi-cal-turned-away).
+
+One credit is one cent, so 25 credits is $0.25. The same figures show as **Claim in a Medi-Cal file** under **Metered Activity** on the **Subscription** tab. Test files are free on every plan. Buy credits in [Clinical credits](/platform/plans/clinical-credits).
+
+### The Free plan's monthly limits
+
+On the Free plan the home page shows "This month on Free" with your counts and **Upgrade plan**, and the sheet shows **Free plan, this month**. Each month, resetting on the 1st:
+
+| Limit | Free plan |
+| --- | --- |
+| **Test files** | 3, each up to 25 claims |
+| **Production files** | 5 |
+| **Production claims** | 25, even if you have credits |
+| **Downloads of each production file** | 3 |
+
+A free re-file of a claim Medi-Cal turned away does not count towards the 25 production claims, but its file counts as a production file.
+
+A paid plan has none of these limits, only the per-claim credits. At a limit the file is refused with "The Free plan limit is reached", nothing is charged, and nothing already made is lost.
+
+## Download it and upload it to Medi-Cal
+
+<Steps>
+  <Step title="Download the file">
+    Select **Download** on the done screen, or open **Files** and select **Download** beside the file. The links stop working after a few minutes; select **Download** again for new ones. On the Free plan the count shows, for example "Downloads used: 1 of 3".
+  </Step>
+  <Step title="Keep the file as it is">
+    Do not open it and save it. Opening and saving can change it.
+  </Step>
+  <Step title="Sign in to the Medi-Cal Provider Portal">
+    Go to **Transaction Center**, then **EDI Submission**.
+  </Step>
+  <Step title="Submit it">
+    Choose the file and submit it. A test file goes in as a test; a production file goes in as a real submission.
+  </Step>
+  <Step title="Read Medi-Cal's reply report">
+    The reply report tells you what was accepted or rejected. A test file is checked the same way, so its report is the proof for your 10-claim test. Add a production file's reports under [Reports](/practice/claims/reports) to see each claim's result and update its status.
+  </Step>
+</Steps>
+
+<Warning>
+  A production file uses credits and is meant to be uploaded to Medi-Cal as it is. Check the claims and the credits in the summary before you select **Make production file**.
+</Warning>
+
+Some files show **Worth knowing** notes after they are made. Read them before you upload.
+
+## Who can do this
+
+Making a **test file** needs no permission. Making a **production file** needs **Make production Medi-Cal files**, which owners and managers always have and other staff only when it is given. See [Approve claims](/practice/claims/approve-claims#who-can-do-this).
+
+## Check it worked
+
+- The sheet says **Test file made** or **Production file made**.
+- **Files** lists it with its **Kind** (**Test** or **Production**), when it was **Made**, **Claims** and **Downloads used**.
+- Production claims now read **In a file**, and the credit balance on the **Subscription** tab has gone down.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Not enough credits'">
+    "A production file uses clinical credits. It needs N credits and the clinic has M. Nothing was charged. Select **Buy credits** in the sheet, add a pack, then make the file again." See [Clinical credits](/platform/plans/clinical-credits).
+  </Accordion>
+  <Accordion title="'Monthly limit reached'">
+    "The Free plan allows N of these a month and this clinic has reached that. The count starts again on the date shown. A paid plan has no monthly limit. Nothing was charged." Choose **Upgrade plan**, or wait for the reset.
+  </Accordion>
+  <Accordion title="'Download limit reached'">
+    The Free plan allows 3 downloads of each production file. Upgrade your plan to remove the limit.
+  </Accordion>
+  <Accordion title="'Some claims are not ready for a file'">
+    Open the claims listed, fix each reason and make the file again. A claim that looks like one already filed needs a corrected claim: code 7 in box 22 and the 13-digit original claim number. See [Corrected claims and voids](/practice/claims/corrected-claims-and-voids).
+  </Accordion>
+  <Accordion title="'A claim is still a draft'">
+    "Confirm and mark every claim ready, then try again. Nothing was charged." For a production file, approve them too.
+  </Accordion>
+  <Accordion title="'We could not confirm the file was made'">
+    "Check the Files screen before trying again, so the same claims are not charged twice. Do not retry until you have looked."
+  </Accordion>
+  <Accordion title="'You cannot make a production file'">
+    "Making a production file needs permission at this clinic. Ask an owner or manager. A test file does not need it."
+  </Accordion>
+  <Accordion title="'Too many claims for one file'">
+    A file holds up to 500 claims. Make two files with fewer claims each.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do you submit the file to Medi-Cal for me?">
+    No. You upload it yourself in the Provider Portal. ClinikEHR has no clearinghouse and cannot see your Portal account.
+  </Accordion>
+  <Accordion title="Why was my test file free but my production file costs credits?">
+    Test claims are not paid by Medi-Cal, and Medi-Cal asks every new submitter to send at least 10 test claims for each claim type first. Test files are free so you can do that.
+  </Accordion>
+  <Accordion title="Can I put claims from two billing providers in one file?">
+    Sometimes not. If the claims cannot go together the sheet says "These claims cannot go in one file. Make the file from fewer claims, or from one billing provider at a time."
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a Medi-Cal file" />
+
+{/* source of truth: components/clinic/claims/generate-sheet.tsx, files/*, lib/claims/claims-messages.ts (PORTAL_STEPS, generateCost, freeRoom), lib/claims/claim-file-rates.ts. Free limits: fn_mc_usage_this_month (3 test files of 25 claims, 5 production files, 25 production claims, 3 downloads a file) */}

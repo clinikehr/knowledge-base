@@ -1,0 +1,90 @@
+---
+title: US insurance and Medi-Cal claims with Ozni
+description: "For clinics on US insurance: ask Ozni about claims, eligibility and payer replies, prepare and send claims, and make Medi-Cal files. Anything that sends or moves money waits for your confirmation."
+icon: /images/icons/shield-halved.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['full']} plans="All plans" roles="Staff who can open Insurance or Claims" note="Voiding, appealing and posting a payment need their own permission." />
+
+<InsuranceRegion region="us" />
+
+Ozni works with the same US insurance screens you do. Your clinic's **Insurance** setting decides which kind of insurance Ozni helps with, so you are never asked whether you are in the US. A clinic set to outside-the-US insurance gets the [HMO tools](/platform/ozni/what-ozni-can-do) instead.
+
+## Ask about claims and coverage
+
+You can ask, in your own words:
+
+- "Which claims were denied this month?" or "Show claim CL-100."
+- "Which visits have no claim yet?"
+- "What did the payer say about this claim?" Ozni explains the payer's reply in plain words, including adjustment codes. If it does not know a code it says so and tells you to ask the payer.
+- "What coverage does this client have?" and "What authorizations are on file?"
+- "How are our insurance claims doing?" for totals, the collection rate and the denial rate.
+- "Which authorizations are running out?" Ozni lists the authorizations that are expiring soon, down to their last session, used up or expired, for every client, with the sessions and days left.
+
+Amounts show only to people who may see money. Everyone else sees a dash, and Ozni never works the figure out for them.
+
+## Prepare, check and send
+
+| You ask | What Ozni does |
+| --- | --- |
+| "Make claims for last week's insured visits" | Prepares **draft** claims from visits that have none. Nothing goes to a payer. More than 10 at once is a large change and uses 15 credits; Ozni asks first. |
+| "Check Ada's eligibility" | Sends a check to the payer, or searches for coverage from the client's details, or checks up to 25 clients together. Results arrive a little later; ask for the client's coverage to read them. |
+| "Send these claims" | Checks each claim with the claim form's own rules first. If anything is missing, such as a diagnosis code or a charge, Ozni names the problem and the line and does **not** offer to send. Clean claims are sent only after you confirm. |
+
+Eligibility checks and claim submissions are charged by the payer connection exactly as they are on the **Insurance** screens. That is separate from Ozni's own price, and Ozni says so on the card.
+
+## Authorizations, eligibility and coverage
+
+| You ask | What Ozni does |
+| --- | --- |
+| "Request an authorization for Ada from Aetna" | Prepares an electronic request with the diagnosis codes, service codes, units and dates you give. It is sent to the insurer only after you confirm, and the card says Stedi's charge follows the **Insurance** screens. Ozni refuses when the insurer does not take electronic requests, when requests are not switched on, or when you do not have the **Send authorization requests** permission. |
+| "Record this authorization" | Saves an authorization you already have, with the payer, number, amount, dates and service codes. It can also record how the insurer answered an authorization, or close one with an outcome. Nothing is sent to the insurer. Needs **Manage insurance authorizations**. |
+| "Link Ada's earlier sessions to this authorization" | Lists the past sessions inside the authorization's dates that are not linked to another authorization or paid by the client, and links them with the reason you give. |
+| "Check tomorrow's eligibility" | Checks every client booked on that day who has active coverage, up to 25 at a time (more than 10 is a large change and uses 15 credits). Clients with no active coverage are skipped and counted. |
+| "Does Ada have a second insurer?" | Runs a coordination-of-benefits check on one coverage and tells you in words whether another insurer covers her and who pays first. Because it is a charged check, it waits for your confirmation. |
+| "Add Ada's insurance" | Adds or updates a client's coverage using the payer from your clinic's payer list and the member id **you type in the chat**. The card shows only the last four characters, and Ozni never repeats the id. Coverage where the client is not the subscriber is entered on the client's own insurance screen. |
+| "Is Cigna in the payer directory?" | Searches the national payer directory by name and tells you each match's payer id, what it supports (eligibility checks, claim status, sending claims, remittances), whether claims need enrollment with the payer first, and whether it is already on your clinic's list. It changes nothing. |
+| "Add Cigna as a payer" | Shows a card with the payer's name, payer id and what it will allow, read fresh from the directory. On **Confirm** it is added to your clinic's payer list, the same as **Add payer** on the **Insurance** screen. Nothing is sent to the payer and there is no charge. Anyone who can use the **Insurance** screen can add a payer. Ozni will not add one that is already on your list, or one the directory gives no payer id for. |
+| "Show me this claim's CMS-1500" | Checks the claim has been sent, then shows a button to the **Insurance** screen. You open the claim and press **CMS-1500 PDF** yourself; the file never passes through the chat. |
+
+Attaching a file to a claim is done on the **Insurance** screens. Ozni can explain the steps.
+
+## Void, appeal and post a payment
+
+These change a claim for good, so each one shows a red confirmation card that says what cannot be undone.
+
+- **Void** closes a claim. It cannot be reopened or sent again from there; a new claim has to be made.
+- **Appeal** records an appeal on a denied, rejected, partly paid or adjudicated claim, with your reason.
+- **Post a payment** records what an insurer paid and what the patient owes, using the amounts you read from the remittance, exactly as the **Insurance** screen does. The payment cannot be more than what is still outstanding on the claim. If it is less, the card says so and the claim shows as partly paid on the **Insurance** screen; contractual adjustments and write-offs cannot be recorded there or through Ozni. If the payment is too large, Ozni shows you the figures and does not post anything. Ozni records the payment; it never moves money.
+
+All three need the **Void, appeal and post insurance payments** permission. It is on for owners and managers, and for billers and accountants when you save them in the permissions sheet. See [Staff](/practice/settings/staff). The same permission now applies on the Insurance screens, not only through Ozni.
+
+## Medi-Cal claims
+
+If your clinic uses the Claims workspace, you can ask Ozni:
+
+- "Show my Medi-Cal claims" for each claim's status, errors and warnings, and where you are in the four steps. For a claim that is still a **Draft**, **Ready** or **Approved**, the counts are worked out when you ask, so they follow your Setup. A claim that is already in a file or has an answer keeps the checks it was saved with.
+- "Why can't this claim be Ready?" for the claim's problems in plain words with the form box. Ozni also runs the code-pair and unit-limit checks and explains each finding, naming the procedure codes and what to do. They are advice from the published tables; Medi-Cal decides.
+- "Change the date of birth on this claim to 10/28/1980" or "Set line 1 to 2 units." Ozni shows a card with each box, what it says now and what it will say. When you confirm, ClinikEHR saves the change as if you had typed it, checks the claim again and tells you what is left to fix. Anything you change counts as checked by you. An **Approved** claim goes back to **Ready** and needs approving again. Ozni does not fill in signature boxes or change the billing provider, and a claim that is in a file, or has an answer from Medi-Cal, cannot be edited: make a corrected claim instead.
+- "What did Medi-Cal say about this claim?" for the latest report result.
+- "Re-file this rejected claim." Ozni makes the free re-file copy as a draft.
+- "Reopen this claim" or "Make a copy to correct." Ozni puts a Ready claim back to Draft, or copies it; to change a few boxes by conversation, ask for the change itself; for a bigger rework, type the corrections on the claim's own screen.
+- "Make a test file of these claims" or "Make a production file." Ready claims are approved first. A production file uses claim credits, and the card shows how many beside Ozni's own price. A test file is free.
+
+Ozni never uploads anything to the Medi-Cal portal. That stays with you, under your clinic's own Submitter ID, and Ozni will explain the steps if you ask. A state-portal upload is not done through Ozni.
+
+### Files you attach
+
+- Attach a PDF or photo of claim forms and ask Ozni to read it. Ozni first tells you the page count and the agent credits it would take (10 a page, and nothing for a PDF that has typed text or form fields) and waits for your reply; only then does it show a card, which repeats the price. When you confirm, the file is read into draft claims on the **Claims** screen, the same as dropping it there. You still check and confirm every box yourself. See [Add claims](/practice/claims/add-claims#ask-ozni-to-read-a-file-you-attach).
+- Attach a Medi-Cal report and ask Ozni to read it. It can be a PDF (the Volser Summary or the Error report) or an electronic payer file: an **835** payment advice, a **999** file acknowledgement or a **277CA** claim acknowledgement. For a PDF or a 999, Ozni asks which of your Medi-Cal files the report answers (or uses it if you have only one), the card names that file, and the results are matched to that file's claims. An 835 or a 277CA is matched claim by claim on your account number, so no file is asked for. Ozni never shows you or reads out the content of an electronic file. If nothing in it matches a claim of yours, Ozni says so and no claim changes. Ozni tells you the counts. See [Reports](/practice/claims/reports).
+- "Download the results of that report as a CSV." Ozni shows a card and the file downloads when you confirm.
+
+Reading a file with AI needs the **Approve claims for a file** or **Make production Medi-Cal files** permission, and reading a report needs **Approve claims for a file**; owners and managers have both.
+
+<StillStuck topic="Ozni insurance" />
+
+{/* source of truth: IMPLEMENTATION_PLAN.md section 3.14 (AS61, AS67), docs/AI-Assistant/M6_CONTRACT.md, lib/assistant/executors/insurance-us.ts and medi-cal.ts */}

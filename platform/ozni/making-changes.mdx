@@ -1,0 +1,187 @@
+---
+title: Making changes with Ozni
+description: "How Ozni proposes a change, what the Confirm card shows, how to undo within 10 minutes, and what Ozni will never do for you."
+icon: /images/icons/sparkles.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Any staff member, for the changes their role allows" />
+
+Ozni never changes anything on its own. It shows you what it would do on a card, and the change happens only when you press **Confirm**. If you do nothing, or select **Cancel**, nothing is changed.
+
+## The Confirm card
+
+Every change Ozni proposes appears as a card in the chat. The card lists what will be different, usually as **Will be** next to the current value, so you can check it before you agree.
+
+<Steps>
+  <Step title="Read the card">
+    Check each line. The card shows exactly what will run, and nothing else.
+  </Step>
+  <Step title="Select Confirm, or Cancel">
+    The button is named for the action, usually **Confirm**. A change that cannot be reversed uses a red button and says what is permanent. After you select **Cancel**, the card reads **Cancelled. Nothing was changed.**
+  </Step>
+  <Step title="Read the result">
+    The card changes to **Changed** or **Not changed**, with the reason if it could not be done.
+  </Step>
+</Steps>
+
+If your clinic requires two-factor sign-in, a change may stop with **Verify your two-factor code first, then confirm again.** Verify, then press **Confirm** again.
+
+## Cards stay put
+
+A card stays on screen while you type to Ozni, and it is still there if you reload the page or come back to the chat later.
+
+- **Expired cards.** A card you do not answer expires after a while. It then says **This card expired. Ask me again and I will prepare it afresh.** and has no **Confirm** button. Ask Ozni to prepare it again.
+- **Replaced cards.** If you ask for the same change a second way, such as the same booking without the email, Ozni prepares a new card. The old one closes and says **Replaced by a newer card.** Only the new card can be confirmed.
+- **A card that did not appear.** If Ozni says a card is ready and you cannot see it, Ozni says so and offers to prepare it again. Reloading is not needed.
+- **Typing while Ozni works.** You can send another message while Ozni is still answering. It waits and Ozni reads it next. A message you send twice in quick succession is sent once.
+
+## When Ozni asks you a question
+
+Sometimes a real choice blocks the work, such as two clients with the same name or a time that clashes. Ozni then shows a question card instead of guessing: one to four questions, each with two to four choices. The choice Ozni recommends is first and marked **Recommended**, and each choice says what it means. You can always type your own answer in **Something else**, then press **Send answer**. Your answer goes back as an ordinary message.
+
+- Ozni asks one round of questions for a request, and a second only when your answer opens a new branch. If you want more, say so ("ask me more questions", "give me options") and Ozni asks another round.
+- A few choices are a one-tap action: adding a clinic task. A change to an appointment always opens its own card, because the client may be told. That choice shows the action in plain words, such as **Create task: Call the lab**, and the button on it is the confirmation. Nothing happens until you press it.
+- A message to a client, anything with an amount, a clinical record, a setting, a change to many records, and anything that cannot be undone never becomes a one-tap choice. They always open their own card.
+
+## Ozni checks its own words
+
+After each answer Ozni compares what it said with what actually happened. If it says something was sent, booked or saved when no confirmed card did it, a plain correction is added under the answer, such as "Nothing has been done yet: confirm the card above and it will go ahead." The same happens if it calls a change that failed or was refused "done", calls a change that went through "failed", or says a message that was only prepared has been delivered. The card always shows the true outcome.
+
+## Automations in Agent Studio
+
+Ozni can read your automations and look after the parts you do every day. Each change is its own card, never part of a plan:
+
+- **What happened.** Ask why a run failed. Ozni reads the run's steps and tells you, in a short plain sentence, which step stopped and why. It does not show what a step produced or what an approval contains; that is on the **Runs** screen.
+- **Approvals.** Ask what is waiting for you. Ozni lists the approvals you may decide, and prepares **Approve** or **Deny** for one of them on its own card. Owners and managers see every approval they may decide; other staff see only the ones waiting for them. An approval of a message to a client is decided on that message's own card, not by Ozni.
+- **Switch a workflow on or off.** An owner or manager can turn one workflow off, or back on. A workflow that was never published is published in the builder.
+- **How often it runs.** For a workflow that already runs on a schedule, an owner or manager can change it to every 15 minutes, every 30 minutes, every hour, every day or every week. If the builder holds edits that are not published yet, Ozni will not publish them for you.
+- **Anything bigger,** such as who receives what, is changed in the builder. Ozni opens it and tells you what to change.
+
+A run that is already going cannot be cancelled, paused or re-run from chat, because Agent Studio has no such control; open the **Runs** screen, or switch the workflow off.
+
+## Undo within 10 minutes
+
+After some changes the card shows an **Undo** button with the minutes left. Select it within 10 minutes to put things back.
+
+| Can be undone | Cannot be undone |
+| --- | --- |
+| Settings you changed | Invoices |
+| Services | Appointments you booked or cancelled |
+| Prices | Anything already sent to a patient or customer |
+| Shifts and availability | A task's due date, owner or patient, and a task that was newly created (delete it from Tasks) |
+| A task you renamed, re-described, completed or reopened | An appointment moved to another time or provider (moving it back could message the client again) |
+
+A card for a change that cannot be reversed says **This can't be undone.** before you confirm it, so you know first.
+
+If someone changes the same thing again after Ozni did, Undo is refused, so it never overwrites their newer change. There is no undo for a whole chat. Only the individual change is reversed.
+
+## Letting Ozni go ahead with small changes
+
+By default Ozni asks before every change (**Ask before every change**). If you prefer, turn on **Auto-confirm small changes** for yourself in <Path items={['Settings', 'Ozni Assistant', 'Settings']} />. It is off until you turn it on, and your clinic owner can switch it off for the whole clinic.
+
+With it on, Ozni goes ahead without asking only for a task for yourself: creating one, renaming or re-describing it, changing its priority, completing or reopening it, as long as no patient is attached. Moving an appointment is not included yet, because moving one can send the client a message.
+
+The card then shows what was done, says it was done for you, and keeps **Undo** for 10 minutes. Everything else still asks first, every time: anything that messages a patient, money, clinical records, settings, changes to many things at once, anything that deletes, and anything that uses credits. Reading information never asks.
+
+## Plans with several steps
+
+For a bigger job, Ozni shows **Here is the plan**, a single card with each step on its own line and a tick beside it.
+
+- A plan of three steps or more starts with a **Steps** checklist. Each step shows **Waiting**, **Working**, **Done**, **Did not finish** or **Skipped**, and the count (for example **2 of 4 done**) updates as the steps run.
+- Untick any step you do not want.
+- Select **Confirm all ticked** to run the ticked steps one after another, in order. While it runs the card reads **Running your plan** and shows **Steps done**.
+- If a step does not succeed, the run stops there and the remaining steps stay waiting.
+- A step that sends something to a patient is never ticked for you and is never run by **Confirm all ticked**. Confirm that step yourself, then confirm the rest.
+
+## Changing many things at once
+
+Ozni can change many rows in one go, for example a set of prices. Every row is shown on the card with its current and new value before you confirm.
+
+- A single request can change **up to 50** rows. Over that, Ozni asks you to split it into smaller batches.
+- Rows are applied one at a time. If some fail, the others still go through, and the card lists each row that was refused with its reason.
+- Select **Try these again** to put the refused rows back in the message box. You read them and send them yourself.
+
+## Reduced amounts
+
+Ask Ozni what reduced amounts a client qualifies for and it lists the clinic's reduction categories, the client's automatic rules (what each covers, the percentage or fixed amount, its dates and whether it is in force) and the documents the client still needs or whose date has run out. It never opens a document, never shows a file name or the written reason, and never uploads or checks a document. If a document is missing, Ozni can offer to send the client an upload request or a form. You can also ask how many reduced amounts were given over a period, by category and by where they came from. The amounts are shown only to people who are allowed to see money figures; everyone else gets the counts.
+
+Ozni can reduce **one line of an open invoice** on a card with the verb **Apply reduced amount**. The card shows the original price, the new amount, the category and your reason. It needs the same permission as the invoice screen (owners and managers, or anyone given it), and it is refused when:
+
+- the invoice is paid, cancelled or still a draft (only an open invoice can be reduced);
+- the new amount is not below the price of the line, or would be nothing at all (a full waiver is a write-off);
+- the clinic has categories and none was chosen, or the chosen category asks for a longer written reason;
+- the reduction would take the invoice below what has already been paid.
+
+A reduction over a category's or the clinic's limit waits for a second owner or manager to approve it. The reason stays internal: the invoice and receipt show the amount only. Categories and automatic rules are set up in **Settings**; Ozni does not change them.
+
+## Automatic document sends
+
+Ask Ozni what the clinic sends automatically with appointments and it reads **Settings**, then **Sharable Documents**: each form or document for signature, the services it applies to, when it goes out, whether the visit waits for it, and its reminders. Only the clinic owner can change this, and Ozni says so to anyone else. For the owner, Ozni can prepare one change per card, **Add automatic send**, **Change automatic send**, **Remove automatic send** or **Use the form**:
+
+- Add a published form for clients, or a document for signature that only the client signs. Who fills the other parts of a document is set on the screen.
+- Change the services, when it goes out, whether the visit waits for it, automatic sending, or the reminders (standard, none or more). Reminders are for forms and documents for signature, not older templates.
+- Older templates cannot be added any more. Ozni can remove one, change its timing and services, or switch it to the form it was converted into.
+
+These changes affect future bookings. Nothing is sent to a client when you confirm.
+
+## Sending a payment link
+
+Ask Ozni to email a client a payment link for their unpaid invoices and it shows a card with the verb **Send link**. The card lists the client, each invoice with what is still owed, the total, and every email address the link goes to, written out in full. It also says that Stripe sends the receipt to the first address, and that the link expires in 24 hours.
+
+- Ozni can do this only when you can take payments yourself: your clinic must have its Stripe account connected and verified, and your role must be allowed to take payments. If it is not, Ozni says so in the same words the payment screen uses.
+- Each invoice is paid for the full amount still owed. Ozni cannot set a different amount. For a part-payment, use **Send payment link** on the payment screen.
+- Send to the client's email on file, to a different address, or to both. A different address must be one **you typed in the chat**. Ozni will not use an address it read in a note, a document or a file, and it asks you to type it instead.
+- The send is never part of **Confirm all ticked**. Confirm it on its own card.
+- Ozni says the link was sent only when the email really went. If the email did not go, the card says the link was created but not emailed, and gives you the link with **Copy link** so you can send it another way.
+
+## Sending a message to a client
+
+Ozni can prepare a message for a client, always on a card of its own with a send verb, and nothing goes until you press **Confirm**. It can send a form (**Send form**) or remind a client to finish one (**Send reminder**), send a document to sign (**Send to sign**) or remind a client to sign it, send an email (**Send email**), a text message (**Send text**), a fax (**Send fax**), an account statement (**Send statement**), an invoice (**Send invoice**), a superbill (**Send superbill**), a telehealth join link (**Send link**), and an appointment reminder email (**Send reminder**). You can ask Ozni to show what a client has been sent, with each item's status, how many automatic reminders have gone, when the next one is due (or that reminders are off) and whether it was flagged to the practice because nobody answered. You can also ask what is still outstanding across all your clients, for example forms not yet finished or documents not yet signed, filtered by form or document name, by who sent it or by overdue. Ozni can then offer a reminder for one item at a time, each on its own card.
+
+Each card shows the client, where it goes, and the exact words or document. Rules that apply to all of them:
+
+- A client's email address or phone number from their record is shown with the middle hidden, for example a••••@example.com or •••• 1234. Ozni never takes an address from anywhere else: a different address or number must be one **you typed in the chat**. Ozni will not use one it read in a note, a document or a file.
+- A message that has gone out cannot be taken back. A reminder uses the same link the client already has, so the first link keeps working.
+- Forms and documents to sign go out with automatic reminders on (two days and five days after sending, and once more the day before the link expires). The card says **Automatic reminders: on** or **off**. Ozni turns them off only when you ask, the same as the **Send reminders** switch on the Forms screen, and a reminder you send yourself still works.
+- Each send is its own card. It is never part of **Confirm all ticked** and never a step in a plan.
+- Ozni sends one client at most three messages from you in an hour, so a fourth is refused. A clinic can send 100 texts in 24 hours.
+- Sending to two or more clients at once (up to 25 for a form) counts as a heavy request, and Ozni asks you to agree to the price first. For more, set up an Agent Studio workflow.
+- If the clinic is out of office, Ozni asks whether to send now or when the clinic is back. A message held until then is reported as held, not as sent.
+- Ozni says a message was sent only when the card reports it. An email is first queued for a few seconds so you can undo it in Mail.
+- Outside the live service nothing is delivered, and the card reports that.
+
+What each one needs, the same as sending it yourself:
+
+- **Forms and documents to sign**: permission to send forms (and to send signing links), a plan above Free, and the clinic's document emails switched on. A document with more than the client's part (a witness, an approver, a staff signature or a copy) can be sent too, when every other part is filled by a member of your clinic's staff. The card lists each person, their part and the signing order the document sets, and each person signs through their own link. Ozni will not use an email address typed in the chat for those parts, will not change the order the document defines, and will not send a document that has a part signed in the room. Send those from the **Forms** screen. Ozni never signs for anyone.
+- **Email**: permission to send mail and a mailbox. If the client has not agreed to direct email, the card says it will go as a secure message with a notification link. Clinical details can be emailed only by a clinician. Ozni will not email a client whose record is marked sensitive.
+- **Text message**: permission to contact clients, an approved texting number, a client who has not replied STOP, a mobile number on file that the client has agreed to be texted on (or a number you type with its country code), and enough messaging credits. Texts go out only between 08:00 and 20:00 clinic time, and no more than 3 messages an hour reach one client. The card shows the number of segments and the credits it costs, paid from messaging credits and not from assistant credits. Ozni never texts a result, a diagnosis or a medicine; it suggests asking the client to call. It will not text a client whose record is marked sensitive.
+- **Fax**: permission to send faxes. The card shows the full fax number and **New fax number - check it is correct** when the clinic has not faxed it before. Only a signed note, an issued invoice, an issued superbill, a kept statement copy or a signed patient document can be faxed, and a referral letter only after it has been saved and signed. When the clinic is set up as a substance use treatment program, a superbill or statement copy is faxed only if the client's written consent on file covers it; otherwise Ozni tells you it cannot be faxed and nothing is sent or charged. Ozni will not fax a record marked sensitive, or a superbill or statement copy for a client whose chart carries a sensitivity marking, and the Fax sheet on the client's billing tab refuses the same ones; send those by secure link instead.
+- **Invoice**: a client email on file. Ozni emails an issued invoice (never a draft, cancelled or voided one) to the client's address on the record, and shows the invoice number and the address with part of it hidden. It picks the client's only issued invoice or asks which number.
+- **Statement and superbill**: a client email on file. Ozni can list a client's superbills (**list**, no lines or diagnoses) and **Issue superbill** from their paid visits, but only when every diagnosis was recorded by a clinician and nothing is missing; it never adds a suggested code, and anything with a gap is left for the **Superbill** review on the client's billing tab. It then emails an issued superbill as a secure link, picking the only issued one or asking which number. A superbill needs permission to create superbills. See [Superbills and statements](/practice/money/superbills-and-statements).
+- **Telehealth link**: an online appointment. A new room counts against the plan's monthly telehealth allowance.
+- **Appointment reminder**: permission to edit appointments. It is not sent if the client's notification choices turn it off, or if a reminder already went for that appointment today.
+
+## When a patient is told
+
+If a change tells a patient or customer, for example moving an appointment, the card says so in plain words, such as "the patient will get an SMS". It only uses the contact choices that patient has already set, the same as making the change on the screen yourself.
+
+## What Ozni will never do
+
+Ozni opens the right screen and explains, but you do these yourself:
+
+- Refund, void or write off a payment.
+- Delete records.
+- Change staff roles or permissions, or security settings.
+- Sign a document, a note or an order.
+- Send anything to a patient without a card that shows you what is sent and to whom.
+- Cancel or downgrade your subscription.
+
+<AuditNote action="A change made through Ozni" />
+
+<StillStuck topic="a change from Ozni" />
+
+{/* source of truth: components/assistant/view/assistant-action-controls.tsx, lib/assistant/proposal-card-model.ts, lib/assistant/action-args.ts (UNDOABLE_TOOLS, UNDO window) */}

@@ -1,0 +1,94 @@
+---
+title: Approve claims
+description: "Approve claims that are ready so they can go into a production file, and see who is allowed to approve."
+icon: /images/icons/circle-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owners and managers; other staff only with the Approve claims for a file permission" />
+
+<InsuranceRegion region="us" />
+
+Approval is the second pair of eyes. A biller prepares a claim and marks it ready; someone allowed to approve says it can go into a **production** file. A **test file** takes claims that are ready or approved, so approval is not needed to test.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home', 'Approve']} />
+
+<TaskHeader
+  before="Claims marked Ready, with every field confirmed"
+  time="A minute"
+  after="Claims with the status Approved, ready for a production file"
+/>
+
+## Approve claims
+
+<Steps>
+  <Step title="Choose the claims">
+    For one claim, select the **⋯** menu at the end of its row and choose **Approve**. It shows only on a claim whose status is **Ready**, and only if you are allowed to approve. A claim with problems to fix shows it greyed out, with "Fix N problems first". For several claims, tick them, or **Select all on this page**, then open the menu beside **Generate** and choose **Approve** with the number you ticked, for example **Approve (3)**. Claims with problems to fix are left out, and the confirmation says how many.
+  </Step>
+  <Step title="Confirm">
+    The dialog says (for one claim it reads "this claim" and "it") "Approving says you have checked these claims and they can go into a production file. Only claims marked ready can be approved, and changing an approved claim later withdraws its approval." Select **Approve 3 claims**.
+  </Step>
+</Steps>
+
+You see how many were approved, for example "3 claims approved. 1 was skipped.", and a second message listing why any were skipped:
+
+| Reason shown | What to do |
+| --- | --- |
+| "is not marked ready" | Open it, confirm every field and mark it ready |
+| "still has a field nobody has confirmed" | Open it and confirm the remaining boxes |
+| "was confirmed by you, so someone else must approve it (an owner, a manager or another approver)" | Ask someone else to approve it |
+| "could not be found, or you do not have access to it" | Reload the list |
+
+## Who can do this
+
+| Action | Who by default | Permission |
+| --- | --- | --- |
+| Approve claims | Owners and managers | **Approve claims for a file** |
+| Make a production file | Owners and managers | **Make production Medi-Cal files** |
+| Make a test file | Anyone whose role opens Medi-Cal Claims | None |
+
+Other staff do not have either permission until an owner or manager gives it. Give them from **Staff & Teams**, in a person's **Permissions**, under **Claims**. See [Permissions](/platform/team/permissions). Enforcement starts for a person when you save their permissions.
+
+**A biller cannot approve a claim they confirmed themselves.** The claim is skipped, and another approver, an owner or a manager has to do it. An owner or manager can approve their own claims, so a solo practice can still work alone.
+
+## Check it worked
+
+- The toast reads "N claims approved."
+- The claims show the status **Approved**. The step bar moves to **Generate**.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="There is no Approve in the menu">
+    Your role does not have **Approve claims for a file**. Ask an owner or manager to give it to you, or to approve the claims.
+  </Accordion>
+  <Accordion title="'You cannot approve claims'">
+    "Approving a claim needs permission at this clinic. Ask an owner or manager."
+  </Accordion>
+  <Accordion title="'No claim was approved'">
+    "A claim must be marked ready, with every field confirmed, before it can be approved." Open the claims and finish the review.
+  </Accordion>
+  <Accordion title="An approved claim went back to Ready">
+    Changing an approved claim withdraws its approval. Approve it again after the change.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does approving send anything to Medi-Cal?">
+    No. Approving only says the claim may go into a production file. Nothing leaves ClinikEHR until you download a file and upload it yourself.
+  </Accordion>
+  <Accordion title="Do I have to approve claims before a test file?">
+    No. A test file takes claims that are marked ready.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="approving claims" />
+
+{/* source of truth: components/clinic/claims/use-claim-actions.tsx, components/clinic/claims/claims-list-actions.tsx, lib/claims/claims-messages.ts (approvedSummary, skippedReason, mapApproveRefusal), lib/claims/claims-permissions.ts, lib/edition-staff-roles.ts (CLAIMS_PERMISSIONS) */}

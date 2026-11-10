@@ -11,11 +11,11 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
 <Availability editions={['clinic']} plans="All plans" roles="Any staff member who can open Billing" />
 
-An invoice lists what a patient owes the hospital, in your currency, and can be emailed as a branded PDF to the patient, to whoever is actually paying, or to both. This page covers building one, sending it, and what you can and cannot do to it afterwards.
+An invoice lists what a patient owes the hospital, in your currency, and can be emailed as a branded message with a secure link to the invoice to the patient, to whoever is actually paying, or to both. This page covers building one, sending it, and what you can and cannot do to it afterwards.
 
 <Path steps={['Sidebar', 'Billing', 'New Invoice']} />
 
-<TaskHeader before="At least one service in your catalogue, and a patient record to bill" time="2 minutes" after="A Pending invoice, emailed as a PDF to the recipients you chose" />
+<TaskHeader before="At least one service in your catalogue, and a patient record to bill" time="2 minutes" after="A Pending invoice, emailed as a secure link to the recipients you chose" />
 
 ## What you're looking at
 
@@ -58,7 +58,7 @@ The form is headed **Create Invoice** and three cards long.
 
 <Steps>
   <Step title="Open the send dialog">
-    **Send Invoice**, from the row's **Invoice Actions**, from the invoice itself, or from the **Invoice Created** dialog. It says: "A branded email with invoice \{number\} attached as a PDF will be sent to the recipients you choose."
+    **Send Invoice**, from the row's **Invoice Actions**, from the invoice itself, or from the **Invoice Created** dialog. It says: "A branded email with a secure link to invoice \{number\} (no file attached; the link expires after 3 days) will be sent to the recipients you choose."
   </Step>
   <Step title="Choose the recipients">
     **Send to** offers three options — the patient's email on file, **A different email**, or **Both — \{patient\} and a different email**.
@@ -104,10 +104,16 @@ Your hospital's staff sheet does carry a **Billing** section of per-person toggl
 
 Enforcement is **opt-in per person** — a colleague never saved in the permissions sheet is unrestricted, and the sheet warns **"Saving starts enforcing"**. A **denied action is recorded**; an allowed one is not.
 
+### What the link shows, and what happens if it stays unpaid
+
+The link opens the invoice **as it is when the client opens it**, not a copy from the day you sent it. After a payment it shows what has been paid and what is left, and once the invoice is settled it shows **Paid**. If you cancel the invoice, the link shows "This invoice was replaced or cancelled. Ask your clinic for the current copy." instead of the bill.
+
+An invoice that is still unpaid gets up to two automatic payment reminders, and each one carries the same secure link, with no file attached. If it is still unpaid after the second, your clinic is told **once**: a notice in the app and an email to your clinic's email address, saying "\{invoice number\} still unpaid by \{client\}". The email's subject has no name and no amount. A client whose record is restricted shows as **Secured patient** and a number, and a clinic that runs a substance use treatment program leaves the name out of the email (the notice in the app keeps it). Both follow **Settings** › **Notifications**: the **Billing** category and the **Email notifications** switch. See [Notifications](/platform/settings/notifications).
+
 ## Check it worked
 
 - The invoice appears under **Billing → Invoices** with a **Pending** badge and its number.
-- After sending, you get **Invoice emailed to \{recipients\}** and each address has the PDF.
+- After sending, you get **Invoice emailed to \{recipients\}** and each address has the secure link (it expires after 3 days).
 - **Download PDF** produces a file that opens. A tiny file that will not open means the download failed, not that it succeeded.
 
 ## Common issues
@@ -126,7 +132,7 @@ Enforcement is **opt-in per person** — a colleague never saved in the permissi
   </Accordion>
 
   <Accordion title="The patient says they never received it">
-    Check the email on file, then re-send with **A different email**. Ask them to check spam: the message carries a PDF attachment, which some filters treat harshly.
+    Check the email on file, then re-send with **A different email**. Ask them to check spam: the message carries a secure link, which some filters treat harshly.
   </Accordion>
 
   <Accordion title="Delete Invoice is greyed out">

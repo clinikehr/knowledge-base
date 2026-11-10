@@ -1,0 +1,110 @@
+---
+title: Sign up for a Claims workspace
+description: "Create a Claims-only workspace for Medi-Cal claim files, and turn on the full EHR whenever you want the rest of ClinikEHR."
+icon: /images/icons/user.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="Starts on the Free plan" roles="Anyone can sign up; only the owner can turn on the full EHR" />
+
+<InsuranceRegion region="us" />
+
+A **Claims workspace** is a ClinikEHR workspace whose menu shows **Medi-Cal Claims** only. It is for a biller or practice that wants the Medi-Cal file maker and nothing else. It is the same ClinikEHR account, the same agreements and the same Free plan; the rest of the product is hidden, not removed.
+
+<TaskHeader
+  before="An email address, or a Google account"
+  time="A few minutes"
+  after="A workspace that opens on Medi-Cal Claims"
+/>
+
+## Sign up for one
+
+<Steps>
+  <Step title="Open the Claims sign-up">
+    Go to `https://app.clinikehr.com/sign-up?product=claims`. The page reads **Create your Claims workspace**: "Free to start. Turn CMS-1500 claims into a Medi-Cal upload file."
+  </Step>
+  <Step title="Create the account">
+    Use your email and a password, or continue with Google. You accept the same Business Associate Agreement, Terms and Privacy Policy as every ClinikEHR account.
+  </Step>
+  <Step title="Confirm your email and sign in">
+    The workspace opens on **Medi-Cal Claims**, on the Free plan.
+  </Step>
+</Steps>
+
+## Make a Claims workspace from an account you already have
+
+If you are the owner of an existing workspace and your profile's country is the United States, the **Add a clinic** sheet offers a switch:
+
+<Steps>
+  <Step title="Select Add a clinic">
+    From your home page.
+  </Step>
+  <Step title="Turn on A Claims workspace (Medi-Cal claim files)">
+    The switch says "Opens on Claims with the rest of the menu hidden. You can turn on the full EHR any time." It is not shown outside the United States.
+  </Step>
+  <Step title="Create the clinic">
+    The new workspace opens on Medi-Cal Claims. Your other workspaces are unchanged.
+  </Step>
+</Steps>
+
+## What the workspace looks like
+
+The menu shows **Medi-Cal Claims** with **Claims**, **Setup**, **Files** and **Reports** only, and the dashboard shows **Your Claims workspace**: "Your menu shows Medi-Cal Claims only. Every other part of ClinikEHR is switched off for now." with **Open Claims**.
+
+Next, [get set up with Medi-Cal](/practice/claims/get-set-up).
+
+## Turn on the full EHR
+
+<Path steps={['Medi-Cal Claims', 'Setup', 'Turn on the full EHR']} />
+
+<Steps>
+  <Step title="Open the card">
+    Select **Turn on the full EHR** at the bottom of **Setup**, or on the **Your Claims workspace** card on the dashboard.
+  </Step>
+  <Step title="Confirm">
+    The dialog says "Every ClinikEHR section comes back in your menu for everyone in this clinic. Nothing is created, moved or lost, and your claims stay where they are. You can hide sections again in Settings, Navigation." Select **Turn on**. To hide sections again later, see [Navigation](/practice/settings/navigation).
+  </Step>
+</Steps>
+
+You see "The full EHR is on" and "Every section is back in your menu. Nothing was moved or lost." Patients, scheduling, notes, billing and the rest are available again.
+
+Only the clinic owner can do this. Everyone else sees "Only the clinic owner can turn on the full EHR."
+
+## Check it worked
+
+- The menu opens on **Medi-Cal Claims** after sign-in.
+- After **Turn on**, the **Your Claims workspace** card is gone and the other sections are in the menu.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="I do not see A Claims workspace in Add a clinic">
+    It is offered to owners whose profile country is the United States, on the full edition. Use the Claims sign-up link instead, or change the country on your profile.
+  </Accordion>
+  <Accordion title="Turn on the full EHR does nothing">
+    "Only the clinic owner can turn on the full EHR." Ask the owner, or sign in as the owner. "Not changed" with a message means the change did not save; try again.
+  </Accordion>
+  <Accordion title="I cannot see Medi-Cal Claims at all">
+    Medi-Cal Claims appears when the clinic's insurance preference is United States. Check **Settings**, **General**, **Insurance**.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does a Claims workspace cost anything?">
+    The workspace starts on the Free plan. Test files are free, and production claims use clinical credits. See [Make a Medi-Cal file](/practice/claims/make-a-file#what-a-file-costs).
+  </Accordion>
+  <Accordion title="Can I go back to Claims only?">
+    You can hide sections again in **Settings**, **Navigation**.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a Claims workspace" />
+
+{/* source of truth: components/auth/signup-wizard.tsx (product=claims), components/home/dashboard/create-clinic-form.tsx, components/clinic/claims/claims-workspace-card.tsx, db/actions/claims-workspace.ts */}

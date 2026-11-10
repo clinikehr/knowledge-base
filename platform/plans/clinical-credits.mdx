@@ -1,0 +1,118 @@
+---
+title: Clinical credits
+description: "How clinical credits pay for per-use services like Medi-Cal claim files, which packs you can buy by card, the bonus on larger packs, and what refunds do."
+icon: /images/icons/coins.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owners and managers buy credits" note="Packs are paid by card on a Stripe payment page, in US dollars." />
+
+Clinical credits pay for the per-use services a clinic runs, such as insurance claims, eligibility checks, attachments and **Claim in a Medi-Cal file**. One credit is worth $0.01.
+
+<Path steps={['Dashboard', 'Subscription', 'Clinical Credits']} />
+
+<TaskHeader
+  before="A card, and an owner or manager account"
+  time="2 minutes"
+  after="A higher balance that never expires"
+/>
+
+## Buy credits
+
+<Steps>
+  <Step title="Open the Clinical Credits card">
+    On the **Subscription** tab, the card shows your **Available Balance** and "1 credit = $0.01 USD".
+  </Step>
+  <Step title="Select Top Up Credits">
+    The **Top Up Credits** sheet reads "Select a credit pack to add to your balance. You pay securely with Stripe. Credits never expire and are shared across clinic activities."
+  </Step>
+  <Step title="Choose a pack">
+    Each tile shows the credits you end up with, any bonus, and the price:
+
+    | You pay | You get | Bonus |
+    | --- | --- | --- |
+    | $10 | 1,000 credits | None |
+    | $25 | 2,500 credits | None |
+    | $50 | 5,250 credits | **+5% bonus** |
+    | $100 | 11,000 credits | **+10% bonus** |
+    | $250 | 25,000 credits | None |
+  </Step>
+  <Step title="Pay">
+    A secure Stripe payment page opens. When the payment goes through, the credits are on your balance, and you see "Payment received" when you return.
+  </Step>
+</Steps>
+
+The packs and bonuses shown in the sheet are the ones that will be added. The bonus is added on top of the pack and appears on its own line in your credit activity.
+
+<Warning>
+  Choosing a pack takes you straight to the payment page, where your card is charged. Check the tile before you select it.
+</Warning>
+
+## What credits pay for
+
+| Service | Credits |
+| --- | --- |
+| **Claim in a Medi-Cal file** (US insurance) | 25 on Free, 15 on Essential, 10 on Team, included on Enterprise, once for each claim the first time it goes into a production file. Test files are free |
+| Other per-use services | Listed under **Metered Activity** on the **Subscription** tab |
+
+See [Make a Medi-Cal file](/practice/claims/make-a-file#what-a-file-costs). The **Claim in a Medi-Cal file** line shows only for clinics whose insurance preference is United States.
+
+## Refunds and credits owed
+
+- **A payment that cannot be matched to a pack is refunded in full automatically.** Nothing is added to your balance.
+- **A refunded or disputed pack takes its credits back.** A partial refund takes back the same share of the credits and of the bonus.
+- **A dispute you win returns them.** When the card issuer decides in your favour, the credits the dispute took back, bonus included, are returned to your balance once, and the **Subscription** tab's ledger shows a line for it. It never returns more than was taken.
+- **Credits already used.** If the credits were spent, the card shows the balance as **credits owed**, and your next top-up covers it first.
+- The account owner receives a confirmation email after each purchase, with the pack, the credits, any bonus and a link to the card receipt.
+
+## Low balance
+
+When your balance falls to your alert level, the card shows **Low Credit Balance** and "Top up to avoid service interruptions." If you owe credits it reads **Credits Owed**.
+
+## These are not your agent credits
+
+<Info>
+  **Agent Studio Credits** are a separate balance, on the same **Subscription** tab, for AI agents and AI writing help. Topping up one does not help the other. See [AI credits](/platform/plans/credits).
+</Info>
+
+## Check it worked
+
+- The **Available Balance** has risen by the pack's credits plus its bonus.
+- The purchase and any bonus appear in the credit activity.
+- The charge appears under **Payment History**. See [Your subscription invoices and receipts](/platform/plans/invoices-and-receipts).
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Only an owner or manager can buy credits for the clinic.'">
+    Ask your clinic owner or a manager to buy them.
+  </Accordion>
+  <Accordion title="'The credit packs could not be loaded.'">
+    Close the sheet and open **Top Up Credits** again. If it keeps failing, contact support.
+  </Accordion>
+  <Accordion title="I paid but the balance has not moved">
+    Reload the page. Confirmation can take a minute. If the charge is in **Payment History** and the balance has not risen after five minutes, contact support with the time of the payment.
+  </Accordion>
+  <Accordion title="My balance shows credits owed">
+    A refund or dispute took back credits that were already used. Your next top-up covers the amount first. If the dispute is later decided in your favour, the credits are returned.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Do credits expire?">
+    No. Credits you buy stay on the balance until they are used.
+  </Accordion>
+  <Accordion title="Can I pay in naira?">
+    Clinical credit packs are priced in US dollars and paid on a Stripe payment page.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="clinical credits" />
+
+{/* source of truth: components/clinic/dashboard/subscription-dashboard.tsx (Clinical Credits card, Top Up Credits sheet), lib/billing/clinical-credit-bundles.ts, lib/billing/clinical-credit-balance.ts, lib/claims/claim-file-rates.ts, components/clinic/dashboard/medi-cal-file-per-use-row.tsx */}

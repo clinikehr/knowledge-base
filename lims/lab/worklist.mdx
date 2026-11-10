@@ -27,11 +27,33 @@ The heading is **Worklist** and the subtitle states the job: "The bench queue, o
 
 Along the top, the status chips double as filters and each carries a live count in brackets — **All**, **Lab intake**, **Collected**, **In transit**, **Received**, **Screening**, **Confirmed**. Beside them are a search box (**Specimen ID, LAN or donor…**), a specimen-type select offering **All specimen types**, **Oral fluid** and **Urine**, the **List** | **Rack** view toggle, and a refresh button with no label on it.
 
-The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel** (shown as **\{n\} analytes**), **Status** and **Received**, with a tick box on each row.
+The list columns are **Specimen**, **LAN**, **Donor**, **Type**, **Panel** (shown as **\{n\} analytes**), **Status**, **Received** and **Where**, with a tick box on each row. Next to the status chips is a red **Overdue (\{n\})** chip, and beside the refresh button a **Turnaround targets** button.
 
 **The empty state.** When nothing matches you get **Nothing in the queue for these filters.** — widen the filters before you assume something is lost. A lab that runs no regulated collections sees that message on every filter, permanently.
 
 <AuditNote action="Opening a specimen from the queue" />
+
+## See what is overdue
+
+Every sample has a clock that starts when your lab **receives** it. A sample is **Overdue** once that clock passes the turnaround target for its specimen type. Select **Overdue (\{n\})** to show only those samples; select it again to go back. Each overdue sample carries a red **Overdue** badge saying how far past the limit it is. A sample that has not reached your lab yet has no running clock, so it is never overdue; its **Where** column says where it is.
+
+The **Where** column shows the sample's last known position, such as **In the lab**, **In transit to the lab** or **In transit to another lab** (a hand-off between your labs outranks everything else), with how long it has been at the lab against its limit. Open a specimen and the same line sits above its workflow, with the **Last step** and when it happened.
+
+If you have not set a target for that specimen type, the worklist compares against your lab's own average over the last 90 days, once at least five samples of that type have been finished. The badge then says **· no target set** so you know the limit is your average, not a promise you made. With neither a target nor enough history there is nothing to compare against, and the sample is simply not marked.
+
+## Set turnaround targets
+
+<Steps>
+  <Step title="Open the targets">
+    Select **Turnaround targets**. Anyone can read them; only an owner or manager can change them.
+  </Step>
+  <Step title="Enter the hours">
+    Enter the hours your lab promises in **Urine target (hours)** and **Oral fluid target (hours)**, counted from receipt. Leave a field empty for no target.
+  </Step>
+  <Step title="Save">
+    Select **Save targets**. The toast reads **Turnaround targets saved** and the worklist marks samples against them straight away.
+  </Step>
+</Steps>
 
 ## Switch between list and rack
 
@@ -113,6 +135,10 @@ See [Permissions](/platform/team/permissions).
     Expected, if you do not run drug testing. Regulated collections populate this queue; clinical requests live in [Test requests](/lims/lab/test-requests).
   </Accordion>
 
+  <Accordion title="Nothing is ever marked Overdue">
+    Either no target is set for that specimen type and your lab has fewer than five finished samples of it in the last 90 days, or the samples have not been received yet (the clock starts at receipt). Set a target under **Turnaround targets**.
+  </Accordion>
+
   <Accordion title="Mark batch negative is greyed out, or counts zero eligible">
     Your selection contains something other than a received oral-fluid specimen. Filter to **Received** and **Oral fluid** first, then reselect — the bar tells you how many of your selection qualify.
   </Accordion>
@@ -164,4 +190,4 @@ See [Permissions](/platform/team/permissions).
 
 <StillStuck topic="the bench queue" />
 
-{/* source of truth: components/clinic/dashboard/lab-station/worklist/worklist-content.tsx, .../worklist/rack-map.tsx, db/actions/dot-lims.ts (batchNegativeScreenAction), lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}
+{/* source of truth: components/clinic/dashboard/lab-station/worklist/worklist-content.tsx, .../worklist/tat-targets-sheet.tsx, lib/lims/tat-overdue.ts, db/actions/lims-tat.ts, .../worklist/rack-map.tsx, db/actions/dot-lims.ts (batchNegativeScreenAction), lib/edition-staff-roles.ts, lib/edition.ts (EDITION_ROLE_MODULES.lims) */}

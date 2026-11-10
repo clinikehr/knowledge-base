@@ -1,0 +1,150 @@
+---
+title: Read Medi-Cal's reports
+description: "Upload the Error report, Volser Summary, 835, 999 or 277CA that comes back, and see claim by claim what was accepted, rejected, paid or denied."
+icon: /images/icons/file-lines.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Owners and managers; other staff only with the Approve claims for a file permission" />
+
+<InsuranceRegion region="us" />
+
+Reading a report changes the status of your claims, so it is for owners, managers and anyone who has been given **Approve claims for a file** in the staff permissions. Anyone else sees "You do not have permission to read Medi-Cal replies at this clinic. Ask an owner or manager."
+
+After you upload a file, Medi-Cal sends reports back. **Reports** reads them for you: you drop in the report you downloaded from the Medi-Cal Provider Portal, and each claim shows what happened to it, in plain words. Reading a report can also move your claims from **In a file** to **Accepted**, **Rejected**, **Paid** or **Denied**.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Reports']} />
+
+<TaskHeader
+  before="A report downloaded from the Medi-Cal Provider Portal, and the file it answers if it is an error report"
+  time="A few minutes"
+  after="A result for each claim in the report, and your claims updated to match"
+/>
+
+## What to upload
+
+| Report | What it tells you | File |
+| --- | --- | --- |
+| **Error report** | Claims or files Medi-Cal turned away | PDF or text |
+| **Volser Summary** | Whether a file was accepted, or accepted with errors | PDF or text |
+| **Payment advice (835)** | What Medi-Cal paid or denied, claim by claim | The 835 file |
+| **File acknowledgement (999)** | Whether a whole file you sent was accepted or rejected, if your clearinghouse sends one | The 999 file |
+| **Claim acknowledgement (277CA)** | Whether each claim was accepted or rejected, if your clearinghouse sends one | The 277CA file |
+
+The screen accepts `.pdf`, `.txt`, `.835`, `.999`, `.277`, `.277ca`, `.edi` and `.dat` files up to 20 MB. ClinikEHR works out which kind a file is from the file itself. Add one report at a time.
+
+<Info>
+  ClinikEHR has not yet been checked against a real Volser Summary or Error report from Medi-Cal. The results sheet says so with a note. Compare what you see with the report in the Provider Portal until that note is gone.
+</Info>
+
+## Read a report
+
+<Steps>
+  <Step title="Open Reports">
+    The screen opens on "Upload what Medi-Cal sent back". If you have not added any, it says "No reports yet. Download one from the Medi-Cal Provider Portal (Transaction Center, EDI Submissions) and drop it above."
+  </Step>
+  <Step title="Choose which file the report is for">
+    Under **Which file is this report for? (needed to match an error report or a 999)**, pick the file you made. Each choice reads like "Production file, Nov 2, 2026, 3 claims". A 999 answers one whole file, so choose that file for it too. For a payment advice or a 277CA, or if you are not sure, leave **Not sure, or a payment advice (835)**; those are matched claim by claim.
+  </Step>
+  <Step title="Drop the report in">
+    Drop it on **Drop a Medi-Cal report here**, or select the box to choose it. You see the file move through reading, then a line such as "Read the report: 2 rejected, 1 accepted, 3 matched to your claims." For an 835 it reads "Read the payment advice: 4 paid, 1 denied, 5 matched to your claims, 0 not matched." A 999 reads "Read the file acknowledgement: 3 accepted, 0 rejected, 3 matched to your claims." A 277CA reads "Read the claim acknowledgement: 2 accepted, 1 rejected, 3 matched to your claims, 0 not matched."
+  </Step>
+  <Step title="Open the results">
+    The results open on their own. To see an earlier report, select **View results** beside it. The list shows what each report was, when it was read and how many claims it matched.
+  </Step>
+</Steps>
+
+## Read the results
+
+Each line has a badge and a sentence:
+
+| Badge | What it means |
+| --- | --- |
+| **Accepted** | Medi-Cal accepted the claim |
+| **Rejected** | Medi-Cal turned the claim away. The line gives the reason, with the box on the CMS-1500 when Medi-Cal names one |
+| **Paid** | Medi-Cal paid. The line reads like "Paid $150.00 of $200.00" |
+| **Denied** | Medi-Cal processed the claim and did not pay it, or paid part |
+| **Payment taken back** | Medi-Cal took back a payment it made earlier |
+| **Note** | Something Medi-Cal said that does not change a claim |
+
+Select **Open claim** on a line to go to the claim. On a rejected claim, **Fix and re-file** opens the same claim; see [Corrected claims and voids](/practice/claims/corrected-claims-and-voids#a-claim-medi-cal-turned-away).
+
+### When a report names only one claim
+
+Medi-Cal lists each error once, however many claims had it. When that happens the line says "Medi-Cal found this on N claims and names only the first." ClinikEHR can match only the first claim. It never guesses at the rest: open the others and check them against the report.
+
+### The 999 and the 277CA
+
+These are acknowledgements, not payments. A **999** says whether a whole file was accepted or rejected, so every claim in the file you chose moves together to **Accepted** or **Rejected**. If the 999 names a different file than the one you chose, or says only part of the file was accepted without saying which claims, nothing changes and the sheet says so. A **277CA** answers claim by claim: your account number in box 26 matches each line to a claim, and the claim moves to **Accepted** or **Rejected**. A status that is neither, such as "not found", is shown as a **Note** and moves nothing. Medi-Cal's own guide lists neither report for a file sent straight to Medi-Cal, so you will see them only if your clearinghouse sends them. ClinikEHR has not yet been checked against a real 999 or 277CA, so compare what you see with the original until the note on the results sheet is gone. A claim turned away by a 999 can be re-filed free, once, like one turned away by an Error report or Volser Summary (see [Corrected claims and voids](/practice/claims/corrected-claims-and-voids#a-claim-medi-cal-turned-away)). A claim turned away by a 277CA is re-filed from the claim as usual, but the copy is charged.
+
+### Lines that are not matched to a claim
+
+Some lines are not matched to any claim here. That is normal on a payment advice: it also covers paper claims and claims from other submitters. A line says why it was not matched. ClinikEHR matches by the claim control number, then by your account number in box 26, narrowed by the charge and the first date of service, and by position in the file for an error report. It never matches by patient name, and when it cannot tell which claim, it leaves the line unmatched.
+
+### What changes on your claims
+
+- A claim that is **In a file** moves to **Accepted**, **Rejected**, **Paid** or **Denied** when a report says so. An **Accepted** claim can later move to **Rejected**, **Paid** or **Denied**.
+- A claim that is a draft, ready or approved is never moved, so a test file's reply does not touch a claim that is not in a production file.
+- A **Rejected** claim is not moved again by a later report.
+- A report that cannot be tied to your claims with confidence is stored and the statuses are left alone. The sheet says so.
+
+### The 835 payment view
+
+For a payment advice the results show four figures: **Paid**, **Billed on these claims**, **Paid in full or in part** and **Denied**. Select **Export CSV** to download the lines as a spreadsheet. The **Paid** tile on the [claims home](/practice/claims/dashboard-and-files) adds up the payments matched to your claims, and shows a dash until you have imported one.
+
+### Reports and results through Ozni
+
+Attach a Medi-Cal report in a chat with Ozni and ask it to read it: a PDF (the Volser Summary or the Error report), or an electronic file (an 835 payment advice, a 999 or a 277CA). Ozni never shows the content of an electronic file in the chat; it is read by the same reader as this screen. An 835 or a 277CA needs no file chosen: each line is matched to a claim by your account number, the card says what will be read, and the counts come back in plain words. If nothing in it matches one of your claims, Ozni says so and no claim changes. A PDF report and a 999 are matched to the Medi-Cal file it answers, so Ozni asks which of your recent files it is for (it lists them by day, test or production, and number of claims), or uses it when you have only one. The card names that file. When you confirm, the report is read and each result is matched to the claims in that file, with the counts in plain words. It needs the same permission as this screen, and reading the report uses no agent credits (a payer report attached to a chat is priced as an ordinary message; a PDF is a heavy request, see [Attaching a file to a chat](/platform/ozni/attachments)). If you have not made a file yet, a PDF report or a 999 has nothing to match to, so make the file first. Ozni can also give you the results as a download: ask for the CSV of a report and confirm the card.
+
+## What is kept
+
+The report file is deleted after 7 days. The results stay. ClinikEHR does not read a patient's name from an 835.
+
+## Check it worked
+
+- The report appears in the list with the time it was read and how many claims it matched.
+- Open a claim that was in the report. A card on the claim shows what Medi-Cal last said about it, with a link to **See all reports**.
+- The claim's status on the claims home matches the result.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'This file type is not supported.'">
+    Use the PDF or text file you downloaded from the Medi-Cal Provider Portal, or the 999 or 277CA your clearinghouse sent.
+  </Accordion>
+  <Accordion title="'This file is larger than 20 MB.'">
+    Download the report again from the Provider Portal; a report is normally much smaller.
+  </Accordion>
+  <Accordion title="Nothing was matched to my claims">
+    For an error report or a 999, choose the file it is for before you drop it in. Check that the claims were in a production file: claims that were only in a test file are not moved.
+  </Accordion>
+  <Accordion title="A claim did not change status">
+    A claim moves only from **In a file** or **Accepted**. A rejected claim stays rejected until you re-file it.
+  </Accordion>
+  <Accordion title="I uploaded the same report twice">
+    Reading it again does not change anything that was already applied.
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Does ClinikEHR fetch the reports from Medi-Cal?">
+    No. ClinikEHR cannot see your Provider Portal account. You download the report there and add it here.
+  </Accordion>
+  <Accordion title="Why does it ask which file a report is for?">
+    An error report names a claim by its position in the file, not by a number. ClinikEHR needs the file to work out which claim is meant.
+  </Accordion>
+  <Accordion title="Is a Rejected claim charged again when I re-file it?">
+    Not the first time. See [Corrected claims and voids](/practice/claims/corrected-claims-and-voids#a-claim-medi-cal-turned-away).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="a Medi-Cal report" />
+
+{/* source of truth: components/clinic/claims/reports/*, lib/claims/reports.ts, lib/claims-reports/status.ts */}

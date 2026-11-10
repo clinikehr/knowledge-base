@@ -1,0 +1,117 @@
+---
+title: Review and confirm a claim
+description: "Open a claim, compare each box with the original page, confirm every field, run the code checks and mark the claim ready."
+icon: /images/icons/clipboard-check.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+import { InsuranceRegion } from '/snippets/insurance-region.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member whose role opens Medi-Cal Claims" />
+
+<InsuranceRegion region="us" />
+
+A claim is a draft until you have looked at every field and confirmed it. ClinikEHR never accepts a box for you, and a claim cannot be marked ready while any box is unconfirmed.
+
+<Path steps={['Sidebar', 'Medi-Cal Claims', 'Home', 'a claim in Your claims']} />
+
+<TaskHeader
+  before="A draft claim, and at least one billing provider in Setup"
+  time="A few minutes a claim"
+  after="A claim marked Ready, with every field confirmed"
+/>
+
+## What you're looking at
+
+**Your claims** lists each claim with its **Claim number**, **Patient**, **Date of service**, **Charge**, **Status** and **Notes**. Each row ends with a **⋯** menu: **Open claim**, **Generate file…** (for a ready or approved claim) and, for a ready claim, **Approve**. Search by claim number, or filter with **All statuses**. The **Notes** column carries badges:
+
+| Badge | Means |
+| --- | --- |
+| **Last month to bill** | The claim is in the last month before Medi-Cal's 6-month limit |
+| **Past the 6-month limit** | The date of service is more than six months ago. Medi-Cal decides whether it will take a late claim |
+| **Possible duplicate** | Another claim has the same member, date and service |
+| **Replaces or voids another claim** | A corrected claim or a void, which is expected to look like another claim |
+| **1 problem to fix** | Something stops a file. Open the claim to see it. The count is worked out when the list opens, so it follows your Setup: adding a billing provider or a contact clears the problems that were waiting on it. A box nobody has confirmed, or a claim that cannot be read, counts too, because the file maker would refuse it. Ozni gives the same count when you ask |
+
+The status runs **Draft**, **Ready**, **Approved**, **In a file**. **Accepted**, **Rejected**, **Paid** and **Denied** are set when you add Medi-Cal's reports under [Reports](/practice/claims/reports); ClinikEHR never sets them on its own.
+
+When you open a claim, a scanned or PDF page shows beside the form on a wide screen (**Show the page** and **Hide the page** on a phone), and selecting a box highlights where it came from on the page.
+
+## Check and confirm the fields
+
+<Steps>
+  <Step title="Choose the billing provider">
+    Under **Billing provider (box 33)**, choose who is billing. If the list is empty, add one in Setup first.
+  </Step>
+  <Step title="Work through To check">
+    **To check** lists the boxes that were read or filled in, least sure first. Compare each with the page.
+  </Step>
+  <Step title="Tick and confirm">
+    Tick **I've checked this** on each box you have compared, then select **Confirm the fields I've checked** (or **Confirm** on a single box). Each box shows where its value came from: **Typed**, **From PDF**, **From CSV** or **AI**. A box read with AI also shows a **Confidence** (or **Low confidence**), and the least sure come first in **To check**. AI can misread a box, so compare it with the page. See [Read a scan with AI](/practice/claims/add-claims#read-a-scan-with-ai).
+  </Step>
+  <Step title="Fix what the panel lists">
+    **To fix before a file** shows **to fix** (**Fix**) and **to look at** (**Look**) counts. A **Fix** stops a file; a **Look** does not. Some are marked "(Needed for production files only.)".
+  </Step>
+  <Step title="Save">
+    Select **Save draft**, or **Mark ready** to save and mark in one go. While boxes are unconfirmed the bar at the bottom reads "N to confirm before it can be ready".
+  </Step>
+</Steps>
+
+The diagnoses (box 21) take ICD-10 codes A to L: type the code or use the search. Each **Service line** (box 24) has a pointer saying which diagnoses it is for, for example **A** or **AB**, and charges are plain numbers such as 125.00. **Add a service line** and **Add a diagnosis** add more; **Remove** takes a line out after a confirmation.
+
+A claim marked ready can go **Back to draft** if you need to change it.
+
+## Run the code checks
+
+Once a claim is saved, **Check codes** compares its procedure codes, modifiers, units and diagnoses with the rules Medi-Cal and Medicare apply. Each finding names the box and line, and is marked **Fix** or **Check**. When nothing is found it says "Nothing found. Medi-Cal makes the final decision."
+
+<Note>
+  The checks are advice. Medi-Cal makes the final decision, and the checks never stop you making a file. A claim that passes can still be rejected, and a finding can be one you are right to ignore.
+</Note>
+
+If the check needs reference data that has not been loaded for a rule, the claim says so instead of passing quietly. For example: "The code-pair (NCCI) check did not run because its data is not loaded yet. Check pairs of procedures billed the same day yourself." and, for units, "The unit-limit (MUE) check did not run because its data is not loaded yet. Check the units billed for each code yourself." A claim that has unsaved changes asks you to save first, because the check reads the saved claim.
+
+## Check it worked
+
+- The panel reads "Nothing to fix. Mark the claim ready when you have checked it."
+- The status badge reads **Ready** and the claim appears in **Your claims** with that status.
+- The step bar moves to **Generate** once no drafts are left.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="'Confirm every field on the claim before marking it ready.'">
+    At least one box is still unconfirmed. Open **To check**, compare each box with the page, tick it and confirm.
+  </Accordion>
+  <Accordion title="'This claim is already in a file. A filed claim is never changed.'">
+    Once a claim has gone into a file it is locked. Make a corrected claim instead. See [Corrected claims and voids](/practice/claims/corrected-claims-and-voids).
+  </Accordion>
+  <Accordion title="Check codes says 'Save the claim, then check the codes'">
+    The check reads the saved claim. Select **Save draft**, then **Check codes**.
+  </Accordion>
+  <Accordion title="'A claim is approved only with the Approve button'">
+    You cannot move a claim to Approved from the editor. See [Approve claims](/practice/claims/approve-claims).
+  </Accordion>
+</AccordionGroup>
+
+## FAQ
+
+<AccordionGroup>
+  <Accordion title="Why is nothing confirmed for me?">
+    A value read from a file can be wrong, and a wrong value on a claim goes to Medi-Cal under your name. Confirming each box is the point of the review.
+  </Accordion>
+  <Accordion title="Can I change an approved claim?">
+    Yes, but changing an approved claim withdraws its approval, and it needs approving again.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="reviewing a claim" />
+
+{/* source of truth: components/clinic/claims/claim-editor/*, components/clinic/claims/scrubber-findings.tsx, lib/claims/claim-list.ts, lib/claims/claims-messages.ts (mapSaveRefusal), lib/claims-intake/scrubber.ts */}
+
+## Changing boxes by conversation
+
+Instead of typing a correction, you can ask Ozni to change a few boxes. It shows each box with what it says now and what it will say, and nothing is saved until you confirm. A box changed this way counts as checked by you, and an approved claim goes back to ready. See [US insurance and Medi-Cal claims with Ozni](/platform/ozni/insurance-and-claims).

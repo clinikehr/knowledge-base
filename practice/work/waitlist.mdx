@@ -1,0 +1,104 @@
+---
+title: Keep a waitlist for earlier appointments
+description: "Note which clients want an earlier appointment, see the slots that open up for them, and offer a slot by email. The first client to book it gets it."
+icon: /images/icons/calendar-days.svg
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Any staff member can see the waitlist; adding, changing, removing and offering needs permission to edit appointments" />
+
+The **Waitlist** keeps a list of clients who would like an earlier appointment than the one they have. You say which service, which provider (or any), the dates you would accept, and the days and times they prefer. When a matching appointment is cancelled or moved, ClinikEHR tells you who it would suit, and you can **Offer this slot** by email. Nothing is booked for anyone: the client follows a link to your booking page, and the first client to book the slot gets it.
+
+<Path steps={['Appointment', 'Waitlist (top of the calendar)']} />
+
+<TaskHeader before="At least one service, and a published booking page so the offer has a link to send" time="A minute per client" after="Clients who want an earlier slot, and a quick way to offer one when it opens" />
+
+## Open the waitlist
+
+Select **Waitlist** at the top of the calendar. On a phone it is the clock icon beside **Filters**. The number on the button counts clients who are waiting or have an offer out. The waitlist opens in a panel over the calendar; select **Close** to go back.
+
+The list has a search box (client, service or provider) and a status filter: **Waiting**, **Offered**, **Booked**, **Removed or expired** and **All**. Each entry shows the service, the provider, the dates, the days and times, and any note. With nobody on it, the panel says so and explains how to add someone.
+
+## Add a client
+
+<Steps>
+  <Step title="Select Add to waitlist">
+    The panel changes to the form. Select **Back** at any time to return to the list without saving.
+  </Step>
+  <Step title="Choose the client">
+    Pick the **Client**.
+  </Step>
+  <Step title="Choose what they are waiting for">
+    Pick a **Service** and a **Provider**, or leave **Any service** and **Any provider**. Set the **Earliest date** and **Latest date** you would accept. Tick **Preferred days** (none ticked means any day) and, if you like, set **Not before** and **Not after** times.
+  </Step>
+  <Step title="Add a note (optional)">
+    The **Note** is only for your team. It is never sent to the client.
+  </Step>
+  <Step title="Select Add to waitlist">
+    The panel returns to the list with the new entry. To change an entry later, select **Edit**.
+  </Step>
+</Steps>
+
+An entry stops being offered slots when its **Latest date** passes. It then shows as **Expired**. When a waiting client books the service inside their dates, the entry moves to **Booked** by itself.
+
+## When a slot opens up
+
+When an appointment is cancelled, or moved to another day, time or provider, the slot is checked against everyone who is waiting. A slot suits a client when it is the same service, the same provider (if they named one), inside their dates, on one of their preferred days and inside their preferred times.
+
+- **Notification.** If anyone matches, you get a notice in the app: "A slot opened up for the waitlist". It gives how many clients match, not their names.
+- **Recently freed slots.** The top of the waitlist panel lists slots cancelled in the last 7 days that are still ahead, with the clients each would suit. This covers cancellations made from the booking page or the client portal too.
+- **On the cancelled appointment.** Open a cancelled appointment on the calendar. **Waitlist matches** lists the clients it would suit. Select **Open waitlist** to see them in the panel.
+
+## Offer a slot
+
+<Steps>
+  <Step title="Select Offer this slot">
+    Next to the client you want to offer it to.
+  </Step>
+  <Step title="Check who gets it">
+    The confirmation shows the client and the address with its middle hidden, and the slot. Select **Send offer**.
+  </Step>
+</Steps>
+
+The client is emailed a link to your booking page with the service chosen and the day opened. The entry shows **Offered**. They still choose the time and book as any client would; if someone else books the slot first, it is gone.
+
+The offer is refused, with the reason, when the slot has already started, the client has no email address, the entry is no longer waiting, your booking page is not published, or this slot was already offered to this client. In a test environment nothing is sent.
+
+## Remove a client
+
+Select **Remove** on an entry and confirm. The client is no longer offered slots. The entry stays in the list under **Removed or expired**.
+
+## Who can do this
+
+| Action | Who can do it by default | Governed by |
+| --- | --- | --- |
+| See the waitlist | Any staff member | Role |
+| Add, edit, remove, offer a slot | Owner, manager, doctor and employee, until an owner switches it off for a person | **Edit appointments** permission |
+
+See [Staff permissions](/platform/team/permissions).
+
+## Check it worked
+
+- The client appears under **Waiting**. Close the panel, open it again and they are still there.
+- Cancel a matching test appointment: you get the notice, and the slot shows under **Recently freed slots**.
+- After **Offer this slot**, the entry shows **Offered** with the slot named.
+
+## Common issues
+
+<AccordionGroup>
+  <Accordion title="Offer this slot is greyed out">
+    You need permission to edit appointments. Ask an owner to switch **Edit appointments** on for you.
+  </Accordion>
+  <Accordion title="A cancelled slot does not list a client I expected">
+    Check the entry against the slot: the service, the provider, the dates, the day of the week and the time must all fit, and the entry must still be **Waiting**.
+  </Accordion>
+  <Accordion title="The offer says the booking page is not published">
+    Publish your booking page first — see [Set up your booking page](/practice/work/booking-page).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck />
