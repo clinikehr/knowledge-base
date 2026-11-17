@@ -1,0 +1,68 @@
+---
+title: "Get started with Drive"
+description: "Drive is where your workspace keeps its files: shared folders, your own files, and each patient's documents, with one search and one storage limit."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans (the storage limit depends on your plan)" roles="Everyone who works in the workspace" note="Patient files are part of the Clinic & Hospital edition" />
+
+Drive is the one place to find a file. It holds the files your whole team shares, the files only you can see, and every document filed to a patient. Open it from the sidebar, directly above **Forms**. In a hospital, that is in the **Records** group; if your hospital does not use the Records area, **Drive** is at the end of the first group instead.
+
+<Path steps={['Sidebar', 'Drive']} />
+
+## What you see
+
+A list of sections down the left (on a phone, a menu at the top) and the files of the section you chose on the right.
+
+| Section | What it holds | Who sees it |
+| --- | --- | --- |
+| **Clinic Drive** | Files and folders the whole workspace shares: policies, contracts, templates | Everyone who works in the workspace. An owner or manager can see all of it |
+| **My Drive** | Your own files and drafts | Only you. Owners and managers cannot browse another person's **My Drive** |
+| **Patients** | Each patient's documents, grouped by what they are | The same people who can open that patient's record. See [File a patient's documents](/platform/drive/patient-files) |
+| **Starred** | Files you starred | You |
+| **Recent** | Files you opened lately | You |
+| **Trash** | Files you or a colleague removed, kept for 30 days | See [Entered in error and Trash](/platform/drive/entered-in-error-and-trash) |
+| **Storage** | How much space the workspace has used and where it goes | Owners and managers by default. See [Storage and limits](/platform/drive/storage-and-limits) |
+
+Use **Search Drive** above the list to find a file by name. **Filters** narrows the list by type, label, who uploaded it and the date it was added.
+
+<Note>
+Drive never shows you a file you could not open somewhere else. A patient document you are not allowed to see in the patient's record does not appear in Drive, in a search, in **Starred** or in **Recent**.
+</Note>
+
+## What is in it on day one
+
+Everything your workspace already stored is there: documents on patients' charts, files patients uploaded, and the documents you gave Ozni. Nothing was moved or copied; Drive lists what is already stored and counts it.
+
+## Where to go next
+
+<Cards>
+  <Card title="Clinic Drive, My Drive and folders" href="/platform/drive/clinic-drive-and-folders" icon="/images/icons/folder-open.svg">
+    Make folders, upload, star, label and find files.
+  </Card>
+  <Card title="Patient files" href="/platform/drive/patient-files" icon="/images/icons/file-heart.svg">
+    File a document by type and by visit.
+  </Card>
+  <Card title="Storage and limits" href="/platform/drive/storage-and-limits" icon="/images/icons/database.svg">
+    What counts, the limit for each plan, and what happens when it is full.
+  </Card>
+</Cards>
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I can't see Drive in the sidebar">
+    Drive opens for every role. If the row is missing, your workspace's owner may have turned off your access to it; ask them, or contact support.
+  </Accordion>
+  <Accordion title="A file I expect is not in the list">
+    Check the section first (a patient's file is under **Patients**, not **Clinic Drive**), then **Filters**: a file marked entered in error is hidden until you switch on **Show entered in error**. If you are not allowed to see the patient's record, their files do not appear either.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: lib/drive/model.ts (section names), lib/clinic-nav-registry.ts (the Drive row) */}

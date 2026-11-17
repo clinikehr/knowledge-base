@@ -1,0 +1,105 @@
+---
+title: "Send a file outside the clinic"
+description: "Make a secure link for a Drive file. It expires within 30 days, can ask for an emailed code, can be view only, and every view and download is recorded."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owners and managers by default, with the send-outside-the-clinic permission" />
+
+Send a file to someone outside the clinic with a secure link instead of an email attachment. The link expires, can be stopped at any time, and every time it is opened is recorded.
+
+<Path steps={['Sidebar', 'Drive', 'Share', 'Secure link']} />
+
+<TaskHeader before="A clean file in Clinic Drive, or in a patient's files" time="Two minutes" after="A link, emailed to the person or ready to copy" />
+
+## Make a link
+
+<Steps>
+  <Step title="Open the Share sheet">
+    Open the file's menu, select **Share**, then **Secure link**.
+  </Step>
+  <Step title="Say who it is for">
+    Enter their email in **Send to**. For a Clinic Drive file this is optional: leave it empty to copy the link and send it yourself.
+  </Step>
+  <Step title="Choose how long it works">
+    Choose **1 day**, **7 days**, **14 days** or **30 days** in **The link works for**. A link never lasts longer than 30 days.
+  </Step>
+  <Step title="Choose what they can do">
+    In **What the recipient can do**, keep **Can view and download** (the default), or choose **View only** to show the file in their browser with no Download button. **View only** works for images and PDFs; for any other kind of file the option is greyed out.
+  </Step>
+  <Step title="Ask for a code if you want one">
+    Turn on **Ask for a code** and the recipient is emailed a one-time code when they open the link. It needs their email address.
+  </Step>
+  <Step title="Make the link">
+    Select **Make a link**. If you gave an email, it is sent. You can also select **Copy** to send it yourself. The link is shown only now.
+  </Step>
+</Steps>
+
+## A patient's file
+
+A patient's file leaves the clinic only with a named recipient, a reason and the emailed code:
+
+- Enter the recipient's email in **Send to**.
+- Write the reason in **Why are you sending it?**. It is kept with the record of the disclosure.
+- **Ask for a code** is on and cannot be turned off.
+
+The disclosure is listed once in the patient's accounting of disclosures, with the recipient and the reason. Owners and managers can see that list. Each time the link is opened is recorded in the patient's access log.
+
+A link opens the version of the file you sent, even if a newer version is uploaded later. It stops working if the file is moved to another client, if the client's record becomes restricted, or if the file becomes protected by the substance use disorder confidentiality rules.
+
+## View only
+
+The recipient sees the file in the page, marked across every page with their email address and the time, and the page has no **Download** button. This discourages copying; it cannot stop someone taking a screenshot, photographing the screen or saving the file by other means, so use it for people you trust. A patient's file is always shown with that mark, whichever choice you make.
+
+## What cannot be sent
+
+- A file marked **sensitive**, or one protected by the substance use disorder confidentiality rules (42 CFR Part 2).
+- A file still being checked for viruses, or one that failed the check.
+- A file for a client your role may not see in full.
+- A folder, a file in **My Drive**, or a file in Trash.
+
+## Stop a link
+
+Open the **Share** sheet, find the link under **Links for this file** and select **Stop**, then **Stop link**. People who have the link see that it is no longer available. A stopped link cannot be switched back on: make a new one.
+
+Each link shows how long it has left and how many times it was opened.
+
+When someone opens a link you made for the first time, you get a notification in ClinikEHR. It does not name the file; selecting it opens the file in Drive with its **Share** sheet, where its links are listed.
+
+## See every link in the clinic
+
+Owners and managers can see all the clinic's secure links under Drive, **Storage**, **Links**: the file, who made the link, who it went to, when it was made and when it expires, how many times it was opened and downloaded, and whether it is active, expired or stopped. You can search, filter by status or by who made it, **Stop** any active link, and select **Export CSV** to save the list. A patient's name appears only for people who may see that patient.
+
+The owner can turn on a **Weekly email summary** with the switch above the list. It is off until you do. Every Monday it says how many links were made, opened and are about to expire. It names no file or person, and it sends only when there was something to report. Turn it off again with the same switch, or with the link at the bottom of the email.
+
+## What the recipient sees
+
+They open the link and, if you asked for a code, request one by email and enter it. Before they open the file they see only the clinic's name. They select **View file** to see it in the page, and unless you chose **View only** they can also select **Download**. The page does not show the file's name or anything about the patient. A link that has expired, been stopped or never existed all show the same message.
+
+Each view and each download is recorded. A download is listed in the patient's accounting of disclosures with the recipient.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Secure link tab">
+    Sending files outside the clinic is for owners and managers by default. Ask one of them to turn it on for you.
+  </Accordion>
+  <Accordion title="The tab says the file is marked sensitive">
+    A sensitive file cannot be sent outside the clinic. Open the patient's file in Drive to see why it was marked.
+  </Accordion>
+  <Accordion title="The recipient says the link does not work">
+    It may have expired or been stopped. Make a new link.
+  </Accordion>
+  <Accordion title="Nothing was emailed from my test workspace">
+    A test workspace never sends email. The sheet says so and shows the link to copy.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: components/clinic/drive/drive-share-sheet.tsx, components/drive-share/drive-share-view.tsx, lib/drive/sharing.ts */}

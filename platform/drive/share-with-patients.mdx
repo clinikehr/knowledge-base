@@ -1,0 +1,59 @@
+---
+title: "Share a file with a patient"
+description: "Show a patient's file to that patient in their portal under My documents, and take it back any time."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Staff with the share-with-the-patient permission, which everyone has unless the owner switches it off" note="Patient files: Clinic & Hospital edition" />
+
+A file you share with a patient appears in their portal under **My documents**, where they can open and download it. Nothing is shown to a patient until you share it.
+
+<Path steps={['Sidebar', 'Drive', 'Patients', 'a patient', 'Share', 'Patient portal']} />
+
+<TaskHeader before="A clean file in the patient's files" time="A minute" after="The patient sees the file under My documents" />
+
+## Share a file
+
+<Steps>
+  <Step title="Open the Share sheet">
+    Open the patient's file, select **Share**, then **Patient portal**. You can do the same from the chart's **Files** tab.
+  </Step>
+  <Step title="Show it">
+    Turn on **Show in the patient's portal**.
+  </Step>
+</Steps>
+
+Turn the switch off to take it back. The patient no longer sees it.
+
+The chart's **Files** tab and Drive use the same setting, so they always agree.
+
+## What cannot be shared
+
+- A file marked **sensitive**. Clear the mark first if it should not be.
+- A file still being checked for viruses, or one that has not been checked. Upload it again to have it checked.
+- A file marked entered in error.
+- A file protected by the substance use disorder confidentiality rules (42 CFR Part 2).
+
+## What the patient sees
+
+**My documents** in the portal lists everything the clinic has shared with them: files you showed, superbills and statements. They can filter by type and download what they need. A patient with a representative sees only what the representative may see.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="The switch is off and greyed out">
+    The line under it says why: the file is sensitive, still being checked, or marked entered in error.
+  </Accordion>
+  <Accordion title="The patient cannot find the file">
+    Ask them to open **My documents** in the portal. The file shows there once you turn the switch on.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: components/clinic/drive/drive-share-sheet.tsx, lib/drive/sharing.ts, the portal's My documents page */}

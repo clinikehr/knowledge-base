@@ -1,0 +1,87 @@
+---
+title: "Entered in error and Trash"
+description: "Patient files are never deleted: mark one entered in error and it stays on the record. Clinic and My Drive files go to Trash for 30 days."
+icon: "/images/icons/trash-can.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Anyone can trash their own files; owners and managers manage Clinic Drive; everyone who can open the patient's record can mark a patient file entered in error by default (a clinic can turn this off for a role)" />
+
+Drive treats two kinds of file differently, on purpose.
+
+| | Patient files | Clinic Drive and My Drive files |
+| --- | --- | --- |
+| Can it be deleted? | **Never** | Yes, after 30 days in Trash |
+| What you do instead | **Mark entered in error** (a reason is required) | **Move to Trash**, then **Restore** within 30 days |
+| Where it goes | It stays on the patient's record, hidden from the normal list | **Trash** |
+
+## Mark a patient file entered in error
+
+Use this when a document was uploaded to the wrong patient or is simply wrong. Clinical records are kept for their full retention period, so the file is not deleted.
+
+<Steps>
+  <Step title="Open the file's menu">
+    On the patient's **Files** tab or under **Patients** in Drive, open the document's menu.
+  </Step>
+  <Step title="Select Mark entered in error">
+    A sheet asks for a **Reason**, for example "uploaded to the wrong patient". A reason is required: "Please say why, in a few words."
+  </Step>
+  <Step title="Confirm">
+    You see "Marked entered in error. It stays in the record." The file leaves the normal list.
+  </Step>
+</Steps>
+
+To see these files, switch on **Show entered in error** under **Filters**. An owner or manager can bring one back with **Undo entered in error**, giving a reason.
+
+<AuditNote action="Marking a file entered in error, or undoing it," />
+
+## Move a patient file to another patient
+
+If a file was filed under the wrong patient, an owner or manager can move it instead of marking it entered in error.
+
+<Steps>
+  <Step title="Open the file's menu under Patients">
+    Select **Move to another patient…**. Only owners and managers see it, and only for a patient file.
+  </Step>
+  <Step title="Choose the patient and give a reason">
+    Pick the patient in **Move it to** and write a short **Reason** (up to 500 characters). Both are required.
+  </Step>
+  <Step title="Select Move file">
+    You see "File moved to the other patient. This record keeps a note that it was moved."
+  </Step>
+</Steps>
+
+The file keeps its name, its type and its sensitive marking, and it leaves the first patient's list. That patient's record keeps a note under **Show entered in error**, so the history stays complete. A file shared with the first patient is not shared with the new one, and links to a visit are cleared. A file still being checked for viruses, one that failed the check, or one under a **legal hold** cannot be moved, and neither can a file for a patient you are restricted from.
+
+<AuditNote action="Moving a file to another patient," />
+
+## Move a Clinic Drive or My Drive file to Trash
+
+Select **Move to Trash** from the file's menu and confirm. Open **Trash** to see removed files. Select **Restore** on one to put it back where it was. After 30 days a file in Trash is permanently deleted, with its earlier versions.
+
+A file under a **legal hold** cannot be moved to Trash or deleted until the hold is lifted. Only the owner places or lifts a legal hold, from the file's menu (**Place legal hold**, **Lift legal hold**).
+
+<Warning>
+Permanent deletion after 30 days cannot be undone. Restore a file you still need before then.
+</Warning>
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="It says a patient file is never deleted">
+    That is intended. Use **Mark entered in error** instead; see above.
+  </Accordion>
+  <Accordion title="I can't find a file I removed">
+    Open **Trash**. A file stays there for 30 days. After that it is gone.
+  </Accordion>
+  <Accordion title="A file I marked entered in error still shows">
+    Check the list's filters. Entered-in-error files are hidden unless **Show entered in error** is on, so a file that still shows may be one you have not marked.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Trash" />
+
+{/* source of truth: lib/drive/item-actions.ts, lib/drive/errors.ts; retention and the 30 days: docs/Drive/CLINIK_DRIVE_IMPLEMENTATION_PLAN.md DR4, DR26 */}

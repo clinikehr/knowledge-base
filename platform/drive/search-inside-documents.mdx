@@ -1,0 +1,99 @@
+---
+title: "Search inside documents"
+description: "Find a file by a word inside it. Typed documents are free; a scanned page costs 1 AI credit, and a blank page is free."
+icon: "/images/icons/magnifying-glass.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="The owner or a manager turns it on or off; everyone who can open Drive can use it once it is on" />
+
+By default Drive finds files by their name, type, patient, label, date and who added them. **Search inside documents** adds the words written inside the file, so you can type "cardiology" and find the referral letter whose name is only "scan 0412".
+
+It is **off** until the owner or a manager turns it on.
+
+## Turn it on or off
+
+<Path steps={['Sidebar', 'Drive', 'Storage', 'Search inside documents']} />
+
+<Steps>
+  <Step title="Open the card">
+    On the **Storage** page, find **Search inside documents**.
+  </Step>
+  <Step title="Select Turn on">
+    A message tells you what it costs and how the text is kept. Select **Turn on**. ClinikEHR starts reading the files already in Drive, and every file you add from then on.
+  </Step>
+</Steps>
+
+The card shows how many files are searchable, how many are still being read, which files are left out and why, and, for the month, how many scanned pages were read and how many AI credits that used. Only the owner or a manager sees the card's counts and the **Turn on** button.
+
+To stop, select **Turn off** and confirm. The text ClinikEHR read from your files is **deleted straight away** and searches go back to file names. AI credits already used are not returned.
+
+<AuditNote action="Turning Search inside documents on or off," />
+
+## What it costs
+
+| File | Cost |
+| --- | --- |
+| A typed PDF, a Word file (.docx), a text, CSV or Markdown file | **Free** |
+| A scanned page or a photo (a PDF made by a scanner, a PNG, JPEG or WebP picture) | **1 AI credit per page** |
+
+- A scanned page that cannot be read clearly is **not charged**, a **blank scanned page is free**, and a page is never charged twice.
+- A scanned page is read by an AI model under ClinikEHR's agreement with its AI provider. Nothing is read this way unless you turn the setting on.
+- If your workspace runs out of AI credits, reading of scanned files pauses and picks up again by itself after you add credits. The card says how many files are waiting.
+- To keep costs predictable there is a **daily limit** on scanned pages (200 a day by default). Scanned files past the limit wait for the next day.
+- Files larger than 20 MB or longer than 200 pages are left out, as are file types that hold no text.
+- Only files that passed the **virus check** are read. A file uploaded before the checks began has not been checked, so it is not searched inside; the card counts these files, and uploading the file again includes it.
+- Files kept outside Drive storage, such as mail attachments, are not searched inside; the card counts them too.
+
+## Search
+
+<Steps>
+  <Step title="Type in the Drive search box">
+    Once it is on, the box reads **Search names and what is written inside**. Type at least three characters.
+  </Step>
+  <Step title="Read the results">
+    A file found by what is inside shows a short passage with your words highlighted. A file found by its name shows as before.
+  </Step>
+  <Step title="Narrow to names only if you want">
+    **Search inside documents** beside the search box starts selected once the setting is on. Select it to switch it off for this search.
+  </Step>
+</Steps>
+
+Search matches whole words as you type them: "cardio" does not find "cardiology". You can search inside documents in **Clinic Drive**, **My Drive** and **Patients**. The search looks across the whole section, not just the folder you are in. **Starred**, **Recent**, **Trash** and a search within one patient use names only.
+
+## Who can find what
+
+Search shows you **only files you could already open**. A word inside a file you cannot open finds nothing and does not say that such a file exists, and the highlighted passage is never taken from a file you cannot see. That includes:
+
+- patient documents a role without access to clinical records cannot open,
+- sensitive files you are not allowed to view,
+- files in a folder you have no access to, and another person's My Drive.
+
+Files marked **entered in error** are found only when **Show entered in error** is on. Files in Trash are not found.
+
+<Note>
+The text is stored encrypted, and the search list does not keep your words in a readable form. It is not shared, and a passage is shown only to someone who may open the file.
+</Note>
+
+A search that lists patient files, and every time passages from files are shown, is recorded in the audit log, as file counts with no search words and no text.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I do not see Search inside documents on the Storage page">
+    The card is on the **Storage** page, which owners and managers open by default. Ask your owner or manager to turn it on.
+  </Accordion>
+  <Accordion title="A word I know is in a file finds nothing">
+    The file may not have been read yet (the card shows how many are waiting), may be a scanned file waiting for credits or for tomorrow's limit, may have been uploaded before virus checks began, or may be a type with no text. Names are always searched.
+  </Accordion>
+  <Accordion title="Results show only names">
+    Check that **Search inside documents** beside the box is selected, that you typed at least three characters, and that you are in Clinic Drive, My Drive or Patients.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Search inside documents" />
+
+{/* source of truth: lib/drive/content-search.ts, components/clinic/drive/drive-content-search-card.tsx; docs/Drive/PHASE_5_CONTRACT.md (DR8, DR34, DR39, DR43, DR49, DR52) */}

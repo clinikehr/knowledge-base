@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only owners and managers can export audit logs" />
+<Availability editions={['pharmacy']} roles="Owner, manager or accountant" note="Only owners and managers can export audit logs and Drive files" />
 
 Your data is yours. This tab hands it back as spreadsheet files you can open, keep, or give to an accountant — one module or twenty, all of it or a date range.
 
@@ -31,10 +31,13 @@ The card is headed **Data Export** — "Export clinic data as CSV or ZIP. Large 
 | **Select all** / **Clear all** | Adds or removes everything at once. | — |
 | **Date range (optional)** | Narrows the export. The placeholder reads **All time**. | All time |
 | **Export** button | Reads **Export \{n\} modules** once you have chosen. A **ZIP** badge appears when you pick more than one. | Disabled until something is selected |
+| **Drive files** | The files in your Clinic Drive, as a ZIP. Choose a **Part** and select **Export Drive files**. Owners and managers only. | Part 1 |
 
 **There is no format picker.** One module gives you a CSV; more than one gives you a ZIP of CSVs. That is the whole rule.
 
 The module groups a pharmacy will care about most are **Administrative** — which is where **Pharmacy POS Sales**, **Dispensing Check Flags** (the checks the till raised on a sale, whether the cashier saw them, and the reason recorded for going ahead), **Billing Invoices** and **Billing Payments** live — and **Patient Profile**, which holds your customer records. If your pharmacy has API access, the **API access** group holds **Linked Patients** (which outside organization may reach which customer, and who linked them) and **Disclosures** (each time a customer's information was sent to an organization, and to whom) — never the information itself. **Audit Logs**, under **Compliance & Audit**, is only offered to owners and managers; everyone else simply does not see it in the list.
+
+If your clinic requires two-factor authentication, starting an export and downloading its file both ask for it, as opening patient records does. Sign in with your second factor first; a session that has not passed it is told so and gets no file. See [Two-factor authentication](/platform/security/mfa).
 
 ## Run an export
 
@@ -55,6 +58,24 @@ The module groups a pharmacy will care about most are **Administrative** — whi
     When the panel turns green and reads **Export ready** it shows the file name and its size, with a **Download** button. Save it somewhere secure.
   </Step>
 </Steps>
+
+## Export your Drive files
+
+**Drive (file list)**, under **Administrative** in the picker, is a spreadsheet of your pharmacy's Drive: names, types, sizes and status. The **Drive files** card under the picker gives you the files themselves, and only owners and managers see it.
+
+<Steps>
+  <Step title="Choose a part">
+    Leave **Part** at **1** the first time. One ZIP holds up to 80 MB of files, so a larger Drive comes in several parts.
+  </Step>
+  <Step title="Select Export Drive files">
+    It runs as an export of its own, separately from any modules you picked. A **Date range (optional)**, if set, picks files by the date they were added.
+  </Step>
+  <Step title="Open README.txt">
+    The ZIP holds your files in their folders under **Clinic Drive**, a **README.txt** and **drive-files-manifest.csv**. The README says how many parts there are. For the next part, set **Part** to **2** and export again.
+  </Step>
+</Steps>
+
+My Drive files and customer files are not in the ZIP, and neither are files that other features keep in Drive, such as team chat files and recordings; each has its own module. For the full list of what is left out and why, see [Export your Drive files](/practice/settings/data-export#export-your-drive-files).
 
 ## What changes once you export
 
@@ -91,6 +112,9 @@ The panel should turn green with **Export ready** and a file size that is not ze
   </Accordion>
   <Accordion title="I closed the tab while it was running">
     The job carried on. Come back to this tab and look under **Recent Exports** — the last few completed jobs are listed with a **Re-download** button while they are still in date.
+  </Accordion>
+  <Accordion title="A Drive file is missing from the ZIP">
+    Open **drive-files-manifest.csv**. Every Clinic Drive file is listed with the part it is in, or why it is not included.
   </Accordion>
   <Accordion title="I got a ZIP and expected a spreadsheet">
     More than one module always produces a ZIP. Unzip it and you have one CSV per module inside.

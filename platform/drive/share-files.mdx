@@ -1,0 +1,67 @@
+---
+title: "Share a file or folder inside the clinic"
+description: "Share a Clinic Drive file or folder with colleagues, a role or the whole clinic, and find what colleagues shared with you."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="The person who added the file, owners and managers, with the share-inside permission" />
+
+Share a file or a folder with the people who need it, without moving it. People you share with can view it; they cannot change it.
+
+<Path steps={['Sidebar', 'Drive', 'Clinic Drive']} />
+
+<TaskHeader before="A file or folder in Clinic Drive, or a file in My Drive" time="A minute" after="The people you chose can open it from Shared with me" />
+
+## Share it
+
+<Steps>
+  <Step title="Open the menu">
+    Open the menu on the file or folder and select **Share**. The **Share** sheet opens on **People in the clinic**.
+  </Step>
+  <Step title="Choose who">
+    In **Share with**, choose **Everyone in the clinic**, **A colleague** or **A role**. For a colleague or a role, choose which one.
+  </Step>
+  <Step title="Share">
+    Select **Share**. The person or role appears under **Shared with**.
+  </Step>
+</Steps>
+
+To stop, select **Stop sharing** beside the person or role. Sharing a folder shares everything inside it, including files added later.
+
+A file in **My Drive** can be shared with named colleagues only. To share it with everyone or a role, move it to **Clinic Drive** first. A folder in **My Drive** cannot be shared.
+
+## Find what was shared with you
+
+Select **Shared with me** in the Drive sidebar. It lists files and folders colleagues shared with you, newest first. Open a shared folder to see what is inside it.
+
+When something is shared with you, you get a notification in ClinikEHR that names no file. When it is shared with a role or with the whole clinic, every member gets that notification and nobody gets an email, so a clinic-wide share never fills inboxes.
+
+## What cannot be shared this way
+
+- **A patient's file.** Patient files follow the chart's own rules, so everyone who may open the chart can already see them. To show one to the patient, see [Share a file with a patient](/platform/drive/share-with-patients). To send one outside the clinic, see [Send a file outside the clinic](/platform/drive/secure-links).
+- Documents that other parts of ClinikEHR keep, such as Ozni's documents and Team chat files.
+- A file that is in Trash.
+
+## Check it worked
+
+The person you chose opens **Shared with me** and sees the file. You can see who has it under **Shared with** in the **Share** sheet.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no Share option on a file">
+    Only the person who added a file, owners and managers can share it, and only if their permissions include sharing inside the clinic. A patient's file has no inside-the-clinic option.
+  </Accordion>
+  <Accordion title="A colleague cannot see a file I shared">
+    They open it from **Shared with me**. If the file is in a folder that only owners and managers can open, sharing the file still lets them see the file but not the folder. See [Choose who can open a folder](/platform/drive/folder-access).
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: components/clinic/drive/drive-share-sheet.tsx, lib/drive/sharing.ts */}

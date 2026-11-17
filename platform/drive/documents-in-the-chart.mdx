@@ -1,0 +1,41 @@
+---
+title: "Forms, signed documents, bills and chat files in Drive"
+description: "Documents other parts of ClinikEHR make appear in a patient's files as read-only entries that open the real document."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Each person sees only what they may open in the place the document comes from" note="Patient documents: Clinic & Hospital edition" />
+
+Under **Patients** in Drive, a patient's files also list the documents ClinikEHR makes for them. You do not upload these. Each one is a link to the real document, so nothing is copied and nothing is counted twice in your storage.
+
+<Path steps={['Sidebar', 'Drive', 'Patients', 'a patient']} />
+
+## What appears
+
+| Entry | Opens |
+| --- | --- |
+| **Form response** | The submitted form, in Forms |
+| **Signed document** | The signed document and its status |
+| **Invoice** | The invoice itself, in **Billing** |
+| **Superbill** | The patient's record, on its **Billing** tab (Solo and Team clinics), or the patient's record in Enterprise |
+| **Fax** | The Fax inbox, once a fax is assigned to the patient |
+| **Report sent securely** | The patient's chart. In a clinic with separate **Patients** and **Patient Records** pages, it opens **Patient Records** for people who may see clinical records, and **Patients** for everyone else |
+| **Team chat file** | The channel it was shared in |
+
+Each entry shows its status, such as **Completed**, **Voided** or **Superseded**, so a corrected or cancelled document is not mistaken for the current one. To change a document, change it where it was made.
+
+## Who sees them
+
+Only people who may open the document where it comes from. A form response needs the permission to view form responses, and a fax needs the fax permission. A client whose chart you cannot open, or whose records are locked to your role, shows nothing. Superbills and invoices are billing documents, so they stay visible to a front desk whose clinical records are locked.
+
+## Team chat files
+
+Files shared in Team chat now appear in Clinic Drive, in a **Team chat** folder, and count toward your storage there. Only people in the conversation can see a file, and that includes direct messages: not even owners and managers see a file from a conversation they are not in. If the message tagged a patient, a link to it also shows in that patient's files for people who can read both the conversation and the chart.
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: lib/drive/shortcuts.ts, the Drive shortcut registration */}

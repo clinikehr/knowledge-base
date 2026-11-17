@@ -1,0 +1,62 @@
+---
+title: "Choose who can open a folder"
+description: "Limit a Clinic Drive folder to certain roles, certain people, or owners and managers only. The setting carries down to the folders inside it."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Owners and managers by default, with the manage-folders permission" />
+
+A new Clinic Drive folder can be opened by everyone in the clinic. Limit it when it holds something private, such as contracts or staff records.
+
+<Path steps={['Sidebar', 'Drive', 'Clinic Drive']} />
+
+<TaskHeader before="A folder in Clinic Drive" time="A minute" after="Only the people you chose can open the folder and what is inside it" />
+
+## Limit a folder
+
+<Steps>
+  <Step title="Open the folder's menu">
+    Open the menu on the folder and select **Folder access**.
+  </Step>
+  <Step title="Choose who can open it">
+    Choose **Everyone in the clinic**, **Certain roles**, **Certain people** or **Owners and managers only**. For roles or people, choose which ones.
+  </Step>
+  <Step title="Save">
+    Select **Save**.
+  </Step>
+</Steps>
+
+Folders and files inside follow the same setting unless you change them. Owners and managers can always open every folder.
+
+## What each choice means
+
+| Choice | Who can open the folder |
+| --- | --- |
+| **Everyone in the clinic** | Every member who can use Drive |
+| **Certain roles** | People with those roles, plus owners and managers |
+| **Certain people** | The people you choose, plus owners and managers |
+| **Owners and managers only** | Owners and managers |
+
+A file shared with a colleague by name is still visible to that colleague when the folder around it is limited. See [Share a file or folder inside the clinic](/platform/drive/share-files).
+
+People whose role is technical, such as a developer or IT administrator, see a Clinic Drive file only when it is shared with them by name. They have no access to patients' files in Drive.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I cannot widen a folder">
+    A folder inside an owners-and-managers-only folder cannot be opened up on its own. The message says "This folder sits inside an owners-and-managers-only folder. Change that folder first."
+  </Accordion>
+  <Accordion title="There is no Folder access option">
+    Setting who can open a folder is for owners and managers by default. Folders that ClinikEHR manages, such as **Ozni documents** and **Team chat**, cannot be changed.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: components/clinic/drive/drive-folder-access-sheet.tsx, lib/drive/folder-access.ts */}

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Audit Logs, Quarterly Access Reviews and Transfers of Care modules: owner or manager only" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant" note="Audit Logs, Quarterly Access Reviews, Transfers of Care, Drive (file list) and Drive files: owner or manager only" />
 
 "Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back." Use it for finance, a migration, a regulator, or your own peace of mind before a big change.
 
@@ -30,6 +30,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 | **Date range (optional)** | Narrows the export to a period. **All time** if left alone | All time |
 | **Export** button | Queues the job. Reads "Export \{n\} modules", and picks up a **ZIP** badge once you choose more than one | Disabled until you pick a module |
 | Progress panel | The running job with a percentage and a label, then **Export ready** and a **Download** button | — |
+| **Drive files** | The files in the hospital's Clinic Drive, as a ZIP. Choose a **Part** and select **Export Drive files**. Owners and managers only | Part 1 |
 | **Recent Exports** | Your last few finished jobs, each with **Re-download** until it expires | — |
 
 Under **Clinical Records**, **Follow-up Notes** exports each follow-up note a colleague added under a note — what it says, which kind of note it was added to, who wrote it and when they signed it. A follow-up note under a record marked sensitive that you could not open on screen is left out.
@@ -84,7 +85,9 @@ A record marked sensitive that you could not open on screen is left out of the f
 
 **API access** is its own group, for clinics with API access, and holds two modules. **Linked Patients** lists which outside organization's connection may reach which patient: the organization, the patient, the organization's own reference for that person, how the link was made (**Linked by staff**, **Confirmed match by staff** or **Created through the API**), who linked it, when it began and, if it has ended, when and why. **Disclosures** lists each time a patient's information was sent to an organization: when, which organization, which permission and request, the kind of record, the basis recorded for sharing and which patient. It never contains the information itself. Linked patients are exported whole whatever date range you choose; **Disclosures** follow the range by the day they were sent. As with every patient module, a restricted client you may not open is left out.
 
-**Audit Logs**, **Quarterly Access Reviews**, **Transfers of Care** and **HIV and PMTCT Records (owner and manager only)** only appear for owners and managers. The HIV and PMTCT module holds a woman's HIV status and ART details and the infants' HIV test results; they are in no other export module. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+**Audit Logs**, **Quarterly Access Reviews**, **Transfers of Care**, **Drive (file list)** and **HIV and PMTCT Records (owner and manager only)** only appear for owners and managers. The HIV and PMTCT module holds a woman's HIV status and ART details and the infants' HIV test results; they are in no other export module. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+
+If your clinic requires two-factor authentication, starting an export and downloading its file both ask for it, as opening patient records does. Sign in with your second factor first; a session that has not passed it is told so and gets no file. See [Two-factor authentication](/platform/security/mfa).
 
 ## Run an export
 
@@ -105,6 +108,24 @@ A record marked sensitive that you could not open on screen is left out of the f
     Select **Download** and put the file somewhere secure immediately.
   </Step>
 </Steps>
+
+## Export your Drive files
+
+**Drive (file list)**, under **Administrative** in the picker, is a spreadsheet of the hospital's Drive: names, types, sizes and status. The **Drive files** card under the picker gives you the files themselves, and only owners and managers see it.
+
+<Steps>
+  <Step title="Choose a part">
+    Leave **Part** at **1** the first time. One ZIP holds up to 80 MB of files, so a larger Drive comes in several parts.
+  </Step>
+  <Step title="Select Export Drive files">
+    It runs as an export of its own, separately from any modules you picked. A **Date range**, if set, picks files by the date they were added.
+  </Step>
+  <Step title="Open README.txt">
+    The ZIP holds your files in their folders under **Clinic Drive**, a **README.txt** and **drive-files-manifest.csv**. The README says how many parts there are. For the next part, set **Part** to **2** and export again.
+  </Step>
+</Steps>
+
+My Drive files and patient files are not in the ZIP, and neither are files that other features keep in Drive, such as team chat files and recordings; each has its own module. For the full list of what is left out and why, see [Export your Drive files](/practice/settings/data-export#export-your-drive-files).
 
 ## What changes once you save
 
@@ -140,6 +161,12 @@ The progress panel reaches **Export ready** and names a file with a plausible si
   </Accordion>
   <Accordion title="I got a ZIP and expected a spreadsheet">
     More than one module always arrives as a ZIP of CSVs, one per module. Pick a single module for a single file.
+  </Accordion>
+  <Accordion title="Drive files says to start a separate export">
+    **Drive files** always runs as an export of its own. Export your other modules first, then select **Export Drive files**.
+  </Accordion>
+  <Accordion title="A Drive file is missing from the ZIP">
+    Open **drive-files-manifest.csv**. Every Clinic Drive file is listed with the part it is in, or why it is not included.
   </Accordion>
   <Accordion title="A module I need is not listed">
     The picker covers the record types this workspace holds. If something genuinely clinical is missing, [contact support](/platform/help/contact-support) rather than working around it with screenshots.

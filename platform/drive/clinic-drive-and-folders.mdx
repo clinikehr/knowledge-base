@@ -1,0 +1,84 @@
+---
+title: "Use Clinic Drive, My Drive and folders"
+description: "Keep shared files in Clinic Drive, your own files in My Drive, and organise both with folders, stars and labels."
+icon: "/images/icons/folder-open.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Any staff member can use My Drive; owners and managers build the Clinic Drive folders by default" />
+
+**Clinic Drive** is the shared shelf: everything the team needs to find. **My Drive** is your own desk: drafts and notes nobody else needs. Both use folders.
+
+<Path steps={['Sidebar', 'Drive', 'Clinic Drive']} />
+
+<TaskHeader before="Nothing, folders and files are created as you go" time="A minute" after="A folder with your files in it" />
+
+## Make a folder
+
+<Steps>
+  <Step title="Open the section">
+    Select **Clinic Drive** or **My Drive**. To make a folder inside another, open that folder first.
+  </Step>
+  <Step title="Select New folder">
+    The **New folder** sheet opens.
+  </Step>
+  <Step title="Name it">
+    Enter a name under 120 characters in **Folder name**. A name that already exists in the same place is refused with "Something with that name already exists here."
+  </Step>
+  <Step title="Create it">
+    The folder appears in the list.
+  </Step>
+</Steps>
+
+## Upload files
+
+Select **Upload files**, or drop files onto the list. Each file is checked for viruses first. The **Uploads** panel shows each file's progress, and a file that fails the check is not added. If the workspace's storage is full the upload is refused; see [Storage and limits](/platform/drive/storage-and-limits).
+
+To replace a file with a newer copy, open its menu and select **Upload a new version**. Earlier versions stay under **Earlier versions** in the file's details and count toward your storage.
+
+## Find, sort and tidy
+
+- **Search Drive** finds a file by name in the section you are in.
+- **Filters** narrows by **Type**, **Label**, who uploaded it and the date added. **Sort by** orders the list by **Name**, **Modified**, **Size** or **Type**, and the view can be a list or a grid.
+- **Star** a file or a folder to find it again under **Starred**. A star is yours alone. A folder you open from **Starred** opens where it lives, in **Clinic Drive**, **My Drive** or **Shared with me**.
+- **Label** gives a file or a folder a colour label for yourself. Open the item's menu, select **Label**, then pick one of your labels or make a new one. The label shows on the item, and **Filters** > **Label** lists the files and folders that carry it. Select **Remove the label** to take it off.
+- **Rename** and **Move** reorganise files and folders. In **Clinic Drive** these are for the people who may manage folders (owners and managers by default) and for the person who uploaded the file.
+- **Details** shows the type, size, who uploaded it, the virus check result and earlier versions.
+
+## Who can do what
+
+| Action | Who by default | Controlled by |
+| --- | --- | --- |
+| Open Drive and Clinic Drive | Everyone | Role |
+| Upload, make folders in **My Drive** | Everyone | The upload permission |
+| Make, rename, move **Clinic Drive** folders | Owners and managers | The manage-folders permission |
+| Remove a **Clinic Drive** file | The person who uploaded it, owners and managers | Role |
+| Place a legal hold | The owner | The legal-hold permission |
+
+Permissions are set per person under **Settings**. A person the owner has not restricted can do whatever their role allows.
+
+## Check it worked
+
+The folder or file shows in the list, and you can reopen it after a refresh.
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="There is no New folder button in Clinic Drive">
+    Creating Clinic Drive folders is for owners and managers by default. Ask one of them, or make the folder in **My Drive**.
+  </Accordion>
+  <Accordion title="My file shows a virus-check message">
+    A file that did not pass the check cannot be opened. Upload a clean copy. A file that shows the check could not finish can be uploaded again.
+  </Accordion>
+  <Accordion title="I can't rename or move a file">
+    In **Clinic Drive** only the person who uploaded a file, owners and managers can change it. In **Patients**, a file's name is fixed; change its type or visit instead.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Drive" />
+
+{/* source of truth: lib/drive/item-actions.ts (the menu), lib/drive/permissions.ts (the permissions) */}

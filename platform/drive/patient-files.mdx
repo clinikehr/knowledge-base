@@ -1,0 +1,76 @@
+---
+title: "File a patient's documents by type and visit"
+description: "Every document on a patient's chart has a document type and, if you want, a visit. Find them in Drive or on the chart's Files tab."
+icon: "/images/icons/file-heart.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { TaskHeader } from '/snippets/task-header.mdx';
+import { StillStuck, AuditNote } from '/snippets/support.mdx';
+
+<Availability editions={['clinic']} plans="All plans" roles="Anyone who can open the patient's record can change a document's type or visit by default; a clinic can turn this off for a role" />
+
+A patient's files are listed in two places that show the same thing: the patient's chart (the **Files** tab) and **Patients** in Drive. A document you file in one is filed in the other.
+
+<Path steps={['Sidebar', 'Drive', 'Patients']} />
+
+## Document types
+
+Every patient document has one document type, so a consent form is never mixed up with a lab result. The types are:
+
+**Consent**, **ID & insurance**, **Outside records**, **Lab results**, **Imaging**, **Referral**, **Correspondence**, **Signed documents**, **Billing**, **Reports**, **Recordings** and **Other**.
+
+Files that were on a chart before Drive are filed under **ID & insurance** (from the Identity and Insurance folders), **Outside records** (from Patient Provided and Clinical), or **Other**. Change one at any time.
+
+## File a document
+
+<Steps>
+  <Step title="Open the patient's files">
+    Open the patient's chart and select **Files**, or select **Patients** in Drive and choose the patient.
+  </Step>
+  <Step title="Open the document's menu and select Change type or visit">
+    A sheet opens with the document's current **Document type**.
+  </Step>
+  <Step title="Choose the type">
+    Choose from **Choose a type**.
+  </Step>
+  <Step title="Link a visit (optional)">
+    Under **Linked to**, choose one of this patient's appointments or consultations, or enter a **Date of service (optional)**. You can link a document to a visit, to a date, both, or neither.
+  </Step>
+  <Step title="Save">
+    The document shows its type and visit in the list. Nothing about the file itself changed.
+  </Step>
+</Steps>
+
+A visit you choose must belong to the same patient. If it does not, you see "That choice does not belong to this patient, so nothing was changed."
+
+## Other documents in a patient's files
+
+Besides the files you upload, a patient's files list the documents other parts of ClinikEHR keep for that patient: lab reports, imaging, video visit and ambient recordings, whiteboards, portal message attachments and eligibility documents. Each one opens in the screen that made it, and each follows that screen's own rules about who may see it, on top of the chart's rules. A person who may not open the patient's clinical records, or who does not have permission to view recordings, does not see them. A whiteboard made inside a psychotherapy note is never listed here: it is seen only where the note is, by whoever can open the note. Lab reports and imaging also follow the roles your edition allows into those screens, and these files cannot be shared, refiled or marked entered in error from Drive. An imaging study's key images and a saved whiteboard's pages are one file each in the list: opening it shows every picture, and all of the pictures count once toward your storage.
+
+## Who sees a patient's files
+
+Drive follows the patient's record exactly:
+
+- If your workspace splits **Patients** from **Patient Records**, people who may not see clinical records see only the non-clinical types (such as **ID & insurance**, **Consent** and **Billing**).
+- A file marked sensitive shows only to the person who uploaded it, the patient's care team and the owner, as on the chart.
+- A patient you cannot open does not appear, and neither do their files.
+- **Download** and **Print** follow your owner's **Allow staff to download patient files** setting, as before.
+
+<AuditNote action="Filing a patient's document, and opening it," />
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="I can't see Change type or visit">
+    By default everyone who can open the patient's record can change a document's type or visit. If a role has been restricted, only people the owner has given the organise-patient-files permission can. A person whose access to patient records is limited can file a document only as Consent, ID and insurance or Billing.
+  </Accordion>
+  <Accordion title="A document I uploaded is under Outside records">
+    That is where documents from the old **Patient Provided** and **Clinical** folders were placed. Use **Change type or visit** to move it.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="patient files" />
+
+{/* source of truth: lib/drive/model.ts (types), lib/drive/item-actions.ts (the menu); re-check against the Files tab once it shows the Drive list (components/clinic/clients-management/client-files-tab.tsx) */}

@@ -21,7 +21,7 @@ For a quicker draft from text you already have — dictation, a transcript, or y
 
 <TaskHeader
   before="A client selected in the Quick Note card, and consent from everyone in the room before you record"
-  time="15–60 seconds to process, once you have the recording"
+  time="15–60 seconds to process a short recording; several minutes for a long one"
   after="A drafted note in your chosen template, ready to review and sign"
 />
 
@@ -49,15 +49,23 @@ The sheet opens on **AI Note Taker** — "Generate structured clinical notes fro
   <Step title="Record, or upload a file">
     **Live Recording** needs microphone permission and tells you "Speak naturally — all participants will be captured". You can pause, resume and stop; the status pill moves through **Recording**, **Paused** and **Complete**.
 
-    **Upload File** takes MP3, MP4, WAV, OGG, M4A, PDF, DOCX, TXT and MD, up to **100 MB**. Use it for audio recorded elsewhere, or a referral letter you want folded into the note.
+    **Upload File** takes MP3, MP4, WAV, OGG, M4A, PDF, DOCX, TXT and MD, up to **500 MB**. Use it for audio recorded elsewhere, or a referral letter you want folded into the note.
+
+    A recording over **500 MB** is refused as soon as you select **Generate Notes**, before anything uploads, and tells you its size.
   </Step>
   <Step title="Wait for it to process">
-    "This may take 15–60 seconds depending on file length." You will see it transcribing, identifying key clinical points, formatting to your template and applying your preferences.
+    Select **Generate Notes**. The recording uploads in small parts, with a progress bar: if your connection drops, it carries on from where it stopped. Keep the tab open until the upload finishes. If it cannot finish, you see **Try again**; it sends the same recording to the same session, so nothing is recorded twice.
+
+    A short recording takes 15–60 seconds. A long one is drafted in the background and can take several minutes: the sheet shows **Drafting your note...** and the note appears when it is ready. Your recording is already saved by then, so you can close the sheet; the session stays in **AI Notes** and the note is there when it finishes.
   </Step>
   <Step title="Review, then apply">
     **Notes Ready!** shows the draft. Read it against what actually happened, then select **Apply to Form** to drop the text into the note form, where you edit and sign as normal — see [Write a clinical note](/practice/clinical/notes). **Re-record / Re-upload** starts again.
   </Step>
 </Steps>
+
+<Warning>
+  **Closing the sheet asks first while a recording is only on your screen.** If you are recording, paused, have a finished recording that has not been sent, or an upload is still running, closing shows **Discard this recording?** Select **Keep recording** to carry on, or **Discard recording** to lose it. Once the recording is uploaded and the note is being drafted, closing the sheet loses nothing.
+</Warning>
 
 <Warning>
   **Read every line before you sign.** A generated note is written from audio, and audio mishears drug names, doses and negations. A clinician must review and approve it — your signature says the words are yours, not the model's.
@@ -69,7 +77,7 @@ Your plan includes AI Note Taker minutes each month, shared by the whole clinic:
 
 - **Beyond the included minutes, each minute costs 2 agent credits.** The meter then reads "Now using agent credits — 2 credits a minute · balance" followed by your balance, and the owner or a manager sees **Buy credits**.
 - **The clinic can switch this off.** **Settings** → **AI Settings** → **Use agent credits when AI Note Taker minutes run out**. With it off, AI Note Taker stops when the included minutes run out.
-- **You are told before you record.** If the included minutes are used up and the switch is off, or the balance is under 2 credits, the sheet says so before recording starts. You can **Buy credits** (owner and managers), or **Write the note by hand**. Nothing fails silently.
+- **You are told before you record.** If the included minutes are used up, or fewer than 15 are left, and the switch is off or the balance cannot cover the rest of a session, the sheet says so before recording starts. You can **Buy credits** (owner and managers), or **Write the note by hand**. If your own place is beyond the plan's included AI Note Taker seats and you have no add-on, the sheet says that too, and the owner or a manager sees **Add the AI Note Taker add-on**. If the sheet cannot check, it says "We could not check whether an AI note can be made for this recording. You can still record." Nothing fails silently.
 - **Regenerating a note you already generated costs nothing extra.**
 
 See [AI credits](/platform/plans/credits) for rates, packs and automatic top-up.
@@ -87,7 +95,7 @@ Opening a session gives you the recording, the generated note, and a **Regenerat
 | **Delete** | Removes the recording and its tracking record. A note already saved to **Notes** is kept |
 | **Open in Notes** | Takes you to the note it produced |
 
-A session still processing after five minutes gets an amber **Stalled** badge and a banner: "This note has been processing longer than expected and was likely interrupted. Stop it, or retry from the recording below."
+A session still processing after 15 minutes gets an amber **Stalled** badge and a banner: "This note has been processing longer than expected and was likely interrupted. Stop it, or retry from the recording below." If the sheet is open when that happens, it stops the session for you, with "This note took too long and was stopped. Your recording is safe; select Generate again." The minutes the session had reserved are given back when a session is stopped, so a stopped note is never charged.
 
 An empty panel reads "No AI notes yet — Generate a note with the AI Note Taker and it'll show up here to manage."
 
@@ -123,7 +131,7 @@ The session shows **Completed** in the **AI Notes** panel, the drafted text is i
   </Accordion>
 
   <Accordion title="AI Note Taker minutes used up">
-    Your clinic has used its included minutes for the month. If agent credits are switched on and the balance is at least 2, recording carries on and uses credits. Otherwise you will see a message before recording, with **Buy credits** for the owner and managers. The allowance resets on the 1st of next month.
+    Your clinic has used its included minutes for the month. If agent credits are switched on and the balance is at least 2, recording carries on and uses credits. Otherwise you will see a message before recording, with **Buy credits** for the owner and managers. The same message appears when fewer than 15 included minutes are left and credits could not cover the rest of a session. The allowance resets on the 1st of next month.
   </Accordion>
 
   <Accordion title="No client selected">
@@ -131,11 +139,15 @@ The session shows **Completed** in the **AI Notes** panel, the drafted text is i
   </Accordion>
 
   <Accordion title="The session is stuck on Processing">
-    Look for the amber **Stalled** badge — it appears once a session has been running more than five minutes. Select **Stop**, then **Retry generation** from the recording. A long recording on a weak connection is the usual cause.
+    A long recording is drafted in the background and can take several minutes. After 15 minutes the session is marked **Stalled** and, with the sheet open, stopped for you. Select **Stop** if you are not waiting on the sheet, then **Retry generation** from the recording. Stopping gives back the minutes the session had reserved.
+  </Accordion>
+
+  <Accordion title="The upload did not finish">
+    Keep the tab open and select **Try again**: it resumes with the same recording and the same session, so you do not record again and no second session is created. If you close the tab while it is uploading, your browser asks first, because the recording would be lost.
   </Accordion>
 
   <Accordion title="File too large">
-    The cap is 100 MB — "Try splitting the session into shorter recordings." A long lossless recording will exceed it; export it as MP3 first.
+    The cap is 500 MB — "Try splitting the session into shorter recordings." A long lossless recording will exceed it; export it as MP3 first.
   </Accordion>
 
   <Accordion title="The note came back in the wrong format">

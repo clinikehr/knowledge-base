@@ -7,6 +7,181 @@ mode: center
 
 New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and ClinikEHR Diagnostics — newest first. Updates reach your workspace automatically; the desktop app updates itself, and installed versions are noted where they matter.
 
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Data export">
+  ## Export the files in your Clinic Drive
+
+  A data export listed your Drive files but did not include them. Owners and managers can now download the files themselves from **Settings** → **Data Export**.
+
+  - **Your folders, kept:** each file comes out as its current version, in its folder, with a README and a list of what is included. See [Export your Drive files](/practice/settings/data-export#export-your-drive-files).
+  - **In parts for a large Drive:** one ZIP holds up to 80 MB of files. The README says how many parts there are.
+  - **Not included:** My Drive (each person's own files), patient files (they have their own export), files in the trash, files that did not pass the virus check, files marked sensitive, a restricted client's files, and any single file over 50 MB.
+  - **Two-factor for every export:** in a clinic that requires two-factor authentication, starting any export and downloading its file now ask for your second factor, as opening patient records does. See [Two-factor authentication](/platform/security/mfa).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Forms and Ozni">
+  ## Ozni builds a form from your list of questions
+
+  Turning a paper form or a list of questions into a form meant typing every question again. Now you can paste your questions into Ozni and ask it to build the form, or describe the form and let Ozni suggest the questions.
+
+  - **One card, every question:** Ozni lists each question with the kind of answer it takes and whether it is required. Select **Create draft** to make it. See [Build a form with Ozni](/practice/forms/build-a-form#build-a-form-with-ozni).
+  - **Always a draft:** nothing is published, shared or sent. You open the form, change what you want and publish it yourself.
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Online booking">
+  ## Returning clients can sign in on your booking page again
+
+  A returning client who chose **Existing client** on the booking page was told that signing in was not available. It works again, and if it is ever unavailable the page now goes straight to your booking questions instead of offering a choice that cannot be completed. **Back** from the questions returns to the calendar. See [Booking page](/practice/work/booking-page#returning-clients).
+
+  If the booking page cannot load for a moment, a client now sees **This booking page could not load** with **Try again**, instead of a blank error screen. See [Booking page](/practice/work/booking-page#common-issues).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Telehealth">
+  ## Video visits connect on more networks, and long sessions are recorded
+
+  Some clinics found that people in a call could not see or hear each other, and that recordings of longer sessions never arrived, so no AI note was written. This release fixes both.
+
+  - **New calls always appear on Upcoming:** the list now shows the soonest calls first, however many old scheduled calls the clinic has. Calls whose time passed without starting are badged **Overdue** and sit after the upcoming ones. **Recent** is newest first and says when more calls exist than it loaded. See [Telehealth](/practice/clinical/telehealth).
+  - **Calls connect on stricter networks:** when a direct connection is blocked, a call now finds another way through, including networks that only allow web traffic. See [Telehealth](/practice/clinical/telehealth).
+  - **Long sessions are recorded:** a recording now uploads in small parts and picks up where it stopped if the connection drops, so a full-length session reaches **Recordings** and the AI Note Taker. If an upload still fails, select **Try again** while the tab is open.
+  - **AI Note Taker recordings upload the same way:** the recording goes up in small parts and resumes if the connection drops, **Try again** sends the same recording to the same session, and closing the sheet while a recording is only on your screen now asks first instead of discarding it. A long recording is drafted in the background and the note appears when it is ready; a note that gets stuck is stopped after 15 minutes and the minutes it reserved are given back. See [Generate a note with AI](/practice/clinical/ai-notes).
+  - **You are warned before recording when an AI note would be refused:** if the clinic has fewer than 15 AI Note Taker minutes left and agent credits cannot cover the rest, or your place is beyond the plan's included AI Note Taker seats, the **Start Recording** sheet says so first, with **Record without AI notes**. The **AI Note Taker** sheet does the same. See [Telehealth](/practice/clinical/telehealth).
+  - **A dropped connection no longer ends the recording:** if your connection drops while you record, the recording keeps running and you have 10 minutes to reconnect. Everyone else sees **The host is reconnecting**. See [Telehealth](/practice/clinical/telehealth).
+  - **A dropped connection keeps the call on screen:** instead of **Connection Failed** and a refresh, you see a **Reconnecting...** bar while your device keeps trying, and it tries straight away when your network returns. If nothing works for about 2 minutes, **You lost your connection** offers **Rejoin call**. Patients get the same behaviour, and see **The host is reconnecting** when the person recording drops. A lost connection is also noticed sooner. See [Telehealth](/practice/clinical/telehealth).
+  - **A recording survives a closed tab:** an encrypted copy stays on your device while you record, and if the tab closes or the upload fails, **A recording from your last session was not uploaded** offers **Upload the saved recording**. The copy is removed once it uploads, is kept for up to 7 days while it has not uploaded, and is removed at once when you sign out, including when you are signed out for being idle, or when someone else signs in on that browser. See [Telehealth](/practice/clinical/telehealth).
+  - **Settings in a call is easy to leave on a phone:** select **Back to call**, the close button, or your phone's back gesture.
+  - **Call tools no longer cover the video:** **Chat**, **Private message**, **Scratchpad** and **Rooms and settings** are now buttons in the bar at the top of the call. On a phone, **Chat** stays in the bar and the others are under **More**. The bottom bar's button is now **Participants**. See [Telehealth](/practice/clinical/telehealth).
+  - **A network change no longer freezes the call:** if your connection moves from Wi-Fi to mobile data or drops for a moment, the call picks up again by itself within about 30 seconds. If one person still cannot be reached, their tile says **Can't reach** and their name, with **Try again**. A weak connection on your side shows **Your connection is poor**. Patients get the same. See [Telehealth](/practice/clinical/telehealth).
+  - **A camera or microphone problem is told, not hidden:** if your camera or microphone stops, another app takes it or the browser blocks it, a notice says what happened with **Try again** and **Choose device**. The call tries your camera or microphone again first, then your computer's default one. Plugging in a headset never switches your microphone by itself. Patients get the same.
+  - **You can join without a camera or microphone:** you now join to watch and listen, and **Try again** adds the camera or microphone when it works, without leaving the call.
+  - **Choosing a different camera or microphone in a call now reaches the others:** the picture or sound no longer freezes for everyone else after you switch.
+  - **Your background and noise suppression stay on when a device reconnects:** if your camera or microphone reconnects or you switch to another one, a blur, background or noise suppression you chose is applied to it again and keeps reaching the others and the recording. If it cannot be restarted, the call carries on without it and says **Your background effect could not be restarted**. Patients get the same.
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital"]} description="Team chat, triage history and maternity">
+  ## Start messages from Home, manage group messages, and see triage on the chart
+
+  Four things people asked for, in one release.
+
+  - **Start a message from Home:** select **+ New message** on Team chat **Home** to message one person or a group of up to 15. See [Team chat](/platform/team/team-chat).
+  - **Change a group message after you start it:** add people or **Remove** them; a group always keeps at least two other people. Owners and managers can **Delete conversation**, which hides it for everyone and keeps the messages for the clinic's records. Channel admins, owners and managers can **Remove** someone from a channel.
+  - **Triage is back in Recent Activity:** a patient's record shows a **Triage** tab and triage in **All Activity**, with **Open triage** on each card. See [Patient records](/hospital/records/patient-records).
+  - **Maternity:** **Edit pregnancy details** corrects gravida, para, blood group, rhesus, last menstrual period and risk factors on an open pregnancy; the due date still changes only through **Change due date**. Next contacts are now worked out from the date of each visit, so an extra visit no longer skips the next one. See [Pregnancy records](/hospital/maternity/pregnancy-records).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Secure links">
+  ## See the file you were sent, and see every link your clinic has made
+
+  Someone who gets a secure link can now look at the file in their browser before they save it, and you can choose to let them look but not download. Owners and managers get one list of every link, and the right people are told when things happen.
+
+  - **View only or view and download:** when you make a [secure link](/platform/drive/secure-links), choose what the recipient can do. A viewer shows the file marked with their email address and the time. **View only** has no Download button and works for images and PDFs.
+  - **Every view and download is recorded**, and a download appears in the patient's accounting of disclosures.
+  - **Links list:** owners and managers see every link under Drive, **Storage**, **Links**, with who made it, who it went to, when it expires and how often it was opened. Stop a link, filter, or export the list.
+  - **Notifications:** you are told when a link you made is opened for the first time (it opens the file with its Share sheet); everyone is told when a file is shared with their role or the whole clinic (never by email); owners and managers are told when someone leaves with files in My Drive. See [Share files inside the clinic](/platform/drive/share-files).
+  - **Weekly summary:** the owner can turn on an email each Monday with how many links were made, opened and are about to expire. It is off until turned on, with a switch and an unsubscribe link.
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="One storage amount">
+  ## One storage amount per plan now covers your mail too
+
+  Mail used to have its own storage amounts (5 GB, 50 GB and 120 GB depending on the plan) on top of Drive's. Now your plan has a single storage amount, and your messages and attachments count inside it, so there is one figure to watch and one place to add space.
+
+  - **One amount per plan:** Free 5 GB, Essential 50 GB, Team 250 GB and Enterprise 1 TB of [Drive storage](/platform/drive/storage-and-limits), mail included.
+  - **Mail no longer has a limit of its own.** The Mail screens show your Drive figure and link to **Drive storage**; the separate mail warnings are gone, so you hear about it once, in Drive.
+  - **Incoming mail is never refused.** If Drive is full, messages without attachments still send; only a new message with attachments waits until you free space or add storage. See [Mail storage](/practice/work/mail-storage).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Upload limits">
+  ## A limit on how many files one person can add in a short time
+
+  Each person can now add up to 100 files in 10 minutes and 1,000 files a day to Drive and to patients' charts. If you reach it, the message tells you how long to wait, and the files still queued are marked as not added so none is lost silently. See [Storage and limits](/platform/drive/storage-and-limits).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Drive search">
+  ## Find a file by what is written inside it
+
+  Drive can now search the words inside your documents, not only their names, so a referral letter called "scan 0412" turns up when you type the specialty. It is **off** until the owner or a manager turns it on. See [Search inside documents](/platform/drive/search-inside-documents).
+
+  - **Turn it on from the Storage page.** The card shows how many files are searchable and what the month has cost.
+  - **Typed documents are free; a scanned page is 1 AI credit.** A page that cannot be read, and a blank page, are not charged, and reading pauses and resumes by itself if credits run out.
+  - **The text is stored encrypted; only the searchable words are indexed.** A scanned page is read by an AI model under ClinikEHR's agreement with its AI provider.
+  - **You only find what you could already open.** A word inside a file you cannot see finds nothing, including patient files your role cannot open and sensitive files.
+  - **Ozni can search inside documents too**, for the files you may already open. It shows names, and a passage only for Clinic Drive files marked Available to Ozni. See [Ozni and your Drive](/platform/drive/ozni-and-drive).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Drive storage">
+  ## Everything you store now counts in one place
+
+  Your Drive limit now covers lab reports, imaging, recordings, whiteboards, mail and message attachments, Medi-Cal and store files, and the other files your workspace keeps, so the **Storage** page shows the whole picture. No one's figure changes for forms and Team chat.
+
+  - **Documents from other screens appear in a patient's files** and open in the screen that made them, with that screen's own access rules. See [Patient files](/platform/drive/patient-files).
+  - **Available to Ozni on any Clinic Drive file.** Owners and managers can let Ozni answer from a policy or price list already in Clinic Drive. See [Ozni and your Drive](/platform/drive/ozni-and-drive).
+  - **Technical roles can open Drive.** They see only the Clinic Drive folders and files shared with them, and never patient files.
+  - **A legal hold now also stops automatic clean-up** of recordings, Medi-Cal uploads and eligibility documents. See [Storage and limits](/platform/drive/storage-and-limits).
+  - **A full workspace now refuses a new file everywhere it can be added:** a patient's portal message attachment, an eligibility document, a saved whiteboard, a Medi-Cal file and a store download, not only Drive itself. Nothing is stored when a file is refused. A patient is told only that the clinic cannot receive files right now, never about your storage or plan. See [Storage and limits](/platform/drive/storage-and-limits).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy","Billing"]} description="Drive storage packs">
+  ## Need more room? Add storage to your plan
+
+  If your workspace is filling up, the owner of a paid plan can now add space without changing plan. See [Buy more storage](/platform/drive/storage-and-limits#buy-more-storage).
+
+  - **Three monthly packs.** **+50 GB** ($10 or ₦15,000 a month), **+200 GB** ($30 or ₦45,000) and **+1 TB** ($100 or ₦150,000), billed in your workspace's currency. Open **Drive**, select **Storage** and choose **Buy** under **Extra storage**.
+  - **Cancel any time.** A cancelled pack keeps working until the end of the month you paid for, and the Storage page shows the date it ends.
+  - **Who sees what.** Only the owner buys or cancels. A manager is told to ask the owner, and the Free plan is shown an upgrade instead.
+  - **ClinikForms storage packs are retired.** Form files share your Drive storage. A pack you bought earlier keeps adding space until its date. See [Envelope packs and form files](/practice/forms/usage-and-packs).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Drive sharing">
+  ## Share files with colleagues, patients and people outside the clinic
+
+  Drive now does the sharing, with a record of who opened what. Open a file's menu and select **Share**.
+
+  - **Inside the clinic.** Share a Clinic Drive file or folder with colleagues, a role or everyone, and find what was shared with you under **Shared with me**. See [Share a file or folder inside the clinic](/platform/drive/share-files).
+  - **Folder access.** Limit a folder to certain roles, certain people, or owners and managers only. See [Choose who can open a folder](/platform/drive/folder-access).
+  - **Secure links.** Send a file outside the clinic with a link that expires within 30 days, can ask for an emailed code, can be stopped at any time and records every open. A patient's file also needs a recipient and a reason, and a sensitive file cannot be sent. See [Send a file outside the clinic](/platform/drive/secure-links).
+  - **Patients.** Show a patient's file in their portal from Drive or from the chart's **Files** tab, which now agree. In the portal, files, superbills and statements are together under **My documents**. See [Share a file with a patient](/platform/drive/share-with-patients).
+  - **More in a patient's files.** Form responses, signed documents, superbills, invoices, assigned faxes and Team chat files tagged to a patient show as entries that open the real document, and Team chat files now count once in your storage. See [Forms, signed documents, bills and chat files in Drive](/platform/drive/documents-in-the-chart).
+</Update>
+
+<Update label="November 17, 2026" tags={["Platform","Solo & Team","Hospital","Pharmacy"]} description="Drive">
+  ## One place to find every file: Drive
+
+  Files used to live in a patient's chart, in Team chat, in forms and in Ozni's documents, with no single place to look and no single limit. **Drive** now sits in the sidebar directly below **Patients** and brings them together.
+
+  - **Clinic Drive** is the shared shelf with folders; **My Drive** is yours alone. Search by name, filter by type, label, uploader and date, and star the files you use most. See [Use Clinic Drive, My Drive and folders](/platform/drive/clinic-drive-and-folders).
+  - Every patient document has a **document type** and can be linked to a visit or a date of service, on the chart's **Files** tab and under **Patients** in Drive. See [File a patient's documents by type and visit](/platform/drive/patient-files).
+  - A patient file is never deleted: **Mark entered in error** keeps it on the record. Clinic and My Drive files go to **Trash** for 30 days. See [Entered in error and Trash](/platform/drive/entered-in-error-and-trash).
+  - One storage limit for everything, ClinikMail included: Free 5 GB, Essential 50 GB, Team 250 GB, Enterprise 1 TB. You are told at 80% and 95%. When it is full, new uploads and files patients send from the portal are refused, signed forms and consents, form attachments and Insurance Profile files still save, and nothing is deleted. Files in Trash keep counting until they are removed for good. ClinikForms storage packs are no longer sold: form files count toward your Drive storage. See [Storage and limits](/platform/drive/storage-and-limits).
+  - Ozni can find files, list a patient's documents by type, show your storage, file an uploaded document and make a folder, on a card you confirm. The documents you gave Ozni now appear in Clinic Drive. See [Ozni and your Drive](/platform/drive/ozni-and-drive).
+  - Folders can be labelled just like files: select **Label** on a folder's menu, and the label shows on the folder and in **Filters** > **Label**.
+  - Folders can be starred just like files: select **Star** on a folder's menu to find it under **Starred**, and open it from there.
+  - **Owners and managers can make a Clinic Drive file available to Ozni.** Ozni answers from it only for people who may open it, follows the file when you rename it or change who can open it, and stops reading it at once when you replace it, move it to Trash or move it out of Clinic Drive. See [Ozni and your Drive](/platform/drive/ozni-and-drive).
+  - An imaging study's key images and a saved whiteboard's pages are one file each in a patient's list: opening it shows all of its pictures, and they count once toward your storage. A whiteboard made inside a psychotherapy note stays private to the person who holds the note. See [File a patient's documents by type and visit](/platform/drive/patient-files).
+</Update>
+
+<Update label="November 17, 2026" tags={["Solo & Team","Hospital","Pharmacy"]} description="Forms">
+  ## A patient sent several forms gets one email, not one for each
+
+  Sending a patient two or more forms used to fill their inbox with a separate email for every form. Now they get one email with a button for each form, and each button opens that form on its own.
+
+  - Forms sent together from **Send intakes**, and forms due when an appointment is booked, arrive in one email. See [Send a form](/practice/forms/send-a-form#sending-several-forms-to-one-patient).
+  - **Review & send** says it before you send: "*Name* gets one email with 3 forms."
+  - Ozni can send a client several forms in one email, on a card you confirm. See [Making changes](/platform/ozni/making-changes).
+  - A document to sign, or a document from your document library, still arrives in its own email, and a single form arrives as before.
+  - Each form keeps its own deadline and reminders.
+  - The email does not name the forms. It says how many there are and which practice sent them; each form's title appears only once the patient opens its secure link.
+</Update>
+
+<Update label="November 17, 2026" tags={["Solo & Team","Hospital"]} description="ePrescribe">
+  ## ePrescribe says when MDToolbox does not accept your practice's details
+
+  When MDToolbox turned down a practice's ePrescribe details, **Sync Patient** and **Sync & Prescribe** showed only "An unexpected error occurred during MDToolbox sync", which gave no clue what to fix. Now the message says that MDToolbox did not accept your practice's ePrescribe details and that nothing was sent.
+
+  - Owners and managers are asked to check with MDToolbox that the practice account and practice ID are active, then contact ClinikEHR support.
+  - Everyone else is asked to let the clinic owner know, or contact ClinikEHR support.
+  - See [Send a prescription electronically](/platform/integrations/eprescribe#if-something-goes-wrong).
+</Update>
+
 <Update label="November 10, 2026" tags={["Solo & Team","Hospital"]} description="Forms">
   ## A form sent from a patient's record is emailed to the address on their record
 
@@ -3894,7 +4069,7 @@ New features, improvements and fixes across ClinikEHR, ClinikEHR Pharmacy and Cl
 
   - Closing a form now frees its place in the Free plan's 15 published forms; reopening it, or making a published form public, needs a free place. See [Publish a form](/practice/forms/publish-a-form).
   - The document seal tab says when ordering has not opened yet, instead of offering a payment. See [Document seal](/practice/forms/document-seal).
-  - Pharmacy and Diagnostics plans no longer show a texted signing-code allowance they do not include, and owners are told at 80% and 100% of their texted codes. See [Storage and envelope packs](/practice/forms/usage-and-packs).
+  - Pharmacy and Diagnostics plans no longer show a texted signing-code allowance they do not include, and owners are told at 80% and 100% of their texted codes. See [Envelope packs and form files](/practice/forms/usage-and-packs).
   - A refunded pack comes off your allowance straight away, and the Buy more dialog says a pack adds nothing after a move to a plan without that allowance.
 </Update>
 

@@ -9,7 +9,7 @@ import { Path } from '/snippets/path.mdx';
 import { TaskHeader } from '/snippets/task-header.mdx';
 import { StillStuck, AuditNote } from '/snippets/support.mdx';
 
-<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant · Audit Logs, Quarterly Access Reviews, Transfers of Care and privacy records: owner or manager" />
+<Availability editions={['clinic']} plans="All plans" roles="Owner, manager or accountant · Audit Logs, Quarterly Access Reviews, Transfers of Care, privacy records and Drive files: owner or manager" />
 
 "Export clinic data as CSV or ZIP. Large exports run in the background — you can navigate away and check back." Use it for an accountant, a migration, a regulator, or your own peace of mind before a big change.
 
@@ -30,6 +30,7 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 | **Date range (optional)** | Narrows the export to a period. **All time** if left alone | All time |
 | **Export** button | Queues the job. Reads "Export \{n\} modules", and picks up a **ZIP** badge once you choose more than one | Disabled until you pick a module |
 | Progress panel | Shows the running job with a percentage and a label, then **Export ready** and a **Download** button | — |
+| **Drive files** | The files in your Clinic Drive, as a ZIP. Choose a **Part** and select **Export Drive files**. Owners and managers only | Part 1 |
 | **Recent Exports** | Your last few finished jobs, each with a **Re-download** button until it expires | — |
 
 **Administrative** also holds your calendar: **Calendar Events** (events and Out of Office blocks, with their times and dates), **Event People & Resources** (who and which rooms or equipment each one applies to), **Calendar Tasks**, and **Clinic Locations** (the sites or branches configured under Settings → Locations).
@@ -37,6 +38,8 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
 **Administrative** also holds **Time Off Requests** (who asked for leave, the dates, the type and note, how it was decided and the reply) and your duty rota, as five modules: **Rota Shifts** (every shift with who it is for, its times, its status and where it is), **Shift Types**, **Shift Patterns**, **Shift Coverage Rules** and **Shift Swap Requests** (each swap or cover request, with who asked, who it was offered to and how a manager answered). A shift's place comes out as names beside the ids — **Department**, **Ward**, **Unit** and **Other Place**, the last for a place you typed — together with **Legacy Department Text**, the department wording the shift was created with before places existed. Shift types, patterns and coverage rules are exported whole whatever date range you choose; **Rota Shifts** follow the range by the shift's start time, and **Shift Swap Requests** by the day the request was made. No patient is named in any of them.
 
 **Audit Logs**, **Quarterly Access Reviews**, **Transfers of Care**, and the privacy records under **Compliance & Audit** (care team assignments, emergency access grants, restriction and record requests, HIV and pregnancy-programme records, Part 2 consents, recorded disclosures, health plan sharing restrictions and legal holds), only appear in the picker for owners and managers. A Part 2 program always receives a ZIP that includes a notice file, even for one module. One module downloads as a single CSV; more than one arrives as a ZIP of CSVs.
+
+If your clinic requires two-factor authentication, starting an export and downloading its file both ask for it, as opening patient records does. Sign in with your second factor first; a session that has not passed it is told so and gets no file. See [Two-factor authentication](/platform/security/mfa).
 
 ## Run an export
 
@@ -57,6 +60,37 @@ import { StillStuck, AuditNote } from '/snippets/support.mdx';
     "Files contain **PHI**. Handle securely per HIPAA." Move it off your downloads folder and onto encrypted storage, and delete any copy you no longer need.
   </Step>
 </Steps>
+
+## Export your Drive files
+
+**Drive (file list)** in the picker is a spreadsheet of your Drive: names, types, sizes and status. **Drive files** gives you the files themselves.
+
+<Steps>
+  <Step title="Find Drive files">
+    Under the module picker, find the **Drive files** card. It only appears for owners and managers.
+  </Step>
+  <Step title="Choose a part">
+    Leave **Part** at **1** the first time. One ZIP holds up to 80 MB of files, so a larger Drive comes in several parts.
+  </Step>
+  <Step title="Select Export Drive files">
+    The export runs on its own, separately from any modules you picked above. A **Date range**, if set, picks files by the date they were added.
+  </Step>
+  <Step title="Open README.txt">
+    The ZIP holds your files in their folders under **Clinic Drive**, a **README.txt** and **drive-files-manifest.csv**. The README says which part this is and how many parts there are. For the next part, set **Part** to **2** and export again.
+  </Step>
+</Steps>
+
+Each file comes out as its current version, with its name and folder kept. Characters a computer cannot use in a file name are replaced, and two files with the same name in one folder are numbered "(2)", "(3)".
+
+**What is not in the ZIP**, and the README counts each one:
+
+- **My Drive.** My Drive files belong to the person who stored them, so they are never part of a clinic export. Each person can download their own files from Drive.
+- **Patient files.** Export them with the patient file modules. They are listed in **Drive (file list)**.
+- **Files kept in Drive by other features**, such as team chat files, whiteboard pictures, mail attachments and recordings. Each has its own export module.
+- Files in the trash, files that did not pass the virus check (or are still being checked), files marked sensitive, and a restricted client's files.
+- **A file larger than 50 MB**, or one that turns out much larger than the size Drive has for it. It is listed in the manifest as too large. Download it from Drive instead.
+
+If your clinic is a Part 2 program, every part includes the notice file.
 
 ## What changes once you save
 
@@ -88,6 +122,12 @@ The progress panel turns green and reads **Export ready** with a file name and a
   </Accordion>
   <Accordion title="Download failed, or the file may have expired">
     "Could not generate download link. The file may have expired." Links last 24 hours. Start the export again; it is quick to re-run.
+  </Accordion>
+  <Accordion title="Drive files says to start a separate export">
+    **Drive files** always runs as an export of its own. Export your other modules first, then select **Export Drive files**.
+  </Accordion>
+  <Accordion title="A Drive file is missing from the ZIP">
+    Open **drive-files-manifest.csv**. Every Clinic Drive file is listed with the part it is in, or why it is not included.
   </Accordion>
   <Accordion title="I closed the tab while it was running">
     The job keeps going. Come back to this tab and it picks the running job up again, or shows it finished under **Recent Exports**.

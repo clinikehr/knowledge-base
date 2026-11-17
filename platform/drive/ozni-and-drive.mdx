@@ -1,0 +1,63 @@
+---
+title: "Ozni and your Drive"
+description: "Ozni can find files, list a patient's documents by type, show your storage and file an uploaded document. Documents you give Ozni live in Drive."
+icon: "/images/icons/sparkles.svg"
+---
+
+import { Availability } from '/snippets/availability.mdx';
+import { Path } from '/snippets/path.mdx';
+import { StillStuck } from '/snippets/support.mdx';
+
+<Availability editions={['all']} plans="All plans" roles="Each person gets what they may open in Drive; storage figures for owners and managers by default" note="Patient documents: Clinic & Hospital edition" />
+
+Ask Ozni about your files in plain words. It sees only what you could open yourself. It does not read files out to you; the one exception is that, once your workspace has turned on [Search inside documents](/platform/drive/search-inside-documents), Ozni can find files by words written inside them. It shows only the file's name, type and date, and a short matching passage only for Clinic Drive files marked **Available to Ozni**; it never shows words from a patient, sensitive or Part 2 file.
+
+## What Ozni can do
+
+| Ask | What happens |
+| --- | --- |
+| "Where is the staff handbook?" | Ozni finds files by name, type, date or who uploaded them. |
+| "Which file mentions cardiology?" | When **Search inside documents** is on, Ozni searches inside files in Clinic Drive, My Drive or patient files and shows the file's name. A short passage is shown only for Clinic Drive files marked **Available to Ozni**, never for a patient, sensitive or Part 2 file. It finds only what you could open yourself. |
+| "What consent forms does this patient have?" | Ozni lists that patient's documents, grouped by type. |
+| "How much storage have we used?" | Ozni gives the used and total space, split by where it goes, and names any storage packs you hold. For owners, managers and anyone given the manage-storage permission. Ozni does not buy storage: the owner does that on the **Storage** page (see [Buy more storage](/platform/drive/storage-and-limits#buy-more-storage)). |
+| "File this as a lab result for Tuesday's visit" | Ozni prepares a card that sets the document's type and visit. Nothing changes until you select **Confirm**. |
+| "Make a folder called HR in Clinic Drive" | Ozni prepares a card to create it. Owners and managers by default; anyone can make a folder in **My Drive**. |
+
+## Make any Clinic Drive file available to Ozni
+
+An owner or manager can let Ozni answer from a file that already lives in **Clinic Drive**, such as a policy or a price list. Open the file's menu and select **Available to Ozni**.
+
+- Ozni first reads the file and checks it. A file that appears to contain patient information or substance use treatment records is refused, and the file says why.
+- It works for PDF, picture (JPEG, PNG, WebP), Word (.docx), text, markdown and CSV files up to 20 MB, once the file has passed its virus check.
+- Patient files and **My Drive** files can never be made available. Neither can a file that is still being checked for viruses.
+- Ozni can read the file only for the people who may open it. If the file sits in a folder limited to certain roles or people, only owners and managers can use it through Ozni, and it follows any later change to who can open the file.
+- If you rename the file, Ozni's name for it changes too. If you move it out of **Clinic Drive**, Ozni stops reading it straight away.
+- If you replace the file with a new version, move it to Trash or it is removed, Ozni stops reading it straight away. Select **Available to Ozni** again to have it read the new version.
+- To stop Ozni reading a file, select **Available to Ozni** again. Ozni's copy is removed. The file itself stays where it is.
+
+The file counts toward your storage once. In **Settings**, **Ozni Assistant**, **Assistant documents**, the file appears with a **From Drive** badge. You change its name and who can open it in Drive; in Settings you can only remove it from Ozni.
+
+## What Ozni leaves to you
+
+Ozni does not share a file outside the workspace, place a legal hold, mark a file entered in error, empty Trash, delete or download a file, or upload one. Ozni tells you so and offers a **Show me** button that opens the right place in Drive.
+
+If you are not allowed to see a patient's clinical records, Ozni says so rather than listing clinical documents.
+
+## Documents you give Ozni
+
+The documents you add under **Settings**, **Ozni Assistant**, **Assistant documents** appear in **Clinic Drive** in a folder called **Ozni documents**. They count toward your Drive storage once, and Ozni answers only from documents you added there or made available in Drive, never from patient files. See [Assistant documents](/platform/ozni/clinic-documents).
+
+## If something goes wrong
+
+<AccordionGroup>
+  <Accordion title="Ozni says it can't find a file I know exists">
+    Ozni lists only files you may open. A file in another person's **My Drive**, a patient you cannot open, or a file marked entered in error does not appear. Open Drive and use **Search Drive** with **Show entered in error** on.
+  </Accordion>
+  <Accordion title="Ozni won't give me the storage figures">
+    Storage is shown to the people allowed to manage it. Ask your owner or a manager.
+  </Accordion>
+</AccordionGroup>
+
+<StillStuck topic="Ozni" />
+
+{/* source of truth: tool group `drive` in the assistant (find files, a patient's documents, storage, file a document, create a folder); lib/assistant/targets.ts (drive targets) */}
