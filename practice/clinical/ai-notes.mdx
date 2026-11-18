@@ -49,7 +49,9 @@ The sheet opens on **AI Note Taker** — "Generate structured clinical notes fro
   <Step title="Record, or upload a file">
     **Live Recording** needs microphone permission and tells you "Speak naturally — all participants will be captured". You can pause, resume and stop; the status pill moves through **Recording**, **Paused** and **Complete**.
 
-    **Upload File** takes MP3, MP4, WAV, OGG, M4A, PDF, DOCX, TXT and MD, up to **500 MB**. Use it for audio recorded elsewhere, or a referral letter you want folded into the note.
+    **Upload File** takes audio (MP3, M4A, WAV, AAC, OGG, WEBM), video (MP4, MOV) and documents (PDF, DOCX, TXT, MD), up to **500 MB**. Drop a file on the box, or select it to choose one. On a phone you can choose a voice memo or a video from your camera roll. Use it for audio recorded elsewhere, or a referral letter you want folded into the note.
+
+    Once a file is accepted, its name and size appear with **Change** beside it. A file the note taker cannot read is refused straight away with the reason under the box, for example "This file type is not supported", and **Generate Notes** stays off. An older Word file (.doc) must be saved as DOCX or PDF first.
 
     A recording over **500 MB** is refused as soon as you select **Generate Notes**, before anything uploads, and tells you its size.
   </Step>
@@ -96,6 +98,18 @@ Opening a session gives you the recording, the generated note, and a **Regenerat
 | **Open in Notes** | Takes you to the note it produced |
 
 A session still processing after 15 minutes gets an amber **Stalled** badge and a banner: "This note has been processing longer than expected and was likely interrupted. Stop it, or retry from the recording below." If the sheet is open when that happens, it stops the session for you, with "This note took too long and was stopped. Your recording is safe; select Generate again." The minutes the session had reserved are given back when a session is stopped, so a stopped note is never charged.
+
+### When the note could not be drafted
+
+Sometimes the recording is transcribed but the assistant cannot finish writing the note, for example because it took too long. The sheet then says **Your recording and its transcript are saved. Only the note drafting failed.** and gives the reason in plain words, such as the assistant taking too long or not being reachable. Nothing needs to be recorded again.
+
+- **Draft again from the saved transcript** writes the note from the transcript that was already made. The transcription is not charged a second time.
+- **Draft with ClinikEHR instead** appears when your clinic uses EvidenceMD and EvidenceMD could not draft the note.
+- From **AI Notes**, **Retry generation** on a failed session does the same: it uses the saved transcript when there is one, and it works even when only the transcript was kept.
+- If your clinic uses EvidenceMD and a session has a saved transcript, **AI Notes** also asks **Write the note with**: your clinic's assistant (EvidenceMD) or **ClinikEHR AI**. Your clinic's assistant is selected to begin with. When EvidenceMD was the one that could not write the note, ClinikEHR AI is marked as suggested. Choosing ClinikEHR AI asks you to confirm first, and tells you the cost: the recording is not transcribed again, so no minutes are used; the first time ClinikEHR AI re-drafts a session it is free, and after that it uses 2 agent credits. If your clinic uses only ClinikEHR, there is nothing to choose and the question does not appear.
+- A failed session in the list shows the reason in plain words, for example that the assistant took too long or could not be reached.
+- Either way the new note is an AI draft. Read and correct it before you sign it.
+- If both assistants failed, the sheet lists each reason so you can see what happened with each.
 
 An empty panel reads "No AI notes yet — Generate a note with the AI Note Taker and it'll show up here to manage."
 
@@ -146,12 +160,20 @@ The session shows **Completed** in the **AI Notes** panel, the drafted text is i
     Keep the tab open and select **Try again**: it resumes with the same recording and the same session, so you do not record again and no second session is created. If you close the tab while it is uploading, your browser asks first, because the recording would be lost.
   </Accordion>
 
+  <Accordion title="Nothing happens when I choose a file">
+    An accepted file shows its name and size under **Upload File**; a refused one shows the reason in red under the box. If you see neither, choose the file again. If the file is a type the note taker does not take (a photo, or a format your phone's recorder uses such as 3GP or AMR), export it as MP3 or M4A, or share it from the recorder app as audio, and upload that.
+  </Accordion>
+
   <Accordion title="File too large">
     The cap is 500 MB — "Try splitting the session into shorter recordings." A long lossless recording will exceed it; export it as MP3 first.
   </Accordion>
 
   <Accordion title="The note came back in the wrong format">
     Open the session in **AI Notes**, choose another template under **Regenerate with**, and select **Regenerate**. The recording is reused, so you do not have to see the client again.
+  </Accordion>
+
+  <Accordion title="The recording stopped playing, or would not play after a pause">
+    Select **Load player** on the session in **AI Notes** to listen. The link to a recording lasts a few minutes, to protect it. While the session is open, the player renews it by itself, including after a long pause or when you jump to another point, and carries on from where you were. **Download** always gets a new link when you select it. If the player says "The recording could not be loaded. Check your connection, then select Try again.", select **Try again**: it starts from where you stopped. If it says "This recording is no longer stored, so it cannot be played or downloaded.", the file is no longer there, for example because the recording was deleted. A note already saved from it is not affected.
   </Accordion>
 
   <Accordion title="The recording missed the second speaker">
